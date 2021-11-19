@@ -16,6 +16,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+
 :root {
   --blue: #5e72e4;
   --indigo: #5603ad;
@@ -56,6 +57,13 @@
 *::before,
 *::after {
   box-sizing: border-box; }
+
+
+.headline {
+  font-size: 1.2rem;
+  color: #eeeeee;
+}
+
 
 html {
   font-family: sans-serif;
@@ -548,7 +556,11 @@ pre {
   position: relative;
   width: 100%;
   padding-right: 15px;
-  padding-left: 15px; }
+  padding-left: 15px;
+ 
+
+
+}
 
 .col {
   flex-basis: 0;
@@ -11051,6 +11063,7 @@ a.btn-icon-only {
   height: 2rem; }
 
 .btn-icon-clipboard {
+  height: 200px;
   margin: 0;
   padding: 1.5rem;
   font-size: 1rem;
