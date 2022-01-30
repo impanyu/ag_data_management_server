@@ -1,0 +1,22 @@
+<root>
+  <Header>C2-AP</Header>
+  <L>457</L>
+  <S>69269308313085</S>
+  <POS>
+    <X>14728</X>
+    <Y>71189</Y>
+    <Z>0</Z>
+    <Height>4874</Height>
+    <Velocity>0</Velocity>
+    <Pan>9000</Pan>
+    <PanVelocity>9000</PanVelocity>
+    <Tilt>-9000</Tilt>
+    <TiltVelocity>-9000</TiltVelocity>
+    <Zoom>0</Zoom>
+    <Focus>120</Focus>
+    <Iris>647</Iris>
+    <Pitch>-691</Pitch>
+    <Roll>-585</Roll>
+  </POS>
+  <Time></Time>
+</root>

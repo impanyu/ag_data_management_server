@@ -19,11 +19,16 @@
 
 
 
+
+
 //
 // Layout
 //
 
 'use strict';
+
+
+
 
 var Layout = (function() {
 
@@ -510,6 +515,14 @@ var CopyIcon = (function() {
 	}
 
 })();
+
+
+//
+// 
+//
+
+
+
 
 //
 // Navbar

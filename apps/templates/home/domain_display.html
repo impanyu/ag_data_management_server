@@ -1,0 +1,201 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Icons {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- Header -->
+    <div class="header bg-unl pb-8 pt-5 pt-md-8" style="min-height: 400px; background-image: url(/static/assets/img/brand/ianr_bg.jpg); background-size: cover; background-position: center top; ">
+      <div class="container-fluid">
+        <div class="header-body">
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid mt--7">
+
+      <div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header bg-transparent">
+              <h3 class="mb-0">{{domain}}</h3>
+            </div>
+            <div class="row" style="display:flex">
+
+           <div id="my_dataviz" class="col-lg-6 col-md-12" style="margin-left:40px; margin-right:25px; margin-top: 40px; margin-bottom: 40px" >
+             <p><b>{{subdomain_paths.0}}/{{times.0}}/{{layers.0}}</b></p>
+             <img id="subdomain_img" width="640" height="480"/>
+           </div>
+
+
+          <form class="col-lg-5 col-md-11" style= "margin-top: 40px">
+              <div class="form-group" >
+              <label for="subdomain_path">Subdomain Path</label>
+              <select  class="form-control" id="subdomain_path">
+                
+                {% for subdomain_path in subdomain_paths%}
+                <option>{{subdomain_path}}</option>
+                {%endfor%}         
+              </select>
+            </div>
+
+            <div class="form-group" >
+              <label for="layer">Data Layer</label>
+              <select class="form-control" id="layer">
+                {% for layer in layers%}
+                <option>{{layer}}</option>
+                {%endfor%}
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="time">Time</label>
+              <select  class="form-control" id="time">
+                {% for time in times%}
+                <option>{{time}}</option>
+                {%endfor%}
+              </select>
+            </div>
+          </form>
+           </div>
+          </div>
+        </div>
+      </div>
+
+      {% include "includes/footer.html" %}
+
+    </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}
+
+<script src="/static/assets/vendor/clipboard/dist/clipboard.min.js"></script>
+<!-- Load d3.js -->
+<!--<script src="https://d3js.org/d3.v6.js"></script>-->
+<script>
+
+ domain="{{domain}}";
+ subdomain_path= "{{subdomain_paths.0}}";
+ layer="{{layers.0}}";
+ time="{{times.0}}";
+ 
+  
+$.post("/domain_data",
+      {
+        subdomain_path: subdomain_path,
+        layer: layer,
+        time: time
+      },
+      function(data, status){
+        
+        $("#subdomain_img")[0].src=data;
+        $("#my_dataviz p b")[0].innerHTML=subdomain_path+"/"+time+"/"+layer;
+  });
+ 
+function htmlToElement(html) {
+    var template = document.createElement('template');
+    html = html.trim(); // Never return a text node of whitespace as the result
+    template.innerHTML = html;
+    return template.content.firstChild;
+}
+
+
+
+$("#layer").change(function(){
+  
+   layer=this.options[this.selectedIndex].value;
+
+   
+
+        $.post("/domain_data",
+      {
+        subdomain_path: subdomain_path,
+        layer: layer,
+        time: time
+      },
+      function(data, status){
+        
+        $("#subdomain_img")[0].src=data;
+
+
+
+
+        $("#my_dataviz p b")[0].innerHTML=subdomain_path+"/"+time+"/"+layer;
+      });
+
+});
+
+$("#subdomain_path").change(function(){
+  
+   subdomain_path=this.options[this.selectedIndex].value;
+
+   $.post("/domain_time",
+      {
+        subdomain_path: subdomain_path,
+      },
+      function(data, status){
+        data=JSON.parse(data);
+        time = data[0];
+        $("#time")[0].innerHTML="";
+        console.info(data);
+        
+        for(t of data){
+          time_html='<option>'+t+'</option>';
+          time_node = htmlToElement(time_html);
+          $("#time")[0].appendChild(time_node);
+        } 
+
+   
+
+       $.post("domain_data",
+          {
+            
+            subdomain_path: subdomain_path,
+            layer: layer,
+            time: time
+          },
+          function(data, status){
+            $("#subdomain_img")[0].src=data;
+
+            $("#my_dataviz p b")[0].innerHTML=subdomain_path+"/"+time+"/"+layer;
+      });
+     });
+
+});
+
+
+
+
+$("#time").change(function(){
+  
+   time=this.options[this.selectedIndex].value;
+   
+   
+      $.post("domain_data",
+      {
+        subdomain_path: subdomain_path,
+        layer: layer,
+        time: time
+      },
+      function(data, status){
+       //alert("Data: " + data + "\nStatus: " + status);
+
+        $("#subdomain_img")[0].src=data;
+        $("#my_dataviz p b")[0].innerHTML=subdomain_path+"/"+time+"/"+layer;
+  });
+
+});
+
+
+
+ 
+   
+ 
+</script>
+{% endblock javascripts %}
