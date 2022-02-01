@@ -3,7 +3,10 @@
 {% block title %} Icons {% endblock title %}
 
 <!-- Specific CSS goes HERE -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}
+<link rel="stylesheet" href="/static/assets/css/time_series_chart.css?v=1.2.0" type="text/css">
+
+{% endblock stylesheets %}
 
 {% block content %}
 
@@ -28,7 +31,13 @@
 
            <div id="my_dataviz" class="col-lg-6 col-md-12" style="margin-left:40px; margin-right:25px; margin-top: 40px; margin-bottom: 40px" >
              <p><b>{{subdomain_paths.0}}/{{times.0}}/{{layers.0}}</b></p>
-             <img id="subdomain_img" width="640" height="480"/>
+             {% if domain == "spidercam" %}
+                <img id="subdomain_img" width="640" height="480"/>
+             {% elif domain == "soilwater" %}
+                <div id="metric-modal"></div>
+
+             {% endif %}
+
            </div>
 
 
@@ -37,9 +46,9 @@
               <label for="subdomain_path">Subdomain Path</label>
               <select  class="form-control" id="subdomain_path">
                 
-                {% for subdomain_path in subdomain_paths%}
+                {% for subdomain_path in subdomain_paths %}
                 <option>{{subdomain_path}}</option>
-                {%endfor%}         
+                {% endfor %}         
               </select>
             </div>
 
@@ -76,14 +85,24 @@
 {% block javascripts %}
 
 <script src="/static/assets/vendor/clipboard/dist/clipboard.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+<script src="//d3js.org/d3.v3.min.js"></script>
 <!-- Load d3.js -->
 <!--<script src="https://d3js.org/d3.v6.js"></script>-->
+
+
 <script>
 
  domain="{{domain}}";
  subdomain_path= "{{subdomain_paths.0}}";
  layer="{{layers.0}}";
  time="{{times.0}}";
+ var metricName="";
+ var metricCount=[];
+ var metricMonths=[];
+
+
+
  
   
 $.post("/domain_data",
@@ -94,8 +113,25 @@ $.post("/domain_data",
       },
       function(data, status){
         
-        $("#subdomain_img")[0].src=data;
+        if(domain=="spidercam")
+          $("#subdomain_img")[0].src=data;
+        else if(domain=="soilwater"){
+          data = JSON.parse(data);
+          console.info(data["times"]);
+
+
+
+           metricName   = "Water Content (m³/m³)";
+
+           metricCount  = data["soilwaters"];
+
+            metricMonths = data["times"];
+            d3.selectAll("svg").remove();
+            draw_time_series_chart();
+        }
+
         $("#my_dataviz p b")[0].innerHTML=subdomain_path+"/"+time+"/"+layer;
+        
   });
  
 function htmlToElement(html) {
@@ -161,9 +197,25 @@ $("#subdomain_path").change(function(){
             time: time
           },
           function(data, status){
-            $("#subdomain_img")[0].src=data;
+              if(domain=="spidercam")
+                $("#subdomain_img")[0].src=data;
+              else if(domain=="soilwater"){
+                data = JSON.parse(data);
+                //console.info(data["times"]);
 
-            $("#my_dataviz p b")[0].innerHTML=subdomain_path+"/"+time+"/"+layer;
+
+
+                 metricName   = "Water Content (m³/m³)";
+
+                 metricCount  = data["soilwaters"];
+
+                  metricMonths = data["times"];
+                  d3.selectAll("svg").remove();
+                  draw_time_series_chart();
+              }
+
+              $("#my_dataviz p b")[0].innerHTML=subdomain_path+"/"+time+"/"+layer;
+        
       });
      });
 
@@ -198,4 +250,7 @@ $("#time").change(function(){
    
  
 </script>
+
+<script src="/static/assets/js/time_series_chart.js"></script>
+
 {% endblock javascripts %}

@@ -52,11 +52,12 @@ def pages(request):
 
  
 
-            subdomain_paths= ["/"+context['domain']+'/'+subdomain for subdomain in subdomains]
+            subdomain_paths= [domain_path+'/'+subdomain for subdomain in subdomains]
 
             context["subdomain_paths"]= subdomain_paths
-            context['layers'] = retrieve_layers(subdomain_paths[0])
+
             context['times'] = retrieve_times(subdomain_paths[0],request.session)
+            context['layers'] = retrieve_layers(subdomain_paths[0])
      
 
 
@@ -114,13 +115,13 @@ def data(request):
 
 
 
-            url=retrieve_sub_domain_data(subdomain_path,layer,time)
+            data=retrieve_sub_domain_data(subdomain_path,layer,time)
             
 
             #url = "/static/assets/img/brand/ianr_bg.jpg" 
 
             
-            return HttpResponse(url)
+            return HttpResponse(data)
 
         elif load_template == 'add_domain':
             time = request.POST['time']
@@ -139,10 +140,7 @@ def data(request):
 
             return HttpResponse("")
             
-                
-
-
-
+               
         elif load_template == 'domain_time':  
             subdomain_path = request.POST['subdomain_path']
             times=retrieve_times(subdomain_path,request.session)
