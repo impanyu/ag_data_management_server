@@ -1,1 +1,1 @@
-# [IANR AgriCulture Data Management and Analytics Platform]
+# IANR AgriCulture Data Management and Analytics Platform
