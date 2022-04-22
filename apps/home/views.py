@@ -15,6 +15,7 @@ import json
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 import os
+import matlab.engine as mat_eng
 
 
 @login_required(login_url="/login/")
@@ -34,14 +35,16 @@ def pages(request):
 
 
         load_template = request.path.split('/')[-1]
+
         load_template = load_template.split('?')[0]
 
         if load_template == 'admin':
             return HttpResponseRedirect(reverse('admin:index'))
 
-        elif load_template == 'domain_display':  
+        elif load_template == 'domain_display': 
+
             
-            context['domain'] = request.GET['domain']
+            context['domain'] = request.GET["app"]
 
             domain_path = "/"+context['domain']
             print(request.session.keys())
@@ -58,10 +61,14 @@ def pages(request):
 
             context['times'] = retrieve_times(subdomain_paths[0],request.session)
             context['layers'] = retrieve_layers(subdomain_paths[0])
-     
-
-
             context['segment'] = load_template
+
+            context['app'] = request.GET.get('app',"")
+
+            context['location']= request.GET.get('location',"")
+            context['time'] = request.GET.get("time","")
+            context['layer'] = request.GET.get("layer","")
+
 
             html_template = loader.get_template('home/domain_display.html')
 
@@ -108,14 +115,37 @@ def data(request):
         load_template = load_template.split('?')[0]
 
         if load_template == 'domain_data':  
-            subdomain_path = request.POST['subdomain_path']
-            layer = request.POST['layer']
-            time = request.POST['time']
+            subdomain_path = request.POST.get('subdomain_path',"")
+            layer = request.POST.get('layer',"")
+            time = request.POST.get('time',"")
+
+            #if(load_template.split('?')[1])=="app=soilwater"
+
+            
+                #data=retrieve_sub_domain_data(subdomain_path,layer,time,request.session)
+
+            
+            app=request.GET.get("app","");
+            plot=request.GET.get("plot","");
+            time=request.GET.get("time","");
+            layer=request.GET.get("layer","");
+            meta=request.GET.get("meta","");
+            print(time)
+
+           
 
 
 
 
-            data=retrieve_sub_domain_data(subdomain_path,layer,time)
+
+            
+            if(app=="spidercam"):
+                
+                data=retrieve_data(app,plot,time,layer,meta)
+            
+            print(data)
+
+
             
 
             #url = "/static/assets/img/brand/ianr_bg.jpg" 
@@ -140,6 +170,79 @@ def data(request):
 
             return HttpResponse("")
             
+        elif load_template == 'canopy_height':
+            dir_name=request.POST['dir_name']
+            time = request.POST['time']
+            subdomain=request.POST['subdomain']
+
+            dir_path=os.path.join(settings.CORE_DIR,'data/users/impanyu/winterwheatDataExample',dir_name)
+            #print(dir_path)
+            
+
+            eng = mat_eng.start_matlab()
+            matlab_scripts_dir= os.path.join(settings.CORE_DIR,'data/users/impanyu/matlab_scripts')
+            eng.cd(matlab_scripts_dir)
+            height=eng.Process_LiDAR(dir_path)
+            print(height)
+            fs_cache = FileSystemStorage(location=os.path.join(settings.CORE_DIR, 'data')+"/data_cache")
+            output_file_name=subdomain+"_"+time+"_all"
+            
+            
+
+            if(not fs_cache.exists(output_file_name)):
+                all_layers={}
+            else:
+                with fs_cache.open(output_file_name,"r") as output_file:
+                    all_layers=json.load(output_file)
+
+
+            with fs_cache.open(output_file_name,"w") as output_file:
+                all_layers["canopy_height"]=height   
+                 
+                json.dump(all_layers,output_file)
+                    
+         
+
+            return HttpResponse("")
+
+
+        elif load_template == 'canopy_coverage_and_temperature':
+            dir_name=request.POST['dir_name']
+            time = request.POST['time']
+            subdomain=request.POST['subdomain']
+
+
+            dir_path=os.path.join(settings.CORE_DIR,'data/users/impanyu/winterwheatDataExample',dir_name)
+            #print(dir_path)
+            
+
+            eng = mat_eng.start_matlab()
+            matlab_scripts_dir= os.path.join(settings.CORE_DIR,'data/users/impanyu/matlab_scripts')
+            eng.cd(matlab_scripts_dir)
+            canopy_coverage_and_temperature=eng.Process_VNIRThermal(dir_path)
+
+        
+            fs_cache = FileSystemStorage(location=os.path.join(settings.CORE_DIR, 'data')+"/data_cache")
+            output_file_name=subdomain+"_"+time+"_all"
+            
+            if(not fs_cache.exists(output_file_name)):
+                all_layers={}
+            else:
+                with fs_cache.open(output_file_name,"r") as output_file:
+                    all_layers=json.load(output_file)
+                   
+                
+                
+            with fs_cache.open(output_file_name,"w") as output_file:
+                all_layers["canopy_coverage_and_temperature"]=canopy_coverage_and_temperature 
+
+
+                 
+                json.dump(all_layers,output_file)
+            return HttpResponse("")
+
+
+
                
         elif load_template == 'domain_time':  
             subdomain_path = request.POST['subdomain_path']
@@ -150,6 +253,7 @@ def data(request):
         elif load_template == 'file_system':
             file_path = request.POST['current_path']
             fs = FileSystemStorage(location=os.path.join(settings.CORE_DIR, 'data')+"/users")
+ 
             dirs,files=fs.listdir(file_path)
 
             response={"dirs":[], "files":[]}

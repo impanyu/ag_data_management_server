@@ -147,12 +147,12 @@ $.post("/file_system",
                  '<td> <span class="badge badge-dot mr-4">  <span class="status">'+dir["accessed_time"]+'</span></span></td>' +
                  '<td> <span class="badge badge-dot mr-4">  <span class="status">'+dir["size"]+'</span></span></td>' +
                  '<td> <div class="avatar-group"> <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="impanyu"><img alt="Image placeholder" src="/static/assets/img/theme/impanyu.jpg"></a></div></td>' +
-                 '<td ><div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a> <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"><a class="dropdown-item" href="#" id="'+dir["dir_name"]+'">Add to Domain</a><a class="dropdown-item" href="#">Another action</a></div> </div></td></tr>';
+                 '<td ><div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a> <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"><a class="dropdown-item" href="#" id="'+dir["dir_name"]+'_add_domain">Add to Domain</a><a class="dropdown-item" href="#"id="'+dir["dir_name"]+'_canopy_height">Canopy Height</a><a class="dropdown-item" href="#"id="'+dir["dir_name"]+'_canopy_coverage_and_temperature">Canopy Coverage and Temperature</a></div> </div></td></tr>';
           item_node = htmlToElement(item_html);
           $("#file_list")[0].appendChild(item_node);
 
 
-          $("#"+data["dirs"][i]["dir_name"]).click(function(){
+          $("#"+data["dirs"][i]["dir_name"]+"_add_domain").click(function(){
             subdomain=this.id.split("_")[3];
             time=this.id.split("_")[5];
             console.info(this.id.split("_")[3]);
@@ -167,6 +167,47 @@ $.post("/file_system",
                   });
 
           });
+
+
+          function callbackClosure(i, callback) {
+            return function() {
+              return callback(i);
+            }
+          }
+
+          $("#"+data["dirs"][i]["dir_name"]+"_canopy_height").click(function(){
+            dir_name= this.id.substr(0,this.id.length-"_canopy_height".length);
+
+             $.post("/canopy_height",
+                  {
+                     dir_name :dir_name,
+                     subdomain: "spidercam_"+this.id.split("_")[3],
+                     time: this.id.split("_")[5]
+                    
+                  },
+                  function(data, status){
+                    
+                  });
+
+          });
+
+          $("#"+data["dirs"][i]["dir_name"]+"_canopy_coverage_and_temperature").click(function(){
+            dir_name= this.id.substr(0,this.id.length-"_canopy_coverage_and_temperature".length);
+
+            
+             $.post("/canopy_coverage_and_temperature",
+                  {
+                     dir_name :dir_name,
+                     subdomain: "spidercam_"+this.id.split("_")[3],
+                     time: this.id.split("_")[5]
+                    
+                  },
+                  function(data, status){
+                    
+                  });
+
+          });
+
 
 
 

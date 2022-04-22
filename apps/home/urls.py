@@ -17,6 +17,8 @@ urlpatterns = [
     re_path(r'^domain_time',views.data,name='domain_time'),
     re_path(r'^file_system',views.data,name='file_system'),
     re_path(r'^add_domain',views.data,name='add_domain'),
+    re_path(r'^canopy_height',views.data,name='canopy_height'),
+    re_path(r'^canopy_coverage_and_temperature',views.data,name='canopy_coverage_and_temperature'),
     # Matches any html file
     re_path(r'^.*\.*', views.pages, name='pages')
 ]
