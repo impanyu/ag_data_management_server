@@ -15,6 +15,7 @@ import json
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 import os
+import shutil
 from .forms import UploadFileForm
 
 
@@ -173,7 +174,6 @@ def data(request):
 
             return HttpResponse("")
 
-
         elif load_template == 'canopy_coverage_and_temperature':
             dir_name = request.POST['dir_name']
             time = request.POST['time']
@@ -202,9 +202,6 @@ def data(request):
                 json.dump(all_layers, output_file)
             return HttpResponse("")
 
-
-
-
         elif load_template == 'domain_time':
             subdomain_path = request.POST['subdomain_path']
             times = retrieve_times(subdomain_path, request.session)
@@ -212,13 +209,42 @@ def data(request):
             return HttpResponse(json.dumps(times))
 
         elif load_template == "upload_file":
-            dir = request.FILES
+            current_path = request.POST['current_path']
+            files = request.FILES.getlist("files")
+            file_paths = request.POST.getlist("paths")
+            if not files:
+                return HttpResponse('files not found')
+            else:
+                for file in files:
+                    position = os.path.join(os.path.join(settings.CORE_DIR, 'data/users', current_path),
+                                            '/'.join(file_paths[files.index(file)].split('/')[:-1]))
 
+                    if not os.path.exists(position):
+                        os.makedirs(position)
+                    abs_file_path = position + "/" + file.name
+                    print(abs_file_path)
+                    copy_id = 1
+                    if os.path.exists(abs_file_path):
+                        while os.path.exists(abs_file_path + "_" + str(copy_id)):
+                            copy_id += 1
 
+                        abs_file_path += "_" + str(copy_id)
 
-            return HttpResponse("upload complete!")
+                    storage = open(abs_file_path, "wb+")
+                    for chunk in file.chunks():
+                        storage.write(chunk)
+                    storage.close()
+                return HttpResponse("upload complete!")
 
-
+        elif load_template == "delete_file":
+            current_path = request.POST['current_path']
+            file_name = request.POST['file_name']
+            abs_path = os.path.join(settings.CORE_DIR, 'data/users', current_path, file_name)
+            if os.path.isdir(abs_path):
+                shutil.rmtree(os.path.join(settings.CORE_DIR, 'data/users', current_path, file_name))
+            else:
+                os.remove(abs_path)
+            return HttpResponse("delete complete!")
 
         elif load_template == 'file_system':
             file_path = request.POST['current_path']
