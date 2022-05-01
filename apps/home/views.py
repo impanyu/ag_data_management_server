@@ -15,6 +15,7 @@ import json
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 import os
+from .forms import UploadFileForm
 
 
 # import matlab.engine as mat_eng
@@ -189,7 +190,7 @@ def data(request):
             fs_cache = FileSystemStorage(location=os.path.join(settings.CORE_DIR, 'data') + "/data_cache")
             output_file_name = subdomain + "_" + time + "_all"
 
-            if (not fs_cache.exists(output_file_name)):
+            if not fs_cache.exists(output_file_name):
                 all_layers = {}
             else:
                 with fs_cache.open(output_file_name, "r") as output_file:
@@ -209,6 +210,15 @@ def data(request):
             times = retrieve_times(subdomain_path, request.session)
 
             return HttpResponse(json.dumps(times))
+
+        elif load_template == "upload_file":
+            dir = request.FILES
+
+
+
+            return HttpResponse("upload complete!")
+
+
 
         elif load_template == 'file_system':
             file_path = request.POST['current_path']

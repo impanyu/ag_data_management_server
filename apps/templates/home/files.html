@@ -33,8 +33,15 @@
       <div class="col">
         <div class="card">
           <!-- Card header -->
-          <div class="card-header border-0">
+          <div class="card-header border-0" style="position:relative">
             <h3 class="mb-0">File List</h3>
+            <form id="upload_form"  action="" method="post" enctype="multipart/form-data" style="position: absolute; top:15px; right:0px;">
+                {% csrf_token %}
+              <input type="file" name="file" value="123" id="upload" multiple="" webkitdirectory>
+              <!--<input type="submit" style="display:none" id="submit">-->
+
+            </form>
+
           </div>
           <!-- Light table -->
           <div class="table-responsive">
@@ -98,9 +105,36 @@
 <!-- Specific JS goes HERE --> 
 {% block javascripts %}
 <script>
-
-
+var form = $("#upload_form");
 current_path = "{{current_path}}";
+
+document.querySelector("#upload").onchange=function(){
+//form[0].requestSubmit();
+//form[0].submit();
+var form_data = new FormData(form[0]);
+form_data.append("current_path",current_path);
+ $.ajax({
+            method: "post",
+            processData: false,
+            contentType: false,
+            cache: false,
+            url: "/upload_file",
+            data: form_data,
+            enctype: "multipart/form-data",
+            success: function (data) {
+                alert(data);
+            }
+        });
+console.info("upload");
+};
+
+
+
+
+
+
+
+
 
 
 function htmlToElement(html) {
