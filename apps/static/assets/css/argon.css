@@ -59,6 +59,16 @@
   box-sizing: border-box; }
 
 .gm-style-iw + button {display: none;}
+
+
+#sidenav-main{
+width :150px;
+}
+
+#panel{
+margin-left:150px;
+}
+
 #zoom_window{
   position
 }
@@ -6332,7 +6342,7 @@ button.bg-darker:focus {
 
 .mt--6,
 .my--6 {
-  margin-top: -4.5rem !important; }
+  margin-top: -10.5rem !important; }
 
 .mr--6,
 .mx--6 {

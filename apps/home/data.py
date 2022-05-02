@@ -253,14 +253,15 @@ def retrieve_sub_domain_data(subdomain_path, layer, time, session):
         fs_data = FileSystemStorage(location=os.path.join(settings.CORE_DIR, 'data') + "/users/impanyu")
 
         output_file_name = subdomain + "_" + time + "_" + layer + ".json"
-        output_time_file_name = "soilwater_time.json";
+        output_time_file_name = "soilwater_time.json"
 
         if (not fs_cache.exists(output_file_name)):
-
             raw_file_path = os.path.join(settings.CORE_DIR, 'data/users/impanyu/soilwater.xlsx')
+            print(raw_file_path)
 
             df = pd.read_excel(raw_file_path, converters={'z6-13171': str})
-            print("ok")
+
+
 
             df['z6-13171'].replace('', np.nan, inplace=True)
             # df = df[df['VAERS ID']!=np.nan]
@@ -276,6 +277,7 @@ def retrieve_sub_domain_data(subdomain_path, layer, time, session):
                 json.dump(times, output_time_file)
 
         else:
+
             with fs_cache.open(output_file_name, "r") as output_file:
                 soilwaters = json.load(output_file)
 

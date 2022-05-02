@@ -1,0 +1,137 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Icons {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+<link rel="stylesheet" href="/static/assets/css/time_series_chart.css?v=1.2.0" type="text/css">
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- Header -->
+    <div class="header bg-unl pb-8 pt-5 pt-md-8" style="min-height: 400px; background-image: url(/static/assets/img/brand/ianr_bg.jpg); background-size: cover; background-position: center top; ">
+      <div class="container-fluid">
+        <div class="header-body">
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid mt--7 bg-unl">
+
+      <div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header bg-transparent">
+              <h3 class="mb-0">{{domain}}</h3>
+            </div>
+            <div class="row" style="display:flex">
+
+           {% if domain == "soilwater" %}
+           <div  class="my_dataviz col-lg-6 col-md-12" style="margin-left:40px; margin-right:25px; margin-top: 40px; margin-bottom: 40px" >
+             <p><b>{{subdomain_paths.0}}/{{times.0}}/{{layers.0}}</b></p>
+            
+                <div id="metric-modal"></div>
+
+             
+           </div>
+
+
+            {% elif domain == "spidercam" %}
+           <div  class="my_dataviz col-lg-6 col-md-12" style="margin-left:40px; margin-right:25px; margin-top: 40px; margin-bottom: 40px; position:relative;" >
+             <!--<p><b>{{subdomain_paths.0}}/{{times.0}}/{{layers.0}}</b></p>-->
+
+                
+                
+                <div id="map"  style="width:1000px;height:800px;"></div>
+                
+                
+               
+                  
+                 <div id="spidercam_progress">
+                  
+                </div>
+
+              <form  >
+
+              {% if location == "" %}
+              <div class="form-group" style= " position:absolute;  top: 8px; right:430px; ">
+              <!--<label for="subdomain_path">Subdomain Path</label>-->
+              <select  class="form-control" id="spidercam_location" onmousedown="if(this.options.length>8){this.size=8;}"  onchange='this.size=0;' onblur="this.size=0;">
+                
+                {% for subdomain_path in subdomain_paths %}
+                <option>{{subdomain_path}}</option>
+                {% endfor %}         
+              </select>
+            </div>
+            {%endif%}
+
+            <div class="form-group" style= " position:absolute;  top: 8px; right:80px; ">
+              <!--<label for="layer">Data Layer</label>-->
+              <select class="form-control " id="spidercam_layer" onmousedown="if(this.options.length>8){this.size=8;}"  onchange='this.size=0;' onblur="this.size=0;">
+                {% for layer in layers%}
+                <option>{{layer}}</option>
+                {%endfor%}
+              </select>
+            </div>
+           
+            <div class="form-group" style= " position:absolute;  top: 8px; right:250px;">
+              <!--<label for="time">Time</label>-->
+              <select  class="form-control" id="spidercam_time" onmousedown="if(this.options.length>8){this.size=8;}"  onchange='this.size=0;' onblur="this.size=0;">
+                {% for time in times%}
+                <option>{{time}}</option>
+                {%endfor%}
+              </select>
+            </div>
+          </form>
+
+          <div id="zoom_window" style= " position:absolute;  top: 0px; right:-360px; width: 320px;height:240px; border:solid;border-width: 1px ">
+
+              <img id="subdomain_img" width="320" height="240" /> 
+              <p id="value"></p>
+              
+          </div> 
+
+
+             
+           </div>
+
+             
+
+            
+         
+          {% endif %}
+           </div>
+            
+
+          </div>
+        </div>
+      </div>
+
+      {% include "includes/footer.html" %}
+
+    </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}
+
+<script src="/static/assets/vendor/clipboard/dist/clipboard.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v6.js"></script>
+
+<script src="/static/assets/js/soilwater.js">
+
+ 
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU1RvtD5YF8-dwMmCIYP8ds-6Np5QVHFY&callback=init_map_spidercam&v=weekly" async></script>
+
+
+<script src="/static/assets/js/time_series_chart.js"></script>
+
+{% endblock javascripts %}

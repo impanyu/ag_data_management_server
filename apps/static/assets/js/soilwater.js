@@ -1,132 +1,4 @@
-{% extends 'layouts/base.html' %}
-
-{% block title %} Icons {% endblock title %}
-
-<!-- Specific CSS goes HERE -->
-{% block stylesheets %}
-<link rel="stylesheet" href="/static/assets/css/time_series_chart.css?v=1.2.0" type="text/css">
-
-{% endblock stylesheets %}
-
-{% block content %}
-
-    <!-- Header -->
-    <div class="header bg-unl pb-8 pt-5 pt-md-8" style="min-height: 400px; background-image: url(/static/assets/img/brand/ianr_bg.jpg); background-size: cover; background-position: center top; ">
-      <div class="container-fluid">
-        <div class="header-body">
-          
-        </div>
-      </div>
-    </div>
-
-    <div class="container-fluid mt--7 bg-unl">
-
-      <div class="row">
-        <div class="col">
-          <div class="card shadow">
-            <div class="card-header bg-transparent">
-              <h3 class="mb-0">{{domain}}</h3>
-            </div>
-            <div class="row" style="display:flex">
-
-           {% if domain == "soilwater" %}
-           <div  class="my_dataviz col-lg-6 col-md-12" style="margin-left:40px; margin-right:25px; margin-top: 40px; margin-bottom: 40px" >
-             <p><b>{{subdomain_paths.0}}/{{times.0}}/{{layers.0}}</b></p>
-            
-                <div id="metric-modal"></div>
-
-             
-           </div>
-
-
-            {% elif domain == "spidercam" %}
-           <div  class="my_dataviz col-lg-6 col-md-12" style="margin-left:40px; margin-right:25px; margin-top: 40px; margin-bottom: 40px; position:relative;" >
-             <!--<p><b>{{subdomain_paths.0}}/{{times.0}}/{{layers.0}}</b></p>-->
-
-                
-                
-                <div id="map"  style="width:1000px;height:800px;"></div>
-                
-                
-               
-                  
-                 <div id="spidercam_progress">
-                  
-                </div>
-
-              <form  >
-
-              {% if location == "" %}
-              <div class="form-group" style= " position:absolute;  top: 8px; right:430px; ">
-              <!--<label for="subdomain_path">Subdomain Path</label>-->
-              <select  class="form-control" id="spidercam_location" onmousedown="if(this.options.length>8){this.size=8;}"  onchange='this.size=0;' onblur="this.size=0;">
-                
-                {% for subdomain_path in subdomain_paths %}
-                <option>{{subdomain_path}}</option>
-                {% endfor %}         
-              </select>
-            </div>
-            {%endif%}
-
-            <div class="form-group" style= " position:absolute;  top: 8px; right:80px; ">
-              <!--<label for="layer">Data Layer</label>-->
-              <select class="form-control " id="spidercam_layer" onmousedown="if(this.options.length>8){this.size=8;}"  onchange='this.size=0;' onblur="this.size=0;">
-                {% for layer in layers%}
-                <option>{{layer}}</option>
-                {%endfor%}
-              </select>
-            </div>
-           
-            <div class="form-group" style= " position:absolute;  top: 8px; right:250px;">
-              <!--<label for="time">Time</label>-->
-              <select  class="form-control" id="spidercam_time" onmousedown="if(this.options.length>8){this.size=8;}"  onchange='this.size=0;' onblur="this.size=0;">
-                {% for time in times%}
-                <option>{{time}}</option>
-                {%endfor%}
-              </select>
-            </div>
-          </form>
-
-          <div id="zoom_window" style= " position:absolute;  top: 0px; right:-360px; width: 320px;height:240px; border:solid;border-width: 1px ">
-
-              <img id="subdomain_img" width="320" height="240" /> 
-              <p id="value"></p>
-              
-          </div> 
-
-
-             
-           </div>
-
-             
-
-            
-         
-          {% endif %}
-           </div>
-            
-
-          </div>
-        </div>
-      </div>
-
-      {% include "includes/footer.html" %}
-
-    </div>
-
-{% endblock content %}
-
-<!-- Specific JS goes HERE --> 
-{% block javascripts %}
-
-<script src="/static/assets/vendor/clipboard/dist/clipboard.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
-<script src="//d3js.org/d3.v3.min.js"></script>
-<!-- Load d3.js -->
-<!--<script src="https://d3js.org/d3.v6.js"></script>-->
-
-<script>
- domain="{{domain}}";
+domain="{{domain}}";
 
  app="{{app}}";
 
@@ -164,7 +36,7 @@ var map;
 var cur_plot;
 
 function rect_zoom(event){
-  
+
 
 
   $.get("/domain_data",
@@ -216,7 +88,7 @@ function init_map_spidercam() {
     mapTypeId:'satellite'
   });
 
-    
+
   for(i=0;i<8;i++){
     for(j=0;j<10;j++){
       rect_lower_lat=lower_lat+i*lat_per_rect;
@@ -242,7 +114,7 @@ function init_map_spidercam() {
 
   rectangle.setMap(map);
   rectangle.addListener("click",rect_highlight);
-  
+
   //rectangle.addListener("mouseout",rect_reset);
   //rectangle.addListener("click",show_info);
   rectangles.set(rectangle,1301+i*10+j);
@@ -250,8 +122,8 @@ function init_map_spidercam() {
   console.info(rectangles);
     }
   }
- 
-     
+
+
 
   info_window = new google.maps.InfoWindow();
 
@@ -270,10 +142,10 @@ function rect_highlight(event){
 {lat:path[3].lat()+lat_per_rect/4, lng:path[3].lng()-ln_per_rect/3},
 
   ];
-    
+
 if(rect_select)
 rect_select.setMap(null);
- 
+
 
 rect_select = new google.maps.Polygon({
     paths: rectCoords,
@@ -322,7 +194,7 @@ if(domain=="spidercam"){
       meta:true,
     },
       function(data,status){
-        
+
         meta_data = JSON.parse(data);
 
         locations = Object.keys(meta_data);
@@ -335,14 +207,14 @@ if(domain=="spidercam"){
           for (t in meta_data[loc]){
              times[t]=true;
              for(l in meta_data[loc][t])
-              
+
 
               layers[l]=true;
           }
         }
 
         sorted_times=Object.keys(times).sort((first,second)=>(new Date(first)-new Date(second)));
-        
+
         $("#spidercam_location")[0].innerHTML="";
         for(loc in meta_data){
           var loc_option=document.createElement("option");
@@ -365,7 +237,7 @@ if(domain=="spidercam"){
         }
 
 
-        
+
         //time_selector = document.getElementById("spidercam_time");
         //time = time_selector.selectedOptions[0];
 
@@ -399,7 +271,7 @@ if(domain=="spidercam"){
         }
 
 
-  
+
           t_ms=new Date(time).getTime()-new Date(sorted_times[0]).getTime();
           time_pos = t_ms/time_span* $("#spidercam_progress")[0].offsetWidth;
 
@@ -443,19 +315,19 @@ function get_data(){
 
             for (p in rectangles_reverse)
                 rectangles_reverse[p].setOptions({fillOpacity:0});
-           
+
             for (overlay of overlays){
                 overlay.setMap(null);
                 overlays=[];
               }
-            
+
 
 
 
 
             for(loc in data){
               t=Object.keys(data[loc])[0];
-              
+
 
               value=data[loc][t][layer];
               if(time in data[loc])
@@ -489,7 +361,7 @@ function get_data(){
 
 
 
-            
+
 
           });
 }
@@ -497,7 +369,7 @@ function get_data(){
 
 var time_box;
 $("#spidercam_time").change(function(){
-  
+
    time=this.options[this.selectedIndex].value;
   get_data();
   if(rect_select){
@@ -508,8 +380,8 @@ $("#spidercam_time").change(function(){
 
 
  time_span=new Date(sorted_times[sorted_times.length-1]).getTime()-new Date(sorted_times[0]).getTime();
-        
-  
+
+
           t_ms=new Date(time).getTime()-new Date(sorted_times[0]).getTime();
           time_pos = t_ms/time_span* $("#spidercam_progress")[0].offsetWidth;
 
@@ -537,7 +409,7 @@ $("#spidercam_time").change(function(){
 });
 
 $("#spidercam_layer").change(function(){
-  
+
    layer=this.options[this.selectedIndex].value;
   get_data();
    if(rect_select){
@@ -548,7 +420,7 @@ $("#spidercam_layer").change(function(){
 });
 
 $("#spidercam_location").change(function(){
-  
+
    p=this.options[this.selectedIndex].value;
    cur_plot=p;
 
@@ -563,10 +435,10 @@ $("#spidercam_location").change(function(){
 {lat:path[3].lat()+lat_per_rect/4, lng:path[3].lng()-ln_per_rect/3},
 
   ];
-    
+
 if(rect_select)
 rect_select.setMap(null);
- 
+
 
   rect_select = new google.maps.Polygon({
     paths: rectCoords,
@@ -593,7 +465,7 @@ rect_select.setMap(map);
         for(t of sorted_times){
           t_ms=new Date(t).getTime()-new Date(sorted_times[0]).getTime();
           bar_pos = t_ms/time_span* $("#spidercam_progress")[0].offsetWidth;
-          
+
           bar = document.createElement("div");
           bar.style.width="0.6%";
           bar.style.height="35px";
@@ -610,26 +482,26 @@ rect_select.setMap(map);
         }
 
 
-  
+
 
 });
 
 }
 
 else{
-$.get("/domain_data",
+$.post("/domain_data",
       {
-        app: app,
         subdomain_path: subdomain_path,
         layer: layer,
-        time: "all"
+        time: time
       },
       function(data, status){
-        
+
         if(domain=="spidercam")
           $("#subdomain_img")[0].src=data;
         else if(domain=="soilwater"){
-        //console.info(data);
+         //console.info(data);
+
           data = JSON.parse(data);
           console.info(data["times"]);
 
@@ -645,9 +517,9 @@ $.get("/domain_data",
         }
 
         $(".my_dataviz p b")[0].innerHTML=subdomain_path+"/"+time+"/"+layer;
-        
+
   });
- 
+
 function htmlToElement(html) {
     var template = document.createElement('template');
     html = html.trim(); // Never return a text node of whitespace as the result
@@ -658,22 +530,21 @@ function htmlToElement(html) {
 
 
 $("#spidercam_layer").change(function(){
-  
+
    layer=this.options[this.selectedIndex].value;
 
    console.info(layer);
 
-   
+
 
         $.post("/domain_data",
       {
-        app:app,
         subdomain_path: subdomain_path,
         layer: layer,
         time: time
       },
       function(data, status){
-      
+
         if(subdomain != "all")
               $("#subdomain_img")[0].src=data;
         else{
@@ -698,17 +569,17 @@ $("#spidercam_layer").change(function(){
 });
 
 $("#subdomain_location").change(function(){
-  
+
    subdomain_path=this.options[this.selectedIndex].value;
    subdomain = subdomain_path.split("/")[2];
    if(subdomain == "all"){
      var all = document.createElement("div");
      all.setAttribute("id","subdomain_img");
-     
+
 
      for(i=0;i<10;i++){
       var row = document.createElement("div");
-     
+
       for(j=0;j<8;j++){
         var col_div = document.createElement("div");
         var col = document.createElement("img");
@@ -749,18 +620,18 @@ $("#subdomain_location").change(function(){
         time = data[0];
         $("#spidercam_time")[0].innerHTML="";
         console.info(data);
-        
+
         for(t of data){
           time_html='<option>'+t+'</option>';
           time_node = htmlToElement(time_html);
           $("#spidercam_time")[0].appendChild(time_node);
-        } 
+        }
 
-   
+
 
        $.post("domain_data",
           {
-            
+
             subdomain_path: subdomain_path,
             layer: layer,
             time: time
@@ -797,7 +668,7 @@ $("#subdomain_location").change(function(){
               }
 
               $(".my_dataviz p b")[0].innerHTML=subdomain_path+"/"+time+"/"+layer;
-        
+
       });
      });
 
@@ -807,10 +678,10 @@ $("#subdomain_location").change(function(){
 
 
 $("#spidercam_time").change(function(){
-  
+
    time=this.options[this.selectedIndex].value;
-   
-   
+
+
       $.post("domain_data",
       {
         subdomain_path: subdomain_path,
@@ -820,7 +691,7 @@ $("#spidercam_time").change(function(){
       function(data, status){
        //alert("Data: " + data + "\nStatus: " + status);
 
-        
+
 
 
         if(subdomain != "all"){
@@ -839,15 +710,4 @@ $("#spidercam_time").change(function(){
 
 });
 
-
-
- 
-  } 
- 
-</script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU1RvtD5YF8-dwMmCIYP8ds-6Np5QVHFY&callback=init_map_spidercam&v=weekly" async></script>
-
-
-<script src="/static/assets/js/time_series_chart.js"></script>
-
-{% endblock javascripts %}
+}

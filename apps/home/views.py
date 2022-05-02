@@ -49,7 +49,7 @@ def pages(request):
             context['domain'] = request.GET["app"]
 
             domain_path = "/" + context['domain']
-            print(request.session.keys())
+            #print(request.session.keys())
 
             subdomains = retrieve_sub_domains(domain_path, request.session)
 
@@ -62,7 +62,6 @@ def pages(request):
             context['segment'] = load_template
 
             context['app'] = request.GET.get('app', "")
-
             context['location'] = request.GET.get('location', "")
             context['time'] = request.GET.get("time", "")
             context['layer'] = request.GET.get("layer", "")
@@ -105,7 +104,7 @@ def data(request):
         load_template = load_template.split('?')[0]
 
         if load_template == 'domain_data':
-            subdomain_path = request.POST.get('subdomain_path', "")
+            subdomain_path = request.GET.get('subdomain_path', "")
             layer = request.POST.get('layer', "")
             time = request.POST.get('time', "")
 
@@ -118,12 +117,16 @@ def data(request):
             time = request.GET.get("time", "")
             layer = request.GET.get("layer", "")
             meta = request.GET.get("meta", "")
-            print(time)
+            #print(app)
+
 
             if app == "spidercam":
                 data = retrieve_data(app, plot, time, layer, meta)
+            elif app == "soilwater":
+                data = retrieve_sub_domain_data(subdomain_path, layer, time, request.session)
 
-            print(data)
+
+
 
             # url = "/static/assets/img/brand/ianr_bg.jpg"
 
@@ -137,7 +140,6 @@ def data(request):
             print(time)
             if subdomain not in request.session:
                 request.session[subdomain] = {time: True}
-
             else:
                 request.session[subdomain][time] = True
             request.session.modified = True
@@ -273,9 +275,6 @@ def data(request):
             response = json.dumps(response)
 
             return HttpResponse(response)
-
-
-
 
     except template.TemplateDoesNotExist:
 

@@ -1,7 +1,7 @@
 function draw_time_series_chart(){
 
-var optwidth        = 600;
-var optheight       = 370;
+var optwidth        = 800;
+var optheight       = 380;
 
 
 /*
