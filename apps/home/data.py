@@ -261,8 +261,6 @@ def retrieve_sub_domain_data(subdomain_path, layer, time, session):
 
             df = pd.read_excel(raw_file_path, converters={'z6-13171': str})
 
-
-
             df['z6-13171'].replace('', np.nan, inplace=True)
             # df = df[df['VAERS ID']!=np.nan]
             df.dropna(subset=['z6-13171'], inplace=True)
