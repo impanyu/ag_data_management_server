@@ -64,7 +64,7 @@
                  <div id="spidercam_progress">
                   
                 </div>
-               <div id="zoom_window" style= " position:absolute;  top: 0px; left:180px; top: 60px; width: 320px;height:240px; border:solid;border-width: 2px; ">
+               <div id="zoom_window" style= " position:absolute;  top: 0px; left:20px; top: 60px; width: 320px;height:240px; border:solid;border-width: 2px; ">
 
               <img id="subdomain_img" width="320" height="240" />
               <p id="value"></p>
@@ -94,7 +94,7 @@
               </select>
             </div>
            
-            <div class="form-group" style= " position:absolute;  top: 10px; left:20px;">
+            <div class="form-group" style= " position:absolute;  top: 10px; left:400px;">
               <!--<label for="time">Time</label>-->
               <select  class="form-control" id="spidercam_time" onmousedown="if(this.options.length>8){this.size=8;}"  onchange='this.size=0;' onblur="this.size=0;">
                 {% for time in times%}
