@@ -254,6 +254,8 @@ def data(request):
 
             fs = FileSystemStorage(location= "/home/"+user)
 
+            print(file_path)
+
 
 
             #dirs, files = fs.listdir(file_path)
