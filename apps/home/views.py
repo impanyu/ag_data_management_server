@@ -251,22 +251,10 @@ def data(request):
         elif load_template == 'file_system':
             file_path = request.POST['current_path']
             fs = FileSystemStorage(location=os.path.join(settings.CORE_DIR, 'data') + "/users")
-
-
-
             fs = FileSystemStorage(location= "/home/"+request.user.get_username())
 
-
-
-
-
-            #dirs, files = fs.listdir(file_path)
-
-            dirs, files = fs.listdir("ag_data")
-
-            print(dirs)
-            print(files)
-
+            file_path = "ag_data"
+            dirs, files = fs.listdir(file_path)
 
 
             response = {"dirs": [], "files": []}
@@ -289,7 +277,7 @@ def data(request):
 
             response = json.dumps(response)
 
-            print(response)
+
             return HttpResponse(response)
 
     except template.TemplateDoesNotExist:
