@@ -253,6 +253,8 @@ def data(request):
             fs = FileSystemStorage(location=os.path.join(settings.CORE_DIR, 'data') + "/users")
             fs = FileSystemStorage(location= "/home/"+request.user.get_username())
 
+            print(request.user.get_username())
+
             file_path = "ag_data"
             dirs, files = fs.listdir(file_path)
 
