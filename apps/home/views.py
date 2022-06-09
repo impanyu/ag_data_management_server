@@ -252,11 +252,13 @@ def data(request):
             file_path = request.POST['current_path']
             fs = FileSystemStorage(location=os.path.join(settings.CORE_DIR, 'data') + "/users")
 
-            fs = FileSystemStorage(location= "/home")
+            fs = FileSystemStorage(location= "/home/"+user)
 
 
 
-            dirs, files = fs.listdir(file_path)
+            #dirs, files = fs.listdir(file_path)
+
+            dirs, files = fs.listdir("ag_data")
 
 
 
