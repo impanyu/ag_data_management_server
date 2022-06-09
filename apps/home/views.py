@@ -258,6 +258,9 @@ def data(request):
 
             dirs, files = fs.listdir(file_path)
 
+            print(dirs)
+            print(files)
+
             response = {"dirs": [], "files": []}
 
             for dir in dirs:
