@@ -252,9 +252,11 @@ def data(request):
             file_path = request.POST['current_path']
             fs = FileSystemStorage(location=os.path.join(settings.CORE_DIR, 'data') + "/users")
 
-            fs = FileSystemStorage(location= "/home/"+user)
 
-            print(file_path)
+
+            fs = FileSystemStorage(location= "/home/"+request.user.get_username())
+
+
 
 
 
