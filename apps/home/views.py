@@ -263,6 +263,8 @@ def data(request):
             print(files)
 
             for dir in dirs:
+                if(dir[0]=="."):
+                    continue
                 created_time = fs.get_created_time(file_path + "/" + dir)
                 accessed_time = fs.get_accessed_time(file_path + "/" + dir)
                 size = fs.size(file_path + "/" + dir)
@@ -271,6 +273,8 @@ def data(request):
                 response["dirs"].append(dir_item)
 
             for file in files:
+                if(file[0]==","):
+                    continue
                 created_time = fs.get_created_time(file_path + "/" + file)
                 accessed_time = fs.get_accessed_time(file_path + "/" + file)
                 size = fs.size(file_path + "/" + file)
