@@ -258,6 +258,7 @@ def data(request):
 
 
             response = {"dirs": [], "files": []}
+            print(files)
 
             for dir in dirs:
                 created_time = fs.get_created_time(file_path + "/" + dir)
