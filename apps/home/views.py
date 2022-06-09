@@ -289,6 +289,7 @@ def data(request):
 
             response = json.dumps(response)
 
+            print(response)
             return HttpResponse(response)
 
     except template.TemplateDoesNotExist:
