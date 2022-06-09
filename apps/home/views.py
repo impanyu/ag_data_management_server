@@ -260,6 +260,9 @@ def data(request):
 
             dirs, files = fs.listdir("ag_data")
 
+            print(dirs)
+            print(files)
+
 
 
             response = {"dirs": [], "files": []}
