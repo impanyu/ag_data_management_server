@@ -256,7 +256,7 @@ def data(request):
                 modified_file_path += "/" + file_path.split("/")[i]
 
             if modified_file_path == "":
-                file_path = modified_file_path
+                file_path = "."
             else:
                 file_path = modified_file_path[1:]
             print(modified_file_path)
