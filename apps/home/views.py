@@ -208,6 +208,7 @@ def data(request):
 
         elif load_template == "upload_file":
             current_path = request.POST['current_path']
+            print("12345")
             print(current_path)
             upload_files = request.FILES.getlist("files")
             upload_file_paths = request.POST.getlist("paths")
