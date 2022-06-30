@@ -307,7 +307,7 @@ def data(request):
                 response["dirs"].append(dir_item)
 
             for file in files:
-                if (file[0] == ","):
+                if file[0] == ".":
                     continue
                 created_time = fs.get_created_time(file_path + "/" + file)
                 accessed_time = fs.get_accessed_time(file_path + "/" + file)
