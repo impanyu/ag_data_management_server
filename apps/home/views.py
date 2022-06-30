@@ -212,6 +212,8 @@ def data(request):
             upload_file_paths = request.POST.getlist("paths")
 
             modified_current_path = ""
+            print(upload_files)
+
             for i in range(1, len(current_path.split("/"))):
                 modified_current_path += "/" + current_path.split("/")[i]
 
