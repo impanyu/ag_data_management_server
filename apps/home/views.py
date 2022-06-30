@@ -208,14 +208,25 @@ def data(request):
 
         elif load_template == "upload_file":
             current_path = request.POST['current_path']
-            files = request.FILES.getlist("files")
-            file_paths = request.POST.getlist("paths")
-            if not files:
+            upload_files = request.FILES.getlist("files")
+            upload_file_paths = request.POST.getlist("paths")
+
+            modified_current_path = ""
+            for i in range(1, len(current_path.split("/"))):
+                modified_current_path += "/" + current_path.split("/")[i]
+
+            if modified_current_path == "":
+                current_path = "."
+            else:
+                current_path = modified_current_path[1:]
+
+            if not upload_files:
                 return HttpResponse('files not found')
             else:
-                for file in files:
-                    position = os.path.join(os.path.join(settings.CORE_DIR, 'data/users', current_path),
-                                            '/'.join(file_paths[files.index(file)].split('/')[:-1]))
+                for file in upload_files:
+                    position = os.path.join(
+                        os.path.join("/home/" + request.user.get_username() + "/ag_data/", current_path),
+                        '/'.join(upload_file_paths[upload_files.index(file)].split('/')[:-1]))
 
                     if not os.path.exists(position):
                         os.makedirs(position)
@@ -238,7 +249,6 @@ def data(request):
             file_path = request.POST['current_path']
             file_name = request.POST['file_name']
 
-
             modified_file_path = ""
             for i in range(1, len(file_path.split("/"))):
                 modified_file_path += "/" + file_path.split("/")[i]
@@ -248,10 +258,10 @@ def data(request):
             else:
                 file_path = modified_file_path[1:]
 
-            abs_path = "/home/" + request.user.get_username() + "/ag_data/"+ file_path+"/"+file_name
+            abs_path = "/home/" + request.user.get_username() + "/ag_data/" + file_path + "/" + file_name
 
             if os.path.isdir(abs_path):
-                #shutil.rmtree(os.path.join(settings.CORE_DIR, 'data/users', current_path, file_name))
+                # shutil.rmtree(os.path.join(settings.CORE_DIR, 'data/users', current_path, file_name))
                 shutil.rmtree(abs_path)
             else:
                 os.remove(abs_path)
@@ -276,7 +286,6 @@ def data(request):
             dirs, files = fs.listdir(file_path)
 
             response = {"dirs": [], "files": []}
-
 
             for dir in dirs:
                 if dir[0] == ".":
