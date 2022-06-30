@@ -260,7 +260,7 @@ def data(request):
                 modified_file_path += "/"+file_path.split("/")[i]
 
             file_path = modified_file_path[1:]
-            print(file_path)
+            print(modified_file_path)
             dirs, files = fs.listdir(file_path)
 
 
