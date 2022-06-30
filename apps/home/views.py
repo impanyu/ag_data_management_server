@@ -259,7 +259,10 @@ def data(request):
             for i in range(1,len(file_path.split("/"))):
                 modified_file_path += "/"+file_path.split("/")[i]
 
-            file_path = modified_file_path[1:]
+            if modified_file_path=="":
+                file_path=modified_file_path
+            else:
+                file_path = modified_file_path[1:]
             print(modified_file_path)
             dirs, files = fs.listdir(file_path)
 
