@@ -235,11 +235,24 @@ def data(request):
                 return HttpResponse("upload complete!")
 
         elif load_template == "delete_file":
-            current_path = request.POST['current_path']
+            file_path = request.POST['current_path']
             file_name = request.POST['file_name']
-            abs_path = os.path.join(settings.CORE_DIR, 'data/users', current_path, file_name)
+
+
+            modified_file_path = ""
+            for i in range(1, len(file_path.split("/"))):
+                modified_file_path += "/" + file_path.split("/")[i]
+
+            if modified_file_path == "":
+                file_path = "."
+            else:
+                file_path = modified_file_path[1:]
+
+            abs_path = "/home/" + request.user.get_username() + "/ag_data/"+ file_path+"/"+file_name
+
             if os.path.isdir(abs_path):
-                shutil.rmtree(os.path.join(settings.CORE_DIR, 'data/users', current_path, file_name))
+                #shutil.rmtree(os.path.join(settings.CORE_DIR, 'data/users', current_path, file_name))
+                shutil.rmtree(abs_path)
             else:
                 os.remove(abs_path)
             return HttpResponse("delete complete!")
@@ -259,12 +272,11 @@ def data(request):
                 file_path = "."
             else:
                 file_path = modified_file_path[1:]
-            print(modified_file_path)
+
             dirs, files = fs.listdir(file_path)
 
             response = {"dirs": [], "files": []}
-            print(files)
-            print(dirs)
+
 
             for dir in dirs:
                 if dir[0] == ".":
