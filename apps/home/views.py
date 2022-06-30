@@ -255,7 +255,9 @@ def data(request):
 
             print(request.user.get_username())
 
-            file_path = "ag_data"
+            modified_file_path = file_path.split("/")[0]+"/ag_data"
+            for i in range(1,file_path.split("/").length):
+                modified_file_path += "/"+file_path.split("/")[i]
             dirs, files = fs.listdir(file_path)
 
 
@@ -263,7 +265,7 @@ def data(request):
             print(files)
 
             for dir in dirs:
-                if(dir[0]=="."):
+                if dir[0]== ".":
                     continue
                 created_time = fs.get_created_time(file_path + "/" + dir)
                 accessed_time = fs.get_accessed_time(file_path + "/" + dir)
