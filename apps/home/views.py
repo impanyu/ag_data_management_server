@@ -49,7 +49,7 @@ def pages(request):
             context['domain'] = request.GET["app"]
 
             domain_path = "/" + context['domain']
-            #print(request.session.keys())
+            # print(request.session.keys())
 
             subdomains = retrieve_sub_domains(domain_path, request.session)
 
@@ -117,16 +117,12 @@ def data(request):
             time = request.GET.get("time", "")
             layer = request.GET.get("layer", "")
             meta = request.GET.get("meta", "")
-            #print(app)
-
+            # print(app)
 
             if app == "spidercam":
                 data = retrieve_data(app, plot, time, layer, meta)
             elif app == "soilwater":
                 data = retrieve_sub_domain_data(subdomain_path, layer, time, request.session)
-
-
-
 
             # url = "/static/assets/img/brand/ianr_bg.jpg"
 
@@ -251,29 +247,27 @@ def data(request):
         elif load_template == 'file_system':
             file_path = request.POST['current_path']
             fs = FileSystemStorage(location=os.path.join(settings.CORE_DIR, 'data') + "/users")
-            fs = FileSystemStorage(location= "/home/"+request.user.get_username()+"/ag_data")
+            fs = FileSystemStorage(location="/home/" + request.user.get_username() + "/ag_data")
 
             print(request.user.get_username())
 
             modified_file_path = ""
-            for i in range(1,len(file_path.split("/"))):
-                modified_file_path += "/"+file_path.split("/")[i]
+            for i in range(1, len(file_path.split("/"))):
+                modified_file_path += "/" + file_path.split("/")[i]
 
-            if modified_file_path=="":
-                file_path=modified_file_path
+            if modified_file_path == "":
+                file_path = modified_file_path
             else:
                 file_path = modified_file_path[1:]
             print(modified_file_path)
             dirs, files = fs.listdir(file_path)
-
-
 
             response = {"dirs": [], "files": []}
             print(files)
             print(dirs)
 
             for dir in dirs:
-                if dir[0]== ".":
+                if dir[0] == ".":
                     continue
                 created_time = fs.get_created_time(file_path + "/" + dir)
                 accessed_time = fs.get_accessed_time(file_path + "/" + dir)
@@ -283,7 +277,7 @@ def data(request):
                 response["dirs"].append(dir_item)
 
             for file in files:
-                if(file[0]==","):
+                if (file[0] == ","):
                     continue
                 created_time = fs.get_created_time(file_path + "/" + file)
                 accessed_time = fs.get_accessed_time(file_path + "/" + file)
@@ -291,9 +285,9 @@ def data(request):
                 file_item = {"file_name": file, "created_time": created_time.strftime("%m/%d/%Y, %H:%M:%S"),
                              "accessed_time": accessed_time.strftime("%m/%d/%Y, %H:%M:%S"), "size": size}
                 response["files"].append(file_item)
+            print(response)
 
             response = json.dumps(response)
-
 
             return HttpResponse(response)
 
