@@ -267,6 +267,7 @@ def data(request):
 
             response = {"dirs": [], "files": []}
             print(files)
+            print(dirs)
 
             for dir in dirs:
                 if dir[0]== ".":
