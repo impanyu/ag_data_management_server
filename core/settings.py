@@ -129,8 +129,10 @@ STATIC_URL = '/static/'
 
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
+    "/home",
     os.path.join(CORE_DIR, 'apps/static'),
     os.path.join(CORE_DIR, 'data')
+
 )
 
 #############################################################
