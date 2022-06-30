@@ -251,13 +251,14 @@ def data(request):
         elif load_template == 'file_system':
             file_path = request.POST['current_path']
             fs = FileSystemStorage(location=os.path.join(settings.CORE_DIR, 'data') + "/users")
-            fs = FileSystemStorage(location= "/home/"+request.user.get_username())
+            fs = FileSystemStorage(location= "/home/"+request.user.get_username()+"/ag_data")
 
             print(request.user.get_username())
 
-            modified_file_path = file_path.split("/")[0]+"/ag_data"
+            modified_file_path = ""
             for i in range(1,file_path.split("/").length):
                 modified_file_path += "/"+file_path.split("/")[i]
+            file_path = modified_file_path
             dirs, files = fs.listdir(file_path)
 
 
