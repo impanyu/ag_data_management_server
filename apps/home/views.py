@@ -208,11 +208,12 @@ def data(request):
 
         elif load_template == "upload_file":
             current_path = request.POST['current_path']
+            print(current_path)
             upload_files = request.FILES.getlist("files")
             upload_file_paths = request.POST.getlist("paths")
 
             modified_current_path = ""
-            print(upload_files)
+
 
             for i in range(1, len(current_path.split("/"))):
                 modified_current_path += "/" + current_path.split("/")[i]
