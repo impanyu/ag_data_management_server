@@ -215,7 +215,6 @@ def data(request):
 
             modified_current_path = ""
 
-
             for i in range(1, len(current_path.split("/"))):
                 modified_current_path += "/" + current_path.split("/")[i]
 
@@ -223,7 +222,7 @@ def data(request):
                 current_path = "."
             else:
                 current_path = modified_current_path[1:]
-            '''
+
 
             if not upload_files:
                 return HttpResponse('files not found')
@@ -250,10 +249,10 @@ def data(request):
                     storage.close()
                 
                 return HttpResponse("upload complete!") 
-                '''
 
 
-            return HttpResponse("upload complete!")
+
+            #return HttpResponse("upload complete!")
 
         elif load_template == "delete_file":
             file_path = request.POST['current_path']
