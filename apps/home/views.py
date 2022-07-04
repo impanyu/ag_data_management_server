@@ -28,7 +28,6 @@ def index(request):
     print("in domains")
     domains = get_domains()
 
-
     context["domains"] = domains
 
     html_template = loader.get_template('home/domains.html')
@@ -46,7 +45,17 @@ def pages(request):
 
         load_template = load_template.split('?')[0]
 
-        if load_template == 'admin':
+        if load_template == 'domains':
+            context = {'segment': 'index'}
+            print("in domains")
+            domains = get_domains()
+
+            context["domains"] = domains
+
+            html_template = loader.get_template('home/domains.html')
+            return HttpResponse(html_template.render(context, request))
+
+        elif load_template == 'admin':
             return HttpResponseRedirect(reverse('admin:index'))
 
         elif load_template == 'domain_display':
@@ -228,7 +237,6 @@ def data(request):
             else:
                 current_path = modified_current_path[1:]
 
-
             if not upload_files:
                 return HttpResponse('files not found')
             else:
@@ -252,12 +260,10 @@ def data(request):
                     for chunk in file.chunks():
                         storage.write(chunk)
                     storage.close()
-                
-                return HttpResponse("upload complete!") 
 
+                return HttpResponse("upload complete!")
 
-
-            #return HttpResponse("upload complete!")
+                # return HttpResponse("upload complete!")
 
         elif load_template == "delete_file":
             file_path = request.POST['current_path']
