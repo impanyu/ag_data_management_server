@@ -1,4 +1,6 @@
 # -*- encoding: utf-8 -*-
+from typing import List, Any
+
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 import os
@@ -10,8 +12,12 @@ from datetime import datetime
 
 
 def get_domains():
-    #print("in domains")
-    with open(os.path.join(settings.CORE_DIR, 'data', 'domains.json'), "w") as domains_file:
+    domains_file_path = os.path.join(settings.CORE_DIR, 'data', 'domains.json')
+    if not os.path.exists(domains_file_path):
+        with open(domains_file_path, 'w') as domains_file:
+            domains = []
+            json.dump(domains, domains_file)
+    with open(domains_file_path, "r") as domains_file:
         domains = json.load(domains_file)
     print(domains)
     return domains
