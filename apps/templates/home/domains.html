@@ -137,31 +137,22 @@
                     </div>
                   </button>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="align-center" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-map-big"></i>
-                      <span>Domain 4</span>
-                    </div>
-                  </button>
-                </div>
-                
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="align-left-2" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-map-big"></i>
-                      <span>Domain 5</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="ambulance" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-map-big"></i>
-                      <span>Domain 6</span>
-                    </div>
-                  </button>
-                </div>
+
+
+                {% for domain in domains %}
+                  <div class="col-lg-3 col-md-6">
+                    <button type="button" class="btn-block" data-clipboard-text="app" title="Copy to clipboard">
+                      <div>
+                        <i class="ni ni-map-big"></i>
+                        <span>{{domain}}</span>
+                      </div>
+                    </button>
+                  </div>
+
+
+                {% endfor %}
+
+
                 <div class="col-lg-3 col-md-6">
                   <button type="button" class="btn-block" data-clipboard-text="app" title="Copy to clipboard">
                     <div>

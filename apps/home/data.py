@@ -9,6 +9,13 @@ import numpy as np
 from datetime import datetime
 
 
+
+def get_domains():
+    with open(os.path.join(settings.CORE_DIR, 'data')+"/domains" , "w") as domains_file:
+        domains = json.load(domains_file)
+    return domains
+
+
 def retrieve_sub_domains(domain_path, session):
     if domain_path == "/spidercam":
         domains = ["1373", "all"]
@@ -283,3 +290,7 @@ def retrieve_sub_domain_data(subdomain_path, layer, time, session):
                 times = json.load(output_time_file)
 
         return json.dumps({"soilwaters": soilwaters, "times": times})
+
+
+
+

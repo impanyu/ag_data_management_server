@@ -25,6 +25,8 @@ from .forms import UploadFileForm
 @login_required(login_url="/login/")
 def index(request):
     context = {'segment': 'index'}
+    domains = get_domains()
+    context["domains"] = domains
 
     html_template = loader.get_template('home/domains.html')
     return HttpResponse(html_template.render(context, request))
