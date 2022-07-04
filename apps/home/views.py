@@ -26,6 +26,7 @@ from .forms import UploadFileForm
 def index(request):
     context = {'segment': 'index'}
     domains = get_domains()
+
     context["domains"] = domains
 
     html_template = loader.get_template('home/domains.html')
