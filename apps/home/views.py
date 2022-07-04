@@ -45,7 +45,7 @@ def pages(request):
 
         load_template = load_template.split('?')[0]
 
-        if load_template == 'domains':
+        if load_template == 'domains.html':
             context = {'segment': 'index'}
             print("in domains")
             domains = get_domains()
