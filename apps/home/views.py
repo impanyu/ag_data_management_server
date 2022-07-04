@@ -26,6 +26,7 @@ from .forms import UploadFileForm
 def index(request):
     context = {'segment': 'index'}
     domains = get_domains()
+    print("in domains")
 
     context["domains"] = domains
 

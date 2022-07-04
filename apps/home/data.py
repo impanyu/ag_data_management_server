@@ -10,7 +10,7 @@ from datetime import datetime
 
 
 def get_domains():
-    print("in domains")
+    #print("in domains")
     with open(os.path.join(settings.CORE_DIR, 'data', 'domains.json'), "w") as domains_file:
         domains = json.load(domains_file)
     print(domains)
