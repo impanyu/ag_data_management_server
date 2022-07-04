@@ -945,8 +945,8 @@ function create_domain(){
      new_domain_box.style.left =(document.offsetWidth - box_width)/2 + "px";
      new_domain_box.style.height = (document.offsetHeight - box_height)/2 + "px";
 
-     document.appendChild(new_domain_box);
-     document.style.opacity = "0.5";
+     document.getElementbyTagName("body").appendChild(new_domain_box);
+     document.getElementbyTagName("body").style.opacity = "0.5";
 
 
 
