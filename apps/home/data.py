@@ -15,7 +15,7 @@ def get_domains():
     domains_file_path = os.path.join(settings.CORE_DIR, 'data', 'domains.json')
     if not os.path.exists(domains_file_path):
         with open(domains_file_path, 'w') as domains_file:
-            domains = {}
+            domains = []
             json.dump(domains, domains_file)
     with open(domains_file_path, "r") as domains_file:
         domains = json.load(domains_file)
