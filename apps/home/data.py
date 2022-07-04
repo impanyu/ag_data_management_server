@@ -19,7 +19,7 @@ def get_domains():
             json.dump(domains, domains_file)
     with open(domains_file_path, "r") as domains_file:
         domains = json.load(domains_file)
-    print(domains)
+    #print(domains)
     return domains
 
 

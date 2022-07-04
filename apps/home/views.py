@@ -47,10 +47,14 @@ def pages(request):
 
         if load_template == 'domains.html':
             context = {'segment': 'index'}
-            print("in domains")
+            #print("in domains")
             domains = get_domains()
 
-            context["domains"] = domains
+            domain_names=[]
+            for domain in domains:
+                domain_names.append(domain["domain_name"])
+
+            context["domains"] = domain_names
 
             html_template = loader.get_template('home/domains.html')
             return HttpResponse(html_template.render(context, request))
