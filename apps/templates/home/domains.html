@@ -958,7 +958,7 @@ function create_domain(){
      background_cover.style.left =0 + "px";
      background_cover.style.top = 0 + "px";
      background_cover.style.opacity = "0.5";
-     background_cover.addListener("click",function(){
+     background_cover.addEventListener("click",function(){
 
          this.remove();
          new_domain_box.remove();
