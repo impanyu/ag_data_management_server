@@ -69,8 +69,8 @@ function create_domain(){
 
 
     new_domain_box.appendChild(date_picker);
-    new_domain_box.style.width =  box_width-100+"px";
-    new_domain_box.style.marginLeft = "50px";
+    date_picker.style.width =  box_width-100+"px";
+    date_picker.style.marginLeft = "50px";
 
 
     $('body').on('focus',".datepicker input", function(){
