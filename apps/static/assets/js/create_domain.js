@@ -116,13 +116,13 @@ function create_domain(){
      new_domain_box.appendChild(map_container);
 
 
-     initMap();
+     //initMap();
 
 
 }
 
 
-function initMap(): void {
+function initMap(){
   const map = new google.maps.Map(
     document.getElementById("map") as HTMLElement,
     {
