@@ -937,16 +937,18 @@
 function create_domain(){
      box_height = 500;
      box_width = 800;
+     body = document.getElementsByTagName("body")[0];
      new_domain_box = document.createElement("div");
-     new_domain_box.attributes.id = "create_domain_box";
+     new_domain_box.setAttributes, ("id","create_domain_box");
      new_domain_box.style.position = "fixed";
      new_domain_box.style.width = box_height+"px";
      new_domain_box.style.height = box_width+"px";
-     new_domain_box.style.left =(document.offsetWidth - box_width)/2 + "px";
-     new_domain_box.style.height = (document.offsetHeight - box_height)/2 + "px";
+     new_domain_box.style.left =(body.offsetWidth - box_width)/2 + "px";
+     new_domain_box.style.height = (body.offsetHeight - box_height)/2 + "px";
 
-     document.getElementsByTagName("body")[0].appendChild(new_domain_box);
+
      $("body>*").css("opacity","0.5");
+     body.appendChild(new_domain_box);
 
 
 
