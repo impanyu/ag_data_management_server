@@ -69,7 +69,7 @@ function create_domain(){
     new_domain_box.appendChild(date_picker);
 
 
-    $('body').on('focus',"datepicker input", function(){
+    $('body').on('focus',".datepicker input", function(){
             $(this).datepicker();
     });
 
