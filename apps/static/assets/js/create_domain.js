@@ -1,3 +1,10 @@
+function htmlToElement(html) {
+          var template = document.createElement('template');
+          html = html.trim(); // Never return a text node of whitespace as the result
+          template.innerHTML = html;
+          return template.content.firstChild;
+}
+
 function create_domain(){
      box_height = 800;
      box_width = 1200;
@@ -12,19 +19,31 @@ function create_domain(){
      new_domain_box.style.top = (body.offsetHeight - box_height)/2 + "px";
 
      title = document.createElement("div");
+     title.style.margin = "40px";
      title.innerHTML = "<span>Create New Domain</span>"
-
      new_domain_box.appendChild(title);
 
-     function htmlToElement(html) {
-          var template = document.createElement('template');
-          html = html.trim(); // Never return a text node of whitespace as the result
-          template.innerHTML = html;
-          return template.content.firstChild;
-    }
+
+    name_input = htmlToElement(    '<div class="col">'+
+        '<div class="form-group">'+
+           '<div class="input-group input-group-alternative">'+
+                '<input type="text" placeholder="Regular" class="form-control" disabled />'+
+            '</div>'+
+        '</div>'+
+    '</div>');
+
+    name_input.setAttribute("id","name_input");
+
+    new_domain_box.appendChild(name_input);
 
 
-        date_picker = htmlToElement('<div class="input-daterange datepicker row align-items-center">'+
+
+
+
+
+
+
+    date_picker = htmlToElement('<div class="input-daterange datepicker row align-items-center">'+
     '<div class="col">'+
         '<div class="form-group">'+
            '<div class="input-group input-group-alternative">'+
@@ -48,6 +67,12 @@ function create_domain(){
 '</div>');
 
     date_picker.setAttribute("id","date_picker");
+
+    new_domain_box.appendChild(date_picker);
+
+
+
+
 
 
 
