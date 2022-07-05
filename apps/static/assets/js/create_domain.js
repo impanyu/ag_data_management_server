@@ -39,7 +39,7 @@ function create_domain(){
 
 
     date_picker = htmlToElement('<div class="input-daterange datepicker row align-items-center">'+
-    '<div class="col col-lg-6">'+
+    '<div class="col col-lg-6 ">'+
         '<div class="form-group">'+
            '<div class="input-group input-group-alternative">'+
                 '<div class="input-group-prepend">'+
