@@ -3,7 +3,7 @@ function create_domain(){
      box_width = 1200;
      body = document.getElementsByTagName("body")[0];
      new_domain_box = document.createElement("div");
-     new_domain_box.setAttributes, ("id","create_domain_box");
+     new_domain_box.setAttribute("id","create_domain_box");
      new_domain_box.style.position = "fixed";
      new_domain_box.style.width = box_width+"px";
      new_domain_box.style.height = box_height+"px";
@@ -47,13 +47,13 @@ function create_domain(){
     '</div>'+
 '</div>');
 
-    date_picker.setAttributes("id","date_picker");
+    date_picker.setAttribute("id","date_picker");
 
 
 
 
      background_cover = document.createElement("div");
-     background_cover.setAttributes("id","background_cover");
+     background_cover.setAttribute("id","background_cover");
      background_cover.style.position = "fixed";
      background_cover.style.width = body.offsetWidth+"px";
      background_cover.style.height = body.offsetHeight+"px";
