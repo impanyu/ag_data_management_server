@@ -68,8 +68,8 @@ function create_domain(){
 
 
 
-    date_picker.setAttribute("id","date_picker");
-    $(".datepicker input").datepicker();
+    //date_picker.setAttribute("id","date_picker");
+
 
     new_domain_box.appendChild(date_picker);
 
