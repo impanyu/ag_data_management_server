@@ -39,7 +39,7 @@ function create_domain(){
 
 
     date_picker = htmlToElement('<div class="input-daterange datepicker row align-items-center">'+
-    '<div class="col col-lg-6 ">'+
+    '<div class="col col-lg-5 ">'+
         '<div class="form-group">'+
            '<div class="input-group input-group-alternative">'+
                 '<div class="input-group-prepend">'+
@@ -49,7 +49,7 @@ function create_domain(){
             '</div>'+
         '</div>'+
     '</div>'+
-    '<div class="col col-lg-6">'+
+    '<div class="col col-lg-5">'+
         '<div class="form-group">'+
             '<div class="input-group input-group-alternative">'+
                '<div class="input-group-prepend">'+
@@ -103,4 +103,59 @@ function create_domain(){
 
 
 
+
+
+     map_container = document.createElement("div");
+     map_container.setAttribute("id","map");
+
+
+
+     map_container.style.width = box_width-100+"px";
+     map_container.style.height = box_height-300+"px";
+     map_container.style.marginLeft = "50px";
+     new_domain_box.appendChild(map_container);
+
+
+     initMap();
+
+
+}
+
+
+function initMap(): void {
+  const map = new google.maps.Map(
+    document.getElementById("map") as HTMLElement,
+    {
+      center: { lat: -34.397, lng: 150.644 },
+      zoom: 8,
+    }
+  );
+
+  const drawingManager = new google.maps.drawing.DrawingManager({
+    drawingMode: google.maps.drawing.OverlayType.MARKER,
+    drawingControl: true,
+    drawingControlOptions: {
+      position: google.maps.ControlPosition.TOP_CENTER,
+      drawingModes: [
+        google.maps.drawing.OverlayType.MARKER,
+        google.maps.drawing.OverlayType.CIRCLE,
+        google.maps.drawing.OverlayType.POLYGON,
+        google.maps.drawing.OverlayType.POLYLINE,
+        google.maps.drawing.OverlayType.RECTANGLE,
+      ],
+    },
+    markerOptions: {
+      icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
+    },
+    circleOptions: {
+      fillColor: "#ffff00",
+      fillOpacity: 1,
+      strokeWeight: 5,
+      clickable: false,
+      editable: true,
+      zIndex: 1,
+    },
+  });
+
+  drawingManager.setMap(map);
 }
