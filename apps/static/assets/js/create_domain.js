@@ -11,7 +11,7 @@ function create_domain(){
      body = document.getElementsByTagName("body")[0];
      new_domain_box = document.createElement("div");
      new_domain_box.setAttribute("id","create_domain_box");
-     new_domain_box.style.position = "fixed";
+     //new_domain_box.style.position = "fixed";
      new_domain_box.style.width = box_width+"px";
      new_domain_box.style.height = box_height+"px";
      new_domain_box.style.background = "white";
