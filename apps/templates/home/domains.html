@@ -935,14 +935,15 @@
 <script src="/static/assets/vendor/clipboard/dist/clipboard.min.js"></script>
 <script>
 function create_domain(){
-     box_height = 500;
-     box_width = 800;
+     box_height = 800;
+     box_width = 1000;
      body = document.getElementsByTagName("body")[0];
      new_domain_box = document.createElement("div");
      new_domain_box.setAttributes, ("id","create_domain_box");
      new_domain_box.style.position = "fixed";
      new_domain_box.style.width = box_width+"px";
      new_domain_box.style.height = box_height+"px";
+     new_domain_box.style.background = "white";
      new_domain_box.style.left =(body.offsetWidth - box_width)/2 + "px";
      new_domain_box.style.top = (body.offsetHeight - box_height)/2 + "px";
 
