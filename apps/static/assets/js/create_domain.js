@@ -67,6 +67,7 @@ function create_domain(){
 '</div>');
 
     date_picker.setAttribute("id","date_picker");
+    $(".datepicker").datepicker();
 
     new_domain_box.appendChild(date_picker);
 
