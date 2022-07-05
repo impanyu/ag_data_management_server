@@ -33,13 +33,15 @@ function create_domain(){
     '</div>');
 
     name_input.setAttribute("id","name_input");
+    name_input.style.width =  box_width-100+"px";
+    name_input.style.marginLeft = "50px";
 
     new_domain_box.appendChild(name_input);
 
 
 
     date_picker = htmlToElement('<div class="input-daterange datepicker row align-items-center">'+
-    '<div class="col col-lg-5 ">'+
+    '<div class="col col-lg-6 ">'+
         '<div class="form-group">'+
            '<div class="input-group input-group-alternative">'+
                 '<div class="input-group-prepend">'+
@@ -49,7 +51,7 @@ function create_domain(){
             '</div>'+
         '</div>'+
     '</div>'+
-    '<div class="col col-lg-5">'+
+    '<div class="col col-lg-6">'+
         '<div class="form-group">'+
             '<div class="input-group input-group-alternative">'+
                '<div class="input-group-prepend">'+
@@ -67,6 +69,8 @@ function create_domain(){
 
 
     new_domain_box.appendChild(date_picker);
+    new_domain_box.style.width =  box_width-100+"px";
+    new_domain_box.style.marginLeft = "50px";
 
 
     $('body').on('focus',".datepicker input", function(){
