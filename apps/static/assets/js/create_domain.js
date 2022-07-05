@@ -116,7 +116,7 @@ function create_domain(){
      new_domain_box.appendChild(map_container);
 
 
-     //initMap();
+     initMap();
 
 
 }
