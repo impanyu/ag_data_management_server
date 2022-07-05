@@ -38,11 +38,6 @@ function create_domain(){
 
 
 
-
-
-
-
-
     date_picker = htmlToElement('<div class="input-daterange datepicker row align-items-center">'+
     '<div class="col">'+
         '<div class="form-group">'+
