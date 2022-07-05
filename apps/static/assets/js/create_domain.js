@@ -73,7 +73,7 @@ date_picker = htmlToElement('<div class="input-group input-daterange">'+
     '</div>')
 
     date_picker.setAttribute("id","date_picker");
-    $(".datepicker").datepicker();
+
 
     new_domain_box.appendChild(date_picker);
 
