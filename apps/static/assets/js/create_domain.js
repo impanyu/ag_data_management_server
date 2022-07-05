@@ -45,7 +45,7 @@ function create_domain(){
                 '<div class="input-group-prepend">'+
                     '<span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>'+
                 '</div>'+
-                '<input class="form-control" placeholder="Start date" type="text" value="06/18/2020">'+
+                '<input class="form-control" data-provide="datepicker" placeholder="Start date" type="text" value="06/18/2020">'+
             '</div>'+
         '</div>'+
     '</div>'+
