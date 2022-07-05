@@ -24,7 +24,7 @@ function create_domain(){
      new_domain_box.appendChild(title);
 
 
-    name_input = htmlToElement(    '<div class="col">'+
+    name_input = htmlToElement('<div class="col">'+
         '<div class="form-group">'+
            '<div class="input-group input-group-alternative">'+
                 '<input type="text" placeholder="Regular" class="form-control" disabled />'+
