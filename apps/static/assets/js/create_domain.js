@@ -66,6 +66,12 @@ function create_domain(){
     '</div>'+
 '</div>');
 
+date_picker = htmlToElement('<div class="input-group input-daterange">'+
+    '<input type="text" class="form-control" value="2012-04-05">'+
+    '<div class="input-group-addon">to</div>'+
+    '<input type="text" class="form-control" value="2012-04-19">'+
+    '</div>')
+
     date_picker.setAttribute("id","date_picker");
     $(".datepicker").datepicker();
 
