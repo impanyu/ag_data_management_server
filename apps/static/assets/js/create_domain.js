@@ -28,7 +28,7 @@ function create_domain(){
      submit_button = htmlToElement('<button class="btn btn-primary" type="button" id="new_domain_submit">Submit</button>');
      new_domain_box.appendChild(submit_button);
 
-     document.getElementById("new_domain_submit").addEventListener("click",function(){
+     submit_button.addEventListener("click",function(){
         $.get("/create_new_domain",
         {
            domain_name : document.getElementById("new_domain_name").getAttribute("value"),
