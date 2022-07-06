@@ -203,6 +203,8 @@ function initMap(){
   drawingManager.setMap(map);
 
   google.maps.event.addListener(drawingManager, "overlaycomplete", function(event){
+       if(lastOverlay)
+           lastOverlay.setMap(null);
 
         event.overlay.overlayType = event.type;
         lastOverlay = event.overlay; // Save it
@@ -218,11 +220,5 @@ function initMap(){
         //map.drawingManager.setDrawingMode(null); // Return to 'hand' mode
 });
 
-
-google.maps.event.addListener(drawingManager, "click", function(event){
-   if(lastOverlay)
-           lastOverlay.setMap(null);
-
-});
 
 }
