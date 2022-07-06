@@ -121,7 +121,19 @@ def data(request):
         load_template = request.path.split('/')[-1]
         load_template = load_template.split('?')[0]
 
-        if load_template == 'domain_data':
+        if load_template == 'create_new_domain':
+            new_domain_name = request.GET.get("new_domain_name","")
+            start_date = request.GET.get("start_date", "")
+            end_date = request.GET.get("end","")
+            southwest = request.GET.get("southwest","")
+            northeast = request.GET.get("northeast","")
+
+            create_new_domain(new_domain_name,start_date,end_date,southwest,northeast)
+
+            return HttpResponse("")
+
+
+        elif load_template == 'domain_data':
             subdomain_path = request.GET.get('subdomain_path', "")
             layer = request.POST.get('layer', "")
             time = request.POST.get('time', "")

@@ -25,8 +25,24 @@ function create_domain(){
      new_domain_box.appendChild(title);
 
 
-     submit_button = htmlToElement('<button class="btn btn-primary" type="button">Button</button>');
+     submit_button = htmlToElement('<button class="btn btn-primary" type="button" id="new_domain_submit">Submit</button>');
      new_domain_box.appendChild(submit_button);
+
+     document.getElementById("new_domain_submit").addEventListener("click",function(){
+        $.get("/create_new_domain",
+        {
+           domain_name : document.getElementById("new_domain_name").getAttribute("value");
+           start_date : document.getElementById("start_date").getAttribute("value");
+           end_date : document.getElementById("end_date").getAttribute("value");
+           southwest : document.getElementById("southwest").getAttribute("value");
+           northeast : document.getElementById("northeast").getAttribute("value");
+        }
+
+
+
+        )
+
+     });
 
 
 
@@ -140,7 +156,7 @@ function create_domain(){
 
 
      map_container.style.width = box_width-100+"px";
-     map_container.style.height = box_height-360+"px";
+     map_container.style.height = box_height-420+"px";
      map_container.style.marginLeft = "50px";
      new_domain_box.appendChild(map_container);
 
@@ -158,7 +174,7 @@ function initMap(){
     document.getElementById("map"),
     {
       center: { lat: 39.397, lng: -97.644 },
-      zoom: 8,
+      zoom: 6,
     }
   );
 

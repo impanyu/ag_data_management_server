@@ -11,14 +11,30 @@ import numpy as np
 from datetime import datetime
 
 
+def create_new_domain(new_domain_name,start_date,end_date,southwest,northeast):
+    domains_file_path = os.path.join(settings.CORE_DIR, 'data', 'domains.json')
+    new_domain = {"new_domain_name": new_domain_name, "date_range": [start_date, end_date],
+     "bounding_box": [southwest, northeast]}
+    if not os.path.exists(domains_file_path):
+        with open(domains_file_path, 'w') as domains_file:
+            domains = [new_domain]
+            json.dump(domains, domains_file)
+
+    else:
+        with open(domains_file_path, 'w') as domains_file:
+            domains = json.load(domains_file)
+            domains.append(new_domain)
+            json.dump(domains,domains_file)
+
+
+
 def get_domains():
     domains_file_path = os.path.join(settings.CORE_DIR, 'data', 'domains.json')
     if not os.path.exists(domains_file_path):
-        with open(domains_file_path, 'w') as domains_file:
-            domains = []
-            json.dump(domains, domains_file)
-    with open(domains_file_path, "r") as domains_file:
-        domains = json.load(domains_file)
+        domains = []
+    else:
+        with open(domains_file_path, "r") as domains_file:
+            domains = json.load(domains_file)
     #print(domains)
     return domains
 
