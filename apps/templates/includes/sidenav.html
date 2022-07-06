@@ -12,9 +12,16 @@
         <!-- Nav items -->
         <ul class="navbar-nav">
            <li class="nav-item">
-            <a class="nav-link {% if 'icons' in segment %} active {% endif %}" href="/index.html">
-              <i class="ni ni-books text-orange"></i>
+            <a class="nav-link {% if 'icons' in segment %} active {% endif %}" href="/main.html">
+              <i class="ni ni-bullet-list-67 text-orange"></i>
               <span class="nav-link-text">Main</span>
+            </a>
+          </li>
+
+           <li class="nav-item">
+            <a class="nav-link {% if 'tables' in segment %} active {% endif %}" href="/files.html?current_path={{user}}">
+              <i class="ni ni-archive-2 text-default"></i>
+              <span class="nav-link-text">Files</span>
             </a>
           </li>
 
@@ -25,27 +32,29 @@
               <span class="nav-link-text">Domains</span>
             </a>
           </li>
-          <!--
+
 
 
           <li class="nav-item">
-            <a class="nav-link {% if 'map' in segment %} active {% endif %}" href="/map.html">
-              <i class="ni ni-pin-3 text-primary"></i>
-              <span class="nav-link-text">Google</span>
-            </a>
-          </li>!-->
-          
-          <li class="nav-item">
-            <a class="nav-link {% if 'tables' in segment %} active {% endif %}" href="/files.html?current_path={{user}}">
-              <i class="ni ni-archive-2 text-default"></i>
-              <span class="nav-link-text">Files</span>
+            <a class="nav-link {% if 'map' in segment %} active {% endif %}" href="/models.html">
+              <i class="ni ni-laptop text-blue"></i>
+              <span class="nav-link-text">Models/span>
             </a>
           </li>
+          
+
 
           <li class="nav-item">
             <a class="nav-link {% if 'profile' in segment %} active {% endif %}" href="http://34.67.105.75:8000/" target=”_blank”>
               <i class="ni ni-single-02 text-yellow"></i>
               <span class="nav-link-text">Jupyter</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link {% if 'profile' in segment %} active {% endif %}" href="/documentation.html" target=”_blank”>
+              <i class="ni ni-books text-green"></i>
+              <span class="nav-link-text">Documentation</span>
             </a>
           </li>
         

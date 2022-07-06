@@ -26,17 +26,54 @@
         <div class="col">
           <div class="card shadow">
                 <div class="card-header bg-transparent">
-                  <h3 class="mb-0">Welcome to IANR Agriculture Data Management and Analytics System</h3>
+                  <h2 class="mb-0">Welcome</h2>
                 </div>
-            <div class="card-body" style = "height: 500px"><>
-                <h3> Here you can store, manage, analyze and visualize your data and files, train and host your machine learning models, while you can also define and maintain domains for your various research topics.
+            <div class="card-body">
+                <h3> Here you can store, manage, analyze and visualize your data and files, train and host your machine learning models, run python and matlab script through Jupyter Notebook, while you can also define and maintain domains for your various research topics.
                 </h3>
-              <div class="row icon-examples col-lg-12">
-                  <div class="col-lg-2 col-md-5">
-                  <button type="button" class="btn-block" data-clipboard-text="active-40" title="Copy to clipboard" onclick="window.open('/domains','_self').focus()">
+              <div class="row icon-examples ">
+                  <div class="col-lg-6 col-md-6">
+                  <button type="button" class="btn-block bg-success" data-clipboard-text="active-40" title="Copy to clipboard" onclick="window.open('/files.html?current_path={{user}}','_self').focus()">
+                    <div>
+                      <i class="ni ni-archive-2 "></i>
+                      <span>Files</span>
+                    </div>
+                  </button>
+                </div>
+
+                  <div class="col-lg-6 col-md-6">
+                  <button type="button" class="btn-block bg-warning" data-clipboard-text="active-40" title="Copy to clipboard" onclick="window.open('/models.html','_self').focus()">
+                    <div>
+                      <i class="ni ni-laptop "></i>
+                      <span>Models</span>
+                    </div>
+                  </button>
+                </div>
+
+
+                  <div class="col-lg-6 col-md-6">
+                  <button type="button" class="btn-block bg-primary" data-clipboard-text="active-40" title="Copy to clipboard" onclick="window.open('/domains.html','_self').focus()">
                     <div>
                       <i class="ni ni-map-big "></i>
                       <span>Domains</span>
+                    </div>
+                  </button>
+                </div>
+
+                  <div class="col-lg-6 col-md-6">
+                  <button type="button" class="btn-block bg-default" data-clipboard-text="active-40" title="Copy to clipboard" onclick="window.open('http://34.67.105.75:8000/','_self').focus()">
+                    <div>
+                      <i class="ni ni-single-02 "></i>
+                      <span>Jupyter Notebook</span>
+                    </div>
+                  </button>
+                </div>
+
+                  <div class="col-lg-6 col-md-6">
+                  <button type="button" class="btn-block bg-info" data-clipboard-text="active-40" title="Copy to clipboard" onclick="window.open('http://34.67.105.75:8000/','_self').focus()">
+                    <div>
+                      <i class="ni ni-books "></i>
+                      <span>Document</span>
                     </div>
                   </button>
                 </div>
