@@ -1,0 +1,96 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Icons {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+<link rel="stylesheet" href="/static/assets/css/time_series_chart.css?v=1.2.0" type="text/css">
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- Header
+    <div class="header bg-unl pb-8 pt-5 pt-md-8" style="min-height: 400px; background-image: url(/static/assets/img/brand/ianr_bg.jpg); background-size: cover; background-position: center top; ">
+      <div class="container-fluid">
+        <div class="header-body">
+          
+        </div>
+      </div>
+    </div>-->
+
+    <div class="container-fluid mt--7 bg-unl" style="margin-top: 0 !important; padding: 0 !important">
+
+      <div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header bg-transparent">
+              <h3 class="mb-0">{{domain}}</h3>
+            </div>
+            <div class="row" style="display:flex">
+
+           {% if domain == "soilwater" %}
+           <div  class="my_dataviz col-lg-8 col-md-12" style="margin-left:40px; margin-right:25px; margin-top: 40px; margin-bottom: 40px" >
+             <p><b>{{subdomain_paths.0}}/all/{{layers.0}}</b></p>
+
+                <div id="metric-modal"></div>
+           </div>
+
+                <form  class="my_dataviz col-lg-3 col-md-12" style="margin-top: 120px;">
+                        <div class="form-group">
+                  <!--<label for="subdomain_path">Subdomain Path</label>-->
+                  <select  class="form-control" id="soilwater_location" onmousedown="if(this.options.length>8){this.size=8;}"  onchange='this.size=0;' onblur="this.size=0;">
+
+                    {% for subdomain_path in subdomain_paths %}
+                    <option>{{subdomain_path}}</option>
+                    {% endfor %}
+                  </select>
+            </div>
+
+                </form>
+
+            <div class="form-group" style= " position:absolute;  top: 8px; left:230px; ">
+              <!--<label for="layer">Data Layer</label>-->
+              <select class="form-control " id="spidercam_layer" onmousedown="if(this.options.length>8){this.size=8;}"  onchange='this.size=0;' onblur="this.size=0;">
+                {% for layer in layers%}
+                <option>{{layer}}</option>
+                {%endfor%}
+              </select>
+            </div>
+           
+            <div class="form-group" style= " position:absolute;  top: 8px; left:445px;">
+              <!--<label for="time">Time</label>-->
+              <select  class="form-control" id="spidercam_time" onmousedown="if(this.options.length>8){this.size=8;}"  onchange='this.size=0;' onblur="this.size=0;">
+                {% for time in times%}
+                <option>{{time}}</option>
+                {%endfor%}
+              </select>
+            </div>
+          </form>
+
+
+
+
+             
+           </div>
+
+             
+
+            
+         
+          {% endif %}
+           </div>
+            
+
+          </div>
+        </div>
+      </div>
+
+      {% include "includes/footer.html" %}
+
+    </div>
+
+{% endblock content %}
+
+{% block javascripts %}
+{% endblock javascripts %}
