@@ -49,7 +49,7 @@ function create_domain(){
     name_input = htmlToElement('<div class="col">'+
         '<div class="form-group">'+
            '<div class="input-group input-group-alternative">'+
-                '<input type="text" placeholder="Domain Name" class="form-control" id="new_domain_name"/>'+
+                '<input type="text" placeholder="Domain Name" class="form-control" id="new_domain_name" value=""/>'+
             '</div>'+
         '</div>'+
     '</div>');
