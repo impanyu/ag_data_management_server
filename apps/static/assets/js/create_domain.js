@@ -36,7 +36,13 @@ function create_domain(){
            end_date : document.getElementById("end_date").value,
            southwest : document.getElementById("southwest").value,
            northeast : document.getElementById("northeast").value,
-        },function(){}
+        },function(data,status){
+
+           if(data == "domain created")
+            location.href = '/domains.html';
+
+
+        }
 
 
 

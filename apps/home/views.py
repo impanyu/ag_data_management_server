@@ -128,11 +128,11 @@ def data(request):
             southwest = request.POST.get("southwest","")
             northeast = request.POST.get("northeast","")
 
-            print("1")
-            create_new_domain(new_domain_name,start_date,end_date,southwest,northeast)
-            print("2")
 
-            return HttpResponse("")
+            create_new_domain(new_domain_name,start_date,end_date,southwest,northeast)
+
+
+            return HttpResponse("domain created")
 
 
         elif load_template == 'domain_data':
