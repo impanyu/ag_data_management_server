@@ -129,7 +129,7 @@ def data(request):
             northeast = request.POST.get("northeast","")
 
             print("1")
-            #create_new_domain(new_domain_name,start_date,end_date,southwest,northeast)
+            create_new_domain(new_domain_name,start_date,end_date,southwest,northeast)
             print("2")
 
             return HttpResponse("")
