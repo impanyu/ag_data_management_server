@@ -29,7 +29,7 @@ function create_domain(){
      new_domain_box.appendChild(submit_button);
 
      submit_button.addEventListener("click",function(){
-        $.get("/create_new_domain",
+        $.post("/create_new_domain",
         {
            domain_name : document.getElementById("new_domain_name").getAttribute("value"),
            start_date : document.getElementById("start_date").getAttribute("value"),

@@ -122,13 +122,15 @@ def data(request):
         load_template = load_template.split('?')[0]
 
         if load_template == 'create_new_domain':
-            new_domain_name = request.GET.get("new_domain_name","")
-            start_date = request.GET.get("start_date", "")
-            end_date = request.GET.get("end","")
-            southwest = request.GET.get("southwest","")
-            northeast = request.GET.get("northeast","")
+            new_domain_name = request.POST.get("new_domain_name","")
+            start_date = request.POST.get("start_date", "")
+            end_date = request.POST.get("end","")
+            southwest = request.POST.get("southwest","")
+            northeast = request.POST.get("northeast","")
 
+            print("1")
             create_new_domain(new_domain_name,start_date,end_date,southwest,northeast)
+            print("2")
 
             return HttpResponse("")
 
