@@ -27,7 +27,7 @@ function create_domain(){
     name_input = htmlToElement('<div class="col">'+
         '<div class="form-group">'+
            '<div class="input-group input-group-alternative">'+
-                '<input type="text" placeholder="Domain Name" class="form-control" />'+
+                '<input type="text" placeholder="Domain Name" class="form-control" id="new_domain_name"/>'+
             '</div>'+
         '</div>'+
     '</div>');
@@ -47,7 +47,7 @@ function create_domain(){
                 '<div class="input-group-prepend">'+
                     '<span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>'+
                 '</div>'+
-                '<input class="form-control"  placeholder="Start date" type="text" value="05/18/2022">'+
+                '<input class="form-control"  placeholder="Start date" type="text" value="05/18/2022" id="start_date">'+
             '</div>'+
         '</div>'+
     '</div>'+
@@ -57,7 +57,7 @@ function create_domain(){
                '<div class="input-group-prepend">'+
                     '<span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>'+
                 '</div>'+
-                '<input class="form-control" placeholder="End date" type="text" value="05/22/2022">'+
+                '<input class="form-control" placeholder="End date" type="text" value="05/22/2022" id="end_date">'+
             '</div>'+
         '</div>'+
     '</div>'+
@@ -83,14 +83,14 @@ function create_domain(){
         '<div class="form-group">'+
            '<div class="input-group input-group-alternative">'+
 
-                '<input type="text" placeholder="Lower Left Corner" class="form-control" />'+
+                '<input type="text" placeholder="Southwest Corner" class="form-control" id = "southwest"/>'+
             '</div>'+
         '</div>'+
     '</div>'+
     '<div class="col col-lg-6">'+
         '<div class="form-group">'+
             '<div class="input-group input-group-alternative">'+
-                '<input type="text" placeholder="Upper Right Corner" class="form-control" />'+
+                '<input type="text" placeholder="Northeast Corner" class="form-control" id="northeast"/>'+
             '</div>'+
         '</div>'+
     '</div>'+
@@ -144,6 +144,8 @@ function create_domain(){
 
 }
 
+lastOverlay = null
+;
 
 function initMap(){
   const map = new google.maps.Map(
@@ -155,7 +157,7 @@ function initMap(){
   );
 
   const drawingManager = new google.maps.drawing.DrawingManager({
-    drawingMode: google.maps.drawing.OverlayType.MARKER,
+    drawingMode: google.maps.drawing.OverlayType.RECTANGLE,
     drawingControl: true,
     drawingControlOptions: {
       position: google.maps.ControlPosition.TOP_CENTER,
@@ -177,4 +179,23 @@ function initMap(){
   });
 
   drawingManager.setMap(map);
+
+  google.maps.event.addListener(drawingManager, "overlaycomplete", function(event){
+        if(lastOverlay)
+           lastOverlay.setMap(null);
+        event.overlay.overlayType = event.type;
+        lastOverlay = event.overlay; // Save it
+
+        var bounds = lastOverlay.getBounds();
+        var start = bounds.getNorthEast();
+        var end = bounds.getSouthWest();
+
+        document.getElementById("southwest").setAttribute("value",end) ;
+        document.getElementById("northwest").setAttribute("value",start);
+
+
+        //map.drawingManager.setDrawingMode(null); // Return to 'hand' mode
+});
+
+
 }
