@@ -19,7 +19,7 @@ function create_domain(){
      new_domain_box.style.top = (body.offsetHeight - box_height)/2 + "px";
 
      title = document.createElement("div");
-     title.style.margin = "40px";
+     title.style.margin = "50px";
      title.innerHTML = "<span>Create New Domain</span>"
      new_domain_box.appendChild(title);
 
@@ -47,7 +47,7 @@ function create_domain(){
                 '<div class="input-group-prepend">'+
                     '<span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>'+
                 '</div>'+
-                '<input class="form-control"  placeholder="Start date" type="text" value="06/18/2020">'+
+                '<input class="form-control"  placeholder="Start date" type="text" value="05/18/2022">'+
             '</div>'+
         '</div>'+
     '</div>'+
@@ -57,7 +57,7 @@ function create_domain(){
                '<div class="input-group-prepend">'+
                     '<span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>'+
                 '</div>'+
-                '<input class="form-control" placeholder="End date" type="text" value="06/22/2020">'+
+                '<input class="form-control" placeholder="End date" type="text" value="05/22/2022">'+
             '</div>'+
         '</div>'+
     '</div>'+
@@ -78,10 +78,29 @@ function create_domain(){
     });
 
 
+    bounding_box =  htmlToElement('<div class="i row align-items-center">'+
+    '<div class="col col-lg-6 ">'+
+        '<div class="form-group">'+
+           '<div class="input-group input-group-alternative">'+
 
+                '<input type="text" placeholder="Lower Left Corner" class="form-control" />'+
+            '</div>'+
+        '</div>'+
+    '</div>'+
+    '<div class="col col-lg-6">'+
+        '<div class="form-group">'+
+            '<div class="input-group input-group-alternative">'+
+                '<input type="text" placeholder="Upper Right Corner" class="form-control" />'+
+            '</div>'+
+        '</div>'+
+    '</div>'+
+'</div>');
 
+    bounding_box.setAttribute("id","lower_left");
+    bounding_box.style.width =  box_width-100+"px";
+    bounding_box.style.marginLeft = "50px";
 
-
+    new_domain_box.appendChild(bounding_box);
 
 
      background_cover = document.createElement("div");
@@ -115,7 +134,7 @@ function create_domain(){
 
 
      map_container.style.width = box_width-100+"px";
-     map_container.style.height = box_height-300+"px";
+     map_container.style.height = box_height-500+"px";
      map_container.style.marginLeft = "50px";
      new_domain_box.appendChild(map_container);
 
@@ -130,7 +149,7 @@ function initMap(){
   const map = new google.maps.Map(
     document.getElementById("map"),
     {
-      center: { lat: -34.397, lng: 150.644 },
+      center: { lat: 39.397, lng: -97.644 },
       zoom: 8,
     }
   );
@@ -141,10 +160,6 @@ function initMap(){
     drawingControlOptions: {
       position: google.maps.ControlPosition.TOP_CENTER,
       drawingModes: [
-        google.maps.drawing.OverlayType.MARKER,
-        google.maps.drawing.OverlayType.CIRCLE,
-        google.maps.drawing.OverlayType.POLYGON,
-        google.maps.drawing.OverlayType.POLYLINE,
         google.maps.drawing.OverlayType.RECTANGLE,
       ],
     },
