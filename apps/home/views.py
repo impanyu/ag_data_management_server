@@ -3,6 +3,7 @@
 Copyright (c) 2019 - present AppSeed.us
 """
 
+
 from django import template
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
@@ -10,6 +11,8 @@ from django.template import loader
 from django.urls import reverse
 from .data import *
 from django.views.decorators.csrf import csrf_exempt
+import stat
+from pwd import getpwnam
 
 import json
 from django.core.files.storage import FileSystemStorage
@@ -25,12 +28,13 @@ from .forms import UploadFileForm
 @login_required(login_url="/login/")
 def index(request):
     context = {'segment': 'index'}
+
     print("in domains")
     domains = get_domains()
 
     context["domains"] = domains
 
-    html_template = loader.get_template('home/domains.html')
+    html_template = loader.get_template('home/main.html')
     return HttpResponse(html_template.render(context, request))
 
 
@@ -250,7 +254,6 @@ def data(request):
 
         elif load_template == "upload_file":
             current_path = request.POST['current_path']
-            print("12345")
             print(current_path)
             upload_files = request.FILES.getlist("files")
             upload_file_paths = request.POST.getlist("paths")
@@ -285,9 +288,12 @@ def data(request):
                         abs_file_path += "_" + str(copy_id)
 
                     storage = open(abs_file_path, "wb+")
+
                     for chunk in file.chunks():
                         storage.write(chunk)
                     storage.close()
+                    os.chmod(abs_file_path,stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR)
+                    os.chown(abs_file_path,getpwnam(request.user.get_username()).pw_uid,-1)
 
                 return HttpResponse("upload complete!")
 

@@ -12,7 +12,8 @@ from django.conf import settings
 urlpatterns = [
 
     # The home page
-    #path('', views.index, name='home'),
+    path('', views.index, name='home'),
+
     re_path(r'^create_new_domain',views.data,name='create_new_domain'),
     re_path(r'^domain_data',views.data,name='domain_data'),
     re_path(r'^domain_time',views.data,name='domain_time'),
