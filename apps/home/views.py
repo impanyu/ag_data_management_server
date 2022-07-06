@@ -291,7 +291,7 @@ def data(request):
                     for chunk in file.chunks():
                         storage.write(chunk)
                     storage.close()
-                    os.chmod(abs_file_path,stat.SIRUSR | stat.S_IWUSR | stat.S_IXUSR)
+                    os.chmod(abs_file_path,stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR)
 
                 return HttpResponse("upload complete!")
 
