@@ -30,7 +30,7 @@ def index(request):
 
     context["domains"] = domains
 
-    html_template = loader.get_template('home/domains.html')
+    html_template = loader.get_template('home/index.html')
     return HttpResponse(html_template.render(context, request))
 
 
