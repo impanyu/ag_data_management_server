@@ -34,6 +34,7 @@ function create_domain(){
      new_domain_box.appendChild(submit_button);
 
 
+
     name_input = htmlToElement('<div class="col">'+
         '<div class="form-group">'+
            '<div class="input-group input-group-alternative">'+
