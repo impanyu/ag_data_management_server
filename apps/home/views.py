@@ -25,6 +25,7 @@ from .forms import UploadFileForm
 @login_required(login_url="/login/")
 def index(request):
     context = {'segment': 'index'}
+
     print("in domains")
     domains = get_domains()
 
