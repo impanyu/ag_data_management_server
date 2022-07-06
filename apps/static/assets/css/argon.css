@@ -61,7 +61,9 @@
 .gm-style-iw + button {display: none;}
 
 
-
+#sidenav-main{
+width: 200px;
+}
 
 #panel{
 margin-left:150px;
