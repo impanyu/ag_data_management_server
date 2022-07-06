@@ -60,6 +60,15 @@ rect_right_ln = parseFloat(northeast.split(",")[1]);
 center_lat = (rect_lower_lat + rect_upper_lat)/2;
 center_ln = (rect_right_ln+ rect_left_ln)/2;
 
+  const map = new google.maps.Map(
+    document.getElementById("map"),
+    {
+      center: { lat:center_lat, lng: center_ln },
+      zoom: 6,
+    }
+  );
+
+
   const rectCoords = [
     { lat: rect_lower_lat, lng: rect_left_ln },
     { lat: rect_lower_lat, lng: rect_right_ln},
@@ -76,16 +85,10 @@ center_ln = (rect_right_ln+ rect_left_ln)/2;
     fillOpacity: 1,
   });
 
+
   rectangle.setMap(map);
 
 
-  const map = new google.maps.Map(
-    document.getElementById("map"),
-    {
-      center: { lat:center_lat, lng: center_ln },
-      zoom: 6,
-    }
-  );
 
 }
 
