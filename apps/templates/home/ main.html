@@ -1,0 +1,62 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Icons {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- Header -->
+    <div class="header bg-unl pb-8 pt-5 pt-md-8" style="min-height: 400px; background-image: url(/static/assets/img/brand/ianr_bg.jpg); background-size: cover; background-position: center top; ">
+      <div class="container-fluid">
+        <div class="header-body">
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid mt--7 bg-unl">
+
+      <div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header bg-transparent">
+              <h3 class="mb-0">Domains</h3>
+            </div>
+            <div class="card-body">
+              <div class="row icon-examples">
+
+
+
+
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% include "includes/footer.html" %}
+
+    </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+
+<script src="/static/assets/vendor/clipboard/dist/clipboard.min.js"></script>
+<script src="/static/assets/vendor/moment/min/moment-with-locales.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU1RvtD5YF8-dwMmCIYP8ds-6Np5QVHFY&libraries=drawing&v=weekly" async></script>
+
+<script src="/static/assets/js/create_domain.js"></script>
+
+{% endblock javascripts %}
