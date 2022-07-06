@@ -172,8 +172,7 @@ function create_domain(){
 
 }
 
-lastOverlay = null
-;
+lastOverlay = null;
 
 function initMap(){
   const map = new google.maps.Map(

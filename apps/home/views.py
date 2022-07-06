@@ -48,6 +48,9 @@ def pages(request):
 
         if load_template == "domain_main_page":
             context['segment'] = load_template
+            context['domain'] = request.GET["domain"]
+            domain_meta = get_domain_meta(request.GET["domain"])
+            context['bounding_box'] = domain_meta["bounding_box"]
 
             html_template = loader.get_template('home/domain_main_page.html')
             return HttpResponse(html_template.render(context, request))
@@ -58,8 +61,8 @@ def pages(request):
             domains = get_domains()
 
             domain_names=[]
-            for domain in domains:
-                domain_names.append(domain["domain_name"])
+            for domain_name in domains:
+                domain_names.append(domain_name)
 
             context["domains"] = domain_names
 
