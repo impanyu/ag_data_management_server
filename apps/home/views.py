@@ -2,6 +2,7 @@
 """
 Copyright (c) 2019 - present AppSeed.us
 """
+import stat
 
 from django import template
 from django.contrib.auth.decorators import login_required
@@ -10,6 +11,7 @@ from django.template import loader
 from django.urls import reverse
 from .data import *
 from django.views.decorators.csrf import csrf_exempt
+import stat
 
 import json
 from django.core.files.storage import FileSystemStorage
@@ -251,7 +253,6 @@ def data(request):
 
         elif load_template == "upload_file":
             current_path = request.POST['current_path']
-            print("12345")
             print(current_path)
             upload_files = request.FILES.getlist("files")
             upload_file_paths = request.POST.getlist("paths")
@@ -286,9 +287,11 @@ def data(request):
                         abs_file_path += "_" + str(copy_id)
 
                     storage = open(abs_file_path, "wb+")
+
                     for chunk in file.chunks():
                         storage.write(chunk)
                     storage.close()
+                    os.chmod(abs_file_path,stat.SIRUSR | stat.S_IWUSR | stat.S_IXUSR)
 
                 return HttpResponse("upload complete!")
 
