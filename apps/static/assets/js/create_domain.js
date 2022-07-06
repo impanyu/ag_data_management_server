@@ -134,7 +134,7 @@ function create_domain(){
 
 
      map_container.style.width = box_width-100+"px";
-     map_container.style.height = box_height-500+"px";
+     map_container.style.height = box_height-400+"px";
      map_container.style.marginLeft = "50px";
      new_domain_box.appendChild(map_container);
 
