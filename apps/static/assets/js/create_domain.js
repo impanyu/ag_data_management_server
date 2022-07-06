@@ -24,6 +24,16 @@ function create_domain(){
      new_domain_box.appendChild(title);
 
 
+     title = document.createElement("div");
+     title.style.margin = "50px";
+     title.innerHTML = "<span>Create New Domain</span>"
+     new_domain_box.appendChild(title);
+
+
+     submit_button = htmlToElement('<button class="btn btn-primary" type="button">Button</button>');
+     new_domain_box.appendChild(submit_button);
+
+
     name_input = htmlToElement('<div class="col">'+
         '<div class="form-group">'+
            '<div class="input-group input-group-alternative">'+
@@ -134,7 +144,7 @@ function create_domain(){
 
 
      map_container.style.width = box_width-100+"px";
-     map_container.style.height = box_height-400+"px";
+     map_container.style.height = box_height-360+"px";
      map_container.style.marginLeft = "50px";
      new_domain_box.appendChild(map_container);
 
@@ -181,8 +191,7 @@ function initMap(){
   drawingManager.setMap(map);
 
   google.maps.event.addListener(drawingManager, "overlaycomplete", function(event){
-        if(lastOverlay)
-           lastOverlay.setMap(null);
+
         event.overlay.overlayType = event.type;
         lastOverlay = event.overlay; // Save it
 
@@ -197,5 +206,11 @@ function initMap(){
         //map.drawingManager.setDrawingMode(null); // Return to 'hand' mode
 });
 
+
+google.maps.event.addListener(drawingManager, "click", function(event){
+   if(lastOverlay)
+           lastOverlay.setMap(null);
+
+});
 
 }
