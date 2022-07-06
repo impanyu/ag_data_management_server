@@ -2,7 +2,7 @@
 """
 Copyright (c) 2019 - present AppSeed.us
 """
-import stat
+
 
 from django import template
 from django.contrib.auth.decorators import login_required
@@ -12,6 +12,7 @@ from django.urls import reverse
 from .data import *
 from django.views.decorators.csrf import csrf_exempt
 import stat
+from pwd import getpwnam
 
 import json
 from django.core.files.storage import FileSystemStorage
@@ -292,6 +293,7 @@ def data(request):
                         storage.write(chunk)
                     storage.close()
                     os.chmod(abs_file_path,stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR)
+                    os.chown(abs_file_path,getpwnam(request.user.get_username()))
 
                 return HttpResponse("upload complete!")
 
