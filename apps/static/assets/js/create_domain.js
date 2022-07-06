@@ -191,7 +191,7 @@ function initMap(){
         var end = bounds.getSouthWest();
 
         document.getElementById("southwest").setAttribute("value",end) ;
-        document.getElementById("northwest").setAttribute("value",start);
+        document.getElementById("northeast").setAttribute("value",start);
 
 
         //map.drawingManager.setDrawingMode(null); // Return to 'hand' mode
