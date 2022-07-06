@@ -124,7 +124,7 @@ def data(request):
         if load_template == 'create_new_domain':
             new_domain_name = request.POST.get("new_domain_name","")
             start_date = request.POST.get("start_date", "")
-            end_date = request.POST.get("end","")
+            end_date = request.POST.get("end_date","")
             southwest = request.POST.get("southwest","")
             northeast = request.POST.get("northeast","")
 

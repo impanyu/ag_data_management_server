@@ -31,7 +31,7 @@ function create_domain(){
      submit_button.addEventListener("click",function(){
         $.post("/create_new_domain",
         {
-           domain_name : document.getElementById("new_domain_name").getAttribute("value"),
+           new_domain_name : document.getElementById("new_domain_name").getAttribute("value"),
            start_date : document.getElementById("start_date").getAttribute("value"),
            end_date : document.getElementById("end_date").getAttribute("value"),
            southwest : document.getElementById("southwest").getAttribute("value"),

@@ -13,7 +13,7 @@ from datetime import datetime
 
 def create_new_domain(new_domain_name,start_date,end_date,southwest,northeast):
     domains_file_path = os.path.join(settings.CORE_DIR, 'data', 'domains.json')
-    new_domain = {"new_domain_name": new_domain_name, "date_range": [start_date, end_date],"bounding_box": [southwest, northeast]}
+    new_domain = {"domain_name": new_domain_name, "date_range": [start_date, end_date],"bounding_box": [southwest, northeast]}
     #new_domain = {}
     if not os.path.exists(domains_file_path):
         with open(domains_file_path, 'w') as domains_file:
