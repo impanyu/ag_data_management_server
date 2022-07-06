@@ -43,12 +43,12 @@
 {% endblock content %}
 
 {% block javascripts %}
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU1RvtD5YF8-dwMmCIYP8ds-6Np5QVHFY&libraries=drawing&v=weekly" async></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU1RvtD5YF8-dwMmCIYP8ds-6Np5QVHFY&callback=init_map&v=weekly" async></script>
 <script >
 
 
 
-function initMap(){
+function init_map(){
 southwest = "{{bounding_box.0}}";
 northeast = "{{bounding_box.1}}";
 
