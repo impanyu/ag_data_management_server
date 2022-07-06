@@ -20,12 +20,7 @@ function create_domain(){
 
      title = document.createElement("div");
      title.style.margin = "50px";
-     title.innerHTML = "<span>Create New Domain</span>"
-     new_domain_box.appendChild(title);
-
-
-     title = document.createElement("div");
-     title.style.margin = "50px";
+     title.style.display = "inline-block";
      title.innerHTML = "<span>Create New Domain</span>"
      new_domain_box.appendChild(title);
 
