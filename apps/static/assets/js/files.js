@@ -90,9 +90,10 @@ function add_to_domain(path,file_name){
         },function(data,status){
 
            if(data == "file added to domain"){
+              alert("file added to domain: "+document.getElementById("domain_name_select").value);
               add_to_domain_box.remove();
               background_cover.remove();
-              alert("file added to domain: "+domain_name);
+
            }
 
 
