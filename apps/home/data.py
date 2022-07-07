@@ -41,7 +41,7 @@ def decode_key(key):
 def query_domain(domain_name,start_date,end_date,southwest,northeast,query_range):
     domain_data_path = os.path.join(settings.CORE_DIR, 'data', domain_name + '.json')
     query_range = json.loads(query_range)
-    query_result = {}
+    query_result = []
     with open(domain_data_path, 'r') as domain_data_file:
         print("infile")
         domain_data = json.load(domain_data_file)
@@ -69,16 +69,12 @@ def query_domain(domain_name,start_date,end_date,southwest,northeast,query_range
                 result["date_range"] = [item_start_date,item_end_date]
                 result["file_path"] = tif_to_png(result["file_path"])
 
-                query_result.append(json.dumps(result))
+                query_result.append(result)
             print(result)
 
 
 
-
-
-
-
-    return query_result
+    return json.dumps(query_result)
 
 
 

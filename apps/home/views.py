@@ -145,8 +145,8 @@ def data(request):
             southwest = request.POST.get("southwest", "")
             northeast = request.POST.get("northeast", "")
             query_range = request.POST.get("query_range", "")
-            query_domain(domain_name,start_date,end_date,southwest,northeast,query_range)
-            return HttpResponse("query succeed!")
+            query_result = query_domain(domain_name,start_date,end_date,southwest,northeast,query_range)
+            return HttpResponse(query_result)
 
 
         elif load_template == 'get_tif_range':
