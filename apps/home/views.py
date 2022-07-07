@@ -135,7 +135,6 @@ def data(request):
         load_template = request.path.split('/')[-1]
         load_template = load_template.split('?')[0]
 
-
         if load_template == 'get_domains':
             domains = get_domains()
             return HttpResponse(json.dumps(domains.keys()))

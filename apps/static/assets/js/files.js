@@ -1,12 +1,12 @@
-var domain_names;
-  $.get("/get_domains",
+var domain_names=[];
+ /* $.get("/get_domains",
         {
         },function(data,status){
            domain_names = JSON.parse(data);
         }
 
         );
-
+*/
 
 
 function htmlToElement(html) {
