@@ -156,7 +156,7 @@ def data(request):
             
             return HttpResponse(json.dumps(date_range))
             '''
-            return HttpResponse(real_path)
+            return HttpResponse("ok")
 
 
 

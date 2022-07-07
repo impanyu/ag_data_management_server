@@ -19,6 +19,7 @@ function add_to_domain(path,file_name){
         {
            file_path : path+"/"+file_name
         },function(data,status){
+           console.info(data);
 
            data = JSON.parse(data);
            start = data[0];
