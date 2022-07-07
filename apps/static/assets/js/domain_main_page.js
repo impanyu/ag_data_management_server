@@ -29,10 +29,10 @@ center_ln = (rect_right_ln+ rect_left_ln)/2;
   const rectangle = new google.maps.Polygon({
     paths: rectCoords,
     strokeColor: "blue",
-    strokeOpacity: 0.8,
+    strokeOpacity: 0.9,
     strokeWeight: 2,
     fillColor: "blue",
-    fillOpacity: .3,
+    fillOpacity: .1,
   });
 
 
