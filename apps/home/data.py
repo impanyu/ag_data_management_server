@@ -69,7 +69,7 @@ def query_domain(domain_name,start_date,end_date,southwest,northeast,query_range
                 result["date_range"] = [item_start_date,item_end_date]
                 result["file_path"] = tif_to_png(result["file_path"])
 
-                query_result.append(result)
+                query_result.append(json.dumps(result))
 
 
 
