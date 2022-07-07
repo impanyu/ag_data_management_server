@@ -62,7 +62,7 @@ function add_to_domain(path,file_name){
    //domain_name_select_string = '<select class="form-select form-select-lg mb-3" aria-label="domain select" id="domain_name_select">';
 
    for(var i in domain_names)
-      domain_name_select_string +=  '<option value="'+domain_name[i]+'">'+domain_name[i]+'</option>'
+      domain_name_select_string +=  '<option value="'+domain_names[i]+'">'+domain_names[i]+'</option>'
 
 
 
