@@ -14,30 +14,33 @@ from datetime import datetime
 def tif_to_png(file_path):
     return file_path
 
-def extract_coordinates(southwest,northeast):
+
+def extract_coordinates(southwest, northeast):
     lower_lat = float(southwest.split(",")[0])
     upper_lat = float(northeast.split(",")[0])
     left_ln = float(southwest.split(",")[1])
     right_ln = float(northeast.split(",")[1])
-    return (lower_lat,upper_lat,left_ln,right_ln)
+    return lower_lat, upper_lat, left_ln, right_ln
 
-def overlap(a1,b1,a2,b2):
-    return max(a1,a2) <= min(b1,b2)
 
-def overlap_time(a1,b1,a2,b2):
-    a1=datetime.strptime(a1,"%m/%d/%Y")
+def overlap(a1, b1, a2, b2):
+    return max(a1, a2) <= min(b1, b2)
+
+
+def overlap_time(a1, b1, a2, b2):
+    a1 = datetime.strptime(a1, "%m/%d/%Y")
     b1 = datetime.strptime(b1, "%m/%d/%Y")
     a2 = datetime.strptime(a2, "%m/%d/%Y")
-    b2=datetime.strptime(b2,"%m/%d/%Y")
-    return overlap(a1,b1,a2,b2)
-
+    b2 = datetime.strptime(b2, "%m/%d/%Y")
+    return overlap(a1, b1, a2, b2)
 
 
 def decode_key(key):
     keys = key.split(",")
-    return (keys[0],keys[1],keys[2],keys[3])
+    return (float(keys[0]), float(keys[1]), float(keys[2]), float(keys[3]),datetime.strptime(keys[4],"%m/%d/%Y"),datetime.strptime(keys[5],"%m/%d/%Y"))
 
-def query_domain(domain_name,start_date,end_date,southwest,northeast,query_range):
+
+def query_domain(domain_name, start_date, end_date, southwest, northeast, query_range):
     domain_data_path = os.path.join(settings.CORE_DIR, 'data', domain_name + '.json')
     query_range = json.loads(query_range)
     query_result = []
@@ -45,12 +48,12 @@ def query_domain(domain_name,start_date,end_date,southwest,northeast,query_range
         print("infile")
         domain_data = json.load(domain_data_file)
         for key, value in domain_data.items():
+            item_lower_lat,item_upper_lat,item_left_ln,item_right_ln, item_start_date, item_end_date = decode_key(key)
 
-            item_southwest,item_northeast,item_start_date,item_end_date = decode_key(key)
-            '''
-            item_lower_lat,item_upper_lat,item_left_ln,item_right_ln = extract_coordinates(item_southwest,item_northeast)
+            #item_lower_lat,item_upper_lat,item_left_ln,item_right_ln = extract_coordinates(item_southwest,item_northeast)
+
             lower_lat, upper_lat, left_ln, right_ln = extract_coordinates(southwest,northeast)
-            
+            '''
             if(not overlap(item_lower_lat,item_upper_lat,lower_lat,upper_lat)):
                 continue
             if(not overlap(item_left_ln,item_right_ln,left_ln,right_ln)):
@@ -77,14 +80,10 @@ def query_domain(domain_name,start_date,end_date,southwest,northeast,query_range
             '''
             print(query_result)
 
-
-
     return json.dumps(query_result)
 
 
-
-
-def map_file_path(logic_path,username):
+def map_file_path(logic_path, username):
     real_path = ""
 
     for i in range(1, len(logic_path.split("/"))):
@@ -95,11 +94,12 @@ def map_file_path(logic_path,username):
     else:
         real_path = real_path[1:]
 
-    real_path=os.path.join("/home/" + username + "/ag_data/", real_path)
+    real_path = os.path.join("/home/" + username + "/ag_data/", real_path)
     return real_path
 
+
 def add_to_domain(domain_name, start_date, end_date, southwest, northeast, data_content):
-    domain_data_path = os.path.join(settings.CORE_DIR, 'data', domain_name+'.json')
+    domain_data_path = os.path.join(settings.CORE_DIR, 'data', domain_name + '.json')
     item_key = southwest + "," + northeast + "," + start_date + "," + end_date
     if not os.path.exists(domain_data_path):
         with open(domain_data_path, 'w') as domain_data_file:
@@ -111,14 +111,13 @@ def add_to_domain(domain_name, start_date, end_date, southwest, northeast, data_
     else:
         with open(domain_data_path, 'r') as domain_data_file:
             domain_data = json.load(domain_data_file)
-            if(item_key not in domain_data):
+            if (item_key not in domain_data):
                 domain_data[item_key] = {}
-            for key,value in json.loads(data_content).items():
+            for key, value in json.loads(data_content).items():
                 domain_data[item_key][key] = value
 
         with open(domain_data_path, 'w') as domain_data_file:
             json.dump(domain_data, domain_data_file)
-
 
     return True
 
