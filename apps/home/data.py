@@ -22,7 +22,7 @@ def convert_and_caching(file_path,username):
     if( suffix == "jpg" or suffix == "png"):
 
         new_name = file_path.split("/")[-1]
-        shutil.copy(real_path, "/static/" + new_name)
+        shutil.copy(real_path, "/static/data_cache/" + new_name)
 
     elif(suffix == "tif" or suffix == "tiff"):
         new_name = file_path.split("/")[-1].split(".")[0]+".jpg"
@@ -35,7 +35,7 @@ def convert_and_caching(file_path,username):
 
         im.save(outfile)
 
-    return "/static/"+new_name
+    return "/static/data_cache/"+new_name
 
 
 
