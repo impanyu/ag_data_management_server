@@ -15,6 +15,8 @@ var drawingManager;
 
 
 function add_to_domain(path,file_name){
+      if(file_name.split(".")[1] !="tif")
+         return;
       $.get("/get_tif_range",
         {
            file_path : path+"/"+file_name
@@ -24,6 +26,7 @@ function add_to_domain(path,file_name){
            data = JSON.parse(data);
            start = data[0];
            end = data[1];
+
 
            rectangle = new google.maps.Rectangle({
                 strokeColor: "#FF0000",
