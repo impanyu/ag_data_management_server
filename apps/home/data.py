@@ -11,6 +11,10 @@ import numpy as np
 from datetime import datetime
 
 
+def query_domain(domain_name,start_date,end_date,southwest,northeast,query_content):
+    domain_data_path = os.path.join(settings.CORE_DIR, 'data', domain_name + '.json')
+
+
 def map_file_path(logic_path,username):
     real_path = ""
 

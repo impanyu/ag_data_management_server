@@ -138,8 +138,17 @@ def data(request):
         load_template = request.path.split('/')[-1]
         load_template = load_template.split('?')[0]
 
+        if load_template == 'query_domain':
+            domain_name = request.POST.get("domain_name", "")
+            start_date = request.POST.get("start_date", "")
+            end_date = request.POST.get("end_date", "")
+            southwest = request.POST.get("southwest", "")
+            northeast = request.POST.get("northeast", "")
+            query_content = request.POST.get("query_content", "")
+            query_domain(domain_name,start_date,end_date,southwest,northeast,query_content)
 
-        if load_template == 'get_tif_range':
+
+        elif load_template == 'get_tif_range':
 
             logic_path = request.GET.get("file_path","")
             real_path = map_file_path(logic_path,request.user.get_username())
