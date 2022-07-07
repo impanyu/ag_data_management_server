@@ -138,11 +138,12 @@ def data(request):
         load_template = request.path.split('/')[-1]
         load_template = load_template.split('?')[0]
 
+        '''
         if load_template == 'get_tif_range':
             logic_path = request.GET.get("file_path","")
             real_path = map_file_path(logic_path)
 
-            '''
+            
             data = gdal.Open(real_path, GA_ReadOnly)
             geoTransform = data.GetGeoTransform()
             minx = geoTransform[0]
@@ -154,13 +155,13 @@ def data(request):
             date_range = [[minx,miny],[maxx,maxy]]
             
             return HttpResponse(json.dumps(date_range))
-            '''
-            return HttpResponse("")
+        '''
 
 
 
 
-        elif load_template == 'get_domains':
+
+        if load_template == 'get_domains':
             domains = get_domains()
             return HttpResponse(json.dumps(list(domains.keys())))
 
