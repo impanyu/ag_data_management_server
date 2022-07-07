@@ -42,7 +42,8 @@ function add_to_domain(path,file_name){
 
               rectangle.setMap(map);
               lastOverlay = rectangle;
-              map.setCenter((start[1]+end[1])/2,(start[0]+end[0])/2);
+
+              map.setCenter({lat:(start[0]+end[0])/2,lng:(start[1]+end[1])/2});
 
 
         }
