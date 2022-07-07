@@ -64,7 +64,7 @@ def query_domain(domain_name,start_date,end_date,southwest,northeast,query_range
                 if(not (range_values[0]<= value[content_key] and value["content_key"]<=range_values[1])):
                     satisfied = False
                     break
-            '''
+            
             if(satisfied):
                 result = value
                 result["bounding_box"]=[item_southwest,item_northeast]
@@ -72,7 +72,8 @@ def query_domain(domain_name,start_date,end_date,southwest,northeast,query_range
                 result["file_path"] = tif_to_png(result["file_path"])
 
                 query_result.append(result)
-            print(result)
+            '''
+            print(query_result)
 
 
 
