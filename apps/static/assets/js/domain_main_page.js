@@ -90,7 +90,7 @@ center_ln = (rect_right_ln+ rect_left_ln)/2;
 
 $("input").datepicker();
 query_content = {};
-   $("query")[0].addEventListener("click",function(){
+   $("#query")[0].addEventListener("click",function(){
         $.post("/query_domain",
         {
            domain_name : document.getElementById("domain_name").value,
