@@ -199,7 +199,7 @@ def data(request):
             domains = get_domains()
             return HttpResponse(json.dumps(list(domains.keys())))
 
-        elif load_template == 'add_to_new_domain':
+        elif load_template == 'add_to_domain':
             domain_name = request.POST.get("domain_name", "")
             start_date = request.POST.get("start_date", "")
             end_date = request.POST.get("end_date", "")
