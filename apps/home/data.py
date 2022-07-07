@@ -50,13 +50,12 @@ def query_domain(domain_name, start_date, end_date, southwest, northeast, query_
         for key, value in domain_data.items():
             item_lower_lat,item_left_ln,item_upper_lat,item_right_ln, item_start_date, item_end_date = decode_key(key)
 
-            #item_lower_lat,item_upper_lat,item_left_ln,item_right_ln = extract_coordinates(item_southwest,item_northeast)
-
             lower_lat, upper_lat, left_ln, right_ln = extract_coordinates(southwest,northeast)
 
             if(not overlap(item_lower_lat,item_upper_lat,lower_lat,upper_lat)):
                 print("o1")
                 continue
+            '''
             if(not overlap(item_left_ln,item_right_ln,left_ln,right_ln)):
                 print("o2")
                 continue
@@ -65,7 +64,7 @@ def query_domain(domain_name, start_date, end_date, southwest, northeast, query_
                 continue
             #check extra attributes
             satisfied = True
-            '''
+            
             for content_key, range_values in query_range.items():
                 if(content_key not in value):
                     continue
