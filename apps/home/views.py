@@ -137,7 +137,7 @@ def data(request):
 
         if load_template == 'get_domains':
             domains = get_domains()
-            return HttpResponse(json.dumps(domains.keys()))
+            return HttpResponse(json.dumps(list(domains.keys())))
 
         elif load_template == 'add_to_new_domain':
             domain_name = request.POST.get("domain_name_select", "")
