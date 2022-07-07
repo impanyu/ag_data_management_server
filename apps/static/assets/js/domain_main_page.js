@@ -88,8 +88,8 @@ center_ln = (rect_right_ln+ rect_left_ln)/2;
 
 }
 
-$("input").datepicker();
-query_content = {};
+$(".daterange input").datepicker();
+query_range = {};
    $("#query")[0].addEventListener("click",function(){
         $.post("/query_domain",
         {
@@ -98,7 +98,7 @@ query_content = {};
            end_date : document.getElementById("end_date").value,
            southwest : document.getElementById("southwest").value.substr(1,document.getElementById("southwest").value.length-2),
            northeast : document.getElementById("northeast").value.substr(1,document.getElementById("northeast").value.length-2),
-           query_content : JSON.stringify(query_content)
+           query_range : JSON.stringify(query_range)
         },function(data,status){
            alert("query succeed!");
 

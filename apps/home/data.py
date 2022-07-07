@@ -11,8 +11,74 @@ import numpy as np
 from datetime import datetime
 
 
-def query_domain(domain_name,start_date,end_date,southwest,northeast,query_content):
+def tif_to_png(file_path):
+    return file_path
+
+def extract_coordinates(southwest,northeast):
+    lower_lat = float(southwest.split(",")[0])
+    upper_lat = float(northeast.split(",")[0])
+    left_ln = float(southwest.split(",")[1])
+    right_ln = float(northeast.split(",")[1])
+
+    return lower_lat,upper_lat,left_ln,right_ln
+
+def overlap(a1,b1,a2,b2):
+    return max(a1,a2) <= min(b1,b2)
+
+def overlap_time(a1,b1,a2,b2):
+    a1=datetime.strptime(a1,"%m/%d/%Y")
+    b1 = datetime.strptime(b1, "%m/%d/%Y")
+    a2 = datetime.strptime(a2, "%m/%d/%Y")
+    b2=datetime.strptime(b2,"%m/%d/%Y")
+    return overlap(a1,b1,a2,b2)
+
+
+
+def decode_key(key):
+    keys = key.split(",")
+    return keys[0],keys[1],keys[2],keys[3]
+
+def query_domain(domain_name,start_date,end_date,southwest,northeast,query_range):
     domain_data_path = os.path.join(settings.CORE_DIR, 'data', domain_name + '.json')
+    query_range = json.loads(query_range)
+    query_result = []
+    with open(domain_data_path, 'r') as domain_data_file:
+        domain_data = json.load(domain_data_file)
+        for key, value in domain_data.items():
+            item_southwest,item_northeast,item_start_date,item_end_date = decode_key(key)
+            item_lower_lat,item_upper_lat,item_left_ln,item_right_ln = extract_coordinates(item_southwest,item_northeast)
+            lower_lat, upper_lat, left_ln, right_ln = extract_coordinates(southwest,northeast)
+            if(not overlap(item_lower_lat,item_upper_lat,lower_lat,upper_lat)):
+                continue
+            if(not overlap(item_left_ln,item_right_ln,left_ln,right_ln)):
+                continue
+            if(not overlap_time(item_start_date,item_end_date,start_date,end_date)):
+                continue
+            #check extra attributes
+            satisfied = True
+            for content_key, range_values in query_range.items():
+                if(content_key not in value):
+                    continue
+                if(not (range_values[0]<= value[content_key] and value["content_key"]<=range_values[1])):
+                    satisfied = False
+                    break
+            if(satisfied):
+                result = value
+                result["bounding_box"]=[item_southwest,item_northeast]
+                result["date_range"] = [item_start_date,item_end_date]
+                result["file_path"] = tif_to_png(result["file_path"])
+
+                query_result.append(result)
+
+
+
+
+
+
+
+    return query_result
+
+
 
 
 def map_file_path(logic_path,username):
