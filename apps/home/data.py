@@ -55,10 +55,13 @@ def query_domain(domain_name, start_date, end_date, southwest, northeast, query_
             lower_lat, upper_lat, left_ln, right_ln = extract_coordinates(southwest,northeast)
 
             if(not overlap(item_lower_lat,item_upper_lat,lower_lat,upper_lat)):
+                print("o1")
                 continue
             if(not overlap(item_left_ln,item_right_ln,left_ln,right_ln)):
+                print("o2")
                 continue
             if(not overlap_time(item_start_date,item_end_date,start_date,end_date)):
+                print("o3")
                 continue
             #check extra attributes
             satisfied = True
@@ -66,7 +69,7 @@ def query_domain(domain_name, start_date, end_date, southwest, northeast, query_
             for content_key, range_values in query_range.items():
                 if(content_key not in value):
                     continue
-                if(not (range_values[0]<= value[content_key] and value["content_key"]<=range_values[1])):
+                if(not (float(range_values[0])<= float(value[content_key]) and float(value[content_key])<=float(range_values[1]))):
                     satisfied = False
                     break
             
