@@ -102,6 +102,24 @@ query_range = {};
         },function(data,status){
            alert("query succeed!");
            console.info(data);
+           data = JSON.parse(data);
+
+           for(var i=0;i<data.length;i++){
+              data_item = data[i];
+
+               const imageBounds = {
+                north: parseFloat(data_item["bounding_box"][1].split(",")[0]),
+                south: parseFloat(data_item["bounding_box"][0].split(",")[0]),
+                east: parseFloat(data_item["bounding_box"][1].split(",")[1]),,
+                west: parseFloat(data_item["bounding_box"][0].split(",")[1]),,
+              };
+
+              img_overlay = new google.maps.GroundOverlay(
+                data_item["file_path"],
+                imageBounds
+              );
+              img_overlay.setMap(map);
+          }
 
 
 
