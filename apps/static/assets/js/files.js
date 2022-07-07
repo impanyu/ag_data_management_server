@@ -8,7 +8,6 @@ var domain_names=[];
         );
 
 
-console.info("gogogo");
 
 function add_to_domain(path,file_name){
      box_height = 800;
@@ -60,14 +59,14 @@ function add_to_domain(path,file_name){
 
 
 
-   domain_name_select_string = '<select class="form-select form-select-lg mb-3" aria-label="domain select" id="domain_name_select">';
+   domain_name_select_string = '<form><select class="form-select form-select-lg mb-3" aria-label="domain select" id="domain_name_select">';
 
    for(domain_name in domain_names)
       domain_name_select_string +=  '<option value="'+domain_name+'">'+domain_name+'</option>'
 
 
 
-   domain_name_select_string += '</select>'
+   domain_name_select_string += '</select></form>'
 
 
 
