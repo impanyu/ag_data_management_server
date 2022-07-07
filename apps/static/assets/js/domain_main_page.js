@@ -1,3 +1,5 @@
+var lastOverlay = null;
+
 function init_map(){
 rect_lower_lat = parseFloat(southwest.split(",")[0]);
 rect_left_ln = parseFloat(southwest.split(",")[1]);
