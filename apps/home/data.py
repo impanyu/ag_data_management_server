@@ -72,7 +72,7 @@ def query_domain(domain_name, start_date, end_date, southwest, northeast, query_
                 if(not (float(range_values[0])<= float(value[content_key]) and float(value[content_key])<=float(range_values[1]))):
                     satisfied = False
                     break
-            '''
+            
             print(satisfied)
             if(satisfied):
                 result = value
@@ -83,6 +83,7 @@ def query_domain(domain_name, start_date, end_date, southwest, northeast, query_
                 result["file_path"] = tif_to_png(result["file_path"])
 
                 query_result.append(result)
+            '''
 
             print(query_result)
 
