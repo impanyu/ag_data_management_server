@@ -22,11 +22,10 @@ def tif_to_jpg(tif_file_path,username):
     im.thumbnail((800,800))
     outfile = os.path.join(settings.CORE_DIR, 'data' ,'data_cache',new_name)
 
-    im.save(outfile, "JPEG", quality=100)
-    '''
+    im.save(outfile)
+
     return "/static/"+new_name
-    '''
-    return real_path
+
 
 
 def extract_coordinates(southwest, northeast):
