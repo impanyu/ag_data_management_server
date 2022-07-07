@@ -47,6 +47,8 @@ function add_to_domain(path,file_name){
               lastOverlay = rectangle;
 
               map.setCenter({lat:(start[0]+end[0])/2,lng:(start[1]+end[1])/2});
+              document.getElementById("southwest").setAttribute("value",start) ;
+              document.getElementById("northeast").setAttribute("value",end);
 
 
         }
@@ -273,11 +275,11 @@ function initMap(){
         lastOverlay = event.overlay; // Save it
 
         var bounds = lastOverlay.getBounds();
-        start = bounds.getNorthEast();
-        end = bounds.getSouthWest();
+        end = bounds.getNorthEast();
+        start = bounds.getSouthWest();
 
-        document.getElementById("southwest").setAttribute("value",end) ;
-        document.getElementById("northeast").setAttribute("value",start);
+        document.getElementById("southwest").setAttribute("value",start) ;
+        document.getElementById("northeast").setAttribute("value",end);
 
 
         //map.drawingManager.setDrawingMode(null); // Return to 'hand' mode
