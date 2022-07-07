@@ -19,8 +19,7 @@ def extract_coordinates(southwest,northeast):
     upper_lat = float(northeast.split(",")[0])
     left_ln = float(southwest.split(",")[1])
     right_ln = float(northeast.split(",")[1])
-
-    return lower_lat,upper_lat,left_ln,right_ln
+    return (lower_lat,upper_lat,left_ln,right_ln)
 
 def overlap(a1,b1,a2,b2):
     return max(a1,a2) <= min(b1,b2)
@@ -36,7 +35,7 @@ def overlap_time(a1,b1,a2,b2):
 
 def decode_key(key):
     keys = key.split(",")
-    return keys[0],keys[1],keys[2],keys[3]
+    return (keys[0],keys[1],keys[2],keys[3])
 
 def query_domain(domain_name,start_date,end_date,southwest,northeast,query_range):
     domain_data_path = os.path.join(settings.CORE_DIR, 'data', domain_name + '.json')
