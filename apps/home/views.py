@@ -3,8 +3,8 @@
 Copyright (c) 2019 - present AppSeed.us
 """
 
-import gdal
-from gdalconst import GA_ReadOnly
+#import gdal
+#from gdalconst import GA_ReadOnly
 
 
 from django import template
@@ -142,6 +142,7 @@ def data(request):
             logic_path = request.GET.get("file_path","")
             real_path = map_file_path(logic_path)
 
+            '''
             data = gdal.Open(real_path, GA_ReadOnly)
             geoTransform = data.GetGeoTransform()
             minx = geoTransform[0]
@@ -151,6 +152,7 @@ def data(request):
             print[minx, miny, maxx, maxy]
 
             date_range = [[minx,miny],[maxx,maxy]]
+            '''
             return HttpResponse(json.dumps(date_range))
 
 
