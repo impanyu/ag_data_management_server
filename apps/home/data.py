@@ -10,6 +10,11 @@ import pandas as pd
 import numpy as np
 from datetime import datetime
 
+
+def add_to_new_domain(domain_name, start_date, end_date, southwest, northeast, file_path):
+    return True
+
+
 def get_domain_meta(domain_name):
     domains_file_path = os.path.join(settings.CORE_DIR, 'data', 'domains.json')
     with open(domains_file_path, "r") as domains_file:
@@ -17,22 +22,21 @@ def get_domain_meta(domain_name):
     return domains[domain_name]
 
 
-def create_new_domain(new_domain_name,start_date,end_date,southwest,northeast):
+def create_new_domain(new_domain_name, start_date, end_date, southwest, northeast):
     domains_file_path = os.path.join(settings.CORE_DIR, 'data', 'domains.json')
-    new_domain = {"date_range": [start_date, end_date],"bounding_box": [southwest, northeast]}
-    #new_domain = {}
+    new_domain = {"date_range": [start_date, end_date], "bounding_box": [southwest, northeast]}
+    # new_domain = {}
     if not os.path.exists(domains_file_path):
         with open(domains_file_path, 'w') as domains_file:
-            domains = {new_domain_name:new_domain}
+            domains = {new_domain_name: new_domain}
             json.dump(domains, domains_file)
 
     else:
         with open(domains_file_path, 'r') as domains_file:
             domains = json.load(domains_file)
-        domains[new_domain_name]=new_domain
+        domains[new_domain_name] = new_domain
         with open(domains_file_path, 'w') as domains_file:
-            json.dump(domains,domains_file)
-
+            json.dump(domains, domains_file)
 
 
 def get_domains():
@@ -42,7 +46,7 @@ def get_domains():
     else:
         with open(domains_file_path, "r") as domains_file:
             domains = json.load(domains_file)
-    #print(domains)
+    # print(domains)
     return domains
 
 

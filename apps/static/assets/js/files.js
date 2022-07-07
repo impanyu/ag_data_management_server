@@ -1,3 +1,14 @@
+var domain_names;
+  $.get("/get_domains",
+        {
+        },function(data,status){
+           domain_names = JSON.parse(data);
+        }
+
+        )
+
+
+
 function htmlToElement(html) {
           var template = document.createElement('template');
           html = html.trim(); // Never return a text node of whitespace as the result
@@ -9,62 +20,70 @@ function add_to_domain(path,file_name){
      box_height = 800;
      box_width = 1200;
      body = document.getElementsByTagName("body")[0];
-     new_domain_box = document.createElement("div");
-     new_domain_box.setAttribute("id","create_domain_box");
-     new_domain_box.style.position = "fixed";
-     new_domain_box.style.width = box_width+"px";
-     new_domain_box.style.height = box_height+"px";
-     new_domain_box.style.background = "white";
-     new_domain_box.style.left =(body.offsetWidth - box_width)/2 + "px";
-     new_domain_box.style.top = (body.offsetHeight - box_height)/2 + "px";
+
+     add_to_domain_box = document.createElement("div");
+     add_to_domain_box.setAttribute("id","add_to_domain_box");
+     add_to_domain_box.style.position = "fixed";
+     add_to_domain_box.style.width = box_width+"px";
+     add_to_domain_box.style.height = box_height+"px";
+     add_to_domain_box.style.background = "white";
+     add_to_domain_box.style.left =(body.offsetWidth - box_width)/2 + "px";
+     add_to_domain_box.style.top = (body.offsetHeight - box_height)/2 + "px";
 
      title = document.createElement("div");
      title.style.margin = "50px";
      title.style.display = "inline-block";
-     title.innerHTML = "<span>Create New Domain</span>"
-     new_domain_box.appendChild(title);
+     title.innerHTML = "<span>Add File to Domain</span>"
+     add_to_domain_box.appendChild(title);
 
-
-     submit_button = htmlToElement('<button class="btn btn-primary" type="button" id="new_domain_submit">Submit</button>');
-     new_domain_box.appendChild(submit_button);
+     submit_button = htmlToElement('<button class="btn btn-primary" type="button" id="add_to_domain_submit">Submit</button>');
+     add_to_domain_box.appendChild(submit_button);
 
      submit_button.addEventListener("click",function(){
-        $.post("/create_new_domain",
+        $.post("/add_to_new_domain",
         {
-           new_domain_name : document.getElementById("new_domain_name").value,
+           domain_name : document.getElementById("domain_name_select").value,
            start_date : document.getElementById("start_date").value,
            end_date : document.getElementById("end_date").value,
            southwest : document.getElementById("southwest").value,
            northeast : document.getElementById("northeast").value,
+           file_path : path+"/"+file_name
         },function(data,status){
 
-           if(data == "domain created")
-            location.href = '/domains.html';
+           if(data == "file added to domain"){
+              add_to_domain_box.remove();
+              background_cover.remove();
+           }
+
 
 
         }
-
-
 
         )
 
      });
 
+   domain_name_select_string = '<select class="form-select" aria-label="domain select" id="domain_name_select">';
+
+   for(domain_name in domain_names):
+      domain_name_select_string +=  '<option value="'+domain_name+''">'+domain_name+'</option>'
 
 
-    name_input = htmlToElement('<div class="col">'+
-        '<div class="form-group">'+
-           '<div class="input-group input-group-alternative">'+
-                '<input type="text" placeholder="Domain Name" class="form-control" id="new_domain_name" value=""/>'+
-            '</div>'+
-        '</div>'+
-    '</div>');
 
-    name_input.setAttribute("id","name_input");
-    name_input.style.width =  box_width-100+"px";
-    name_input.style.marginLeft = "50px";
+   domain_name_select_string += '</select>'
 
-    new_domain_box.appendChild(name_input);
+
+
+    domain_name_select = htmlToElement(domain_name_select_string
+     );
+
+
+
+    domain_name_select.setAttribute("id","domain_name_select");
+    domain_name_select.style.width =  box_width-100+"px";
+    domain_name_select.style.marginLeft = "50px";
+
+    add_to_domain_box.appendChild(domain_name_select);
 
 
 
@@ -128,7 +147,7 @@ function add_to_domain(path,file_name){
     bounding_box.style.width =  box_width-100+"px";
     bounding_box.style.marginLeft = "50px";
 
-    new_domain_box.appendChild(bounding_box);
+    add_to_domain_box.appendChild(bounding_box);
 
 
      background_cover = document.createElement("div");
@@ -164,14 +183,13 @@ function add_to_domain(path,file_name){
      map_container.style.width = box_width-100+"px";
      map_container.style.height = box_height-420+"px";
      map_container.style.marginLeft = "50px";
-     new_domain_box.appendChild(map_container);
+     add_to_domain_box.appendChild(map_container);
 
 
      initMap();
 
 
 }
-
 lastOverlay = null;
 
 function initMap(){
