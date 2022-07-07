@@ -34,8 +34,8 @@ function create_domain(){
            new_domain_name : document.getElementById("new_domain_name").value,
            start_date : document.getElementById("start_date").value,
            end_date : document.getElementById("end_date").value,
-           southwest : document.getElementById("southwest").value.substr(1,document.getElementById("southwest").length-2),
-           northeast : document.getElementById("northeast").value.substr(1,document.getElementById("northeast").length-2),
+           southwest : document.getElementById("southwest").value.substr(1,document.getElementById("southwest").value.length-2),
+           northeast : document.getElementById("northeast").value.substr(1,document.getElementById("northeast").value.length-2),
         },function(data,status){
 
            if(data == "domain created")

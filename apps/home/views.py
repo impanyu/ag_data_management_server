@@ -208,7 +208,7 @@ def data(request):
             data_content = request.POST.get("data_content","")
 
             add_to_domain(domain_name,start_date,end_date,southwest,northeast,data_content)
-            return HttpResponse("file added to domain")
+            return HttpResponse("item added to domain")
 
         elif load_template == 'create_new_domain':
             new_domain_name = request.POST.get("new_domain_name","")
