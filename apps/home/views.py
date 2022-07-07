@@ -146,6 +146,7 @@ def data(request):
             northeast = request.POST.get("northeast", "")
             query_content = request.POST.get("query_content", "")
             query_domain(domain_name,start_date,end_date,southwest,northeast,query_content)
+            return HttpResponse("query succeed!")
 
 
         elif load_template == 'get_tif_range':
@@ -162,10 +163,6 @@ def data(request):
             maxx = minx + geoTransform[1] * data.RasterXSize
             miny = maxy + geoTransform[5] * data.RasterYSize
             
-
-
-
-
 
             # get the existing coordinate system
 
@@ -198,10 +195,6 @@ def data(request):
             date_range = [[latlong_southwest[0], latlong_southwest[1]], [latlong_northeast[0], latlong_northeast[1]]]
 
             return HttpResponse(json.dumps(date_range))
-
-
-
-
 
 
         elif load_template == 'get_domains':
