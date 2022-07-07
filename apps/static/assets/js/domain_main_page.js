@@ -1,5 +1,6 @@
 var lastOverlay = null;
 var map;
+var overlays=[];
 
 function init_map(){
 rect_lower_lat = parseFloat(southwest.split(",")[0]);
@@ -105,6 +106,12 @@ query_range = {};
            console.info(data);
            data = JSON.parse(data);
 
+           for(var i=0;i<overlays.length;i++){
+              overlays[i].setMap(null);
+
+
+           }
+
            for(var i=0;i<data.length;i++){
               data_item = data[i];
               north = parseFloat(data_item["bounding_box"][1].split(",")[0]);
@@ -124,6 +131,7 @@ query_range = {};
                 imageBounds
               );
               img_overlay.setMap(map);
+              overlays.append[img_overlay];
               map.setCenter({lat: (north+south)/2 ,lng: (east+west)/2});
               map.setZoom(13);
           }
