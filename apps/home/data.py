@@ -12,6 +12,24 @@ from datetime import datetime
 
 
 def add_to_new_domain(domain_name, start_date, end_date, southwest, northeast, file_path):
+    domain_data_path = os.path.join(settings.CORE_DIR, 'data', 'domain_data.json')
+    if not os.path.exists(domain_data_path):
+        with open(domain_data_path, 'w') as domain_data_file:
+            domain_data = {domain_name:[]}
+            domain_data[domain_name].append({"bounding_box": [southwest,northeast],"date_range":[start_date,end_date],"file_path":file_path})
+            json.dump(domain_data, domain_data_file)
+
+    else:
+        with open(domain_data_path, 'r') as domain_data_file:
+            domain_data = json.load(domain_data_file)
+        if(domain_name not in domain_data):
+            domain_data[domain_name] = []
+        domain_data[domain_name].append({"bounding_box": [southwest, northeast], "date_range": [start_date, end_date], "file_path": file_path})
+
+        with open(domain_data_path, 'w') as domain_data_file:
+            json.dump(domain_data, domain_data_file)
+
+
     return True
 
 
