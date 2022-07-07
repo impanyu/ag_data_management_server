@@ -107,6 +107,8 @@
 
 <!-- Specific JS goes HERE --> 
 {% block javascripts %}
+<script src="/static/assets/js/files.js"></script>
+
 <script>
 var form = $("#upload_form");
 current_path = "{{current_path}}";
@@ -305,7 +307,7 @@ function get_file_list(){
                    '<td ><div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>'+
                    '<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">'+
                    '<a class="dropdown-item" href="#" id="'+i+'_file_delete">Delete</a>'+
-                   '<a class="dropdown-item" href="#" id="'+dir["dir_name"]+'_add_domain">Add to Domain</a>'+
+                   '<a class="dropdown-item" href="#" id="'+i+'_add_domain">Add to Domain</a>'+
                    '</div> </div></td></tr>';
             item_node = htmlToElement(item_html);
             $("#file_list")[0].appendChild(item_node);
@@ -330,8 +332,18 @@ function get_file_list(){
             });
 
 
+            $("#"+i+"_add_domain").click(function(){
+               file_name= data["files"][parseInt(this.id.split("_")[0])]["file_name"];
+               console.info(file_name);
+               add_to_domain(current_path,file_name);
+
+
+            });
+
+
 
           }
+
 
 
 
