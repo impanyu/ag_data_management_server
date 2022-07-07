@@ -74,8 +74,8 @@ center_ln = (rect_right_ln+ rect_left_ln)/2;
         var start = bounds.getNorthEast();
         var end = bounds.getSouthWest();
 
-        document.getElementById("southwest").setAttribute("value",end) ;
-        document.getElementById("northeast").setAttribute("value",start);
+        //document.getElementById("southwest").setAttribute("value",end) ;
+        //document.getElementById("northeast").setAttribute("value",start);
 
 
         //map.drawingManager.setDrawingMode(null); // Return to 'hand' mode
