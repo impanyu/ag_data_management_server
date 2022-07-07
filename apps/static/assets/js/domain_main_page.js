@@ -101,6 +101,7 @@ query_range = {};
            query_range : JSON.stringify(query_range)
         },function(data,status){
            alert("query succeed!");
+           console.info(data);
 
 
 
