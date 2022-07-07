@@ -10,19 +10,28 @@ import pandas as pd
 import numpy as np
 from datetime import datetime
 from PIL import Image
+import shutil
 
 
 
-def tif_to_jpg(tif_file_path,username):
+def convert_and_caching(tif_file_path,username):
     real_path = map_file_path(tif_file_path,username)
+    suffix = tif_file_path.split("/")[-1].split(".")[1]
+    if( suffix == "jpg" or suffix == "png"):
 
-    new_name = tif_file_path.split("/")[-1].split(".")[0]+".jpg"
-    im = Image.open(real_path)
+        new_name = tif_file_path.split("/")[-1]
+        shutil.copy(real_path, "/static/" + new_name)
 
-    im.thumbnail((800,800))
-    outfile = os.path.join(settings.CORE_DIR, 'data' ,'data_cache',new_name)
+    elif(suffix == "tif" or suffix == "tiff"):
+        new_name = tif_file_path.split("/")[-1].split(".")[0]+".jpg"
+        im = Image.open(real_path)
 
-    im.save(outfile)
+        im.thumbnail((800,800))
+        outfile = os.path.join(settings.CORE_DIR, 'data' ,'data_cache',new_name)
+        if(not im.mode == 'RGB'):
+            im = im.convert('RGB')
+
+        im.save(outfile)
 
     return "/static/"+new_name
 
@@ -89,7 +98,7 @@ def query_domain(domain_name, start_date, end_date, southwest, northeast, query_
                 item_northeast = str(item_upper_lat) + "," + str(item_right_ln)
                 result["bounding_box"]=[item_southwest,item_northeast]
                 result["date_range"] = [datetime.strftime(item_start_date,"%m/%d/%Y"),datetime.strftime(item_end_date,"%m/%d/%Y")]
-                result["file_path"] = tif_to_jpg(result["file_path"],username)
+                result["file_path"] = convert_and_caching(result["file_path"],username)
 
                 query_result.append(result)
 
