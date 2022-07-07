@@ -8,7 +8,6 @@ var domain_names=[];
         );
 */
 
-console.info("gogogo");
 function htmlToElement(html) {
           var template = document.createElement('template');
           html = html.trim(); // Never return a text node of whitespace as the result
@@ -66,7 +65,7 @@ function add_to_domain(path,file_name){
    domain_name_select_string = '<select class="form-select" aria-label="domain select" id="domain_name_select">';
 
    for(domain_name in domain_names)
-      domain_name_select_string +=  '<option value="'+domain_name+''">'+domain_name+'</option>'
+      domain_name_select_string +=  '<option value="'+domain_name+'">'+domain_name+'</option>'
 
 
 
