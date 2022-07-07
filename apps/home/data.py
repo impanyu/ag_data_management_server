@@ -51,10 +51,11 @@ def query_domain(domain_name, start_date, end_date, southwest, northeast, query_
             if(not overlap(item_left_ln,item_right_ln,left_ln,right_ln)):
                 print("o2")
                 continue
+            '''
             if(not overlap(item_start_date,item_end_date,start_date,end_date)):
                 print("o3")
                 continue
-            '''
+            
             #check extra attributes
             satisfied = True
             
