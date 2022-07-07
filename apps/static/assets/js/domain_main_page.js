@@ -106,12 +106,16 @@ query_range = {};
 
            for(var i=0;i<data.length;i++){
               data_item = data[i];
+              north = parseFloat(data_item["bounding_box"][1].split(",")[0]);
+              south = parseFloat(data_item["bounding_box"][0].split(",")[0]);
+              east = parseFloat(data_item["bounding_box"][1].split(",")[1]);
+              west = parseFloat(data_item["bounding_box"][0].split(",")[1]);
 
                const imageBounds = {
-                north: parseFloat(data_item["bounding_box"][1].split(",")[0]),
-                south: parseFloat(data_item["bounding_box"][0].split(",")[0]),
-                east: parseFloat(data_item["bounding_box"][1].split(",")[1]),
-                west: parseFloat(data_item["bounding_box"][0].split(",")[1]),
+                north: north,
+                south: south,
+                east: east,
+                west: west,
               };
 
               img_overlay = new google.maps.GroundOverlay(
@@ -119,6 +123,8 @@ query_range = {};
                 imageBounds
               );
               img_overlay.setMap(map);
+              map.setCenter({lat: (north+south)/2 ,lng: (east+west)/2});
+              map.setZoom(13);
           }
 
 
