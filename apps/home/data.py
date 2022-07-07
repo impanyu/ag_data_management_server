@@ -65,13 +65,14 @@ def query_domain(domain_name, start_date, end_date, southwest, northeast, query_
                 continue
             #check extra attributes
             satisfied = True
-            
+            '''
             for content_key, range_values in query_range.items():
                 if(content_key not in value):
                     continue
                 if(not (float(range_values[0])<= float(value[content_key]) and float(value[content_key])<=float(range_values[1]))):
                     satisfied = False
                     break
+            '''
             print(satisfied)
             if(satisfied):
                 result = value
