@@ -27,14 +27,6 @@ def overlap(a1, b1, a2, b2):
     return max(a1, a2) <= min(b1, b2)
 
 
-def overlap_time(a1, b1, a2, b2):
-    a1 = datetime.strptime(a1, "%m/%d/%Y")
-    b1 = datetime.strptime(b1, "%m/%d/%Y")
-    a2 = datetime.strptime(a2, "%m/%d/%Y")
-    b2 = datetime.strptime(b2, "%m/%d/%Y")
-    return overlap(a1, b1, a2, b2)
-
-
 def decode_key(key):
     keys = key.split(",")
     return (float(keys[0]), float(keys[1]), float(keys[2]), float(keys[3]),datetime.strptime(keys[4],"%m/%d/%Y"),datetime.strptime(keys[5],"%m/%d/%Y"))
@@ -59,10 +51,10 @@ def query_domain(domain_name, start_date, end_date, southwest, northeast, query_
             if(not overlap(item_left_ln,item_right_ln,left_ln,right_ln)):
                 print("o2")
                 continue
-            if(not overlap_time(item_start_date,item_end_date,start_date,end_date)):
+            if(not overlap(item_start_date,item_end_date,start_date,end_date)):
                 print("o3")
                 continue
-            '''
+
             #check extra attributes
             satisfied = True
             
@@ -83,7 +75,7 @@ def query_domain(domain_name, start_date, end_date, southwest, northeast, query_
                 result["file_path"] = tif_to_png(result["file_path"])
 
                 query_result.append(result)
-            '''
+
 
             print(query_result)
 
