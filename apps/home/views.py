@@ -3,7 +3,7 @@
 Copyright (c) 2019 - present AppSeed.us
 """
 
-from osgeo import gdal
+from osgeo import gdal,osr
 from osgeo.gdalconst import GA_ReadOnly
 
 
@@ -154,8 +154,40 @@ def data(request):
             miny = maxy + geoTransform[5] * data.RasterYSize
             
 
-            date_range = [[minx,miny],[maxx,maxy]]
-            
+
+
+
+
+            # get the existing coordinate system
+
+            old_cs = osr.SpatialReference()
+            old_cs.ImportFromWkt(data.GetProjectionRef())
+
+            # create the new coordinate system
+            wgs84_wkt = """
+            GEOGCS["WGS 84",
+                DATUM["WGS_1984",
+                    SPHEROID["WGS 84",6378137,298.257223563,
+                        AUTHORITY["EPSG","7030"]],
+                    AUTHORITY["EPSG","6326"]],
+                PRIMEM["Greenwich",0,
+                    AUTHORITY["EPSG","8901"]],
+                UNIT["degree",0.01745329251994328,
+                    AUTHORITY["EPSG","9122"]],
+                AUTHORITY["EPSG","4326"]]"""
+            new_cs = osr.SpatialReference()
+            new_cs.ImportFromWkt(wgs84_wkt)
+
+            # create a transform object to convert between coordinate systems
+            transform = osr.CoordinateTransformation(old_cs, new_cs)
+
+
+            # get the coordinates in lat long
+            latlong_southwest = transform.TransformPoint(minx, miny)
+            latlong_northeast = transform.TransformPoint(maxx, maxy)
+
+            date_range = [[latlong_southwest[0], latlong_southwest[1]], [latlong_northeast[0], latlong_northeast[1]]]
+
             return HttpResponse(json.dumps(date_range))
 
 
