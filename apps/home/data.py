@@ -53,7 +53,7 @@ def query_domain(domain_name, start_date, end_date, southwest, northeast, query_
             #item_lower_lat,item_upper_lat,item_left_ln,item_right_ln = extract_coordinates(item_southwest,item_northeast)
 
             lower_lat, upper_lat, left_ln, right_ln = extract_coordinates(southwest,northeast)
-            '''
+
             if(not overlap(item_lower_lat,item_upper_lat,lower_lat,upper_lat)):
                 continue
             if(not overlap(item_left_ln,item_right_ln,left_ln,right_ln)):
@@ -77,7 +77,7 @@ def query_domain(domain_name, start_date, end_date, southwest, northeast, query_
                 result["file_path"] = tif_to_png(result["file_path"])
 
                 query_result.append(result)
-            '''
+
             print(query_result)
 
     return json.dumps(query_result)
