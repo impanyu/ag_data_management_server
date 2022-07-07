@@ -8,6 +8,10 @@ var domain_names=[];
         );
 var start;
 var end;
+var map;
+var lastOverlay;
+var drawingManager;
+
 
 
 function add_to_domain(path,file_name){
@@ -20,6 +24,24 @@ function add_to_domain(path,file_name){
            start = data[0];
            end = data[1];
 
+           rectangle = new google.maps.Rectangle({
+                strokeColor: "#FF0000",
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: "#FF0000",
+                fillOpacity: 0.35,
+                map,
+                bounds: {
+                  north: end[0],
+                  south: start[0],
+                  east: end[1],
+                  west: start[1],
+                },
+              });
+
+              rectangle.setMap(map);
+              lastOverlay = rectangle;
+              map.setCenter((start[1]+end[1])/2,(start[0]+end[0])/2);
 
 
         }
@@ -203,10 +225,10 @@ function add_to_domain(path,file_name){
 
 
 }
-lastOverlay = null;
+
 
 function initMap(){
-  const map = new google.maps.Map(
+  map = new google.maps.Map(
     document.getElementById("map"),
     {
       center: { lat: 39.397, lng: -97.644 },
@@ -214,7 +236,7 @@ function initMap(){
     }
   );
 
-  const drawingManager = new google.maps.drawing.DrawingManager({
+  drawingManager = new google.maps.drawing.DrawingManager({
     drawingMode: google.maps.drawing.OverlayType.RECTANGLE,
     drawingControl: true,
     drawingControlOptions: {
@@ -228,7 +250,7 @@ function initMap(){
     },
     circleOptions: {
       fillColor: "#ffff00",
-      fillOpacity: 1,
+      fillOpacity: .8,
       strokeWeight: 5,
       clickable: false,
       editable: true,
