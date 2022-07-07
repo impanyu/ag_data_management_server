@@ -1,4 +1,5 @@
 var lastOverlay = null;
+var map;
 
 function init_map(){
 rect_lower_lat = parseFloat(southwest.split(",")[0]);
@@ -9,7 +10,7 @@ rect_right_ln = parseFloat(northeast.split(",")[1]);
 center_lat = (rect_lower_lat + rect_upper_lat)/2;
 center_ln = (rect_right_ln+ rect_left_ln)/2;
 
-  const map = new google.maps.Map(
+   map = new google.maps.Map(
     document.getElementById("map"),
     {
       center: { lat:center_lat, lng: center_ln },
