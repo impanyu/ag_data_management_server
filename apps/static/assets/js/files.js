@@ -109,7 +109,7 @@ function add_to_domain(path,file_name){
     //date_picker.setAttribute("id","date_picker");
 
 
-    new_domain_box.appendChild(date_picker);
+    add_to_domain_box.appendChild(date_picker);
     date_picker.style.width =  box_width-100+"px";
     date_picker.style.marginLeft = "50px";
 
@@ -156,14 +156,14 @@ function add_to_domain(path,file_name){
      background_cover.addEventListener("click",function(){
 
          this.remove();
-         new_domain_box.remove();
+         add_to_domain_box.remove();
 
      });
 
 
      //$("body>*").css("opacity","0.5");
      body.appendChild(background_cover);
-     body.appendChild(new_domain_box);
+     body.appendChild(add_to_domain_box);
 
 
 
