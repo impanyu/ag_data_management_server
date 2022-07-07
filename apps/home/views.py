@@ -141,7 +141,7 @@ def data(request):
 
         if load_template == 'get_tif_range':
             logic_path = request.GET.get("file_path","")
-            real_path = map_file_path(logic_path)
+            #real_path = map_file_path(logic_path)
 
             '''
             data = gdal.Open(real_path, GA_ReadOnly)
