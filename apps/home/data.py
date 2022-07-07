@@ -26,6 +26,9 @@ def extract_coordinates(southwest, northeast):
 def overlap(a1, b1, a2, b2):
     return max(a1, a2) <= min(b1, b2)
 
+def string_to_time(t):
+    return datetime.strptime(t, "%m/%d/%Y")
+
 
 def decode_key(key):
     keys = key.split(",")
@@ -48,11 +51,11 @@ def query_domain(domain_name, start_date, end_date, southwest, northeast, query_
                 print("o1")
                 continue
 
-            if(not overlap(item_left_ln,item_right_ln,datetime.strptime(left_ln,"%m/%d/%Y"),datetime.strptime(right_ln,"%m/%d/%Y"))):
+            if(not overlap(item_left_ln,item_right_ln,left_ln,right_ln)):
                 print("o2")
                 continue
 
-            if(not overlap(item_start_date,item_end_date,start_date,end_date)):
+            if(not overlap(item_start_date,item_end_date,string_to_time(start_date),string_to_time(end_date))):
                 print("o3")
                 continue
             '''
