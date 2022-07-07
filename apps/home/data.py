@@ -58,7 +58,7 @@ def query_domain(domain_name, start_date, end_date, southwest, northeast, query_
             if(not overlap(item_start_date,item_end_date,string_to_time(start_date),string_to_time(end_date))):
                 print("o3")
                 continue
-            '''
+
             #check extra attributes
             satisfied = True
             
@@ -79,7 +79,7 @@ def query_domain(domain_name, start_date, end_date, southwest, northeast, query_
                 result["file_path"] = tif_to_png(result["file_path"])
 
                 query_result.append(result)
-            '''
+
 
             print(query_result)
 
