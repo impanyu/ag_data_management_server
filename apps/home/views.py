@@ -152,8 +152,10 @@ def data(request):
             print[minx, miny, maxx, maxy]
 
             date_range = [[minx,miny],[maxx,maxy]]
-            '''
+            
             return HttpResponse(json.dumps(date_range))
+            '''
+            return HttpResponse("")
 
 
 
