@@ -43,6 +43,7 @@ def query_domain(domain_name,start_date,end_date,southwest,northeast,query_range
     query_range = json.loads(query_range)
     query_result = []
     with open(domain_data_path, 'r') as domain_data_file:
+        print("infile")
         domain_data = json.load(domain_data_file)
         for key, value in domain_data.items():
             item_southwest,item_northeast,item_start_date,item_end_date = decode_key(key)
