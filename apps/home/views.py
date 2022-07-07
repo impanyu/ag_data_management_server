@@ -143,18 +143,20 @@ def data(request):
             logic_path = request.GET.get("file_path","")
             real_path = map_file_path(logic_path)
 
-            
+            '''
             data = gdal.Open(real_path, GA_ReadOnly)
             geoTransform = data.GetGeoTransform()
             minx = geoTransform[0]
             maxy = geoTransform[3]
             maxx = minx + geoTransform[1] * data.RasterXSize
             miny = maxy + geoTransform[5] * data.RasterYSize
-            print[minx, miny, maxx, maxy]
+            
 
             date_range = [[minx,miny],[maxx,maxy]]
             
             return HttpResponse(json.dumps(date_range))
+            '''
+            return HttpResponse(real_path)
 
 
 
