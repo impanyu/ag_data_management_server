@@ -6,10 +6,27 @@ var domain_names=[];
         }
 
         );
-
+var start;
+var end;
 
 
 function add_to_domain(path,file_name){
+      $.get("/get_tif_range",
+        {
+           file_path : path+"/"+file_name
+        },function(data,status){
+
+           data = JSON.parse(data);
+           start = data[0];
+           end = data[1];
+
+
+
+        }
+
+        )
+
+
      box_height = 800;
      box_width = 1200;
      body = document.getElementsByTagName("body")[0];
@@ -229,8 +246,8 @@ function initMap(){
         lastOverlay = event.overlay; // Save it
 
         var bounds = lastOverlay.getBounds();
-        var start = bounds.getNorthEast();
-        var end = bounds.getSouthWest();
+        start = bounds.getNorthEast();
+        end = bounds.getSouthWest();
 
         document.getElementById("southwest").setAttribute("value",end) ;
         document.getElementById("northeast").setAttribute("value",start);

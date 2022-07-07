@@ -11,6 +11,20 @@ import numpy as np
 from datetime import datetime
 
 
+def map_file_path(logic_path,username):
+    real_path = ""
+
+    for i in range(1, len(logic_path.split("/"))):
+        real_path += "/" + logic_path.split("/")[i]
+
+    if real_path == "":
+        real_path = "."
+    else:
+        real_path = real_path[1:]
+
+    real_path=os.path.join("/home/" + username + "/ag_data/", real_path)
+    return real_path
+
 def add_to_new_domain(domain_name, start_date, end_date, southwest, northeast, file_path):
     domain_data_path = os.path.join(settings.CORE_DIR, 'data', 'domain_data.json')
     if not os.path.exists(domain_data_path):
