@@ -138,7 +138,7 @@ def data(request):
         load_template = request.path.split('/')[-1]
         load_template = load_template.split('?')[0]
 
-        '''
+
         if load_template == 'get_tif_range':
             logic_path = request.GET.get("file_path","")
             real_path = map_file_path(logic_path)
@@ -155,13 +155,13 @@ def data(request):
             date_range = [[minx,miny],[maxx,maxy]]
             
             return HttpResponse(json.dumps(date_range))
-        '''
 
 
 
 
 
-        if load_template == 'get_domains':
+
+        elif load_template == 'get_domains':
             domains = get_domains()
             return HttpResponse(json.dumps(list(domains.keys())))
 
