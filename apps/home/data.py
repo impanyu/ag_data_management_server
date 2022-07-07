@@ -18,9 +18,10 @@ def tif_to_jpg(tif_file_path,username):
 
     new_name = tif_file_path.split("/")[-1].split(".")[0]+".jpg"
     im = Image.open(real_path)
-    '''
+
     im.thumbnail((800,800))
     outfile = os.path.join(settings.CORE_DIR, 'data' ,'data_cache',new_name)
+    '''
     im.save(outfile, "JPEG", quality=100)
     return "/static/"+new_name
     '''
