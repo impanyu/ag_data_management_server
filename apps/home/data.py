@@ -72,8 +72,10 @@ def query_domain(domain_name, start_date, end_date, southwest, northeast, query_
             
             if(satisfied):
                 result = value
+                item_southwest = str(item_lower_lat) + "," + str(item_left_ln)
+                item_northeast = str(item_upper_lat) + "," + str(item_right_ln)
                 result["bounding_box"]=[item_southwest,item_northeast]
-                result["date_range"] = [item_start_date,item_end_date]
+                result["date_range"] = [datetime.strftime(item_start_date,"%m/%d/%Y"),datetime.strftime(item_end_date,"%m/%d/%Y")]
                 result["file_path"] = tif_to_png(result["file_path"])
 
                 query_result.append(result)
