@@ -57,12 +57,14 @@ def query_domain(domain_name,start_date,end_date,southwest,northeast,query_range
                 continue
             #check extra attributes
             satisfied = True
+            '''
             for content_key, range_values in query_range.items():
                 if(content_key not in value):
                     continue
                 if(not (range_values[0]<= value[content_key] and value["content_key"]<=range_values[1])):
                     satisfied = False
                     break
+            '''
             if(satisfied):
                 result = value
                 result["bounding_box"]=[item_southwest,item_northeast]
