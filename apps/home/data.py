@@ -38,10 +38,10 @@ def add_to_domain(domain_name, start_date, end_date, southwest, northeast, data_
     else:
         with open(domain_data_path, 'r') as domain_data_file:
             domain_data = json.load(domain_data_file)
-        if(item_key not in domain_data):
-            domain_data[item_key] = {}
-        for key,value in json.loads(data_content):
-            domain_data[item_key][key] = value
+            if(item_key not in domain_data):
+                domain_data[item_key] = {}
+            for key,value in json.loads(data_content):
+                domain_data[item_key][key] = value
 
         with open(domain_data_path, 'w') as domain_data_file:
             json.dump(domain_data, domain_data_file)
