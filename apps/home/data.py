@@ -28,7 +28,7 @@ def convert_and_caching(file_path,username):
         new_name = file_path.split("/")[-1].split(".")[0]+".jpg"
         im = Image.open(real_path)
 
-        im.thumbnail((800,800))
+        im.thumbnail((1000,1000))
         outfile = os.path.join(settings.CORE_DIR, 'data' ,'data_cache',new_name)
         if(not im.mode == 'RGB'):
             im = im.convert('RGB')
