@@ -43,55 +43,20 @@
 {% endblock content %}
 
 {% block javascripts %}
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU1RvtD5YF8-dwMmCIYP8ds-6Np5QVHFY&callback=init_map&v=weekly" async></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU1RvtD5YF8-dwMmCIYP8ds-6Np5QVHFY&libraries=drawing&v=weekly" async></script>
+
+
 <script >
 
 
 
-function init_map(){
-southwest = "{{bounding_box.0}}";
-northeast = "{{bounding_box.1}}";
 
-rect_lower_lat = parseFloat(southwest.split(",")[0]);
-rect_left_ln = parseFloat(southwest.split(",")[1]);
-rect_upper_lat = parseFloat(northeast.split(",")[0]);
-rect_right_ln = parseFloat(northeast.split(",")[1]);
-
-center_lat = (rect_lower_lat + rect_upper_lat)/2;
-center_ln = (rect_right_ln+ rect_left_ln)/2;
-
-  const map = new google.maps.Map(
-    document.getElementById("map"),
-    {
-      center: { lat:center_lat, lng: center_ln },
-      zoom: 8,
-    }
-  );
-
-
-  const rectCoords = [
-    { lat: rect_lower_lat, lng: rect_left_ln },
-    { lat: rect_lower_lat, lng: rect_right_ln},
-    { lat: rect_upper_lat, lng: rect_right_ln },
-    { lat: rect_upper_lat, lng: rect_left_ln }
-  ];
-// Construct the rect.
-  const rectangle = new google.maps.Polygon({
-    paths: rectCoords,
-    strokeColor: "blue",
-    strokeOpacity: 0.8,
-    strokeWeight: 2,
-    fillColor: "blue",
-    fillOpacity: .3,
-  });
-
-
-  rectangle.setMap(map);
-
-
-
-}
-
-
+var southwest = "{{bounding_box.0}}";
+var northeast = "{{bounding_box.1}}";
 </script>
+
+<script src="/static/assets/js/domain_main_page.js"></script>
+
+
+
 {% endblock javascripts %}
