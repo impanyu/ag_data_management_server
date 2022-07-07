@@ -86,7 +86,7 @@ function add_to_domain(path,file_name){
            end_date : document.getElementById("end_date").value,
            southwest : document.getElementById("southwest").value,
            northeast : document.getElementById("northeast").value,
-           data_content : JSON.stringfy({file_path: path+"/"+file_name})
+           data_content : JSON.stringify({file_path: path+"/"+file_name})
         },function(data,status){
 
            if(data == "file added to domain"){
