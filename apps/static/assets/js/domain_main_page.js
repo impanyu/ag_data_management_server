@@ -130,7 +130,7 @@ query_range = {};
                 imageBounds
               );
               img_overlay.setMap(map);
-              overlays.append[img_overlay];
+              overlays.append(img_overlay);
               map.setCenter({lat: (north+south)/2 ,lng: (east+west)/2});
               map.setZoom(13);
           }
