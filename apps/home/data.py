@@ -14,16 +14,18 @@ import shutil
 
 
 
-def convert_and_caching(tif_file_path,username):
-    real_path = map_file_path(tif_file_path,username)
-    suffix = tif_file_path.split("/")[-1].split(".")[1]
+def convert_and_caching(file_path,username):
+    real_path = map_file_path(file_path,username)
+    suffix = file_path.split("/")[-1].split(".")[1]
+    print(suffix)
+
     if( suffix == "jpg" or suffix == "png"):
 
-        new_name = tif_file_path.split("/")[-1]
+        new_name = file_path.split("/")[-1]
         shutil.copy(real_path, "/static/" + new_name)
 
     elif(suffix == "tif" or suffix == "tiff"):
-        new_name = tif_file_path.split("/")[-1].split(".")[0]+".jpg"
+        new_name = file_path.split("/")[-1].split(".")[0]+".jpg"
         im = Image.open(real_path)
 
         im.thumbnail((800,800))
