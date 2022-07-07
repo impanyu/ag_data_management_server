@@ -88,3 +88,4 @@ center_ln = (rect_right_ln+ rect_left_ln)/2;
 
 }
 
+$("input").datepicker();
