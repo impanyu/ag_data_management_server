@@ -5,7 +5,7 @@ var domain_names;
            domain_names = JSON.parse(data);
         }
 
-        )
+        );
 
 
 

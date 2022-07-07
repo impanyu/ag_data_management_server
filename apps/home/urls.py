@@ -13,7 +13,8 @@ urlpatterns = [
 
     # The home page
     path('', views.index, name='home'),
-
+    re_path(r'^get_domains',views.data,name='get_domains'),
+    re_path(r'^add_to_new_domain',views.data,name='add_to_new_domain'),
     re_path(r'^create_new_domain',views.data,name='create_new_domain'),
     re_path(r'^domain_data',views.data,name='domain_data'),
     re_path(r'^domain_time',views.data,name='domain_time'),
@@ -25,6 +26,7 @@ urlpatterns = [
     re_path(r'^delete_file',views.data,name='delete_file'),
     # Matches any html file
     re_path(r'^.*\.*', views.pages, name='pages')
+
 ]
 
 
