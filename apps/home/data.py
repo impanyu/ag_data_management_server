@@ -46,6 +46,7 @@ def query_domain(domain_name,start_date,end_date,southwest,northeast,query_range
         print("infile")
         domain_data = json.load(domain_data_file)
         for key, value in domain_data.items():
+            '''
             item_southwest,item_northeast,item_start_date,item_end_date = decode_key(key)
             item_lower_lat,item_upper_lat,item_left_ln,item_right_ln = extract_coordinates(item_southwest,item_northeast)
             lower_lat, upper_lat, left_ln, right_ln = extract_coordinates(southwest,northeast)
@@ -57,7 +58,7 @@ def query_domain(domain_name,start_date,end_date,southwest,northeast,query_range
                 continue
             #check extra attributes
             satisfied = True
-            '''
+            
             for content_key, range_values in query_range.items():
                 if(content_key not in value):
                     continue
