@@ -110,8 +110,8 @@ query_range = {};
                const imageBounds = {
                 north: parseFloat(data_item["bounding_box"][1].split(",")[0]),
                 south: parseFloat(data_item["bounding_box"][0].split(",")[0]),
-                east: parseFloat(data_item["bounding_box"][1].split(",")[1]),,
-                west: parseFloat(data_item["bounding_box"][0].split(",")[1]),,
+                east: parseFloat(data_item["bounding_box"][1].split(",")[1]),
+                west: parseFloat(data_item["bounding_box"][0].split(",")[1]),
               };
 
               img_overlay = new google.maps.GroundOverlay(
