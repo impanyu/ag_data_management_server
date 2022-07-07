@@ -79,19 +79,20 @@ function add_to_domain(path,file_name){
      add_to_domain_box.appendChild(submit_button);
 
      submit_button.addEventListener("click",function(){
-        $.post("/add_to_new_domain",
+        $.post("/add_to_domain",
         {
            domain_name : document.getElementById("domain_name_select").value,
            start_date : document.getElementById("start_date").value,
            end_date : document.getElementById("end_date").value,
            southwest : document.getElementById("southwest").value,
            northeast : document.getElementById("northeast").value,
-           file_path : path+"/"+file_name
+           data_content : JSON.stringfy({file_path: path+"/"+file_name})
         },function(data,status){
 
            if(data == "file added to domain"){
               add_to_domain_box.remove();
               background_cover.remove();
+              alert("file added to domain: "+domain_name);
            }
 
 

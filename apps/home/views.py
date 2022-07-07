@@ -200,14 +200,14 @@ def data(request):
             return HttpResponse(json.dumps(list(domains.keys())))
 
         elif load_template == 'add_to_new_domain':
-            domain_name = request.POST.get("domain_name_select", "")
+            domain_name = request.POST.get("domain_name", "")
             start_date = request.POST.get("start_date", "")
             end_date = request.POST.get("end_date", "")
             southwest = request.POST.get("southwest", "")
             northeast = request.POST.get("northeast", "")
-            file_path = request.POST.get("file_path","")
+            data_content = request.POST.get("data_content","")
 
-            add_to_new_domain(domain_name,start_date,end_date,southwest,northeast,file_path)
+            add_to_domain(domain_name,start_date,end_date,southwest,northeast,data_content)
             return HttpResponse("file added to domain")
 
         elif load_template == 'create_new_domain':

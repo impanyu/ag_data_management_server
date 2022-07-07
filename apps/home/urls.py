@@ -16,7 +16,7 @@ urlpatterns = [
     re_path(r'^get_tif_range',views.data,name='get_tif_range'),
     re_path(r'^get_domains',views.data,name='get_domains'),
 
-    re_path(r'^add_to_new_domain',views.data,name='add_to_new_domain'),
+    re_path(r'^add_to_domain',views.data,name='add_to_domain'),
     re_path(r'^create_new_domain',views.data,name='create_new_domain'),
     re_path(r'^domain_data',views.data,name='domain_data'),
     re_path(r'^domain_time',views.data,name='domain_time'),
