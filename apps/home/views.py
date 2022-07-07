@@ -145,7 +145,7 @@ def data(request):
             southwest = request.POST.get("southwest", "")
             northeast = request.POST.get("northeast", "")
             query_range = request.POST.get("query_range", "")
-            query_result = query_domain(domain_name,start_date,end_date,southwest,northeast,query_range)
+            query_result = query_domain(domain_name,start_date,end_date,southwest,northeast,query_range,request.user.get_username())
             return HttpResponse(query_result)
 
 

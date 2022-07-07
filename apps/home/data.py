@@ -9,10 +9,19 @@ import json
 import pandas as pd
 import numpy as np
 from datetime import datetime
+from PIL import Image
 
 
-def tif_to_png(file_path):
-    return file_path
+
+def tif_to_jpg(tif_file_path,username):
+    real_path = map_file_path(tif_file_path,username)
+    new_name = tif_file_path.split("/")[-1].split(".")[0]+".jpg"
+    im = Image.open(real_path)
+    "Generating jpeg for"
+    im.thumbnail((800,800))
+    outfile = os.path.join(settings.CORE_DIR, 'data' ,'data_cache',new_name)
+    im.save(outfile, "JPEG", quality=100)
+    return "/static/"+new_name
 
 
 def extract_coordinates(southwest, northeast):
@@ -35,7 +44,7 @@ def decode_key(key):
     return (float(keys[0]), float(keys[1]), float(keys[2]), float(keys[3]),datetime.strptime(keys[4],"%m/%d/%Y"),datetime.strptime(keys[5],"%m/%d/%Y"))
 
 
-def query_domain(domain_name, start_date, end_date, southwest, northeast, query_range):
+def query_domain(domain_name, start_date, end_date, southwest, northeast, query_range,username):
     domain_data_path = os.path.join(settings.CORE_DIR, 'data', domain_name + '.json')
     query_range = json.loads(query_range)
     query_result = []
@@ -76,7 +85,7 @@ def query_domain(domain_name, start_date, end_date, southwest, northeast, query_
                 item_northeast = str(item_upper_lat) + "," + str(item_right_ln)
                 result["bounding_box"]=[item_southwest,item_northeast]
                 result["date_range"] = [datetime.strftime(item_start_date,"%m/%d/%Y"),datetime.strftime(item_end_date,"%m/%d/%Y")]
-                result["file_path"] = tif_to_png(result["file_path"])
+                result["file_path"] = tif_to_jpg(result["file_path"],username)
 
                 query_result.append(result)
 
