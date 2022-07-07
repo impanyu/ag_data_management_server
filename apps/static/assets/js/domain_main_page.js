@@ -108,9 +108,8 @@ query_range = {};
 
            for(var i=0;i<overlays.length;i++){
               overlays[i].setMap(null);
-
-
            }
+           overlays=[];
 
            for(var i=0;i<data.length;i++){
               data_item = data[i];
