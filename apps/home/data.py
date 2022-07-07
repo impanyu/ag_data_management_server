@@ -55,13 +55,14 @@ def query_domain(domain_name, start_date, end_date, southwest, northeast, query_
             if(not overlap(item_lower_lat,item_upper_lat,lower_lat,upper_lat)):
                 print("o1")
                 continue
-            '''
+
             if(not overlap(item_left_ln,item_right_ln,left_ln,right_ln)):
                 print("o2")
                 continue
             if(not overlap_time(item_start_date,item_end_date,start_date,end_date)):
                 print("o3")
                 continue
+            '''
             #check extra attributes
             satisfied = True
             
