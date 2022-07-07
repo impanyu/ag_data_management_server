@@ -52,9 +52,9 @@ function init_map(){
 southwest = "{{bounding_box.0}}";
 northeast = "{{bounding_box.1}}";
 
-rect_lower_lat = parseFloat(southwest.split(",")[0].substr(1));
+rect_lower_lat = parseFloat(southwest.split(",")[0]);
 rect_left_ln = parseFloat(southwest.split(",")[1]);
-rect_upper_lat = parseFloat(northeast.split(",")[0].substr(1));
+rect_upper_lat = parseFloat(northeast.split(",")[0]);
 rect_right_ln = parseFloat(northeast.split(",")[1]);
 
 center_lat = (rect_lower_lat + rect_upper_lat)/2;
