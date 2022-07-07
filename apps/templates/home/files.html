@@ -209,9 +209,6 @@ function get_file_list(){
                    '<td> <div class="avatar-group"> <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="{{user}}"><img alt="Image placeholder" src="/static/assets/img/theme/react.jpg"></a></div></td>' +
                    '<td ><div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>'+
                    '<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">'+
-                   '<a class="dropdown-item" href="#" id="'+dir["dir_name"]+'_add_domain">Add to Domain</a>'+
-                   '<a class="dropdown-item" href="#"id="'+dir["dir_name"]+'_canopy_height">Canopy Height</a>'+
-                   '<a class="dropdown-item" href="#"id="'+dir["dir_name"]+'_canopy_coverage_and_temperature">Canopy Coverage and Temperature</a>'+
                    '<a class="dropdown-item" href="#" id="'+i+'_delete">Delete</a>'+
                    '</div> </div></td></tr>';
             item_node = htmlToElement(item_html);
@@ -308,6 +305,7 @@ function get_file_list(){
                    '<td ><div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>'+
                    '<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">'+
                    '<a class="dropdown-item" href="#" id="'+i+'_file_delete">Delete</a>'+
+                   '<a class="dropdown-item" href="#" id="'+dir["dir_name"]+'_add_domain">Add to Domain</a>'+
                    '</div> </div></td></tr>';
             item_node = htmlToElement(item_html);
             $("#file_list")[0].appendChild(item_node);
