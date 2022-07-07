@@ -3,8 +3,8 @@
 Copyright (c) 2019 - present AppSeed.us
 """
 
-#import gdal
-#from gdalconst import GA_ReadOnly
+from osgeo import gdal
+from osgeo.gdalconst import GA_ReadOnly
 
 
 from django import template
