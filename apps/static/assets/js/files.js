@@ -81,11 +81,13 @@ function add_to_domain(path,file_name){
      submit_button = htmlToElement('<button class="btn btn-primary" type="button" id="add_to_domain_submit">Submit</button>');
      add_to_domain_box.appendChild(submit_button);
 
-     attr_id=document.getElementById("attr").value
+
 
      submit_button.addEventListener("click",function(){
         $.post("/add_to_domain",
         {
+           attr_id=document.getElementById("attr").value；
+
            domain_name : document.getElementById("domain_name_select").value,
            start_date : document.getElementById("start_date").value,
            end_date : document.getElementById("end_date").value,
