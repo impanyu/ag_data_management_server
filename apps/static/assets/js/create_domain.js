@@ -247,10 +247,10 @@ function init_map_main(){
                  console.info(parseFloat(domains[domain_name]["bounding_box"][0].split(",")[0]) );
                  var marker = new google.maps.Marker({
                     position: {lat:parseFloat(domains[domain_name]["bounding_box"][0].split(",")[0]) , lng: parseFloat(domains[domain_name]["bounding_box"][0].split(",")[1])},
-                    map_main,
+
                     title: domain_name,
                   });
-                  //marker.setMap(map)
+                  marker.setMap(map_main);
             }
 
 
