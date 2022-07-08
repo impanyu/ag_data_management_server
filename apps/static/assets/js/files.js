@@ -59,8 +59,8 @@ function add_to_domain(path,file_name){
 
      body = document.getElementsByTagName("body")[0];
 
-     box_height = Math.min(800,body.offsetHeight);
-     box_width = Math.min(1200,body.offsetWidth);
+     box_height = Math.min(800,window.innerHeight-200);
+     box_width = Math.min(1200,window.innerWidth-200);
 
 
      add_to_domain_box = document.createElement("div");
@@ -69,8 +69,8 @@ function add_to_domain(path,file_name){
      add_to_domain_box.style.width = box_width+"px";
      add_to_domain_box.style.height = box_height+"px";
      add_to_domain_box.style.background = "white";
-     add_to_domain_box.style.left =(body.offsetWidth - box_width)/2 + "px";
-     add_to_domain_box.style.top = (body.offsetHeight - box_height)/2 + "px";
+     add_to_domain_box.style.left =(window.innerWidth - box_width)/2 + "px";
+     add_to_domain_box.style.top = (window.innerHeight - box_height)/2 + "px";
 
      title = document.createElement("div");
      title.style.margin = "50px";
