@@ -17,7 +17,7 @@ var drawingManager;
 function add_to_domain(path,file_name){
       if(file_name.split(".")[file_name.split(".").length-1] !="tif" && file_name.split(".")[file_name.split(".").length-1] !="tiff" && file_name.split(".")[file_name.split(".").length-1] !="png" && file_name.split(".")[file_name.split(".").length-1] !="jpg")
          return;
-      if(file_name.split(".")[-1] == "tif"){
+      if(file_name.split(".")[file_name.split(".").length-1] == "tif" || file_name.split(".")[file_name.split(".").length-1] =="tiff"){
               $.get("/get_tif_range",
                 {
                    file_path : path+"/"+file_name
