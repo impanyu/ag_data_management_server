@@ -228,6 +228,10 @@ def data(request):
             domains = get_domains()
             return HttpResponse(json.dumps(list(domains.keys())))
 
+        elif load_template == 'get_domains_meta':
+            domains = get_domains()
+            return HttpResponse(json.dumps(domains))
+
         elif load_template == 'add_to_domain':
             domain_name = request.POST.get("domain_name", "")
             start_date = request.POST.get("start_date", "")

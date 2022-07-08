@@ -238,6 +238,30 @@ function init_map_main(){
     }
   );
 
+     $.get("/get_domains_meta",
+        {
+        },function(data,status){
+
+           domains = JSON.parse(data);
+            location.href = '/domains.html';
+            for(domain_name in domains){
+                 new google.maps.Marker({
+                    position: {lat:parseFloat(domains[domain_name]["bounding_box"][0].split(",")[0]) , lng: parseFloat(domains[domain_name]["bounding_box"][0].split(",")[1])},
+                    map,
+                    title: domain_name,
+                  });
+            }
+
+
+
+        }
+
+
+
+        )
+
+
+
 
 
 
