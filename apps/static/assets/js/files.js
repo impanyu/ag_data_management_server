@@ -120,7 +120,7 @@ function add_to_domain(path,file_name){
   domain_name_select_string = '<div class="col col-lg-6 align-items-center">'+
         '<div class="form-group">'+
            '<div class="input-group input-group-alternative">';
-   domain_name_select_string += '<select class="form-control form-select-lg mb-3" data-toggle="select" title="Simple select" data-placeholder="Select a domain" id="domain_name_select">';
+   domain_name_select_string += '<select class="form-control form-select-lg" data-toggle="select" title="Simple select" data-placeholder="Select a domain" id="domain_name_select">';
 
 
    for(var i in domain_names)
@@ -137,11 +137,14 @@ function add_to_domain(path,file_name){
 
 
 
-    domain_name_select.setAttribute("id","domain_name_select");
-    domain_name_select.style.width =  box_width-100+"px";
-    domain_name_select.style.marginLeft = "50px";
 
-    add_to_domain_box.appendChild(domain_name_select);
+    domain_name_select.setAttribute("id","domain_name_select");
+    //domain_name_select.style.width =  box_width-100+"px";
+    //domain_name_select.style.marginLeft = "50px";
+
+
+
+    //add_to_domain_box.appendChild(domain_name_select);
 
 
 
@@ -152,7 +155,11 @@ function add_to_domain(path,file_name){
             '</div>'+
         '</div>'+
     '</div>');
-    add_to_domain_box.appendChild(attr_input);
+
+    domain_and_attr_container = htmlToElement('<div class="row align-items-center"></div>')
+    domain_and_attr_container.appendChild(domain_name_select);
+    domain_and_attr_container.appendChild(attr_input);
+    add_to_domain_box.appendChild(domain_and_attr_container)
 
 
     date_picker = htmlToElement('<div class="input-daterange datepicker row align-items-center">'+
