@@ -245,11 +245,12 @@ function init_map_main(){
            domains = JSON.parse(data);
             for(domain_name in domains){
                  console.info(parseFloat(domains[domain_name]["bounding_box"][0].split(",")[0]) );
-                 new google.maps.Marker({
+                 var marker = new google.maps.Marker({
                     position: {lat:parseFloat(domains[domain_name]["bounding_box"][0].split(",")[0]) , lng: parseFloat(domains[domain_name]["bounding_box"][0].split(",")[1])},
-                    map,
+                    map_main,
                     title: domain_name,
                   });
+                  //marker.setMap(map)
             }
 
 
