@@ -157,11 +157,13 @@ function add_to_domain(path,file_name){
         '</div>'+
     '</div>');
 
-    attr_input.getElementById("attr").value = file_name.substr(0,file_name.length-file_name.split(".")[file_name.split(".").length-1].length);
-    domain_and_attr_container = htmlToElement('<div class="row align-items-center" style="width: 1100px; margin-left: 50px;"></div>')
+     domain_and_attr_container = htmlToElement('<div class="row align-items-center" style="width: 1100px; margin-left: 50px;"></div>')
     domain_and_attr_container.appendChild(domain_name_select);
     domain_and_attr_container.appendChild(attr_input);
     add_to_domain_box.appendChild(domain_and_attr_container);
+
+    document.getElementById("attr").value = file_name.substr(0,file_name.length-file_name.split(".")[file_name.split(".").length-1].length);
+
 
 
     date_picker = htmlToElement('<div class="input-daterange datepicker row align-items-center">'+
