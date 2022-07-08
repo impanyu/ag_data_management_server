@@ -54,7 +54,7 @@ function add_to_domain(path,file_name){
 
                 }
 
-                )
+                );
         }
 
      body = document.getElementsByTagName("body")[0];
@@ -91,6 +91,7 @@ function add_to_domain(path,file_name){
            northeast : document.getElementById("northeast").value,
            data_content : JSON.stringify({file_path: path+"/"+file_name})
         },function(data,status){
+           console.info(data);
 
            if(data == "item added to domain"){
               alert("item added to domain: "+document.getElementById("domain_name_select").value);
