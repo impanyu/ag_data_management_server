@@ -242,7 +242,7 @@ function get_file_list(){
               time=this.id.split("_")[5];
               console.info(this.id.split("_")[3]);
 
-               $.post("/add_domain",
+               $.post("/domain",
                     {
                       subdomain: subdomain,
                       time: time//data["dirs"][i]["dir_name"].split("_")[5]

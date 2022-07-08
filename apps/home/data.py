@@ -127,7 +127,7 @@ def map_file_path(logic_path, username):
 
 def add_to_domain(domain_name, start_date, end_date, southwest, northeast, data_content):
     domain_data_path = os.path.join(settings.CORE_DIR, 'data', domain_name + '.json')
-    item_key = southwest + "," + northeast + "," + start_date + "," + end_date
+    item_key = southwest[1:-1] + "," + northeast[1,-1] + "," + start_date + "," + end_date
     if not os.path.exists(domain_data_path):
         with open(domain_data_path, 'w') as domain_data_file:
 
