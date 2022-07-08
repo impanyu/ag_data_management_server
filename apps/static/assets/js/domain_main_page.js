@@ -144,7 +144,7 @@ var query_result_by_attr = {};
                             { lat: north, lng: east },
                             { lat: north, lng: west }
                           ];
-                      if(data_item[k].isnumeric()){
+                      if($.isNumeric(data_item[k])){
                           fill_color=parseInt(Math.min(data_item[k]*255,255));
 
                                 rectangle = new google.maps.Polygon({
