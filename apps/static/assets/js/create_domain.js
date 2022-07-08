@@ -227,3 +227,58 @@ function initMap(){
 
 
 }
+
+
+function init_map_main(){
+  const map = new google.maps.Map(
+    document.getElementById("map_main"),
+    {
+      center: { lat: 39.397, lng: -97.644 },
+      zoom: 6,
+    }
+  );
+
+  const drawingManager = new google.maps.drawing.DrawingManager({
+    drawingMode: google.maps.drawing.OverlayType.RECTANGLE,
+    drawingControl: true,
+    drawingControlOptions: {
+      position: google.maps.ControlPosition.TOP_CENTER,
+      drawingModes: [
+        google.maps.drawing.OverlayType.RECTANGLE,
+      ],
+    },
+    markerOptions: {
+      icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
+    },
+    circleOptions: {
+      fillColor: "#ffff00",
+      fillOpacity: 1,
+      strokeWeight: 5,
+      clickable: false,
+      editable: true,
+      zIndex: 1,
+    },
+  });
+
+  drawingManager.setMap(map);
+
+  google.maps.event.addListener(drawingManager, "overlaycomplete", function(event){
+       if(lastOverlay)
+           lastOverlay.setMap(null);
+
+        event.overlay.overlayType = event.type;
+        lastOverlay = event.overlay; // Save it
+
+        var bounds = lastOverlay.getBounds();
+        var start = bounds.getNorthEast();
+        var end = bounds.getSouthWest();
+
+        document.getElementById("southwest").setAttribute("value",end) ;
+        document.getElementById("northeast").setAttribute("value",start);
+
+
+        //map.drawingManager.setDrawingMode(null); // Return to 'hand' mode
+});
+
+
+}
