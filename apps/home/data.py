@@ -31,11 +31,12 @@ def convert_and_caching(file_path,username):
             return "/static/data_cache/" + new_name
 
         im = Image.open(real_path)
+        if (not im.mode == 'RGB'):
+            im = im.convert('RGB')
 
         im.thumbnail((1000,1000))
 
-        if(not im.mode == 'RGB'):
-            im = im.convert('RGB')
+
 
         im.save(outfile)
 
@@ -103,13 +104,13 @@ def query_domain(domain_name, start_date, end_date, southwest, northeast, query_
 
             if(satisfied):
                 result = {}
-                '''
+
                 for attr_key, attr_value in value.items():
                     if (not attr_value.isnumeric()): #deal with file path
                         result[attr_key] = convert_and_caching(attr_value, username)
                     else:
                         result[attr_key] = attr_value
-                '''
+
 
 
                 item_southwest = str(item_lower_lat) + "," + str(item_left_ln)
