@@ -91,7 +91,12 @@ center_ln = (rect_right_ln+ rect_left_ln)/2;
 }
 
 $(".daterange input").datepicker();
-query_range = {};
+//query_range should be in the format: {range_1:[1,2], range_b:[3,4],...}
+var query_range = {};
+
+var query_result_by_time = {};//key need to be modified to range, currently just use start date
+var query_result_by_attr = {};
+
    $("#query")[0].addEventListener("click",function(){
         $.post("/query_domain",
         {
@@ -110,6 +115,10 @@ query_range = {};
               overlays[i].setMap(null);
            }
            overlays=[];
+           query_result_by_time = {};
+           query_result_by_attr = {};
+
+
 
            for(var i=0;i<data.length;i++){
               data_item = data[i];
@@ -118,24 +127,76 @@ query_range = {};
               east = parseFloat(data_item["bounding_box"][1].split(",")[1]);
               west = parseFloat(data_item["bounding_box"][0].split(",")[1]);
 
-               const imageBounds = {
-                north: north,
-                south: south,
-                east: east,
-                west: west,
-              };
+              for(k in data_item){
+                       if(k == "bounding_box" || k=="date_range")
+                          continue;
 
-              img_overlay = new google.maps.GroundOverlay(
-                data_item["file_path"],
-                imageBounds
-              );
-              img_overlay.setMap(map);
-              overlays.push(img_overlay);
-              map.setCenter({lat: (north+south)/2 ,lng: (east+west)/2});
-              map.setZoom(18);
+                        imageBounds = {
+                        north: north,
+                        south: south,
+                        east: east,
+                        west: west,
+                      };
+
+                       rectCoords = [
+                            { lat: south, lng: west },
+                            { lat: south, lng: east},
+                            { lat: north, lng: east },
+                            { lat: north, lng: west }
+                          ];
+                      if(data_item[k].isnumeric()){
+                          fill_color=parseInt(Math.min(data_item[k]*255,255));
+
+                                rectangle = new google.maps.Polygon({
+                                paths: rectCoords,
+                                strokeColor: "rgb("+0+","+fill_color+","+0+")",
+                                strokeOpacity: 0.5,
+                                strokeWeight: 2,
+                                fillColor: "rgb("+0+","+fill_color+","+0+")",
+                                fillOpacity: 0.5,
+                              });
+
+                              rectangle.setMap(map);
+                              overlays.push(rectangle);
+                              if(k in query_result_by_attr)
+                                    query_result_by_attr[k].push(rectangle);
+                              else
+                                   query_result_by_attr[k] = [rectangle];
+                              if(data_item["date_range"][0] in query_result_by_time)
+
+                                    query_result_by_time[data_item["date_range"][0]].push(rectangle);
+                              else
+                                  query_result_by_time[data_item["date_range"][0]]=[rectangle];
+
+                      }
+                      else{
+                              img_overlay = new google.maps.GroundOverlay(
+                                data_item[k],
+                                imageBounds
+                              );
+                              img_overlay.setMap(map);
+                              overlays.push(img_overlay);
+
+                              if(k in query_result_by_attr)
+                                    query_result_by_attr[k].push(img_overlay);
+                              else
+                                   query_result_by_attr[k] = [img_overlay];
+                              if(data_item["date_range"][0] in query_result_by_time)
+
+                                    query_result_by_time[data_item["date_range"][0]].push(img_overlay);
+                              else
+                                  query_result_by_time[data_item["date_range"][0]]=[img_overlay];
+
+                      }
+
+              }
+
+
+
           }
 
-
+              map.setCenter({lat: (north+south)/2 ,lng: (east+west)/2});
+              map.setZoom(18);
 
 
         }

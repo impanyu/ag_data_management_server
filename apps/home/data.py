@@ -26,10 +26,14 @@ def convert_and_caching(file_path,username):
 
     elif(suffix == "tif" or suffix == "tiff"):
         new_name = file_path.split("/")[-1].split(".")[0]+".jpg"
+        outfile = os.path.join(settings.CORE_DIR, 'data', 'data_cache', new_name)
+        if (os.path.exists(outfile)):
+            return "/static/data_cache/" + new_name
+
         im = Image.open(real_path)
 
         im.thumbnail((1000,1000))
-        outfile = os.path.join(settings.CORE_DIR, 'data' ,'data_cache',new_name)
+
         if(not im.mode == 'RGB'):
             im = im.convert('RGB')
 
