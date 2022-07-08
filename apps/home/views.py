@@ -209,7 +209,7 @@ def data(request):
             northeast = request.POST.get("northeast", "")
             data_content = request.POST.get("data_content","")
 
-            add_to_domain(domain_name,start_date,end_date,southwest,northeast,data_content)
+            #add_to_domain(domain_name,start_date,end_date,southwest,northeast,data_content)
             return HttpResponse("item added to domain")
 
         elif load_template == 'create_new_domain':
