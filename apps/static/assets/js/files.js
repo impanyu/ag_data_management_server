@@ -156,7 +156,7 @@ function add_to_domain(path,file_name){
         '</div>'+
     '</div>');
 
-    domain_and_attr_container = htmlToElement('<div class="row align-items-center"></div>')
+    domain_and_attr_container = htmlToElement('<div class="row align-items-center" style="width: 1100px; margin-left: 50px;"></div>')
     domain_and_attr_container.appendChild(domain_name_select);
     domain_and_attr_container.appendChild(attr_input);
     add_to_domain_box.appendChild(domain_and_attr_container)
