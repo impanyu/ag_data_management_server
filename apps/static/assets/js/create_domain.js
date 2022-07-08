@@ -241,7 +241,7 @@ function init_map_main(){
      $.get("/get_domains_meta",
         {
         },function(data,status){
-
+            /*
            domains = JSON.parse(data);
             location.href = '/domains.html';
             for(domain_name in domains){
@@ -250,7 +250,7 @@ function init_map_main(){
                     map,
                     title: domain_name,
                   });
-            }
+            }*/
 
 
 
