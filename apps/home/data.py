@@ -100,14 +100,17 @@ def query_domain(domain_name, start_date, end_date, southwest, northeast, query_
                     break
             
             print(satisfied)
-            '''
+
             if(satisfied):
                 result = {}
+                '''
                 for attr_key, attr_value in value.items():
                     if (not attr_value.isnumeric()): #deal with file path
                         result[attr_key] = convert_and_caching(attr_value, username)
                     else:
                         result[attr_key] = attr_value
+                '''
+
 
                 item_southwest = str(item_lower_lat) + "," + str(item_left_ln)
                 item_northeast = str(item_upper_lat) + "," + str(item_right_ln)
@@ -117,7 +120,7 @@ def query_domain(domain_name, start_date, end_date, southwest, northeast, query_
 
 
                 query_result.append(result)
-            '''
+
 
             print(query_result)
 
