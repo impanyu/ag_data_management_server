@@ -100,6 +100,7 @@ def query_domain(domain_name, start_date, end_date, southwest, northeast, query_
                     break
             
             print(satisfied)
+            '''
             if(satisfied):
                 result = {}
                 for attr_key, attr_value in value.items():
@@ -116,7 +117,7 @@ def query_domain(domain_name, start_date, end_date, southwest, northeast, query_
 
 
                 query_result.append(result)
-
+            '''
 
             print(query_result)
 
