@@ -81,6 +81,8 @@ function add_to_domain(path,file_name){
      submit_button = htmlToElement('<button class="btn btn-primary" type="button" id="add_to_domain_submit">Submit</button>');
      add_to_domain_box.appendChild(submit_button);
 
+     attr_id=document.getElementById("attr").value
+
      submit_button.addEventListener("click",function(){
         $.post("/add_to_domain",
         {
@@ -89,7 +91,7 @@ function add_to_domain(path,file_name){
            end_date : document.getElementById("end_date").value,
            southwest : document.getElementById("southwest").value,
            northeast : document.getElementById("northeast").value,
-           data_content : JSON.stringify({document.getElementById("attr").value: path+"/"+file_name})
+           data_content : JSON.stringify({attr_id: path+"/"+file_name})
         },function(data,status){
            console.info(data);
 
