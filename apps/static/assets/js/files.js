@@ -84,9 +84,10 @@ function add_to_domain(path,file_name){
 
 
      submit_button.addEventListener("click",function(){
+        attr_id=document.getElementById("attr").value;
         $.post("/add_to_domain",
         {
-           attr_id=document.getElementById("attr").value;
+
 
            domain_name : document.getElementById("domain_name_select").value,
            start_date : document.getElementById("start_date").value,
