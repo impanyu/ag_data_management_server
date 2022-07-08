@@ -139,7 +139,6 @@ function add_to_domain(path,file_name){
 
 
 
-    domain_name_select.setAttribute("id","domain_name_select");
     //domain_name_select.style.width =  box_width-100+"px";
     //domain_name_select.style.marginLeft = "50px";
 
