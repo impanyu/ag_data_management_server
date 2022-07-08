@@ -115,6 +115,8 @@ function add_to_domain(path,file_name){
   domain_name_select_string = '<select class="form-control form-select-lg mb-3 col-lg-6" data-toggle="select" title="Simple select" data-placeholder="Select a domain" id="domain_name_select">';
    //domain_name_select_string = '<select class="form-select form-select-lg mb-3" aria-label="domain select" id="domain_name_select">';
 
+
+
    for(var i in domain_names)
       domain_name_select_string +=  '<option value="'+domain_names[i]+'">'+domain_names[i]+'</option>'
 
@@ -135,6 +137,16 @@ function add_to_domain(path,file_name){
 
     add_to_domain_box.appendChild(domain_name_select);
 
+
+
+   attr_input = htmlToElement('<div class="col col-lg-6">'+
+        '<div class="form-group">'+
+           '<div class="input-group input-group-alternative">'+
+                '<input type="text" placeholder="Attribute Name" class="form-control" id="attr" value=""/>'+
+            '</div>'+
+        '</div>'+
+    '</div>');
+    add_to_domain_box.appendChild(attr_input);
 
 
     date_picker = htmlToElement('<div class="input-daterange datepicker row align-items-center">'+
