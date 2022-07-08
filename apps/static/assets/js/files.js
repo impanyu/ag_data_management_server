@@ -263,7 +263,7 @@ function add_to_domain(path,file_name){
      map_container.style.marginLeft = "50px";
      add_to_domain_box.appendChild(map_container);
 
-    document.getElementById("attr").value = file_name.substr(0,file_name.length-file_name.split(".")[file_name.split(".").length-1].length);
+    document.getElementById("attr").value = file_name.substr(0,file_name.length-file_name.split(".")[file_name.split(".").length-1].length-1);
 
 
 
