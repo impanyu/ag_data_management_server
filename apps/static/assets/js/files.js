@@ -88,6 +88,7 @@ function add_to_domain(path,file_name){
         attr_id=document.getElementById("attr").value;
         data_content = {};
         data_content[attr_id] =path+"/"+file_name;
+        console.info(data_content);
         $.post("/add_to_domain",
         {
 
