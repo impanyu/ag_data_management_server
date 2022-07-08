@@ -17,43 +17,45 @@ var drawingManager;
 function add_to_domain(path,file_name){
       if(file_name.split(".")[-1] !="tif" && file_name.split(".")[-1] !="tiff" && file_name.split(".")[-1] !="png" && file_name.split(".")[-1] !="jpg")
          return;
-      $.get("/get_tif_range",
-        {
-           file_path : path+"/"+file_name
-        },function(data,status){
-           console.info(data);
+      if(file_name.split(".")[-1] == "tif"){
+              $.get("/get_tif_range",
+                {
+                   file_path : path+"/"+file_name
+                },function(data,status){
+                   console.info(data);
 
-           data = JSON.parse(data);
-           start = data[0];
-           end = data[1];
-
-
-           rectangle = new google.maps.Rectangle({
-                strokeColor: "#FF0000",
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: "#FF0000",
-                fillOpacity: 0.35,
-                map,
-                bounds: {
-                  north: end[0],
-                  south: start[0],
-                  east: end[1],
-                  west: start[1],
-                },
-              });
-
-              rectangle.setMap(map);
-              lastOverlay = rectangle;
-
-              map.setCenter({lat:(start[0]+end[0])/2,lng:(start[1]+end[1])/2});
-              document.getElementById("southwest").setAttribute("value",start) ;
-              document.getElementById("northeast").setAttribute("value",end);
+                   data = JSON.parse(data);
+                   start = data[0];
+                   end = data[1];
 
 
+                   rectangle = new google.maps.Rectangle({
+                        strokeColor: "#FF0000",
+                        strokeOpacity: 0.8,
+                        strokeWeight: 2,
+                        fillColor: "#FF0000",
+                        fillOpacity: 0.35,
+                        map,
+                        bounds: {
+                          north: end[0],
+                          south: start[0],
+                          east: end[1],
+                          west: start[1],
+                        },
+                      });
+
+                      rectangle.setMap(map);
+                      lastOverlay = rectangle;
+
+                      map.setCenter({lat:(start[0]+end[0])/2,lng:(start[1]+end[1])/2});
+                      document.getElementById("southwest").setAttribute("value",start) ;
+                      document.getElementById("northeast").setAttribute("value",end);
+
+
+                }
+
+                )
         }
-
-        )
 
 
      box_height = 800;
