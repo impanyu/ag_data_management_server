@@ -58,8 +58,8 @@ function add_to_domain(path,file_name){
         }
 
 
-     box_height = 800;
-     box_width = 1200;
+     box_height = Math.min(800,body.offsetHeight);
+     box_width = Math.min(1200,body.offsetWidth);
      body = document.getElementsByTagName("body")[0];
 
      add_to_domain_box = document.createElement("div");
@@ -69,7 +69,7 @@ function add_to_domain(path,file_name){
      add_to_domain_box.style.height = box_height+"px";
      add_to_domain_box.style.background = "white";
      add_to_domain_box.style.left =(body.offsetWidth - box_width)/2 + "px";
-     add_to_domain_box.style.top = (body.offsetHeight - box_height)/2-300 + "px";
+     add_to_domain_box.style.top = (body.offsetHeight - box_height)/2 + "px";
 
      title = document.createElement("div");
      title.style.margin = "50px";
