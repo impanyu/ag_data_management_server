@@ -191,12 +191,14 @@ var query_result_by_attr = {};
 
               }
 
+              map.setCenter({lat: (north+south)/2 ,lng: (east+west)/2});
+              map.setZoom(18);
+
 
 
           }
 
-              map.setCenter({lat: (north+south)/2 ,lng: (east+west)/2});
-              map.setZoom(18);
+
 
 
         }
