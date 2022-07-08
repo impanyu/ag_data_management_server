@@ -109,7 +109,7 @@ def query_domain(domain_name, start_date, end_date, southwest, northeast, query_
 
     return json.dumps(query_result)
 
-
+#map logic_path to real_path, for example impanyu/ENREC/1.png -> /home/impanyu/ag_data/ENREC/1.png
 def map_file_path(logic_path, username):
     real_path = ""
 

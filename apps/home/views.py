@@ -154,6 +154,33 @@ def data(request):
             logic_path = request.GET.get("file_path","")
             real_path = map_file_path(logic_path,request.user.get_username())
             #print(real_path)
+            #temporary solution for spidercam data
+            if(real_path.split(".")[-1] == "tiff"):
+                lower_lat = 41.145632
+                left_ln = -96.439434
+                upper_lat = 41.145942
+                right_ln = -96.439201
+
+                lat_per_rect = (upper_lat - lower_lat) / 8
+                ln_per_rect = (right_ln - left_ln) / 10
+
+                plot_id = int(real_path.split("/")[-2].split("_")[3])
+                i = int((plot_id - 1301) /10)
+                j = (plot_id -1301) % 10
+
+                rect_lower_lat = lower_lat + i * lat_per_rect
+                rect_upper_lat = rect_lower_lat + lat_per_rect
+                rect_left_ln = left_ln + j * ln_per_rect
+                rect_right_ln = rect_left_ln + ln_per_rect
+
+                bounding_box = [[rect_lower_lat, rect_left_ln],
+                                [rect_upper_lat, rect_right_ln]]
+
+                return HttpResponse(json.dumps(bounding_box))
+
+
+
+
 
 
             data = gdal.Open(real_path, GA_ReadOnly)
@@ -192,9 +219,9 @@ def data(request):
             latlong_southwest = transform.TransformPoint(minx, miny)
             latlong_northeast = transform.TransformPoint(maxx, maxy)
 
-            date_range = [[latlong_southwest[0], latlong_southwest[1]], [latlong_northeast[0], latlong_northeast[1]]]
+            bounding_box = [[latlong_southwest[0], latlong_southwest[1]], [latlong_northeast[0], latlong_northeast[1]]]
 
-            return HttpResponse(json.dumps(date_range))
+            return HttpResponse(json.dumps(bounding_box))
 
 
         elif load_template == 'get_domains':
