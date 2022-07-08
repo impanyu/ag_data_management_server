@@ -248,7 +248,7 @@ function init_map_main(){
                  var marker = new google.maps.Marker({
                     position: {lat:parseFloat(domains[domain_name]["bounding_box"][0].split(",")[0]) , lng: parseFloat(domains[domain_name]["bounding_box"][0].split(",")[1])},
 
-                    title: domain_name,
+                    label: domain_name,
                   });
                   marker.setMap(map_main);
             }
