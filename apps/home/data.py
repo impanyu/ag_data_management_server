@@ -83,11 +83,13 @@ def query_domain(domain_name, start_date, end_date, southwest, northeast, query_
                 print("o3")
                 continue
 
-            #check extra attributes
+            #check  attributes
             satisfied = True
-            
+
             for content_key, range_values in query_range.items():
                 if(content_key not in value):
+                    continue
+                if(not value[content_key].isnumeric()):
                     continue
                 if(not (float(range_values[0])<= float(value[content_key]) and float(value[content_key])<=float(range_values[1]))):
                     satisfied = False
@@ -95,12 +97,19 @@ def query_domain(domain_name, start_date, end_date, southwest, northeast, query_
             
             print(satisfied)
             if(satisfied):
-                result = value
+                result = {}
+                for attr_key, attr_value in value.items():
+                    if (not attr_value.isnumeric()): #deal with file path
+                        result[attr_key] = convert_and_caching(attr_value, username)
+                    else:
+                        result[attr_key] = attr_value
+
                 item_southwest = str(item_lower_lat) + "," + str(item_left_ln)
                 item_northeast = str(item_upper_lat) + "," + str(item_right_ln)
                 result["bounding_box"]=[item_southwest,item_northeast]
                 result["date_range"] = [datetime.strftime(item_start_date,"%m/%d/%Y"),datetime.strftime(item_end_date,"%m/%d/%Y")]
-                result["file_path"] = convert_and_caching(result["file_path"],username)
+
+
 
                 query_result.append(result)
 

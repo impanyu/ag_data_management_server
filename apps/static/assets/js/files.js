@@ -89,7 +89,7 @@ function add_to_domain(path,file_name){
            end_date : document.getElementById("end_date").value,
            southwest : document.getElementById("southwest").value,
            northeast : document.getElementById("northeast").value,
-           data_content : JSON.stringify({file_path: path+"/"+file_name})
+           data_content : JSON.stringify({document.getElementById("attr").value: path+"/"+file_name})
         },function(data,status){
            console.info(data);
 
@@ -110,7 +110,7 @@ function add_to_domain(path,file_name){
 
 
 
-  domain_name_select_string = '<select class="form-control form-select-lg mb-3" data-toggle="select" title="Simple select" data-placeholder="Select a domain" id="domain_name_select">';
+  domain_name_select_string = '<select class="form-control form-select-lg mb-3 col-lg-6" data-toggle="select" title="Simple select" data-placeholder="Select a domain" id="domain_name_select">';
    //domain_name_select_string = '<select class="form-select form-select-lg mb-3" aria-label="domain select" id="domain_name_select">';
 
    for(var i in domain_names)
