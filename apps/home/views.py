@@ -155,7 +155,7 @@ def data(request):
             real_path = map_file_path(logic_path,request.user.get_username())
             #print(real_path)
             #temporary solution for spidercam data
-            if(real_path.split("/")[1] == "winterWheatDataExample"):
+            if(real_path.split("/")[1] == "winterwheatDataExample"):
                 lower_lat = 41.145632
                 left_ln = -96.439434
                 upper_lat = 41.145942
