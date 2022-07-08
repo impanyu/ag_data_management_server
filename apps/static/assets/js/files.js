@@ -115,9 +115,12 @@ function add_to_domain(path,file_name){
 
 
 
-  domain_name_select_string = '<select class="form-control form-select-lg mb-3 col-lg-6" data-toggle="select" title="Simple select" data-placeholder="Select a domain" id="domain_name_select">';
    //domain_name_select_string = '<select class="form-select form-select-lg mb-3" aria-label="domain select" id="domain_name_select">';
 
+  domain_name_select_string = '<div class="col col-lg-6 align-items-center">'+
+        '<div class="form-group">'+
+           '<div class="input-group input-group-alternative">';
+   domain_name_select_string += '<select class="form-control form-select-lg mb-3" data-toggle="select" title="Simple select" data-placeholder="Select a domain" id="domain_name_select">';
 
 
    for(var i in domain_names)
@@ -125,7 +128,7 @@ function add_to_domain(path,file_name){
 
 
 
-   domain_name_select_string += '</select>'
+   domain_name_select_string += '</select></div></div></div>'
 
 
 
@@ -142,7 +145,7 @@ function add_to_domain(path,file_name){
 
 
 
-   attr_input = htmlToElement('<div class="col col-lg-6">'+
+   attr_input = htmlToElement('<div class="col col-lg-6 align-items-center">'+
         '<div class="form-group">'+
            '<div class="input-group input-group-alternative">'+
                 '<input type="text" placeholder="Attribute Name" class="form-control" id="attr" value=""/>'+
