@@ -17,6 +17,7 @@ var drawingManager;
 function add_to_domain(path,file_name){
       if(file_name.split(".")[file_name.split(".").length-1] !="tif" && file_name.split(".")[file_name.split(".").length-1] !="tiff" && file_name.split(".")[file_name.split(".").length-1] !="png" && file_name.split(".")[file_name.split(".").length-1] !="jpg")
          return;
+
       if(file_name.split(".")[file_name.split(".").length-1] == "tif" || file_name.split(".")[file_name.split(".").length-1] =="tiff"){
               $.get("/get_tif_range",
                 {
@@ -156,10 +157,11 @@ function add_to_domain(path,file_name){
         '</div>'+
     '</div>');
 
+    attr_input.setAttribute("value",file_name.substr(0,file_name.length-file_name.split(".")[file_name.split(".").length-1].length));
     domain_and_attr_container = htmlToElement('<div class="row align-items-center" style="width: 1100px; margin-left: 50px;"></div>')
     domain_and_attr_container.appendChild(domain_name_select);
     domain_and_attr_container.appendChild(attr_input);
-    add_to_domain_box.appendChild(domain_and_attr_container)
+    add_to_domain_box.appendChild(domain_and_attr_container);
 
 
     date_picker = htmlToElement('<div class="input-daterange datepicker row align-items-center">'+
