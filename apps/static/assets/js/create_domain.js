@@ -6,8 +6,8 @@ function htmlToElement(html) {
 }
 
 function create_domain(){
-     box_height = 800;
-     box_width = 1200;
+     box_height = Math.min(800,window.innerHeight-200);
+     box_width = Math.min(1200,window.innerWidth-200);
      body = document.getElementsByTagName("body")[0];
      new_domain_box = document.createElement("div");
      new_domain_box.setAttribute("id","create_domain_box");
@@ -15,8 +15,8 @@ function create_domain(){
      new_domain_box.style.width = box_width+"px";
      new_domain_box.style.height = box_height+"px";
      new_domain_box.style.background = "white";
-     new_domain_box.style.left =(body.offsetWidth - box_width)/2 + "px";
-     new_domain_box.style.top = (body.offsetHeight - box_height)/2 + "px";
+     new_domain_box.style.left =(window.innerWidth - box_width)/2 + "px";
+     new_domain_box.style.top = (window.innerHeight - box_height)/2 + "px";
 
      title = document.createElement("div");
      title.style.margin = "50px";
