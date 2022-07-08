@@ -132,7 +132,7 @@ query_range = {};
               img_overlay.setMap(map);
               overlays.push(img_overlay);
               map.setCenter({lat: (north+south)/2 ,lng: (east+west)/2});
-              map.setZoom(13);
+              map.setZoom(16);
           }
 
 
