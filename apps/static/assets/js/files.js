@@ -57,10 +57,11 @@ function add_to_domain(path,file_name){
                 )
         }
 
+     body = document.getElementsByTagName("body")[0];
 
      box_height = Math.min(800,body.offsetHeight);
      box_width = Math.min(1200,body.offsetWidth);
-     body = document.getElementsByTagName("body")[0];
+
 
      add_to_domain_box = document.createElement("div");
      add_to_domain_box.setAttribute("id","add_to_domain_box");
