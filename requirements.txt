@@ -14,3 +14,4 @@ pandas==1.4.2
 openpyxl==3.0.9
 django-pam==2.1.0
 Pillow == 8.3.2
+python-decouple == 3.6
