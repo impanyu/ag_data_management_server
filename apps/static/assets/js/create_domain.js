@@ -234,7 +234,7 @@ function init_map_main(){
     document.getElementById("map_main"),
     {
       center: { lat: 40.897, lng: -96.644 },
-      zoom: 9,
+      zoom: 11,
     }
   );
 
