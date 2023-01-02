@@ -258,12 +258,6 @@ function init_map_main(){
         }
 
 
-
         )
-
-
-
-
-
 
 }
