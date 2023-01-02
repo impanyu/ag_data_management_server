@@ -3,8 +3,8 @@
 Copyright (c) 2019 - present AppSeed.us
 """
 
-from osgeo import gdal,osr
-from osgeo.gdalconst import GA_ReadOnly
+#from osgeo import gdal,osr
+#from osgeo.gdalconst import GA_ReadOnly
 
 
 from django import template
@@ -147,82 +147,6 @@ def data(request):
             query_range = request.POST.get("query_range", "")
             query_result = query_domain(domain_name,start_date,end_date,southwest,northeast,query_range,request.user.get_username())
             return HttpResponse(query_result)
-
-
-        elif load_template == 'get_tif_range':
-
-            logic_path = request.GET.get("file_path","")
-            real_path = map_file_path(logic_path,request.user.get_username())
-            #print(real_path)
-            #temporary solution for spidercam data
-            if(logic_path.split("/")[1] == "winterwheatDataExample"):
-                lower_lat = 41.145632
-                left_ln = -96.439434
-                upper_lat = 41.145942
-                right_ln = -96.439201
-
-                lat_per_rect = (upper_lat - lower_lat) / 8
-                ln_per_rect = (right_ln - left_ln) / 10
-
-                plot_id = int(real_path.split("/")[-2].split("_")[3])
-                i = int((plot_id - 1301) /10)
-                j = (plot_id -1301) % 10
-
-                rect_lower_lat = lower_lat + i * lat_per_rect
-                rect_upper_lat = rect_lower_lat + lat_per_rect
-                rect_left_ln = left_ln + j * ln_per_rect
-                rect_right_ln = rect_left_ln + ln_per_rect
-
-                bounding_box = [[rect_lower_lat, rect_left_ln],
-                                [rect_upper_lat, rect_right_ln]]
-
-                return HttpResponse(json.dumps(bounding_box))
-
-
-
-
-
-
-            data = gdal.Open(real_path, GA_ReadOnly)
-            geoTransform = data.GetGeoTransform()
-            minx = geoTransform[0]
-            maxy = geoTransform[3]
-            maxx = minx + geoTransform[1] * data.RasterXSize
-            miny = maxy + geoTransform[5] * data.RasterYSize
-            
-
-            # get the existing coordinate system
-
-            old_cs = osr.SpatialReference()
-            old_cs.ImportFromWkt(data.GetProjectionRef())
-
-            # create the new coordinate system
-            wgs84_wkt = """
-            GEOGCS["WGS 84",
-                DATUM["WGS_1984",
-                    SPHEROID["WGS 84",6378137,298.257223563,
-                        AUTHORITY["EPSG","7030"]],
-                    AUTHORITY["EPSG","6326"]],
-                PRIMEM["Greenwich",0,
-                    AUTHORITY["EPSG","8901"]],
-                UNIT["degree",0.01745329251994328,
-                    AUTHORITY["EPSG","9122"]],
-                AUTHORITY["EPSG","4326"]]"""
-            new_cs = osr.SpatialReference()
-            new_cs.ImportFromWkt(wgs84_wkt)
-
-            # create a transform object to convert between coordinate systems
-            transform = osr.CoordinateTransformation(old_cs, new_cs)
-
-
-            # get the coordinates in lat long
-            latlong_southwest = transform.TransformPoint(minx, miny)
-            latlong_northeast = transform.TransformPoint(maxx, maxy)
-
-            bounding_box = [[latlong_southwest[0], latlong_southwest[1]], [latlong_northeast[0], latlong_northeast[1]]]
-
-            return HttpResponse(json.dumps(bounding_box))
-
 
         elif load_template == 'get_domains':
             domains = get_domains()
