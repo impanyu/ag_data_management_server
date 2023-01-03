@@ -325,7 +325,7 @@ def data(request):
                         storage.write(chunk)
                     storage.close()
 
-                    #os.chmod(abs_file_path,stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR)
+                    os.chmod(abs_file_path,stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR)
                     #os.chown(abs_file_path,getpwnam(request.user.get_username()).pw_uid,-1)
 
                 return HttpResponse("upload complete!")
