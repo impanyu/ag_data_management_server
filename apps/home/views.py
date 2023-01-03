@@ -338,6 +338,7 @@ def data(request):
 
                     data_point = {"path": abs_file_path}
 
+
                     # if meta data is provided
                     meta_data_file_path = abs_file_path+".meta"
                     if os.path.exists(meta_data_file_path):
@@ -350,10 +351,11 @@ def data(request):
                     if abs_file_path.split(".")[-1] == "tif" or abs_file_path.split(".")[-1] == "tiff":
                         with Image.open(abs_file_path) as img:
                             #print("here")
-                            #for key in img.tag.keys():
-                            #    print(key)
-                            meta_dict = {TAGS[key] : img.tag[key] for key in img.tag.keys()}
-                            print(meta_dict)
+                            for key in img.tag.keys():
+                                if not key == 'StripOffsets':
+                                    meta_data[TAGS[key]] = img.tag[key]
+                            #meta_dict = {TAGS[key] : img.tag[key] for key in img.tag.keys()}
+                            #print(meta_dict)
                     #data_points[position] = {"loc":loc, "time":time, "public": False, "category":"UAV", "format":"image"}
 
 
