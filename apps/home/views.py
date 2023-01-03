@@ -418,8 +418,9 @@ def data(request):
             #query all the data points or files in current path
             data_and_files = open(os.path.join(settings.CORE_DIR, 'data','data_and_files.json'),"r")
             data_points = json.load(data_and_files)
+
             for data_path in data_points:
-                if data_path.startswith(abs_path) or data_points[data_path]["public"] == True:
+                if data_path.startswith(abs_path) or ("public" in data_points[data_path] and data_points[data_path]["public"] == True):
                     response["data_points"].append(data_points[data_path])
 
             response = json.dumps(response)
