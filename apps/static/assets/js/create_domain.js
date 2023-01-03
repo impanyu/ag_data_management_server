@@ -261,3 +261,26 @@ function init_map_main(){
         )
 
 }
+
+var data_cat_color_map = {};
+data_cat_color_map["UAV"] = "red";
+data_cat_color_map["soil_water"] = "blue";
+data_cat_color_map["data"] = "pink";
+
+
+function draw_points(data_points){
+   for (const data_point in data_points) {
+    data_cat = data_point["category"];
+    data_loc = data_point["loc"];
+    const point = new google.maps.Circle({
+      strokeColor: data_cat_color_map[data_cat],
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: data_cat_color_map[data_cat],
+      fillOpacity: 0.8,
+      map_main,
+      center: data_loc,
+      radius: 1,
+    });
+  }
+}

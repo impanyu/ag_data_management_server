@@ -324,9 +324,18 @@ def data(request):
                     for chunk in file.chunks():
                         storage.write(chunk)
                     storage.close()
-
                     os.chmod(abs_file_path,stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR)
-                    os.chown(abs_file_path,getpwnam(request.user.get_username()).pw_uid,-1)
+                    os.chown(abs_file_path,getpwnam(request.user.get_username()).pw_uid,getpwnam(request.user.get_username()).pw_uid)
+
+                    #modify data_and_files
+                    data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "w")
+                    data_points = json.load(data_and_files)
+                    #data_points[position] = {"loc":loc, "time":time, "public": False, "category":"UAV", "format":"image"}
+
+
+                    json.dump(data_points, data_and_files)
+                    data_and_files.close()
+
 
                 return HttpResponse("upload complete!")
 
@@ -352,12 +361,22 @@ def data(request):
                 shutil.rmtree(abs_path)
             else:
                 os.remove(abs_path)
+
+            #modify data_and_files
+            data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "w")
+            data_points = json.load(data_and_files)
+            for data_path in data_points:
+                if data_path == abs_path:
+                    del data_points[data_path]
+            json.dump(data_points,data_and_files)
+            data_and_files.close()
             return HttpResponse("delete complete!")
 
         elif load_template == 'file_system':
             file_path = request.POST['current_path']
             fs = FileSystemStorage(location=os.path.join(settings.CORE_DIR, 'data') + "/users")
             fs = FileSystemStorage(location="/home/" + request.user.get_username() + "/ag_data")
+            abs_path = os.path.join("/home/" + request.user.get_username() + "/ag_data/",file_path)
 
             print(request.user.get_username())
 
@@ -394,6 +413,14 @@ def data(request):
                              "accessed_time": accessed_time.strftime("%m/%d/%Y, %H:%M:%S"), "size": size}
                 response["files"].append(file_item)
             print(response)
+
+
+            #query all the data points or files in current path
+            data_and_files = open(os.path.join(settings.CORE_DIR, 'data','data_and_files.json'),"r")
+            data_points = json.load(data_and_files)
+            for data_path in data_points:
+                if data_path.startswith(abs_path) or data_points[data_path]["public"] == True:
+                    response["data_points"].append(data_points[data_path])
 
             response = json.dumps(response)
 

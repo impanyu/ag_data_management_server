@@ -200,6 +200,10 @@ function get_file_list(){
           subdomains=[]
           times=[]
 
+          //draw all the data & files in current_path on google map based
+          data_points = data["data_points"];
+          draw_points(data_points);
+
 
 
           for(var i=0;i<data['dirs'].length;i++){
@@ -290,11 +294,8 @@ function get_file_list(){
 
             });
 
-
-
-
-
           }
+
 
           //for(file of data.files){
           for(var i=0;i<data['files'].length;i++){
