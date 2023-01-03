@@ -398,16 +398,21 @@ def data(request):
                 os.remove(abs_path)
 
             #modify data_and_files
-            data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "w+")
+            data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "r")
             data_points = json.load(data_and_files)
+            data_and_files.close()
+
+
             for data in data_points:
                 print(abs_path)
 
                 if "path" in data and data["path"] == abs_path:
                     data_points.remove(data)
-            data_and_files.seek(0)
+
+            data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "w")
             json.dump(data_points, data_and_files)
             data_and_files.close()
+
 
             return HttpResponse("delete complete!")
 
