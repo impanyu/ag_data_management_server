@@ -349,8 +349,9 @@ def data(request):
                     # extract meta data from file
                     if abs_file_path.split(".")[-1] == "tif" or abs_file_path.split(".")[-1] == "tiff":
                         with Image.open(abs_file_path) as img:
-                            meta_dict = {TAGS[key] : img.tag[key] for key in img.tag.iterkeys()}
-                            print(meta_dict)
+                            print("here")
+                            #meta_dict = {TAGS[key] : img.tag[key] for key in img.tag.iterkeys()}
+                            #print(meta_dict)
                     #data_points[position] = {"loc":loc, "time":time, "public": False, "category":"UAV", "format":"image"}
 
 
