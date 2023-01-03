@@ -350,7 +350,7 @@ def data(request):
                     if abs_file_path.split(".")[-1] == "tif" or abs_file_path.split(".")[-1] == "tiff":
                         with Image.open(abs_file_path) as img:
                             #print("here")
-                            for key in img.tag.iterkeys():
+                            for key in img.tag.keys():
                                 print(key)
                             #meta_dict = {TAGS[key] : img.tag[key] for key in img.tag.iterkeys()}
                             #print(meta_dict)
