@@ -329,12 +329,12 @@ def data(request):
 
                     #modify data_and_files
                     data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "w")
-                    data_points = json.load(data_and_files)
+                    #data_points = json.load(data_and_files)
                     #data_points[position] = {"loc":loc, "time":time, "public": False, "category":"UAV", "format":"image"}
 
 
-                    json.dump(data_points, data_and_files)
-                    data_and_files.close()
+                    #json.dump(data_points, data_and_files)
+                    #data_and_files.close()
 
 
                 return HttpResponse("upload complete!")
