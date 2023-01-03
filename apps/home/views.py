@@ -296,7 +296,7 @@ def data(request):
                 modified_current_path += "/" + current_path.split("/")[i]
 
             if modified_current_path == "":
-                current_path = "."
+                current_path = ""
             else:
                 current_path = modified_current_path[1:]
 
