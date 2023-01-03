@@ -385,11 +385,11 @@ def data(request):
                 modified_file_path += "/" + file_path.split("/")[i]
 
             if modified_file_path == "":
-                file_path = "."
+                file_path = ""
             else:
                 file_path = modified_file_path[1:]
 
-            abs_path = "/home/" + request.user.get_username() + "/ag_data/" + file_path + "/" + file_name
+            abs_path = os.path.join("/home/" + request.user.get_username() + "/ag_data/" ,file_path,file_name)
 
             if os.path.isdir(abs_path):
                 # shutil.rmtree(os.path.join(settings.CORE_DIR, 'data/users', current_path, file_name))
