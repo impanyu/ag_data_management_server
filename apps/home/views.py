@@ -352,7 +352,7 @@ def data(request):
                         with Image.open(abs_file_path) as img:
                             #print("here")
                             for key in img.tag.keys():
-                                if not key == 'StripOffsets':
+                                #if not key == 'StripOffsets':
                                     print(key)
                                     data_point[TAGS[key]] = img.tag[key]
                             #meta_dict = {TAGS[key] : img.tag[key] for key in img.tag.keys()}
