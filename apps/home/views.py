@@ -308,6 +308,7 @@ def data(request):
                     position = os.path.join("/home/" + request.user.get_username() + "/ag_data",
                                             '/'.join(upload_file_paths[upload_files.index(file)].split('/')[:-1]))
                     print(position)
+                    print(file.name)
 
                     if not os.path.exists(position):
                         os.makedirs(position)
