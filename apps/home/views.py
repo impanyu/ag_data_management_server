@@ -304,12 +304,9 @@ def data(request):
                 return HttpResponse('files not found')
             else:
                 for file in upload_files:
-                    if(not current_path == ""):
-                        position = os.path.join("/home/" + request.user.get_username() + "/ag_data/", current_path,
-                                                '/'.join(upload_file_paths[upload_files.index(file)].split('/')[:-1]))
-                    else:
-                        position = os.path.join("/home/" + request.user.get_username() + "/ag_data/",
-                                                '/'.join(upload_file_paths[upload_files.index(file)].split('/')[:-1]))
+
+                    position = os.path.join("/home/" + request.user.get_username() + "/ag_data",
+                                            '/'.join(upload_file_paths[upload_files.index(file)].split('/')[:-1]))
                     print(position)
 
                     if not os.path.exists(position):
