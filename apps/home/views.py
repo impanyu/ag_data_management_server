@@ -401,6 +401,7 @@ def data(request):
             data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "r+")
             data_points = json.load(data_and_files)
             for data in data_points:
+                print(abs_path)
                 if "path" in data and data["path"] == abs_path:
                     data_points.remove(data)
             data_and_files.seek(0)
