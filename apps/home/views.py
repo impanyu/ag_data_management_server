@@ -330,6 +330,7 @@ def data(request):
                     #modify data_and_files
                     data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "w")
                     data_points = json.load(data_and_files)
+                    print(data_points)
                     #data_points[position] = {"loc":loc, "time":time, "public": False, "category":"UAV", "format":"image"}
 
 
@@ -421,9 +422,9 @@ def data(request):
             response["data_points"] = []
 
             for data_path in data_points:
-                print(data_points[data_path])
-                #if data_path.startswith(abs_path) or ("public" in data_points[data_path] and data_points[data_path]["public"] == True):
-                #    response["data_points"].append(data_points[data_path])
+                #print(data_points[data_path])
+                if data_path.startswith(abs_path) or ("public" in data_points[data_path] and data_points[data_path]["public"] == True):
+                    response["data_points"].append(data_points[data_path])
 
             response = json.dumps(response)
 
