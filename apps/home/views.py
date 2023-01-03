@@ -413,7 +413,6 @@ def data(request):
             json.dump(data_points, data_and_files)
             data_and_files.close()
 
-
             return HttpResponse("delete complete!")
 
         elif load_template == 'file_system':
