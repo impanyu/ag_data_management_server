@@ -404,7 +404,7 @@ def data(request):
                 print(abs_path)
                 if "path" in data and data["path"] == abs_path:
                     data_points.remove(data)
-            #data_and_files.seek(0)
+            data_and_files.seek(0)
             json.dump(data_points, data_and_files)
             data_and_files.close()
 
