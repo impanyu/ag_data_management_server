@@ -333,7 +333,7 @@ def data(request):
                     data_and_files.close()
 
 
-                    data_points[position]={}
+                    data_points[abs_file_path]={}
                     #data_points[position] = {"loc":loc, "time":time, "public": False, "category":"UAV", "format":"image"}
 
                     data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "w")
@@ -369,13 +369,18 @@ def data(request):
                 os.remove(abs_path)
 
             #modify data_and_files
-            data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "w")
+            data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "r+")
             data_points = json.load(data_and_files)
             for data_path in data_points:
                 if data_path == abs_path:
                     del data_points[data_path]
-            json.dump(data_points,data_and_files)
+            data_and_files.seek(0)
+            json.dump(data_points, data_and_files)
             data_and_files.close()
+
+
+
+
             return HttpResponse("delete complete!")
 
         elif load_template == 'file_system':
