@@ -421,9 +421,9 @@ def data(request):
             response["data_points"] = []
 
             for data_path in data_points:
-                #print(data_path)
+                print(data_path)
                 #if data_path.startswith(abs_path) or ("public" in data_points[data_path] and data_points[data_path]["public"] == True):
-                response["data_points"].append(data_points[data_path])
+                #response["data_points"].append(data_points[data_path])
 
             response = json.dumps(response)
 
