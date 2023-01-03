@@ -311,7 +311,7 @@ def data(request):
 
                     if not os.path.exists(position):
                         os.makedirs(position)
-                    abs_file_path = position + "/" + file.name
+                    abs_file_path = os.path.join(position, file.name)
                     print(abs_file_path)
                     copy_id = 1
                     if os.path.exists(abs_file_path):
