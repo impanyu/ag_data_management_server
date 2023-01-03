@@ -389,7 +389,7 @@ def data(request):
             else:
                 file_path = modified_file_path[1:]
 
-            abs_path = os.path.join("/home/" + request.user.get_username() + "/ag_data/" ,file_path,file_name)
+            abs_path = os.path.join("/home/" + request.user.get_username() + "/ag_data/",file_path,file_name)
 
             if os.path.isdir(abs_path):
                 # shutil.rmtree(os.path.join(settings.CORE_DIR, 'data/users', current_path, file_name))
@@ -404,7 +404,7 @@ def data(request):
                 print(abs_path)
                 if "path" in data and data["path"] == abs_path:
                     data_points.remove(data)
-            data_and_files.seek(0)
+            #data_and_files.seek(0)
             json.dump(data_points, data_and_files)
             data_and_files.close()
 
