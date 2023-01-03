@@ -328,16 +328,19 @@ def data(request):
                     os.chown(abs_file_path,getpwnam(request.user.get_username()).pw_uid,getpwnam(request.user.get_username()).pw_uid)
 
                     #modify data_and_files
-                    data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "w")
+                    data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "r")
                     data_points = json.load(data_and_files)
-                    print(data_points)
-                    print(position)
+                    data_and_files.close()
+
+
                     data_points[position]={}
                     #data_points[position] = {"loc":loc, "time":time, "public": False, "category":"UAV", "format":"image"}
 
-
+                    data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "w")
                     json.dump(data_points, data_and_files)
                     data_and_files.close()
+
+
 
 
                 return HttpResponse("upload complete!")
