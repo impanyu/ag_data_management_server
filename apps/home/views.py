@@ -353,6 +353,7 @@ def data(request):
                             #print("here")
                             for key in img.tag.keys():
                                 if not key == 'StripOffsets':
+                                    print(key)
                                     data_point[TAGS[key]] = img.tag[key]
                             #meta_dict = {TAGS[key] : img.tag[key] for key in img.tag.keys()}
                             #print(meta_dict)
