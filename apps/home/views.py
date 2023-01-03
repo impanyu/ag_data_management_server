@@ -333,7 +333,7 @@ def data(request):
                     #data_points[position] = {"loc":loc, "time":time, "public": False, "category":"UAV", "format":"image"}
 
 
-                    json.dump(data_points, data_and_files)
+                    #json.dump(data_points, data_and_files)
                     data_and_files.close()
 
 
