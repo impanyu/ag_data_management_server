@@ -353,7 +353,7 @@ def data(request):
                             #print("here")
                             for key in img.tag.keys():
                                 if not key == 'StripOffsets':
-                                    meta_data[TAGS[key]] = img.tag[key]
+                                    data_point[TAGS[key]] = img.tag[key]
                             #meta_dict = {TAGS[key] : img.tag[key] for key in img.tag.keys()}
                             #print(meta_dict)
                     #data_points[position] = {"loc":loc, "time":time, "public": False, "category":"UAV", "format":"image"}
