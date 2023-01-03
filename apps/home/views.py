@@ -318,10 +318,11 @@ def data(request):
                     print(abs_file_path)
                     copy_id = 1
                     if os.path.exists(abs_file_path):
-                        while os.path.exists(abs_file_path + "_" + str(copy_id)):
-                            copy_id += 1
+                        #while os.path.exists(abs_file_path + "_" + str(copy_id)):
+                            #copy_id += 1
+                        return HttpResponse("File exists!")
 
-                        abs_file_path += "_" + str(copy_id)
+                        #abs_file_path += "_" + str(copy_id)
 
                     storage = open(abs_file_path, "wb+")
 
@@ -353,10 +354,10 @@ def data(request):
                             #print("here")
                             for key in img.tag.keys():
                                 print(key)
-                                if not key == 'StripOffsets':
+                                if not TAGS[key] == 'StripOffsets':
                                     data_point[TAGS[key]] = img.tag[key]
-                            meta_dict = {TAGS[key] : img.tag[key] for key in img.tag.keys()}
-                            print(meta_dict)
+                            #meta_dict = {TAGS[key] : img.tag[key] for key in img.tag.keys()}
+                            #print(meta_dict)
                     #data_points[position] = {"loc":loc, "time":time, "public": False, "category":"UAV", "format":"image"}
 
 
