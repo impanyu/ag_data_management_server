@@ -22,6 +22,8 @@ from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 import os
 import shutil
+from PIL import Image
+from PIL.TiffTags import TAGS
 from .forms import UploadFileForm
 
 
@@ -329,14 +331,32 @@ def data(request):
                     os.chmod(abs_file_path,stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR)
                     os.chown(abs_file_path,getpwnam(request.user.get_username()).pw_uid,getpwnam(request.user.get_username()).pw_uid)
 
-                    #modify data_and_files
+                    # load data_and_files
                     data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "r")
                     data_points = json.load(data_and_files)
                     data_and_files.close()
 
+                    data_point = {"path": abs_file_path}
 
-                    data_points[abs_file_path]={}
+                    # if meta data is provided
+                    meta_data_file_path = abs_file_path+".meta"
+                    if os.path.exists(meta_data_file_path):
+                        with open(meta_data_file_path,"r") as meta_data_file:
+                            meta_data = json.load(meta_data_file)
+                            for key in meta_data:
+                                data_point[key] = meta_data[key]
+
+                    # extract meta data from file
+                    if abs_file_path.split(".")[-1] == "tif" or abs_file_path.split(".")[-1] == "tiff"
+                    with Image.open(abs_file_path) as img:
+                        meta_dict = {TAGS[key] : img.tag[key] for key in img.tag.iterkeys()}
+                        print(meta_dict)
                     #data_points[position] = {"loc":loc, "time":time, "public": False, "category":"UAV", "format":"image"}
+
+
+                    # infer meta data from file
+
+                    data_points.append(data_point)
 
                     data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "w")
                     json.dump(data_points, data_and_files)
@@ -373,15 +393,12 @@ def data(request):
             #modify data_and_files
             data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "r+")
             data_points = json.load(data_and_files)
-            for data_path in data_points:
-                if data_path == abs_path:
-                    del data_points[data_path]
+            for data in data_points:
+                if "path" in data and data["path"] == abs_path:
+                    data_points.remove(data)
             data_and_files.seek(0)
             json.dump(data_points, data_and_files)
             data_and_files.close()
-
-
-
 
             return HttpResponse("delete complete!")
 
@@ -433,14 +450,16 @@ def data(request):
             data_points = json.load(data_and_files)
             response["data_points"] = []
 
-            for data_path in data_points:
+            for data in data_points:
                 #print(data_points[data_path])
-                if data_path.startswith(abs_path) or ("public" in data_points[data_path] and data_points[data_path]["public"] == True):
-                    response["data_points"].append(data_points[data_path])
+                if ("path" in data and data["path"].startswith(abs_path) ):
+                    response["data_points"].append(data)
 
             response = json.dumps(response)
 
             return HttpResponse(response)
+
+
 
     except template.TemplateDoesNotExist:
 
