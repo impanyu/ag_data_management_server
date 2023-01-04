@@ -281,7 +281,7 @@ function draw_points(data_points){
       fillOpacity: 0.8,
       map_main,
       center: data_loc,
-      radius: 10,
+      radius: 100,
     });
   }
 }
