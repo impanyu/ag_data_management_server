@@ -437,9 +437,10 @@ def data(request):
 
 
             for data in data_points:
-                print(abs_path)
+
 
                 if "path" in data and data["path"].startswith(abs_path):
+                    print("here")
                     data_points.remove(data)
 
             data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "w")
