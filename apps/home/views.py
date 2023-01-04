@@ -449,7 +449,7 @@ def data(request):
             file_path = request.POST['current_path']
             fs = FileSystemStorage(location=os.path.join(settings.CORE_DIR, 'data') + "/users")
             fs = FileSystemStorage(location="/home/" + request.user.get_username() + "/ag_data")
-            abs_path = os.path.join("/home/" + request.user.get_username() + "/ag_data/",file_path)
+
 
             print(request.user.get_username())
 
@@ -458,9 +458,11 @@ def data(request):
                 modified_file_path += "/" + file_path.split("/")[i]
 
             if modified_file_path == "":
-                file_path = "."
+                file_path = ""
             else:
                 file_path = modified_file_path[1:]
+
+            abs_path = os.path.join("/home/" + request.user.get_username() + "/ag_data", file_path)
 
             dirs, files = fs.listdir(file_path)
 
