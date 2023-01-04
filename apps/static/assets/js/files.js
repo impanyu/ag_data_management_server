@@ -109,8 +109,6 @@ function add_to_domain(path,file_name){
 
            }
 
-
-
         }
 
         )

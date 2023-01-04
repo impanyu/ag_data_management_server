@@ -322,6 +322,7 @@ function get_file_list(){
                    '<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">'+
                    '<a class="dropdown-item" href="#" id="'+i+'_file_delete">Delete</a>'+
                    '<a class="dropdown-item" href="#" id="'+i+'_add_domain">Add to Domain</a>'+
+                   '<a class="dropdown-item" href="#" id="'+i+'_meta_data">Meta Data</a>'+
                    '</div> </div></td></tr>';
             item_node = htmlToElement(item_html);
             $("#file_list")[0].appendChild(item_node);
@@ -351,6 +352,14 @@ function get_file_list(){
                file_name= data["files"][parseInt(this.id.split("_")[0])]["file_name"];
                console.info(file_name);
                add_to_domain(current_path,file_name);
+
+
+            });
+
+             $("#"+i+"_meta_data").click(function(){
+               file_name= data["files"][parseInt(this.id.split("_")[0])]["file_name"];
+               console.info(file_name);
+               #get_meta_data(current_path,file_name);
 
 
             });
