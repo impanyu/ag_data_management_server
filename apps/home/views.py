@@ -494,7 +494,7 @@ def data(request):
             response["data_points"] = []
 
             for data in data_points:
-                print(data_points["abs_path"])
+                print(abs_path)
 
                 if ("path" in data and data["path"].startswith(abs_path) ):
                     response["data_points"].append(data)
