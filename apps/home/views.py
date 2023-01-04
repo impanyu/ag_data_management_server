@@ -350,6 +350,7 @@ def data(request):
                                 data_point[key] = meta_data[key]
 
                     # extract meta data from file
+                    data_point["size"]=os.path.getsize(abs_file_path)
                     if abs_file_path.split(".")[-1] == "tif" or abs_file_path.split(".")[-1] == "tiff":
                         with Image.open(abs_file_path) as img:
                             #print("here")
