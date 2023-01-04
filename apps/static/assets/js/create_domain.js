@@ -278,12 +278,12 @@ function draw_points(data_points){
     const point = new google.maps.Circle({
       strokeColor: "black",
       strokeOpacity: 0.3,
-      strokeWeight: min(size,200)/10,
+      strokeWeight: Math.min(size,200)/10,
       fillColor: data_cat_color_map[data_cat],
       fillOpacity: 0.3,
       map:map_main,
       center: data_loc,
-      radius: min(size,200),
+      radius: Math.min(size,200),
     });
   }
 }
