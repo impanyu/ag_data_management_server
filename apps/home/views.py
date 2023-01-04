@@ -24,6 +24,7 @@ import os
 import shutil
 from PIL import Image
 from PIL.TiffTags import TAGS
+import datetime
 from .forms import UploadFileForm
 
 
@@ -360,8 +361,41 @@ def data(request):
                             #print(meta_dict)
                     #data_points[position] = {"loc":loc, "time":time, "public": False, "category":"UAV", "format":"image"}
 
-
                     # infer meta data from file
+                    if abs_file_path.split("/")[-2] == "winterwheatDataExample":
+                        lower_lat = 41.145632
+                        left_ln = -96.439434
+                        upper_lat = 41.145942
+                        right_ln = -96.439201
+
+                        lat_per_rect = (upper_lat - lower_lat) / 8
+                        ln_per_rect = (right_ln - left_ln) / 10
+
+                        plot_id = int(abs_file_path.split("/")[-2].split("_")[3])
+                        data_point["plot_id"] = plot_id
+                        data_point["labels"] = ["wheat","spidercam"]
+                        if abs_file_path.split("/")[-1].startswith("NIR"):
+                            data_point["labels"].append("NIR")
+                        elif abs_file_path.split("/")[-1].startswith("RGB"):
+                            data_point["labels"].append("RGB")
+                        elif abs_file_path.split("/")[-1].startswith("Infrared"):
+                            data_point["labels"].append("Infrared")
+                        elif abs_file_path.split("/")[-1].startswith("LiDAR"):
+                            data_point["labels"].append("LiDAR")
+
+
+                        i = int((plot_id - 1301) / 10)
+                        j = (plot_id - 1301) % 10
+
+                        rect_lower_lat = lower_lat + i * lat_per_rect
+                        rect_upper_lat = rect_lower_lat + lat_per_rect
+                        rect_left_ln = left_ln + j * ln_per_rect
+                        rect_right_ln = rect_left_ln + ln_per_rect
+
+                        data_point["loc"] = [(rect_lower_lat+rect_upper_lat)/2, (rect_left_ln+rect_right_ln)/2]
+                        data_point["time"] = datetime.strptime(abs_file_path.split("/")[-2].split("_")[5], "%Y%m%d%H%M%S").strftime("%Y/%m/%d %H:%M:%S")
+
+
 
                     data_points.append(data_point)
 
