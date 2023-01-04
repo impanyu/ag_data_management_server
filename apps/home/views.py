@@ -373,7 +373,8 @@ def data(request):
 
                         plot_id = int(abs_file_path.split("/")[-2].split("_")[3])
                         data_point["plot_id"] = plot_id
-                        data_point["labels"] = ["wheat","spidercam"]
+                        data_points["category"] = "spidercam"
+                        data_point["labels"] = ["wheat"]
                         if abs_file_path.split("/")[-1].startswith("NIR"):
                             data_point["labels"].append("NIR")
                         elif abs_file_path.split("/")[-1].startswith("RGB"):
@@ -391,10 +392,8 @@ def data(request):
                         rect_left_ln = left_ln + j * ln_per_rect
                         rect_right_ln = rect_left_ln + ln_per_rect
 
-                        data_point["loc"] = {"lat":(rect_lower_lat+rect_upper_lat)/2, "lng":(rect_left_ln+rect_right_ln)/2}
+                        data_point["loc"] = {"lat": (rect_lower_lat+rect_upper_lat)/2, "lng": (rect_left_ln+ rect_right_ln)/2}
                         #data_point["time"] = datetime.strptime(abs_file_path.split("/")[-2].split("_")[5], "%Y%m%d%H%M%S").strftime("%Y/%m/%d %H:%M:%S")
-
-
 
                     data_points.append(data_point)
 
