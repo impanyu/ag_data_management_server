@@ -442,6 +442,8 @@ def data(request):
                 if "path" in data and data["path"].startswith(abs_path):
 
                     data_points.remove(data)
+                else:
+                    print(data["path"])
             print(len(data_points))
 
             data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "w")
