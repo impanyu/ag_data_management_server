@@ -450,7 +450,7 @@ def data(request):
             fs = FileSystemStorage(location="/home/" + request.user.get_username() + "/ag_data")
 
 
-            print(request.user.get_username())
+            #print(request.user.get_username())
 
             modified_file_path = ""
             for i in range(1, len(file_path.split("/"))):
@@ -492,12 +492,13 @@ def data(request):
             #query all the data points or files in current path
             data_and_files = open(os.path.join(settings.CORE_DIR, 'data','data_and_files.json'),"r")
             data_points = json.load(data_and_files)
+            data_and_files.close()
             response["data_points"] = []
+            print(abs_path)
 
             for data in data_points:
-                print(abs_path)
 
-                if ("path" in data and data["path"].startswith(abs_path) ):
+                if "path" in data and data["path"].startswith(abs_path):
                     response["data_points"].append(data)
 
             response = json.dumps(response)
