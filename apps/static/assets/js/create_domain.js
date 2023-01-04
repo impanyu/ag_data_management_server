@@ -279,7 +279,7 @@ function draw_points(data_points){
       strokeWeight: 2,
       fillColor: data_cat_color_map[data_cat],
       fillOpacity: 0.8,
-      map_main,
+      map:map_main,
       center: data_loc,
       radius: 100,
     });
