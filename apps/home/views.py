@@ -362,7 +362,7 @@ def data(request):
                     #data_points[position] = {"loc":loc, "time":time, "public": False, "category":"UAV", "format":"image"}
 
                     # infer meta data from file
-                    if abs_file_path.split("/")[-2] == "winterwheatDataExample":
+                    if abs_file_path.split("/")[-3] == "winterwheatDataExample":
                         lower_lat = 41.145632
                         left_ln = -96.439434
                         upper_lat = 41.145942
