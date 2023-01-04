@@ -383,7 +383,6 @@ def data(request):
                         elif abs_file_path.split("/")[-1].startswith("LiDAR"):
                             data_point["labels"].append("LiDAR")
 
-
                         i = int((plot_id - 1301) / 10)
                         j = (plot_id - 1301) % 10
 
@@ -393,7 +392,7 @@ def data(request):
                         rect_right_ln = rect_left_ln + ln_per_rect
 
                         data_point["loc"] = [(rect_lower_lat+rect_upper_lat)/2, (rect_left_ln+rect_right_ln)/2]
-                        data_point["time"] = datetime.strptime(abs_file_path.split("/")[-2].split("_")[5], "%Y%m%d%H%M%S").strftime("%Y/%m/%d %H:%M:%S")
+                        #data_point["time"] = datetime.strptime(abs_file_path.split("/")[-2].split("_")[5], "%Y%m%d%H%M%S").strftime("%Y/%m/%d %H:%M:%S")
 
 
 
