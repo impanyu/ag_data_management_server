@@ -269,6 +269,7 @@ data_cat_color_map["data"] = "pink";
 
 
 function draw_points(data_points){
+
    for (const data_point in data_points) {
     data_cat = data_point["category"];
     data_loc = data_point["loc"];
