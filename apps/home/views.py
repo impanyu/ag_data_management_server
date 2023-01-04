@@ -461,7 +461,7 @@ def data(request):
             else:
                 file_path = modified_file_path[1:]
 
-            abs_path = os.path.join("/home/" + request.user.get_username() + "/ag_data", file_path)
+            abs_path = "" #os.path.join("/home/" + request.user.get_username() + "/ag_data", file_path)
 
             dirs, files = fs.listdir(file_path)
 
