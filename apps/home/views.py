@@ -437,15 +437,7 @@ def data(request):
             print("initial")
             print(len(data_points))
 
-
-            for data in data_points:
-
-
-                if "path" in data and data["path"].startswith(abs_path):
-
-                    data_points.remove(data)
-                else:
-                    print(data["path"])
+            data_points = [data for data in data_points if "path" in data and data["path"].startswith(abs_path)]
             print("afterdeleted")
             print(len(data_points))
 
