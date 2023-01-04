@@ -434,12 +434,10 @@ def data(request):
             data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "r")
             data_points = json.load(data_and_files)
             data_and_files.close()
-            print("initial")
-            print(len(data_points))
+
 
             data_points = [data for data in data_points if not ("path" in data and data["path"].startswith(abs_path))]
-            print("afterdeleted")
-            print(len(data_points))
+
 
             data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "w")
             json.dump(data_points, data_and_files)
