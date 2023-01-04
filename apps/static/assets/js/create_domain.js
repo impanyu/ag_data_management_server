@@ -265,12 +265,13 @@ function init_map_main(){
 var data_cat_color_map = {};
 data_cat_color_map["UAV"] = "red";
 data_cat_color_map["soil_water"] = "blue";
-data_cat_color_map["spidercam"] = "FF0000";
+data_cat_color_map["spidercam"] = "pink";
 
 
 function draw_points(data_points){
 
-   for (const data_point in data_points) {
+   for (i in data_points) {
+   data_point = data_points[i]
     data_cat = data_point["category"];
     data_loc = data_point["loc"];
     const point = new google.maps.Circle({
