@@ -283,7 +283,7 @@ function draw_points(data_points){
       fillOpacity: 0.3,
       map:map_main,
       center: data_loc,
-      radius: Math.min(size,200),
+      radius: Math.min(size/10,20),
     });
   }
 }
