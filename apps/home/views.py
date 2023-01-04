@@ -434,6 +434,8 @@ def data(request):
             data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "r")
             data_points = json.load(data_and_files)
             data_and_files.close()
+            print("initial")
+            print(len(data_points))
 
 
             for data in data_points:
@@ -444,6 +446,7 @@ def data(request):
                     data_points.remove(data)
                 else:
                     print(data["path"])
+            print("afterdeleted")
             print(len(data_points))
 
             data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "w")
