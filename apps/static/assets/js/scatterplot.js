@@ -5,7 +5,7 @@ const svg = d3.select("#files_plot")
     .attr("width", "100%")
     .attr("height","100%")
     .append("g")
-    .attr("transform", `translate(${margin.left}, ${margin.top})`);
+    //.attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 //Read the data
 d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/2_TwoNum.csv").then( function(data) {
