@@ -13,8 +13,8 @@ const svg = d3.select("#files_plot")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 
-height = d3.select("#files_plot svg").node().getBoundingClientRect.height();
-width = d3.select("#files_plot svg").node().getBoundingClientRect.width();
+height = d3.select("#files_plot svg").node().getBoundingClientRect.height;
+width = d3.select("#files_plot svg").node().getBoundingClientRect.width;
 
 //Read the data
 d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/2_TwoNum.csv").then( function(data) {
