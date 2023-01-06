@@ -12,6 +12,10 @@ const svg = d3.select("#files_plot")
     .append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
+
+height = d3.select("#files_plot .svg").node().getBoundingClientRect.height();
+width = d3.select("#files_plot .svg").node().getBoundingClientRect.width();
+
 //Read the data
 d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/2_TwoNum.csv").then( function(data) {
 
@@ -37,7 +41,7 @@ d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_data
     .join("circle")
         .attr("cx", function (d) { return x(d.GrLivArea); } )
         .attr("cy", function (d) { return y(d.SalePrice); } )
-        .attr("r", 1.5)
+        .attr("r", 10)
         .style("fill", "#69b3a2")
 
 })
