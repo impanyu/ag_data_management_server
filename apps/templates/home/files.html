@@ -94,7 +94,11 @@
 
           </div>
 
+            <div>
           <div id="map_main" style="width:98%; height: 600px; margin: auto; margin-bottom: 1.5rem"> </div>
+            <div id="files_plot"></div>
+                <input class="btn btn-lg btn-neutral" type="button" onclick="change_plot()" id="change_plot">Change Map</input>
+            </div>
 
 
           <!-- Light table -->
@@ -163,6 +167,8 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU1RvtD5YF8-dwMmCIYP8ds-6Np5QVHFY&libraries=drawing&v=weekly&callback=init_map_main" async></script>
 
 <script src="/static/assets/js/files.js"></script>
+<script src="https://d3js.org/d3.v6.js"></script>
+<script src="/static/assets/js/scatterplot.js"></script>
 
 <script>
 var form = $("#upload_form");
