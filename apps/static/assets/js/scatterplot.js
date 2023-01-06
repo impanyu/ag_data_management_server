@@ -13,8 +13,8 @@ const svg = d3.select("#files_plot")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 
-height = d3.select("#files_plot svg").node().getBoundingClientRect().height;
-width = d3.select("#files_plot svg").node().getBoundingClientRect().width;
+height = d3.select("#files_plot #map_main").node().getBoundingClientRect().height;
+width = d3.select("#files_plot #map_main").node().getBoundingClientRect().width;
 console.info("height"+height);
 console.info(width);
 
