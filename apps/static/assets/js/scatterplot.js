@@ -15,7 +15,8 @@ const svg = d3.select("#files_plot")
 
 height = d3.select("#files_plot svg").node().getBoundingClientRect().height;
 width = d3.select("#files_plot svg").node().getBoundingClientRect().width;
-width = 2000;
+console.info(height);
+console.info(width);
 
 //Read the data
 d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/2_TwoNum.csv").then( function(data) {
