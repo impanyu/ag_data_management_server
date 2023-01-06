@@ -36,13 +36,7 @@ svg = d3.select("#files_plot")
     gGrid.call(grid, zx, zy);
   }
 
-  return Object.assign(svg.node(), {
-    reset() {
-      svg.transition()
-          .duration(750)
-          .call(zoom.transform, d3.zoomIdentity);
-    }
-  });
+
 
 data = {
   const random = d3.randomNormal(0, 0.2);
