@@ -15,7 +15,7 @@ const svg = d3.select("#files_plot")
 
 height = d3.select("#files_plot svg").node().getBoundingClientRect().height;
 width = d3.select("#files_plot svg").node().getBoundingClientRect().width;
-console.info(height);
+console.info("height"+height);
 console.info(width);
 
 //Read the data
