@@ -5,8 +5,9 @@ const zoom = d3.zoom()
       .scaleExtent([0.5, 32])
       .on("zoom", zoomed);
 
-  const svg = d3.create("svg")
-      .attr("viewBox", [0, 0, width, height]);
+svg = d3.select("#files_plot")
+    .append("svg")
+     .attr("viewBox", [0, 0, width, height]);
 
   const gGrid = svg.append("g");
 
