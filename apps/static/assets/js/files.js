@@ -331,14 +331,6 @@ function initMap(){
 
 
 
-
-
-
-
-
-
-
-
 //original in files.html
 var form = $("#upload_form");
 current_path = "{{current_path}}";
@@ -604,7 +596,6 @@ function change_plot(){
      document.querySelector("#map_main").style.display="block";
          document.querySelector("#files_plot").style.display="none";
          map_displayed="map";
-
     }
 
 }
