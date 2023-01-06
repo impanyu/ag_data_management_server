@@ -593,6 +593,7 @@ function get_file_list(){
 }
 
 map_displayed = "map";
+
 function change_plot(){
     if (map_displayed == "map"){
          document.querySelector("#map_main").style.display="none";
