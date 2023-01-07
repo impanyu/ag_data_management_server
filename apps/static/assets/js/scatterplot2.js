@@ -37,16 +37,14 @@ svg = d3.select("#files_plot")
   }
 
 
+const random = d3.randomNormal(0, 0.2);
+const sqrt3 = Math.sqrt(3);
 
-data = {
-  const random = d3.randomNormal(0, 0.2);
-  const sqrt3 = Math.sqrt(3);
-  return [].concat(
+data = [].concat(
     Array.from({length: 300}, () => [random() + sqrt3, random() + 1, 0]),
     Array.from({length: 300}, () => [random() - sqrt3, random() + 1, 1]),
     Array.from({length: 300}, () => [random(), random() - 1, 2])
   );
-}
 
 
 x = d3.scaleLinear()
