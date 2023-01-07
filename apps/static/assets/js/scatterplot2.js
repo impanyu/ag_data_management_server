@@ -1,5 +1,6 @@
 height = d3.select("#map_main").node().getBoundingClientRect().height;
 width = d3.select("#map_main").node().getBoundingClientRect().width;
+k = height / width;
 
 const random = d3.randomNormal(0, 0.2);
 const sqrt3 = Math.sqrt(3);
