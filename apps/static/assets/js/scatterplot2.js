@@ -79,7 +79,7 @@ svg = d3.select("#files_plot")
     .join("path")
       .attr("d", d => `M${x(d[0])},${y(d[1])}h0`)
       .attr("stroke", d => z(d[2]))
-      .attr("stroke-width", 5);
+      .attr("stroke-width", 20);
 
   const gx = svg.append("g");
 
