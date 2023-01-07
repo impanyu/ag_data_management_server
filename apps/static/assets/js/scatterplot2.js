@@ -70,9 +70,11 @@ svg = d3.select("#files_plot")
 
   const gGrid = svg.append("g");
 
+/*
   const gDot = svg.append("g")
       .attr("fill", "none")
       .attr("stroke-linecap", "round");
+
 
   gDot.selectAll("path")
     .data(data)
@@ -80,6 +82,18 @@ svg = d3.select("#files_plot")
       .attr("d", d => `M${x(d[0])},${y(d[1])}h0`)
       .attr("stroke", d => z(d[2]))
       .attr("stroke-width", 20);
+*/
+    // Add dots
+    svg.append('g')
+    .selectAll("dot")
+    .data(data)
+    .join("circle")
+        .attr("cx", function (d) { return x(d[0]); } )
+        .attr("cy", function (d) { return y(d[1]); } )
+        .attr("r", 10)
+        .attr("stroke","black")
+        .attr("stroke-width",2)
+        .style("fill", d => z(d[2]));
 
   const gx = svg.append("g");
 
