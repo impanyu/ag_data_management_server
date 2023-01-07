@@ -51,7 +51,6 @@ function create_domain(){
      });
 
 
-
     name_input = htmlToElement('<div class="col">'+
         '<div class="form-group">'+
            '<div class="input-group input-group-alternative">'+
