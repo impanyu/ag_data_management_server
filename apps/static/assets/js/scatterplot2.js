@@ -84,7 +84,7 @@ svg = d3.select("#files_plot")
       .attr("stroke-width", 20);
 */
     // Add dots
-    svg.append('g')
+    const gDot = svg.append('g')
     .selectAll("dot")
     .data(data)
     .join("circle")
