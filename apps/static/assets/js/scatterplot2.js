@@ -1,42 +1,6 @@
 height = d3.select("#map_main").node().getBoundingClientRect().height;
 width = d3.select("#map_main").node().getBoundingClientRect().width;
 
-const zoom = d3.zoom()
-      .scaleExtent([0.5, 32])
-      .on("zoom", zoomed);
-
-svg = d3.select("#files_plot")
-    .append("svg")
-     .attr("viewBox", [0, 0, width, height]);
-
-  const gGrid = svg.append("g");
-
-  const gDot = svg.append("g")
-      .attr("fill", "none")
-      .attr("stroke-linecap", "round");
-
-  gDot.selectAll("path")
-    .data(data)
-    .join("path")
-      .attr("d", d => `M${x(d[0])},${y(d[1])}h0`)
-      .attr("stroke", d => z(d[2]));
-
-  const gx = svg.append("g");
-
-  const gy = svg.append("g");
-
-  svg.call(zoom).call(zoom.transform, d3.zoomIdentity);
-
-  function zoomed({transform}) {
-    const zx = transform.rescaleX(x).interpolate(d3.interpolateRound);
-    const zy = transform.rescaleY(y).interpolate(d3.interpolateRound);
-    gDot.attr("transform", transform).attr("stroke-width", 5 / transform.k);
-    gx.call(xAxis, zx);
-    gy.call(yAxis, zy);
-    gGrid.call(grid, zx, zy);
-  }
-
-
 const random = d3.randomNormal(0, 0.2);
 const sqrt3 = Math.sqrt(3);
 
@@ -45,6 +9,8 @@ data = [].concat(
     Array.from({length: 300}, () => [random() - sqrt3, random() + 1, 1]),
     Array.from({length: 300}, () => [random(), random() - 1, 2])
   );
+
+
 
 
 x = d3.scaleLinear()
@@ -92,3 +58,40 @@ grid = (g, x, y) => g
       )
         .attr("y1", d => 0.5 + y(d))
         .attr("y2", d => 0.5 + y(d)));
+
+const zoom = d3.zoom()
+      .scaleExtent([0.5, 32])
+      .on("zoom", zoomed);
+
+svg = d3.select("#files_plot")
+    .append("svg")
+     .attr("viewBox", [0, 0, width, height]);
+
+  const gGrid = svg.append("g");
+
+  const gDot = svg.append("g")
+      .attr("fill", "none")
+      .attr("stroke-linecap", "round");
+
+  gDot.selectAll("path")
+    .data(data)
+    .join("path")
+      .attr("d", d => `M${x(d[0])},${y(d[1])}h0`)
+      .attr("stroke", d => z(d[2]));
+
+  const gx = svg.append("g");
+
+  const gy = svg.append("g");
+
+  svg.call(zoom).call(zoom.transform, d3.zoomIdentity);
+
+  function zoomed({transform}) {
+    const zx = transform.rescaleX(x).interpolate(d3.interpolateRound);
+    const zy = transform.rescaleY(y).interpolate(d3.interpolateRound);
+    gDot.attr("transform", transform).attr("stroke-width", 5 / transform.k);
+    gx.call(xAxis, zx);
+    gy.call(yAxis, zy);
+    gGrid.call(grid, zx, zy);
+  }
+
+
