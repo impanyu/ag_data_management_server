@@ -331,5 +331,272 @@ function initMap(){
 
 
 
+for(var i = 0; i < current_path_components.length; i++){
+  path += current_path_components[i];
+  item_html='<li class="breadcrumb-item"><a href="/files.html?current_path='+path+'">'+current_path_components[i]+'</a></li>'
+  path += "/";
+
+
+  item_node = htmlToElement(item_html);
+  $("#pwd")[0].appendChild(item_node);
+}
+
+
+document.querySelector("#upload_dir").onchange=function(){
+//form[0].requestSubmit();
+//form[0].submit();
+files = this.files;
+upload();
+this.value="";
+
+
+};
+
+document.querySelector("#upload_file").onchange=function(){
+
+files = this.files;
+upload();
+this.value="";
+
+};
+
+
+function upload(){
+var form_data = new FormData();
+form_data.append("current_path",current_path);
+
+for(var i=0;i<files.length;i++){
+  form_data.append("files",files[i]);
+  form_data.append("paths",files[i]["webkitRelativePath"]);
+
+}
+
+
+ $.ajax({
+            method: "post",
+            processData: false,
+            contentType: false,
+            cache: false,
+            url: "/upload_file",
+            data: form_data,
+            enctype: "multipart/form-data",
+            success: function (data) {
+                alert(data);
+                $("#file_list")[0].innerHTML="";
+                get_file_list();
+            }
+        });
+
+}
+
+
+
+function htmlToElement(html) {
+    var template = document.createElement('template');
+    html = html.trim(); // Never return a text node of whitespace as the result
+    template.innerHTML = html;
+    return template.content.firstChild;
+}
+
+get_file_list();
+
+
+function get_file_list(){
+
+
+
+  $.post("/file_system",
+        {
+          current_path: current_path,
+
+        },
+        function(data, status){
+          console.info(data);
+          data=JSON.parse(data);
+          subdomains=[]
+          times=[]
+
+          //draw all the data & files in current_path on google map based
+          data_points = data["data_points"];
+          console.info(data_points)
+          draw_points(data_points);
+
+
+
+          for(var i=0;i<data['dirs'].length;i++){
+            dir=data["dirs"][i];
+
+            item_html =  '<tr><td scope="row"><div class="media align-items-center"><div class="media-body"><i class="ni ni-folder-17 text-primary"></i><span class="name mb-0 text-sm"> <a href="/files.html?current_path='+current_path+'/'+dir["dir_name"] +'">&nbsp; ' +dir["dir_name"]+ '</a></span> </div></div></td>" + "<td class="budget">'+dir["created_time"]+'</td>"' +
+                   '<td> <span class="badge badge-dot mr-4">  <span class="status">'+dir["accessed_time"]+'</span></span></td>' +
+                   '<td> <span class="badge badge-dot mr-4">  <span class="status">'+dir["size"]+'</span></span></td>' +
+                   '<td> <div class="avatar-group"> <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title='+user+'><img alt="Image placeholder" src="/static/assets/img/theme/react.jpg"></a></div></td>' +
+                   '<td ><div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>'+
+                   '<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">'+
+                   '<a class="dropdown-item" href="#" id="'+i+'_delete">Delete</a>'+
+                   '</div> </div></td></tr>';
+            item_node = htmlToElement(item_html);
+            $("#file_list")[0].appendChild(item_node);
+
+            $("#"+i+"_delete").click(function(){
+               file_name = data["dirs"][parseInt(this.id.split("_")[0])]["dir_name"];
+
+               $.post("/delete_file",
+                      {
+                        current_path : current_path,
+                        file_name: file_name
+                      },
+                      function(data, status){
+                          $("#file_list")[0].innerHTML="";
+                          get_file_list();
+                          alert(data);
+
+
+                      });
+
+
+            });
+
+
+            $("#"+data["dirs"][i]["dir_name"]+"_add_domain").click(function(){
+              subdomain=this.id.split("_")[3];
+              time=this.id.split("_")[5];
+              console.info(this.id.split("_")[3]);
+
+               $.post("/domain",
+                    {
+                      subdomain: subdomain,
+                      time: time//data["dirs"][i]["dir_name"].split("_")[5]
+                    },
+                    function(data, status){
+
+                    });
+
+            });
+
+
+            function callbackClosure(i, callback) {
+              return function() {
+                return callback(i);
+              }
+            }
+
+            $("#"+data["dirs"][i]["dir_name"]+"_canopy_height").click(function(){
+              dir_name= this.id.substr(0,this.id.length-"_canopy_height".length);
+
+               $.post("/canopy_height",
+                    {
+                       dir_name :dir_name,
+                       subdomain: "spidercam_"+this.id.split("_")[3],
+                       time: this.id.split("_")[5]
+
+                    },
+                    function(data, status){
+
+                    });
+
+            });
+
+            $("#"+data["dirs"][i]["dir_name"]+"_canopy_coverage_and_temperature").click(function(){
+              dir_name= this.id.substr(0,this.id.length-"_canopy_coverage_and_temperature".length);
+
+
+               $.post("/canopy_coverage_and_temperature",
+                    {
+                       dir_name :dir_name,
+                       subdomain: "spidercam_"+this.id.split("_")[3],
+                       time: this.id.split("_")[5]
+
+                    },
+                    function(data, status){
+
+                    });
+
+            });
+
+          }
+
+
+          //for(file of data.files){
+          for(var i=0;i<data['files'].length;i++){
+          file=data["files"][i];
+
+            item_html =  '<tr><td scope="row"><div class="media align-items-center"><div class="media-body"><span class="name mb-0 text-sm"> &nbsp;<a href="/static/users/'+current_path+'/'+file["file_name"]+'"> ' +file["file_name"]+ '</a></span> </div></div></td>" + "<td class="budget">'+file["created_time"]+'</td>"' +
+                   '<td> <span class="badge badge-dot mr-4">  <span class="status">'+file["accessed_time"]+'</span></span></td>' +
+                   '<td> <span class="badge badge-dot mr-4">  <span class="status">'+file["size"]+'</span></span></td>' +
+                   '<td> <div class="avatar-group"> <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title='+user+'><img alt="Image placeholder" src="/static/assets/img/theme/react.jpg"></a></div></td>' +
+                   '<td ><div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>'+
+                   '<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">'+
+                   '<a class="dropdown-item" href="#" id="'+i+'_file_delete">Delete</a>'+
+                   '<a class="dropdown-item" href="#" id="'+i+'_add_domain">Add to Domain</a>'+
+                   '<a class="dropdown-item" href="#" id="'+i+'_meta_data">Meta Data</a>'+
+                   '<a class="dropdown-item" href="#" id="'+i+'_google_earth_engine">Earth Engine</a>'+
+                   '</div> </div></td></tr>';
+            item_node = htmlToElement(item_html);
+            $("#file_list")[0].appendChild(item_node);
+
+
+            $("#"+i+"_file_delete").click(function(){
+               file_name= data["files"][parseInt(this.id.split("_")[0])]["file_name"];
+
+
+               console.info(file_name);
+               $.post("/delete_file",
+                      {
+                        current_path : current_path,
+                        file_name: file_name
+                      },
+                      function(data, status){
+                          $("#file_list")[0].innerHTML="";
+                          get_file_list();
+                          alert(data);
+                      });
+
+
+            });
+
+
+            $("#"+i+"_add_domain").click(function(){
+               file_name= data["files"][parseInt(this.id.split("_")[0])]["file_name"];
+               console.info(file_name);
+               add_to_domain(current_path,file_name);
+
+
+            });
+
+             $("#"+i+"_meta_data").click(function(){
+               file_name= data["files"][parseInt(this.id.split("_")[0])]["file_name"];
+               console.info(file_name);
+               //get_meta_data(current_path,file_name);
+
+
+            });
+          }
+
+
+
+
+    });
+}
+
+map_displayed = "map";
+
+function change_file_plot(){
+    if (map_displayed == "map"){
+         document.querySelector("#map_main").style.display="none";
+         document.querySelector("#files_plot").style.display="block";
+         map_displayed="files_plot";
+        }
+    else{
+     document.querySelector("#map_main").style.display="block";
+         document.querySelector("#files_plot").style.display="none";
+         map_displayed="map";
+    }
+
+}
+
+$('body').on('focus',".datepicker input", function(){
+            $(this).datepicker();
+  });
+
 
 
