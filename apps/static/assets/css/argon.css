@@ -61,70 +61,6 @@
 .gm-style-iw + button {display: none;}
 
 
-#sidenav-main{
-width: 150px;
-}
-
-#panel{
-margin-left:150px;
-}
-
-#zoom_window{
-  position
-}
-
-#spidercam_location{
-  
-}
-
-#spidercam_layer_selector{
-  
-  //border-width: 2px;
-  //border-color: #999;
-  //border-style: solid;
-  width:  200px;
-  position: relative;
-}
-
-#spidercam_progress:hover{
-  opacity: 1;
-}
-
-#spidercam_progress {
-  width: 960px;
-  left: 120px;
-  background-color: #fff;
-  opacity: 0.8;
-  transition: opacity 0.5s;
-  position: absolute;
-  bottom: 25px;
-  border-radius: 3px;
-  height: 35px;
-}
-
-#spidercam_bar {
-  width: 1%;
-  height: 35px;
-  background-color: green;
-  border-radius: 3px;
-}
-
-
-.domain_all{
-  display: inline-block;
-  width: 80px;
-  height: 48px;
-  border: 10px !important;
-
-}
-.domain_all:hover{
- opacity: 0.5;
-}
-
-.headline {
-  font-size: 1.2rem;
-  color: #eeeeee;
-}
 
 
 .btn-block {
@@ -167,10 +103,6 @@ margin-left:150px;
     white-space: nowrap;
     text-overflow: ellipsis;
     vertical-align: middle; }
-
-
-
-
 
 
 
