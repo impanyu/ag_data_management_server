@@ -429,6 +429,10 @@ function get_file_list(){
         {
           current_path: current_path,
           category: document.querySelector("#category").value,
+          mode: mode,
+          format: format,
+          label: label,
+
 
 
         },
