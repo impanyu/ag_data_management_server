@@ -33,18 +33,21 @@
               <div class="col-lg-6 col-6">
                   <label class="form-check-label" for="category_select" style="width:15%">Category</label>
                   <select  class="form-control" aria-label="catetory" id="category_select" style="display: inline-block; width:50%; margin-left:1em">
-                  <option selected value="0">ENREC</option>
-                  <option value="1">Spidercam</option>
-                  <option value="2">Soil Water</option>
+                  <option selected value="UAV">UAV</option>
+                  <option value="Genotype">Genotype</option>
+                  <option value="Phenotype">Phenotype</option>
+                      <option value = "Soil"> Soil </option>
+                      <option value = "Air"> Air </option>
+                      <option value = "other"> Other</option>
                 </select>
                   </div>
                   <div class="col-lg-6 col-6">
-                  <label class="form-check-label" for="mode" style="width:15%">Mode</label>
-                  <select  class="form-control" aria-label="catetory" id="mode" style="display: inline-block; width:50%; margin-left:1em">
-                  <option selected value="0">Domain</option>
-                  <option value="1">Data</option>
-                  <option value="2">Tool</option>
-                      <option value="3">Model</option>
+                  <label class="form-check-label" for="mode" style="width:10%">Mode</label>
+                  <select  class="form-control" aria-label="mode" id="mode" style="display: inline-block; width:50%; margin-left:1em">
+                  <option selected value="Domain">Domain</option>
+                  <option value="Data">Data</option>
+                  <option value="Tool">Tool</option>
+                      <option value="Model">Model</option>
                 </select>
 
               </div>
@@ -53,20 +56,24 @@
 
               <div class="row align-items-center py-4">
                 <div class="col-lg-6 col-6">
-                    <label class="form-check-label" for="category_select">Format</label>
-                <select class="custom-select" multiple size = "4">
-                  <option selected>Open this select menu</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
+                    <label class="form-check-label" for="format" style="width:10%">Format</label>
+                <select class="custom-select" multiple size = "4" aria-label="format" id="format" style="display: inline-block; width:50%; margin-left:1em">
+                  <option selected value="Image">Image</option>
+                  <option value="CSV/Spreadsheet">CSV/Spreadsheet</option>
+                    <option value="Data">Data</option>
+                  <option value="Python">Python</option>
+                    <option value="R">R</option>
+                    <option value="Matlab"> Matlab</option>
+                    <option value="Other"> Other</option>
+
                 </select>
                 </div>
                   <div class="col-lg-6 col-6">
-                <select class="custom-select" multiple size = "4">
-                  <option selected>Open this select menu</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
+                <label class="form-check-label" for="label" style="width:10%">Format</label>
+                <select class="custom-select" multiple size = "4" aria-label="label" id="label" style="display: inline-block; width:50%; margin-left:1em">
+                  <option selected value="Spidercam">Spidercam</option>
+                  <option value="ENREC">ENREC</option>
+                    <option value="Wheat">Wheat</option>
                 </select>
                 </div>
 
