@@ -408,6 +408,14 @@ function get_file_list(){
   $.post("/file_system",
         {
           current_path: current_path,
+          category: document.querySelector("#category").value,
+          mode: document.querySelector("#mode").value,
+          format: document.querySelector("#format").value,
+          label: document.querySelector("#label").value
+          //time_range: [querySelector("#start").value,querySelector()]
+
+
+
 
         },
         function(data, status){
