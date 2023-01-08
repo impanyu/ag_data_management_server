@@ -402,6 +402,26 @@ get_file_list();
 
 
 function get_file_list(){
+   mode = [];
+  mode_options = document.querySelector("#mode").options;
+  for (var i =0; i<mode_options.length; i++){
+     if(mode_options[i].selected)
+        mode.push(mode_options[i]);
+  }
+
+  format = [];
+  format_options = document.querySelector("#format").options;
+  for (var i =0; i<format_options.length; i++){
+     if(format_options[i].selected)
+        format.push(category_options[i]);
+  }
+
+  label = [];
+  label_options = document.querySelector("#label").options;
+  for (var i =0; i<label_options.length; i++){
+     if(label_options[i].selected)
+        label.push(category_options[i]);
+  }
 
 
 
@@ -409,20 +429,17 @@ function get_file_list(){
         {
           current_path: current_path,
           category: document.querySelector("#category").value,
-          mode: document.querySelector("#mode").value,
-          format: document.querySelector("#format").value,
-          label: document.querySelector("#label").value
-          //time_range: [querySelector("#start").value,querySelector()]
-
-
-
-
+          mode: mode,
+          format: format,
+          label: label,
+          time_range: [querySelector("#start_date").value,querySelector("#end_date").value],
+          bounding_box: [querySelector("#southwest").value, querySelector("#northeast").value]
         },
         function(data, status){
           console.info(data);
           data=JSON.parse(data);
-          subdomains=[]
-          times=[]
+          subdomains=[];
+          times=[];
 
           //draw all the data & files in current_path on google map based
           data_points = data["data_points"];
