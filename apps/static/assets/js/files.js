@@ -413,14 +413,14 @@ function get_file_list(){
   format_options = document.querySelector("#format").options;
   for (var i =0; i<format_options.length; i++){
      if(format_options[i].selected)
-        format.push(category_options[i]);
+        format.push(format_options[i]);
   }
 
   label = [];
   label_options = document.querySelector("#label").options;
   for (var i =0; i<label_options.length; i++){
      if(label_options[i].selected)
-        label.push(category_options[i]);
+        label.push(label_options[i]);
   }
 
 
