@@ -406,21 +406,21 @@ function get_file_list(){
   mode_options = document.querySelector("#mode").options;
   for (var i =0; i<mode_options.length; i++){
      if(mode_options[i].selected)
-        mode.push(mode_options[i]);
+        mode.push(mode_options[i].value);
   }
 
   format = [];
   format_options = document.querySelector("#format").options;
   for (var i =0; i<format_options.length; i++){
      if(format_options[i].selected)
-        format.push(format_options[i]);
+        format.push(format_options[i].value);
   }
 
   label = [];
   label_options = document.querySelector("#label").options;
   for (var i =0; i<label_options.length; i++){
      if(label_options[i].selected)
-        label.push(label_options[i]);
+        label.push(label_options[i].value);
   }
 
 
@@ -432,6 +432,8 @@ function get_file_list(){
           mode: mode,
           format: format,
           label: label,
+          time_range: [document.querySelector("#start_date").value,document.querySelector("#end_date").value],
+          bounding_box: [document.querySelector("#southwest").value, document.querySelector("#northeast").value]
 
 
 
