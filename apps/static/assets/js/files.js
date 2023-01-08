@@ -602,9 +602,10 @@ function change_file_plot(){
 
 }
 
+/*
 $('body').on('focus',".datepicker input", function(){
             $(this).datepicker();
   });
-
+*/
 
 
