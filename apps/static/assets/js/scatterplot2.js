@@ -11,9 +11,6 @@ data = [].concat(
     Array.from({length: 300}, () => [random(), random() - 1, 2])
   );
 
-
-
-
 x = d3.scaleLinear()
     .domain([-4.5, 4.5])
     .range([0, width])
