@@ -454,7 +454,7 @@ def data(request):
 
         elif load_template == 'file_system':
             file_path = request.POST['current_path']
-            '''
+
             search_box = request.POST['search_box']
             category = request.POST['category']
             mode = request.POST.getlist('mode')
@@ -462,7 +462,7 @@ def data(request):
             label = request.POST.getlist('label')
             time_range = request.POST.getlist('time_range')
             bounding_box = request.POST.getlist('bounding_box')
-            '''
+
 
             #fs = FileSystemStorage(location=os.path.join(settings.CORE_DIR, 'data') + "/users")
             fs = FileSystemStorage(location="/home/" + request.user.get_username() + "/ag_data")

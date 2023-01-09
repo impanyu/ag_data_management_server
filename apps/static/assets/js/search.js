@@ -377,8 +377,6 @@ function get_file_list(){
           time_range: [document.querySelector("#start_date").value,document.querySelector("#end_date").value],
           bounding_box: [document.querySelector("#southwest").value, document.querySelector("#northeast").value]
 
-
-
         },
         function(data, status){
           //console.info(data);
