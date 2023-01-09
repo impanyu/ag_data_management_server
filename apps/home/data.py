@@ -524,7 +524,6 @@ def filtering_condition(data, search_box, category, mode, format, label, time_ra
         lower_lat, upper_lat, left_ln, right_ln = extract_coordinates(southwest, northeast)
         if item_loc["lat"] < lower_lat or item_loc["lat"] > upper_lat:
             return False
-
         if item_loc["lng"] < left_ln or item_loc["lng"] > right_ln:
             return False
 
@@ -532,4 +531,5 @@ def filtering_condition(data, search_box, category, mode, format, label, time_ra
 
 
 def dim_reduction(points):
+
     return points
