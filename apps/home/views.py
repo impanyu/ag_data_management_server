@@ -115,11 +115,11 @@ def pages(request):
             html_template = loader.get_template('home/files.html')
             return HttpResponse(html_template.render(context, request))
 
-        elif load_template == "search.html":
+        elif load_template == "search_page.html":
             context['current_path'] = request.GET['current_path']
             context['segment'] = load_template
 
-            html_template = loader.get_template('home/search_page.html')
+            html_template = loader.get_template('home/search.html')
             return HttpResponse(html_template.render(context, request))
 
         context['segment'] = load_template
