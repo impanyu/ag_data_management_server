@@ -428,7 +428,7 @@ function get_file_list(){
   $.post("/file_system",
         {
           current_path: current_path,
-            /*
+          /*
           search_box: document.querySelector("#search_box").value,
           category: document.querySelector("#category").value,
           mode: mode,
