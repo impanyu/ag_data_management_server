@@ -335,8 +335,6 @@ for(var i = 0; i < current_path_components.length; i++){
   path += current_path_components[i];
   item_html='<li class="breadcrumb-item"><a href="/files.html?current_path='+path+'">'+current_path_components[i]+'</a></li>'
   path += "/";
-
-
   item_node = htmlToElement(item_html);
   $("#pwd")[0].appendChild(item_node);
 }
