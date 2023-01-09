@@ -251,8 +251,6 @@ function add_to_domain(path,file_name){
 
 
 
-
-
      map_container = document.createElement("div");
      map_container.setAttribute("id","map");
 

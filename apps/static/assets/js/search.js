@@ -386,8 +386,9 @@ function get_file_list(){
 
           //draw all the data & files in current_path on google map based
           items = data["items"];
+          points = data["2d_points"]
           console.info(items)
-          draw_points(items);
+          draw_points(points);
 
 
           for(var i=0;i<items.length;i++){
@@ -554,14 +555,8 @@ function init_map_main(){
                   });
                   marker.setMap(map_main);
             }
-
-
-
         }
-
-
         )
-
 }
 
 var data_cat_color_map = {};

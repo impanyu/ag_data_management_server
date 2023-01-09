@@ -13,19 +13,18 @@ from PIL import Image
 import shutil
 
 
-
-def convert_and_caching(file_path,username):
-    real_path = map_file_path(file_path,username)
+def convert_and_caching(file_path, username):
+    real_path = map_file_path(file_path, username)
     suffix = file_path.split("/")[-1].split(".")[1]
     print(suffix)
 
-    if( suffix == "jpg" or suffix == "png"):
+    if (suffix == "jpg" or suffix == "png"):
 
         new_name = file_path.split("/")[-1]
         shutil.copy(real_path, "/static/data_cache/" + new_name)
 
-    elif(suffix == "tif" or suffix == "tiff"):
-        new_name = file_path.split("/")[-1].split(".")[0]+".jpg"
+    elif (suffix == "tif" or suffix == "tiff"):
+        new_name = file_path.split("/")[-1].split(".")[0] + ".jpg"
         outfile = os.path.join(settings.CORE_DIR, 'data', 'data_cache', new_name)
         if (os.path.exists(outfile)):
             return "/static/data_cache/" + new_name
@@ -34,14 +33,11 @@ def convert_and_caching(file_path,username):
         if (not im.mode == 'RGB'):
             im = im.convert('RGB')
 
-        im.thumbnail((1000,1000))
-
-
+        im.thumbnail((1000, 1000))
 
         im.save(outfile)
 
-    return "/static/data_cache/"+new_name
-
+    return "/static/data_cache/" + new_name
 
 
 def extract_coordinates(southwest, northeast):
@@ -55,16 +51,18 @@ def extract_coordinates(southwest, northeast):
 def overlap(a1, b1, a2, b2):
     return max(a1, a2) <= min(b1, b2)
 
+
 def string_to_time(t):
     return datetime.strptime(t, "%m/%d/%Y")
 
 
 def decode_key(key):
     keys = key.split(",")
-    return (float(keys[0]), float(keys[1]), float(keys[2]), float(keys[3]),datetime.strptime(keys[4],"%m/%d/%Y"),datetime.strptime(keys[5],"%m/%d/%Y"))
+    return (float(keys[0]), float(keys[1]), float(keys[2]), float(keys[3]), datetime.strptime(keys[4], "%m/%d/%Y"),
+            datetime.strptime(keys[5], "%m/%d/%Y"))
 
 
-def query_domain(domain_name, start_date, end_date, southwest, northeast, query_range,username):
+def query_domain(domain_name, start_date, end_date, southwest, northeast, query_range, username):
     domain_data_path = os.path.join(settings.CORE_DIR, 'data', domain_name + '.json')
     query_range = json.loads(query_range)
     query_result = []
@@ -72,62 +70,61 @@ def query_domain(domain_name, start_date, end_date, southwest, northeast, query_
         print("infile")
         domain_data = json.load(domain_data_file)
         for key, value in domain_data.items():
-            item_lower_lat,item_left_ln,item_upper_lat,item_right_ln, item_start_date, item_end_date = decode_key(key)
+            item_lower_lat, item_left_ln, item_upper_lat, item_right_ln, item_start_date, item_end_date = decode_key(
+                key)
 
-            lower_lat, upper_lat, left_ln, right_ln = extract_coordinates(southwest,northeast)
+            lower_lat, upper_lat, left_ln, right_ln = extract_coordinates(southwest, northeast)
 
-            if(not overlap(item_lower_lat,item_upper_lat,lower_lat,upper_lat)):
+            if (not overlap(item_lower_lat, item_upper_lat, lower_lat, upper_lat)):
                 print("o1")
                 continue
 
-            if(not overlap(item_left_ln,item_right_ln,left_ln,right_ln)):
+            if (not overlap(item_left_ln, item_right_ln, left_ln, right_ln)):
                 print("o2")
                 continue
 
-            if(not overlap(item_start_date,item_end_date,string_to_time(start_date),string_to_time(end_date))):
+            if (not overlap(item_start_date, item_end_date, string_to_time(start_date), string_to_time(end_date))):
                 print("o3")
                 continue
 
-            #check  attributes
+            # check  attributes
             satisfied = True
 
             for content_key, range_values in query_range.items():
-                if(content_key not in value):
+                if (content_key not in value):
                     continue
-                if(not value[content_key].isnumeric()):
+                if (not value[content_key].isnumeric()):
                     continue
-                if(not (float(range_values[0])<= float(value[content_key]) and float(value[content_key])<=float(range_values[1]))):
+                if (not (float(range_values[0]) <= float(value[content_key]) and float(value[content_key]) <= float(
+                        range_values[1]))):
                     satisfied = False
                     break
-            
+
             print(satisfied)
 
-            if(satisfied):
+            if (satisfied):
                 result = {}
 
                 for attr_key, attr_value in value.items():
-                    if (not attr_value.isnumeric()): #deal with file path
+                    if (not attr_value.isnumeric()):  # deal with file path
                         result[attr_key] = convert_and_caching(attr_value, username)
                     else:
                         result[attr_key] = attr_value
 
-
-
                 item_southwest = str(item_lower_lat) + "," + str(item_left_ln)
                 item_northeast = str(item_upper_lat) + "," + str(item_right_ln)
-                result["bounding_box"]=[item_southwest,item_northeast]
-                result["date_range"] = [datetime.strftime(item_start_date,"%m/%d/%Y"),datetime.strftime(item_end_date,"%m/%d/%Y")]
-
-
+                result["bounding_box"] = [item_southwest, item_northeast]
+                result["date_range"] = [datetime.strftime(item_start_date, "%m/%d/%Y"),
+                                        datetime.strftime(item_end_date, "%m/%d/%Y")]
 
                 query_result.append(result)
-
 
             print(query_result)
 
     return json.dumps(query_result)
 
-#map logic_path to real_path, for example impanyu/ENREC/1.png -> /home/impanyu/ag_data/ENREC/1.png
+
+# map logic_path to real_path, for example impanyu/ENREC/1.png -> /home/impanyu/ag_data/ENREC/1.png
 def map_file_path(logic_path, username):
     real_path = ""
 
@@ -145,13 +142,12 @@ def map_file_path(logic_path, username):
 
 def add_to_domain(domain_name, start_date, end_date, southwest, northeast, data_content):
     domain_data_path = os.path.join(settings.CORE_DIR, 'data', domain_name + '.json')
-    if(southwest[0] == "("):
+    if (southwest[0] == "("):
         item_key = southwest[1:-1] + "," + northeast[1:-1] + "," + start_date + "," + end_date
-    elif(southwest[0].isnumeric()):
+    elif (southwest[0].isnumeric()):
         item_key = southwest + "," + northeast + "," + start_date + "," + end_date
     else:
-        item_key = "0,0,0,0,"+start_date+end_date
-
+        item_key = "0,0,0,0," + start_date + end_date
 
     if not os.path.exists(domain_data_path):
         with open(domain_data_path, 'w') as domain_data_file:
@@ -485,6 +481,55 @@ def retrieve_sub_domain_data(subdomain_path, layer, time, session):
         return json.dumps({"soilwaters": soilwaters, "times": times})
 
 
-def filtering_condition(data,search_box,category,mode,format,label,time_range,bounding_box):
+def filtering_condition(data, search_box, category, mode, format, label, time_range, bounding_box):
+    item_name = data["path"].split("/")[-1]
+    if not search_box in item_name:
+        return False
+
+    if not category == "":
+        if "category" not in data or not data["category"] == category:
+            return False
+
+    if "mode" not in data or not data["mode"] in mode:
+        return False
+
+    has_format = False
+    for f in format:
+        if f in data["format"]:
+            has_format = True
+            break
+    if not has_format:
+        return False
+
+    has_label = False
+    for l in label:
+        if l in data["label"]:
+            has_label = True
+            break
+    if not has_label:
+        return False
+
+    start = datetime.strptime(time_range[0], "Y/m/d").timestamp()
+    end = datetime.strptime(time_range[1], "Y/m/d").timestamp()
+    item_time = datetime.strptime(data["time"], "Y/m/d %H:%M:%S").timestamp()
+
+    if item_time > end or item_time < start:
+        return False
+
+    southwest = bounding_box[0]
+    northeast = bounding_box[1]
+    item_loc = data["loc"]
+
+    if not (southwest == "Southwest Corner" and northeast == "Northeast Corner"):
+        lower_lat, upper_lat, left_ln, right_ln = extract_coordinates(southwest, northeast)
+        if item_loc["lat"] < lower_lat or item_loc["lat"] > upper_lat:
+            return False
+
+        if item_loc["lng"] < left_ln or item_loc["lng"] > right_ln:
+            return False
 
     return True
+
+
+def dim_reduction(points):
+    return points

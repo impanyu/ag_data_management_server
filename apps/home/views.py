@@ -550,7 +550,6 @@ def data(request):
         elif load_template == 'mode_search':
             file_path = request.POST['current_path']
 
-
             search_box = request.POST['search_box']
             category = request.POST['category']
             mode = request.POST.getlist('mode')
@@ -580,7 +579,8 @@ def data(request):
             dirs, files = fs.listdir(file_path)
             '''
 
-            response = {"items": []}
+            response = {"items": [], "2d_points":[]}
+            points = []
 
             # query all the data points or files in current path
             data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "r")
@@ -594,7 +594,10 @@ def data(request):
                 if filtering_condition(data,search_box,category,mode,format,label,time_range,bounding_box):
                     item_name = data["path"].split("/")[-1]
                     data["name"] = item_name
+                    points.append([data["mode"],data["category"],data["label"],data["loc"],data["time"]])
                     response["items"].append(data)
+
+            response["2d_points"] = dim_reduction(points)
 
 
 
