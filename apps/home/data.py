@@ -11,6 +11,7 @@ import numpy as np
 from datetime import datetime
 from PIL import Image
 import shutil
+from sklearn import manifold
 
 
 def convert_and_caching(file_path, username):
@@ -530,6 +531,50 @@ def filtering_condition(data, search_box, category, mode, format, label, time_ra
     return True
 
 
-def dim_reduction(points):
+from sklearn.metrics.pairwise import euclidean_distances
+#[data["mode"],data["category"],data["label"],data["loc"],data["time"]]
+# mode, category and time are string, label is list, loc is dict
+def distance(x,y):
+    d = 0
+    if not x[0] == y[0]:
+        d = d+1
+    if not x[1] == y[1]:
+        d = d+1
+    for l in x[2]:
+        if not l in y[2]:
+            d = d+1
+    for l in y[2]:
+        if not l in x[2]:
+            d = d+1
+    d = d+ euclidean_distances([[x[3]["lat"]/90,x[3]["lng"]/180]],[[y[3]["lat"]/90,y[3]["lng"]/180]])
+    x_time = datetime.strptime(x[4], "%Y/%m/%d %H:%M:%S").timestamp()
+    y_time = datetime.strptime(y[4], "%Y/%m/%d %H:%M:%S").timestamp()
+    d = d+ abs(x_time - y_time) / (365*12*30*24*3600)
+    return d
 
-    return points
+def data_metric(X,Y):
+    result = np.zeros([len(X),len(Y)])
+    i = 0
+    for x in X:
+        j = 0
+        for y in Y:
+            result[i][j] = distance(x,y)
+            j = j+1
+        i = i+1
+    print(result)
+    return result
+
+
+def dim_reduction(points):
+    input = data_metric(points,points)
+    t_sne = manifold.TSNE(
+        n_components=2,
+        perplexity=30,
+        init="random",
+        n_iter=250,
+        random_state=0,
+        metric = "precomputed"
+    )
+    results = t_sne.fit_transform(input)
+
+    return results

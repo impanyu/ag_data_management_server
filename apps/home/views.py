@@ -590,6 +590,7 @@ def data(request):
 
 
             for data in data_points:
+
         
                 if filtering_condition(data,search_box,category,mode,format,label,time_range,bounding_box):
                     item_name = data["path"].split("/")[-1]
@@ -598,8 +599,6 @@ def data(request):
                     response["items"].append(data)
 
             response["2d_points"] = dim_reduction(points)
-
-
 
             response = json.dumps(response)
 
