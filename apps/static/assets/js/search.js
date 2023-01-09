@@ -329,37 +329,6 @@ function initMap(){
 
 
 
-
-function upload(){
-var form_data = new FormData();
-form_data.append("current_path",current_path);
-
-for(var i=0;i<files.length;i++){
-  form_data.append("files",files[i]);
-  form_data.append("paths",files[i]["webkitRelativePath"]);
-
-}
-
-
- $.ajax({
-            method: "post",
-            processData: false,
-            contentType: false,
-            cache: false,
-            url: "/upload_file",
-            data: form_data,
-            enctype: "multipart/form-data",
-            success: function (data) {
-                alert(data);
-                $("#file_list")[0].innerHTML="";
-                get_file_list();
-            }
-        });
-
-}
-
-
-
 function htmlToElement(html) {
     var template = document.createElement('template');
     html = html.trim(); // Never return a text node of whitespace as the result
@@ -371,7 +340,7 @@ get_file_list();
 
 
 function get_file_list(){
- /*
+
   $("#file_list")[0].innerHTML="";
    mode = [];
   mode_options = document.querySelector("#mode").options;
@@ -393,7 +362,7 @@ function get_file_list(){
      if(label_options[i].selected)
         label.push(label_options[i].value);
   }
-  */
+
 
 
   $.post("/file_system",
