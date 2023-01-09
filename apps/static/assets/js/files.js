@@ -402,6 +402,7 @@ get_file_list();
 
 
 function get_file_list(){
+  $("#file_list")[0].innerHTML="";
    mode = [];
   mode_options = document.querySelector("#mode").options;
   for (var i =0; i<mode_options.length; i++){
