@@ -400,6 +400,7 @@ get_file_list();
 
 
 function get_file_list(){
+ /*
   $("#file_list")[0].innerHTML="";
    mode = [];
   mode_options = document.querySelector("#mode").options;
@@ -421,11 +422,13 @@ function get_file_list(){
      if(label_options[i].selected)
         label.push(label_options[i].value);
   }
+  */
 
 
   $.post("/file_system",
         {
-          current_path: current_path,
+          current_path: current_path
+          /*
           search_box: document.querySelector("#search_box").value,
           category: document.querySelector("#category").value,
           mode: mode,
@@ -433,7 +436,7 @@ function get_file_list(){
           label: label,
           time_range: [document.querySelector("#start_date").value,document.querySelector("#end_date").value],
           bounding_box: [document.querySelector("#southwest").value, document.querySelector("#northeast").value]
-
+          */
 
         },
         function(data, status){
