@@ -385,7 +385,7 @@ function get_file_list(){
           times=[];
 
           //draw all the data & files in current_path on google map based
-          data_points = data["data_points"];
+          data_points = data["items"];
           console.info(data_points)
           draw_points(data_points);
 
