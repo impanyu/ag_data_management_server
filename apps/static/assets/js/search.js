@@ -385,12 +385,70 @@ function get_file_list(){
           times=[];
 
           //draw all the data & files in current_path on google map based
-          data_points = data["items"];
-          console.info(data_points)
-          draw_points(data_points);
+          items = data["items"];
+          console.info(items)
+          draw_points(items);
 
 
-          //for(file of data.files){
+          for(var i=0;i<items.length;i++){
+          item = data["items"][i];
+
+
+            item_html =  '<tr><td scope="row"><div class="media align-items-center"><div class="media-body"><span class="name mb-0 text-sm"> &nbsp;<a href="/static/users/'+current_path+'/'+item["name"]+'"> ' +item["name"]+
+                     '</a></span> </div></div></td>" + "<td class="budget">'+item["mode"]+'</td>"' +
+                   '<td> <span class="badge badge-dot mr-4">  <span class="status">'+item["label"]+'</span></span></td>' +
+                   '<td> <span class="badge badge-dot mr-4">  <span class="status">'+item["category"]+'</span></span></td>' +
+                   '<td> <div class="avatar-group"> <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title='+item["owner"]+'><img alt="Image placeholder" src="/static/assets/img/theme/react.jpg"></a></div></td>' +
+                   '<td ><div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>'+
+                   '<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">'+
+                   '<a class="dropdown-item" href="#" id="'+i+'_file_delete">Delete</a>'+
+                   '<a class="dropdown-item" href="#" id="'+i+'_add_domain">Add to Domain</a>'+
+                   '<a class="dropdown-item" href="#" id="'+i+'_meta_data">Meta Data</a>'+
+                   '<a class="dropdown-item" href="#" id="'+i+'_google_earth_engine">Earth Engine</a>'+
+                   '</div> </div></td></tr>';
+            item_node = htmlToElement(item_html);
+            $("#file_list")[0].appendChild(item_node);
+
+
+            $("#"+i+"_file_delete").click(function(){
+               file_name= data["files"][parseInt(this.id.split("_")[0])]["file_name"];
+
+
+               console.info(file_name);
+               $.post("/delete_file",
+                      {
+                        current_path : current_path,
+                        file_name: file_name
+                      },
+                      function(data, status){
+                          $("#file_list")[0].innerHTML="";
+                          get_file_list();
+                          alert(data);
+                      });
+
+
+            });
+
+
+            $("#"+i+"_add_domain").click(function(){
+               file_name= data["files"][parseInt(this.id.split("_")[0])]["file_name"];
+               console.info(file_name);
+               add_to_domain(current_path,file_name);
+
+
+            });
+
+             $("#"+i+"_meta_data").click(function(){
+               file_name= data["files"][parseInt(this.id.split("_")[0])]["file_name"];
+               console.info(file_name);
+               //get_meta_data(current_path,file_name);
+
+
+            });
+          }
+
+
+          /*
           for(var i=0;i<data['files'].length;i++){
           file=data["files"][i];
 
@@ -445,8 +503,7 @@ function get_file_list(){
 
             });
           }
-
-
+       */
 
 
     });

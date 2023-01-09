@@ -593,6 +593,7 @@ def data(request):
         
                 if filtering_condition(data,search_box,category,mode,format,label,time_range,bounding_box):
                     item_name = data["path"].split("/")[-1]
+                    data["name"] = item_name
                     response["items"].append(data)
 
 
