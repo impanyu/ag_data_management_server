@@ -483,3 +483,8 @@ def retrieve_sub_domain_data(subdomain_path, layer, time, session):
                 times = json.load(output_time_file)
 
         return json.dumps({"soilwaters": soilwaters, "times": times})
+
+
+def filtering_condition(data,search_box,category,mode,format,label,time_range,bounding_box):
+
+    return True

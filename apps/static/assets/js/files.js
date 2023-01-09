@@ -425,7 +425,6 @@ function get_file_list(){
   }
 
 
-
   $.post("/file_system",
         {
           current_path: current_path,
@@ -438,10 +437,9 @@ function get_file_list(){
           bounding_box: [document.querySelector("#southwest").value, document.querySelector("#northeast").value]
 
 
-
         },
         function(data, status){
-          console.info(data);
+          //console.info(data);
           data=JSON.parse(data);
           subdomains=[];
           times=[];
@@ -452,11 +450,11 @@ function get_file_list(){
           draw_points(data_points);
 
 
-
           for(var i=0;i<data['dirs'].length;i++){
             dir=data["dirs"][i];
 
-            item_html =  '<tr><td scope="row"><div class="media align-items-center"><div class="media-body"><i class="ni ni-folder-17 text-primary"></i><span class="name mb-0 text-sm"> <a href="/files.html?current_path='+current_path+'/'+dir["dir_name"] +'">&nbsp; ' +dir["dir_name"]+ '</a></span> </div></div></td>" + "<td class="budget">'+dir["created_time"]+'</td>"' +
+            item_html =  '<tr><td scope="row"><div class="media align-items-center"><div class="media-body"><i class="ni ni-folder-17 text-primary"></i><span class="name mb-0 text-sm"> <a href="/files.html?current_path='+current_path+'/'+dir["dir_name"] +'">&nbsp; ' +dir["dir_name"]+
+            '</a></span> </div></div></td>" + "<td class="budget">'+dir["created_time"]+'</td>"' +
                    '<td> <span class="badge badge-dot mr-4">  <span class="status">'+dir["accessed_time"]+'</span></span></td>' +
                    '<td> <span class="badge badge-dot mr-4">  <span class="status">'+dir["size"]+'</span></span></td>' +
                    '<td> <div class="avatar-group"> <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title='+user+'><img alt="Image placeholder" src="/static/assets/img/theme/react.jpg"></a></div></td>' +
@@ -482,7 +480,6 @@ function get_file_list(){
 
 
                       });
-
 
             });
 

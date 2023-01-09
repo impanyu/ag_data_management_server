@@ -478,6 +478,42 @@ def data(request):
 
             response = {"dirs": [], "files": []}
 
+            # query all the data points or files in current path
+            data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "r")
+            data_points = json.load(data_and_files)
+            data_and_files.close()
+            response["data_points"] = []
+            #print(abs_path)
+
+            '''
+            for data in data_points:
+
+                if "path" in data and data["path"].startswith(abs_path) and filtering_condition(data,search_box,category,mode,format,label,time_range,bounding_box):
+                    file_name = data["path"][len(abs_path)+1:]
+                    if data["mode"] == "Data":
+
+                        if fs.exists(file_path + "/" + file_name):
+                            if os.path.isdir(data["path"]):
+                                dir = file_name
+                                created_time = fs.get_created_time(file_path + "/" + dir)
+                                accessed_time = fs.get_accessed_time(file_path + "/" + dir)
+                                size = fs.size(file_path + "/" + dir)
+                                dir_item = {"dir_name": dir, "created_time": created_time.strftime("%m/%d/%Y, %H:%M:%S"),
+                                            "accessed_time": accessed_time.strftime("%m/%d/%Y, %H:%M:%S"), "size": size}
+                                response["dirs"].append(dir_item)
+                            else:
+                                file = file_name
+                                created_time = fs.get_created_time(file_path + "/" + file)
+                                accessed_time = fs.get_accessed_time(file_path + "/" + file)
+                                size = fs.size(file_path + "/" + file)
+                                file_item = {"file_name": file, "created_time": created_time.strftime("%m/%d/%Y, %H:%M:%S"),
+                                             "accessed_time": accessed_time.strftime("%m/%d/%Y, %H:%M:%S"), "size": size}
+                                response["files"].append(file_item)
+                    else:
+                        response["domain"] = []
+                    response["data_points"].append(data)
+            '''
+
             for dir in dirs:
                 if dir[0] == ".":
                     continue
@@ -498,19 +534,6 @@ def data(request):
                              "accessed_time": accessed_time.strftime("%m/%d/%Y, %H:%M:%S"), "size": size}
                 response["files"].append(file_item)
             print(response)
-
-
-            #query all the data points or files in current path
-            data_and_files = open(os.path.join(settings.CORE_DIR, 'data','data_and_files.json'),"r")
-            data_points = json.load(data_and_files)
-            data_and_files.close()
-            response["data_points"] = []
-            print(abs_path)
-
-            for data in data_points:
-
-                if "path" in data and data["path"].startswith(abs_path):
-                    response["data_points"].append(data)
 
             response = json.dumps(response)
 
