@@ -540,6 +540,79 @@ def data(request):
 
             return HttpResponse(response)
 
+        elif load_template == 'search':
+            file_path = request.POST['current_path']
+
+            search_box = request.POST['search_box']
+            category = request.POST['category']
+            mode = request.POST.getlist('mode')
+            format = request.POST.getlist('format')
+            label = request.POST.getlist('label')
+            time_range = request.POST.getlist('time_range')
+            bounding_box = request.POST.getlist('bounding_box')
+
+
+            # fs = FileSystemStorage(location=os.path.join(settings.CORE_DIR, 'data') + "/users")
+            fs = FileSystemStorage(location="/home/" + request.user.get_username() + "/ag_data")
+
+            # print(request.user.get_username())
+
+            modified_file_path = ""
+            for i in range(1, len(file_path.split("/"))):
+                modified_file_path += "/" + file_path.split("/")[i]
+
+            if modified_file_path == "":
+                file_path = "."
+                abs_path = "/home/" + request.user.get_username() + "/ag_data"
+            else:
+                file_path = modified_file_path[1:]
+                abs_path = os.path.join("/home/" + request.user.get_username() + "/ag_data", file_path)
+
+            dirs, files = fs.listdir(file_path)
+
+            response = {"dirs": [], "files": []}
+
+            # query all the data points or files in current path
+            data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "r")
+            data_points = json.load(data_and_files)
+            data_and_files.close()
+            response["data_points"] = []
+            # print(abs_path)
+
+
+            for data in data_points:
+
+                if "path" in data and data["path"].startswith(abs_path) and filtering_condition(data,search_box,category,mode,format,label,time_range,bounding_box):
+                    file_name = data["path"][len(abs_path)+1:]
+                    if data["mode"] == "Data":
+
+                        if fs.exists(file_path + "/" + file_name):
+                            if os.path.isdir(data["path"]):
+                                dir = file_name
+                                created_time = fs.get_created_time(file_path + "/" + dir)
+                                accessed_time = fs.get_accessed_time(file_path + "/" + dir)
+                                size = fs.size(file_path + "/" + dir)
+                                dir_item = {"dir_name": dir, "created_time": created_time.strftime("%m/%d/%Y, %H:%M:%S"),
+                                            "accessed_time": accessed_time.strftime("%m/%d/%Y, %H:%M:%S"), "size": size}
+                                response["dirs"].append(dir_item)
+                            else:
+                                file = file_name
+                                created_time = fs.get_created_time(file_path + "/" + file)
+                                accessed_time = fs.get_accessed_time(file_path + "/" + file)
+                                size = fs.size(file_path + "/" + file)
+                                file_item = {"file_name": file, "created_time": created_time.strftime("%m/%d/%Y, %H:%M:%S"),
+                                             "accessed_time": accessed_time.strftime("%m/%d/%Y, %H:%M:%S"), "size": size}
+                                response["files"].append(file_item)
+                    else:
+                        response["domain"] = []
+                    response["data_points"].append(data)
+
+
+
+            response = json.dumps(response)
+
+            return HttpResponse(response)
+
 
 
     except template.TemplateDoesNotExist:
