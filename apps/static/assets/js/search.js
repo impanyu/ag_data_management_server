@@ -365,7 +365,7 @@ function get_file_list(){
 
 
 
-  $.post("/search",
+  $.post("/mode_search",
         {
           current_path: current_path,
 /*

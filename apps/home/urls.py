@@ -13,7 +13,7 @@ urlpatterns = [
 
     # The home page
     path('', views.index, name='home'),
-    re_path(r'^search',views.data,name='search'),
+    re_path(r'^mode_search',views.data,name='search'),
     re_path(r'^query_domain',views.data,name='query_domain'),
     re_path(r'^get_tif_range',views.data,name='get_tif_range'),
     re_path(r'^get_domains',views.data,name='get_domains'),
