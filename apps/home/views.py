@@ -579,13 +579,13 @@ def data(request):
             response["data_points"] = []
             # print(abs_path)
 
-
+            '''
             for data in data_points:
-
+        
                 if "path" in data and data["path"].startswith(abs_path) and filtering_condition(data,search_box,category,mode,format,label,time_range,bounding_box):
                     file_name = data["path"][len(abs_path)+1:]
                     if data["mode"] == "Data":
-
+        
                         if fs.exists(file_path + "/" + file_name):
                             if os.path.isdir(data["path"]):
                                 dir = file_name
@@ -606,7 +606,7 @@ def data(request):
                     else:
                         response["domain"] = []
                     response["data_points"].append(data)
-
+            '''
 
 
             response = json.dumps(response)
