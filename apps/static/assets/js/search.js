@@ -531,4 +531,63 @@ $('body').on('focus',".datepicker input", function(){
   });
 
 
+function init_map_main(){
+  map_main = new google.maps.Map(
+    document.getElementById("map_main"),
+    {
+      center: { lat: 40.897, lng: -96.644 },
+      zoom: 11,
+    }
+  );
+
+     $.get("/get_domains_meta",
+        {
+        },function(data,status){
+            console.info(data)
+           domains = JSON.parse(data);
+            for(domain_name in domains){
+                 console.info(parseFloat(domains[domain_name]["bounding_box"][0].split(",")[0]) );
+                 var marker = new google.maps.Marker({
+                    position: {lat:parseFloat(domains[domain_name]["bounding_box"][0].split(",")[0]) , lng: parseFloat(domains[domain_name]["bounding_box"][0].split(",")[1])},
+
+                    label: domain_name,
+                  });
+                  marker.setMap(map_main);
+            }
+
+
+
+        }
+
+
+        )
+
+}
+
+var data_cat_color_map = {};
+data_cat_color_map["UAV"] = "pink";
+data_cat_color_map["soil_water"] = "blue";
+data_cat_color_map["spidercam"] = "red";
+
+
+function draw_points(data_points){
+
+   for (i in data_points) {
+   data_point = data_points[i]
+    data_cat = data_point["category"];
+    data_loc = data_point["loc"];
+    size = data_point["size"];
+    const point = new google.maps.Circle({
+      strokeColor: "black",
+      strokeOpacity: 0.3,
+      strokeWeight: 2,
+      fillColor: data_cat_color_map[data_cat],
+      fillOpacity: 0.3,
+      map:map_main,
+      center: data_loc,
+      radius: Math.min(size,1000),
+    });
+  }
+}
+
 
