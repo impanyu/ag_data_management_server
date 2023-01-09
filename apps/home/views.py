@@ -115,7 +115,7 @@ def pages(request):
             html_template = loader.get_template('home/files.html')
             return HttpResponse(html_template.render(context, request))
 
-        elif load_template == "search_page.html":
+        elif load_template == "search.html":
             context['current_path'] = request.GET['current_path']
             context['segment'] = load_template
 
