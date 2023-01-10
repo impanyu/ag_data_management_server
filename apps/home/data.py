@@ -590,7 +590,7 @@ def dim_reduction(points):
         metric = "precomputed"
     )
     results = t_sne.fit_transform(input)
-    print(results)
+
 
     return results
 

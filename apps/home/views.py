@@ -650,6 +650,7 @@ def data(request):
                     response["items"].append(data)
 
             response["2d_points"] = dim_reduction(points)
+            print(response)
 
             response = json.dumps(response)
 
