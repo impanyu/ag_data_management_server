@@ -595,6 +595,7 @@ def dim_reduction(points):
     return results
 
 def top_down(dir_root, data_points):
+    data_points[dir_root]["path"] = dir_root
     if not os.path.isdir(dir_root):
         register_file_meta(dir_root,data_points)
         return
@@ -614,6 +615,7 @@ def top_down(dir_root, data_points):
 
         for key in meta_data:
             data_points[path][key] = meta_data[key]
+
         top_down(path,data_points)
 
 
