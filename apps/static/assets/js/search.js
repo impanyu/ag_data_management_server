@@ -387,8 +387,13 @@ function get_file_list(){
           //draw all the data & files in current_path on google map based
           items = data["items"];
           points = data["2d_points"]
+          color_scale_map = {"CSV/Spreadsheet":1, "Image":2, "Other":3}
           for(i in items){
              items[i]["2d"] = points[i];
+             if(items[i]["category"].length > 0)
+               items[i]["2d"].push(color_scale_map[items[i]["category"][0]]);
+             else
+               items[i]["2d"].push(0);
           }
           console.info(items)
           draw_points(items);

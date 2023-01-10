@@ -34,10 +34,10 @@ function draw_2d_points(data){
         .domain([y_min, y_max])
         .range([height, 0])
 
-    color_scale_map = {"CSV/Spreadsheet":1, "Image":2, "Other":3}
+
 
     z = d3.scaleOrdinal()
-        .domain(data.map(d => {if(d["format"].length==0) return 0; else return color_scale_map[d["format"][0]];}))
+        .domain(data.map(d => data.map(d => d["2d"][2]))
         .range(d3.schemeCategory10)
 
     xAxis = (g, x) => g
@@ -102,12 +102,12 @@ function draw_2d_points(data){
         .selectAll("dot")
         .data(data)
         .join("circle")
-            .attr("cx", function (d) { console.info(d["2d"][0]); return x(d["2d"][0]); } )
-            .attr("cy", function (d) {console.info(d["2d"][1]);  return y(d["2d"][1]); } )
+            .attr("cx", function (d) {  return x(d["2d"][0]); } )
+            .attr("cy", function (d) { return y(d["2d"][1]); } )
             .attr("r", 10)
             .attr("stroke","black")
             .attr("stroke-width",2)
-            .style("fill", d => z(d[2]));
+            .style("fill", d => z(d["2d"][2]));
 
       const gx = svg.append("g");
 
