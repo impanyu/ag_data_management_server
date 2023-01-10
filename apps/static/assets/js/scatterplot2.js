@@ -114,11 +114,11 @@ function draw_2d_points(data){
     d3.select(this)
       .style("opacity", 1)
   };
-  var mousemove = function(d) {
+  var mousemove = function(e) {
     Tooltip
       .html("name: "+d["name"]+"<br>"+"category: "+d["category"]+"<br>"+"label: "+d["label"]+"<br>"+"mode: "+d["mode"]+"<br>"+"format: "+d["format"])
-      .style("left", (d3.mouse(this)[0]+70) + "px")
-      .style("top", (d3.mouse(this)[1]) + "px")
+      .style("left", (d3.pointer(e)[0]+70) + "px")
+      .style("top", (d3.pointer(e)[1]) + "px")
   };
   var mouseleave = function(d) {
     Tooltip
