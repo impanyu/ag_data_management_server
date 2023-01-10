@@ -101,8 +101,8 @@ function draw_2d_points(data){
       const gy = svg.append("g");
 
       svg.call(zoom).call(zoom.transform, d3.zoomIdentity);
-}
-  function zoomed({transform}) {
+
+        function zoomed({transform}) {
     const zx = transform.rescaleX(x).interpolate(d3.interpolateRound);
     const zy = transform.rescaleY(y).interpolate(d3.interpolateRound);
     gDot.attr("transform", transform).attr("stroke-width", 5 / transform.k);
@@ -110,6 +110,8 @@ function draw_2d_points(data){
     gy.call(yAxis, zy);
     gGrid.call(grid, zx, zy);
   }
+}
+
 
 
 //draw_2d_points(data);
