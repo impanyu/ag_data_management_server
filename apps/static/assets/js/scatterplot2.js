@@ -111,6 +111,35 @@ function draw_2d_points(data){
             .on("mouseover",function(){d3.select(this).attr("r",50);})
             .on("mouseout",function(){d3.select(this).attr("r",20);});
 
+       var Tooltip = d3.select("#tooltip")
+    .append("div")
+    .style("opacity", 0)
+    .attr("class", "tooltip")
+    .style("background-color", "white")
+    .style("border", "solid")
+    .style("border-width", "2px")
+    .style("border-radius", "5px")
+    .style("padding", "5px");
+
+
+      var mouseover = function(d) {
+    Tooltip
+      .style("opacity", 1)
+    d3.select(this)
+      .style("opacity", 1)
+  };
+  var mousemove = function(d) {
+    Tooltip
+      .html("name: "+d["name"]+"<br>"+"category: "+d["category"]+"<br>"+"label: "+d["label"]+"<br>"+"mode: "+d["mode"]+"<br>"+"format: "+d["format"])
+      .style("left", (d3.mouse(this)[0]+70) + "px")
+      .style("top", (d3.mouse(this)[1]) + "px")
+  };
+  var mouseleave = function(d) {
+    Tooltip
+      .style("opacity", 0)
+
+  };
+
       const gx = svg.append("g");
 
       const gy = svg.append("g");
