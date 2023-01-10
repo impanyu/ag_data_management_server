@@ -112,4 +112,4 @@ function draw_2d_points(data){
   }
 
 
-draw_2d_points(data);
+//draw_2d_points(data);

@@ -389,6 +389,7 @@ function get_file_list(){
           points = data["2d_points"]
           console.info(items)
           draw_points(items);
+          draw_2d_points(points);
 
 
           for(var i=0;i<items.length;i++){
