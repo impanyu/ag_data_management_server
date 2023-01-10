@@ -22,6 +22,7 @@ from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 import os
 import shutil
+import copy
 from PIL import Image
 from PIL.TiffTags import TAGS
 import datetime
@@ -360,7 +361,7 @@ def data(request):
 
                 data_points[root_abs_path] = {"path": abs_file_path, "mode": "other", "category":"other", "label":[],"loc":{"lat":0,"lng":0},"time":"1970/1/1 00:00:00","format":[]}
                 for key in meta_data:
-                    data_points[root_abs_path][key] = meta_data[key]
+                    data_points[root_abs_path][key] = copy.deepcopy(meta_data[key])
 
                 top_down(root_abs_path,data_points)
 

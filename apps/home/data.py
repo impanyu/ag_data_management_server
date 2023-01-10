@@ -594,6 +594,7 @@ def dim_reduction(points):
 
     return results
 
+import copy
 def top_down(dir_root, data_points):
     data_points[dir_root]["path"] = dir_root
     if not os.path.isdir(dir_root):
@@ -604,7 +605,7 @@ def top_down(dir_root, data_points):
         with open(meta_data_file_path, "r") as meta_data_file:
             meta_data = json.load(meta_data_file)
             for key in meta_data:
-                data_points[dir_root][key] = meta_data[key]
+                data_points[dir_root][key] = copy.deepcopy(meta_data[key])
 
     meta_data = data_points[dir_root]
 
@@ -616,7 +617,7 @@ def top_down(dir_root, data_points):
                                       "loc": {"lat": 0, "lng": 0}, "time": "1970/1/1 00:00:00", "format": []}
 
         for key in meta_data:
-            data_points[path][key] = meta_data[key]
+            data_points[path][key] = copy.deepcopy(meta_data[key])
 
         top_down(path,data_points)
 
@@ -628,7 +629,7 @@ def register_file_meta(file_path,data_points):
         with open(meta_data_file_path, "r") as meta_data_file:
             meta_data = json.load(meta_data_file)
             for key in meta_data:
-                data_points[file_path][key] = meta_data[key]
+                data_points[file_path][key] = copy.deepcopy(meta_data[key])
 
     if file_path.split("/")[-1].split(".")[1] == ".py":
         data_points[file_path]["format"].append("Python")
