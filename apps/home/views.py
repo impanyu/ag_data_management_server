@@ -649,13 +649,11 @@ def data(request):
                     points.append([data["mode"],data["category"],data["label"],data["loc"],data["time"],data["format"]])
                     response["items"].append(data)
 
-            response["2d_points"] = dim_reduction(points)
+            #response["2d_points"] = dim_reduction(points)
 
             response = json.dumps(response)
 
             return HttpResponse(response)
-
-
 
     except template.TemplateDoesNotExist:
 
