@@ -604,9 +604,13 @@ def top_down(dir_root, data_points):
     meta_data = data_points[dir_root]
 
     for p in os.listdir(dir_root):
+        path = dir_root+"/"+p
+        data_points[path] = {"path": path, "mode": "other", "category": "other", "label": [],
+                                      "loc": {"lat": 0, "lng": 0}, "time": "1970/1/1 00:00:00", "format": []}
+
         for key in meta_data:
-            data_points[p][key] = meta_data[key]
-        top_down(dir_root+"/"+p,data_points)
+            data_points[path][key] = meta_data[key]
+        top_down(path,data_points)
 
 
 def register_file_meta(file_path,data_points):
