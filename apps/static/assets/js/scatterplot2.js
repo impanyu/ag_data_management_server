@@ -108,8 +108,9 @@ function draw_2d_points(data){
             .attr("stroke","black")
             .attr("stroke-width",2)
             .style("fill", d => z(d["2d"][2]))
-            .on("mouseover",function(){d3.select(this).attr("r",50);})
-            .on("mouseout",function(){d3.select(this).attr("r",20);});
+            .on("mouseover",function(){d3.select(this).attr("r",50);mouseover();})
+            .on("mouseout",function(){d3.select(this).attr("r",20);mouseleave();})
+            .on("mousemove",mousemove);
 
        var Tooltip = d3.select("#tooltip")
     .append("div")
