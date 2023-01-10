@@ -602,12 +602,12 @@ def top_down(dir_root, data_points):
                 data_points[dir_root][key] = meta_data[key]
 
     meta_data = data_points[dir_root]
-    '''
+
     for p in os.listdir(dir_root):
         for key in meta_data:
             data_points[p][key] = meta_data[key]
         top_down(dir_root+"/"+p,data_points)
-    '''
+
 
 def register_file_meta(file_path,data_points):
     if file_path.split(".")[-1] == "meta":
