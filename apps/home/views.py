@@ -617,7 +617,7 @@ def data(request):
 
             '''
             modified_file_path = ""
-            for i in range(1, len(file_path.split("/"))):
+            for i in range(1, len(file_path.split("/")))
                 modified_file_path += "/" + file_path.split("/")[i]
 
             if modified_file_path == "":

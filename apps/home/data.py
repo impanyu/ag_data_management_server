@@ -594,6 +594,13 @@ def top_down(dir_root, data_points):
     if not os.path.isdir(dir_root):
         register_file_meta(dir_root,data_points)
         return
+    meta_data_file_path = dir_root +"/" +".meta"
+    if os.path.exists(meta_data_file_path):
+        with open(meta_data_file_path, "r") as meta_data_file:
+            meta_data = json.load(meta_data_file)
+            for key in meta_data:
+                data_points[dir_root][key] = meta_data[key]
+
     meta_data = data_points[dir_root]
 
     for p in os.listdir(dir_root):
