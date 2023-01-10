@@ -107,13 +107,16 @@ function draw_2d_points(data){
             .attr("r", 20)
             .attr("stroke","black")
             .attr("stroke-width",2)
-            .style("fill", d => z(d["2d"][2]));
+            .style("fill", d => z(d["2d"][2]))
+            .on("mouseover",function(){d3.select(this).attr("r",50);})
+            .on("mouseout",function(){d3.select(this).attr("r",20);});
 
       const gx = svg.append("g");
 
       const gy = svg.append("g");
 
       svg.call(zoom).call(zoom.transform, d3.zoomIdentity);
+
 
         function zoomed({transform}) {
     const zx = transform.rescaleX(x).interpolate(d3.interpolateRound);
