@@ -353,7 +353,7 @@ def data(request):
                 for i,dir in enumerate(current_abs_path.split("/")):
                     cur = cur + "/"+ dir
                     if cur in data_points:
-                        meta = data_points[cur]
+                        meta_data = data_points[cur]
 
                 root_abs_path = os.path.join("/home/" + request.user.get_username() + "/ag_data",current_path,
                                             '/'.join(upload_file_paths[0].split('/')[:-1]))
@@ -362,7 +362,7 @@ def data(request):
                 for key in meta_data:
                     data_points[root_abs_path][key] = meta_data[key]
 
-                top_down(root_abs_path,data_points)
+                #top_down(root_abs_path,data_points)
 
                 '''
                 if os.path.isdir(root_abs_path):
