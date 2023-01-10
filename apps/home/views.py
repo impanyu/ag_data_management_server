@@ -318,6 +318,7 @@ def data(request):
                 data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "r")
                 data_points = json.load(data_and_files)
                 data_and_files.close()
+                print("abs"+upload_file_paths)
 
                 #upload each file
                 for file in upload_files:
@@ -361,7 +362,7 @@ def data(request):
                 else:
                     root_abs_path = os.path.join("/home/" + request.user.get_username() + "/ag_data",current_path,upload_file_paths[0].split('/')[0])
 
-                print("xx" + root_abs_path)
+
 
 
                 data_points[root_abs_path] = {"path": root_abs_path, "mode": "other", "category":"other", "label":[],"loc":{"lat":0,"lng":0},"time":"1970/1/1 00:00:00","format":[]}
