@@ -629,6 +629,7 @@ def register_file_meta(file_path,data_points):
             meta_data = json.load(meta_data_file)
             for key in meta_data:
                 data_points[file_path][key] = meta_data[key]
+    return
 
     if file_path.split("/")[-1].split(".")[1] == ".py":
         data_points[file_path]["format"].append("Python")
