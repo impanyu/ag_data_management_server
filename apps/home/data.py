@@ -610,7 +610,7 @@ def top_down(dir_root, data_points):
     meta_data = data_points[dir_root]
 
     for p in os.listdir(dir_root):
-        print(p)
+        print("xx"+p)
         path = dir_root+"/"+p
         if path.split(".")[-1] == "meta":
             continue
