@@ -584,13 +584,13 @@ function draw_points(data_points){
     //size = data_point["size"];
     const point = new google.maps.Circle({
       strokeColor: "black",
-      strokeOpacity: 0.3,
+      strokeOpacity: 0.5,
       strokeWeight: 2,
       fillColor: data_cat_color_map[data_cat],
-      fillOpacity: 0.3,
+      fillOpacity: 0.5,
       map:map_main,
       center: data_loc,
-      radius: 500//Math.min(size,1000),
+      radius: 1000//Math.min(size,1000),
     });
   }
 }
