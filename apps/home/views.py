@@ -357,7 +357,7 @@ def data(request):
                         meta_data = data_points[cur]
 
                 root_abs_path = os.path.join("/home/" + request.user.get_username() + "/ag_data",current_path,
-                                            '/'.join(upload_file_paths[0].split('/')[:-1]))
+                                            '/'.join(upload_file_paths[0].split('/')[0]))
 
                 data_points[root_abs_path] = {"path": abs_file_path, "mode": "other", "category":"other", "label":[],"loc":{"lat":0,"lng":0},"time":"1970/1/1 00:00:00","format":[]}
                 for key in meta_data:
