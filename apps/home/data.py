@@ -620,7 +620,7 @@ def top_down(dir_root, data_points):
         for key in meta_data:
             data_points[path][key] = copy.deepcopy(meta_data[key])
 
-        top_down(path,data_points)
+        #top_down(path,data_points)
 
 
 def register_file_meta(file_path,data_points):
