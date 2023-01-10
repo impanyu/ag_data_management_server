@@ -15,7 +15,7 @@ function draw_2d_points(data){
       x_min = Math.min(x_min,data[i][0]);
       y_min = Math.min(y_min,data[i][1]);
       x_max = Math.max(x_max,data[i][0]);
-      y_max = Math.min(y_max,data[i][1]);
+      y_max = Math.max(y_max,data[i][1]);
 
 
    }
