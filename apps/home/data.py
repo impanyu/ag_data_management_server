@@ -631,5 +631,5 @@ def register_file_meta(file_path,data_points):
         data_points[file_path]["format"].append("R")
     elif file_path.split("/")[-1].split(".")[1] == ".m":
         data_points[file_path]["format"].append("Matlab")
-    elif file_path.split("/")[-1].split(".")[1] == "csv" or file_path.split("/")[-1].split(".")[1] == "xlsx":
+    elif file_path.split("/")[-1].split(".")[1] == "csv" or file_path.split("/")[-1].split(".")[1] == "xlsx" or file_path.split("/")[-1].split(".")[1] == "xls":
         data_points[file_path]["format"] = "CSV/Spreadsheet"
