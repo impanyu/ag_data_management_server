@@ -538,7 +538,7 @@ from sklearn.metrics.pairwise import euclidean_distances
 def distance(x,y):
 
     d = 0
-    return d
+
     if not x[0] == y[0]:
         d = d+1
     if not x[1] == y[1]:
@@ -573,7 +573,7 @@ def data_metric(X,Y):
             result[i][j] = distance(x,y)
             j = j+1
         i = i+1
-    print(result)
+
     return result
 
 
@@ -590,6 +590,7 @@ def dim_reduction(points):
         metric = "precomputed"
     )
     results = t_sne.fit_transform(input)
+    print(results)
 
     return results
 
