@@ -103,7 +103,7 @@ function draw_2d_points(data){
         .data(data)
         .join("circle")
             .attr("cx", function (d) { console.info(d["2d"][0]); return x(d["2d"][0]); } )
-            .attr("cy", function (d) {console.info(d);  return y(d["2d"][1]); } )
+            .attr("cy", function (d) {console.info(d["2d"][1]);  return y(d["2d"][1]); } )
             .attr("r", 10)
             .attr("stroke","black")
             .attr("stroke-width",2)
