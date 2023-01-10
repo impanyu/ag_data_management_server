@@ -37,7 +37,7 @@ function draw_2d_points(data){
     color_scale_map = {"CSV/Spreadsheet":1, "Image":2, "Other":3}
 
     z = d3.scaleOrdinal()
-        .domain(data.map(d => {if d["format"].length==0 return 0; else return color_scale_map[d["format"][0]]}))
+        .domain(data.map(d => {if(d["format"].length==0) return 0; else return color_scale_map[d["format"][0]];}))
         .range(d3.schemeCategory10)
 
     xAxis = (g, x) => g
