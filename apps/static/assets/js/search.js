@@ -391,7 +391,7 @@ function get_file_list(){
           for(i in items){
              items[i]["2d"] = points[i];
              if(items[i]["category"].length > 0)
-               items[i]["2d"].push(color_scale_map[items[i]["category"][0]]);
+               items[i]["2d"].push(color_scale_map[items[i]["format"][0]]);
              else
                items[i]["2d"].push(0);
           }
