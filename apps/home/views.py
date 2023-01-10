@@ -318,7 +318,8 @@ def data(request):
                 data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "r")
                 data_points = json.load(data_and_files)
                 data_and_files.close()
-                print("abs"+upload_file_paths)
+                print("abs")
+                print(upload_file_paths)
 
                 #upload each file
                 for file in upload_files:
