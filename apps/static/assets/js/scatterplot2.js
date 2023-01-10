@@ -104,7 +104,7 @@ function draw_2d_points(data){
         .join("circle")
             .attr("cx", function (d) {  return x(d["2d"][0]); } )
             .attr("cy", function (d) { return y(d["2d"][1]); } )
-            .attr("r", 10)
+            .attr("r", 20)
             .attr("stroke","black")
             .attr("stroke-width",2)
             .style("fill", d => z(d["2d"][2]));

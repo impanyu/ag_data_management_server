@@ -358,6 +358,7 @@ def data(request):
                     if cur in data_points:
                         meta_data = data_points[cur]
 
+                #upload single file, not relative path
                 if(upload_file_paths[0] == ""):
                     root_abs_path = os.path.join("/home/" + request.user.get_username() + "/ag_data",current_path,upload_files[0].name)
                 else:
