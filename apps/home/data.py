@@ -637,7 +637,7 @@ def register_file_meta(file_path,data_points):
 
     if file_path.split("/")[-1].split(".")[1] == ".py":
         data_points[file_path]["format"].append("Python")
-    elif file_path.split("/")[-1].split(".")[1] == ".tif" \
+    elif file_path.split("/")[-1].split(".")[1] == "tif" \
             or file_path.split("/")[-1].split(".")[1] == "tiff" \
             or file_path.split("/")[-1].split(".")[1] == "png" \
             or file_path.split("/")[-1].split(".")[1] == "jpg" \
