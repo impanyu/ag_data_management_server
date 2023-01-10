@@ -37,7 +37,7 @@ function draw_2d_points(data){
 
 
     z = d3.scaleOrdinal()
-        .domain(data.map(d => data.map(d => d["2d"][2]))
+        .domain(data.map(d => d["2d"][2]))
         .range(d3.schemeCategory10)
 
     xAxis = (g, x) => g
