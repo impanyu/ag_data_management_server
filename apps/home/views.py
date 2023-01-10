@@ -313,9 +313,15 @@ def data(request):
             if not upload_files:
                 return HttpResponse('files not found')
             else:
+                # load data_and_files
+                data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "r")
+                data_points = json.load(data_and_files)
+                data_and_files.close()
+
+                #upload each file
                 for file in upload_files:
 
-                    position = os.path.join("/home/" + request.user.get_username() + "/ag_data",
+                    position = os.path.join("/home/" + request.user.get_username() + "/ag_data",current_path,
                                             '/'.join(upload_file_paths[upload_files.index(file)].split('/')[:-1]))
                     print(position)
                     print(file.name)
@@ -325,6 +331,7 @@ def data(request):
                     abs_file_path = os.path.join(position, file.name)
                     print(abs_file_path)
                     copy_id = 1
+
                     if os.path.exists(abs_file_path):
                         #while os.path.exists(abs_file_path + "_" + str(copy_id)):
                             #copy_id += 1
@@ -340,15 +347,60 @@ def data(request):
                     os.chmod(abs_file_path,stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR)
                     os.chown(abs_file_path,getpwnam(request.user.get_username()).pw_uid,getpwnam(request.user.get_username()).pw_uid)
 
-                    # load data_and_files
-                    data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "r")
-                    data_points = json.load(data_and_files)
-                    data_and_files.close()
+                cur = ""
+                meta_data = {}
+                current_abs_path = os.path.join("/home/" + request.user.get_username() + "/ag_data", current_path)
+                for i,dir in enumerate(current_abs_path.split("/")):
+                    cur = cur + "/"+ dir
+                    if cur in data_points:
+                        meta = data_points[cur]
 
-                    data_point = {"path": abs_file_path}
+                root_abs_path = os.path.join("/home/" + request.user.get_username() + "/ag_data",current_path,
+                                            '/'.join(upload_file_paths[0].split('/')[:-1]))
+
+                data_points[root_abs_path] = {"path": abs_file_path, "mode": "other", "category":"other", "label":[],"loc":{"lat":0,"lng":0},"time":"1970/1/1 00:00:00","format":[]}
+                for key in meta_data:
+                    data_points[root_abs_path][key] = meta_data[key]
+
+                top_down(root_abs_path,data_points)
+
+                '''
+                if os.path.isdir(root_abs_path):
+                    dfs(fs,data_points)
+                #a single file is uploaded
+                else:
+                    register_file_meta(root_abs_path,data_points)
+
+                    # a meta file is uploaded
+                    if file.name[-5:] == ".meta":
+                        with open(abs_file_path, "r") as meta_data_file:
+                            meta_data = json.load(meta_data_file)
+                        # a meta file for dir
+                        if file.name[:-5] == abs_file_path.split("/")[-2]:
+                            data_points[abs_file_path[:(len(abs_file_path.split("/")[-1])+1)]] = meta_data
+                        else:
+                            data_points[abs_file_path[:-5]] = meta_data
+                    else:
+                        continue
 
 
-                    # if meta data is provided
+
+
+                    #dir_root = os.path.join("/home/" + request.user.get_username() + "/ag_data", current_path,'/'.join(upload_file_paths[0].split('/')[0]))
+
+
+
+
+                    #data["mode"],data["category"],data["label"],data["loc"],data["time"]
+                    data_point = {"path": abs_file_path, "mode": "other", "category":"other", "label":[],"loc":{"lat":0,"lng":0},"time":"1970/1/1 00:00:00"}
+
+
+
+                    # register meta
+                    if ".meta" in abs_file_path:
+                        meta_data_file_path = abs_file_path + "/"+file".meta"
+
+                    # read meta data
                     meta_data_file_path = abs_file_path+".meta"
                     if os.path.exists(meta_data_file_path):
                         with open(meta_data_file_path,"r") as meta_data_file:
@@ -404,12 +456,11 @@ def data(request):
                         #data_point["time"] = datetime.strptime(abs_file_path.split("/")[-2].split("_")[5], "%Y%m%d%H%M%S").strftime("%Y/%m/%d %H:%M:%S")
 
                     data_points.append(data_point)
+                    '''
 
-                    data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "w")
-                    json.dump(data_points, data_and_files)
-                    data_and_files.close()
-
-
+                data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "w")
+                json.dump(data_points, data_and_files)
+                data_and_files.close()
 
 
                 return HttpResponse("upload complete!")

@@ -532,8 +532,8 @@ def filtering_condition(data, search_box, category, mode, format, label, time_ra
 
 
 from sklearn.metrics.pairwise import euclidean_distances
-#[data["mode"],data["category"],data["label"],data["loc"],data["time"]]
-# mode, category and time are string, label is list, loc is dict
+#[data["mode"],data["category"],data["label"],data["loc"],data["time"],data["format"]]
+# mode, category and time are string, label and format are list, loc is dict
 def distance(x,y):
     d = 0
     if not x[0] == y[0]:
@@ -550,6 +550,15 @@ def distance(x,y):
     x_time = datetime.strptime(x[4], "%Y/%m/%d %H:%M:%S").timestamp()
     y_time = datetime.strptime(y[4], "%Y/%m/%d %H:%M:%S").timestamp()
     d = d+ abs(x_time - y_time) / (365*12*30*24*3600)
+
+    for l in x[5]:
+        if not l in y[5]:
+            d = d+1
+    for l in y[5]:
+        if not l in x[5]:
+            d = d+1
+
+
     return d
 
 def data_metric(X,Y):
@@ -578,3 +587,40 @@ def dim_reduction(points):
     results = t_sne.fit_transform(input)
 
     return results
+
+def top_down(dir_root, data_points):
+    if not os.path.isdir(dir_root):
+        register_file_meta(dir_root,data_points)
+        return
+    meta_data = data_points[dir_root]
+
+    for p in os.listdir(dir_root):
+        for key in meta_data:
+            data_points[p][key] = meta_data[key]
+        top_down(dir_root+"/"+p,data_points)
+
+
+def register_file_meta(file_path,data_points):
+    meta_data_file_path = file_path + ".meta"
+    if os.path.exists(meta_data_file_path):
+        with open(meta_data_file_path, "r") as meta_data_file:
+            meta_data = json.load(meta_data_file)
+            for key in meta_data:
+                data_points[file_path][key] = meta_data[key]
+
+    if file_path.split("/")[-1].split(".")[1] == ".py":
+        data_points[file_path]["format"].append("Python")
+    elif file_path.split("/")[-1].split(".")[1] == ".tif" \
+            or file_path.split("/")[-1].split(".")[1] == "tiff" \
+            or file_path.split("/")[-1].split(".")[1] == "png" \
+            or file_path.split("/")[-1].split(".")[1] == "jpg" \
+            or file_path.split("/")[-1].split(".")[1] == "jpeg": \
+            data_points[file_path]["format"].append("Image")
+    elif file_path.split("/")[-1].split(".")[1] == ".m":
+        data_points[file_path]["format"].append("Matlab")
+    elif file_path.split("/")[-1].split(".")[1] == ".r":
+        data_points[file_path]["format"].append("R")
+    elif file_path.split("/")[-1].split(".")[1] == ".m":
+        data_points[file_path]["format"].append("Matlab")
+    elif file_path.split("/")[-1].split(".")[1] == "csv" or file_path.split("/")[-1].split(".")[1] == "xlsx":
+        data_points[file_path]["format"] = "CSV/Spreadsheet"
