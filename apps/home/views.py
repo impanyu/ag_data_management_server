@@ -494,7 +494,7 @@ def data(request):
             data_and_files.close()
 
 
-            data_points = [data for data in data_points if not ("path" in data and data["path"].startswith(abs_path))]
+            data_points = {path: data_points[path] for path in data_points if not (path.startswith(abs_path))}
 
 
             data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "w")
@@ -640,13 +640,13 @@ def data(request):
             # print(abs_path)
 
 
-            for data in data_points:
+            for path in data_points:
+                data = data_points[path]
 
-        
                 if filtering_condition(data,search_box,category,mode,format,label,time_range,bounding_box):
                     item_name = data["path"].split("/")[-1]
                     data["name"] = item_name
-                    points.append([data["mode"],data["category"],data["label"],data["loc"],data["time"]])
+                    points.append([data["mode"],data["category"],data["label"],data["loc"],data["time"],data["format"]])
                     response["items"].append(data)
 
             response["2d_points"] = dim_reduction(points)
