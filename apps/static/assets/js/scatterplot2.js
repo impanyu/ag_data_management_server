@@ -108,7 +108,7 @@ function draw_2d_points(data){
     .style("padding", "5px");
 
 
-      var mouseover = function(d) {
+      var mouseover = function(this,d) {
     Tooltip
       .style("opacity", 1)
     d3.select(this)
