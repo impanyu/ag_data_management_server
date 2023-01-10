@@ -598,7 +598,7 @@ import copy
 def top_down(dir_root, data_points):
     data_points[dir_root]["path"] = dir_root
     if not os.path.isdir(dir_root):
-        register_file_meta(dir_root,data_points)
+        #register_file_meta(dir_root,data_points)
         return
     meta_data_file_path = dir_root +"/" +".meta"
     if os.path.exists(meta_data_file_path):
@@ -620,7 +620,7 @@ def top_down(dir_root, data_points):
         for key in meta_data:
             data_points[path][key] = copy.deepcopy(meta_data[key])
 
-        #top_down(path,data_points)
+        top_down(path,data_points)
 
 
 def register_file_meta(file_path,data_points):
