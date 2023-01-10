@@ -549,11 +549,12 @@ def distance(x,y):
     for l in y[2]:
         if not l in x[2]:
             d = d+1
+    '''
     d = d+ euclidean_distances([[x[3]["lat"]/90,x[3]["lng"]/180]],[[y[3]["lat"]/90,y[3]["lng"]/180]])
     x_time = datetime.strptime(x[4], "%Y/%m/%d %H:%M:%S").timestamp()
     y_time = datetime.strptime(y[4], "%Y/%m/%d %H:%M:%S").timestamp()
     d = d+ abs(x_time - y_time) / (365*12*30*24*3600)
-
+    '''
     for l in x[5]:
         if not l in y[5]:
             d = d+1
