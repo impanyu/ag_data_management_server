@@ -7,21 +7,31 @@ data = [].concat(
   );
 
 function draw_2d_points(data){
+   x_min = 10000;
+   x_max = -10000;
+   y_min = x_min;
+   y_max = x_max;
+   for(i in data){
+      x_min = Math.min(x_min,data[i][0]);
+      y_min = Math.min(y_min,data[i][1]);
+      x_max = Math.max(x_max,data[i][0]);
+      y_max = Math.min(y_max,data[i][1]);
+
+
+   }
+
 
     height = d3.select("#map_main").node().getBoundingClientRect().height;
     width = d3.select("#map_main").node().getBoundingClientRect().width;
     k = height / width;
 
 
-
-
-
     x = d3.scaleLinear()
-        .domain([-4.5, 4.5])
+        .domain([x_min, x_max])
         .range([0, width])
 
     y = d3.scaleLinear()
-        .domain([-4.5 * k, 4.5 * k])
+        .domain([y_min, y_max])
         .range([height, 0])
 
     z = d3.scaleOrdinal()
