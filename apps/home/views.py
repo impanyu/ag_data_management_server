@@ -366,7 +366,7 @@ def data(request):
                 for key in meta_data:
                     data_points[root_abs_path][key] = copy.deepcopy(meta_data[key])
 
-                top_down(root_abs_path,data_points)
+                #top_down(root_abs_path,data_points)
 
                 '''
                 if os.path.isdir(root_abs_path):
