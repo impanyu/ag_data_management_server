@@ -536,7 +536,9 @@ from sklearn.metrics.pairwise import euclidean_distances
 #[data["mode"],data["category"],data["label"],data["loc"],data["time"],data["format"]]
 # mode, category and time are string, label and format are list, loc is dict
 def distance(x,y):
+
     d = 0
+    return d
     if not x[0] == y[0]:
         d = d+1
     if not x[1] == y[1]:
