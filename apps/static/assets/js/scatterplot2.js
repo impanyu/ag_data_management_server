@@ -97,22 +97,7 @@ function draw_2d_points(data){
           .attr("stroke", d => z(d[2]))
           .attr("stroke-width", 20);
     */
-        // Add dots
-        const gDot = svg.append('g')
-        .selectAll("dot")
-        .data(data)
-        .join("circle")
-            .attr("cx", function (d) {  return x(d["2d"][0]); } )
-            .attr("cy", function (d) { return y(d["2d"][1]); } )
-            .attr("r", 20)
-            .attr("stroke","black")
-            .attr("stroke-width",2)
-            .style("fill", d => z(d["2d"][2]))
-            .on("mouseover",function(){d3.select(this).attr("r",50);mouseover();})
-            .on("mouseout",function(){d3.select(this).attr("r",20);mouseleave();})
-            .on("mousemove",mousemove);
-
-       Tooltip = d3.select("#tooltip")
+          Tooltip = d3.select("#tooltip")
     .append("div")
     .style("opacity", 0)
     .attr("class", "tooltip")
@@ -140,6 +125,23 @@ function draw_2d_points(data){
       .style("opacity", 0)
 
   };
+
+        // Add dots
+        const gDot = svg.append('g')
+        .selectAll("dot")
+        .data(data)
+        .join("circle")
+            .attr("cx", function (d) {  return x(d["2d"][0]); } )
+            .attr("cy", function (d) { return y(d["2d"][1]); } )
+            .attr("r", 20)
+            .attr("stroke","black")
+            .attr("stroke-width",2)
+            .style("fill", d => z(d["2d"][2]))
+            .on("mouseover",function(){d3.select(this).attr("r",50);mouseover();})
+            .on("mouseout",function(){d3.select(this).attr("r",20);mouseleave();})
+            .on("mousemove",mousemove);
+
+
 
       const gx = svg.append("g");
 
