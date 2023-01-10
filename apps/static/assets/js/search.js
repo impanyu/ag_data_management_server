@@ -565,8 +565,8 @@ function init_map_main(){
 
 var data_cat_color_map = {};
 data_cat_color_map["UAV"] = "pink";
-data_cat_color_map["soil_water"] = "blue";
-data_cat_color_map["spidercam"] = "red";
+data_cat_color_map["Soil"] = "blue";
+data_cat_color_map["Phenotype"] = "red";
 
 
 function draw_points(data_points){
@@ -575,7 +575,7 @@ function draw_points(data_points){
    data_point = data_points[i]
     data_cat = data_point["category"];
     data_loc = data_point["loc"];
-    size = data_point["size"];
+    //size = data_point["size"];
     const point = new google.maps.Circle({
       strokeColor: "black",
       strokeOpacity: 0.3,
@@ -584,7 +584,7 @@ function draw_points(data_points){
       fillOpacity: 0.3,
       map:map_main,
       center: data_loc,
-      radius: Math.min(size,1000),
+      radius: 500//Math.min(size,1000),
     });
   }
 }
