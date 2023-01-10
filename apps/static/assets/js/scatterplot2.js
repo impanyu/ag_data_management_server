@@ -1,3 +1,5 @@
+const random = d3.randomNormal(0, 0.2);
+const sqrt3 = Math.sqrt(3);
 data = [].concat(
     Array.from({length: 300}, () => [random() + sqrt3, random() + 1, 0]),
     Array.from({length: 300}, () => [random() - sqrt3, random() + 1, 1]),
@@ -10,8 +12,7 @@ function draw_2d_points(data){
     width = d3.select("#map_main").node().getBoundingClientRect().width;
     k = height / width;
 
-    const random = d3.randomNormal(0, 0.2);
-    const sqrt3 = Math.sqrt(3);
+
 
 
 
