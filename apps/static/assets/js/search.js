@@ -397,7 +397,7 @@ function get_file_list(){
                items[i]["2d"].push(0);
           }
 
-          //draw_points(items);
+          draw_points(items);
           draw_2d_points(items);
 
 
