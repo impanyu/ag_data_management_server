@@ -5,7 +5,7 @@ data = [].concat(
     Array.from({length: 300}, () => [random() - sqrt3, random() + 1, 1]),
     Array.from({length: 300}, () => [random(), random() - 1, 2])
   );
-
+var Tooltip;
 function draw_2d_points(data){
    x_min = 10000;
    x_max = -10000;
@@ -112,7 +112,7 @@ function draw_2d_points(data){
             .on("mouseout",function(){d3.select(this).attr("r",20);mouseleave();})
             .on("mousemove",mousemove);
 
-       var Tooltip = d3.select("#tooltip")
+       Tooltip = d3.select("#tooltip")
     .append("div")
     .style("opacity", 0)
     .attr("class", "tooltip")
