@@ -387,9 +387,12 @@ function get_file_list(){
           //draw all the data & files in current_path on google map based
           items = data["items"];
           points = data["2d_points"]
+          for(i in items){
+             items[i]["2d"] = points[i];
+          }
           console.info(items)
           draw_points(items);
-          draw_2d_points(points);
+          draw_2d_points(items);
 
 
           for(var i=0;i<items.length;i++){
