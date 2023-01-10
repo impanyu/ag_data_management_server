@@ -360,7 +360,7 @@ def data(request):
                                             upload_file_paths[0].split('/')[0])
 
                 print("root"+root_abs_path)
-                print("upload"+upload_file_paths[0])
+                print("upload"+upload_file_paths)
 
                 data_points[root_abs_path] = {"path": abs_file_path, "mode": "other", "category":"other", "label":[],"loc":{"lat":0,"lng":0},"time":"1970/1/1 00:00:00","format":[]}
                 for key in meta_data:
