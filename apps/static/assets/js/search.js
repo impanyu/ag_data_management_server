@@ -388,14 +388,15 @@ function get_file_list(){
           items = data["items"];
           points = data["2d_points"]
           color_scale_map = {"CSV/Spreadsheet":1, "Image":2, "Other":3}
+          console.info(items);
           for(i in items){
              items[i]["2d"] = points[i];
-             if(items[i]["category"].length > 0)
+             if(items[i]["format"].length > 0)
                items[i]["2d"].push(color_scale_map[items[i]["format"][0]]);
              else
                items[i]["2d"].push(0);
           }
-          console.info(items)
+
           //draw_points(items);
           draw_2d_points(items);
 
