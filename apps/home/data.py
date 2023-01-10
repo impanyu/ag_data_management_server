@@ -483,7 +483,6 @@ def retrieve_sub_domain_data(subdomain_path, layer, time, session):
 
 
 def filtering_condition(data, search_box, category, mode, format, label, time_range, bounding_box):
-    return True
     item_name = data["path"].split("/")[-1]
     if not search_box in item_name:
         return False
@@ -629,7 +628,6 @@ def register_file_meta(file_path,data_points):
             meta_data = json.load(meta_data_file)
             for key in meta_data:
                 data_points[file_path][key] = meta_data[key]
-    return
 
     if file_path.split("/")[-1].split(".")[1] == ".py":
         data_points[file_path]["format"].append("Python")
