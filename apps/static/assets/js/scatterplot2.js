@@ -116,7 +116,7 @@ function draw_2d_points(data){
   var mousemove = function(e,d) {
     Tooltip
       .html("name: "+d["name"]+"<br>"+"category: "+d["category"]+"<br>"+"label: "+d["label"]+"<br>"+"mode: "+d["mode"]+"<br>"+"format: "+d["format"])
-      .style("left", (d3.pointer(e)[0]-50) + "px")
+      .style("left", (d3.pointer(e)[0]+50) + "px")
       .style("top", (d3.pointer(e)[1]) + "px")
   };
   var mouseleave = function(d) {
