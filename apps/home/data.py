@@ -584,14 +584,13 @@ def dim_reduction(points):
     input = data_metric(points,points)
     t_sne = manifold.TSNE(
         n_components=2,
-        perplexity=30,
+        perplexity=10,
         init="random",
         n_iter=250,
         random_state=0,
         metric = "precomputed"
     )
     results = t_sne.fit_transform(input)
-
 
     return results
 
