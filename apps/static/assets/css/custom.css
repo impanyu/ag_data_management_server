@@ -9,6 +9,9 @@
 .search-bar-icon:hover{
    background:#cccccc;
 }
+#search-filter:hover{
+ background:#cccccc;
+}
 
 #zoom_window{
   position
