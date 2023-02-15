@@ -6,11 +6,11 @@
 //margin-left:150px;
 }
 
-.search-bar-icon:hover{
-   background:#cccccc;
+#search:hover{
+ opacity:.5;
 }
 #search-filter:hover{
- background:#cccccc;
+ opacity:.5;
 }
 
 #zoom_window{
