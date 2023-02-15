@@ -5,6 +5,9 @@
 #panel{
 //margin-left:150px;
 }
+#filter-condition{
+transition: height 2s;
+}
 
 #search:hover{
  opacity:.5;
