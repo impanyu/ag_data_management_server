@@ -7,6 +7,14 @@
 }
 #filter-condition{
 transition: height 2s, padding-top 2s, padding-bottom 2s;
+overflow:hidden;
+
+height:0;
+padding-right:1.25rem;
+padding-left:1.25rem;
+padding-top:0rem;
+padding-bottom:0rem
+
 }
 
 #search:hover{
