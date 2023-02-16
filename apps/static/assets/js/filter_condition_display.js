@@ -7,7 +7,7 @@ function toggle_filter_condition(){
 
 function toggle_filter_condition_2(){
    if(document.querySelector("#filter-condition").style.height == "0px")
-     document.querySelector("#filter-condition").style.height = "auto";
+     document.querySelector("#filter-condition").style.height = "500px";
     else
      document.querySelector("#filter-condition").style.height = "0px";
 }
