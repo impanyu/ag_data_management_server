@@ -8,11 +8,13 @@ function toggle_filter_condition(){
 function toggle_filter_condition_2(){
    if(document.querySelector("#filter-condition").style.height == "0px"){
      document.querySelector("#filter-condition").style.height = "1080px";
-     document.querySelector("#filter-condition").style.padding = "1.25rem";
+     document.querySelector("#filter-condition").style.paddingTop = "1.25rem";
+     document.querySelector("#filter-condition").style.paddingBottom = "1.25rem";
 
      }
     else{
      document.querySelector("#filter-condition").style.height = "0px";
-     document.querySelector("#filter-condition").style.padding = "0rem";
+          document.querySelector("#filter-condition").style.paddingTop = "0rem";
+     document.querySelector("#filter-condition").style.paddingBottom = "0rem";
      }
 }
