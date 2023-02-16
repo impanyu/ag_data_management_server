@@ -4,3 +4,10 @@ function toggle_filter_condition(){
     else
      document.querySelector("#filter-condition").style.display = "block";
 }
+
+function toggle_filter_condition_2(){
+   if(document.querySelector("#filter-condition").style.height == "0")
+     document.querySelector("#filter-condition").style.height = "auto";
+    else
+     document.querySelector("#filter-condition").style.height = "0";
+}
