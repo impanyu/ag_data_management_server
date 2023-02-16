@@ -6,7 +6,7 @@
 //margin-left:150px;
 }
 #filter-condition{
-transition: height 2s;
+transition: height 2s, padding 2s;
 }
 
 #search:hover{
