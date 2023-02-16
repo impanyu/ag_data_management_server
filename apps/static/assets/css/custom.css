@@ -9,7 +9,7 @@
 transition: height 1.5s, padding-top 1.5s, padding-bottom 1.5s;
 overflow:hidden;
 
-height:0;
+height:0px;
 padding-right:1.25rem;
 padding-left:1.25rem;
 padding-top:0rem;
