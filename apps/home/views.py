@@ -41,7 +41,7 @@ def index(request):
 
     context["domains"] = domains
 
-    html_template = loader.get_template('home/main.html')
+    html_template = loader.get_template('home/search.html')
     return HttpResponse(html_template.render(context, request))
 
 
