@@ -537,7 +537,7 @@ function change_file_plot(){
 }
 
 
-$('body').on('focus',".datepicker>input", function(){
+$('body').on('focus',".datepicker input", function(){
             $(this).datepicker();
   });
 
@@ -551,6 +551,29 @@ function init_map_main(){
     }
   );
 
+    drawingManager = new google.maps.drawing.DrawingManager({
+    drawingMode: google.maps.drawing.OverlayType.RECTANGLE,
+    drawingControl: true,
+    drawingControlOptions: {
+      position: google.maps.ControlPosition.TOP_CENTER,
+      drawingModes: [
+        google.maps.drawing.OverlayType.RECTANGLE,
+      ],
+    },
+    markerOptions: {
+      icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
+    },
+    circleOptions: {
+      fillColor: "#ffff00",
+      fillOpacity: .8,
+      strokeWeight: 5,
+      clickable: false,
+      editable: true,
+      zIndex: 1,
+    },
+  });
+
+
      $.get("/get_domains_meta",
         {
         },function(data,status){
@@ -560,7 +583,6 @@ function init_map_main(){
                  //console.info(parseFloat(domains[domain_name]["bounding_box"][0].split(",")[0]) );
                  var marker = new google.maps.Marker({
                     position: {lat:parseFloat(domains[domain_name]["bounding_box"][0].split(",")[0]) , lng: parseFloat(domains[domain_name]["bounding_box"][0].split(",")[1])},
-
                     label: domain_name,
                   });
                   marker.setMap(map_main);

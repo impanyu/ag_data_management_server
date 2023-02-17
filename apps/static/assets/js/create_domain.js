@@ -252,13 +252,8 @@ function init_map_main(){
                   marker.setMap(map_main);
             }
 
-
-
         }
-
-
         )
-
 }
 
 var data_cat_color_map = {};
