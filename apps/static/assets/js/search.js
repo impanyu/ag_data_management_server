@@ -198,7 +198,7 @@ function add_to_domain(path,file_name){
     date_picker.style.marginLeft = "50px";
 
 
-    $('body').on('focus',".datepicker input", function(){
+    $('body').on('focus',".datepicker>input", function(){
             $(this).datepicker();
     });
 
