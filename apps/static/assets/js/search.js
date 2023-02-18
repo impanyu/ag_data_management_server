@@ -552,28 +552,6 @@ function init_map_main(){
     }
   );
 
-    drawingManager = new google.maps.drawing.DrawingManager({
-    drawingMode: google.maps.drawing.OverlayType.RECTANGLE,
-    drawingControl: true,
-    drawingControlOptions: {
-      position: google.maps.ControlPosition.TOP_CENTER,
-      drawingModes: [
-        google.maps.drawing.OverlayType.RECTANGLE,
-      ],
-    },
-    markerOptions: {
-      icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
-    },
-    circleOptions: {
-      fillColor: "#ffff00",
-      fillOpacity: .8,
-      strokeWeight: 5,
-      clickable: false,
-      editable: true,
-      zIndex: 1,
-    },
-  });
-
 
      $.get("/get_domains_meta",
         {
@@ -605,7 +583,7 @@ function init_map_main(){
       icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
     },
     circleOptions: {
-      fillColor: "#ffff00",
+      fillColor: "blue",
       fillOpacity: .8,
       strokeWeight: 5,
       clickable: false,
