@@ -294,7 +294,7 @@ function initMap(){
     markerOptions: {
       icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
     },
-    circleOptions: {
+    rectangleOptions: {
       fillColor: "#ffff00",
       fillOpacity: .8,
       strokeWeight: 5,
