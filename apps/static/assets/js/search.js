@@ -590,6 +590,53 @@ function init_map_main(){
             }
         }
         )
+
+
+      drawingManager = new google.maps.drawing.DrawingManager({
+    drawingMode: google.maps.drawing.OverlayType.RECTANGLE,
+    drawingControl: true,
+    drawingControlOptions: {
+      position: google.maps.ControlPosition.TOP_CENTER,
+      drawingModes: [
+        google.maps.drawing.OverlayType.RECTANGLE,
+      ],
+    },
+    markerOptions: {
+      icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
+    },
+    circleOptions: {
+      fillColor: "#ffff00",
+      fillOpacity: .8,
+      strokeWeight: 5,
+      clickable: false,
+      editable: true,
+      zIndex: 1,
+    },
+  });
+
+  drawingManager.setMap(map_main);
+
+  google.maps.event.addListener(drawingManager, "overlaycomplete", function(event){
+       if(lastOverlay)
+           lastOverlay.setMap(null);
+
+        event.overlay.overlayType = event.type;
+        lastOverlay = event.overlay; // Save it
+
+        var bounds = lastOverlay.getBounds();
+        end = bounds.getNorthEast();
+        start = bounds.getSouthWest();
+
+        document.getElementById("southwest").setAttribute("value",start) ;
+        document.getElementById("northeast").setAttribute("value",end);
+
+
+        //map.drawingManager.setDrawingMode(null); // Return to 'hand' mode
+});
+
+
+
+
 }
 
 var data_cat_color_map = {};
