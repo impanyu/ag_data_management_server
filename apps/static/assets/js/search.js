@@ -538,6 +538,7 @@ function change_file_plot(){
 
 
 $('body').on('focus',".datepicker input", function(){
+            console.info()
             $(this).datepicker();
   });
 
