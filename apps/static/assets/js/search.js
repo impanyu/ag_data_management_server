@@ -583,7 +583,7 @@ function init_map_main(){
       icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
     },
     circleOptions: {
-      fillColor: "blue",
+      fillColor: "#0000ff",
       fillOpacity: .8,
       strokeWeight: 5,
       clickable: false,
