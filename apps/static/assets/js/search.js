@@ -584,8 +584,8 @@ function init_map_main(){
     },
     rectangleOptions: {
       fillColor: "#0000ff",
-      fillOpacity: .8,
-      strokeWeight: 5,
+      fillOpacity: .6,
+      strokeWeight: 3,
       clickable: false,
       editable: true,
       zIndex: 1,
