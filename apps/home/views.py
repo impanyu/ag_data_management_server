@@ -23,6 +23,7 @@ from django.conf import settings
 import os
 import shutil
 import copy
+
 from PIL import Image
 from PIL.TiffTags import TAGS
 import datetime
