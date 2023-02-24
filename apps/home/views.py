@@ -612,7 +612,7 @@ def data(request):
             file_path = request.POST['current_path']
 
             search_box = request.POST['search_box']
-            category = request.POST['category']
+            category = request.POST.getlist('category')
             mode = request.POST.getlist('mode')
             format = request.POST.getlist('format')
             label = request.POST.getlist('label')
