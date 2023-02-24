@@ -346,7 +346,7 @@ function get_file_list(){
   category_options = document.querySelector("#category").options;
     for (var i =0; i<category_options.length; i++){
      if(category_options[i].selected)
-        mode.push(category_options[i].value);
+        category.push(category_options[i].value);
   }
 
 
