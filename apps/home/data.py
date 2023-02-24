@@ -485,15 +485,20 @@ def retrieve_sub_domain_data(subdomain_path, layer, time, session):
 def filtering_condition(data, search_box, category, mode, format, label, time_range, bounding_box):
     return True
     item_name = data["path"].split("/")[-1]
-    if not search_box in item_name:
+    if not search_box in data["path"]:
         return False
 
-    if not category == "":
-        if "category" not in data or not data["category"] == category:
-            return False
+    for c in category:
+        if c == data["category"]:
+            return true
+        else:
+            return false
 
-    if "mode" not in data or not data["mode"] in mode:
-        return False
+    for m in mode:
+        if m == data["mode"]:
+            return true
+        else:
+            return false
 
     has_format = False
     for f in format:

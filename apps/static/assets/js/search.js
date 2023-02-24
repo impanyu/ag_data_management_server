@@ -342,6 +342,14 @@ get_file_list();
 function get_file_list(){
 
   $("#file_list")[0].innerHTML="";
+  category = [];
+  catetory_options = document.querySelector("category").options;
+    for (var i =0; i<category_options.length; i++){
+     if(category_options[i].selected)
+        mode.push(category_options[i].value);
+  }
+
+
    mode = [];
   mode_options = document.querySelector("#mode").options;
   for (var i =0; i<mode_options.length; i++){
@@ -370,7 +378,7 @@ function get_file_list(){
           current_path: current_path,
 
           search_box: document.querySelector("#search_box").value,
-          category: document.querySelector("#category").value,
+          category: category,
           mode: mode,
           format: format,
           label: label,
@@ -436,25 +444,18 @@ function get_file_list(){
                           get_file_list();
                           alert(data);
                       });
-
-
             });
-
 
             $("#"+i+"_add_domain").click(function(){
                file_name= data["files"][parseInt(this.id.split("_")[0])]["file_name"];
                console.info(file_name);
                add_to_domain(current_path,file_name);
-
-
             });
 
              $("#"+i+"_meta_data").click(function(){
                file_name= data["files"][parseInt(this.id.split("_")[0])]["file_name"];
                console.info(file_name);
                //get_meta_data(current_path,file_name);
-
-
             });
           }
 
