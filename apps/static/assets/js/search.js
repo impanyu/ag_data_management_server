@@ -336,7 +336,7 @@ function htmlToElement(html) {
     return template.content.firstChild;
 }
 
-get_file_list();
+//get_file_list();
 
 
 function get_file_list(){
@@ -397,7 +397,7 @@ function get_file_list(){
           points = data["2d_points"]
           color_scale_map = {"CSV/Spreadsheet":1, "Image":2, "Other":3}
           console.info(items);
-          document.querySelector("#result_number").innerHTML="<b>Search Result: "+items.length+"</b>";
+          document.querySelector("#result_number").innerHTML="<b>Search Results: "+items.length+"</b>";
           for(i in items){
              items[i]["2d"] = points[i];
              if(items[i]["format"].length > 0)
