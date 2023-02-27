@@ -351,6 +351,9 @@ def data(request):
                     os.chmod(abs_file_path,stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR)
                     os.chown(abs_file_path,getpwnam(request.user.get_username()).pw_uid,getpwnam(request.user.get_username()).pw_uid)
 
+                #aggregate meta data for each file
+
+                '''
                 cur = ""
                 meta_data = {}
                 current_abs_path = os.path.join("/home/" + request.user.get_username() + "/ag_data", current_path)
@@ -358,19 +361,21 @@ def data(request):
                     cur = cur + "/"+ dir
                     if cur in data_points:
                         meta_data = data_points[cur]
-
+                '''
                 #upload single file, not relative path
                 if(upload_file_paths[0] == ""):
                     root_abs_path = os.path.join("/home/" + request.user.get_username() + "/ag_data",current_path,upload_files[0].name)
                 else:
                     root_abs_path = os.path.join("/home/" + request.user.get_username() + "/ag_data",current_path,upload_file_paths[0].split('/')[0])
 
-
+                aggregate_meta_data(root_abs_path)
+                '''
                 data_points[root_abs_path] = {"path": root_abs_path, "mode": "other", "category":"other", "label":[],"loc":{"lat":0,"lng":0},"time":"1970/1/1 00:00:00","format":[]}
                 for key in meta_data:
                     data_points[root_abs_path][key] = copy.deepcopy(meta_data[key])
 
                 top_down(root_abs_path,data_points)
+                '''
 
                 '''
                 if os.path.isdir(root_abs_path):
@@ -466,9 +471,9 @@ def data(request):
                     data_points.append(data_point)
                     '''
 
-                data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "w")
-                json.dump(data_points, data_and_files)
-                data_and_files.close()
+                #data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "w")
+                #json.dump(data_points, data_and_files)
+                #data_and_files.close()
 
 
                 return HttpResponse("upload complete!")

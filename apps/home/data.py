@@ -14,6 +14,7 @@ import shutil
 from sklearn import manifold
 
 
+
 def convert_and_caching(file_path, username):
     real_path = map_file_path(file_path, username)
     suffix = file_path.split("/")[-1].split(".")[1]
@@ -488,16 +489,16 @@ def filtering_condition(data, search_box, category, mode, format, label, time_ra
     if not search_box in data["path"]:
         return False
 
+    has_category = False
     for c in category:
-        if c == data["category"]:
-            return true
-        else:
-            return false
+        if c in data["category"]:
+            has_category = True
+            break
+    if not has_category:
+        return False
 
     for m in mode:
-        if m == data["mode"]:
-            return true
-        else:
+        if not m == data["mode"]:
             return false
 
     has_format = False
@@ -538,22 +539,23 @@ def filtering_condition(data, search_box, category, mode, format, label, time_ra
 
 
 from sklearn.metrics.pairwise import euclidean_distances
-#[data["mode"],data["category"],data["label"],data["loc"],data["time"],data["format"]]
-# mode, category and time are string, label and format are list, loc is dict
-def distance(x,y):
 
+
+# [data["mode"],data["category"],data["label"],data["loc"],data["time"],data["format"]]
+# mode, category and time are string, label and format are list, loc is dict
+def distance(x, y):
     d = 0
 
     if not x[0] == y[0]:
-        d = d+1
+        d = d + 1
     if not x[1] == y[1]:
-        d = d+1
+        d = d + 1
     for l in x[2]:
         if not l in y[2]:
-            d = d+1
+            d = d + 1
     for l in y[2]:
         if not l in x[2]:
-            d = d+1
+            d = d + 1
     '''
     d = d+ euclidean_distances([[x[3]["lat"]/90,x[3]["lng"]/180]],[[y[3]["lat"]/90,y[3]["lng"]/180]])
     x_time = datetime.strptime(x[4], "%Y/%m/%d %H:%M:%S").timestamp()
@@ -562,23 +564,23 @@ def distance(x,y):
     '''
     for l in x[5]:
         if not l in y[5]:
-            d = d+1
+            d = d + 1
     for l in y[5]:
         if not l in x[5]:
-            d = d+1
-
+            d = d + 1
 
     return d
 
-def data_metric(X,Y):
-    result = np.zeros([len(X),len(Y)])
+
+def data_metric(X, Y):
+    result = np.zeros([len(X), len(Y)])
     i = 0
     for x in X:
         j = 0
         for y in Y:
-            result[i][j] = distance(x,y)
-            j = j+1
-        i = i+1
+            result[i][j] = distance(x, y)
+            j = j + 1
+        i = i + 1
 
     return result
 
@@ -586,27 +588,30 @@ def data_metric(X,Y):
 def dim_reduction(points):
     if len(points) < 2:
         return np.array([])
-    input = data_metric(points,points)
+    input = data_metric(points, points)
     t_sne = manifold.TSNE(
         n_components=2,
         perplexity=10,
         init="random",
         n_iter=250,
         random_state=0,
-        metric = "precomputed"
+        metric="precomputed"
     )
     results = t_sne.fit_transform(input)
 
     return results
 
+
 import copy
+
+
 def top_down(dir_root, data_points):
     data_points[dir_root]["path"] = dir_root
     if not os.path.isdir(dir_root):
-        register_file_meta(dir_root,data_points)
+        register_file_meta(dir_root, data_points)
         return
 
-    meta_data_file_path = dir_root +"/" +".meta"
+    meta_data_file_path = dir_root + "/" + ".meta"
     if os.path.exists(meta_data_file_path):
         with open(meta_data_file_path, "r") as meta_data_file:
             meta_data = json.load(meta_data_file)
@@ -614,25 +619,22 @@ def top_down(dir_root, data_points):
                 data_points[dir_root][key] = copy.deepcopy(meta_data[key])
 
     meta_data = data_points[dir_root]
-    
 
     for p in os.listdir(dir_root):
 
-        path = dir_root+"/"+p
+        path = dir_root + "/" + p
         if path.split(".")[-1] == "meta":
             continue
         data_points[path] = {"path": path, "mode": "other", "category": "other", "label": [],
-                                      "loc": {"lat": 0, "lng": 0}, "time": "1970/1/1 00:00:00", "format": []}
+                             "loc": {"lat": 0, "lng": 0}, "time": "1970/1/1 00:00:00", "format": []}
 
         for key in meta_data:
             data_points[path][key] = copy.deepcopy(meta_data[key])
 
-        top_down(path,data_points)
+        top_down(path, data_points)
 
 
-
-def register_file_meta(file_path,data_points):
-
+def register_file_meta(file_path, data_points):
     meta_data_file_path = file_path + ".meta"
     if os.path.exists(meta_data_file_path):
         with open(meta_data_file_path, "r") as meta_data_file:
@@ -654,7 +656,98 @@ def register_file_meta(file_path,data_points):
         data_points[file_path]["format"].append("R")
     elif file_path.split("/")[-1].split(".")[1] == ".m":
         data_points[file_path]["format"].append("Matlab")
-    elif file_path.split("/")[-1].split(".")[1] == "csv" or file_path.split("/")[-1].split(".")[1] == "xlsx" or file_path.split("/")[-1].split(".")[1] == "xls":
-        data_points[file_path]["format"].append( "CSV/Spreadsheet")
+    elif file_path.split("/")[-1].split(".")[1] == "csv" or file_path.split("/")[-1].split(".")[1] == "xlsx" or \
+            file_path.split("/")[-1].split(".")[1] == "xls":
+        data_points[file_path]["format"].append("CSV/Spreadsheet")
     else:
         data_points[file_path]["format"].append("Other")
+
+
+def aggregate_meta_data(dir_path):
+    meta_data = {}
+    # if this is a file
+    if not os.path.isdir(dir_path):
+        return generate_meta_data_for_file(dir_path)
+    meta_data["mode"] = "Folder"
+    meta_data["category"] = []
+    meta_data["format"] = []
+    meta_data["label"] = []
+    meta_data["time_range"] = {"start": "2030/01/01 00:00:00", "end": "1970/01/01 00:00:00"}
+    meta_data["spatial_range"] = {"northeast": {"lat": 0, "lng": -180}, "southwest": {"lat": 90, "lng": 0}}
+
+    # iterate through each sub path
+    for p in os.listdir(dir_path):
+        sub_meta_data = aggregate_meta_data(dir_path)
+        for c in sub_meta_data["category"]:
+            meta_data["category"].append(c)
+        for f in sub_meta_data["format"]:
+            meta_data["format"].append(f)
+        for l in sub_meta_data["label"]:
+            meta_data["format"].append(l)
+
+        current_start = datetime.strptime(meta_data["time_range"]["start"], "%Y/%m/%d %H:%M:%S").timestamp()
+        sub_start = datetime.strptime(sub_meta_data["time_range"]["start"], "%Y/%m/%d %H:%M:%S").timestamp()
+        current_end = datetime.strptime(meta_data["time_range"]["end"], "%Y/%m/%d %H:%M:%S").timestamp()
+        sub_end = datetime.strptime(sub_meta_data["time_range"]["end"], "%Y/%m/%d %H:%M:%S").timestamp()
+
+        meta_data["time_range"]["start"] = datetime.fromtimestamp(min(current_start, sub_start)).strftime(
+            "%Y/%m/%d %H:%M:%S")
+        meta_data["time_range"]["end"] = datetime.fromtimestamp(max(current_end, sub_end)).strftime("%Y/%m/%d %H:%M:%S")
+
+        # here we only consider north america
+        meta_data["spatial_range"]["northeast"]["lat"] = max(meta_data["spatial_range"]["northeast"]["lat"],
+                                                             sub_meta_data["spatial_range"]["northeast"]["lat"])
+        meta_data["spatial_range"]["northeast"]["lng"] = max(meta_data["spatial_range"]["northeast"]["lng"],
+                                                             sub_meta_data["spatial_range"]["northeast"]["lng"])
+
+        meta_data["spatial_range"]["southwest"]["lat"] = min(meta_data["spatial_range"]["southwest"]["lat"],
+                                                             sub_meta_data["spatial_range"]["southwest"]["lat"])
+        meta_data["spatial_range"]["southwest"]["lng"] = min(meta_data["spatial_range"]["southwest"]["lng"],
+                                                             sub_meta_data["spatial_range"]["southwest"]["lng"])
+
+    meta_data_file_name = "_".join(dir_path.split("/")[1:]) + ".json"
+
+    with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "w") as meta_data_file:
+        json.dump(meta_data, meta_data_file)
+
+    return meta_data
+
+
+def generate_meta_data_for_file(file_path):
+    meta_data = {}
+    meta_data["mode"] = "File"
+    meta_data["category"] = []
+    meta_data["format"] = []
+    meta_data["label"] = []
+    meta_data["time_range"] = {"start": "2030/01/01 00:00:00", "end": "1970/01/01 00:00:00"}
+    meta_data["spatial_range"] = {"northeast": {"lat": 0, "lng": -180}, "southwest": {"lat": 90, "lng": 0}}
+
+    suffix = file_path.split("/")[-1].split(".")[1]
+
+    if suffix == ".py":
+        meta_data["format"].append("Python")
+    elif suffix == "tif" \
+            or suffix == "tiff" \
+            or suffix == "png" \
+            or suffix == "jpg" \
+            or suffix == "jpeg": \
+            meta_data["format"].append("Image")
+    elif suffix == ".shp":
+        meta_data["format"].append("Shape")
+    elif suffix == ".m" or suffix == ".mlx":
+        meta_data["format"].append("Matlab")
+    elif suffix == ".r":
+        meta_data["format"].append("R")
+    elif suffix == "csv":
+        meta_data["format"].append("CSV")
+    elif suffix == "xlsx" or suffix == "xls":
+        meta_data["format"].append("Spreadsheet")
+    else:
+        meta_data["format"].append("Other")
+
+    meta_data_file_name = "_".join(file_path.split("/")[1:]) + ".json"
+
+    with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "w") as meta_data_file:
+        json.dump(meta_data, meta_data_file)
+
+    return meta_data
