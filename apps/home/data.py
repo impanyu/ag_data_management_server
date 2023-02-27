@@ -678,7 +678,8 @@ def aggregate_meta_data(dir_path):
 
     # iterate through each sub path
     for p in os.listdir(dir_path):
-        sub_meta_data = aggregate_meta_data(dir_path)
+        sub_path = os.path.join(dir_path,p)
+        sub_meta_data = aggregate_meta_data(sub_path)
         for c in sub_meta_data["category"]:
             meta_data["category"].append(c)
         for f in sub_meta_data["format"]:
