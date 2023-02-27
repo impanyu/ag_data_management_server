@@ -12,7 +12,8 @@ from datetime import datetime
 from PIL import Image
 import shutil
 from sklearn import manifold
-
+import rasterio
+from rasterio.crs import CRS
 
 
 def convert_and_caching(file_path, username):
@@ -745,9 +746,33 @@ def generate_meta_data_for_file(file_path):
     else:
         meta_data["format"].append("Other")
 
+    if suffix == "tif" or suffix == "tiff":
+        meta_data["spatial_range"] = read_tif_meta(file_path)
+
     meta_data_file_name = "_".join(file_path.split("/")[1:]) + ".json"
 
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "w") as meta_data_file:
         json.dump(meta_data, meta_data_file)
 
     return meta_data
+
+
+def read_tif_meta(file_path):
+    # Open the GeoTIFF file
+    with rasterio.open(file_path) as src:
+        # Get the image's CRS (Coordinate Reference System)
+        crs = CRS.from_epsg(4326)
+        if src.crs != crs:
+            return {"northeast": {"lat": 0, "lng": -180}, "southwest": {"lat": 90, "lng": 0}}
+
+        # Get the image's transform (mapping from pixel coordinates to world coordinates)
+        transform = src.transform
+
+        # Get the image's width and height in pixels
+        width = src.width
+        height = src.height
+
+        # Get the longitude and latitude coordinates of the southeast and northwest corners of the image
+        nw_lng, nw_lat = transform * (0, 0)
+        se_lng, se_lat = transform * (width, height)
+    return {"northeast": {"lat": nw_lat, "lng": nw_lng}, "southwest": {"lat": se_lat, "lng": se_lng}}
