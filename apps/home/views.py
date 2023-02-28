@@ -376,14 +376,14 @@ def data(request):
                     parent_dir = "/".join(root_abs_path.split("/")[:-1])
                     parent_meta_data_file_name = "_".join(parent_dir.split("/")[1:]) + ".json"
                     parent_meta_data_file_path = os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name)
-                    '''
+
                     with open(parent_meta_data_file_path, "w+") as parent_meta_data_file:
                         parent_meta_data = json.load(parent_meta_data_file)
                         if "subdirs" in parent_meta_data:
                             parent_meta_data["subdirs"].append(root_abs_path)
                         else:
                             parent_meta_data["subdirs"] = [root_abs_path]
-
+                    '''
                     with open(parent_meta_data_file_path, "w") as parent_meta_data_file:
                         json.dump(parent_meta_data, parent_meta_data_file)
                     '''
