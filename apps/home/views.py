@@ -501,6 +501,18 @@ def data(request):
             else:
                 os.remove(abs_path)
 
+            # remove corresponding meta data file
+            meta_data_file_name = "_".join(abs_path.split("/")[1:]) + ".json"
+            os. remove(meta_data_file_name)
+
+            # adjust meta data of its parent dir
+            if not abs_path.split("/")[-2] == "ag_data":
+                parent_dir = "/".join(abs_path.split("/")[:-1])
+                adjust_meta_data(parent_dir)
+
+
+
+            '''
             #modify data_and_files
             data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "r")
             data_points = json.load(data_and_files)
@@ -513,6 +525,7 @@ def data(request):
             data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "w")
             json.dump(data_points, data_and_files)
             data_and_files.close()
+            '''
 
             return HttpResponse("delete complete!")
 

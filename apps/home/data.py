@@ -676,6 +676,7 @@ def aggregate_meta_data(dir_path):
     meta_data["time_range"] = {"start": "2030/01/01 00:00:00", "end": "1970/01/01 00:00:00"}
     meta_data["spatial_range"] = {"northeast": {"lat": 0, "lng": -180}, "southwest": {"lat": 90, "lng": 0}}
     meta_data["subdirs"] = []
+    meta_data["abs_path"] = dir_path
 
     # iterate through each sub path
     for p in os.listdir(dir_path):
@@ -725,6 +726,7 @@ def generate_meta_data_for_file(file_path):
     meta_data["label"] = []
     meta_data["time_range"] = {"start": "2030/01/01 00:00:00", "end": "1970/01/01 00:00:00"}
     meta_data["spatial_range"] = {"northeast": {"lat": 0, "lng": -180}, "southwest": {"lat": 90, "lng": 0}}
+    meta_data["abs_path"] = file_path
 
     suffix = file_path.split("/")[-1].split(".")[1]
 
@@ -779,3 +781,60 @@ def read_tif_meta(file_path):
         nw_lng, nw_lat = transform * (0, 0)
         se_lng, se_lat = transform * (width, height)
     return {"northeast": {"lat": nw_lat, "lng": nw_lng}, "southwest": {"lat": se_lat, "lng": se_lng}}
+
+
+def adjust_meta_data(dir_path):
+    meta_data = {}
+    meta_data["mode"] = "Folder"
+    meta_data["category"] = []
+    meta_data["format"] = []
+    meta_data["label"] = []
+    meta_data["time_range"] = {"start": "2030/01/01 00:00:00", "end": "1970/01/01 00:00:00"}
+    meta_data["spatial_range"] = {"northeast": {"lat": 0, "lng": -180}, "southwest": {"lat": 90, "lng": 0}}
+    meta_data["subdirs"] = []
+    meta_data["abs_path"] = dir_path
+
+    # iterate through each sub path
+    for p in os.listdir(dir_path):
+        sub_path = os.path.join(dir_path, p)
+        sub_meta_data_file_name = "_".join(sub_path.split("/")[1:]) + ".json"
+        with open(os.path.join(settings.CORE_DIR, 'data', sub_meta_data_file_name), "w") as sub_meta_data_file:
+            sub_meta_data = json.load(sub_meta_data_file)
+
+        meta_data["subdirs"].append(sub_path)
+        for c in sub_meta_data["category"]:
+            meta_data["category"].append(c)
+        for f in sub_meta_data["format"]:
+            meta_data["format"].append(f)
+        for l in sub_meta_data["label"]:
+            meta_data["format"].append(l)
+
+        current_start = datetime.strptime(meta_data["time_range"]["start"], "%Y/%m/%d %H:%M:%S").timestamp()
+        sub_start = datetime.strptime(sub_meta_data["time_range"]["start"], "%Y/%m/%d %H:%M:%S").timestamp()
+        current_end = datetime.strptime(meta_data["time_range"]["end"], "%Y/%m/%d %H:%M:%S").timestamp()
+        sub_end = datetime.strptime(sub_meta_data["time_range"]["end"], "%Y/%m/%d %H:%M:%S").timestamp()
+
+        meta_data["time_range"]["start"] = datetime.fromtimestamp(min(current_start, sub_start)).strftime(
+            "%Y/%m/%d %H:%M:%S")
+        meta_data["time_range"]["end"] = datetime.fromtimestamp(max(current_end, sub_end)).strftime("%Y/%m/%d %H:%M:%S")
+
+        # here we only consider north america
+        meta_data["spatial_range"]["northeast"]["lat"] = max(meta_data["spatial_range"]["northeast"]["lat"],
+                                                             sub_meta_data["spatial_range"]["northeast"]["lat"])
+        meta_data["spatial_range"]["northeast"]["lng"] = max(meta_data["spatial_range"]["northeast"]["lng"],
+                                                             sub_meta_data["spatial_range"]["northeast"]["lng"])
+
+        meta_data["spatial_range"]["southwest"]["lat"] = min(meta_data["spatial_range"]["southwest"]["lat"],
+                                                             sub_meta_data["spatial_range"]["southwest"]["lat"])
+        meta_data["spatial_range"]["southwest"]["lng"] = min(meta_data["spatial_range"]["southwest"]["lng"],
+                                                             sub_meta_data["spatial_range"]["southwest"]["lng"])
+
+    meta_data_file_name = "_".join(dir_path.split("/")[1:]) + ".json"
+
+    with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "w") as meta_data_file:
+        json.dump(meta_data, meta_data_file)
+
+    if dir_path.split("/")[-2] == "ag_data":
+        return
+    parent_dir = "/".join(dir_path.split("/")[:-1])
+    adjust_meta_data(parent_dir)
