@@ -688,7 +688,12 @@ def aggregate_meta_data(dir_path):
         for f in sub_meta_data["format"]:
             meta_data["format"].append(f)
         for l in sub_meta_data["label"]:
-            meta_data["format"].append(l)
+            meta_data["label"].append(l)
+
+        meta_data["category"] = list(set(meta_data["category"]))
+        meta_data["format"] = list(set(meta_data["format"]))
+        meta_data["label"] = list(set(meta_data["category"]))
+
 
         current_start = datetime.strptime(meta_data["time_range"]["start"], "%Y/%m/%d %H:%M:%S").timestamp()
         sub_start = datetime.strptime(sub_meta_data["time_range"]["start"], "%Y/%m/%d %H:%M:%S").timestamp()
@@ -786,29 +791,37 @@ def read_tif_meta(file_path):
 
 def adjust_meta_data(dir_path):
     meta_data = {}
+    meta_data_file_name = "_".join(dir_path.split("/")[1:]) + ".json"
+    with open(meta_data_file_name, "r") as meta_data_file:
+        meta_data = json.load(meta_data_file)
+
     meta_data["mode"] = "Folder"
     meta_data["category"] = []
     meta_data["format"] = []
     meta_data["label"] = []
     meta_data["time_range"] = {"start": "2030/01/01 00:00:00", "end": "1970/01/01 00:00:00"}
     meta_data["spatial_range"] = {"northeast": {"lat": 0, "lng": -180}, "southwest": {"lat": 90, "lng": 0}}
-    meta_data["subdirs"] = []
+    #meta_data["subdirs"] = []
     meta_data["abs_path"] = dir_path
 
     # iterate through each sub path
-    for p in os.listdir(dir_path):
+    for p in meta_data["subdirs"]:
         sub_path = os.path.join(dir_path, p)
         sub_meta_data_file_name = "_".join(sub_path.split("/")[1:]) + ".json"
-        with open(os.path.join(settings.CORE_DIR, 'data', sub_meta_data_file_name), "w+") as sub_meta_data_file:
+        with open(os.path.join(settings.CORE_DIR, 'data', sub_meta_data_file_name), "r") as sub_meta_data_file:
             sub_meta_data = json.load(sub_meta_data_file)
 
-        meta_data["subdirs"].append(sub_path)
+        #meta_data["subdirs"].append(sub_path)
         for c in sub_meta_data["category"]:
             meta_data["category"].append(c)
         for f in sub_meta_data["format"]:
             meta_data["format"].append(f)
         for l in sub_meta_data["label"]:
             meta_data["format"].append(l)
+
+        meta_data["category"] = list(set(meta_data["category"]))
+        meta_data["format"] = list(set(meta_data["format"]))
+        meta_data["label"] = list(set(meta_data["category"]))
 
         current_start = datetime.strptime(meta_data["time_range"]["start"], "%Y/%m/%d %H:%M:%S").timestamp()
         sub_start = datetime.strptime(sub_meta_data["time_range"]["start"], "%Y/%m/%d %H:%M:%S").timestamp()
