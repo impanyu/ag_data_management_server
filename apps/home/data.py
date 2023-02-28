@@ -675,11 +675,13 @@ def aggregate_meta_data(dir_path):
     meta_data["label"] = []
     meta_data["time_range"] = {"start": "2030/01/01 00:00:00", "end": "1970/01/01 00:00:00"}
     meta_data["spatial_range"] = {"northeast": {"lat": 0, "lng": -180}, "southwest": {"lat": 90, "lng": 0}}
+    meta_data["subdirs"] = []
 
     # iterate through each sub path
     for p in os.listdir(dir_path):
         sub_path = os.path.join(dir_path,p)
         sub_meta_data = aggregate_meta_data(sub_path)
+        meta_data["subdirs"] .append(sub_path)
         for c in sub_meta_data["category"]:
             meta_data["category"].append(c)
         for f in sub_meta_data["format"]:
