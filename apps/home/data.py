@@ -485,7 +485,7 @@ def retrieve_sub_domain_data(subdomain_path, layer, time, session):
 
 
 def filtering_condition(data, search_box, category, mode, format, label, time_range, bounding_box):
-    #return True
+    # return True
 
     if not search_box in data["abs_path"]:
         return False
@@ -694,7 +694,6 @@ def aggregate_meta_data(dir_path):
         meta_data["format"] = list(set(meta_data["format"]))
         meta_data["label"] = list(set(meta_data["category"]))
 
-
         current_start = datetime.strptime(meta_data["time_range"]["start"], "%Y/%m/%d %H:%M:%S").timestamp()
         sub_start = datetime.strptime(sub_meta_data["time_range"]["start"], "%Y/%m/%d %H:%M:%S").timestamp()
         current_end = datetime.strptime(meta_data["time_range"]["end"], "%Y/%m/%d %H:%M:%S").timestamp()
@@ -801,7 +800,7 @@ def adjust_meta_data(dir_path):
     meta_data["label"] = []
     meta_data["time_range"] = {"start": "2030/01/01 00:00:00", "end": "1970/01/01 00:00:00"}
     meta_data["spatial_range"] = {"northeast": {"lat": 0, "lng": -180}, "southwest": {"lat": 90, "lng": 0}}
-    #meta_data["subdirs"] = []
+    # meta_data["subdirs"] = []
     meta_data["abs_path"] = dir_path
 
     # iterate through each sub path
@@ -811,7 +810,7 @@ def adjust_meta_data(dir_path):
         with open(os.path.join(settings.CORE_DIR, 'data', sub_meta_data_file_name), "r") as sub_meta_data_file:
             sub_meta_data = json.load(sub_meta_data_file)
 
-        #meta_data["subdirs"].append(sub_path)
+        # meta_data["subdirs"].append(sub_path)
         for c in sub_meta_data["category"]:
             meta_data["category"].append(c)
         for f in sub_meta_data["format"]:
@@ -860,11 +859,11 @@ def delete_meta_data(meta_data_path):
     os.remove(meta_data_path)
     sub_dirs = meta_data["subdirs"]
     for subdir in sub_dirs:
-        sub_meta_data_path = os.path.join(settings.CORE_DIR, 'data', "_".join(subdir.split("/")[1:])+ ".json")
+        sub_meta_data_path = os.path.join(settings.CORE_DIR, 'data', "_".join(subdir.split("/")[1:]) + ".json")
         delete_meta_data(sub_meta_data_path)
 
 
-def search(root_dir,search_box,category,mode,format,label,time_range,spatial_range):
+def search(root_dir, search_box, category, mode, format, label, time_range, spatial_range):
     return {}
     # search data
-    #if "Folder" in mode or "File" in mode:
+    # if "Folder" in mode or "File" in mode:
