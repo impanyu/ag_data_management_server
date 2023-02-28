@@ -680,9 +680,9 @@ def aggregate_meta_data(dir_path):
 
     # iterate through each sub path
     for p in os.listdir(dir_path):
-        sub_path = os.path.join(dir_path,p)
+        sub_path = os.path.join(dir_path, p)
         sub_meta_data = aggregate_meta_data(sub_path)
-        meta_data["subdirs"] .append(sub_path)
+        meta_data["subdirs"].append(sub_path)
         for c in sub_meta_data["category"]:
             meta_data["category"].append(c)
         for f in sub_meta_data["format"]:
@@ -798,7 +798,7 @@ def adjust_meta_data(dir_path):
     for p in os.listdir(dir_path):
         sub_path = os.path.join(dir_path, p)
         sub_meta_data_file_name = "_".join(sub_path.split("/")[1:]) + ".json"
-        with open(os.path.join(settings.CORE_DIR, 'data', sub_meta_data_file_name), "w") as sub_meta_data_file:
+        with open(os.path.join(settings.CORE_DIR, 'data', sub_meta_data_file_name), "r") as sub_meta_data_file:
             sub_meta_data = json.load(sub_meta_data_file)
 
         meta_data["subdirs"].append(sub_path)
@@ -838,3 +838,12 @@ def adjust_meta_data(dir_path):
         return
     parent_dir = "/".join(dir_path.split("/")[:-1])
     adjust_meta_data(parent_dir)
+
+
+def delete_meta_data(meta_data_path):
+    with open(meta_data_path, "r") as meta_data_file:
+        meta_data = json.load(meta_data_file)
+    os.remove(meta_data_path)
+    sub_dirs = meta_data["subdirs"]
+    for subdir in sub_dirs:
+        delete_meta_data(subdir)
