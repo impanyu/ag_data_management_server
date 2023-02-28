@@ -369,6 +369,12 @@ def data(request):
                     root_abs_path = os.path.join("/home/" + request.user.get_username() + "/ag_data",current_path,upload_file_paths[0].split('/')[0])
 
                 aggregate_meta_data(root_abs_path)
+
+                # adjust meta data of its parent dir
+                if not root_abs_path.split("/")[-2] == "home":
+                    parent_dir = "/".join(root_abs_path.split("/")[:-1])
+                    adjust_meta_data(parent_dir)
+
                 '''
                 data_points[root_abs_path] = {"path": root_abs_path, "mode": "other", "category":"other", "label":[],"loc":{"lat":0,"lng":0},"time":"1970/1/1 00:00:00","format":[]}
                 for key in meta_data:
@@ -507,7 +513,7 @@ def data(request):
             delete_meta_data(meta_data_path)
 
             # adjust meta data of its parent dir
-            if not abs_path.split("/")[-2] == "ag_data":
+            if not abs_path.split("/")[-2] == "home":
                 parent_dir = "/".join(abs_path.split("/")[:-1])
                 adjust_meta_data(parent_dir)
 
