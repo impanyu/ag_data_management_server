@@ -634,7 +634,7 @@ def data(request):
             format = request.POST.getlist('format')
             label = request.POST.getlist('label')
             time_range = request.POST.getlist('time_range')
-            bounding_box = request.POST.getlist('bounding_box')
+            spatial_range = request.POST.getlist('bounding_box')
 
 
             # fs = FileSystemStorage(location=os.path.join(settings.CORE_DIR, 'data') + "/users")
@@ -661,12 +661,15 @@ def data(request):
             points = []
 
             # query all the data points or files in current path
-            data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "r")
-            data_points = json.load(data_and_files)
-            data_and_files.close()
+            #data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "r")
+            #data_points = json.load(data_and_files)
+            #data_and_files.close()
             # print(abs_path)
 
+            root_dir = "/"+request.user.get_username()
+            response["items"] = search(root_dir,search_box,category,mode,format,label,time_range,spatial_range)
 
+            '''
             for path in data_points:
                 data = data_points[path]
 
@@ -681,6 +684,7 @@ def data(request):
             print(response)
 
             response = json.dumps(response)
+            '''
 
             return HttpResponse(response)
 

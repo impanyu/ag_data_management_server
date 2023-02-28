@@ -485,9 +485,9 @@ def retrieve_sub_domain_data(subdomain_path, layer, time, session):
 
 
 def filtering_condition(data, search_box, category, mode, format, label, time_range, bounding_box):
-    return True
-    item_name = data["path"].split("/")[-1]
-    if not search_box in data["path"]:
+    #return True
+
+    if not search_box in data["abs_path"]:
         return False
 
     has_category = False
@@ -799,7 +799,7 @@ def adjust_meta_data(dir_path):
     for p in os.listdir(dir_path):
         sub_path = os.path.join(dir_path, p)
         sub_meta_data_file_name = "_".join(sub_path.split("/")[1:]) + ".json"
-        with open(os.path.join(settings.CORE_DIR, 'data', sub_meta_data_file_name), "r") as sub_meta_data_file:
+        with open(os.path.join(settings.CORE_DIR, 'data', sub_meta_data_file_name), "w+") as sub_meta_data_file:
             sub_meta_data = json.load(sub_meta_data_file)
 
         meta_data["subdirs"].append(sub_path)
@@ -835,7 +835,7 @@ def adjust_meta_data(dir_path):
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "w") as meta_data_file:
         json.dump(meta_data, meta_data_file)
 
-    if dir_path.split("/")[-2] == "ag_data":
+    if dir_path.split("/")[-2] == "home":
         return
     parent_dir = "/".join(dir_path.split("/")[:-1])
     adjust_meta_data(parent_dir)
@@ -849,3 +849,9 @@ def delete_meta_data(meta_data_path):
     for subdir in sub_dirs:
         sub_meta_data_path = os.path.join(settings.CORE_DIR, 'data', "_".join(subdir.split("/")[1:])+ ".json")
         delete_meta_data(sub_meta_data_path)
+
+
+def search(root_dir,search_box,category,mode,format,label,time_range,spatial_range):
+    return {}
+    # search data
+    #if "Folder" in mode or "File" in mode:
