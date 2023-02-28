@@ -371,7 +371,7 @@ def data(request):
                 aggregate_meta_data(root_abs_path)
 
                 # adjust meta data of its parent dir
-                '''
+
                 if not root_abs_path.split("/")[-2] == "home":
                     parent_dir = "/".join(root_abs_path.split("/")[:-1])
                     parent_meta_data_file_name = "_".join(parent_dir.split("/")[1:]) + ".json"
@@ -383,6 +383,7 @@ def data(request):
                             parent_meta_data["subdirs"] = [root_abs_path]
                     with open(parent_meta_data_file_name, "w") as parent_meta_data_file:
                         json.dump(parent_meta_data, parent_meta_data_file)
+                '''
                     adjust_meta_data(parent_dir)
                 '''
 
