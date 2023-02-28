@@ -727,6 +727,7 @@ def generate_meta_data_for_file(file_path):
     meta_data["time_range"] = {"start": "2030/01/01 00:00:00", "end": "1970/01/01 00:00:00"}
     meta_data["spatial_range"] = {"northeast": {"lat": 0, "lng": -180}, "southwest": {"lat": 90, "lng": 0}}
     meta_data["abs_path"] = file_path
+    meta_data["subdirs"] = []
 
     suffix = file_path.split("/")[-1].split(".")[1]
 

@@ -509,7 +509,7 @@ def data(request):
             # adjust meta data of its parent dir
             if not abs_path.split("/")[-2] == "ag_data":
                 parent_dir = "/".join(abs_path.split("/")[:-1])
-                #adjust_meta_data(parent_dir)
+                adjust_meta_data(parent_dir)
 
 
 
