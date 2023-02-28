@@ -380,11 +380,12 @@ def data(request):
                     with open(parent_meta_data_file_path, "a+") as parent_meta_data_file:
                         parent_meta_data_file.seek(0)
                         parent_meta_data = json.load(parent_meta_data_file)
+                    '''
                         if "subdirs" in parent_meta_data:
                             parent_meta_data["subdirs"].append(root_abs_path)
                         else:
                             parent_meta_data["subdirs"] = [root_abs_path]
-                    '''
+                    
                     with open(parent_meta_data_file_path, "w") as parent_meta_data_file:
                         json.dump(parent_meta_data, parent_meta_data_file)
                     '''
