@@ -375,7 +375,7 @@ def data(request):
                 if not root_abs_path.split("/")[-2] == "home":
                     parent_dir = "/".join(root_abs_path.split("/")[:-1])
                     parent_meta_data_file_name = "_".join(parent_dir.split("/")[1:]) + ".json"
-                    with open(parent_meta_data_file_name, "r") as parent_meta_data_file:
+                    with open(parent_meta_data_file_name, "w+") as parent_meta_data_file:
                         parent_meta_data = json.load(parent_meta_data_file)
                         if "subdirs" in parent_meta_data:
                             parent_meta_data["subdirs"].append(root_abs_path)
