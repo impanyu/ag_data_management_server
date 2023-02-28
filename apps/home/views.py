@@ -682,9 +682,10 @@ def data(request):
             response["2d_points"] = dim_reduction(points).tolist()
 
             print(response)
+            '''
 
             response = json.dumps(response)
-            '''
+
 
             return HttpResponse(response)
 
