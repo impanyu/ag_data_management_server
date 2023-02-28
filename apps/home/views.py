@@ -696,8 +696,18 @@ def data(request):
             #data_and_files.close()
             # print(abs_path)
 
-            root_dir = "/"+request.user.get_username()
+            # search the user's own items
+            root_dir = os.path.join("/home",request.user.get_username())
             response["items"] = search(root_dir,search_box,category,mode,format,label,time_range,spatial_range)
+
+            # search public items
+            root_dir = "/home/public"
+            public_items = search(root_dir, search_box, category, mode, format, label, time_range, spatial_range)
+
+            response["items"] += public_items
+
+            #for item in response["items"]:
+
 
             '''
             for path in data_points:

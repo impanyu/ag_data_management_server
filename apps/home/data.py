@@ -484,27 +484,37 @@ def retrieve_sub_domain_data(subdomain_path, layer, time, session):
         return json.dumps({"soilwaters": soilwaters, "times": times})
 
 
-def filtering_condition(data, search_box, category, mode, format, label, time_range, bounding_box):
+def filtering_condition(meta_data, search_box, category, mode, format, label, time_range, bounding_box):
     # return True
 
-    if not search_box in data["abs_path"]:
+    searched_words = search_box.split(" ")
+    has_words = False
+    for w in searched_words:
+        if w in meta_data["abs_path"]:
+            has_words = True
+            break
+    if not has_words:
         return False
 
     has_category = False
     for c in category:
-        if c in data["category"]:
+        if c in meta_data["category"]:
             has_category = True
             break
     if not has_category:
         return False
 
+    has_mode = False
     for m in mode:
-        if not m == data["mode"]:
-            return false
+        if m == meta_data["mode"]:
+            has_mode = True
+            break
+    if not has_mode:
+        return False
 
     has_format = False
     for f in format:
-        if f in data["format"]:
+        if f in meta_data["format"]:
             has_format = True
             break
     if not has_format:
@@ -512,7 +522,7 @@ def filtering_condition(data, search_box, category, mode, format, label, time_ra
 
     has_label = False
     for l in label:
-        if l in data["label"]:
+        if l in meta_data["label"]:
             has_label = True
             break
     if not has_label:
@@ -520,20 +530,27 @@ def filtering_condition(data, search_box, category, mode, format, label, time_ra
 
     start = datetime.strptime(time_range[0], "Y/m/d").timestamp()
     end = datetime.strptime(time_range[1], "Y/m/d").timestamp()
-    item_time = datetime.strptime(data["time"], "Y/m/d %H:%M:%S").timestamp()
+    item_start_time = datetime.strptime(meta_data["time_range"]["start"], "Y/m/d %H:%M:%S").timestamp()
+    item_end_time = datetime.strptime(meta_data["time_range"]["end"], "Y/m/d %H:%M:%S").timestamp()
 
-    if item_time > end or item_time < start:
+    if not overlap(start,end,item_start_time,item_end_time):
         return False
 
     southwest = bounding_box[0]
     northeast = bounding_box[1]
-    item_loc = data["loc"]
+
+
+    item_northeast_lat = meta_data["spatial_range"]["northeast"]["lat"]
+    item_northeast_lng = meta_data["spatial_range"]["northeast"]["lng"]
+    item_southwest_lat = meta_data["spatial_range"]["southwest"]["lat"]
+    item_southwest_lng = meta_data["spatial_range"]["southwest"]["lng"]
+
 
     if not (southwest == "Southwest Corner" and northeast == "Northeast Corner"):
         lower_lat, upper_lat, left_ln, right_ln = extract_coordinates(southwest, northeast)
-        if item_loc["lat"] < lower_lat or item_loc["lat"] > upper_lat:
+        if not overlap(lower_lat,upper_lat,item_southwest_lat,item_northeast_lat):
             return False
-        if item_loc["lng"] < left_ln or item_loc["lng"] > right_ln:
+        if not overlap(left_ln,right_ln,item_southwest_lng,item_northeast_lng):
             return False
 
     return True
@@ -677,6 +694,7 @@ def aggregate_meta_data(dir_path):
     meta_data["spatial_range"] = {"northeast": {"lat": 0, "lng": -180}, "southwest": {"lat": 90, "lng": 0}}
     meta_data["subdirs"] = []
     meta_data["abs_path"] = dir_path
+    meta_data["public"] = "False"
 
     # iterate through each sub path
     for p in os.listdir(dir_path):
@@ -732,6 +750,7 @@ def generate_meta_data_for_file(file_path):
     meta_data["spatial_range"] = {"northeast": {"lat": 0, "lng": -180}, "southwest": {"lat": 90, "lng": 0}}
     meta_data["abs_path"] = file_path
     meta_data["subdirs"] = []
+    meta_data["public"] = "False"
 
     suffix = file_path.split("/")[-1].split(".")[1]
 
@@ -865,6 +884,45 @@ def delete_meta_data(meta_data_path):
 
 
 def search(root_dir, search_box, category, mode, format, label, time_range, spatial_range):
-    return {}
+    result = []
     # search data
-    # if "Folder" in mode or "File" in mode:
+    # if we need to do a full search
+    if "File" in mode or "Folder" in format:
+        root_dir = root_dir + "/ag_data"
+        meta_data_file_name = "_".join(root_dir.split("/")[1:]) + ".json"
+        with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
+            meta_data = json.load(meta_data_file)
+            if filtering_condition(meta_data,search_box, category, mode, format, label, time_range, spatial_range):
+                result.append(meta_data)
+            for subdir in meta_data["subdirs"]:
+                sub_result = search(subdir,search_box, category, mode, format, label, time_range, spatial_range)
+                result += sub_result
+        return result
+
+    if "Domain" in format:
+        root_dir = root_dir + "/domains"
+        meta_data_file_name = "_".join(root_dir.split("/")[1:]) + ".json"
+        with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
+            meta_data = json.load(meta_data_file)
+            if filtering_condition(meta_data, search_box, category, mode, format, label, time_range, spatial_range):
+                result.append(meta_data)
+
+    if "Tool" in format:
+        root_dir = root_dir + "/tools"
+        meta_data_file_name = "_".join(root_dir.split("/")[1:]) + ".json"
+        with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
+            meta_data = json.load(meta_data_file)
+            if filtering_condition(meta_data, search_box, category, mode, format, label, time_range, spatial_range):
+                result.append(meta_data)
+
+    if "Model" in format:
+        root_dir = root_dir + "/models"
+        meta_data_file_name = "_".join(root_dir.split("/")[1:]) + ".json"
+        with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
+            meta_data = json.load(meta_data_file)
+            if filtering_condition(meta_data, search_box, category, mode, format, label, time_range, spatial_range):
+                result.append(meta_data)
+
+    return result
+
+
