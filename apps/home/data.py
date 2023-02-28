@@ -847,4 +847,5 @@ def delete_meta_data(meta_data_path):
     os.remove(meta_data_path)
     sub_dirs = meta_data["subdirs"]
     for subdir in sub_dirs:
-        delete_meta_data(subdir)
+        sub_meta_data_path = os.path.join(settings.CORE_DIR, 'data', "/".join(subdir.split("/")[:-1]))
+        delete_meta_data(sub_meta_data_path)
