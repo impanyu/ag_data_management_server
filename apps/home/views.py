@@ -503,7 +503,7 @@ def data(request):
 
             # remove corresponding meta data file
             meta_data_file_name = "_".join(abs_path.split("/")[1:]) + ".json"
-            os. remove(meta_data_file_name)
+            os.remove(meta_data_file_name)
 
             # adjust meta data of its parent dir
             if not abs_path.split("/")[-2] == "ag_data":
