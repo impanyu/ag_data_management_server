@@ -667,7 +667,7 @@ def data(request):
             time_range = request.POST.getlist('time_range')
             spatial_range = request.POST.getlist('bounding_box')
 
-            print("in search")
+
 
 
             # fs = FileSystemStorage(location=os.path.join(settings.CORE_DIR, 'data') + "/users")
