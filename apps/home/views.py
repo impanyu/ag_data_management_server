@@ -672,7 +672,6 @@ def data(request):
             print("format: " + str(format))
             print("label: " + str(label))
 
-
             # fs = FileSystemStorage(location=os.path.join(settings.CORE_DIR, 'data') + "/users")
             #fs = FileSystemStorage(location="/home/" + request.user.get_username() + "/ag_data")
 
