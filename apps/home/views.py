@@ -659,9 +659,8 @@ def data(request):
             print(request.method)
             print(request.body)
 
+
             request_data = json.loads(request.body)
-
-
 
             file_path = request_data['current_path']
 
