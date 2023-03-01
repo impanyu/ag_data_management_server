@@ -656,8 +656,8 @@ def data(request):
             return HttpResponse(response)
 
         elif load_template == 'mode_search':
-            print(request.method)
-            print(request.body)
+            #print(request.method)
+            #print(request.body)
             request_data = json.loads(request.body)
 
             file_path = request_data['current_path']
