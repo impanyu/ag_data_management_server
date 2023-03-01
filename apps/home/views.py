@@ -660,7 +660,6 @@ def data(request):
             print(request.body)
             request_data = json.loads(request.body)
 
-
             file_path = request_data['current_path']
 
             search_box = request_data['search_box']
