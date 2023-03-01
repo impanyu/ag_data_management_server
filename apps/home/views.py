@@ -656,7 +656,7 @@ def data(request):
             return HttpResponse(response)
 
         elif load_template == 'mode_search':
-            print("in search")
+
             file_path = request.POST['current_path']
 
             search_box = request.POST['search_box']
@@ -666,6 +666,8 @@ def data(request):
             label = request.POST.getlist('label')
             time_range = request.POST.getlist('time_range')
             spatial_range = request.POST.getlist('bounding_box')
+
+            print("in search")
 
 
             # fs = FileSystemStorage(location=os.path.join(settings.CORE_DIR, 'data') + "/users")
