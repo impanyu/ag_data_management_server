@@ -928,8 +928,9 @@ def search(root_dir, search_box, category, mode, format, label, time_range, spat
     # search data
     # if we need to do a full search
     print("in search")
+    print("mode " + str(mode))
     if "File" in mode or "Folder" in mode:
-        print("mode "+str(mode))
+
         root_dir = root_dir + "/ag_data"
         meta_data_file_name = "_".join(root_dir.split("/")[1:]) + ".json"
         with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
