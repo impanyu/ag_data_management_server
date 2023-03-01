@@ -707,12 +707,12 @@ def data(request):
 
 
             # search the user's own items
-            root_dir = os.path.join("/home",request.user.get_username())
+            root_dir = os.path.join("/home",request.user.get_username(),"ag_data")
             response["items"] = search(root_dir,search_box,category,mode,format,label,time_range,spatial_range)
             print(response["items"])
             # search public items
             # still need to differentiate between own and public items
-            root_dir = "/home/public"
+            root_dir = "/home/public/ag_data"
             public_items = search(root_dir, search_box, category, mode, format, label, time_range, spatial_range)
 
             response["items"] += public_items
