@@ -376,7 +376,7 @@ function get_file_list(){
   $.ajax({
          type: "POST",
          url:"/mode_search",
-         data:{
+         data:JSON.stringify({
           current_path: current_path,
 
           search_box: document.querySelector("#search_box").value,
@@ -387,7 +387,7 @@ function get_file_list(){
           time_range:  [document.querySelector("#start_date").value,document.querySelector("#end_date").value],
           bounding_box:  [document.querySelector("#southwest").value, document.querySelector("#northeast").value]
 
-        },
+        }),
         contentType: "application/json",
         success: function(data, status){
           //console.info(data);
