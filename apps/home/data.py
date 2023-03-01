@@ -557,6 +557,16 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
 
 
 from sklearn.metrics.pairwise import euclidean_distances
+def list_distance(l1,l2):
+    overlaps = set(l1) & set(l2)
+    num_overlaps = len(overlaps)
+
+    unions = set(l1) | set(l2)
+    num_unions = len(unions)
+
+    return 1-num_overlaps/max(1,num_unions)
+
+
 
 
 # [data["mode"],data["category"],data["label"],data["loc"],data["time"],data["format"]]
@@ -564,8 +574,29 @@ from sklearn.metrics.pairwise import euclidean_distances
 def distance(x, y):
     d = 0
 
-    if not x[0] == y[0]:
+    if not x["mode"] == y["mode"]:
         d = d + 1
+    d += list_distance(x["category"],y["category"])
+    d += list_distance(x["label"], y["label"])
+    d += list_distance(x["format"], y["format"])
+    if not overlap(x["time_range"]["start"],x["time_range"]["end"],y["time_range"]["start"],y["time_range"]["end"]):
+        d += 1
+
+    x_northeast_lat = x["spatial_range"]["northeast"]["lat"]
+    x_northeast_lng = x["spatial_range"]["northeast"]["lng"]
+    x_southwest_lat = x["spatial_range"]["southwest"]["lat"]
+    x_southwest_lng = x["spatial_range"]["southwest"]["lng"]
+
+    y_northeast_lat = y["spatial_range"]["northeast"]["lat"]
+    y_northeast_lng = y["spatial_range"]["northeast"]["lng"]
+    y_southwest_lat = y["spatial_range"]["southwest"]["lat"]
+    y_southwest_lng = y["spatial_range"]["southwest"]["lng"]
+
+    if not overlap(x_southwest_lat,x_northeast_lat,y_southwest_lat,y_northeast_lat) or not overlap(x_southwest_lng,x_northeast_lng,y_southwest_lng,y_northeast_lng):
+        d += 1
+
+
+    '''
     if not x[1] == y[1]:
         d = d + 1
     for l in x[2]:
@@ -574,18 +605,19 @@ def distance(x, y):
     for l in y[2]:
         if not l in x[2]:
             d = d + 1
-    '''
+    
     d = d+ euclidean_distances([[x[3]["lat"]/90,x[3]["lng"]/180]],[[y[3]["lat"]/90,y[3]["lng"]/180]])
     x_time = datetime.strptime(x[4], "%Y/%m/%d %H:%M:%S").timestamp()
     y_time = datetime.strptime(y[4], "%Y/%m/%d %H:%M:%S").timestamp()
     d = d+ abs(x_time - y_time) / (365*12*30*24*3600)
-    '''
+    
     for l in x[5]:
         if not l in y[5]:
             d = d + 1
     for l in y[5]:
         if not l in x[5]:
             d = d + 1
+    '''
 
     return d
 

@@ -701,12 +701,15 @@ def data(request):
             response["items"] = search(root_dir,search_box,category,mode,format,label,time_range,spatial_range)
 
             # search public items
+            # still need to differentiate between own and public items
             root_dir = "/home/public"
             public_items = search(root_dir, search_box, category, mode, format, label, time_range, spatial_range)
 
             response["items"] += public_items
 
-            #for item in response["items"]:
+            response["2d_points"] = dim_reduction(response["items"]).tolist()
+
+
 
 
             '''
