@@ -710,7 +710,6 @@ def data(request):
             root_dir = os.path.join("/home",request.user.get_username())
             response["items"] = search(root_dir,search_box,category,mode,format,label,time_range,spatial_range)
             print(response["items"])
-
             # search public items
             # still need to differentiate between own and public items
             root_dir = "/home/public"
