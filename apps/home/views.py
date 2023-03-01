@@ -696,6 +696,7 @@ def data(request):
             #data_and_files.close()
             # print(abs_path)
 
+            print("in search")
             # search the user's own items
             root_dir = os.path.join("/home",request.user.get_username())
             response["items"] = search(root_dir,search_box,category,mode,format,label,time_range,spatial_range)
