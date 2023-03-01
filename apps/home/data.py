@@ -497,8 +497,11 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
         return False
 
     has_category = False
-    for c in category:
-        if c in meta_data["category"]:
+    for c in meta_data["category"]:
+        if c in category:
+            has_category = True
+            break
+        if c not in ["Genotype","Phenotype","Soil","Atmosphere"] and "Other" in category:
             has_category = True
             break
     if not has_category:
@@ -513,18 +516,22 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
         return False
 
     has_format = False
-    for f in format:
-        if f in meta_data["format"]:
+    for f in meta_data["format"]:
+        if f in format:
             has_format = True
             break
+        if f not in ["Image","Shape","CSV","Spreadsheet","Python","R","Matlab"] and "Other" in format:
+            has_format = True
     if not has_format:
         return False
 
     has_label = False
-    for l in label:
-        if l in meta_data["label"]:
+    for l in meta_data["label"]:
+        if l in label:
             has_label = True
             break
+        if l not in ["Spidercam","ENREC","Wheat"] and "Other" in label:
+            has_label = True
     if not has_label:
         return False
 
@@ -776,9 +783,9 @@ def aggregate_meta_data(dir_path):
 def generate_meta_data_for_file(file_path):
     meta_data = {}
     meta_data["mode"] = "File"
-    meta_data["category"] = []
+    meta_data["category"] = ["default"]
     meta_data["format"] = []
-    meta_data["label"] = []
+    meta_data["label"] = ["default"]
     meta_data["time_range"] = {"start": "2030/01/01 00:00:00", "end": "1970/01/01 00:00:00"}
     meta_data["spatial_range"] = {"northeast": {"lat": 0, "lng": -180}, "southwest": {"lat": 90, "lng": 0}}
     meta_data["abs_path"] = file_path
@@ -805,8 +812,7 @@ def generate_meta_data_for_file(file_path):
         meta_data["format"].append("CSV")
     elif suffix == "xlsx" or suffix == "xls":
         meta_data["format"].append("Spreadsheet")
-    else:
-        meta_data["format"].append("Other")
+
 
     if suffix == "tif" or suffix == "tiff":
         meta_data["spatial_range"] = read_tif_meta(file_path)
