@@ -969,4 +969,4 @@ def search(root_dir, search_box, category, mode, format, label, time_range, spat
                 result.append(meta_data)
     '''
 
-    return result
+

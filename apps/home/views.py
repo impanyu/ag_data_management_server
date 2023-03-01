@@ -712,11 +712,12 @@ def data(request):
             print(response["items"])
             # search public items
             # still need to differentiate between own and public items
+            '''
             root_dir = "/home/public/ag_data"
             public_items = search(root_dir, search_box, category, mode, format, label, time_range, spatial_range)
 
             response["items"] += public_items
-
+            '''
             response["2d_points"] = dim_reduction(response["items"]).tolist()
 
 
