@@ -373,20 +373,23 @@ function get_file_list(){
 
  //console.info(mode);
 
-  $.post("/mode_search",
-        {
+  $.ajax({
+         type: "POST",
+         url:"/mode_search",
+         data:{
           current_path: current_path,
 
           search_box: document.querySelector("#search_box").value,
-          category: JSON.stringify(category),
-          mode:  JSON.stringify(mode),
-          format:  JSON.stringify(format),
-          label:  JSON.stringify(label),
-          time_range:  JSON.stringify([document.querySelector("#start_date").value,document.querySelector("#end_date").value]),
-          bounding_box:  JSON.stringify([document.querySelector("#southwest").value, document.querySelector("#northeast").value])
+          category: category,
+          mode:  mode,
+          format:  format,
+          label:  label,
+          time_range:  [document.querySelector("#start_date").value,document.querySelector("#end_date").value],
+          bounding_box:  [document.querySelector("#southwest").value, document.querySelector("#northeast").value]
 
         },
-        function(data, status){
+        contentType: "application/json",
+        success: function(data, status){
           //console.info(data);
           data=JSON.parse(data);
           subdomains=[];
@@ -519,7 +522,7 @@ function get_file_list(){
        */
 
 
-    });
+    }});
 }
 
 map_displayed = "map";
