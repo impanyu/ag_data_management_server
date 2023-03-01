@@ -371,7 +371,7 @@ function get_file_list(){
         label.push(label_options[i].value);
   }
 
- console.info(mode);
+ //console.info(mode);
 
   $.post("/mode_search",
         {
