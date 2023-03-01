@@ -927,7 +927,7 @@ def search(root_dir, search_box, category, mode, format, label, time_range, spat
     result = []
     # search data
     # if we need to do a full search
-    if "File" in mode or "Folder" in format:
+    if "File" in mode or "Folder" in mode:
         root_dir = root_dir + "/ag_data"
         meta_data_file_name = "_".join(root_dir.split("/")[1:]) + ".json"
         with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
@@ -939,7 +939,7 @@ def search(root_dir, search_box, category, mode, format, label, time_range, spat
                 result += sub_result
         return result
 
-    if "Domain" in format:
+    if "Domain" in mode:
         root_dir = root_dir + "/domains"
         meta_data_file_name = "_".join(root_dir.split("/")[1:]) + ".json"
         with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
@@ -947,7 +947,7 @@ def search(root_dir, search_box, category, mode, format, label, time_range, spat
             if filtering_condition(meta_data, search_box, category, mode, format, label, time_range, spatial_range):
                 result.append(meta_data)
 
-    if "Tool" in format:
+    if "Tool" in mode:
         root_dir = root_dir + "/tools"
         meta_data_file_name = "_".join(root_dir.split("/")[1:]) + ".json"
         with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
