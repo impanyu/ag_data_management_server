@@ -927,7 +927,7 @@ def search(root_dir, search_box, category, mode, format, label, time_range, spat
     result = []
     # search data
     # if we need to do a full search
-    print("in search")
+
     #print("mode " + str(mode))
     if "File" in mode or "Folder" in mode:
 
@@ -940,6 +940,7 @@ def search(root_dir, search_box, category, mode, format, label, time_range, spat
             for subdir in meta_data["subdirs"]:
                 sub_result = search(subdir, search_box, category, mode, format, label, time_range, spatial_range)
                 result += sub_result
+
         return result
 
     if "Domain" in mode:

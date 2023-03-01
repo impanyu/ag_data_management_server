@@ -671,10 +671,10 @@ def data(request):
             spatial_range = request_data['bounding_box']
 
 
-            print("search_box: " + search_box)
-            print("mode: " + str(mode))
-            print("format: " + str(format))
-            print("label: " + str(label))
+            #print("search_box: " + search_box)
+            #print("mode: " + str(mode))
+            #print("format: " + str(format))
+            #print("label: " + str(label))
 
             # fs = FileSystemStorage(location=os.path.join(settings.CORE_DIR, 'data') + "/users")
             #fs = FileSystemStorage(location="/home/" + request.user.get_username() + "/ag_data")
@@ -709,6 +709,7 @@ def data(request):
             # search the user's own items
             root_dir = os.path.join("/home",request.user.get_username())
             response["items"] = search(root_dir,search_box,category,mode,format,label,time_range,spatial_range)
+            print(response["items"])
 
             # search public items
             # still need to differentiate between own and public items
