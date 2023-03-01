@@ -750,7 +750,7 @@ def aggregate_meta_data(dir_path):
 
         meta_data["category"] = list(set(meta_data["category"]))
         meta_data["format"] = list(set(meta_data["format"]))
-        meta_data["label"] = list(set(meta_data["category"]))
+        meta_data["label"] = list(set(meta_data["label"]))
 
         current_start = datetime.strptime(meta_data["time_range"]["start"], "%Y/%m/%d %H:%M:%S").timestamp()
         sub_start = datetime.strptime(sub_meta_data["time_range"]["start"], "%Y/%m/%d %H:%M:%S").timestamp()
