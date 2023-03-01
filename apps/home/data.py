@@ -528,13 +528,14 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
     if not has_label:
         return False
 
-    start = datetime.strptime(time_range[0], "Y/m/d").timestamp()
-    end = datetime.strptime(time_range[1], "Y/m/d").timestamp()
-    item_start_time = datetime.strptime(meta_data["time_range"]["start"], "Y/m/d %H:%M:%S").timestamp()
-    item_end_time = datetime.strptime(meta_data["time_range"]["end"], "Y/m/d %H:%M:%S").timestamp()
+    if not (time_range[0] == "start" or time_range[1] == "end"):
+        start = datetime.strptime(time_range[0], "Y/m/d").timestamp()
+        end = datetime.strptime(time_range[1], "Y/m/d").timestamp()
+        item_start_time = datetime.strptime(meta_data["time_range"]["start"], "Y/m/d %H:%M:%S").timestamp()
+        item_end_time = datetime.strptime(meta_data["time_range"]["end"], "Y/m/d %H:%M:%S").timestamp()
 
-    if not overlap(start, end, item_start_time, item_end_time):
-        return False
+        if not overlap(start, end, item_start_time, item_end_time):
+            return False
 
     southwest = bounding_box[0]
     northeast = bounding_box[1]
@@ -544,7 +545,7 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
     item_southwest_lat = meta_data["spatial_range"]["southwest"]["lat"]
     item_southwest_lng = meta_data["spatial_range"]["southwest"]["lng"]
 
-    if not (southwest == "Southwest Corner" and northeast == "Northeast Corner"):
+    if not (southwest == "Southwest Corner" or northeast == "Northeast Corner"):
         lower_lat, upper_lat, left_ln, right_ln = extract_coordinates(southwest, northeast)
         if not overlap(lower_lat, upper_lat, item_southwest_lat, item_northeast_lat):
             return False
