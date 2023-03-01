@@ -487,7 +487,7 @@ def retrieve_sub_domain_data(subdomain_path, layer, time, session):
 def filtering_condition(meta_data, search_box, category, mode, format, label, time_range, bounding_box):
     # return True
 
-    searched_words = search_box.split(" ")
+    #searched_words = search_box.split(" ")
     print("searched_words                       "+searched_words)
     has_words = False
     '''
@@ -927,7 +927,7 @@ def delete_meta_data(meta_data_path):
 
 def search(root_dir, search_box, category, mode, format, label, time_range, spatial_range):
     result = []
-    print (search_box)
+    print(len(search_box))
     # search data
     # if we need to do a full search
 
