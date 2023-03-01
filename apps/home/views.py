@@ -667,10 +667,7 @@ def data(request):
             time_range = request.POST.getlist('time_range')
             spatial_range = request.POST.getlist('bounding_box')
 
-            print("mode: "+ str(mode))
-
-
-
+            print("mode: " + str(mode))
 
             # fs = FileSystemStorage(location=os.path.join(settings.CORE_DIR, 'data') + "/users")
             #fs = FileSystemStorage(location="/home/" + request.user.get_username() + "/ag_data")
