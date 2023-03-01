@@ -533,40 +533,38 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
     item_start_time = datetime.strptime(meta_data["time_range"]["start"], "Y/m/d %H:%M:%S").timestamp()
     item_end_time = datetime.strptime(meta_data["time_range"]["end"], "Y/m/d %H:%M:%S").timestamp()
 
-    if not overlap(start,end,item_start_time,item_end_time):
+    if not overlap(start, end, item_start_time, item_end_time):
         return False
 
     southwest = bounding_box[0]
     northeast = bounding_box[1]
-
 
     item_northeast_lat = meta_data["spatial_range"]["northeast"]["lat"]
     item_northeast_lng = meta_data["spatial_range"]["northeast"]["lng"]
     item_southwest_lat = meta_data["spatial_range"]["southwest"]["lat"]
     item_southwest_lng = meta_data["spatial_range"]["southwest"]["lng"]
 
-
     if not (southwest == "Southwest Corner" and northeast == "Northeast Corner"):
         lower_lat, upper_lat, left_ln, right_ln = extract_coordinates(southwest, northeast)
-        if not overlap(lower_lat,upper_lat,item_southwest_lat,item_northeast_lat):
+        if not overlap(lower_lat, upper_lat, item_southwest_lat, item_northeast_lat):
             return False
-        if not overlap(left_ln,right_ln,item_southwest_lng,item_northeast_lng):
+        if not overlap(left_ln, right_ln, item_southwest_lng, item_northeast_lng):
             return False
 
     return True
 
 
 from sklearn.metrics.pairwise import euclidean_distances
-def list_distance(l1,l2):
+
+
+def list_distance(l1, l2):
     overlaps = set(l1) & set(l2)
     num_overlaps = len(overlaps)
 
     unions = set(l1) | set(l2)
     num_unions = len(unions)
 
-    return 1-num_overlaps/max(1,num_unions)
-
-
+    return 1 - num_overlaps / max(1, num_unions)
 
 
 # [data["mode"],data["category"],data["label"],data["loc"],data["time"],data["format"]]
@@ -576,10 +574,10 @@ def distance(x, y):
 
     if not x["mode"] == y["mode"]:
         d = d + 1
-    d += list_distance(x["category"],y["category"])
+    d += list_distance(x["category"], y["category"])
     d += list_distance(x["label"], y["label"])
     d += list_distance(x["format"], y["format"])
-    if not overlap(x["time_range"]["start"],x["time_range"]["end"],y["time_range"]["start"],y["time_range"]["end"]):
+    if not overlap(x["time_range"]["start"], x["time_range"]["end"], y["time_range"]["start"], y["time_range"]["end"]):
         d += 1
 
     x_northeast_lat = x["spatial_range"]["northeast"]["lat"]
@@ -592,9 +590,11 @@ def distance(x, y):
     y_southwest_lat = y["spatial_range"]["southwest"]["lat"]
     y_southwest_lng = y["spatial_range"]["southwest"]["lng"]
 
-    if not overlap(x_southwest_lat,x_northeast_lat,y_southwest_lat,y_northeast_lat) or not overlap(x_southwest_lng,x_northeast_lng,y_southwest_lng,y_northeast_lng):
+    if not overlap(x_southwest_lat, x_northeast_lat, y_southwest_lat, y_northeast_lat) or not overlap(x_southwest_lng,
+                                                                                                      x_northeast_lng,
+                                                                                                      y_southwest_lng,
+                                                                                                      y_northeast_lng):
         d += 1
-
 
     '''
     if not x[1] == y[1]:
@@ -924,10 +924,10 @@ def search(root_dir, search_box, category, mode, format, label, time_range, spat
         meta_data_file_name = "_".join(root_dir.split("/")[1:]) + ".json"
         with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
             meta_data = json.load(meta_data_file)
-            if filtering_condition(meta_data,search_box, category, mode, format, label, time_range, spatial_range):
+            if filtering_condition(meta_data, search_box, category, mode, format, label, time_range, spatial_range):
                 result.append(meta_data)
             for subdir in meta_data["subdirs"]:
-                sub_result = search(subdir,search_box, category, mode, format, label, time_range, spatial_range)
+                sub_result = search(subdir, search_box, category, mode, format, label, time_range, spatial_range)
                 result += sub_result
         return result
 
@@ -956,5 +956,3 @@ def search(root_dir, search_box, category, mode, format, label, time_range, spat
                 result.append(meta_data)
 
     return result
-
-
