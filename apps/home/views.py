@@ -667,6 +667,8 @@ def data(request):
             time_range = request.POST.getlist('time_range')
             spatial_range = request.POST.getlist('bounding_box')
 
+            print("mode: "+ str(mode))
+
 
 
 
