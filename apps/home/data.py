@@ -487,8 +487,8 @@ def retrieve_sub_domain_data(subdomain_path, layer, time, session):
 def filtering_condition(meta_data, search_box, category, mode, format, label, time_range, bounding_box):
     # return True
 
-    #searched_words = search_box.split(" ")
-    #print("searched_words                       "+searched_words)
+    searched_words = search_box.split(" ")
+    print("searched_words                       "+searched_words)
     has_words = False
     '''
     for w in searched_words:
