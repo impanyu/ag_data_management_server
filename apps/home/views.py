@@ -657,15 +657,19 @@ def data(request):
 
         elif load_template == 'mode_search':
 
-            file_path = request.POST['current_path']
+            request_data = json.loads(request.body)
 
-            search_box = request.POST['search_box']
-            category = request.POST.getlist('category')
-            mode = request.POST.getlist('mode')
-            format = request.POST.getlist('format')
-            label = request.POST.getlist('label')
-            time_range = request.POST.getlist('time_range')
-            spatial_range = request.POST.getlist('bounding_box')
+
+
+            file_path = request_data['current_path']
+
+            search_box = request_data['search_box']
+            category = request_data['category']
+            mode = request_data['mode']
+            format = request_data['format']
+            label = request_data['label']
+            time_range = request_data['time_range']
+            spatial_range = request_data['bounding_box']
 
 
             print("search_box: " + search_box)
