@@ -875,7 +875,7 @@ def adjust_meta_data(dir_path):
         for f in sub_meta_data["format"]:
             meta_data["format"].append(f)
         for l in sub_meta_data["label"]:
-            meta_data["format"].append(l)
+            meta_data["label"].append(l)
 
         meta_data["category"] = list(set(meta_data["category"]))
         meta_data["format"] = list(set(meta_data["format"]))
