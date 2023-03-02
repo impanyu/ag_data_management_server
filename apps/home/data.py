@@ -544,7 +544,6 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
         return False
     '''
 
-
     if not (time_range[0] == "start" or time_range[1] == "end"):
         start = datetime.strptime(time_range[0], "Y/m/d").timestamp()
         end = datetime.strptime(time_range[1], "Y/m/d").timestamp()
@@ -555,6 +554,7 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
             print("not has time")
             return False
 
+    '''
     southwest = bounding_box[0]
     northeast = bounding_box[1]
 
@@ -571,6 +571,7 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
         if not overlap(left_ln, right_ln, item_southwest_lng, item_northeast_lng):
             print("not has space")
             return False
+    '''
 
     print("find one")
     return True
