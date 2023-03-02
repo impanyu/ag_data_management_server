@@ -573,11 +573,13 @@ def data(request):
             '''
 
             #fs = FileSystemStorage(location=os.path.join(settings.CORE_DIR, 'data') + "/users")
-            fs = FileSystemStorage(location="/home/" + request.user.get_username() + "/ag_data")
+            #fs = FileSystemStorage(location="/home/" + request.user.get_username() + "/ag_data")
+            fs = FileSystemStorage(location="/home/" + file_path)
 
 
             #print(request.user.get_username())
 
+            '''
             modified_file_path = ""
             for i in range(1, len(file_path.split("/"))):
                 modified_file_path += "/" + file_path.split("/")[i]
@@ -588,16 +590,17 @@ def data(request):
             else:
                 file_path = modified_file_path[1:]
                 abs_path = os.path.join("/home/" + request.user.get_username() + "/ag_data", file_path)
+            '''
 
 
-            dirs, files = fs.listdir(file_path)
+            dirs, files = fs.listdir(".")
 
             response = {"dirs": [], "files": []}
 
             # query all the data points or files in current path
-            data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "r")
-            data_points = json.load(data_and_files)
-            data_and_files.close()
+            #data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "r")
+            #data_points = json.load(data_and_files)
+            #data_and_files.close()
             response["data_points"] = []
             #print(abs_path)
 
@@ -633,9 +636,9 @@ def data(request):
             for dir in dirs:
                 if dir[0] == ".":
                     continue
-                created_time = fs.get_created_time(file_path + "/" + dir)
-                accessed_time = fs.get_accessed_time(file_path + "/" + dir)
-                size = fs.size(file_path + "/" + dir)
+                created_time = fs.get_created_time( dir)
+                accessed_time = fs.get_accessed_time( dir)
+                size = fs.size( dir)
                 dir_item = {"dir_name": dir, "created_time": created_time.strftime("%m/%d/%Y, %H:%M:%S"),
                             "accessed_time": accessed_time.strftime("%m/%d/%Y, %H:%M:%S"), "size": size}
                 response["dirs"].append(dir_item)
@@ -643,9 +646,9 @@ def data(request):
             for file in files:
                 if file[0] == ".":
                     continue
-                created_time = fs.get_created_time(file_path + "/" + file)
-                accessed_time = fs.get_accessed_time(file_path + "/" + file)
-                size = fs.size(file_path + "/" + file)
+                created_time = fs.get_created_time( file)
+                accessed_time = fs.get_accessed_time( file)
+                size = fs.size(file)
                 file_item = {"file_name": file, "created_time": created_time.strftime("%m/%d/%Y, %H:%M:%S"),
                              "accessed_time": accessed_time.strftime("%m/%d/%Y, %H:%M:%S"), "size": size}
                 response["files"].append(file_item)

@@ -419,7 +419,7 @@ function get_file_list(){
           item = data["items"][i];
 
 
-            item_html =  '<tr><td scope="row"><div class="media align-items-center"><div class="media-body"><span class="name mb-0 text-sm"> &nbsp;<a href="/static/users/'+current_path+'/'+item["name"]+'"> ' +item["name"]+
+            item_html =  '<tr><td scope="row"><div class="media align-items-center"><div class="media-body"><span class="name mb-0 text-sm"> &nbsp;<a href="'+item["name"]+'"> ' +item["name"]+
                      '</a></span> </div></div></td>" + "<td class="budget">'+item["mode"]+'</td>"' +
                    '<td> <span class="badge badge-dot mr-4">  <span class="status">'+item["label"]+'</span></span></td>' +
                    '<td> <span class="badge badge-dot mr-4">  <span class="status">'+item["category"]+'</span></span></td>' +
@@ -653,7 +653,6 @@ function draw_points(data_points){
     });
     google_map_circles.push(point);
   }
-
 }
 
 
