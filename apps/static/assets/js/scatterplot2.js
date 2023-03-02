@@ -24,8 +24,8 @@ function draw_2d_points(data){
    }
 
 
-    height = d3.select("#map_main").node().getBoundingClientRect().height;
-    width = 600;//d3.select("#map_main").node().getBoundingClientRect().width;
+    height = 600;//d3.select("#map_main").node().getBoundingClientRect().height;
+    width = d3.select("#map_main").node().getBoundingClientRect().width;
     k = height / width;
 
 
