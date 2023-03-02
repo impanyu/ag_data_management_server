@@ -23,9 +23,14 @@ function draw_2d_points(data){
 
    }
 
-
-    height = 600;//d3.select("#map_main").node().getBoundingClientRect().height;
-    width = d3.select("#map_main").node().getBoundingClientRect().width;
+    if( d3.select("#map_main").node().style.display == "none"){
+      height = d3.select("#files_plot").node().getBoundingClientRect().height;
+      width = d3.select("#files_plot").node().getBoundingClientRect().width;
+    }
+    else{
+        height = d3.select("#map_main").node().getBoundingClientRect().height;
+        width = d3.select("#map_main").node().getBoundingClientRect().width;
+    }
     k = height / width;
 
 
