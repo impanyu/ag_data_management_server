@@ -565,19 +565,19 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
     item_southwest_lat = meta_data["spatial_range"]["southwest"]["lat"]
     item_southwest_lng = meta_data["spatial_range"]["southwest"]["lng"]
 
-    if not (southwest == "Southwest Corner" or northeast == "Northeast Corner"):
+    if not (southwest == "southwest" or northeast == "northeast"):
         print(southwest)
         print(northeast)
-        #lower_lat, upper_lat, left_ln, right_ln = extract_coordinates(southwest, northeast)
+        lower_lat, upper_lat, left_ln, right_ln = extract_coordinates(southwest, northeast)
 
-    '''
+
         if not overlap(lower_lat, upper_lat, item_southwest_lat, item_northeast_lat):
             print("not has space")
             return False
         if not overlap(left_ln, right_ln, item_southwest_lng, item_northeast_lng):
             print("not has space")
             return False
-    '''
+
 
     print("find one")
     return True
