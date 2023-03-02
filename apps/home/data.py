@@ -558,6 +558,8 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
     southwest = bounding_box[0]
     northeast = bounding_box[1]
 
+    print(southwest)
+
     item_northeast_lat = meta_data["spatial_range"]["northeast"]["lat"]
     item_northeast_lng = meta_data["spatial_range"]["northeast"]["lng"]
     item_southwest_lat = meta_data["spatial_range"]["southwest"]["lat"]
