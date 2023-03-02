@@ -662,8 +662,8 @@ def data_metric(X, Y):
 
 
 def dim_reduction(points):
-    #if len(points) < 2:
-    #    return np.array([])
+    if len(points) < 2:
+        return np.array([[0,0]])
     input = data_metric(points, points)
     t_sne = manifold.TSNE(
         n_components=2,
