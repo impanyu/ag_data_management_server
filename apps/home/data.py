@@ -498,7 +498,7 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
     if not has_words:
         print("not has word")
         return False
-
+    '''
     has_category = False
     for c in meta_data["category"]:
         if c in category:
@@ -510,6 +510,7 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
     if not has_category:
         print("not has category")
         return False
+    '''
 
     has_mode = False
     for m in mode:
@@ -530,7 +531,7 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
     if not has_format:
         print("not has format")
         return False
-
+    '''
     has_label = False
     for l in meta_data["label"]:
         if l in label:
@@ -541,6 +542,8 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
     if not has_label:
         print("not has label")
         return False
+    '''
+
 
     if not (time_range[0] == "start" or time_range[1] == "end"):
         start = datetime.strptime(time_range[0], "Y/m/d").timestamp()
