@@ -8,7 +8,7 @@ data = [].concat(
 var Tooltip;
 
 function draw_2d_points(data){
-   d3.select("#files_plot").selectAll().remove();
+   d3.select("#files_plot").selectAll("svg").remove();
 
    x_min = 10000;
    x_max = -10000;
@@ -78,7 +78,7 @@ function draw_2d_points(data){
             .attr("y2", d => 0.5 + y(d)));
 
     const zoom = d3.zoom()
-          .scaleExtent([0.5, 1.5])
+          .scaleExtent([0.75, 1.5])
           .on("zoom", zoomed);
 
     svg = d3.select("#files_plot")
