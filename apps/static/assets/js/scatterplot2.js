@@ -75,7 +75,7 @@ function draw_2d_points(data){
             .attr("y2", d => 0.5 + y(d)));
 
     const zoom = d3.zoom()
-          .scaleExtent([0.5, 32])
+          .scaleExtent([0.5, 2])
           .on("zoom", zoomed);
 
     svg = d3.select("#files_plot")
