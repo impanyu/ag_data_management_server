@@ -399,6 +399,7 @@ function get_file_list(){
           //draw all the data & files in current_path on google map based
           items = data["items"];
           points = data["2d_points"]
+
           color_scale_map = {"CSV/Spreadsheet":1, "Image":2, "Other":3}
           console.info(items);
           document.querySelector("#result_number").innerHTML="<b>Search Results: "+items.length+"</b>";
@@ -634,7 +635,7 @@ function draw_points(data_points){
    for (i in data_points) {
    data_point = data_points[i]
     data_cat = data_point["category"];
-    data_loc = data_point["loc"];
+    data_loc = data_point["spatial_range"][0]; // northeast corner
     //size = data_point["size"];
     const point = new google.maps.Circle({
       strokeColor: "black",

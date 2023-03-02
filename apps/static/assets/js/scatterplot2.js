@@ -6,7 +6,10 @@ data = [].concat(
     Array.from({length: 300}, () => [random(), random() - 1, 2])
   );
 var Tooltip;
+
 function draw_2d_points(data){
+   d3.select("#files_plot").selectAll().remove();
+
    x_min = 10000;
    x_max = -10000;
    y_min = x_min;
@@ -75,7 +78,7 @@ function draw_2d_points(data){
             .attr("y2", d => 0.5 + y(d)));
 
     const zoom = d3.zoom()
-          .scaleExtent([0.5, 2])
+          .scaleExtent([0.5, 1.5])
           .on("zoom", zoomed);
 
     svg = d3.select("#files_plot")
