@@ -338,6 +338,7 @@ function htmlToElement(html) {
 
 //get_file_list();
 
+$("option").click(function(){this.selected=true});
 
 function get_file_list(){
 

@@ -499,15 +499,14 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
         print("not has word")
         return False
 
-
     has_category = False
     for c in meta_data["category"]:
         if c in category:
             has_category = True
             break
-        if c not in ["Genotype","Phenotype","Soil","Atmosphere"] and "Other" in category:
-            has_category = True
-            break
+        #if c not in ["Genotype","Phenotype","Soil","Atmosphere"] and "Other" in category:
+        #    has_category = True
+        #    break
     if not has_category:
         print("not has category")
         return False
@@ -526,8 +525,8 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
         if f in format:
             has_format = True
             break
-        if f not in ["Image","Shape","CSV","Spreadsheet","Python","R","Matlab"] and "Other" in format:
-            has_format = True
+        #if f not in ["Image","Shape","CSV","Spreadsheet","Python","R","Matlab"] and "Other" in format:
+        #    has_format = True
     if not has_format:
         print("not has format")
         return False
@@ -537,8 +536,8 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
         if l in label:
             has_label = True
             break
-        if l not in ["Spidercam","ENREC","Wheat"] and "Other" in label:
-            has_label = True
+        #if l not in ["Spidercam","ENREC","Wheat"] and "Other" in label:
+        #    has_label = True
     if not has_label:
         print("not has label")
         return False
