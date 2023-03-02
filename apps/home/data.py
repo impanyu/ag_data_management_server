@@ -934,7 +934,7 @@ def delete_meta_data(meta_data_path):
 
 def search(root_dir, search_box, category, mode, format, label, time_range, spatial_range):
     result = []
-    print(len(search_box))
+    #print(len(search_box))
     # search data
     # if we need to do a full search
 
