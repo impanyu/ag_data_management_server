@@ -327,7 +327,7 @@ function initMap(){
 
 }
 
-
+google_map_circles = []
 
 function htmlToElement(html) {
     var template = document.createElement('template');
@@ -625,12 +625,16 @@ function init_map_main(){
 }
 
 var data_cat_color_map = {};
-data_cat_color_map["UAV"] = "pink";
+data_cat_color_map["Genotype"] = "pink";
 data_cat_color_map["Soil"] = "blue";
 data_cat_color_map["Phenotype"] = "red";
-
+data_cat_color_map["Atmosphere"] = "green";
 
 function draw_points(data_points){
+
+  //clear circles
+  google_map_circles.forEach(function(circle){circle.setMap(null)});
+  google_map_circles=[];
 
    for (i in data_points) {
    data_point = data_points[i]
@@ -647,7 +651,9 @@ function draw_points(data_points){
       center: data_loc,
       radius: 1000//Math.min(size,1000),
     });
+    google_map_circles.push(point);
   }
+
 }
 
 
