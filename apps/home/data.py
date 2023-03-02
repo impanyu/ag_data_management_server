@@ -526,7 +526,7 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
         if f in format:
             has_format = True
             break
-        #if f not in ["Image","Shape","CSV","Spreadsheet","Python","R","Matlab"] and "Other" in format:
+        # if f not in ["Image","Shape","CSV","Spreadsheet","Python","R","Matlab"] and "Other" in format:
         #    has_format = True
     if not has_format:
         print("not has format")
@@ -554,11 +554,8 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
             print("not has time")
             return False
 
-
     southwest = bounding_box[0]
     northeast = bounding_box[1]
-
-
 
     item_northeast_lat = meta_data["spatial_range"]["northeast"]["lat"]
     item_northeast_lng = meta_data["spatial_range"]["northeast"]["lng"]
@@ -570,7 +567,6 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
         print(northeast)
         lower_lat, upper_lat, left_ln, right_ln = extract_coordinates(southwest, northeast)
 
-
         if not overlap(lower_lat, upper_lat, item_southwest_lat, item_northeast_lat):
             print("not has space")
             return False
@@ -578,8 +574,6 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
             print("not has space")
             return False
 
-
-    print("find one")
     return True
 
 
@@ -834,7 +828,6 @@ def generate_meta_data_for_file(file_path):
     elif suffix == "xlsx" or suffix == "xls":
         meta_data["format"].append("Spreadsheet")
 
-
     if suffix == "tif" or suffix == "tiff":
         meta_data["spatial_range"] = read_tif_meta(file_path)
 
@@ -945,14 +938,14 @@ def delete_meta_data(meta_data_path):
 
 def search(root_dir, search_box, category, mode, format, label, time_range, spatial_range):
     result = []
-    #print(len(search_box))
+    # print(len(search_box))
     # search data
     # if we need to do a full search
 
-    #print("mode " + str(mode))
-    #if "File" in mode or "Folder" in mode:
+    # print("mode " + str(mode))
+    # if "File" in mode or "Folder" in mode:
 
-    #root_dir = root_dir + "/ag_data"
+    # root_dir = root_dir + "/ag_data"
     meta_data_file_name = "_".join(root_dir.split("/")[1:]) + ".json"
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
         meta_data = json.load(meta_data_file)
@@ -989,5 +982,3 @@ def search(root_dir, search_box, category, mode, format, label, time_range, spat
             if filtering_condition(meta_data, search_box, category, mode, format, label, time_range, spatial_range):
                 result.append(meta_data)
     '''
-
-
