@@ -568,6 +568,8 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
         if not overlap(left_ln, right_ln, item_southwest_lng, item_northeast_lng):
             print("not has space")
             return False
+
+    print("find one")
     return True
 
 
