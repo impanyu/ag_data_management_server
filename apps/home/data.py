@@ -488,7 +488,7 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
     # return True
 
     searched_words = search_box.split(" ")
-    print("searched_words                       "+searched_words)
+    #print("searched_words                       "+searched_words)
     has_words = False
     '''
     for w in searched_words:
