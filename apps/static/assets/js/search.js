@@ -372,6 +372,13 @@ function get_file_list(){
         label.push(label_options[i].value);
   }
 
+  privilege = [];
+  privilege_options = document.querySelector("#privilege").options;
+  for (var i =0; i<privilege_options.length; i++){
+     if(privilege_options[i].selected)
+        privilege.push(privilege_options[i].value);
+  }
+
  //console.info(mode);
 
   $.ajax({
@@ -385,6 +392,7 @@ function get_file_list(){
           mode:  mode,
           format:  format,
           label:  label,
+          privilege: privilege,
           time_range:  [document.querySelector("#start_date").value,document.querySelector("#end_date").value],
           bounding_box:  [document.querySelector("#southwest").value, document.querySelector("#northeast").value]
 

@@ -670,6 +670,7 @@ def data(request):
             mode = request_data['mode']
             format = request_data['format']
             label = request_data['label']
+            privilege = request_data['privilege']
             time_range = request_data['time_range']
             spatial_range = request_data['bounding_box']
 
