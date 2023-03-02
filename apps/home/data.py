@@ -496,7 +496,9 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
             has_words = True
             break
     if not has_words:
+        print("not has word")
         return False
+
 
     has_category = False
     for c in meta_data["category"]:
@@ -507,6 +509,7 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
             has_category = True
             break
     if not has_category:
+        print("not has category")
         return False
 
     has_mode = False
@@ -515,6 +518,7 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
             has_mode = True
             break
     if not has_mode:
+        print("not has mode")
         return False
 
     has_format = False
@@ -525,6 +529,7 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
         if f not in ["Image","Shape","CSV","Spreadsheet","Python","R","Matlab"] and "Other" in format:
             has_format = True
     if not has_format:
+        print("not has format")
         return False
 
     has_label = False
@@ -535,6 +540,7 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
         if l not in ["Spidercam","ENREC","Wheat"] and "Other" in label:
             has_label = True
     if not has_label:
+        print("not has label")
         return False
 
     if not (time_range[0] == "start" or time_range[1] == "end"):
@@ -544,6 +550,7 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
         item_end_time = datetime.strptime(meta_data["time_range"]["end"], "Y/m/d %H:%M:%S").timestamp()
 
         if not overlap(start, end, item_start_time, item_end_time):
+            print("not has time")
             return False
 
     southwest = bounding_box[0]
@@ -557,11 +564,11 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
     if not (southwest == "Southwest Corner" or northeast == "Northeast Corner"):
         lower_lat, upper_lat, left_ln, right_ln = extract_coordinates(southwest, northeast)
         if not overlap(lower_lat, upper_lat, item_southwest_lat, item_northeast_lat):
+            print("not has space")
             return False
         if not overlap(left_ln, right_ln, item_southwest_lng, item_northeast_lng):
+            print("not has space")
             return False
-
-
     return True
 
 
