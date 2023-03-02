@@ -487,6 +487,9 @@ def retrieve_sub_domain_data(subdomain_path, layer, time, session):
 def filtering_condition(meta_data, search_box, category, mode, format, label, time_range, bounding_box):
     # return True
 
+    if meta_data["name"] == "ag_data":
+        return False
+
     searched_words = search_box.split(" ")
 
     has_words = False
@@ -877,6 +880,7 @@ def adjust_meta_data(dir_path):
     meta_data["spatial_range"] = {"northeast": {"lat": 0, "lng": -180}, "southwest": {"lat": 90, "lng": 0}}
     # meta_data["subdirs"] = []
     meta_data["abs_path"] = dir_path
+    meta_data["name"] = dir_path.split("/")[-1]
 
 
     # iterate through each sub path
