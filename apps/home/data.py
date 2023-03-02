@@ -488,9 +488,9 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
     # return True
 
     searched_words = search_box.split(" ")
-    #print("searched_words                       "+searched_words)
+
     has_words = False
-    '''
+
     for w in searched_words:
         if w in meta_data["abs_path"]:
             has_words = True
@@ -560,7 +560,7 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
             return False
         if not overlap(left_ln, right_ln, item_southwest_lng, item_northeast_lng):
             return False
-    '''
+
 
     return True
 
