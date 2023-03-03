@@ -366,9 +366,9 @@ def data(request):
                 '''
                 #upload single file, not relative path
                 if(upload_file_paths[0] == ""):
-                    root_abs_path = os.path.join("/home/" + request.user.get_username() + "/ag_data",current_path,upload_files[0].name)
+                    root_abs_path = os.path.join("/home",current_path,upload_files[0].name)
                 else:
-                    root_abs_path = os.path.join("/home/" + request.user.get_username() + "/ag_data",current_path,upload_file_paths[0].split('/')[0])
+                    root_abs_path = os.path.join("/home" ,current_path,upload_file_paths[0].split('/')[0])
 
                 aggregate_meta_data(root_abs_path)
 
