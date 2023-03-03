@@ -638,7 +638,7 @@ function get_meta_data(){
 
 
                               //meta_html += '<div class="col-lg-6 col-6 d-flex align-items-center">';
-                              meta_html += '<div class="d-flex align-items-center" style = "border: solid 3px #aaa; background-color:white; height:2.8rem; width:80%; padding-left:1rem; padding-right:1rem">'
+                              meta_html += '<div class="border shadow p-3 mb-5 bg-white rouded d-flex align-items-center" style = "background-color:white; height:2.8rem; width:80%; padding-left:1rem; padding-right:1rem">'
                               meta_html += " ";
                               for (i in meta_value){
                                  meta_html += meta_value[i]+
