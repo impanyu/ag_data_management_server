@@ -660,7 +660,8 @@ def data(request):
 
         elif load_template == 'meta_data':
             current_path = request.POST['current_path']
-            meta_data = get_meta_data("/home/"+current_path)
+            meta_data={"m":1}
+            #meta_data = get_meta_data("/home/"+current_path)
             response = json.dumps(meta_data)
             return HttpResponse(response)
 
