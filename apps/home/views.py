@@ -302,6 +302,7 @@ def data(request):
             upload_files = request.FILES.getlist("files")
             upload_file_paths = request.POST.getlist("paths")
 
+            '''
             modified_current_path = ""
 
             for i in range(1, len(current_path.split("/"))):
@@ -311,21 +312,22 @@ def data(request):
                 current_path = ""
             else:
                 current_path = modified_current_path[1:]
+            '''
 
             if not upload_files:
                 return HttpResponse('files not found')
             else:
                 # load data_and_files
-                data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "r")
-                data_points = json.load(data_and_files)
-                data_and_files.close()
-                print("abs")
-                print(upload_file_paths)
+                #data_and_files = open(os.path.join(settings.CORE_DIR, 'data', 'data_and_files.json'), "r")
+                #data_points = json.load(data_and_files)
+                #data_and_files.close()
+                #print("abs")
+                #print(upload_file_paths)
 
                 #upload each file
                 for file in upload_files:
 
-                    position = os.path.join("/home/" + request.user.get_username() + "/ag_data",current_path,
+                    position = os.path.join("/home",current_path,
                                             '/'.join(upload_file_paths[upload_files.index(file)].split('/')[:-1]))
                     print(position)
                     print(file.name)
