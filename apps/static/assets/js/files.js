@@ -620,7 +620,7 @@ function get_meta_data(){
           for(meta_key in meta_data){
              meta_value = meta_data[meta_key]
              meta_html += '<div class="row" style="padding:1rem">'+
-             '<div class="col-lg-3 col-3" d-flex align-items-center>'+
+             '<div class="col-lg-3 col-3 d-flex align-items-center">'+
                   '<label class="form-check-label" for="'+meta_key+'" ><b>'+meta_key+'</b></label>'+
                   '</div>'+
                   '<div class="col-lg-6 col-6">'+
