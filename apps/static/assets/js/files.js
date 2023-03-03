@@ -631,7 +631,7 @@ function get_meta_data(){
              '<div class="col-lg-3 col-3 d-flex align-items-center">'+
                   '<label class="form-check-label" for="'+meta_key+'" ><b>'+meta_key.toUpperCase()+'</b></label>'+
                   '</div>'+
-                  '<div class="col-lg-6 col-6">';
+                  '<div class="col-lg-6 col-6 d-flex align-items-center">';
                   for (i in meta_value){
                      meta_html += meta_value[i]+
                      '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16" onclick="remove_meta_data_option()">'+
