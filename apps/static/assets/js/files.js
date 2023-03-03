@@ -607,6 +607,12 @@ function get_file_list(){
     });
 }
 
+meta_data_options = {"category":["Genotype","Phenotype","Soil","Atmosphere"]
+                   "mode":["Folder","File","Domain","Tool","Model"]
+                   "format":["Image","Shape","CSV","Spreadsheet","Python","R","Matlab"]
+                   "label":["Spidercam","ENREC","Wheat"]};
+
+
 function get_meta_data(){
     $.post("/meta_data",
         {
@@ -625,9 +631,28 @@ function get_meta_data(){
              '<div class="col-lg-3 col-3 d-flex align-items-center">'+
                   '<label class="form-check-label" for="'+meta_key+'" ><b>'+meta_key.toUpperCase()+'</b></label>'+
                   '</div>'+
-                  '<div class="col-lg-6 col-6">'+
-                     '<input class="form-control" type="text" id="meta_key" value="'+meta_value+'">'+
-                  '</div></div>'
+                  '<div class="col-lg-6 col-6">';
+                  for (meta_value_element in meta_value){
+                     meta_html += meta_value_element+
+                     '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16" onclick="remove_meta_data_option()">'+
+                     '<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>'+
+                     '</svg>' + ','
+                  }
+
+                    meta_html +='</div>';
+
+                    meta_html += '<div class="dropdown col-lg-3 col-3">'+
+                                  '<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Add'+
+                                  '<span class="caret"></span></button>'+
+                                  '<ul class="dropdown-menu">';
+                                 for(option in meta_data_options[meta_key]){
+                                   meta_html += '<li onclick="add_meta_data_option()">'+ +'</li>';
+                                   }
+
+                                 meta_html+= '</ul></div>';
+
+                     //'<input class="form-control" type="text" id="meta_key" value="'+meta_value+'">'+
+
           }
 
            meta_html += '<div class="row align-items-center py-4">'+
