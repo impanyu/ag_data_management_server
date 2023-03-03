@@ -619,8 +619,8 @@ function get_meta_data(){
           meta_html = "";
           for(meta_key in meta_data){
              meta_value = meta_data[meta_key]
-             meta_html += '<div class="row  py-4">'+
-             '<div class="col-lg-4 col-4" >'+
+             meta_html += '<div class="row  style="padding:1.25rem">'+
+             '<div class="col-lg-3 col-3" >'+
                   '<label class="form-check-label" for="'+meta_key+'" ><b>'+meta_key+'</b></label>'+
                   '</div>'+
                   '<div class="col-lg-6 col-6">'+
