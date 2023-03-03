@@ -633,7 +633,7 @@ function get_meta_data(){
 
 
              meta_html += '</div>';
-             meta_html += '<div class="dropdown col-lg-1 col-1">'+
+             meta_html += '<div class="dropdown col-lg-2 col-2">'+
                                   '<button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Add'+
                                   '<span class="caret"></span></button>'+
                                   '<ul class="dropdown-menu">';
