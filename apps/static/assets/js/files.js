@@ -623,7 +623,7 @@ function get_meta_data(){
                   '<label class="form-check-label" for="'+meta_key+'" ><b>'+meta_key+'</b></label>'+
                   '</div>'+
                   '<div class="col-lg-6 col-6">'+
-                     '<input type="text" id="meta_key" value="'+meta_value+'">'+
+                     '<input class="form-control" type="text" id="meta_key" value="'+meta_value+'">'+
                   '</div>'
           }
            document.querySelector("#meta_data_panel").innerHTML = meta_html;
