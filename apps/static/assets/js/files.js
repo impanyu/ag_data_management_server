@@ -634,18 +634,11 @@ function get_meta_data(){
 
 
                          meta_html += '</div>';
-                         meta_html += '<div class="dropdown col-lg-8 col-8 d-flex align-items-center">'+
-                                              '<button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Add'+
-                                              '<span class="caret"></span></button>'+
-                                              '<ul class="dropdown-menu">';
-                                             for(j in meta_data_options[meta_key]){
-                                               meta_html += '<li onclick="add_meta_data_option()"><a href="#" style="display:block;padding:3px 20px;">'+ meta_data_options[meta_key][j] +'</a></li>';
-                                               }
+                         meta_html += '<div class="dropdown col-lg-8 col-8 d-flex align-items-center">';
 
-                                             meta_html+= '</ul>';
 
                               //meta_html += '<div class="col-lg-6 col-6 d-flex align-items-center">';
-                              meta_html += '<div style = "border: solid 3px #aaa; background-color:white; padding:12.5px">'
+                              meta_html += '<div class="d-flex align-items-center" style = "border: solid 3px #aaa; background-color:white; height:2.8rem; width:80%; padding-left:10px; padding-right:10px">'
                               meta_html += " ";
                               for (i in meta_value){
                                  meta_html += meta_value[i]+
@@ -654,7 +647,16 @@ function get_meta_data(){
                                  '</svg>' + ','
                               }
 
-                                meta_html +='</div>'+'</div>'+'</div>';
+                                meta_html +='</div>';
+                                meta_html +='<button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Add'+
+                                              '<span class="caret"></span></button>'+
+                                              '<ul class="dropdown-menu">';
+                                             for(j in meta_data_options[meta_key]){
+                                               meta_html += '<li onclick="add_meta_data_option()"><a href="#" style="display:block;padding:3px 20px;">'+ meta_data_options[meta_key][j] +'</a></li>';
+                                               }
+
+                                             meta_html+= '</ul>';
+                                meta_html +='</div>'+'</div>';
                  }
              else if (meta_key == "public"){
 
