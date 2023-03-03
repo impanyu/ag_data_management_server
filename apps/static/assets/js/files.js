@@ -646,6 +646,7 @@ function get_meta_data(){
 
                               //meta_html += '<div class="col-lg-6 col-6 d-flex align-items-center">';
                               meta_html += '<div style = "border: solid 3px #aaa; background-color:white; padding:12.5px">'
+                              meta_html += " ";
                               for (i in meta_value){
                                  meta_html += meta_value[i]+
                                  '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16" onclick="remove_meta_data_option()">'+
