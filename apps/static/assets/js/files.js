@@ -618,7 +618,7 @@ function get_meta_data(){
           console.info(meta_data);
           meta_html = "";
           for(meta_key in meta_data){
-             if (meta_key == "subdirs" || meta_key =="abs_path" || meta_key == name)
+             if (meta_key == "subdirs" || meta_key =="abs_path" || meta_key == "name")
               continue;
              meta_value = meta_data[meta_key];
              meta_html += '<div class="row" style="padding:1rem">'+
