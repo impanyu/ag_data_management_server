@@ -627,33 +627,38 @@ function get_meta_data(){
              if (meta_key == "subdirs" || meta_key =="abs_path" || meta_key == "name")
               continue;
              meta_value = meta_data[meta_key];
-             meta_html += '<div class="row" style="padding:1rem">'+
-             '<div class="col-lg-2 col-2 d-flex align-items-center">'+
-                  '<label class="form-check-label" for="'+meta_key+'" ><b>'+meta_key.toUpperCase()+'</b></label>';
+             if  (meta_key == "mode" || meta_key =="category" || meta_key == "format" || meta_key == "label"){
+                         meta_html += '<div class="row" style="padding:1rem">'+
+                         '<div class="col-lg-2 col-2 d-flex align-items-center">'+
+                              '<label class="form-check-label" for="'+meta_key+'" ><b>'+meta_key.toUpperCase()+'</b></label>';
 
 
-             meta_html += '</div>';
-             meta_html += '<div class="dropdown col-lg-2 col-2">'+
-                                  '<button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Add'+
-                                  '<span class="caret"></span></button>'+
-                                  '<ul class="dropdown-menu">';
-                                 for(j in meta_data_options[meta_key]){
-                                   meta_html += '<li onclick="add_meta_data_option()"><a href="#" style="display:block;padding:3px 20px;">'+ meta_data_options[meta_key][j] +'</a></li>';
-                                   }
+                         meta_html += '</div>';
+                         meta_html += '<div class="dropdown col-lg-2 col-2 d-flex align-items-center">'+
+                                              '<button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Add'+
+                                              '<span class="caret"></span></button>'+
+                                              '<ul class="dropdown-menu">';
+                                             for(j in meta_data_options[meta_key]){
+                                               meta_html += '<li onclick="add_meta_data_option()"><a href="#" style="display:block;padding:3px 20px;">'+ meta_data_options[meta_key][j] +'</a></li>';
+                                               }
 
-                                 meta_html+= '</ul></div>';
+                                             meta_html+= '</ul>';
 
-                  '<div class="col-lg-6 col-6 d-flex align-items-center">';
-                  for (i in meta_value){
-                     meta_html += meta_value[i]+
-                     '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16" onclick="remove_meta_data_option()">'+
-                     '<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>'+
-                     '</svg>' + ','
-                  }
+                              //meta_html += '<div class="col-lg-6 col-6 d-flex align-items-center">';
+                              meta_html += '<div style = "margin-left: 10px; border: solid 1px #aaa"; background-color:white;>'
+                              for (i in meta_value){
+                                 meta_html += meta_value[i]+
+                                 '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16" onclick="remove_meta_data_option()">'+
+                                 '<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>'+
+                                 '</svg>' + ','
+                              }
 
-                    meta_html +='</div>'+'</div>';
+                                meta_html +='</div>'+'</div>';
+                 }
+             else if (meta_key == "public"){
 
-                     //'<input class="form-control" type="text" id="meta_key" value="'+meta_value+'">'+
+
+             }
 
           }
 
