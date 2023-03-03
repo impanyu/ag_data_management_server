@@ -517,7 +517,7 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
 
     has_mode = False
     for m in mode:
-        if m == meta_data["mode"]:
+        if m in meta_data["mode"]:
             has_mode = True
             break
     if not has_mode:
@@ -744,7 +744,7 @@ def aggregate_meta_data(dir_path):
     # if this is a file
     if not os.path.isdir(dir_path):
         return generate_meta_data_for_file(dir_path)
-    meta_data["mode"] = "Folder"
+    meta_data["mode"] = ["Folder"]
     meta_data["category"] = []
     meta_data["format"] = []
     meta_data["label"] = []
@@ -766,10 +766,13 @@ def aggregate_meta_data(dir_path):
             meta_data["format"].append(f)
         for l in sub_meta_data["label"]:
             meta_data["label"].append(l)
+        for m in sub_meta_data["mode"]:
+            meta_data["mode"].append(m)
 
         meta_data["category"] = list(set(meta_data["category"]))
         meta_data["format"] = list(set(meta_data["format"]))
         meta_data["label"] = list(set(meta_data["label"]))
+        meta_data["mode"] = list(set(meta_data["mode"]))
 
         current_start = datetime.strptime(meta_data["time_range"]["start"], "%Y/%m/%d %H:%M:%S").timestamp()
         sub_start = datetime.strptime(sub_meta_data["time_range"]["start"], "%Y/%m/%d %H:%M:%S").timestamp()
@@ -801,7 +804,7 @@ def aggregate_meta_data(dir_path):
 
 def generate_meta_data_for_file(file_path):
     meta_data = {}
-    meta_data["mode"] = "File"
+    meta_data["mode"] = ["File"]
     meta_data["category"] = []
     meta_data["format"] = []
     meta_data["label"] = []
@@ -872,7 +875,7 @@ def adjust_meta_data(dir_path):
     with open(meta_data_file_path, "r") as meta_data_file:
         meta_data = json.load(meta_data_file)
 
-    meta_data["mode"] = "Folder"
+    meta_data["mode"] = []
     meta_data["category"] = []
     meta_data["format"] = []
     meta_data["label"] = []
@@ -897,10 +900,13 @@ def adjust_meta_data(dir_path):
             meta_data["format"].append(f)
         for l in sub_meta_data["label"]:
             meta_data["label"].append(l)
+        for m in sub_meta_data["mode"]:
+            meta_data["mode"].append(m)
 
         meta_data["category"] = list(set(meta_data["category"]))
         meta_data["format"] = list(set(meta_data["format"]))
         meta_data["label"] = list(set(meta_data["category"]))
+        meta_data["mode"] = list(set(meta_data["mode"]))
 
         current_start = datetime.strptime(meta_data["time_range"]["start"], "%Y/%m/%d %H:%M:%S").timestamp()
         sub_start = datetime.strptime(sub_meta_data["time_range"]["start"], "%Y/%m/%d %H:%M:%S").timestamp()
