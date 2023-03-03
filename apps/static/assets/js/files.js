@@ -653,7 +653,7 @@ function get_meta_data(){
                                  '</svg>' + ','
                               }
 
-                                meta_html +='</div>'+'</div>';
+                                meta_html +='</div>'+'</div>'+'</div>';
                  }
              else if (meta_key == "public"){
 
