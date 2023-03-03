@@ -607,9 +607,9 @@ function get_file_list(){
     });
 }
 
-meta_data_options = {"category":["Genotype","Phenotype","Soil","Atmosphere"]
-                   "mode":["Folder","File","Domain","Tool","Model"]
-                   "format":["Image","Shape","CSV","Spreadsheet","Python","R","Matlab"]
+meta_data_options = {"category":["Genotype","Phenotype","Soil","Atmosphere"],
+                   "mode":["Folder","File","Domain","Tool","Model"],
+                   "format":["Image","Shape","CSV","Spreadsheet","Python","R","Matlab"],
                    "label":["Spidercam","ENREC","Wheat"]};
 
 
