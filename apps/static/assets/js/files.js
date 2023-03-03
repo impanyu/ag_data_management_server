@@ -619,12 +619,13 @@ function get_meta_data(){
           meta_html = "";
           for(meta_key in meta_data){
              meta_value = meta_data[meta_key]
-             meta_html += '<div class="col-lg-4 col-4" style="margin:10px">'+
+             meta_html += '<div class="row  py-4">'+
+             '<div class="col-lg-4 col-4" >'+
                   '<label class="form-check-label" for="'+meta_key+'" ><b>'+meta_key+'</b></label>'+
                   '</div>'+
                   '<div class="col-lg-6 col-6">'+
                      '<input class="form-control" type="text" id="meta_key" value="'+meta_value+'">'+
-                  '</div>'
+                  '</div></div>'
           }
            document.querySelector("#meta_data_panel").innerHTML = meta_html;
 
