@@ -617,7 +617,7 @@ function get_meta_data(){
           meta_data=JSON.parse(data);
           console.info(meta_data);
           meta_html = "";
-          for meta_key in meta_data{
+          for(meta_key in meta_data){
              meta_value = meta_data[meta_key]
              meta_html += '<div class="col-lg-4 col-4">'+
                   '<label class="form-check-label" for="'+meta_key+'" ><b>'+meta_key+'</b></label>'+
