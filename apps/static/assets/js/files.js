@@ -623,7 +623,7 @@ function get_meta_data(){
              meta_value = meta_data[meta_key];
              meta_html += '<div class="row" style="padding:1rem">'+
              '<div class="col-lg-3 col-3 d-flex align-items-center">'+
-                  '<label class="form-check-label" for="'+meta_key+'" ><b>'+toUpperCase(meta_key)+'</b></label>'+
+                  '<label class="form-check-label" for="'+meta_key+'" ><b>'+meta_key.toUpperCase()+'</b></label>'+
                   '</div>'+
                   '<div class="col-lg-6 col-6">'+
                      '<input class="form-control" type="text" id="meta_key" value="'+meta_value+'">'+
