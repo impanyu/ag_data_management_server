@@ -629,9 +629,18 @@ function get_meta_data(){
              meta_value = meta_data[meta_key];
              meta_html += '<div class="row" style="padding:1rem">'+
              '<div class="col-lg-3 col-3 d-flex align-items-center">'+
-                  '<label class="form-check-label" for="'+meta_key+'" ><b>'+meta_key.toUpperCase()+'</b></label>'+
-                  '</div>'+
-                  '<div class="col-lg-6 col-6 d-flex align-items-center">';
+                  '<label class="form-check-label" for="'+meta_key+'" ><b>'+meta_key.toUpperCase()+'</b></label>';
+                  meta_html += '<div class="dropdown ">'+
+                                  '<button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Add'+
+                                  '<span class="caret"></span></button>'+
+                                  '<ul class="dropdown-menu">';
+                                 for(j in meta_data_options[meta_key]){
+                                   meta_html += '<li onclick="add_meta_data_option()"><a href="#" style="display:block;padding:3px 20px;">'+ meta_data_options[meta_key][j] +'</a></li>';
+                                   }
+
+                                 meta_html+= '</ul></div>';
+
+                  meta_html += '</div>'+ '<div class="col-lg-6 col-6 d-flex align-items-center">';
                   for (i in meta_value){
                      meta_html += meta_value[i]+
                      '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16" onclick="remove_meta_data_option()">'+
@@ -639,17 +648,7 @@ function get_meta_data(){
                      '</svg>' + ','
                   }
 
-                    meta_html +='</div>';
-
-                    meta_html += '<div class="dropdown col-lg-3 col-3">'+
-                                  '<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Add'+
-                                  '<span class="caret"></span></button>'+
-                                  '<ul class="dropdown-menu">';
-                                 for(j in meta_data_options[meta_key]){
-                                   meta_html += '<li onclick="add_meta_data_option()"><a href="#" style="display:block;padding:3px 20px;">'+ meta_data_options[meta_key][j] +'</a></li>';
-                                   }
-
-                                 meta_html+= '</ul></div></div>';
+                    meta_html +='</div>'+'</div>';
 
                      //'<input class="form-control" type="text" id="meta_key" value="'+meta_value+'">'+
 
