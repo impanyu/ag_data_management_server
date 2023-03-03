@@ -646,7 +646,7 @@ function get_meta_data(){
                                   '<span class="caret"></span></button>'+
                                   '<ul class="dropdown-menu">';
                                  for(j in meta_data_options[meta_key]){
-                                   meta_html += '<li onclick="add_meta_data_option()">'+ meta_data_options[meta_key][j] +'</li>';
+                                   meta_html += '<li onclick="add_meta_data_option()"><a href="#">'+ meta_data_options[meta_key][j] +'</a></li>';
                                    }
 
                                  meta_html+= '</ul></div></div>';
