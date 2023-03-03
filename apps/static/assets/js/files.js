@@ -396,6 +396,7 @@ function htmlToElement(html) {
 }
 
 get_file_list();
+get_meta_data();
 
 
 function get_file_list(){
@@ -604,6 +605,30 @@ function get_file_list(){
 
 
     });
+}
+
+function get_meta_data(){
+    $.post("/meta_data",
+        {
+          current_path: current_path
+         },
+         function(data, status){
+          //console.info(data);
+          meta_data=JSON.parse(data);
+          meta_html = "";
+          for meta_key in meta_data{
+             meta_value = meta_data[meta_key]
+             meta_html += '<div class="col-lg-4 col-4">'+
+                  '<label class="form-check-label" for="'+meta_key+'" ><b>'+meta_key+'</b></label>'+
+                  '</div>'+
+                  '<div class="col-lg-6 col-6">'+
+                     '<input type="text" id="meta_key" value="'+meta_value+'">+
+                  '</div>'
+          }
+           document.querySelector("#meta_data_panel").innerHTML = meta_html;
+
+         });
+
 }
 
 map_displayed = "map";

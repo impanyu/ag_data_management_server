@@ -455,7 +455,7 @@ function get_item_list(){
                       },
                       function(data, status){
                           $("#file_list")[0].innerHTML="";
-                          get_file_list();
+                          get_item_list();
                           alert(data);
                       });
             });

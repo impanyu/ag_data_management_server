@@ -989,3 +989,10 @@ def search(root_dir, search_box, category, mode, format, label, time_range, spat
             if filtering_condition(meta_data, search_box, category, mode, format, label, time_range, spatial_range):
                 result.append(meta_data)
     '''
+
+
+def get_meta_data(path):
+    meta_data_file_name = "_".join(path.split("/")[1:]) + ".json"
+    with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
+        meta_data = json.load(meta_data_file)
+    return meta_data
