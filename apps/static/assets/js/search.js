@@ -340,7 +340,7 @@ function htmlToElement(html) {
 
 //$("option").click(function(){this.selected=true});
 
-function get_file_list(){
+function get_item_list(){
 
   $("#file_list")[0].innerHTML="";
   category = [];
