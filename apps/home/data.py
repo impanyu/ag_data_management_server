@@ -484,7 +484,7 @@ def retrieve_sub_domain_data(subdomain_path, layer, time, session):
         return json.dumps({"soilwaters": soilwaters, "times": times})
 
 
-def filtering_condition(meta_data, search_box, category, mode, format, label, type, time_range, bounding_box):
+def filtering_condition(meta_data, search_box, category, mode, format, label, time_range, bounding_box):
     # return True
 
     if meta_data["name"] == "ag_data":
@@ -501,23 +501,22 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ty
     if not has_words:
         print("not has word")
         return False
-    '''
+
     has_category = False
-    for c in meta_data["category"]:
-        if c in category:
+    for c in category:
+        if c == "All" or c in meta_data["category"]:
             has_category = True
             break
-        #if c not in ["Genotype","Phenotype","Soil","Atmosphere"] and "Other" in category:
+        # if c not in ["Genotype","Phenotype","Soil","Atmosphere"] and "Other" in category:
         #    has_category = True
         #    break
     if not has_category:
         print("not has category")
         return False
-    '''
 
     has_mode = False
     for m in mode:
-        if m in meta_data["mode"]:
+        if m == "All" or m in meta_data["mode"]:
             has_mode = True
             break
     if not has_mode:
@@ -525,8 +524,8 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ty
         return False
 
     has_format = False
-    for f in meta_data["format"]:
-        if f in format:
+    for f in format:
+        if f == "All" or f in meta_data["format"]:
             has_format = True
             break
         # if f not in ["Image","Shape","CSV","Spreadsheet","Python","R","Matlab"] and "Other" in format:
@@ -534,28 +533,16 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ty
     if not has_format:
         print("not has format")
         return False
-    '''
+
     has_label = False
-    for l in meta_data["label"]:
-        if l in label:
+    for l in label:
+        if l == "All" or l in meta_data["label"]:
             has_label = True
             break
-        #if l not in ["Spidercam","ENREC","Wheat"] and "Other" in label:
+        # if l not in ["Spidercam","ENREC","Wheat"] and "Other" in label:
         #    has_label = True
     if not has_label:
         print("not has label")
-        return False
-    '''
-
-    has_type = False
-    for t in meta_data["type"]:
-        if t in type:
-            has_type = True
-            break
-        # if f not in ["Image","Shape","CSV","Spreadsheet","Python","R","Matlab"] and "Other" in format:
-        #    has_format = True
-    if not has_type:
-        print("not has type")
         return False
 
     if not (time_range[0] == "start" or time_range[1] == "end"):
@@ -674,7 +661,7 @@ def data_metric(X, Y):
 
 def dim_reduction(points):
     if len(points) < 2:
-        return np.array([[0,0]])
+        return np.array([[0, 0]])
     input = data_metric(points, points)
     t_sne = manifold.TSNE(
         n_components=2,
@@ -755,12 +742,12 @@ def aggregate_meta_data(dir_path):
     # if this is a file
     if not os.path.isdir(dir_path):
         return generate_meta_data_for_file(dir_path)
-    meta_data["mode"] = ["Folder"]
+    meta_data["mode"] = []
     meta_data["category"] = []
     meta_data["format"] = []
     meta_data["label"] = []
-    meta_data["time_range"] = {"start": "2030/01/01 00:00:00", "end": "1970/01/01 00:00:00"}
-    meta_data["spatial_range"] = {"northeast": {"lat": 0, "lng": -180}, "southwest": {"lat": 90, "lng": 0}}
+    meta_data["time_range"] = {"start": "2030/01/01 00:00:00", "end": "2030/01/01 00:00:00"}
+    meta_data["spatial_range"] = {"northeast": {"lat": 0, "lng": -180}, "southwest": {"lat": 0, "lng": -180}}
     meta_data["subdirs"] = []
     meta_data["abs_path"] = dir_path
     meta_data["public"] = "False"
@@ -771,6 +758,7 @@ def aggregate_meta_data(dir_path):
         sub_path = os.path.join(dir_path, p)
         sub_meta_data = aggregate_meta_data(sub_path)
         meta_data["subdirs"].append(sub_path)
+        '''
         for c in sub_meta_data["category"]:
             meta_data["category"].append(c)
         for f in sub_meta_data["format"]:
@@ -804,7 +792,7 @@ def aggregate_meta_data(dir_path):
                                                              sub_meta_data["spatial_range"]["southwest"]["lat"])
         meta_data["spatial_range"]["southwest"]["lng"] = min(meta_data["spatial_range"]["southwest"]["lng"],
                                                              sub_meta_data["spatial_range"]["southwest"]["lng"])
-
+        '''
     meta_data_file_name = "_".join(dir_path.split("/")[1:]) + ".json"
 
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "w") as meta_data_file:
@@ -815,12 +803,12 @@ def aggregate_meta_data(dir_path):
 
 def generate_meta_data_for_file(file_path):
     meta_data = {}
-    meta_data["mode"] = ["File"]
+    meta_data["mode"] = []
     meta_data["category"] = []
     meta_data["format"] = []
     meta_data["label"] = []
-    meta_data["time_range"] = {"start": "2030/01/01 00:00:00", "end": "1970/01/01 00:00:00"}
-    meta_data["spatial_range"] = {"northeast": {"lat": 0, "lng": -180}, "southwest": {"lat": 90, "lng": 0}}
+    meta_data["time_range"] = {"start": "2030/01/01 00:00:00", "end": "2030/01/01 00:00:00"}
+    meta_data["spatial_range"] = {"northeast": {"lat": 0, "lng": -180}, "southwest": {"lat": 0, "lng": -180}}
     meta_data["abs_path"] = file_path
     meta_data["subdirs"] = []
     meta_data["public"] = "False"
@@ -830,22 +818,22 @@ def generate_meta_data_for_file(file_path):
 
     if suffix == ".py":
         meta_data["format"].append("Python")
-    elif suffix == "tif" \
-            or suffix == "tiff" \
-            or suffix == "png" \
-            or suffix == "jpg" \
-            or suffix == "jpeg": \
-            meta_data["format"].append("Image")
+    elif suffix == "tif" or suffix == "tiff" or suffix == "png" or suffix == "jpg" or suffix == "jpeg":
+        meta_data["mode"].append("Data")
+        meta_data["format"].append("Image")
     elif suffix == ".shp":
         meta_data["format"].append("Shape")
+        meta_data["mode"].append("Data")
     elif suffix == ".m" or suffix == ".mlx":
         meta_data["format"].append("Matlab")
     elif suffix == ".r":
         meta_data["format"].append("R")
     elif suffix == "csv":
         meta_data["format"].append("CSV")
+        meta_data["mode"].append("Data")
     elif suffix == "xlsx" or suffix == "xls":
         meta_data["format"].append("Spreadsheet")
+        meta_data["mode"].append("Data")
 
     if suffix == "tif" or suffix == "tiff":
         meta_data["spatial_range"] = read_tif_meta(file_path)
@@ -895,7 +883,6 @@ def adjust_meta_data(dir_path):
     # meta_data["subdirs"] = []
     meta_data["abs_path"] = dir_path
     meta_data["name"] = dir_path.split("/")[-1]
-
 
     # iterate through each sub path
     for p in meta_data["subdirs"]:
@@ -960,7 +947,7 @@ def delete_meta_data(meta_data_path):
         delete_meta_data(sub_meta_data_path)
 
 
-def search(root_dir, search_box, category, mode, format, label, type, time_range,  spatial_range):
+def search(root_dir, search_box, category, mode, format, label, time_range, spatial_range):
     result = []
     # print(len(search_box))
     # search data
@@ -973,10 +960,10 @@ def search(root_dir, search_box, category, mode, format, label, type, time_range
     meta_data_file_name = "_".join(root_dir.split("/")[1:]) + ".json"
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
         meta_data = json.load(meta_data_file)
-        if filtering_condition(meta_data, search_box, category, mode, format, label, type,time_range, spatial_range):
+        if filtering_condition(meta_data, search_box, category, mode, format, label, time_range, spatial_range):
             result.append(meta_data)
         for subdir in meta_data["subdirs"]:
-            sub_result = search(subdir, search_box, category, mode, format, label,type, time_range, spatial_range)
+            sub_result = search(subdir, search_box, category, mode, format, label, time_range, spatial_range)
             result += sub_result
 
     return result

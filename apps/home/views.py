@@ -367,13 +367,14 @@ def data(request):
                 #upload single file, not relative path
                 if(upload_file_paths[0] == ""):
                     root_abs_path = os.path.join("/home",current_path,upload_files[0].name)
+                    generate_meta_data_for_file(root_abs_path)
                 else:
                     root_abs_path = os.path.join("/home" ,current_path,upload_file_paths[0].split('/')[0])
 
-                aggregate_meta_data(root_abs_path)
+                #aggregate_meta_data(root_abs_path)
 
                 # adjust meta data of its parent dir
-
+                '''
                 if not root_abs_path.split("/")[-2] == "home":
                     parent_dir = "/".join(root_abs_path.split("/")[:-1])
                     parent_meta_data_file_name = "_".join(parent_dir.split("/")[1:]) + ".json"
@@ -392,6 +393,8 @@ def data(request):
 
                 
                     adjust_meta_data(parent_dir)
+                '''
+
 
 
                 '''
@@ -683,7 +686,6 @@ def data(request):
             format = request_data['format']
             label = request_data['label']
             privilege = request_data['privilege']
-            type = request_data['type']
             time_range = request_data['time_range']
             spatial_range = request_data['bounding_box']
 
@@ -726,7 +728,7 @@ def data(request):
             # search the user's own items
             if "My Own Data" in privilege:
                 root_dir = os.path.join("/home",request.user.get_username(),"ag_data")
-                response["items"] = search(root_dir,search_box,category,mode,format,label,type,time_range,spatial_range)
+                response["items"] = search(root_dir,search_box,category,mode,format,label,time_range,spatial_range)
             #if "Domain" in mode:
                 #search_domains()
                 print(response["items"])
