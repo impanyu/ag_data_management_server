@@ -546,7 +546,7 @@ def data(request):
                     parent_meta_data["subdirs"].remove(abs_path)
                 with open(parent_meta_data_file_path, "w") as parent_meta_data_file:
                     json.dump(parent_meta_data,parent_meta_data_file)
-                adjust_meta_data(parent_dir)
+                #adjust_meta_data(parent_dir)
 
 
 
