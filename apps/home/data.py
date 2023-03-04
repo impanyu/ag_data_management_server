@@ -14,6 +14,9 @@ import shutil
 from sklearn import manifold
 import rasterio
 from rasterio.crs import CRS
+from rasterio.warp import transform
+
+
 
 
 def convert_and_caching(file_path, username):
@@ -850,21 +853,30 @@ def read_tif_meta(file_path):
     # Open the GeoTIFF file
     with rasterio.open(file_path) as src:
         # Get the image's CRS (Coordinate Reference System)
-        crs = CRS.from_epsg(4326)
-        if src.crs != crs:
-            return {"northeast": {"lat": 0, "lng": -180}, "southwest": {"lat": 90, "lng": 0}}
+        src_crs = src.crs
+        dst_crs = CRS.from_epsg(4326)
+
+
+        #if src.crs != crs:
+        #    return {"northeast": {"lat": 0, "lng": -180}, "southwest": {"lat": 90, "lng": 0}}
 
         # Get the image's transform (mapping from pixel coordinates to world coordinates)
-        transform = src.transform
+        transform_matrix = src.transform
+
+
 
         # Get the image's width and height in pixels
         width = src.width
         height = src.height
 
         # Get the longitude and latitude coordinates of the southeast and northwest corners of the image
-        nw_lng, nw_lat = transform * (0, 0)
-        se_lng, se_lat = transform * (width, height)
-    return {"northeast": {"lat": nw_lat, "lng": nw_lng}, "southwest": {"lat": se_lat, "lng": se_lng}}
+        nw_lng, nw_lat = transform_matrix * (0, 0)
+        se_lng, se_lat = transform_matrix * (width, height)
+
+        lngs, lats = transform(src_crs, dst_crs, [nw_lng,se_lng],[nw_lat,se_lat])
+
+
+    return {"northeast": {"lat": lats[0], "lng": lngs[1]}, "southwest": {"lat": lats[1], "lng": lngs[0]}}
 
 
 def adjust_meta_data(dir_path):
