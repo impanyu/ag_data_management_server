@@ -367,11 +367,11 @@ def data(request):
                 #upload single file, not relative path
                 if(upload_file_paths[0] == ""):
                     root_abs_path = os.path.join("/home",current_path,upload_files[0].name)
-                    generate_meta_data_for_file(root_abs_path)
+
                 else:
                     root_abs_path = os.path.join("/home" ,current_path,upload_file_paths[0].split('/')[0])
 
-                #aggregate_meta_data(root_abs_path)
+                aggregate_meta_data(root_abs_path)
 
                 # adjust meta data of its parent dir
                 '''
