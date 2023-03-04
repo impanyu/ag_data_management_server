@@ -484,7 +484,7 @@ def retrieve_sub_domain_data(subdomain_path, layer, time, session):
         return json.dumps({"soilwaters": soilwaters, "times": times})
 
 
-def filtering_condition(meta_data, search_box, category, mode, format, label, time_range, bounding_box):
+def filtering_condition(meta_data, search_box, category, mode, format, label, type, time_range, bounding_box):
     # return True
 
     if meta_data["name"] == "ag_data":
@@ -546,6 +546,17 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
         print("not has label")
         return False
     '''
+
+    has_type = False
+    for t in meta_data["type"]:
+        if t in type:
+            has_type = True
+            break
+        # if f not in ["Image","Shape","CSV","Spreadsheet","Python","R","Matlab"] and "Other" in format:
+        #    has_format = True
+    if not has_type:
+        print("not has type")
+        return False
 
     if not (time_range[0] == "start" or time_range[1] == "end"):
         start = datetime.strptime(time_range[0], "Y/m/d").timestamp()
@@ -949,7 +960,7 @@ def delete_meta_data(meta_data_path):
         delete_meta_data(sub_meta_data_path)
 
 
-def search(root_dir, search_box, category, mode, format, label, time_range, spatial_range):
+def search(root_dir, search_box, category, mode, format, label, type, time_range,  spatial_range):
     result = []
     # print(len(search_box))
     # search data
@@ -962,10 +973,10 @@ def search(root_dir, search_box, category, mode, format, label, time_range, spat
     meta_data_file_name = "_".join(root_dir.split("/")[1:]) + ".json"
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
         meta_data = json.load(meta_data_file)
-        if filtering_condition(meta_data, search_box, category, mode, format, label, time_range, spatial_range):
+        if filtering_condition(meta_data, search_box, category, mode, format, label, type,time_range, spatial_range):
             result.append(meta_data)
         for subdir in meta_data["subdirs"]:
-            sub_result = search(subdir, search_box, category, mode, format, label, time_range, spatial_range)
+            sub_result = search(subdir, search_box, category, mode, format, label,type, time_range, spatial_range)
             result += sub_result
 
     return result

@@ -379,6 +379,13 @@ function get_item_list(){
         privilege.push(privilege_options[i].value);
   }
 
+  type = [];
+  type_options = document.querySelector("#type").options;
+  for (var i =0; i<type_options.length; i++){
+     if(type_options[i].selected)
+        type.push(type_options[i].value);
+  }
+
  //console.info(mode);
 
   $.ajax({
@@ -393,6 +400,7 @@ function get_item_list(){
           format:  format,
           label:  label,
           privilege: privilege,
+          type: type,
           time_range:  [document.querySelector("#start_date").value,document.querySelector("#end_date").value],
           bounding_box:  [document.querySelector("#southwest").value, document.querySelector("#northeast").value]
 
