@@ -44,7 +44,33 @@
 
 
           <div  id = "meta_data_panel" style = "padding:1.5rem;background:#ddd" >
+            <div class="row  py-4">
+              <div class="col-lg-6 col-6">
+                  <label class="form-check-label" for="category" style="width:100%;margin: 15px"><b>Category</b></label>
+                  <select  class="form-control" multiple size = "4" aria-label="catetory" id="category" style="display: inline-block; width:80%">
+                  <!--<option  value="UAV">UAV</option>-->
 
+                  <option value="Genotype">Genotype</option>
+                  <option  value="Phenotype">Phenotype</option>
+                      <option value = "Soil"> Soil </option>
+                      <option value = "Atmosphere"> Atmosphere </option>
+
+
+                </select>
+                  </div>
+
+
+                   <div class="col-lg-6 col-6">
+                  <label class="form-check-label" for="mode" style="width:100%;margin: 15px"><b>Mode</b></label>
+                  <select  class="form-control" multiple size = "4" aria-label="mode" id="mode" style="display: inline-block; width:80%; ">
+                      <option  value="File">Data</option>
+                  <option  value="Domain">Domain</option>
+                  <option value="Tool">Tool</option>
+                      <option value="Model">Model</option>
+                </select>
+
+              </div>
+              </div>
 
           </div>
 
