@@ -682,7 +682,7 @@ function  add_meta_data_option(self){
 
   //new_label=this.querySelector("a").innerHTML;
    for(var i=0;i<labels.length;i++){
-     if(new_label == labels[i])
+     if(new_label == current_labels[i])
         return;
    }
 
@@ -692,7 +692,7 @@ function  add_meta_data_option(self){
                                  '</svg>' + ',' +'</div>';
    console.info(label_html);
    document.querySelector("#label").innerHTML =  document.querySelector("#label").innerHTML+label_html;
-   labels.append(new_label);
+   current_labels.append(new_label);
 }
 
 
