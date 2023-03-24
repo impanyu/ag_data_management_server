@@ -652,7 +652,7 @@ function get_meta_data(){
 
                              for(j in labels){
 
-                               label_option_html += '<li onclick="add_meta_data_option(this)"><a href="#" style="display:block;padding:3px 20px;">'+ labels[j] +'</a></li>';
+                               label_option_html += '<li ><a onclick="add_meta_data_option(this)" style="display:block;padding:3px 20px;">'+ labels[j] +'</a></li>';
                                }
                               document.querySelector("#label_option").innerHTML = label_option_html;
 
@@ -678,7 +678,7 @@ function get_meta_data(){
 map_displayed = "map";
 
 function  add_meta_data_option(self){
-  new_label=self.querySelector("a").innerHTML;
+  new_label=self.innerHTML;
   console.info(new_label);
   //new_label=this.querySelector("a").innerHTML;
    for(var i=0;i<labels.length;i++){
