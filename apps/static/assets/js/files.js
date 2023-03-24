@@ -652,7 +652,7 @@ function get_meta_data(){
 
                              for(j in labels){
 
-                               label_option_html += '<li onclick="add_meta_data_option()"><a href="#" style="display:block;padding:3px 20px;">'+ labels[j] +'</a></li>';
+                               label_option_html += '<li onclick="add_meta_data_option(event)"><a href="#" style="display:block;padding:3px 20px;">'+ labels[j] +'</a></li>';
                                }
                               document.querySelector("#label_option").innerHTML = label_option_html;
 
