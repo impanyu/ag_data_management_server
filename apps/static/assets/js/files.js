@@ -683,16 +683,16 @@ function get_meta_data(){
 var toggleSwitch = document.getElementById("toggle-switch");
 
 // Get the content element
-var content = document.getElementById("content");
+var content = document.getElementById("privilege");
 
 // Add an event listener to the toggle switch
 toggleSwitch.addEventListener("change", function() {
   if (toggleSwitch.checked) {
     // Show the content
-    content.style.display = "block";
+    content.innerHTML = "<p>Private Data</p>";
   } else {
     // Hide the content
-    content.style.display = "none";
+   content.innerHTML = "<p>Make Public</p>"
   }
 });
 
