@@ -678,6 +678,7 @@ function get_meta_data(){
 map_displayed = "map";
 
 function  add_meta_data_option(event){
+  console.info(event.target);
   new_label=event.target.querySelector("a").innerHTML;
   //new_label=this.querySelector("a").innerHTML;
    for(var i=0;i<labels.length;i++){
