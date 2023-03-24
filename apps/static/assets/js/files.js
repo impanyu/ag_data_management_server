@@ -670,11 +670,7 @@ function get_meta_data(){
 
           }
 
-           meta_html += '<div class="row align-items-center py-4">'+
-                  '<div class="col col-lg-2">'+
-                      '<a href="#" class="btn btn-lg btn-primary" onclick="update_meta()" id = "update_meta()">Update</a>'+
-                 '</div>'+
-              '</div>'
+
            document.querySelector("#meta_data_panel").innerHTML = document.querySelector("#meta_data_panel").innerHTML+meta_html;
 
 
