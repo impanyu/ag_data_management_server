@@ -638,7 +638,7 @@ function get_meta_data(){
              else if  (meta_key == "label"){
                          label_html = "";
                          label_option_html = "";
-                         current_labels = meta_data;
+                         current_labels = meta_value;
 
 
                               for (i in meta_value){
