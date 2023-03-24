@@ -647,7 +647,7 @@ function get_meta_data(){
                              document.querySelector("#label").innerHTML = label_html;
                              labels= ["Spidercam","ENREC","Wheat"];
 
-                             for(j in ){
+                             for(j in labels){
 
                                label_option_html += '<li onclick="add_meta_data_option()"><a href="#" style="display:block;padding:3px 20px;">'+ labels[j] +'</a></li>';
                                }
