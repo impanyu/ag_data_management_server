@@ -640,7 +640,8 @@ function get_meta_data(){
               continue;
 
               else if (meta_key == "mode" || meta_key == "category" || meta_key == "format"){
-              console.info(meta_value);
+                 if(meta_value.length == 0)
+                   continue;
                 document.querySelector("#"+meta_key).querySelector("option[value="+meta_value[0]+"]").selected=true;
               }
 
