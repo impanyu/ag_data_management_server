@@ -821,6 +821,7 @@ def generate_meta_data_for_file(file_path):
 
     if suffix == ".py":
         meta_data["format"].append("Python")
+        meta_data["mode"].append("Tool")
     elif suffix == "tif" or suffix == "tiff" or suffix == "png" or suffix == "jpg" or suffix == "jpeg":
         meta_data["mode"].append("Data")
         meta_data["format"].append("Image")
@@ -829,14 +830,20 @@ def generate_meta_data_for_file(file_path):
         meta_data["mode"].append("Data")
     elif suffix == ".m" or suffix == ".mlx":
         meta_data["format"].append("Matlab")
+        meta_data["mode"].append("Tool")
     elif suffix == ".r":
         meta_data["format"].append("R")
+        meta_data["mode"].append("Tool")
     elif suffix == "csv":
         meta_data["format"].append("CSV")
         meta_data["mode"].append("Data")
     elif suffix == "xlsx" or suffix == "xls":
         meta_data["format"].append("Spreadsheet")
         meta_data["mode"].append("Data")
+    else:
+        meta_data["format"].append("Other")
+        meta_data["mode"].append("Other")
+
 
     if suffix == "tif" or suffix == "tiff":
         meta_data["spatial_range"] = read_tif_meta(file_path)
