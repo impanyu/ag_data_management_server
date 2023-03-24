@@ -658,7 +658,7 @@ function get_meta_data(){
                  // continue;
                 document.querySelector("#northeast").value = "("+meta_value["northeast"]["lat"]+","+meta_value["northeast"]["lng"]+")";
 
-                document.querySelector("#southeast").value = "("+meta_value["southeast"]["lat"]+","+meta_value["southeast"]["lng"]+")";
+                document.querySelector("#southwest").value = "("+meta_value["southwest"]["lat"]+","+meta_value["southwest"]["lng"]+")";
 
               }
 
