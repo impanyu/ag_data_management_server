@@ -679,6 +679,7 @@ map_displayed = "map";
 
 function  add_meta_data_option(event){
   new_label=event.target.innerHTML;
+  console.info(new_label);
   //new_label=this.querySelector("a").innerHTML;
    for(var i=0;i<labels.length;i++){
      if(new_label == labels[i])
