@@ -745,7 +745,7 @@ def aggregate_meta_data(dir_path):
     # if this is a file
     if not os.path.isdir(dir_path):
         return generate_meta_data_for_file(dir_path)
-    meta_data["mode"] = []
+    meta_data["mode"] = ["Folder"]
     meta_data["category"] = []
     meta_data["format"] = []
     meta_data["label"] = []
