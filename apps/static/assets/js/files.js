@@ -627,7 +627,7 @@ function get_meta_data(){
           //console.info(data);
           meta_data=JSON.parse(data);
           console.info(meta_data);
-          //meta_html = "";
+          meta_html = "";
           for(meta_key in meta_data){
              if (meta_key == "subdirs" || meta_key =="abs_path" || meta_key == "name")
               continue;
@@ -675,7 +675,7 @@ function get_meta_data(){
                       '<a href="#" class="btn btn-lg btn-primary" onclick="update_meta()" id = "update_meta()">Update</a>'+
                  '</div>'+
               '</div>'
-           document.querySelector("#meta_data_panel").innerHTML = meta_html;
+           document.querySelector("#meta_data_panel").innerHTML = document.querySelector("#meta_data_panel").innerHTML+meta_html;
 
 
          });
