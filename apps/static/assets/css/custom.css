@@ -1,3 +1,58 @@
+/* Adjust the margin and padding of the switch label */
+.form-check-label {
+  margin-left: 0.5rem;
+  padding-top: 0.25rem;
+}
+
+/* Adjust the size and position of the switch handle */
+.form-check-input {
+  width: 3rem;
+  height: 1.5rem;
+  margin-right: 0.5rem;
+  position: relative;
+}
+
+.form-check-input::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background-color: #dee2e6;
+  border-radius: 0.75rem;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+.form-check-input::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background-color: #6c757d;
+  border-radius: 0.75rem;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+.form-check-input:checked::before {
+  background-color: #0d6efd;
+}
+
+.form-check-input:checked::after {
+  background-color: #fff;
+  transform: translateX(-50%);
+}
+
+/* Hide the content by default */
+#content {
+  display: none;
+}
+
+
 #sidenav-main{
 //width: 150px;
 }

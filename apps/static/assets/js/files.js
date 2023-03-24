@@ -679,6 +679,27 @@ function get_meta_data(){
 
 }
 
+
+// Get the toggle switch element
+var toggleSwitch = document.getElementById("toggle-switch");
+
+// Get the content element
+var content = document.getElementById("content");
+
+// Add an event listener to the toggle switch
+toggleSwitch.addEventListener("change", function() {
+  if (toggleSwitch.checked) {
+    // Show the content
+    content.style.display = "block";
+  } else {
+    // Hide the content
+    content.style.display = "none";
+  }
+});
+
+
+
+
 map_displayed = "map";
 
 function  add_meta_data_option(self){
