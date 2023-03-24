@@ -689,10 +689,10 @@ var content = document.getElementById("privilege");
 toggleSwitch.addEventListener("change", function() {
   if (toggleSwitch.checked) {
     // Show the content
-    content.innerHTML = "<b>Make Public</b>";
+    content.innerHTML = "Public Data";
   } else {
     // Hide the content
-   content.innerHTML = "<b>Private Data</b>"
+   content.innerHTML = "Private Data"
   }
 });
 
