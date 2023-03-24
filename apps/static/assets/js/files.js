@@ -719,7 +719,7 @@ toggleSwitch.addEventListener("change", function() {
   }
 });
 
-
+document.querySelector("#navbar-search-main").style.display="none";
 
 map_displayed = "map";
 

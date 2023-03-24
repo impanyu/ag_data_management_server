@@ -114,6 +114,7 @@ def pages(request):
             context['current_path'] = request.GET['current_path']
             context['segment'] = load_template
 
+
             html_template = loader.get_template('home/files.html')
             return HttpResponse(html_template.render(context, request))
 
