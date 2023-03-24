@@ -618,6 +618,8 @@ function remove_meta_data_option(){
 
 }
 
+labels= ["Spidercam","ENREC","Wheat"];
+current_labels = [];
 function get_meta_data(){
     $.post("/meta_data",
         {
@@ -636,6 +638,7 @@ function get_meta_data(){
              else if  (meta_key == "label"){
                          label_html = "";
                          label_option_html = "";
+                         current_labels = meta_data;
 
 
                               for (i in meta_value){
@@ -645,11 +648,11 @@ function get_meta_data(){
                                  '</svg>' + ',' +'</div>'
                               }
                              document.querySelector("#label").innerHTML = label_html;
-                             labels= ["Spidercam","ENREC","Wheat"];
+
 
                              for(j in labels){
 
-                               label_option_html += '<li onclick="add_meta_data_option(meta_value)"><a href="#" style="display:block;padding:3px 20px;">'+ labels[j] +'</a></li>';
+                               label_option_html += '<li onclick="add_meta_data_option()"><a href="#" style="display:block;padding:3px 20px;">'+ labels[j] +'</a></li>';
                                }
                               document.querySelector("#label_option").innerHTML = label_option_html;
 
@@ -674,17 +677,19 @@ function get_meta_data(){
 
 map_displayed = "map";
 
-function  add_meta_data_option(labels, new_label){
+function  add_meta_data_option(){
+  new_label=this.querySelector("a").innerHTML;
    for(var i=0;i<labels.length;i++){
      if(new_label == labels[i])
         return;
    }
 
-   label_html += '<div class ="meta_option">'+new_label+
+   label_html = '<div class ="meta_option">'+new_label+
                                  '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16" onclick="remove_meta_data_option()">'+
                                  '<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>'+
                                  '</svg>' + ',' +'</div>'
-   document.querySelector("#label").innerHTML = label_html;
+   document.querySelector("#label").innerHTML =  document.querySelector("#label").innerHTML+label_html;
+   labels.append(new_label);
 }
 
 
