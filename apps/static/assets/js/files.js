@@ -645,10 +645,11 @@ function get_meta_data(){
                                  '</svg>' + ',' +'</div>'
                               }
                              document.querySelector("#label").innerHTML = label_html;
+                             labels= ["Spidercam","ENREC","Wheat"];
 
+                             for(j in ){
 
-                             for(j in meta_data_options[meta_key]){
-                               label_option_html += '<li onclick="add_meta_data_option()"><a href="#" style="display:block;padding:3px 20px;">'+ meta_data_options[meta_key][j] +'</a></li>';
+                               label_option_html += '<li onclick="add_meta_data_option()"><a href="#" style="display:block;padding:3px 20px;">'+ labels[j] +'</a></li>';
                                }
                               document.querySelector("#label_option_html").innerHTML = label_option_html;
 
