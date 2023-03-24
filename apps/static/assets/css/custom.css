@@ -1,56 +1,68 @@
-/* Adjust the margin and padding of the switch label */
-.form-check-label {
-  margin-left: 0.5rem;
-  padding-top: 0.25rem;
-}
-
-/* Adjust the size and position of the switch handle */
-.form-check-input {
-  width: 3rem;
-  height: 1.5rem;
-  margin-right: 0.5rem;
+/* Set the base styles for the toggle switch */
+.toggle-switch {
   position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 24px;
 }
 
-.form-check-input::before {
-  content: "";
+/* Hide the checkbox input */
+.toggle-switch-checkbox {
+  display: none;
+}
+
+/* Set the styles for the switch label */
+.toggle-switch-label {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  position: relative;
+  border-radius: 24px;
+  background-color: #c7cbd1;
+  transition: background-color 0.3s ease-in-out;
+}
+
+/* Set the styles for the switch inner element */
+.toggle-switch-inner {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  background-color: #fff;
+  transition: left 0.3s ease-in-out;
+}
+
+/* Set the styles for the switch switch element */
+.toggle-switch-switch {
   position: absolute;
   top: 0;
   left: 0;
-  width: 50%;
-  height: 100%;
-  background-color: #dee2e6;
-  border-radius: 0.75rem;
-  -webkit-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
+  width: 24px;
+  height: 24px;
+  border-radius: 24px;
+  background-color: #fff;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+  transition: left 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-.form-check-input::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 50%;
-  height: 100%;
-  background-color: #6c757d;
-  border-radius: 0.75rem;
-  -webkit-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
+/* Set the styles for the switch when it is toggled on */
+.toggle-switch-checkbox:checked + .toggle-switch-label .toggle-switch-inner {
+  left: 26px;
 }
 
-.form-check-input:checked::before {
+.toggle-switch-checkbox:checked + .toggle-switch-label .toggle-switch-switch {
+  left: 24px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0);
   background-color: #0d6efd;
 }
 
-.form-check-input:checked::after {
-  background-color: #fff;
-  transform: translateX(-50%);
+.toggle-switch-checkbox:checked + .toggle-switch-label {
+  background-color: #0d6efd;
 }
 
-/* Hide the content by default */
-#content {
-  display: none;
-}
 
 
 #sidenav-main{

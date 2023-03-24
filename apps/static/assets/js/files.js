@@ -679,7 +679,6 @@ function get_meta_data(){
 
 }
 
-
 // Get the toggle switch element
 var toggleSwitch = document.getElementById("toggle-switch");
 
@@ -696,7 +695,6 @@ toggleSwitch.addEventListener("change", function() {
     content.style.display = "none";
   }
 });
-
 
 
 
