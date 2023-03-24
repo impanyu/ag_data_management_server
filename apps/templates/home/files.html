@@ -103,6 +103,84 @@
               </div>
 
 
+             <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-6">
+                    <label class="form-check-label" for="privilege" style="width:100%; margin:15px"><b>Privilege</b></label>
+                <select class="custom-select" multiple size = "2" aria-label="privilege" id="privilege" style="display: inline-block; width:80%; ">
+                  <option  selected value="My Own Data">My Own Data</option>
+                    <option  value="Public Data">Public Data</option>
+
+
+                </select>
+                </div>
+
+
+
+
+              </div>
+
+
+
+            <div class="row align-items-center py-4 input-daterange datepicker">
+                 <div class="col col-lg-12">
+                <label class="form-check-label" style="margin-bottom:20px"><b>Time Range</b></label>
+                     </div>
+                <div class="col-6 col-lg-6 ">
+                <div class="form-group">
+                   <div class="input-group input-group-alternative">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                        </div>
+                        <input class="form-control"  placeholder="Start date" type="text" value="start" id="start_date">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-lg-6">
+                <div class="form-group">
+                   <div class="input-group input-group-alternative">
+                       <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                        </div>
+                        <input class="form-control" placeholder="End date" type="text" value="end" id="end_date">
+                    </div>
+                </div>
+            </div>
+
+            </div>
+
+            <div class="row align-items-center py-4">
+                 <div class="col col-lg-12">
+                <label class="form-check-label" style="margin-bottom:20px"><b>Spatial Range</b></label>
+                     </div>
+
+              <div class="col-6 col-lg-6 ">
+                  <div class="form-group">
+                     <div class="input-group input-group-alternative">
+
+                          <input type="text" placeholder="Southwest Corner" class="form-control" id = "southwest" value="southwest"/>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-6 col-lg-6">
+                  <div class="form-group">
+                      <div class="input-group input-group-alternative">
+                          <input type="text" placeholder="Northeast Corner" class="form-control" id="northeast" value="northeast"/>
+
+                      </div>
+                  </div>
+              </div>
+
+
+
+            </div>
+              <div class="row align-items-center py-4">
+                  <div class="col col-lg-2">
+                      <a href="#" class="btn btn-lg btn-primary" onclick="get_item_list()" id = "filter_submit">Search</a>
+                 </div>
+              </div>
+
+
           </div>
 
 
