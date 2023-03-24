@@ -662,11 +662,11 @@ function get_meta_data(){
 
                  }
              else if (meta_key == "public"){
-
-
+                  document.querySelector("#toggle-switch").checked = true;
              }
 
              else{
+                document.querySelector("#other_meta").value += meta_key + ": "+ meta_value + "\n";
              }
 
           }
