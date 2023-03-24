@@ -60,7 +60,7 @@
 }
 
 .toggle-switch-checkbox:checked + .toggle-switch-label {
-  background-color: #0d6efd;
+  //background-color: #0d6efd;
 }
 
 
