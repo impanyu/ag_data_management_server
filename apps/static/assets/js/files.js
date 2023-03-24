@@ -692,7 +692,7 @@ function  add_meta_data_option(self){
                                  '</svg>' + ',' +'</div>';
    console.info(label_html);
    document.querySelector("#label").innerHTML =  document.querySelector("#label").innerHTML+label_html;
-   current_labels.append(new_label);
+   current_labels.push(new_label);
 }
 
 
