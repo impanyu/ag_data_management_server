@@ -619,7 +619,7 @@ function remove_meta_data_option(){
 }
 
 labels= ["Spidercam","ENREC","Wheat"];
-current_labels = [];
+current_labels = new Set();
 function get_meta_data(){
     $.post("/meta_data",
         {
@@ -638,7 +638,7 @@ function get_meta_data(){
              else if  (meta_key == "label"){
                          label_html = "";
                          label_option_html = "";
-                         current_labels = meta_value;
+                         current_labels = new Set(meta_value);
 
 
                               for (i in meta_value){
@@ -681,10 +681,8 @@ function  add_meta_data_option(self){
   new_label=self.innerHTML;
 
   //new_label=this.querySelector("a").innerHTML;
-   for(var i=0;i<labels.length;i++){
-     if(new_label == current_labels[i])
-        return;
-   }
+   if (current_labels.has(new_label))
+      return;
 
    label_html = '<div class ="meta_option">'+new_label+
                                  '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16" onclick="remove_meta_data_option()">'+
@@ -692,7 +690,7 @@ function  add_meta_data_option(self){
                                  '</svg>' + ',' +'</div>';
    console.info(label_html);
    document.querySelector("#label").innerHTML =  document.querySelector("#label").innerHTML+label_html;
-   current_labels.push(new_label);
+   current_labels.add(new_label);
 }
 
 
