@@ -745,9 +745,9 @@ def aggregate_meta_data(dir_path):
     # if this is a file
     if not os.path.isdir(dir_path):
         return generate_meta_data_for_file(dir_path)
-    meta_data["mode"] = ["Folder"]
+    meta_data["mode"] = ["Data"]
     meta_data["category"] = []
-    meta_data["format"] = []
+    meta_data["format"] = ["Folder"]
     meta_data["label"] = []
     meta_data["time_range"] = {"start": "2030/01/01 00:00:00", "end": "2030/01/01 00:00:00"}
     meta_data["spatial_range"] = {"northeast": {"lat": 0, "lng": -180}, "southwest": {"lat": 0, "lng": -180}}
