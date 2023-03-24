@@ -677,8 +677,8 @@ function get_meta_data(){
 
 map_displayed = "map";
 
-function  add_meta_data_option(this){
-  new_label=this.querySelector("a").innerHTML;
+function  add_meta_data_option(self){
+  new_label=self.querySelector("a").innerHTML;
   console.info(new_label);
   //new_label=this.querySelector("a").innerHTML;
    for(var i=0;i<labels.length;i++){
