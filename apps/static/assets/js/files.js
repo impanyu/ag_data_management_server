@@ -639,6 +639,10 @@ function get_meta_data(){
              if (meta_key == "subdirs" || meta_key =="abs_path" )
               continue;
 
+              else if (meta_key == "mode" || meta_key == "category" || meta_key == "format"){
+                document.querySelector(meta_key).querySelector("option[value="+meta_value+"]").selected=true;
+              }
+
              else if  (meta_key == "label"){
                          label_html = "";
                          label_option_html = "";
