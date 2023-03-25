@@ -883,11 +883,11 @@ def update_meta(file_path,new_meta_data):
                 meta_data[k] = v
 
         elif key == "spatial_range":
-            lower_lat, upper_lat, left_ln, right_ln = extract_coordinates(new_meta_data["southwest"].strip("()"), new_meta_data["northeast"].strip("()"))
-            #meta_data["spatial_range"]["southwest"]["lat"] = lower_lat
-            #meta_data["spatial_range"]["southwest"]["lng"] = left_ln
-            #meta_data["spatial_range"]["northeast"]["lat"] = upper_lat
-            #meta_data["spatial_range"]["northeast"]["lng"] = right_ln
+            lower_lat, upper_lat, left_ln, right_ln = extract_coordinates(new_meta_data[key]["southwest"].strip("()"), new_meta_data[key]["northeast"].strip("()"))
+            meta_data["spatial_range"]["southwest"]["lat"] = lower_lat
+            meta_data["spatial_range"]["southwest"]["lng"] = left_ln
+            meta_data["spatial_range"]["northeast"]["lat"] = upper_lat
+            meta_data["spatial_range"]["northeast"]["lng"] = right_ln
 
 
 
