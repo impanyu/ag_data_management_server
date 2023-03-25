@@ -631,7 +631,7 @@ function update_meta(){
         category.push(category_options[i].value);
 
   }
-  meta_data["catetory"] = category_options;
+  meta_data["catetory"] = category;
 
 
    mode = [];
@@ -640,7 +640,7 @@ function update_meta(){
      if(mode_options[i].selected)
         mode.push(mode_options[i].value);
   }
-   meta_data["mode"] = mode_options;
+   meta_data["mode"] = mode;
 
   format = [];
   format_options = document.querySelector("#format").options;
@@ -648,7 +648,7 @@ function update_meta(){
      if(format_options[i].selected)
         format.push(format_options[i].value);
   }
-  meta_data["format"] = format_options;
+  meta_data["format"] = format;
 
   label = [];
   label_options = document.querySelector("#label").querySelectorAll("div");
