@@ -622,6 +622,75 @@ function remove_meta_data_option(self){
    grand_parent.removeChild(parent);
 }
 
+function update_meta(){
+  meta_data = {};
+  category = [];
+  category_options = document.querySelector("#category").options;
+    for (var i =0; i<category_options.length; i++){
+     if(category_options[i].selected)
+        category.push(category_options[i].value);
+
+  }
+  meta_data["catetory"] = category_options;
+
+
+   mode = [];
+  mode_options = document.querySelector("#mode").options;
+  for (var i =0; i<mode_options.length; i++){
+     if(mode_options[i].selected)
+        mode.push(mode_options[i].value);
+  }
+   meta_data["mode"] = mode_options;
+
+  format = [];
+  format_options = document.querySelector("#format").options;
+  for (var i =0; i<format_options.length; i++){
+     if(format_options[i].selected)
+        format.push(format_options[i].value);
+  }
+  meta_data["format"] = format_options;
+
+  label = [];
+  label_options = document.querySelector("#label").querySelectorAll("div");
+  for (var i =0; i<label_options.length; i++){
+        label.push(label_options[i].querySelector("span").innerHTML);
+  }
+  meta_data["label"] = label;
+
+
+  privilege = [];
+  privilege_options = document.querySelector("#privilege").options;
+  for (var i =0; i<privilege_options.length; i++){
+     if(privilege_options[i].selected)
+        privilege.push(privilege_options[i].value);
+  }
+
+  if(document.querySelector("#toggle-switch").checked)
+    meta_data["public"] = "False";
+   else:
+     meta_data["public"] = "True";
+
+    meta_data["time_range"] = {"start":document.querySelector("#start_date").value, "end":document.querySelector("#end_date").value};
+    meta_data["spatial_range"] = {"southwest":document.querySelector("#southwest").value, "northeast":document.querySelector("#northeast").value};
+    meta_data["other_meta"] = document.querySelector("#other_meta");
+
+    $.ajax({
+         type: "POST",
+         url:"/update_meta",
+         data:JSON.stringify({
+          current_path: current_path,
+          meta_data: meta_data
+
+        }),
+        contentType: "application/json",
+        success: function(data, status){
+          alert("meta data updated");
+
+  }});
+
+
+}
+
 labels= ["Spidercam","ENREC","Wheat"];
 current_labels = new Set();
 function get_meta_data(){
@@ -632,7 +701,7 @@ function get_meta_data(){
          function(data, status){
           //console.info(data);
           meta_data=JSON.parse(data);
-          console.info(meta_data);
+          //console.info(meta_data);
 
           for(meta_key in meta_data){
              meta_value = meta_data[meta_key];
@@ -685,7 +754,10 @@ function get_meta_data(){
 
                  }
              else if (meta_key == "public"){
-                  document.querySelector("#toggle-switch").checked = true;
+                  if(meta_value == "False")
+                     document.querySelector("#toggle-switch").checked = true;
+                  else
+                     document.querySelector("#toggle-switch").checked = false;
              }
 
              else{
@@ -712,10 +784,10 @@ var content = document.getElementById("privilege");
 toggleSwitch.addEventListener("change", function() {
   if (toggleSwitch.checked) {
     // Show the content
-    content.innerHTML = "Public Data";
+    content.innerHTML = "Private Data";
   } else {
     // Hide the content
-   content.innerHTML = "Private Data"
+   content.innerHTML = "Public Data"
   }
 });
 

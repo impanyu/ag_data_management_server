@@ -53,13 +53,14 @@
                 </div>
               <div class="col-lg-6 col-6">
 
-                  <select  class="form-control" multiple size = "3" aria-label="catetory" id="category" style="display: inline-block; width:80%">
+                  <select  class="form-control" size = "3" aria-label="catetory" id="category" style="display: inline-block; width:80%">
                   <!--<option  value="UAV">UAV</option>-->
 
                   <option value="Genotype">Genotype</option>
                   <option  value="Phenotype">Phenotype</option>
                       <option value = "Soil"> Soil </option>
                       <option value = "Atmosphere"> Atmosphere </option>
+                      <option value = "Other"> Other </option>
 
 
                 </select>
@@ -68,7 +69,7 @@
 
                    <div class="col-lg-6 col-6">
 
-                  <select  class="form-control" multiple size = "3" aria-label="mode" id="mode" style="display: inline-block; width:80%; ">
+                  <select  class="form-control"  size = "3" aria-label="mode" id="mode" style="display: inline-block; width:80%; ">
                       <option  value="Data">Data</option>
                   <option  value="Domain">Domain</option>
                   <option value="Tool">Tool</option>
@@ -84,7 +85,7 @@
                   </div>
                 <div class="col-lg-6 col-6">
 
-                <select class="custom-select" multiple size = "3" aria-label="format" id="format" style="display: inline-block; width:80%; ">
+                <select class="custom-select"  size = "3" aria-label="format" id="format" style="display: inline-block; width:80%; ">
 
                      <option   value="Folder">Folder</option>
                   <option   value="Image">Image</option>
@@ -94,6 +95,8 @@
                   <option value="Python">Python</option>
                     <option value="R">R</option>
                     <option value="Matlab">Matlab</option>
+                    <option value = "Other"> Other </option>
+
 
                 </select>
                 </div>
@@ -238,8 +241,6 @@
                       <a href="#" class="btn btn-lg btn-primary" onclick="update_meta()" id = "update_meta">Update</a>
                  </div>
               </div>
-
-
           </div>
 
 

@@ -673,6 +673,15 @@ def data(request):
             response = json.dumps(meta_data)
             return HttpResponse(response)
 
+        elif load_template == 'update_meta':
+            request_data = json.loads(request.body)
+            file_path = request_data['current_path']
+            meta_data = request_data["meta_data"]
+            update_meta(file_path,meta_data)
+
+            response = "success";
+            return HttpResponse(response)
+
 
         elif load_template == 'mode_search':
             #print(request.method)

@@ -855,6 +855,29 @@ def generate_meta_data_for_file(file_path):
 
     return meta_data
 
+def update_meta(file_path,new_meta_data):
+    meta_data_file_name = "_".join(file_path.split("/")[1:]) + ".json"
+
+    with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
+        meta_data = json.load(meta_data_file)
+
+    for key in new_meta_data:
+        if key == "category" or key == "mode" or key == "format" or key=="label" or key=="public":
+            meta_data[key] = new_meta_data[key]
+        elif key == "time_range":
+            meta_data[key]["start"] = datetime.strptime(new_meta_data["time_range"]["start"], "%Y/%m/%d").strftime("%Y/%m/%d %H:%M:%S")
+            meta_data[key]["end"] = datetime.strptime(new_meta_data["time_range"]["end"], "%Y/%m/%d").strftime("%Y/%m/%d %H:%M:%S")
+        elif key == "other_meta":
+            for p in new_meta_data[key].split("\n"):
+                k = p.split(":")[0].strip()
+                v = p.split(":")[1].strip()
+                meta_data[k] = v
+        elif key == "spatial_range":
+            lower_lat, upper_lat, left_ln, right_ln = extract_coordinates(new_meta_data["southwest"], new_meta_data["northeast"])
+            meta_data["spatial_range"]["southwest"]["lat"] = lower_lat
+            meta_data["spatial_range"]["southwest"]["lng"] = left_ln
+            meta_data["spatial_range"]["northeast"]["lat"] = upper_lat
+            meta_data["spatial_range"]["northeast"]["lng"] = right_ln
 
 def read_tif_meta(file_path):
     # Open the GeoTIFF file
