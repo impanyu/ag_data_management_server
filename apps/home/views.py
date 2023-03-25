@@ -495,7 +495,7 @@ def data(request):
                         rect_right_ln = rect_left_ln + ln_per_rect
 
                         data_point["loc"] = {"lat": (rect_lower_lat+rect_upper_lat)/2, "lng": (rect_left_ln+ rect_right_ln)/2}
-                        #data_point["time"] = datetime.strptime(abs_file_path.split("/")[-2].split("_")[5], "%Y%m%d%H%M%S").strftime("%Y/%m/%d %H:%M:%S")
+                        #data_point["time"] = datetime.strptime(abs_file_path.split("/")[-2].split("_")[5], "%Y%m%d%H%M%S").strftime("%m/%d/%Y %H:%M:%S")
 
                     data_points.append(data_point)
                     '''

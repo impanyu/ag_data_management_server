@@ -370,7 +370,7 @@ def retrieve_data(app, plot, time, layer, meta):
         plot_upper = int(plot)
 
     if time == "":
-        time_lower = int(datetime.strptime("1970", "%Y").strftime("%s"))
+        time_lower = int(datetime.strptime("2030", "%Y").strftime("%s"))
         time_upper = int(datetime.strptime("2030", "%Y").strftime("%s"))
     else:
         # time_lower=new Date(new Date(time).getTime()-3600).toTimeString()
@@ -634,8 +634,8 @@ def distance(x, y):
             d = d + 1
     
     d = d+ euclidean_distances([[x[3]["lat"]/90,x[3]["lng"]/180]],[[y[3]["lat"]/90,y[3]["lng"]/180]])
-    x_time = datetime.strptime(x[4], "%Y/%m/%d %H:%M:%S").timestamp()
-    y_time = datetime.strptime(y[4], "%Y/%m/%d %H:%M:%S").timestamp()
+    x_time = datetime.strptime(x[4], "%m/%d/%Y %H:%M:%S").timestamp()
+    y_time = datetime.strptime(y[4], "%m/%d/%Y %H:%M:%S").timestamp()
     d = d+ abs(x_time - y_time) / (365*12*30*24*3600)
     
     for l in x[5]:
@@ -703,7 +703,7 @@ def top_down(dir_root, data_points):
         if path.split(".")[-1] == "meta":
             continue
         data_points[path] = {"path": path, "mode": "other", "category": "other", "label": [],
-                             "loc": {"lat": 0, "lng": 0}, "time": "1970/1/1 00:00:00", "format": []}
+                             "loc": {"lat": 0, "lng": 0}, "time": "2030/1/1 00:00:00", "format": []}
 
         for key in meta_data:
             data_points[path][key] = copy.deepcopy(meta_data[key])
@@ -749,7 +749,7 @@ def aggregate_meta_data(dir_path):
     meta_data["category"] = []
     meta_data["format"] = ["Folder"]
     meta_data["label"] = []
-    meta_data["time_range"] = {"start": "2030/01/01 00:00:00", "end": "2030/01/01 00:00:00"}
+    meta_data["time_range"] = {"start": "01/01/2030 00:00:00", "end": "01/01/2030 00:00:00"}
     meta_data["spatial_range"] = {"northeast": {"lat": 0, "lng": -180}, "southwest": {"lat": 0, "lng": -180}}
     meta_data["subdirs"] = []
     meta_data["abs_path"] = dir_path
@@ -776,14 +776,14 @@ def aggregate_meta_data(dir_path):
         meta_data["label"] = list(set(meta_data["label"]))
         meta_data["mode"] = list(set(meta_data["mode"]))
 
-        current_start = datetime.strptime(meta_data["time_range"]["start"], "%Y/%m/%d %H:%M:%S").timestamp()
-        sub_start = datetime.strptime(sub_meta_data["time_range"]["start"], "%Y/%m/%d %H:%M:%S").timestamp()
-        current_end = datetime.strptime(meta_data["time_range"]["end"], "%Y/%m/%d %H:%M:%S").timestamp()
-        sub_end = datetime.strptime(sub_meta_data["time_range"]["end"], "%Y/%m/%d %H:%M:%S").timestamp()
+        current_start = datetime.strptime(meta_data["time_range"]["start"], "%m/%d/%Y %H:%M:%S").timestamp()
+        sub_start = datetime.strptime(sub_meta_data["time_range"]["start"], "%m/%d/%Y %H:%M:%S").timestamp()
+        current_end = datetime.strptime(meta_data["time_range"]["end"], "%m/%d/%Y %H:%M:%S").timestamp()
+        sub_end = datetime.strptime(sub_meta_data["time_range"]["end"], "%m/%d/%Y %H:%M:%S").timestamp()
 
         meta_data["time_range"]["start"] = datetime.fromtimestamp(min(current_start, sub_start)).strftime(
-            "%Y/%m/%d %H:%M:%S")
-        meta_data["time_range"]["end"] = datetime.fromtimestamp(max(current_end, sub_end)).strftime("%Y/%m/%d %H:%M:%S")
+            "%m/%d/%Y %H:%M:%S")
+        meta_data["time_range"]["end"] = datetime.fromtimestamp(max(current_end, sub_end)).strftime("%m/%d/%Y %H:%M:%S")
 
         # here we only consider north america
         meta_data["spatial_range"]["northeast"]["lat"] = max(meta_data["spatial_range"]["northeast"]["lat"],
@@ -810,7 +810,7 @@ def generate_meta_data_for_file(file_path):
     meta_data["category"] = []
     meta_data["format"] = []
     meta_data["label"] = []
-    meta_data["time_range"] = {"start": "2030/01/01 00:00:00", "end": "2030/01/01 00:00:00"}
+    meta_data["time_range"] = {"start": "01/01/2030 00:00:00", "end": "01/01/2030 00:00:00"}
     meta_data["spatial_range"] = {"northeast": {"lat": 0, "lng": -180}, "southwest": {"lat": 0, "lng": -180}}
     meta_data["abs_path"] = file_path
     meta_data["subdirs"] = []
@@ -871,8 +871,8 @@ def update_meta(file_path,new_meta_data):
             #print(meta_data[key])
 
         elif key == "time_range":
-            meta_data[key]["start"] = datetime.strptime(new_meta_data["time_range"]["start"], "%Y/%m/%d").strftime("%Y/%m/%d %H:%M:%S")
-            meta_data[key]["end"] = datetime.strptime(new_meta_data["time_range"]["end"], "%Y/%m/%d").strftime("%Y/%m/%d %H:%M:%S")
+            meta_data[key]["start"] = datetime.strptime(new_meta_data["time_range"]["start"], "%m/%d/%Y").strftime("%m/%d/%Y %H:%M:%S")
+            meta_data[key]["end"] = datetime.strptime(new_meta_data["time_range"]["end"], "%m/%d/%Y").strftime("%m/%d/%Y %H:%M:%S")
         '''
         elif key == "other_meta":
             for p in new_meta_data[key].split("\n"):
@@ -935,7 +935,7 @@ def adjust_meta_data(dir_path):
     meta_data["category"] = []
     meta_data["format"] = []
     meta_data["label"] = []
-    meta_data["time_range"] = {"start": "2030/01/01 00:00:00", "end": "1970/01/01 00:00:00"}
+    meta_data["time_range"] = {"start": "01/01/2030 00:00:00", "end": "01/01/2030 00:00:00"}
     meta_data["spatial_range"] = {"northeast": {"lat": 0, "lng": -180}, "southwest": {"lat": 90, "lng": 0}}
     # meta_data["subdirs"] = []
     meta_data["abs_path"] = dir_path
@@ -963,14 +963,14 @@ def adjust_meta_data(dir_path):
         meta_data["label"] = list(set(meta_data["category"]))
         meta_data["mode"] = list(set(meta_data["mode"]))
 
-        current_start = datetime.strptime(meta_data["time_range"]["start"], "%Y/%m/%d %H:%M:%S").timestamp()
-        sub_start = datetime.strptime(sub_meta_data["time_range"]["start"], "%Y/%m/%d %H:%M:%S").timestamp()
-        current_end = datetime.strptime(meta_data["time_range"]["end"], "%Y/%m/%d %H:%M:%S").timestamp()
-        sub_end = datetime.strptime(sub_meta_data["time_range"]["end"], "%Y/%m/%d %H:%M:%S").timestamp()
+        current_start = datetime.strptime(meta_data["time_range"]["start"], "%m/%d/%Y %H:%M:%S").timestamp()
+        sub_start = datetime.strptime(sub_meta_data["time_range"]["start"], "%m/%d/%Y %H:%M:%S").timestamp()
+        current_end = datetime.strptime(meta_data["time_range"]["end"], "%m/%d/%Y %H:%M:%S").timestamp()
+        sub_end = datetime.strptime(sub_meta_data["time_range"]["end"], "%m/%d/%Y %H:%M:%S").timestamp()
 
         meta_data["time_range"]["start"] = datetime.fromtimestamp(min(current_start, sub_start)).strftime(
-            "%Y/%m/%d %H:%M:%S")
-        meta_data["time_range"]["end"] = datetime.fromtimestamp(max(current_end, sub_end)).strftime("%Y/%m/%d %H:%M:%S")
+            "%m/%d/%Y %H:%M:%S")
+        meta_data["time_range"]["end"] = datetime.fromtimestamp(max(current_end, sub_end)).strftime("%m/%d/%Y %H:%M:%S")
 
         # here we only consider north america
         meta_data["spatial_range"]["northeast"]["lat"] = max(meta_data["spatial_range"]["northeast"]["lat"],
