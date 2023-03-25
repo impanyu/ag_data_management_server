@@ -869,7 +869,7 @@ def update_meta(file_path,new_meta_data):
             meta_data[key]["end"] = datetime.strptime(new_meta_data["time_range"]["end"], "%Y/%m/%d").strftime("%Y/%m/%d %H:%M:%S")
         elif key == "other_meta":
             for p in new_meta_data[key].split("\n"):
-                if p == "":
+                if ":" not in p:
                     continue
                 k = p.split(":")[0].strip()
                 v = p.split(":")[1].strip()
