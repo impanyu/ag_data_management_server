@@ -660,7 +660,7 @@ def data(request):
                 file_item = {"file_name": file, "created_time": created_time.strftime("%m/%d/%Y, %H:%M:%S"),
                              "accessed_time": accessed_time.strftime("%m/%d/%Y, %H:%M:%S"), "size": size}
                 response["files"].append(file_item)
-            print(response)
+
 
             response = json.dumps(response)
 
