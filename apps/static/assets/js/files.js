@@ -677,7 +677,7 @@ function update_meta(){
         }),
         contentType: "application/json",
         success: function(data, status){
-          alert("meta data updated");
+          //alert("meta data updated");
 
   }});
 

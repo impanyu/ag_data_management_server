@@ -876,9 +876,9 @@ def recursive_update_public(file_path, value):
 
 def update_meta(file_path,new_meta_data):
     meta_data_file_name = "_".join(file_path.split("/")[1:]) + ".json"
-    with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
-        meta_data = json.load(meta_data_file)
-
+    #with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
+    #    meta_data = json.load(meta_data_file)
+    meta_data ={}
 
     print(new_meta_data)
     for key in new_meta_data:
