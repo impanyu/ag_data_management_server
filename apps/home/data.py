@@ -888,9 +888,10 @@ def update_meta(file_path,new_meta_data):
             #print(key)
             #print(meta_data[key])
         elif key == "public" and not meta_data[key] == new_meta_data[key]:
+            meta_data[key] = new_meta_data[key]
 
             # recursively change the subdirs and files
-            recursive_update_public(file_path,new_meta_data[key])
+            #recursive_update_public(file_path,new_meta_data[key])
 
 
 
