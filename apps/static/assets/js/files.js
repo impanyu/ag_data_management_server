@@ -667,7 +667,7 @@ function update_meta(){
 
   if(document.querySelector("#toggle-switch").checked)
     meta_data["public"] = "False";
-   else:
+   else
      meta_data["public"] = "True";
 
     meta_data["time_range"] = {"start":document.querySelector("#start_date").value, "end":document.querySelector("#end_date").value};
