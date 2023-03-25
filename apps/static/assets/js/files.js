@@ -694,7 +694,7 @@ function get_meta_data(){
          function(data, status){
           //console.info(data);
           meta_data=JSON.parse(data);
-          //console.info(meta_data);
+          console.info(meta_data);
 
           for(meta_key in meta_data){
              meta_value = meta_data[meta_key];
