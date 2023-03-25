@@ -879,6 +879,9 @@ def update_meta(file_path,new_meta_data):
             meta_data["spatial_range"]["northeast"]["lat"] = upper_lat
             meta_data["spatial_range"]["northeast"]["lng"] = right_ln
 
+    with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "w") as meta_data_file:
+        json.dump(meta_data,meta_data_file)
+
 def read_tif_meta(file_path):
     # Open the GeoTIFF file
     with rasterio.open(file_path) as src:
