@@ -747,6 +747,7 @@ function get_meta_data(){
 
                  }
              else if (meta_key == "public"){
+                 console.info(meta_value);
                   if(meta_value == "False")
                      document.querySelector("#toggle-switch").checked = true;
                   else
