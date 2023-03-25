@@ -860,8 +860,7 @@ def update_meta(file_path,new_meta_data):
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
         meta_data = json.load(meta_data_file)
 
-
-
+    print(new_meta_data)
     for key in new_meta_data:
         if key == "category" or key == "mode" or key == "format" or key == "label" or key == "public":
 
