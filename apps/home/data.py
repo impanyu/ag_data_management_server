@@ -873,7 +873,7 @@ def update_meta(file_path,new_meta_data):
         elif key == "time_range":
             meta_data[key]["start"] = datetime.strptime(new_meta_data["time_range"]["start"], "%m/%d/%Y").strftime("%m/%d/%Y %H:%M:%S")
             meta_data[key]["end"] = datetime.strptime(new_meta_data["time_range"]["end"], "%m/%d/%Y").strftime("%m/%d/%Y %H:%M:%S")
-        '''
+
         elif key == "other_meta":
             for p in new_meta_data[key].split("\n"):
                 if ":" not in p:
@@ -881,6 +881,7 @@ def update_meta(file_path,new_meta_data):
                 k = p.split(":")[0].strip()
                 v = p.split(":")[1].strip()
                 meta_data[k] = v
+        '''
         elif key == "spatial_range":
             lower_lat, upper_lat, left_ln, right_ln = extract_coordinates(new_meta_data["southwest"], new_meta_data["northeast"])
             meta_data["spatial_range"]["southwest"]["lat"] = lower_lat
