@@ -883,6 +883,7 @@ def update_meta(file_path,new_meta_data):
         '''
 
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "w") as meta_data_file:
+
         print(meta_data)
         json.dump(meta_data,meta_data_file)
 
