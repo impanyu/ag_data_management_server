@@ -891,7 +891,7 @@ def update_meta(file_path,new_meta_data):
             meta_data[key] = new_meta_data[key]
 
             # recursively change the subdirs and files
-            #recursive_update_public(file_path,new_meta_data[key])
+            recursive_update_public(file_path,new_meta_data[key])
 
 
 
