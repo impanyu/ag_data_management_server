@@ -865,9 +865,9 @@ def update_meta(file_path,new_meta_data):
         if key == "category" or key == "mode" or key == "format" or key == "label" or key == "public":
 
             meta_data[key] = new_meta_data[key]
-            print(key)
-            print(meta_data[key])
-        '''
+            #print(key)
+            #print(meta_data[key])
+
         elif key == "time_range":
             meta_data[key]["start"] = datetime.strptime(new_meta_data["time_range"]["start"], "%Y/%m/%d").strftime("%Y/%m/%d %H:%M:%S")
             meta_data[key]["end"] = datetime.strptime(new_meta_data["time_range"]["end"], "%Y/%m/%d").strftime("%Y/%m/%d %H:%M:%S")
@@ -884,7 +884,7 @@ def update_meta(file_path,new_meta_data):
             meta_data["spatial_range"]["southwest"]["lng"] = left_ln
             meta_data["spatial_range"]["northeast"]["lat"] = upper_lat
             meta_data["spatial_range"]["northeast"]["lng"] = right_ln
-        '''
+
 
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "w") as meta_data_file:
         print(meta_data)

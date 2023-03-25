@@ -631,7 +631,7 @@ function update_meta(){
         category.push(category_options[i].value);
 
   }
-  meta_data["catetory"] = category;
+  meta_data["category"] = category;
 
 
    mode = [];
