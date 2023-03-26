@@ -549,10 +549,10 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
         return False
 
     if not (time_range[0] == "start" or time_range[1] == "end"):
-        start = datetime.strptime(time_range[0], "Y/m/d").timestamp()
-        end = datetime.strptime(time_range[1], "Y/m/d").timestamp()
-        item_start_time = datetime.strptime(meta_data["time_range"]["start"], "Y/m/d %H:%M:%S").timestamp()
-        item_end_time = datetime.strptime(meta_data["time_range"]["end"], "Y/m/d %H:%M:%S").timestamp()
+        start = datetime.strptime(time_range[0], "m/d/Y").timestamp()
+        end = datetime.strptime(time_range[1], "m/d/Y").timestamp()
+        item_start_time = datetime.strptime(meta_data["time_range"]["start"], "m/d/Y %H:%M:%S").timestamp()
+        item_end_time = datetime.strptime(meta_data["time_range"]["end"], "m/d/Y %H:%M:%S").timestamp()
 
         if not overlap(start, end, item_start_time, item_end_time):
             print("not has time")
