@@ -773,6 +773,8 @@ function get_meta_data(){
 
 }
 
+window.onpostate = function(event){document.querySelector("#other_meta").value=""};
+
 // Get the toggle switch element
 var toggleSwitch = document.getElementById("toggle-switch");
 
