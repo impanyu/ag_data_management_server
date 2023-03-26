@@ -904,6 +904,7 @@ def update_meta(file_path,new_meta_data):
             #other_meta = new_meta_data[key].replace("\n",",")
             #other_meta = json.loads("{" + other_meta + "}")
             #meta_data.update(other_meta)
+            continue
 
             for p in new_meta_data[key].split("\n"):
                 if ":" not in p:
