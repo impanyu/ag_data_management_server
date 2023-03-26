@@ -911,8 +911,8 @@ def update_meta(file_path,new_meta_data):
                 k = p.split(":")[0].strip()
                 v = p.split(":")[1].strip()
                 
-                if v[1] == "{" or v[1] == "[":
-                    v = json.loads(v)
+
+                v = json.loads(v)
 
                 meta_data[k] = v
 
