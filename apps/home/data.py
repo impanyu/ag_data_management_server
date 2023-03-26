@@ -878,7 +878,7 @@ def update_meta(file_path,new_meta_data):
     meta_data_file_name = "_".join(file_path.split("/")[1:]) + ".json"
     #with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
     #    meta_data = json.load(meta_data_file)
-    meta_data ={}
+    meta_data ={"public" : "True"}
 
     print(new_meta_data)
     for key in new_meta_data:
@@ -894,7 +894,6 @@ def update_meta(file_path,new_meta_data):
             recursive_update_public(file_path,new_meta_data[key])
 
 
-
         elif key == "time_range":
             meta_data[key]={"start": "01/01/2030 00:00:00", "end": "01/01/2030 00:00:00"}
             meta_data[key]["start"] = datetime.strptime(new_meta_data["time_range"]["start"], "%m/%d/%Y").strftime("%m/%d/%Y %H:%M:%S")
@@ -904,8 +903,7 @@ def update_meta(file_path,new_meta_data):
             #other_meta = new_meta_data[key].replace("\n",",")
             #other_meta = json.loads("{" + other_meta + "}")
             #meta_data.update(other_meta)
-            continue
-            '''
+
 
             for p in new_meta_data[key].split("\n"):
                 if ":" not in p:
@@ -915,7 +913,7 @@ def update_meta(file_path,new_meta_data):
                 
                 if v[1] == "{" or v[1] == "[":
                     v = json.loads(v)
-            '''
+
                 #meta_data[k] = v
 
 
