@@ -908,13 +908,13 @@ def update_meta(file_path,new_meta_data):
             for p in new_meta_data[key].split("\n"):
                 if ":" not in p:
                     continue
-                #k = p.split(":")[0].strip()
-                #v = p.split(":")[1].strip()
+                k = p.split(":")[0].strip()
+                v = p.split(":")[1].strip()
                 
                 if v[1] == "{" or v[1] == "[":
                     v = json.loads(v)
 
-                #meta_data[k] = v
+                meta_data[k] = v
 
 
         elif key == "spatial_range":
