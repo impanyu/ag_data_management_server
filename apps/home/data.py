@@ -910,9 +910,12 @@ def update_meta(file_path,new_meta_data):
                     continue
                 k = p.split(":")[0].strip()
                 v = p.split(":")[1].strip()
-                if v[0] == "{" or v[0] == "[":
+                '''
+                if v[1] == "{" or v[1] == "[":
                     v = json.loads(v)
+                '''
                 meta_data[k] = v
+
 
         elif key == "spatial_range":
             lower_lat, upper_lat, left_ln, right_ln = extract_coordinates(new_meta_data[key]["southwest"].strip("()"), new_meta_data[key]["northeast"].strip("()"))
