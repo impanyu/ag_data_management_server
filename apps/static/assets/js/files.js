@@ -686,6 +686,8 @@ function update_meta(){
 
 labels= ["Spidercam","ENREC","Wheat"];
 current_labels = new Set();
+
+ document.querySelector("#other_meta").value ="";
 function get_meta_data(){
     $.post("/meta_data",
         {
@@ -695,7 +697,6 @@ function get_meta_data(){
           //console.info(data);
           meta_data=JSON.parse(data);
           console.info(meta_data);
-          document.querySelector("#other_meta").value="";
 
           for(meta_key in meta_data){
              meta_value = meta_data[meta_key];
@@ -760,8 +761,8 @@ function get_meta_data(){
              }
 
              else{
-                 document.querySelector("#other_meta").value += meta_key + ": "+ JSON.stringify(meta_value) + "\n";
-                //document.querySelector("#other_meta").value += meta_key + ": "+ meta_value + "\n";
+                document.querySelector("#other_meta").value += meta_key + ": "+ JSON.stringify(meta_value) + "\n";
+            //    document.querySelector("#other_meta").value += meta_key + ": "+ meta_value + "\n";
              }
 
           }
@@ -773,8 +774,6 @@ function get_meta_data(){
          });
 
 }
-
-
 
 // Get the toggle switch element
 var toggleSwitch = document.getElementById("toggle-switch");
