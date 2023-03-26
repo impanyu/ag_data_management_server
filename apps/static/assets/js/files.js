@@ -759,7 +759,7 @@ function get_meta_data(){
              }
 
              else{
-                document.querySelector("#other_meta").value += meta_key + ": "+ meta_value + "\n";
+                document.querySelector("#other_meta").value += meta_key + ": "+ JSON.stringfy(meta_value) + "\n";
              }
 
           }
