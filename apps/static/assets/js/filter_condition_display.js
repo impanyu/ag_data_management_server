@@ -7,7 +7,7 @@ function toggle_filter_condition(){
 
 function toggle_filter_condition_2(){
    if(document.querySelector("#filter-condition").style.height == "0px"){
-     document.querySelector("#filter-condition").style.height = "1880px";
+     document.querySelector("#filter-condition").style.height = "1980px";
      document.querySelector("#filter-condition").style.paddingTop = "1.25rem";
      document.querySelector("#filter-condition").style.paddingBottom = "1.25rem";
 
@@ -21,7 +21,7 @@ function toggle_filter_condition_2(){
 
 function toggle_filter_condition_3(){
    if(document.querySelector("#meta_data_panel").style.height == "0px"){
-     document.querySelector("#meta_data_panel").style.height = "1980px";
+     document.querySelector("#meta_data_panel").style.height = "2080px";
      document.querySelector("#meta_data_panel").style.paddingTop = "1.25rem";
      document.querySelector("#meta_data_panel").style.paddingBottom = "1.25rem";
 
