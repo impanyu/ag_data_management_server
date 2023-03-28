@@ -1,14 +1,19 @@
 
 
-nav_link = document.querySelector('.nav-link');
+nav_links = document.querySelectorAll('.nav-link');
 
-nav_link.addEventListener('mouseover', add_active(this));
-
-nav_link.addEventListener('mouseout', function(this) {
-  this.classList.remove('active');
+for(i=0;i<nav_links.length;i++){
+  nav_links[i].addEventListener('mouseover', function(){
+     nav_links[i].classList.add('active')
+});
+  nav_links[i].addEventListener('mouseout', function() {
+  nav_links[i].classList.remove('active');
 });
 
-
-function add_active(self){
-   self.classList.add('active');
 }
+
+
+
+
+
+
