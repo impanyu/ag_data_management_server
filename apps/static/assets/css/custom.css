@@ -1,3 +1,8 @@
+label_item_in_file_meta:hover{
+background-color:#aaa;
+}
+
+
 /* Set the base styles for the toggle switch */
 .toggle-switch {
   position: relative;
