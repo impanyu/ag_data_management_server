@@ -14,7 +14,7 @@
           <!-- Card header -->
           <div class="card-header border-0" style="position:relative">
              <div class="row align-items-center ">
-                  <div class="col-lg-7 col-12">
+                  <div class="col-lg-6 col-12">
                     <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                       <ol class="breadcrumb breadcrumb-links breadcrumb-dark" id="pwd">
                         <li class="breadcrumb-item"><a href="/files.html?current_path={{user}}"><i class="fas fa-home"></i></a></li>
@@ -23,8 +23,19 @@
                       </ol>
                     </nav>
                   </div>
-                  <div class="col-lg-5 col-12 text-right">
-                       <div href="#" class="btn btn-lg btn-neutral" >Create</div>
+                  <div class="col-lg-6 col-12 text-right">
+                       <div href="#" class="btn btn-lg btn-neutral" >
+                              <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Add<span class="caret"></span>
+                        <ul class="dropdown-menu" style="overflow:auto;max-height:300px">
+                            <li>Folder</li>
+                            <li>File</li>
+                        </ul>
+
+                     </button>
+
+
+
+                       </div>
                     <a href="#" class="btn btn-lg btn-neutral" onclick="document.getElementById('upload_dir').click()">Upload Folder</a>
                     <a href="#" class="btn btn-lg btn-neutral" onclick="document.getElementById('upload_file').click()">Upload File</a>
 
