@@ -3,7 +3,7 @@
 nav_links = document.querySelectorAll('.nav-link');
 
 for(i=0;i<nav_links.length;i++){
- nav_
+
   nav_links[i].addEventListener('mouseover', function(event){
      add_active(event);
 });
