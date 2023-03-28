@@ -684,7 +684,9 @@ function update_meta(){
 
 }
 
-labels= ["Spidercam","ENREC","Wheat"];
+
+
+labels= ["Spidercam", "ENREC", "Wheat", "Crop", "Weather", "GIS", "Application", "UAV", "IoT", "Farm", "Machinery", "Disease", "Pest", "Fertilizer", "Water", "Nitrogen", "Cattle"];
 current_labels = new Set();
 
  document.querySelector("#other_meta").value ="";
