@@ -13,6 +13,22 @@
         <div class="card bg-unl">
           <!-- Card header -->
             <div style="padding:10px; background:#ddd"><span id = "search_filter" ><b>Search Filter</b></span></div>
+            <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
+        <div class="form-group mb-0">
+          <div class="input-group input-group-alternative input-group-merge">
+            <div class="input-group-prepend">
+              <span class="input-group-text " id="search"><i class="fas fa-search"></i></span>
+            </div>
+            <div class="input-group-prepend">
+              <span class="input-group-text " id="search-filter" onclick="toggle_filter_condition_2()"><i class="ni ni-bullet-list-67"></i></span>
+            </div>
+            <input class="form-control" placeholder="Search" type="text" id="search_box">
+          </div>
+        </div>
+        <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </form>
           <div class="card-header border-0" id = "filter-condition" style="position:relative;height:0px;background:#ddd">
 
             <div class="row  py-4">
