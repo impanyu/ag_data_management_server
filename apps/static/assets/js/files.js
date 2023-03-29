@@ -413,6 +413,26 @@ get_meta_and_content();
 
 
 function get_file_content(){
+$.post("/read_file",
+        {
+          current_path: current_path,
+          /*
+          search_box: document.querySelector("#search_box").value,
+          category: document.querySelector("#category").value,
+          mode: mode,
+          format: format,
+          label: label,
+          time_range: [document.querySelector("#start_date").value,document.querySelector("#end_date").value],
+          bounding_box: [document.querySelector("#southwest").value, document.querySelector("#northeast").value]
+          */
+
+
+        },
+        function(data, status){
+            data=JSON.parse(data);
+
+        });
+
 }
 
 
@@ -783,6 +803,9 @@ function get_meta_data(){
                      document.querySelector("#toggle-switch").checked = false;
                      document.getElementById("privilege").innerHTML = "Public Data";
                      }
+             }
+             else if (meta_key == "native"){
+                    document.querySelector("#native_meta").value += JSON.stringify(meta_value);
              }
 
              else{

@@ -575,8 +575,18 @@ def data(request):
 
             return HttpResponse("delete complete!")
 
+        elif load_template == 'read_file':
+            file_path = request.POST['current_path']
+            read_file(file_path)
+
+            response ={}
+            response = json.dumps(response)
+
+            return HttpResponse(response)
+
         elif load_template == 'file_system':
             file_path = request.POST['current_path']
+
             '''
             search_box = request.POST['search_box']
             category = request.POST['category']
