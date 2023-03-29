@@ -356,7 +356,7 @@ files = this.files;
 webkitEntires = this.webkitEntries;
 console.info(webkitEntires);
 await upload();
-this.value="";
+//this.value="";
 
 };
 
