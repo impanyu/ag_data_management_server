@@ -808,7 +808,7 @@ function get_meta_data(){
                     for(k in meta_value)
 
                         document.querySelector("#native_meta").value += k+": "+JSON.stringify(meta_value[k])+ "\n";
-                    document.querySelector("#native_meta_panel").style.display = "block";
+                    //document.querySelector("#native_meta_panel").style.display = "block";
              }
 
              else{
