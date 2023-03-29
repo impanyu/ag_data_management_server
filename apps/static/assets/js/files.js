@@ -356,7 +356,7 @@ files = this.files;
 webkitEntires = this.webkitEntries;
 console.info(webkitEntires);
 await upload();
-//this.value="";
+this.value="";
 
 };
 
@@ -373,6 +373,8 @@ var form_data = new FormData();
 form_data.append("current_path",current_path);
 
 if(files.length == 0) {//should create a new folder, but currently do not allow
+     //actually if folder is empty, onchange will never be called, so the control flow will not reach here
+     //still need to find ways to upload empty folders
       alert("Empty Folder!!!");
       resolve();
        return;
