@@ -360,11 +360,14 @@ this.value="";
 function upload(){
 var form_data = new FormData();
 form_data.append("current_path",current_path);
-
+console.info(files);
 for(var i=0;i<files.length;i++){
+
+
   form_data.append("files",files[i]);
   form_data.append("paths",files[i]["webkitRelativePath"]);
   console.info(files[i]["webkitRelativePath"]);
+
 
 }
 
