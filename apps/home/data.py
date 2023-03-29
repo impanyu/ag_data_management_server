@@ -1094,10 +1094,10 @@ def get_meta_data(path):
     meta_data_file_name = "_".join(path.split("/")[1:]) + ".json"
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
         meta_data = json.load(meta_data_file)
-    suffix = path.split("/")[-1].split(".")
-    if "." not in suffix:
+    file_name = path.split("/")[-1]
+    if "." not in file_name:
         return meta_data
-    suffix = suffix[1]
+    suffix = file_name.split(".")[1]
     if suffix == "shp":
         sf = shapefile.Reader(path)
         meta_data["native"] = sf.__geo_interface__["properties"]
