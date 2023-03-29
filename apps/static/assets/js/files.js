@@ -346,7 +346,7 @@ webkitEntires = this.webkitEntries;
 console.info(files.length);
 await upload();
 this.value="";
-return;
+
 
 };
 
@@ -357,7 +357,7 @@ webkitEntires = this.webkitEntries;
 console.info(webkitEntires);
 await upload();
 this.value="";
-return;
+
 };
 
 
