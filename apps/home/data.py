@@ -1055,8 +1055,8 @@ def search(root_dir, search_box, category, mode, format, label, time_range, spat
     meta_data_file_name = "_".join(root_dir.split("/")[1:]) + ".json"
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
         meta_data = json.load(meta_data_file)
-        if filtering_condition(meta_data, search_box, category, mode, format, label, time_range, spatial_range):
-            result.append(meta_data)
+        #if filtering_condition(meta_data, search_box, category, mode, format, label, time_range, spatial_range):
+         #   result.append(meta_data)
         for subdir in meta_data["subdirs"]:
             sub_result = search(subdir, search_box, category, mode, format, label, time_range, spatial_range)
             result += sub_result
