@@ -819,29 +819,29 @@ def generate_meta_data_for_file(file_path):
 
     suffix = file_path.split("/")[-1].split(".")[1]
 
-    if suffix == ".py":
-        meta_data["format"].append("Python")
-        meta_data["mode"].append("Tool")
+    if suffix == "py":
+        meta_data["format"]=["Python"]
+        meta_data["mode"]=["Tool"]
     elif suffix == "tif" or suffix == "tiff" or suffix == "png" or suffix == "jpg" or suffix == "jpeg":
-        meta_data["mode"].append("Data")
-        meta_data["format"].append("Image")
-    elif suffix == ".shp":
-        meta_data["format"].append("Shape")
-        meta_data["mode"].append("Data")
-    elif suffix == ".m" or suffix == ".mlx":
-        meta_data["format"].append("Matlab")
-        meta_data["mode"].append("Tool")
-    elif suffix == ".r":
-        meta_data["format"].append("R")
-        meta_data["mode"].append("Tool")
+        meta_data["mode"]=["Data"]
+        meta_data["format"]=["Image"]
+    elif suffix == "shp":
+        meta_data["format"]=["Shape"]
+        meta_data["mode"]=["Data"]
+    elif suffix == "m" or suffix == ".mlx":
+        meta_data["format"]=["Matlab"]
+        meta_data["mode"]=["Tool"]
+    elif suffix == "r":
+        meta_data["format"]=["R"]
+        meta_data["mode"]=["Tool"]
     elif suffix == "csv":
-        meta_data["format"].append("CSV")
-        meta_data["mode"].append("Data")
+        meta_data["format"]=["CSV"]
+        meta_data["mode"]=["Data"]
     elif suffix == "xlsx" or suffix == "xls":
-        meta_data["format"].append("Spreadsheet")
-        meta_data["mode"].append("Data")
+        meta_data["format"]=["Spreadsheet"]
+        meta_data["mode"]=["Data"]
     else:
-        meta_data["format"].append("Other")
+        meta_data["format"]=["Other"]
 
 
 
