@@ -413,6 +413,32 @@ get_meta_and_content();
 
 
 function get_file_content(){
+/*
+shapefile.open("/read_file?"+current_path)
+  .then(source => source.read()
+    .then(function log(result) {
+      if (result.done) return;
+          const shape = result.value;
+    const coords = shape.geometry.coordinates;
+
+    // Create a new Google Maps polygon for each shape
+    const polygon = new google.maps.Polygon({
+      paths: coords.map(coords => ({ lat: coords[1], lng: coords[0] })),
+      map: map,
+      strokeColor: "#FF0000",
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: "#FF0000",
+      fillOpacity: 0.35,
+    });
+
+      console.log(result.value);
+      return source.read().then(log);
+    }))
+  .catch(error => console.error(error.stack));
+*/
+
+/*
 $.post("/read_file",
         {
           current_path: current_path,
@@ -426,13 +452,13 @@ $.post("/read_file",
           bounding_box: [document.querySelector("#southwest").value, document.querySelector("#northeast").value]
           */
 
-
+/*
         },
         function(data, status){
             data=JSON.parse(data);
 
         });
-
+*/
 }
 
 
