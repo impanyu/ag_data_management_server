@@ -805,7 +805,9 @@ function get_meta_data(){
                      }
              }
              else if (meta_key == "native"){
-                    document.querySelector("#native_meta").value += JSON.stringify(meta_value).replace(",","\n");
+                    for k in meta_value:
+
+                        document.querySelector("#native_meta").value += k+": "+JSON.stringify(meta_value[k])+ "\n";
                     document.querySelector("#native_meta_panel").style.display = "block";
              }
 
