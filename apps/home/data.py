@@ -1095,7 +1095,7 @@ def get_meta_data(path):
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
         meta_data = json.load(meta_data_file)
     suffix = path.split("/")[-1].split(".")
-    if "." no in suffix:
+    if "." not in suffix:
         return meta_data
     if suffix == "shp":
         sf = shapefile.Reader(path)
