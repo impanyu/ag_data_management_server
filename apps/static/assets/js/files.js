@@ -374,11 +374,13 @@ form_data.append("current_path",current_path);
 
 if(files.length == 0) {//should create a new folder, but currently do not allow
       alert("Empty Folder!!!");
+      resolve();
        return;
 }
 if(files[0]["webkitRelativePath"]== ""){//upload a file
     if(current_files_names.indexOf(files[0]["name"])!=-1){
        alert("File Exists!!!");
+       resolve();
        return;
     }
 }
@@ -386,6 +388,7 @@ if(files[0]["webkitRelativePath"]== ""){//upload a file
 else{//upload a folder
     if(current_folders_names.indexOf(files[0]["webkitRelativePath"].split("/")[0])!=-1){
       alert("Folder Exists!!!");
+      resolve();
       return;
 
   }
