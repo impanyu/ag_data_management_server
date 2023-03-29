@@ -805,7 +805,7 @@ function get_meta_data(){
                      }
              }
              else if (meta_key == "native"){
-                    for k in meta_value:
+                    for{k in meta_value}:
 
                         document.querySelector("#native_meta").value += k+": "+JSON.stringify(meta_value[k])+ "\n";
                     document.querySelector("#native_meta_panel").style.display = "block";
