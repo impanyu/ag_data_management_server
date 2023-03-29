@@ -405,6 +405,7 @@ async function get_meta_and_content(){
 
 
 }
+get_meta_and_content();
 
 
 
