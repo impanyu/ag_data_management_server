@@ -395,8 +395,15 @@ function htmlToElement(html) {
     return template.content.firstChild;
 }
 
-get_file_list();
+meta_data={};
 get_meta_data();
+if(meta_data["format"] == "Folder")
+    get_file_list();
+else
+    get_file_content();
+
+
+
 
 
 function get_file_list(){
@@ -613,7 +620,7 @@ meta_data_options = {"category":["Genotype","Phenotype","Soil","Atmosphere"],
                    "label":["Spidercam","ENREC","Wheat"]};
 
 
-meta_data={};
+
 function remove_meta_data_option(self){
    removed_label = self.previousSibling.innerHTML;
    current_labels.delete(removed_label);
