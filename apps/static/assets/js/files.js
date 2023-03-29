@@ -370,20 +370,23 @@ function upload(){
 var form_data = new FormData();
 form_data.append("current_path",current_path);
 
-if(files.length == 0) {//should create a new folder
-   create_new_folder();
+if(files.length == 0) {//should create a new folder, but currently do not allow
+      alert("Empty Folder!");
+       return;
 }
 if(files[0]["webkitRelativePath"]== ""){//upload a file
-    if(files[0] in current_files){
+    if(files[0]["name"] in current_files){
        alert("File Exists!");
        return;
     }
 }
 
 else{//upload a folder
-    if(files[0]["webkitRelativePath"].split("/")[0] in current_folders)
+    if(files[0]["webkitRelativePath"].split("/")[0] in current_folders){
       alert("Folder Exists!");
       return;
+
+  }
 }
 
 
