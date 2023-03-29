@@ -343,7 +343,7 @@ document.querySelector("#upload_dir").onchange=function(){
 //form[0].submit();
 files = this.files;
 webkitEntires = this.webkitEntries;
-console.info(files);
+console.info(files.length);
 upload();
 this.value="";
 
