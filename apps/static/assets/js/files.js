@@ -396,11 +396,19 @@ function htmlToElement(html) {
 }
 
 meta_data={};
-get_meta_data();
-if(meta_data["format"] == "Folder")
+async function get_meta_and_content(){
+  await get_meta_data();
+  if(meta_data["format"] == "Folder")
     get_file_list();
-else
+  else
     get_file_content();
+
+
+}
+
+
+
+
 
 
 
@@ -698,6 +706,7 @@ current_labels = new Set();
 
  document.querySelector("#other_meta").value ="";
 function get_meta_data(){
+   return new Promise(function(resolve,reject){
     $.post("/meta_data",
         {
           current_path: current_path
@@ -778,9 +787,9 @@ function get_meta_data(){
 
 
 
+        resolve();
 
-
-         });
+         }); });
 
 }
 
