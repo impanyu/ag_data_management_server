@@ -398,11 +398,14 @@ function htmlToElement(html) {
 meta_data={};
 async function get_meta_and_content(){
   await get_meta_data();
-  if(meta_data["format"] == "Folder")
+  if(meta_data["format"] == "Folder"){
     get_file_list();
-  else
-    get_file_content();
 
+    }
+  else{
+    get_file_content();
+    document.querySelector("#file_table").style.display="none";
+   }
 
 }
 get_meta_and_content();
