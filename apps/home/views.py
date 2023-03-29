@@ -315,6 +315,8 @@ def data(request):
                 current_path = modified_current_path[1:]
             '''
 
+
+
             if not upload_files:
                 return HttpResponse('files not found')
             else:
@@ -324,6 +326,10 @@ def data(request):
                 #data_and_files.close()
                 #print("abs")
                 #print(upload_file_paths)
+
+                root_abs_path = os.path.join("/home", current_path, upload_file_paths[0].split("/")[0])
+                if os.path.exists(root_abs_path):
+                    return HttpResponse("Folder exists!")
 
                 #upload each file
                 for file in upload_files:
