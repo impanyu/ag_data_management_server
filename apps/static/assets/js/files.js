@@ -729,6 +729,7 @@ function get_meta_data(){
                  if(meta_value.length == 0)
                    continue;
                  console.info(meta_key);
+                 console.info(meta_value);
                 document.querySelector("#"+meta_key).querySelector("option[value="+meta_value[0]+"]").selected=true;
               }
 
