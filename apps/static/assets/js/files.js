@@ -338,24 +338,24 @@ for(var i = 0; i < current_path_components.length; i++){
 }
 
 
-document.querySelector("#upload_dir").onchange=function(){
+document.querySelector("#upload_dir").onchange=async function(){
 //form[0].requestSubmit();
 //form[0].submit();
 files = this.files;
 webkitEntires = this.webkitEntries;
 console.info(files.length);
-upload();
+await upload();
 this.value="";
 
 
 };
 
-document.querySelector("#upload_file").onchange=function(){
+document.querySelector("#upload_file").onchange=async function(){
 
 files = this.files;
 webkitEntires = this.webkitEntries;
 console.info(webkitEntires);
-upload();
+await upload();
 this.value="";
 
 };
@@ -367,6 +367,8 @@ function create_new_folder(){
 
 
 function upload(){
+return new Promise(function(resolve,reject){
+
 var form_data = new FormData();
 form_data.append("current_path",current_path);
 
@@ -416,6 +418,9 @@ for(var i=0;i<files.length;i++){
             }
         });
 
+      resolve();
+
+    });
 }
 
 
