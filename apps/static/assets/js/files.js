@@ -728,6 +728,7 @@ function get_meta_data(){
               else if (meta_key == "mode" || meta_key == "category" || meta_key == "format"){
                  if(meta_value.length == 0)
                    continue;
+                 console.info(meta_key);
                 document.querySelector("#"+meta_key).querySelector("option[value="+meta_value[0]+"]").selected=true;
               }
 
