@@ -1097,6 +1097,7 @@ def get_meta_data(path):
     suffix = path.split("/")[-1].split(".")
     if "." not in suffix:
         return meta_data
+    suffix = suffix[1]
     if suffix == "shp":
         sf = shapefile.Reader(path)
         meta_data["native"] = sf.__geo_interface__["properties"]
