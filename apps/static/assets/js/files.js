@@ -342,6 +342,8 @@ document.querySelector("#upload_dir").onchange=function(){
 //form[0].requestSubmit();
 //form[0].submit();
 files = this.files;
+webkitEntires = this.webkitEntries;
+console.info(webkitEntires);
 upload();
 this.value="";
 
@@ -351,15 +353,39 @@ this.value="";
 document.querySelector("#upload_file").onchange=function(){
 
 files = this.files;
+webkitEntires = this.webkitEntries;
+console.info(webkitEntires);
 upload();
 this.value="";
 
 };
 
 
+function create_new_folder(){
+
+}
+
+
 function upload(){
 var form_data = new FormData();
 form_data.append("current_path",current_path);
+
+if(files.length == 0) {//should create a new folder
+   create_new_folder();
+}
+if(files[0]["webkitRelativePath"]== ""){//upload a file
+    if(files[0] in current_files){
+       alert("File Exists!");
+       return;
+    }
+}
+
+else{//upload a folder
+    if(files[0]["webkitRelativePath"].split("/")[0] in current_folders)
+      alert("Folder Exists!");
+      return;
+}
+
 
 for(var i=0;i<files.length;i++){
 
@@ -517,6 +543,8 @@ function get_file_list(){
 
           //draw all the data & files in current_path on google map based
           data_points = data["data_points"];
+          current_files = data["files"];
+          current_folders = data["dirs"];
           console.info(data_points)
           draw_points(data_points);
 

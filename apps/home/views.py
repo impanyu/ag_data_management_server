@@ -327,9 +327,10 @@ def data(request):
                 #print("abs")
                 #print(upload_file_paths)
 
-                root_abs_path = os.path.join("/home", current_path, upload_file_paths[0].split("/")[0])
-                if os.path.exists(root_abs_path):
-                    return HttpResponse("Folder exists!")
+                if not upload_file_paths[0] == "":
+                    root_abs_path = os.path.join("/home", current_path, upload_file_paths[0].split("/")[0])
+                    if os.path.exists(root_abs_path):
+                        return HttpResponse("Folder exists!")
 
                 #upload each file
                 for file in upload_files:
