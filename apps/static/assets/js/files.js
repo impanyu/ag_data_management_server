@@ -377,14 +377,14 @@ if(files.length == 0) {//should create a new folder, but currently do not allow
        return;
 }
 if(files[0]["webkitRelativePath"]== ""){//upload a file
-    if(files[0]["name"] in current_files_names){
+    if(current_files_names.indexOf(files[0]["name"])!=-1){
        alert("File Exists!!!");
        return;
     }
 }
 
 else{//upload a folder
-    if(files[0]["webkitRelativePath"].split("/")[0] in current_folders_names){
+    if(current_folders_names.indexOf(files[0]["webkitRelativePath"].split("/")[0])!=-1){
       alert("Folder Exists!!!");
       return;
 
