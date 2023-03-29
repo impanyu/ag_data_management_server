@@ -377,14 +377,14 @@ if(files.length == 0) {//should create a new folder, but currently do not allow
        return;
 }
 if(files[0]["webkitRelativePath"]== ""){//upload a file
-    if(files[0]["name"] in current_files){
+    if(files[0]["name"] in current_files_names){
        alert("File Exists!!!");
        return;
     }
 }
 
 else{//upload a folder
-    if(files[0]["webkitRelativePath"].split("/")[0] in current_folders){
+    if(files[0]["webkitRelativePath"].split("/")[0] in current_folders_names){
       alert("Folder Exists!!!");
       return;
 
@@ -551,14 +551,15 @@ function get_file_list(){
 
           //draw all the data & files in current_path on google map based
           data_points = data["data_points"];
-          current_files = data["files"];
-          current_folders = data["dirs"];
+          current_files_names = [];
+          current_folders_names = [];
           console.info(data_points)
           draw_points(data_points);
 
 
           for(var i=0;i<data['dirs'].length;i++){
             dir=data["dirs"][i];
+            current_folders_names.push(dir["dir_name"]);
 
             item_html =  '<tr><td scope="row"><div class="media align-items-center"><div class="media-body"><i class="ni ni-folder-17 text-primary"></i><span class="name mb-0 text-sm"> <a href="/files.html?current_path='+current_path+'/'+dir["dir_name"] +'&dir=true">&nbsp; ' +dir["dir_name"]+
             '</a></span> </div></div></td>" + "<td class="budget">'+dir["created_time"]+'</td>"' +
@@ -653,6 +654,7 @@ function get_file_list(){
           //for(file of data.files){
           for(var i=0;i<data['files'].length;i++){
           file=data["files"][i];
+          current_files_names.push(file["file_name"]);
 
             item_html =  '<tr><td scope="row"><div class="media align-items-center"><div class="media-body"><span class="name mb-0 text-sm"> &nbsp;<a href="/files.html?current_path='+current_path+'/'+file["file_name"]+'&dir=false"> ' +file["file_name"]+ '</a></span> </div></div></td>" + "<td class="budget">'+file["created_time"]+'</td>"' +
                    '<td> <span class="badge badge-dot mr-4">  <span class="status">'+file["accessed_time"]+'</span></span></td>' +
