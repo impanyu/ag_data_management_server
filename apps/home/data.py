@@ -1100,7 +1100,7 @@ def get_meta_data(path):
     suffix = file_name.split(".")[1]
     if suffix == "shp":
         sf = shapefile.Reader(path)
-        meta_data["native"] = {"fields":sf.fields, "numRecords":sf.numRecords, "shapeType":sf.shapeType,"shapeTypeName":sf.shapeTypeName,"type":sf.__geo_interface__['type'],"all":sf.__geo_interface__}
+        meta_data["native"] = {"fields":sf.fields, "numRecords":sf.numRecords, "shapeType":sf.shapeType,"shapeTypeName":sf.shapeTypeName,"type":sf.__geo_interface__['type'],"all":sf.shapes()}
 
 
     return meta_data
