@@ -806,7 +806,7 @@ def aggregate_meta_data(dir_path):
 
 def generate_meta_data_for_file(file_path):
     meta_data = {}
-    meta_data["mode"] = []
+    meta_data["mode"] = ["Data"]
     meta_data["category"] = []
     meta_data["format"] = []
     meta_data["label"] = []
@@ -842,7 +842,7 @@ def generate_meta_data_for_file(file_path):
         meta_data["mode"].append("Data")
     else:
         meta_data["format"].append("Other")
-        meta_data["mode"].append("Other")
+
 
 
     if suffix == "tif" or suffix == "tiff":
