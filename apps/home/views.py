@@ -9,7 +9,7 @@ Copyright (c) 2019 - present AppSeed.us
 
 from django import template
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template import loader
 from django.urls import reverse
 from .data import *
@@ -22,6 +22,8 @@ from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 import os
 import shutil
+import zipfile
+
 import copy
 
 from PIL import Image
@@ -582,14 +584,42 @@ def data(request):
 
             return HttpResponse("delete complete!")
 
-        elif load_template == 'read_file':
+        elif load_template == 'get_file':
             file_path = request.POST['current_path']
-            read_file(file_path)
+            abs_path = os.path.join("/home", file_path)
 
-            response ={}
-            response = json.dumps(response)
 
-            return HttpResponse(response)
+
+            # Check if the path exists
+            if not os.path.exists(abs_path):
+                raise Http404("Path does not exist")
+
+            # Check if the path is a file or a folder
+            if os.path.isfile(abs_path):
+                # If the path is a file, open it and return the contents as a response
+                with open(abs_path, 'r') as file:
+                    response = HttpResponse(file.read())
+                response['Content-Type'] = 'text/plain'
+                response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
+                return response
+            else:
+                # If the path is a folder, create a ZIP archive of the folder and return it as a response
+                zip_filename = f"{os.path.basename(file_path)}.zip"
+                zip_file_path = os.path.join(settings.CORE_DIR, 'data', zip_filename)
+                with zipfile.ZipFile(zip_file_path, 'w') as zip:
+                    for root, dirs, files in os.walk(abs_path):
+                        for file in files:
+                            abs_file_path = os.path.join(root, file)
+                            rel_file_path = os.path.relpath(abs_file_path, abs_path)
+                            zip.write(abs_file_path, rel_file_path)
+                with open(zip_file_path, 'rb') as zip_file:
+                    response = HttpResponse(zip_file.read())
+                response['Content-Type'] = 'application/zip'
+                response['Content-Disposition'] = f'attachment; filename="{zip_filename}"'
+                os.remove(zip_file_path)
+                return response
+
+
 
         elif load_template == 'file_system':
             file_path = request.POST['current_path']

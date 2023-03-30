@@ -1105,5 +1105,9 @@ def get_meta_data(path):
 
     return meta_data
 
-def read_file(path):
-    return
+
+
+
+
+def get_file(path):
+   return

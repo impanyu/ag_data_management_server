@@ -480,7 +480,7 @@ shapefile.open("/read_file?"+current_path)
   .catch(error => console.error(error.stack));
 */
 
-/*
+
 $.post("/read_file",
         {
           current_path: current_path,
@@ -494,13 +494,34 @@ $.post("/read_file",
           bounding_box: [document.querySelector("#southwest").value, document.querySelector("#northeast").value]
           */
 
-/*
+
         },
         function(data, status){
             data=JSON.parse(data);
 
         });
-*/
+
+
+        $.post("/read_file", function(data, status) {
+          if (data) {
+                // Extract the filename from the Content-Disposition header
+                const filename = data.headers('Content-Disposition').split('filename=')[1];
+                // Trigger the download by creating an <a> element with a temporary href and click it
+                const blob = new Blob([data]);
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                a.click();
+                window.URL.revokeObjectURL(url);
+              } else {
+                console.error('Failed to download file');
+              }
+        }).fail(function() {
+          console.error('Error downloading file');
+        });
+
+
 }
 
 
