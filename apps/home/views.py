@@ -604,20 +604,23 @@ def data(request):
 
 
 
+
+
                 if suffix == "shp":
                     img_path = shp_to_image(abs_path)
                     with open(img_path, 'rb') as file:
                         response = HttpResponse(file.read())
                     response['Content-Type'] = 'application/octet-stream'
 
-                else:
+                elif suffix == "jpg" or suffix == "jpeg":
                     with open(abs_path, 'rb') as file:
                         response = HttpResponse(file.read())
-                    response['Content-Type'] = 'application/octet-stream'
+                    response['Content-Type'] = 'image/jpg'
 
-
-
-
+                elif suffix == "png":
+                    with open(abs_path, 'rb') as file:
+                        response = HttpResponse(file.read())
+                    response['Content-Type'] = 'image/png'
 
 
                 response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
