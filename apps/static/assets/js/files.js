@@ -466,7 +466,7 @@ async function get_meta_and_content(){
 }
 get_meta_and_content();
 
-function delete(){
+function delete_file_or_folder(){
 }
 
 function get_file_content(){
