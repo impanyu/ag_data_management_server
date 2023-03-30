@@ -507,6 +507,7 @@ shapefile.open("/read_file?"+current_path)
                 a.href = url;
                 a.download = filename;
                 a.click();
+                console.info(a);
                 window.URL.revokeObjectURL(url);
               } else {
                 console.error('Failed to download file');
