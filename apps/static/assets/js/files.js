@@ -454,7 +454,7 @@ async function get_meta_and_content(){
    if(current_path.indexOf(".")==-1){ //folder
      get_file_list();
    }
-   else{
+   else{//file
       get_file_content();
       document.querySelector("#file_table").style.display="none";
       document.querySelector("#upload_file_button").style.display="none";
@@ -492,7 +492,7 @@ $.post("/get_file",
 
 }
 
-function download(){
+function download_file_or_folder(){
 /*
 shapefile.open("/read_file?"+current_path)
   .then(source => source.read()
