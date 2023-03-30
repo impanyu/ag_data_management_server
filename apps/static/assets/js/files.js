@@ -543,7 +543,7 @@ x={};
                 // Trigger the download by creating an <a> element with a temporary href and click it
                 //const blob = new Blob([data]);
                 // const blob = new Blob([data], { type: contentType });
-                blob = xhr.response;
+                blob = xhr.responseText;
 
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
