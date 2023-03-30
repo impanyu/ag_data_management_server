@@ -439,7 +439,8 @@ function htmlToElement(html) {
 
 meta_data={};
 async function get_meta_and_content(){
-  get_meta_data();
+  /*await get_meta_data();
+
   if(meta_data["format"][0] == "Folder"){
     get_file_list();
 
@@ -447,6 +448,15 @@ async function get_meta_and_content(){
   else{
     get_file_content();
     document.querySelector("#file_table").style.display="none";
+   }
+   */
+   get_meta_data();
+   if(current_path.indexOf(".")==-1){ //folder
+     get_file_list();
+   }
+   else{
+      get_file_content();
+      document.querySelector("#file_table").style.display="none";
    }
 
 }
