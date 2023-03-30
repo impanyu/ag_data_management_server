@@ -17,6 +17,10 @@ from rasterio.crs import CRS
 from rasterio.warp import transform
 import shapefile
 
+import geopandas as gpd
+import matplotlib.pyplot as plt
+from matplotlib.colors import ListedColormap
+
 
 
 
@@ -829,6 +833,15 @@ def generate_meta_data_for_file(file_path):
     elif suffix == "shp":
         meta_data["format"]=["Shape"]
         meta_data["mode"]=["Data"]
+
+        # Read shapefile using geopandas
+        gdf = gpd.read_file(file_path)
+        gdf = gdf.to_crs('EPSG:4326')
+        # Get bounds of shapefile
+        bounds = gdf.total_bounds
+        minx, miny, maxx, maxy = bounds
+        meta_data["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
+
     elif suffix == "m" or suffix == ".mlx":
         meta_data["format"]=["Matlab"]
         meta_data["mode"]=["Tool"]
@@ -1102,6 +1115,14 @@ def get_meta_data(path):
         sf = shapefile.Reader(path)
         meta_data["native"] = {"fields":sf.fields, "numRecords":sf.numRecords, "shapeType":sf.shapeType,"shapeTypeName":sf.shapeTypeName,"type":sf.__geo_interface__['type']}
 
+        # Read shapefile using geopandas
+        gdf = gpd.read_file(path)
+        gdf = gdf.to_crs('EPSG:4326')
+        # Get bounds of shapefile
+        bounds = gdf.total_bounds
+        minx, miny, maxx, maxy = bounds
+        meta_data["native"]["spatial_range"]={"southwest":{"lat":miny,"lng":minx},"northeast":{"lat":maxy,"lng":maxx}}
+
 
     return meta_data
 
@@ -1111,3 +1132,33 @@ def get_meta_data(path):
 
 def get_file(path):
    return
+
+def plot_shapefile(shp_path, output_path):
+    # Read shapefile using geopandas
+    gdf = gpd.read_file(shp_path)
+    gdf = gdf.to_crs('EPSG:4326')
+
+    # Get bounds of shapefile
+    bounds = gdf.total_bounds
+    minx, miny, maxx, maxy = bounds
+
+    print(gdf.columns)
+
+    # Define colormap and plot the shapefile
+    cmap = ListedColormap(['white','green','blue','yellow','purple','red'])
+    ax = gdf.plot(column='ndre', cmap=cmap, figsize=(12, 12))
+
+    # Add title and remove axes
+    ax.set_title('Shapefile Plot')
+    ax.set_axis_off()
+
+    # Save figure to file
+    plt.savefig(output_path, dpi=300)
+
+    # Return bounds as a tuple of (minx, miny, maxx, maxy)
+    return (minx, miny, maxx, maxy)
+
+def shp_to_image(shp_path):
+    img_path = f"{shp_path[:-3]}.jpg"
+    plot_shapefile(shp_path,img_path)
+    return img_path

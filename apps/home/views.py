@@ -597,8 +597,26 @@ def data(request):
             # Check if the path is a file or a folder
             if os.path.isfile(abs_path):
                 # If the path is a file, open it and return the contents as a response
-                with open(abs_path, 'rb') as file:
-                    response = HttpResponse(file.read())
+                suffix = abs_path.split("/")[-1].split(".")[-1]
+
+                #if suffix == "tif" or suffix == "tiff":
+
+
+
+
+                if suffix == "shp":
+                    img_path = shp_to_image(abs_path)
+                    with open(img_path, 'rb') as file:
+                        response = HttpResponse(file.read())
+
+                else:
+                    with open(abs_path, 'rb') as file:
+                        response = HttpResponse(file.read())
+
+
+
+
+
                 response['Content-Type'] = 'application/octet-stream'
                 response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
                 return response
