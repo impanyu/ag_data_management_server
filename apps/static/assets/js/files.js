@@ -466,6 +466,9 @@ async function get_meta_and_content(){
 }
 get_meta_and_content();
 
+function delete(){
+}
+
 function get_file_content(){
 $.post("/get_file",
         {
