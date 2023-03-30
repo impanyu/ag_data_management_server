@@ -492,7 +492,7 @@ shapefile.open("/read_file?"+current_path)
 
                  const contentType = xhr.getResponseHeader('Content-Type');
                 // Extract the filename from the Content-Disposition header
-                const filename =xhr.getResponseHeader('Content-Disposition');//.split('filename=')[1];
+                const filename =xhr.getResponseHeader('Content-Disposition').split('filename=')[1];
                  // Extract the filename from the Content-Disposition header using a regular expression
                  //const match = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(data);
                 //const filename = decodeURIComponent(match[1].replace(/['"]/g, ''));
