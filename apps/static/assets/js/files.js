@@ -485,6 +485,8 @@ shapefile.open("/read_file?"+current_path)
 
         $.post("/get_file", function(data, status) {
           if (data) {
+                 console.info(data);
+
                 // Extract the filename from the Content-Disposition header
                 //const filename = data.headers('Content-Disposition').split('filename=')[1];
                  // Extract the filename from the Content-Disposition header using a regular expression
