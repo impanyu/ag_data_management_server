@@ -860,7 +860,7 @@ function get_meta_data(){
               }
 
               else if (meta_key == "time_range"){
-                if(meta_value["start"] == "01/01/2030 00:00:00" and meta_value["end"] == "01/01/2030 00:00:00")
+                if(meta_value["start"] == "01/01/2030 00:00:00" && meta_value["end"] == "01/01/2030 00:00:00")
                   continue;
                 document.querySelector("#start_date").value = meta_value["start"].substr(0,10);
                 document.querySelector("#end_date").value = meta_value["end"].substr(0,10);
@@ -868,7 +868,7 @@ function get_meta_data(){
               }
 
               else if (meta_key == "spatial_range"){
-                if(meta_value["northeast"]["lat"] == "0" and meta_value["northeast"]["lng"] == "-180")
+                if(meta_value["northeast"]["lat"] == "0"  &&  meta_value["northeast"]["lng"] == "-180")
                   continue;
                 document.querySelector("#northeast").value = "("+meta_value["northeast"]["lat"]+","+meta_value["northeast"]["lng"]+")";
 
