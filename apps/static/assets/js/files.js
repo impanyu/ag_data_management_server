@@ -483,7 +483,10 @@ shapefile.open("/read_file?"+current_path)
 
 
 
-        $.post("/get_file", function(data, status) {
+        $.post("/get_file",
+        {
+          current_path: current_path
+         }, function(data, status) {
           if (data) {
                  console.info(data);
 
