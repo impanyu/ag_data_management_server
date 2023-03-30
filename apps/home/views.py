@@ -587,7 +587,7 @@ def data(request):
         elif load_template == 'get_file':
             file_path = request.POST['current_path']
             abs_path = os.path.join("/home", file_path)
-
+            print(os.path.basename(file_path))
 
 
             # Check if the path exists
