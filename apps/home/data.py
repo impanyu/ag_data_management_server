@@ -1160,5 +1160,6 @@ def plot_shapefile(shp_path, output_path):
 
 def shp_to_image(shp_path):
     img_path = f"{shp_path[:-3]}.jpg"
-    plot_shapefile(shp_path,img_path)
+    img_path = shp_path
+    #plot_shapefile(shp_path,img_path)
     return img_path
