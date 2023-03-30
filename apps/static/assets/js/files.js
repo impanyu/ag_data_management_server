@@ -445,16 +445,19 @@ async function get_meta_and_content(){
 
     }
   else{
-    //get_file_content();
+    get_file_content();
     document.querySelector("#file_table").style.display="none";
    }
 
 }
 get_meta_and_content();
 
-
-
 function get_file_content(){
+
+
+}
+
+function download(){
 /*
 shapefile.open("/read_file?"+current_path)
   .then(source => source.read()
