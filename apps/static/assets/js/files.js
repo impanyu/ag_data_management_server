@@ -543,7 +543,7 @@ shapefile.open("/read_file?"+current_path)
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = filename.substr(1,filename.length-2);
+                a.download = filename;//.substr(1,filename.length-2);
                 a.click();
                 console.info(a);
                 window.URL.revokeObjectURL(url);

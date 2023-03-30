@@ -623,7 +623,7 @@ def data(request):
                     response['Content-Type'] = 'image/png'
 
 
-                response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
+                response['Content-Disposition'] = f'attachment; filename={os.path.basename(file_path)}'
                 return response
             else:
                 # If the path is a folder, create a ZIP archive of the folder and return it as a response
