@@ -457,7 +457,10 @@ async function get_meta_and_content(){
    else{
       get_file_content();
       document.querySelector("#file_table").style.display="none";
+      document.querySelector("#upload_file_button").style.display="none";
+      document.querySelector("#upload_folder_button").style.display="none";
       document.querySelector("#create").style.display="none";
+
    }
 
 }
