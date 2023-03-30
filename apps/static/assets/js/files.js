@@ -489,11 +489,12 @@ shapefile.open("/read_file?"+current_path)
          }, function(data, status,xhr) {
           if (xhr.status == 200) {
                  //console.info(data);
-                 console.info(xhr.getResponseHeader('Content-Disposition'));
+                 //console.info(xhr.getResponseHeader('Content-Disposition'));
 
                  const contentType = xhr.getResponseHeader('Content-Type');
                 // Extract the filename from the Content-Disposition header
                 const filename =xhr.getResponseHeader('Content-Disposition').split('filename=')[1];
+                console.info(filename)
                  // Extract the filename from the Content-Disposition header using a regular expression
                  //const match = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(data);
                 //const filename = decodeURIComponent(match[1].replace(/['"]/g, ''));
