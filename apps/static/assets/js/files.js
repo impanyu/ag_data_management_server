@@ -520,7 +520,7 @@ shapefile.open("/read_file?"+current_path)
 
 
 
-
+xhr={};
 
 
         $.post("/get_file",
@@ -543,6 +543,7 @@ shapefile.open("/read_file?"+current_path)
                 //const blob = new Blob([data]);
                 // const blob = new Blob([data], { type: contentType });
                 blob = xhr.response;
+
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
