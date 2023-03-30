@@ -486,18 +486,20 @@ shapefile.open("/read_file?"+current_path)
         $.post("/get_file",
         {
           current_path: current_path
-         }, function(data, status) {
-          if (data) {
-                 console.info(data);
+         }, function(data, status,xhr) {
+          if (xhr.status == 200) {
+                 //console.info(data);
 
+                 const contentType = xhr.getResponseHeader('Content-Type');
                 // Extract the filename from the Content-Disposition header
-                const filename = data.headers('Content-Disposition').split('filename=')[1];
+                const filename =xhr.getResponseHeader('Content-Disposition');//.split('filename=')[1];
                  // Extract the filename from the Content-Disposition header using a regular expression
                  //const match = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(data);
                 //const filename = decodeURIComponent(match[1].replace(/['"]/g, ''));
 
                 // Trigger the download by creating an <a> element with a temporary href and click it
-                const blob = new Blob([data]);
+                //const blob = new Blob([data]);
+                 const blob = new Blob([data], { type: contentType });
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
