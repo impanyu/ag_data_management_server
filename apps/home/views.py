@@ -608,6 +608,7 @@ def data(request):
                     img_path = shp_to_image(abs_path)
                     with open(img_path, 'rb') as file:
                         response = HttpResponse(file.read())
+                    response['Content-Type'] = 'application/octet-stream'
 
                 else:
                     with open(abs_path, 'rb') as file:

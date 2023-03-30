@@ -838,7 +838,7 @@ def generate_meta_data_for_file(file_path):
         gdf = gpd.read_file(file_path)
         gdf = gdf.to_crs('EPSG:4326')
         # Get bounds of shapefile
-        bounds = gdf.total_bounds
+        bounds = gdf.total_bounds if not gdf.empty else (0, -180, 0, -180)
         minx, miny, maxx, maxy = bounds
         meta_data["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
 
@@ -1119,7 +1119,7 @@ def get_meta_data(path):
         gdf = gpd.read_file(path)
         gdf = gdf.to_crs('EPSG:4326')
         # Get bounds of shapefile
-        bounds = gdf.total_bounds
+        bounds = gdf.total_bounds if not gdf.empty else (0, -180, 0, -180)
         minx, miny, maxx, maxy = bounds
         meta_data["native"]["spatial_range"]={"southwest":{"lat":miny,"lng":minx},"northeast":{"lat":maxy,"lng":maxx}}
 
@@ -1139,7 +1139,7 @@ def plot_shapefile(shp_path, output_path):
     gdf = gdf.to_crs('EPSG:4326')
 
     # Get bounds of shapefile
-    bounds = gdf.total_bounds
+    bounds = gdf.total_bounds if not gdf.empty else (0, -180, 0, -180)
     minx, miny, maxx, maxy = bounds
 
     print(gdf.columns)

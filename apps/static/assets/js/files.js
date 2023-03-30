@@ -467,7 +467,25 @@ async function get_meta_and_content(){
 get_meta_and_content();
 
 function get_file_content(){
+$.post("/get_file",
+        {
+          current_path: current_path
+         }, function(data, status,xhr) {
+          if (xhr.status == 200) {
+             console.info(200);
+             const contentType = xhr.getResponseHeader('Content-Type');
+             // Extract the filename from the Content-Disposition header
+             const filename =xhr.getResponseHeader('Content-Disposition').split('filename=')[1];
 
+             const blob = new Blob([data], { type: contentType });
+             const url = window.URL.createObjectURL(blob);
+             const img = document.createElement('img');
+             img.src = url;
+             document.querySelector("#file_content").appendChild(img);
+
+
+          }
+       });
 
 }
 
