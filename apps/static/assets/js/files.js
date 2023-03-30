@@ -439,7 +439,7 @@ function htmlToElement(html) {
 
 meta_data={};
 async function get_meta_and_content(){
-  await get_meta_data();
+  get_meta_data();
   if(meta_data["format"][0] == "Folder"){
     get_file_list();
 
