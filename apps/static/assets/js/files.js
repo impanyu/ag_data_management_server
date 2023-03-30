@@ -489,6 +489,7 @@ shapefile.open("/read_file?"+current_path)
          }, function(data, status,xhr) {
           if (xhr.status == 200) {
                  //console.info(data);
+                 console.info(xhr.getResponseHeader('Content-Disposition'));
 
                  const contentType = xhr.getResponseHeader('Content-Type');
                 // Extract the filename from the Content-Disposition header
