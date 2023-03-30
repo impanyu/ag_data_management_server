@@ -521,6 +521,8 @@ shapefile.open("/read_file?"+current_path)
 
 
 
+
+
         $.post("/get_file",
         {
           current_path: current_path
@@ -539,7 +541,8 @@ shapefile.open("/read_file?"+current_path)
 
                 // Trigger the download by creating an <a> element with a temporary href and click it
                 //const blob = new Blob([data]);
-                 const blob = new Blob([data], { type: contentType });
+                // const blob = new Blob([data], { type: contentType });
+                blob = xhr.response;
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
