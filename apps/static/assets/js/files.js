@@ -520,7 +520,7 @@ shapefile.open("/read_file?"+current_path)
 
 
 
-xhr={};
+x={};
 
 
         $.post("/get_file",
@@ -528,6 +528,7 @@ xhr={};
           current_path: current_path
          }, function(data, status,xhr) {
           if (xhr.status == 200) {
+                 x = xhr;
                  //console.info(data);
                  //console.info(xhr.getResponseHeader('Content-Disposition'));
 
