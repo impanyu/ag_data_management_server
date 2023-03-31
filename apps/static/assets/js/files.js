@@ -522,7 +522,7 @@ else if (suffix == "tif" || suffix == "tiff" || suffix == "png" || suffix == "jp
                     const url = window.URL.createObjectURL(response);
 
 
-                   if (meta_data["native"]["spatial_range"]["northeast"]["lat"] == "0" &&  meta_data["native"]["spatial_range"]["northeast"]["lng"] == "-180"){
+                   if (meta_data["spatial_range"]["northeast"]["lat"] == "0" &&  meta_data["spatial_range"]["northeast"]["lng"] == "-180"){
                    //no geospatial info, only render a img
 
                         // Create a URL object from the blob response
@@ -538,10 +538,10 @@ else if (suffix == "tif" || suffix == "tiff" || suffix == "png" || suffix == "jp
                    //has geospatial info, render on map
                    else{
 
-                          north = parseFloat(meta_data["native"]["spatial_range"]["northeast"]["lat"]);
-                          south = parseFloat(meta_data["native"]["spatial_range"]["southwest"]["lat"]);
-                          east = meta_data["native"]["spatial_range"]["northeast"]["lng"];
-                          west = meta_data["native"]["spatial_range"]["southwest"]["lng"];
+                          north = parseFloat(meta_data["spatial_range"]["northeast"]["lat"]);
+                          south = parseFloat(meta_data["spatial_range"]["southwest"]["lat"]);
+                          east = meta_data["spatial_range"]["northeast"]["lng"];
+                          west = meta_data["spatial_range"]["southwest"]["lng"];
 
                           const imageBounds = {
                               north: north,
