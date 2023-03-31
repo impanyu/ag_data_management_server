@@ -1148,7 +1148,8 @@ def plot_shapefile(shp_path, output_path):
     cmap = ListedColormap(['white','green','blue','yellow','purple','red'])
     cmap = ListedColormap(['#1a9850','#91cf60','#d9ef8b','#fee08b','#fc8d59','#d73027','#a50026','#f46d43','#fdae61','#f0f0f0'])
 
-    ax = gdf.plot(column=gdf.columns[0], cmap=cmap, figsize=(12, 12))
+    aspect_ratio =(maxy - miny)/ (maxx-minx)
+    ax = gdf.plot(column=gdf.columns[0], cmap=cmap, figsize=(12, 12*aspect_ratio))
 
 
     # Set x and y limits based on the converted coordinates
@@ -1158,12 +1159,17 @@ def plot_shapefile(shp_path, output_path):
     # Add title and remove axes
     #ax.set_title('Shapefile Plot')
     ax.set_axis_off()
+    # remove all the margins
+    plt.subplots_adjust(left=0, right=1, bottom=0, top=1, wspace=0, hspace=0)
+    ax.margins(0)
 
     # Save figure to file
     plt.savefig(output_path, dpi=300)
 
     # Return bounds as a tuple of (minx, miny, maxx, maxy)
-    return (minx, miny, maxx, maxy)
+    #return (minx, miny, maxx, maxy)
+
+
 
 def shp_to_image(shp_path):
     img_path = f"{shp_path[:-3]}png"
