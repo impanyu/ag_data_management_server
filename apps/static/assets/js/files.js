@@ -515,13 +515,42 @@ else if (suffix == "tif" || suffix == "tiff" || suffix == "png" || suffix == "jp
                   const contentType = xhr.getResponseHeader('Content-Type');
                    // Extract the filename from the Content-Disposition header
                    const filename =xhr.getResponseHeader('Content-Disposition').split('filename=')[1];
-                    // Create a URL object from the blob response
                     const url = window.URL.createObjectURL(response);
 
-                     const img = document.createElement('img');
-                     img.src = url;
-                     img.style.width="100%";
-                     document.querySelector("#file_content").appendChild(img);
+                   if (meta_data["native"]["spatial_range"]["northeast"]["lat"] == "0" &&  meta_data["native"]["spatial_range"]["northeast"]["lng"] == "-180"){
+                   //no geospatial info, only render a img
+
+                        // Create a URL object from the blob response
+
+
+                         const img = document.createElement('img');
+                         img.src = url;
+                         img.style.width="100%";
+                         document.querySelector("#file_content").appendChild(img);
+
+                     }
+
+                   //has geospatial info, render on map
+                   else{
+
+                          const imageBounds = {
+                              north: parseFloat(meta_data["native"]["spatial_range"]["northeast"]["lat"]),
+                              south: parseFloat(meta_data["native"]["spatial_range"]["southwest"]["lat"]),
+                              east:  meta_data["native"]["spatial_range"]["northeast"]["lng"],
+                              west:  meta_data["native"]["spatial_range"]["southwest"]["lng"]
+
+
+                          };
+
+
+
+                        const overlay = new google.maps.GroundOverlay(url, imageBounds);
+
+                        overlay.setMap(map);
+
+
+                   }
+
 
                 },
                 error: function(xhr, status, error) {
@@ -1102,3 +1131,64 @@ $('body').on('focus',".datepicker input", function(){
 
 
 
+
+
+function init_map_main(){
+  map_main = new google.maps.Map(
+    document.getElementById("map_main"),
+    {
+      center: { lat: 40.897, lng: -96.644 },
+      zoom: 11,
+    }
+  );
+
+
+      drawingManager = new google.maps.drawing.DrawingManager({
+    drawingMode: google.maps.drawing.OverlayType.RECTANGLE,
+    drawingControl: true,
+    drawingControlOptions: {
+      position: google.maps.ControlPosition.TOP_CENTER,
+      drawingModes: [
+        google.maps.drawing.OverlayType.RECTANGLE,
+      ],
+    },
+    markerOptions: {
+      icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
+    },
+    rectangleOptions: {
+      fillColor: "#0000ff",
+      fillOpacity: .6,
+      strokeWeight: 3,
+      clickable: false,
+      editable: true,
+      zIndex: 1,
+    },
+  });
+
+  drawingManager.setMap(map_main);
+
+  google.maps.event.addListener(drawingManager, "overlaycomplete", function(event){
+       if(lastOverlay)
+           lastOverlay.setMap(null);
+
+        event.overlay.overlayType = event.type;
+        lastOverlay = event.overlay; // Save it
+
+        var bounds = lastOverlay.getBounds();
+        end = bounds.getNorthEast();
+        start = bounds.getSouthWest();
+
+        document.getElementById("southwest").setAttribute("value",start) ;
+        document.getElementById("northeast").setAttribute("value",end);
+
+
+        //map.drawingManager.setDrawingMode(null); // Return to 'hand' mode
+});
+
+
+
+
+
+
+
+}
