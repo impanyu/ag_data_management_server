@@ -554,7 +554,7 @@ else if (suffix == "tif" || suffix == "tiff" || suffix == "png" || suffix == "jp
                         map_main.setZoom(15);
                         console.info(url);
 
-                        const overlay = new google.maps.GroundOverlay(https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/320px-Image_created_with_a_mobile_phone.png, imageBounds);
+                        const overlay = new google.maps.GroundOverlay("https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/320px-Image_created_with_a_mobile_phone.png", imageBounds);
 
                         overlay.setMap(map);
 
