@@ -555,7 +555,7 @@ shapefile.open("/read_file?"+current_path)
               } else {
                 console.error('Failed to download file');
               }
-        }).fail(function() {
+        },"blob").fail(function() {
           console.error('Error downloading file');
         });
 
