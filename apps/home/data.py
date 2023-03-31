@@ -1136,17 +1136,25 @@ def get_file(path):
 def plot_shapefile(shp_path, output_path):
     # Read shapefile using geopandas
     gdf = gpd.read_file(shp_path)
-    #gdf = gdf.to_crs('EPSG:4326')
+    gdf = gdf.to_crs('EPSG:4326')
 
     # Get bounds of shapefile
-    #bounds = gdf.total_bounds if not gdf.empty else (0, -180, 0, -180)
-    #minx, miny, maxx, maxy = bounds
+    bounds = gdf.total_bounds if not gdf.empty else (-180, 0, -180, 0)
+    minx, miny, maxx, maxy = bounds
 
     #print(gdf.columns)
 
     # Define colormap and plot the shapefile
     cmap = ListedColormap(['white','green','blue','yellow','purple','red'])
     ax = gdf.plot(column=gdf.columns[0], cmap=cmap, figsize=(12, 12))
+
+    plot_crs = ax.projection
+    xmin, ymin = plot_crs.transform_point((minx, miny), gdf.crs)
+    xmax, ymax = plot_crs.transform_point((maxx, maxy), gdf.crs)
+
+    # Set x and y limits based on the converted coordinates
+    ax.set_xlim(xmin, xmax)
+    ax.set_ylim(ymin, ymax)
 
     # Add title and remove axes
     ax.set_title('Shapefile Plot')
@@ -1159,7 +1167,7 @@ def plot_shapefile(shp_path, output_path):
     #return (minx, miny, maxx, maxy)
 
 def shp_to_image(shp_path):
-    img_path = f"{shp_path[:-3]}jpg"
+    img_path = f"{shp_path[:-3]}png"
     if os.path.exists(img_path):
         return img_path
     plot_shapefile(shp_path,img_path)
