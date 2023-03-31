@@ -452,7 +452,7 @@ async function get_meta_and_content(){
    */
 
    if(current_path.indexOf(".")==-1){ //folder
-   get_meta_data();
+    get_meta_data();
      get_file_list();
    }
    else{//file
