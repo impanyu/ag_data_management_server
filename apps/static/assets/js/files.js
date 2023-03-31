@@ -455,11 +455,12 @@ async function get_meta_and_content(){
      get_file_list();
    }
    else{//file
-      get_file_content();
+
       document.querySelector("#file_table").style.display="none";
       document.querySelector("#upload_file_button").style.display="none";
       document.querySelector("#upload_folder_button").style.display="none";
       document.querySelector("#create").style.display="none";
+      get_file_content();
 
    }
 
@@ -471,6 +472,7 @@ function delete_file_or_folder(){
 
 
 x={};
+u = "";
 function get_file_content(){
 suffix = current_path.split(".")[1];
 
@@ -517,6 +519,7 @@ else if (suffix == "tif" || suffix == "tiff" || suffix == "png" || suffix == "jp
                    const filename =xhr.getResponseHeader('Content-Disposition').split('filename=')[1];
                     const url = window.URL.createObjectURL(response);
 
+
                    if (meta_data["native"]["spatial_range"]["northeast"]["lat"] == "0" &&  meta_data["native"]["spatial_range"]["northeast"]["lng"] == "-180"){
                    //no geospatial info, only render a img
 
@@ -551,7 +554,7 @@ else if (suffix == "tif" || suffix == "tiff" || suffix == "png" || suffix == "jp
                         map_main.setZoom(15);
                         console.info(url);
 
-                        const overlay = new google.maps.GroundOverlay(url, imageBounds);
+                        const overlay = new google.maps.GroundOverlay(https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/320px-Image_created_with_a_mobile_phone.png, imageBounds);
 
                         overlay.setMap(map);
 
