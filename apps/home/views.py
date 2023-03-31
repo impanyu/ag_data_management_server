@@ -622,6 +622,12 @@ def data(request):
                         response = HttpResponse(file.read())
                     response['Content-Type'] = 'image/png'
 
+                else:
+                    with open(abs_path, 'rb') as file:
+                        response = HttpResponse(file.read())
+                    response['Content-Type'] = 'text/plain'
+
+
 
                 response['Content-Disposition'] = f'attachment; filename={os.path.basename(file_path)}'
                 return response
