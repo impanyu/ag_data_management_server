@@ -733,7 +733,7 @@ function get_file_list(){
           current_files_names = [];
           current_folders_names = [];
           console.info(data_points)
-          draw_points(data_points);
+          //draw_points(data_points);
 
 
           for(var i=0;i<data['dirs'].length;i++){
