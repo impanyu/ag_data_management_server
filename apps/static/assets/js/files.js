@@ -533,16 +533,22 @@ else if (suffix == "tif" || suffix == "tiff" || suffix == "png" || suffix == "jp
                    //has geospatial info, render on map
                    else{
 
-                          const imageBounds = {
-                              north: parseFloat(meta_data["native"]["spatial_range"]["northeast"]["lat"]),
-                              south: parseFloat(meta_data["native"]["spatial_range"]["southwest"]["lat"]),
-                              east:  meta_data["native"]["spatial_range"]["northeast"]["lng"],
-                              west:  meta_data["native"]["spatial_range"]["southwest"]["lng"]
+                          north = parseFloat(meta_data["native"]["spatial_range"]["northeast"]["lat"]);
+                          south = parseFloat(meta_data["native"]["spatial_range"]["southwest"]["lat"]);
+                          east = meta_data["native"]["spatial_range"]["northeast"]["lng"];
+                          west = meta_data["native"]["spatial_range"]["southwest"]["lng"];
 
+                          const imageBounds = {
+                              north: north,
+                              south: south,
+                              east:  east,
+                              west:  west
 
                           };
 
-
+                        new_center = new google.maps.Latlng((north+south)/2,(east+west)/2);
+                        map_main.setCenter(new_center);
+                        map_main.setZoom(15);
 
                         const overlay = new google.maps.GroundOverlay(url, imageBounds);
 
