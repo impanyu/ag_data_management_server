@@ -1163,11 +1163,28 @@ def plot_shapefile(shp_path, output_path):
     plt.savefig(output_path, dpi=300)
 
     # Return bounds as a tuple of (minx, miny, maxx, maxy)
-    #return (minx, miny, maxx, maxy)
+    return (minx, miny, maxx, maxy)
 
 def shp_to_image(shp_path):
     img_path = f"{shp_path[:-3]}png"
     if os.path.exists(img_path):
         return img_path
-    plot_shapefile(shp_path,img_path)
+    minx, miny, maxx, maxy = plot_shapefile(shp_path,img_path)
+    meta_data = generate_meta_data_for_file(img_path)
+    meta_data["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
+
+    meta_data_file_name = "_".join(img_path.split("/")[1:]) + ".json"
+
+    with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "w") as meta_data_file:
+        json.dump(meta_data, meta_data_file)
+
+    parent_meta_data_file_name = "/".join(meta_data_file_name.split("/")[:-1])
+    with open(os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name), "r") as parent_meta_data_file:
+        parent_meta_data = json.load(parent_meta_data_file)
+
+    parent_meta_data["subdirs"].append(img_path)
+    with open(os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name), "w") as parent_meta_data_file:
+        json.dump(parent_meta_data,parent_meta_data_file)
+
+
     return img_path
