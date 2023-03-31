@@ -1136,13 +1136,13 @@ def get_file(path):
 def plot_shapefile(shp_path, output_path):
     # Read shapefile using geopandas
     gdf = gpd.read_file(shp_path)
-    gdf = gdf.to_crs('EPSG:4326')
+    #gdf = gdf.to_crs('EPSG:4326')
 
     # Get bounds of shapefile
-    bounds = gdf.total_bounds if not gdf.empty else (0, -180, 0, -180)
-    minx, miny, maxx, maxy = bounds
+    #bounds = gdf.total_bounds if not gdf.empty else (0, -180, 0, -180)
+    #minx, miny, maxx, maxy = bounds
 
-    print(gdf.columns)
+    #print(gdf.columns)
 
     # Define colormap and plot the shapefile
     cmap = ListedColormap(['white','green','blue','yellow','purple','red'])
@@ -1156,9 +1156,9 @@ def plot_shapefile(shp_path, output_path):
     plt.savefig(output_path, dpi=300)
 
     # Return bounds as a tuple of (minx, miny, maxx, maxy)
-    return (minx, miny, maxx, maxy)
+    #return (minx, miny, maxx, maxy)
 
 def shp_to_image(shp_path):
     img_path = f"{shp_path[:-3]}.jpg"
-    #plot_shapefile(shp_path,img_path)
+    plot_shapefile(shp_path,img_path)
     return img_path
