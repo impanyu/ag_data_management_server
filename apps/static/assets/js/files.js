@@ -549,6 +549,7 @@ else if (suffix == "tif" || suffix == "tiff" || suffix == "png" || suffix == "jp
                         new_center = new google.maps.LatLng((north+south)/2,(east+west)/2);
                         map_main.setCenter(new_center);
                         map_main.setZoom(15);
+                        console.info(url);
 
                         const overlay = new google.maps.GroundOverlay(url, imageBounds);
 
