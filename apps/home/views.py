@@ -656,7 +656,7 @@ def data(request):
             else:
                 with open(abs_path, 'rb') as file:
                     response = HttpResponse(file.read())
-                response['Content-Type'] = 'text/plain'
+                response['Content-Type'] = 'application/octet-stream'
                 response['Content-Disposition'] = f'inline; filename={os.path.basename(file_path)}'
 
 
