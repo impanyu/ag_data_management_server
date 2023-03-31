@@ -607,6 +607,7 @@ def data(request):
 
 
                 if suffix == "shp":
+
                     img_path = shp_to_image(abs_path)
                     with open(img_path, 'rb') as file:
                         response = HttpResponse(file.read())

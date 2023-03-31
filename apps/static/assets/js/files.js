@@ -487,6 +487,7 @@ $.ajax({
 
          const img = document.createElement('img');
          img.src = url;
+         img.style.width="100%";
          document.querySelector("#file_content").appendChild(img);
 
     },
