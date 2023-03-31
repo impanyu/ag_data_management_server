@@ -261,7 +261,7 @@ function add_to_domain(path,file_name){
      map_container.style.marginLeft = "50px";
      add_to_domain_box.appendChild(map_container);
 
-    document.getElementById("attr").value = file_name.substr(0,file_name.length-file_name.split(".")[file_name.split(".").length-1].length-1);
+    document.ElementById("attr").value = file_name.substr(0,file_name.length-file_name.split(".")[file_name.split(".").length-1].length-1);
 
 
 
@@ -450,8 +450,9 @@ async function get_meta_and_content(){
     document.querySelector("#file_table").style.display="none";
    }
    */
-   await get_meta_data();
+
    if(current_path.indexOf(".")==-1){ //folder
+   get_meta_data();
      get_file_list();
    }
    else{//file
@@ -460,6 +461,7 @@ async function get_meta_and_content(){
       document.querySelector("#upload_file_button").style.display="none";
       document.querySelector("#upload_folder_button").style.display="none";
       document.querySelector("#create").style.display="none";
+      await get_meta_data();
       get_file_content();
 
    }
@@ -554,9 +556,9 @@ else if (suffix == "tif" || suffix == "tiff" || suffix == "png" || suffix == "jp
                         map_main.setZoom(15);
                         console.info(url);
 
-                        const overlay = new google.maps.GroundOverlay("https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/320px-Image_created_with_a_mobile_phone.png", imageBounds);
+                        const overlay = new google.maps.GroundOverlay(url, imageBounds);
 
-                        overlay.setMap(map);
+                        overlay.setMap(map_main);
 
 
                    }
