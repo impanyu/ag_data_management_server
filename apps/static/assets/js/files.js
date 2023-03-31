@@ -470,6 +470,34 @@ function delete_file_or_folder(){
 }
 
 function get_file_content(){
+$.ajax({
+    url: '/get_file',
+    type: 'POST',
+    data: {current_path: current_path},
+    xhrFields: {
+        responseType: 'blob'
+    },
+    success: function(response,status,xhr) {
+      const contentType = xhr.getResponseHeader('Content-Type');
+       // Extract the filename from the Content-Disposition header
+       const filename =xhr.getResponseHeader('Content-Disposition').split('filename=')[1];
+        // Create a URL object from the blob response
+        const url = window.URL.createObjectURL(response);
+
+         const img = document.createElement('img');
+         img.src = url;
+         document.querySelector("#file_content").appendChild(img);
+
+    },
+    error: function(xhr, status, error) {
+
+        console.error('Error retrieving file:', error);
+    }
+});
+
+
+
+/*
 $.post("/get_file",
         {
           current_path: current_path
@@ -489,9 +517,9 @@ $.post("/get_file",
 
           }
        });
-
+*/
 }
-x={};
+
 function download_file_or_folder(){
 /*
 shapefile.open("/read_file?"+current_path)
@@ -539,12 +567,10 @@ $.ajax({
 
     },
     error: function(xhr, status, error) {
-         x=xhr;
-        console.error('Error retrieving image:', error);
+
+        console.error('Error retrieving file:', error);
     }
 });
-
-
 
 
 /*

@@ -628,7 +628,6 @@ def data(request):
                     response['Content-Type'] = 'text/plain'
 
 
-
                 response['Content-Disposition'] = f'attachment; filename={os.path.basename(file_path)}'
                 return response
             else:
