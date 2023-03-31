@@ -537,6 +537,7 @@ $.ajax({
 
     },
     error: function(xhr, status, error) {
+         x=xhr;
         console.error('Error retrieving image:', error);
     }
 });
