@@ -522,7 +522,9 @@ $.ajax({
     url: '/get_file',
     type: 'POST',
     data: {current_path: current_path},
-    dataType: 'blob',  // Specify the expected response type
+    xhrFields: {
+        responseType: 'blob'
+    },
     success: function(response,status,xhr) {
       const contentType = xhr.getResponseHeader('Content-Type');
        // Extract the filename from the Content-Disposition header
