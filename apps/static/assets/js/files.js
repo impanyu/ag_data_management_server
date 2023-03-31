@@ -491,7 +491,7 @@ $.post("/get_file",
        });
 
 }
-
+x={};
 function download_file_or_folder(){
 /*
 shapefile.open("/read_file?"+current_path)
@@ -520,7 +520,7 @@ shapefile.open("/read_file?"+current_path)
 
 
 
-x={};
+
 
 
         $.post("/get_file",
