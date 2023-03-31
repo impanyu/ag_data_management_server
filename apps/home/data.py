@@ -1146,7 +1146,7 @@ def plot_shapefile(shp_path, output_path):
 
     # Define colormap and plot the shapefile
     cmap = ListedColormap(['white','green','blue','yellow','purple','red'])
-    ax = gdf.plot(column='ndre', cmap=cmap, figsize=(12, 12))
+    ax = gdf.plot(column=gdf.columns[0], cmap=cmap, figsize=(12, 12))
 
     # Add title and remove axes
     ax.set_title('Shapefile Plot')
