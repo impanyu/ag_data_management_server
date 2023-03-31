@@ -1159,7 +1159,7 @@ def plot_shapefile(shp_path, output_path):
     #return (minx, miny, maxx, maxy)
 
 def shp_to_image(shp_path):
-    img_path = f"{shp_path[:-3]}.jpg"
+    img_path = f"{shp_path[:-3]}jpg"
     if os.path.exists(img_path):
         return img_path
     plot_shapefile(shp_path,img_path)

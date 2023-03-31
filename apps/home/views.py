@@ -584,53 +584,21 @@ def data(request):
 
             return HttpResponse("delete complete!")
 
-        elif load_template == 'get_file':
+        elif load_template == 'download_file': #directly download file or folder
             file_path = request.POST['current_path']
             abs_path = os.path.join("/home", file_path)
-            print(os.path.basename(file_path))
-
 
             # Check if the path exists
             if not os.path.exists(abs_path):
                 raise Http404("Path does not exist")
 
-            # Check if the path is a file or a folder
             if os.path.isfile(abs_path):
-                # If the path is a file, open it and return the contents as a response
-                suffix = abs_path.split("/")[-1].split(".")[-1]
 
-                #if suffix == "tif" or suffix == "tiff":
-
-
-
-
-
-
-                if suffix == "shp":
-
-                    img_path = shp_to_image(abs_path)
-                    with open(img_path, 'rb') as file:
-                        response = HttpResponse(file.read())
-                    response['Content-Type'] = 'image/jpg'
-
-                elif suffix == "jpg" or suffix == "jpeg":
-                    with open(abs_path, 'rb') as file:
-                        response = HttpResponse(file.read())
-                    response['Content-Type'] = 'image/jpg'
-
-                elif suffix == "png":
-                    with open(abs_path, 'rb') as file:
-                        response = HttpResponse(file.read())
-                    response['Content-Type'] = 'image/png'
-
-                else:
-                    with open(abs_path, 'rb') as file:
-                        response = HttpResponse(file.read())
-                    response['Content-Type'] = 'text/plain'
-
-
+                with open(abs_path, 'rb') as file:
+                    response = HttpResponse(file.read())
+                response['Content-Type'] = 'application/octet-stream'
                 response['Content-Disposition'] = f'attachment; filename={os.path.basename(file_path)}'
-                return response
+
             else:
                 # If the path is a folder, create a ZIP archive of the folder and return it as a response
                 zip_filename = f"{os.path.basename(file_path)}.zip"
@@ -646,7 +614,50 @@ def data(request):
                 response['Content-Type'] = 'application/zip'
                 response['Content-Disposition'] = f'attachment; filename="{zip_filename}"'
                 os.remove(zip_file_path)
-                return response
+
+            return response
+
+
+        elif load_template == 'get_file': # try to display file in front end
+            file_path = request.POST['current_path']
+            abs_path = os.path.join("/home", file_path)
+            print(os.path.basename(file_path))
+
+
+            # Check if the path exists
+            if not os.path.exists(abs_path):
+                raise Http404("Path does not exist")
+
+            suffix = abs_path.split("/")[-1].split(".")[-1]
+
+            #if suffix == "tif" or suffix == "tiff":
+
+
+            if suffix == "shp":
+
+                img_path = shp_to_image(abs_path)
+                with open(img_path, 'rb') as file:
+                    response = HttpResponse(file.read())
+                response['Content-Type'] = 'image/jpg'
+
+            elif suffix == "jpg" or suffix == "jpeg":
+                with open(abs_path, 'rb') as file:
+                    response = HttpResponse(file.read())
+                response['Content-Type'] = 'image/jpg'
+
+            elif suffix == "png":
+                with open(abs_path, 'rb') as file:
+                    response = HttpResponse(file.read())
+                response['Content-Type'] = 'image/png'
+
+            else:
+                with open(abs_path, 'rb') as file:
+                    response = HttpResponse(file.read())
+                response['Content-Type'] = 'text/plain'
+
+
+            response['Content-Disposition'] = f'inline; filename={os.path.basename(file_path)}'
+            return response
 
 
 

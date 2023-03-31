@@ -468,37 +468,70 @@ get_meta_and_content();
 
 function delete_file_or_folder(){
 }
+
+
 x={};
 function get_file_content(){
-$.ajax({
-    url: '/get_file',
-    type: 'POST',
-    data: {current_path: current_path},
-    xhrFields: {
-        responseType: 'blob'
-    },
-    success: function(response,status,xhr) {
-      x=xhr;
-      const contentType = xhr.getResponseHeader('Content-Type');
-       // Extract the filename from the Content-Disposition header
-       const filename =xhr.getResponseHeader('Content-Disposition').split('filename=')[1];
-        // Create a URL object from the blob response
-        const url = window.URL.createObjectURL(response);
+suffix = current_path.split(".")[1];
 
-         const img = document.createElement('img');
-         img.src = url;
-         img.style.width="100%";
-         document.querySelector("#file_content").appendChild(img);
+if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suffix == "r" || suffix == "csv" || suffix == "xlsx" || suffix == "xls"){
+       $.ajax({
+                url: '/get_file',
+                type: 'POST',
+                data: {current_path: current_path},
+                xhrFields: {
+                    responseType: 'text'
+                },
+                success: function(response,status,xhr) {
+                  x=xhr;
+                  const contentType = xhr.getResponseHeader('Content-Type');
+                   // Extract the filename from the Content-Disposition header
+                   const filename =xhr.getResponseHeader('Content-Disposition').split('filename=')[1];
+                    // Create a URL object from the blob response
 
-    },
-    error: function(xhr, status, error) {
+                     const p = document.createElement('p');
+                     p.innerHTML = response;
+                     document.querySelector("#file_content").appendChild(p);
 
-        console.error('Error retrieving file:', error);
-    }
-});
+                },
+                error: function(xhr, status, error) {
+
+                    console.error('Error retrieving file:', error);
+                }
+            });
+}
+else if (suffix == "tif" || suffix == "tiff" || suffix == "png" || suffix == "jpg" || suffix == "jpeg" || suffix == "shp"){
 
 
+            $.ajax({
+                url: '/get_file',
+                type: 'POST',
+                data: {current_path: current_path},
+                xhrFields: {
+                    responseType: 'blob'
+                },
+                success: function(response,status,xhr) {
+                  x=xhr;
+                  const contentType = xhr.getResponseHeader('Content-Type');
+                   // Extract the filename from the Content-Disposition header
+                   const filename =xhr.getResponseHeader('Content-Disposition').split('filename=')[1];
+                    // Create a URL object from the blob response
+                    const url = window.URL.createObjectURL(response);
 
+                     const img = document.createElement('img');
+                     img.src = url;
+                     img.style.width="100%";
+                     document.querySelector("#file_content").appendChild(img);
+
+                },
+                error: function(xhr, status, error) {
+
+                    console.error('Error retrieving file:', error);
+                }
+            });
+
+
+}
 /*
 $.post("/get_file",
         {
