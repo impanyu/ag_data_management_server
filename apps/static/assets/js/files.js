@@ -518,11 +518,33 @@ shapefile.open("/read_file?"+current_path)
   .catch(error => console.error(error.stack));
 */
 
+$.ajax({
+    url: '/get_file',
+    type: 'POST',
+    data: {current_path: current_path},
+    dataType: 'blob',  // Specify the expected response type
+    success: function(response,status,xhr) {
+      const contentType = xhr.getResponseHeader('Content-Type');
+       // Extract the filename from the Content-Disposition header
+       const filename =xhr.getResponseHeader('Content-Disposition').split('filename=')[1];
+        // Create a URL object from the blob response
+        const url = window.URL.createObjectURL(response);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;//.substr(1,filename.length-2);
+        a.click();
+        console.info(a);
+
+    },
+    error: function(xhr, status, error) {
+        console.error('Error retrieving image:', error);
+    }
+});
 
 
 
 
-
+/*
         $.post("/get_file",
         {
           current_path: current_path
@@ -555,10 +577,10 @@ shapefile.open("/read_file?"+current_path)
               } else {
                 console.error('Failed to download file');
               }
-        },"blob").fail(function() {
+        }).fail(function() {
           console.error('Error downloading file');
         });
-
+*/
 
 }
 
