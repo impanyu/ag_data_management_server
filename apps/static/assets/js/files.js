@@ -468,7 +468,7 @@ get_meta_and_content();
 
 function delete_file_or_folder(){
 }
-
+x={};
 function get_file_content(){
 $.ajax({
     url: '/get_file',
@@ -478,6 +478,7 @@ $.ajax({
         responseType: 'blob'
     },
     success: function(response,status,xhr) {
+      x=xhr;
       const contentType = xhr.getResponseHeader('Content-Type');
        // Extract the filename from the Content-Disposition header
        const filename =xhr.getResponseHeader('Content-Disposition').split('filename=')[1];
