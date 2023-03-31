@@ -1146,18 +1146,17 @@ def plot_shapefile(shp_path, output_path):
 
     # Define colormap and plot the shapefile
     cmap = ListedColormap(['white','green','blue','yellow','purple','red'])
+    cmap = ListedColormap(['#1a9850','#91cf60','#d9ef8b','#fee08b','#fc8d59','#d73027','#a50026','#f46d43','#fdae61','#f0f0f0'])
+
     ax = gdf.plot(column=gdf.columns[0], cmap=cmap, figsize=(12, 12))
 
-    plot_crs = ax.projection
-    xmin, ymin = plot_crs.transform_point((minx, miny), gdf.crs)
-    xmax, ymax = plot_crs.transform_point((maxx, maxy), gdf.crs)
 
     # Set x and y limits based on the converted coordinates
-    ax.set_xlim(xmin, xmax)
-    ax.set_ylim(ymin, ymax)
+    ax.set_xlim(minx, maxx)
+    ax.set_ylim(miny, maxy)
 
     # Add title and remove axes
-    ax.set_title('Shapefile Plot')
+    #ax.set_title('Shapefile Plot')
     ax.set_axis_off()
 
     # Save figure to file
