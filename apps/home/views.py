@@ -639,24 +639,28 @@ def data(request):
                 with open(img_path, 'rb') as file:
                     response = HttpResponse(file.read())
                 response['Content-Type'] = 'image/jpg'
+                response['Content-Disposition'] = f'inline; filename={os.path.basename(img_path)}'
 
             elif suffix == "jpg" or suffix == "jpeg":
                 with open(abs_path, 'rb') as file:
                     response = HttpResponse(file.read())
                 response['Content-Type'] = 'image/jpg'
+                response['Content-Disposition'] = f'inline; filename={os.path.basename(file_path)}'
 
             elif suffix == "png":
                 with open(abs_path, 'rb') as file:
                     response = HttpResponse(file.read())
                 response['Content-Type'] = 'image/png'
+                response['Content-Disposition'] = f'inline; filename={os.path.basename(file_path)}'
 
             else:
                 with open(abs_path, 'rb') as file:
                     response = HttpResponse(file.read())
                 response['Content-Type'] = 'text/plain'
+                response['Content-Disposition'] = f'inline; filename={os.path.basename(file_path)}'
 
 
-            response['Content-Disposition'] = f'inline; filename={os.path.basename(file_path)}'
+
             return response
 
 
