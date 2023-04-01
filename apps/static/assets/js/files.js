@@ -438,6 +438,15 @@ function htmlToElement(html) {
 }
 
 meta_data={};
+suffix = current_path.split(".")[1];
+if(suffix == "shp"){
+     for (i in meta_data["native"]["columns"]){
+         current_col = meta_data["native"]["columns"][i];
+         document.querySelector("#shp_col_list").innerHTML +=  '<a class="dropdown-item" href="#" onclick="get_file_content()">'+current_col+'</a>';
+     }
+ }
+
+
 async function get_meta_and_content(){
   /*await get_meta_data();
 
@@ -470,12 +479,10 @@ async function get_meta_and_content(){
 }
 get_meta_and_content();
 
- for (i in meta_data["native"]["columns"]){
-     current_col = meta_data["native"]["columns"][i];
-     document.querySelector("#shp_col_list").innerHTML +=  '<a class="dropdown-item" href="#" onclick="get_file_content()">'+current_col+'</a>';
- }
 
 current_col = meta_data["native"]["columns"][0];
+
+
 
 function delete_file_or_folder(){
 }
@@ -484,7 +491,7 @@ function delete_file_or_folder(){
 x={};
 u = "";
 function get_file_content(){
-suffix = current_path.split(".")[1];
+
 
 if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suffix == "r" || suffix == "csv" || suffix == "xlsx" || suffix == "xls" || suffix == "json" || suffix == "xml"){
        $.ajax({
