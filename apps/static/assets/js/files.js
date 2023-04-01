@@ -599,9 +599,10 @@ else if (suffix == "tif" || suffix == "tiff" || suffix == "png" || suffix == "jp
 else if (suffix == "shp"){
                 document.querySelector("#shp_col_list").innerHTML = "";
                for (i in meta_data["native"]["columns"]){
-                          current_col = meta_data["native"]["columns"][i];
-                          document.querySelector("#shp_col_list").innerHTML +=  '<span class="dropdown-item"  onclick="change_shp_dropdown(this)">'+current_col+'</span>';
+                          col = meta_data["native"]["columns"][i];
+                          document.querySelector("#shp_col_list").innerHTML +=  '<span class="dropdown-item"  onclick="change_shp_dropdown(this)">'+col+'</span>';
                   }
+                  current_col =  meta_data["native"]["columns"][0];
 
             $.ajax({
                 url: '/get_file',
@@ -646,8 +647,9 @@ else if (suffix == "shp"){
                         map_main.setZoom(15);
                         console.info(url);
 
-                        const overlay = new google.maps.GroundOverlay(url, imageBounds);
 
+                        const overlay = new google.maps.GroundOverlay(url, imageBounds);
+                        map_main.clearOverlays();
                         overlay.setMap(map_main);
 
                        // Create opacity slider
