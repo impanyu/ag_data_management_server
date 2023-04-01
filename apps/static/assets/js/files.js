@@ -514,9 +514,10 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
                    const filename =xhr.getResponseHeader('Content-Disposition').split('filename=')[1];
                     // Create a URL object from the blob response
 
-                     const p = document.createElement('p');
-                     p.innerHTML = response;
-                     document.querySelector("#file_content").appendChild(p);
+                     const pre = document.createElement('pre');
+                     pre.classList.add("language-python")
+                     pre.innerHTML = response;
+                     document.querySelector("#file_content").appendChild(pre);
                      document.querySelector("#shp_dropdown").style.display="none";
                       document.querySelector("#map_main").style.display="none";
                       document.querySelector("#opacity-slider-container").style.display="none";
