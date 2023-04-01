@@ -1165,7 +1165,7 @@ def plot_shapefile(shp_path, output_path):
     ax.margins(0)
 
     # Save figure to file
-    plt.savefig(output_path, dpi=300)
+    plt.savefig(output_path, dpi=300,bbox_inches='tight')
 
     # Return bounds as a tuple of (minx, miny, maxx, maxy)
     return (minx, miny, maxx, maxy)
