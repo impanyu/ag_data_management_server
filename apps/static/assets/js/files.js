@@ -439,7 +439,12 @@ function htmlToElement(html) {
 
 meta_data={};
 suffix = current_path.split(".")[1];
+labels= ["Spidercam", "ENREC", "Wheat", "Crop", "Weather", "GIS", "Application", "UAV", "IoT", "Farm", "Machinery", "Disease", "Pest", "Fertilizer", "Water", "Nitrogen", "Cattle"];
+current_labels = new Set();
+document.querySelector("#other_meta").value ="";
+get_meta_and_content();
 
+current_col = meta_data["native"]["columns"][0];
 
 
 async function get_meta_and_content(){
@@ -473,17 +478,13 @@ async function get_meta_and_content(){
               document.querySelector("#shp_col_list").innerHTML +=  '<a class="dropdown-item" href="#" onclick="get_file_content()">'+current_col+'</a>';
       }
  }
-
-
       get_file_content();
 
    }
 
 }
-get_meta_and_content();
 
 
-current_col = meta_data["native"]["columns"][0];
 
 
 
@@ -1002,10 +1003,7 @@ function update_meta(){
 
 
 
-labels= ["Spidercam", "ENREC", "Wheat", "Crop", "Weather", "GIS", "Application", "UAV", "IoT", "Farm", "Machinery", "Disease", "Pest", "Fertilizer", "Water", "Nitrogen", "Cattle"];
-current_labels = new Set();
 
- document.querySelector("#other_meta").value ="";
 function get_meta_data(){
    return new Promise(function(resolve,reject){
     $.post("/meta_data",
