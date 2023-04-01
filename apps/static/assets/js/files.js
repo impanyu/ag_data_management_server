@@ -438,7 +438,7 @@ function htmlToElement(html) {
 }
 
 meta_data={};
-suffix = current_path.split(".")[1];
+suffix = current_path.split(".")[current_path.split(".").length-1];
 labels= ["Spidercam", "ENREC", "Wheat", "Crop", "Weather", "GIS", "Application", "UAV", "IoT", "Farm", "Machinery", "Disease", "Pest", "Fertilizer", "Water", "Nitrogen", "Cattle"];
 current_labels = new Set();
 document.querySelector("#other_meta").value ="";
