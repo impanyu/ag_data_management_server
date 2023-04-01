@@ -560,6 +560,13 @@ else if (suffix == "tif" || suffix == "tiff" || suffix == "png" || suffix == "jp
 
                         overlay.setMap(map_main);
 
+                       // Create opacity slider
+                        const slider = document.getElementById('opacity-slider');
+                        slider.addEventListener('input', () => {
+                          const opacity = slider.value / 100;
+                          overlay.setOpacity(opacity);
+                        });
+
 
                    }
 

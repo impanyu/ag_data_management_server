@@ -272,7 +272,7 @@
 
                 <hr class="d-block" style="margin-bottom:2rem;border:1px solid rgba(0,0,0,.1)">
 
-              <div class="row align-items-center py-4" id="map_main" style=" height: 600px; "> </div>
+
 
 
           </div>
@@ -282,7 +282,14 @@
                 <!-- <div style="padding:10px; background:white" ><span id = "data_tab" ><h3><b>Data</b></h3></span></div>-->
           <div id ="data_panel">
                       <!-- Light table -->
-              <div id="file_content">
+              <div id="file_content" style="position:relative">
+                   <div id="opacity-slider-container">
+                      <input type="range" min="0" max="100" value="100" id="opacity-slider">
+                    </div>
+
+                  <div class="row align-items-center py-4" id="map_main" style=" height: 600px; "> </div>
+
+
                   </div>
           <div class="table-responsive" id="file_table">
             <table class="table align-items-center table-flush">
