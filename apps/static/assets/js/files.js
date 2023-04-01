@@ -515,7 +515,8 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
                     // Create a URL object from the blob response
 
                      const pre = document.createElement('pre');
-                     pre.classList.add("language-python")
+                     code = document.createElement('code');
+                     code.classList.add("language-python","line-numbers")
                      pre.innerHTML = response;
                      Prism.highlightAll();
                      document.querySelector("#file_content").appendChild(pre);
