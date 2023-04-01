@@ -1168,7 +1168,7 @@ def plot_shapefile(shp_path, output_path):
     plt.savefig(output_path, dpi=300)
 
     # Return bounds as a tuple of (minx, miny, maxx, maxy)
-    #return (minx, miny, maxx, maxy)
+    return (minx, miny, maxx, maxy)
 
 
 
@@ -1177,6 +1177,7 @@ def shp_to_image(shp_path):
     if os.path.exists(img_path):
         return img_path
     minx, miny, maxx, maxy = plot_shapefile(shp_path,img_path)
+
     meta_data = generate_meta_data_for_file(img_path)
     meta_data["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
 
