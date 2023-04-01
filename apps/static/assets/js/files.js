@@ -472,14 +472,7 @@ async function get_meta_and_content(){
       document.querySelector("#upload_folder_button").style.display="none";
       document.querySelector("#create").style.display="none";
       await get_meta_data();
-      if(suffix == "shp"){
-           for (i in meta_data["native"]["columns"]){
-              current_col = meta_data["native"]["columns"][i];
-              document.querySelector("#shp_col_list").innerHTML +=  '<a class="dropdown-item" href="#" onclick="get_file_content()">'+current_col+'</a>';
-      }
-      current_col = meta_data["native"]["columns"][0];
 
-    }
 
       get_file_content();
 
@@ -558,6 +551,9 @@ else if (suffix == "tif" || suffix == "tiff" || suffix == "png" || suffix == "jp
 
                    //has geospatial info, render on map
                    else{
+
+                          document.querySelector("#shp_dropdown").style.display="none";
+
                           north = parseFloat(meta_data["spatial_range"]["northeast"]["lat"]);
                           south = parseFloat(meta_data["spatial_range"]["southwest"]["lat"]);
                           east = meta_data["spatial_range"]["northeast"]["lng"];
@@ -596,6 +592,11 @@ else if (suffix == "tif" || suffix == "tiff" || suffix == "png" || suffix == "jp
 }
 
 else if (suffix == "shp"){
+                document.querySelector("#shp_col_list").innerHTML = "";
+               for (i in meta_data["native"]["columns"]){
+                          current_col = meta_data["native"]["columns"][i];
+                          document.querySelector("#shp_col_list").innerHTML +=  '<a class="dropdown-item" href="#" onclick="get_file_content()">'+current_col+'</a>';
+                  }
 
             $.ajax({
                 url: '/get_file',
