@@ -487,6 +487,10 @@ async function get_meta_and_content(){
 function delete_file_or_folder(){
 }
 
+function change_shp_dropdown(self){
+  current_col = self.innerHTML;
+  get_file_content();
+}
 
 x={};
 u = "";
@@ -595,7 +599,7 @@ else if (suffix == "shp"){
                 document.querySelector("#shp_col_list").innerHTML = "";
                for (i in meta_data["native"]["columns"]){
                           current_col = meta_data["native"]["columns"][i];
-                          document.querySelector("#shp_col_list").innerHTML +=  '<a class="dropdown-item" href="#" onclick="get_file_content()">'+current_col+'</a>';
+                          document.querySelector("#shp_col_list").innerHTML +=  '<a class="dropdown-item" href="#" onclick="change_shp_dropdown(this)">'+current_col+'</a>';
                   }
 
             $.ajax({
