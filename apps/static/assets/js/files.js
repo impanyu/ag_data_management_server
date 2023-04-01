@@ -443,7 +443,7 @@ labels= ["Spidercam", "ENREC", "Wheat", "Crop", "Weather", "GIS", "Application",
 current_labels = new Set();
 document.querySelector("#other_meta").value ="";
 get_meta_and_content();
-
+current_col = "";
 
 
 
@@ -488,7 +488,7 @@ function delete_file_or_folder(){
 }
 
 function change_shp_dropdown(self){
- console.info(self);
+
   current_col = self.innerHTML;
   get_file_content();
 }
