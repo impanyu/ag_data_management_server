@@ -551,6 +551,8 @@ else if (suffix == "tif" || suffix == "tiff" || suffix == "png" || suffix == "jp
                          img.style.width="100%";
                          document.querySelector("#file_content").appendChild(img);
                          document.querySelector("#shp_dropdown").style.display="none";
+                          document.querySelector("#map_main").style.display="none";
+                           document.querySelector("#opacity-slider-container").style.display="none";
 
                    }
 
