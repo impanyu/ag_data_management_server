@@ -600,7 +600,7 @@ else if (suffix == "shp"){
                 document.querySelector("#shp_col_list").innerHTML = "";
                for (i in meta_data["native"]["columns"]){
                           current_col = meta_data["native"]["columns"][i];
-                          document.querySelector("#shp_col_list").innerHTML +=  '<a class="dropdown-item" href="#" onclick="change_shp_dropdown(this)">'+current_col+'</a>';
+                          document.querySelector("#shp_col_list").innerHTML +=  '<span class="dropdown-item"  onclick="change_shp_dropdown(this)">'+current_col+'</span>';
                   }
 
             $.ajax({
