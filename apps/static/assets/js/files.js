@@ -454,7 +454,7 @@ async function get_meta_and_content(){
    if(current_path.indexOf(".")==-1){ //folder
      get_meta_data();
      get_file_list();
-     document.querySelector("#data_panel").style.display="none";
+     document.querySelector("#file_content").style.display="none";
    }
    else{//file
 
