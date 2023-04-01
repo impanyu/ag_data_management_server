@@ -499,7 +499,7 @@ u = "";
 function get_file_content(){
 
 
-if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suffix == "r" || suffix == "csv" || suffix == "xlsx" || suffix == "xls" || suffix == "json" || suffix == "xml"){
+if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suffix == "r" || suffix == "csv" || suffix == "xlsx" || suffix == "xls" || suffix == "json" || suffix == "xml" || suffix=="html"){
        $.ajax({
                 url: '/get_file',
                 type: 'POST',
