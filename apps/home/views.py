@@ -623,6 +623,7 @@ def data(request):
             abs_path = os.path.join("/home", file_path)
             print(file_path)
 
+
             # Check if the path exists
             if not os.path.exists(abs_path):
                 raise Http404("Path does not exist")
