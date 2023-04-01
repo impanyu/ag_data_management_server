@@ -516,10 +516,15 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
 
                      const pre = document.createElement('pre');
                      code = document.createElement('code');
+
                      code.classList.add("language-python","line-numbers")
-                     pre.innerHTML = response;
+                     code.innerHTML = response;
                      Prism.highlightAll();
+
+                     pre.appendChild(code);
                      document.querySelector("#file_content").appendChild(pre);
+
+
                      document.querySelector("#shp_dropdown").style.display="none";
                       document.querySelector("#map_main").style.display="none";
                       document.querySelector("#opacity-slider-container").style.display="none";
