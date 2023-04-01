@@ -519,7 +519,7 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
 
                      code.classList.add("language-python","line-numbers")
                      code.innerHTML = response;
-                     Prism.highlightAll();
+                    // Prism.highlightAll();
 
                      pre.appendChild(code);
                      document.querySelector("#file_content").appendChild(pre);
