@@ -2,6 +2,17 @@
 background-color:#aaa;
 }
 
+#shp_dropdown {
+  position: absolute;
+  top: 10px;
+  right: 230px;
+  z-index: 1;
+  background-color: white;
+  border-radius: 4px;
+  padding: 4px;
+  //width: 100px;
+}
+
 #opacity-slider-container {
   position: absolute;
   top: 10px;

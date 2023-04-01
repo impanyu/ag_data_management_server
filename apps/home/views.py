@@ -631,11 +631,9 @@ def data(request):
             suffix = abs_path.split("/")[-1].split(".")[-1]
 
             #if suffix == "tif" or suffix == "tiff":
-
-
             if suffix == "shp":
-
-                img_paths = shp_to_image(abs_path)
+                col = request.POST['col']
+                img_path = shp_to_image(abs_path,col)
                 with open(img_path, 'rb') as file:
                     response = HttpResponse(file.read())
                 response['Content-Type'] = 'image/jpg'

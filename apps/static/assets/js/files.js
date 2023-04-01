@@ -470,6 +470,13 @@ async function get_meta_and_content(){
 }
 get_meta_and_content();
 
+ for (i in meta_data["native"]["columns"]){
+     current_col = meta_data["native"]["columns"][i];
+     document.querySelector("#shp_col_list").innerHTML +=  '<a class="dropdown-item" href="#" onclick="get_file_content()">'+current_col+'</a>';
+ }
+
+current_col = meta_data["native"]["columns"][0];
+
 function delete_file_or_folder(){
 }
 
@@ -505,13 +512,17 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
                 }
             });
 }
-else if (suffix == "tif" || suffix == "tiff" || suffix == "png" || suffix == "jpg" || suffix == "jpeg" || suffix == "shp"){
 
+else if (suffix == "tif" || suffix == "tiff" || suffix == "png" || suffix == "jpg" || suffix == "jpeg"){
+
+}
+
+else if (suffix == "shp"){
 
             $.ajax({
                 url: '/get_file',
                 type: 'POST',
-                data: {current_path: current_path},
+                data: {current_path: current_path, col:col},
                 xhrFields: {
                     responseType: 'blob'
                 },
@@ -520,25 +531,20 @@ else if (suffix == "tif" || suffix == "tiff" || suffix == "png" || suffix == "jp
                   const contentType = xhr.getResponseHeader('Content-Type');
                    // Extract the filename from the Content-Disposition header
                    const filename =xhr.getResponseHeader('Content-Disposition').split('filename=')[1];
-                    const url = window.URL.createObjectURL(response);
-
+                   const url = window.URL.createObjectURL(response);
 
                    if (meta_data["spatial_range"]["northeast"]["lat"] == "0" &&  meta_data["spatial_range"]["northeast"]["lng"] == "-180"){
                    //no geospatial info, only render a img
 
-                        // Create a URL object from the blob response
-
-
+                   // Create a URL object from the blob response
                          const img = document.createElement('img');
                          img.src = url;
                          img.style.width="100%";
                          document.querySelector("#file_content").appendChild(img);
-
-                     }
+                   }
 
                    //has geospatial info, render on map
                    else{
-
                           north = parseFloat(meta_data["spatial_range"]["northeast"]["lat"]);
                           south = parseFloat(meta_data["spatial_range"]["southwest"]["lat"]);
                           east = meta_data["spatial_range"]["northeast"]["lng"];
@@ -549,7 +555,6 @@ else if (suffix == "tif" || suffix == "tiff" || suffix == "png" || suffix == "jp
                               south: south,
                               east:  east,
                               west:  west
-
                           };
 
                         new_center = new google.maps.LatLng((north+south)/2,(east+west)/2);
@@ -567,18 +572,13 @@ else if (suffix == "tif" || suffix == "tiff" || suffix == "png" || suffix == "jp
                           const opacity = slider.value / 100;
                           overlay.setOpacity(opacity);
                         });
-
-
                    }
-
-
                 },
                 error: function(xhr, status, error) {
 
                     console.error('Error retrieving file:', error);
                 }
             });
-
 
 }
 /*

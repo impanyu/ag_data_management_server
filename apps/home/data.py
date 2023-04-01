@@ -837,27 +837,33 @@ def generate_meta_data_for_file(file_path):
         # Read shapefile using geopandas
         gdf = gpd.read_file(file_path)
         gdf = gdf.to_crs('EPSG:4326')
+        columns = [col for col in gdf.columns]
+
         # Get bounds of shapefile
         bounds = gdf.total_bounds if not gdf.empty else (-180, 0, -180, 0)
         minx, miny, maxx, maxy = bounds
         meta_data["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
 
+        sf = shapefile.Reader(file_path)
+
+        meta_data["native"] = {"fields": sf.fields, "numRecords": sf.numRecords, "shapeType": sf.shapeType,
+                               "shapeTypeName": sf.shapeTypeName, "type": sf.__geo_interface__['type'], "columns": columns}
+
+
     elif suffix == "m" or suffix == ".mlx":
-        meta_data["format"]=["Matlab"]
-        meta_data["mode"]=["Tool"]
+        meta_data["format"] = ["Matlab"]
+        meta_data["mode"] = ["Tool"]
     elif suffix == "r":
-        meta_data["format"]=["R"]
-        meta_data["mode"]=["Tool"]
+        meta_data["format"] = ["R"]
+        meta_data["mode"] = ["Tool"]
     elif suffix == "csv":
-        meta_data["format"]=["CSV"]
-        meta_data["mode"]=["Data"]
+        meta_data["format"] = ["CSV"]
+        meta_data["mode"] = ["Data"]
     elif suffix == "xlsx" or suffix == "xls":
-        meta_data["format"]=["Spreadsheet"]
-        meta_data["mode"]=["Data"]
+        meta_data["format"] = ["Spreadsheet"]
+        meta_data["mode"] = ["Data"]
     else:
-        meta_data["format"]=["Other"]
-
-
+        meta_data["format"] = ["Other"]
 
     if suffix == "tif" or suffix == "tiff":
         meta_data["spatial_range"] = read_tif_meta(file_path)
@@ -1112,6 +1118,7 @@ def get_meta_data(path):
     if "." not in file_name:
         return meta_data
     suffix = file_name.split(".")[1]
+    '''
     if suffix == "shp":
         sf = shapefile.Reader(path)
         meta_data["native"] = {"fields":sf.fields, "numRecords":sf.numRecords, "shapeType":sf.shapeType,"shapeTypeName":sf.shapeTypeName,"type":sf.__geo_interface__['type']}
@@ -1123,8 +1130,7 @@ def get_meta_data(path):
         bounds = gdf.total_bounds if not gdf.empty else (-180, 0, -180, 0)
         minx, miny, maxx, maxy = bounds
         meta_data["native"]["spatial_range"]={"southwest":{"lat":miny,"lng":minx},"northeast":{"lat":maxy,"lng":maxx}}
-
-
+    '''
     return meta_data
 
 
@@ -1166,6 +1172,21 @@ def plot_shapefile(shp_path, output_path,col,minx, miny, maxx, maxy):
 
 
 def shp_to_image(shp_path,col): # plot a column of shape file as png image
+    meta_data_file_name = "_".join(shp_path.split("/")[1:]) + ".json"
+
+    #with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
+    #    meta_data = json.dump(meta_data_file)
+
+    img_path = f"{shp_path[:-4]}_{col}.png"
+
+    if os.path.exists(img_path):
+        return img_path
+        # Define colormap and plot the shapefile
+
+    cmap = ListedColormap(
+        ['#1a9850', '#91cf60', '#d9ef8b', '#fee08b', '#fc8d59', '#d73027', '#a50026', '#f46d43', '#fdae61',
+         '#f0f0f0'])
+
     # Read shapefile using geopandas
     gdf = gpd.read_file(shp_path)
     gdf = gdf.to_crs('EPSG:4326')
@@ -1174,55 +1195,38 @@ def shp_to_image(shp_path,col): # plot a column of shape file as png image
     bounds = gdf.total_bounds if not gdf.empty else (-180, 0, -180, 0)
     minx, miny, maxx, maxy = bounds
 
-    img_paths=[]
+    aspect_ratio = (maxy - miny) / (maxx - minx)
+    ax = gdf.plot(column=col, cmap=cmap, figsize=(12, 12 * aspect_ratio))
 
-    for col in gdf.columns:
+    # Set x and y limits based on the converted coordinates
+    ax.set_xlim(minx, maxx)
+    ax.set_ylim(miny, maxy)
 
+    # Add title and remove axes
+    # ax.set_title('Shapefile Plot')
+    ax.set_axis_off()
+    # remove all the margins
+    plt.subplots_adjust(left=0, right=1, bottom=0, top=1, wspace=0, hspace=0)
+    ax.margins(0)
 
-        img_path = f"{shp_path[:-4]}_{col}.png"
-        img_paths.append(img_path)
+    # Save figure to file
+    plt.savefig(img_path, dpi=300, bbox_inches='tight')
 
-        if os.path.exists(img_path):
-            continue
-            # Define colormap and plot the shapefile
-        cmap = ListedColormap(['white', 'green', 'blue', 'yellow', 'purple', 'red'])
-        cmap = ListedColormap(
-            ['#1a9850', '#91cf60', '#d9ef8b', '#fee08b', '#fc8d59', '#d73027', '#a50026', '#f46d43', '#fdae61',
-             '#f0f0f0'])
+    img_meta_data = generate_meta_data_for_file(img_path)
+    img_meta_data["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
 
-        aspect_ratio = (maxy - miny) / (maxx - minx)
-        ax = gdf.plot(column=col, cmap=cmap, figsize=(12, 12 * aspect_ratio))
+    img_meta_data_file_name = "_".join(img_path.split("/")[1:]) + ".json"
 
-        # Set x and y limits based on the converted coordinates
-        ax.set_xlim(minx, maxx)
-        ax.set_ylim(miny, maxy)
+    with open(os.path.join(settings.CORE_DIR, 'data', img_meta_data_file_name), "w") as img_meta_data_file:
+        json.dump(img_meta_data, img_meta_data_file)
 
-        # Add title and remove axes
-        # ax.set_title('Shapefile Plot')
-        ax.set_axis_off()
-        # remove all the margins
-        plt.subplots_adjust(left=0, right=1, bottom=0, top=1, wspace=0, hspace=0)
-        ax.margins(0)
+    img_parent_path = "/".join(img_path.split("/")[:-1])
+    img_parent_meta_data_file_name = "_".join(img_parent_path.split("/")[1:]) + ".json"
+    with open(os.path.join(settings.CORE_DIR, 'data', img_parent_meta_data_file_name), "r") as img_parent_meta_data_file:
+        img_parent_meta_data = json.load(img_parent_meta_data_file)
 
-        # Save figure to file
-        plt.savefig(img_path, dpi=300, bbox_inches='tight')
+    img_parent_meta_data["subdirs"].append(img_path)
+    with open(os.path.join(settings.CORE_DIR, 'data', img_parent_meta_data_file_name), "w") as img_parent_meta_data_file:
+        json.dump(img_parent_meta_data,img_parent_meta_data_file)
 
-        meta_data = generate_meta_data_for_file(img_path)
-        meta_data["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
-
-        meta_data_file_name = "_".join(img_path.split("/")[1:]) + ".json"
-
-        with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "w") as meta_data_file:
-            json.dump(meta_data, meta_data_file)
-
-        parent_path = "/".join(img_path.split("/")[:-1])
-        parent_meta_data_file_name = "_".join(parent_path.split("/")[1:]) + ".json"
-        with open(os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name), "r") as parent_meta_data_file:
-            parent_meta_data = json.load(parent_meta_data_file)
-
-        parent_meta_data["subdirs"].append(img_path)
-        with open(os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name), "w") as parent_meta_data_file:
-            json.dump(parent_meta_data,parent_meta_data_file)
-
-
-    return img_paths
+    return img_path
