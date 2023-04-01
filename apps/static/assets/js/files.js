@@ -520,10 +520,11 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
                      code.classList.add("language-python")
                      code.innerHTML = response;
 
-                     hljs.highlightAll();
+
 
                      pre.appendChild(code);
                      document.querySelector("#file_content").appendChild(pre);
+                     hljs.highlightAll();
 
 
                      document.querySelector("#shp_dropdown").style.display="none";
