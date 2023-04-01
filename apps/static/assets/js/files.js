@@ -472,6 +472,7 @@ async function get_meta_and_content(){
       document.querySelector("#upload_file_button").style.display="none";
       document.querySelector("#upload_folder_button").style.display="none";
       document.querySelector("#create").style.display="none";
+      document.querySelector("#file_content").style.display="none";
       await get_meta_data();
       if(suffix == "shp"){
         current_col =  meta_data["native"]["columns"][0];
@@ -510,6 +511,7 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
                 },
                 success: function(response,status,xhr) {
                   x=xhr;
+                  document.querySelector("#file_content").style.display="block";
                   const contentType = xhr.getResponseHeader('Content-Type');
                    // Extract the filename from the Content-Disposition header
                    const filename =xhr.getResponseHeader('Content-Disposition').split('filename=')[1];
@@ -550,6 +552,7 @@ else if (suffix == "tif" || suffix == "tiff" || suffix == "png" || suffix == "jp
                 },
                 success: function(response,status,xhr) {
                   x=xhr;
+                  document.querySelector("#file_content").style.display="block";
                   const contentType = xhr.getResponseHeader('Content-Type');
                    // Extract the filename from the Content-Disposition header
                    const filename =xhr.getResponseHeader('Content-Disposition').split('filename=')[1];
@@ -628,6 +631,7 @@ else if (suffix == "shp"){
                 },
                 success: function(response,status,xhr) {
                   x=xhr;
+                  document.querySelector("#file_content").style.display="block";
                   const contentType = xhr.getResponseHeader('Content-Type');
                    // Extract the filename from the Content-Disposition header
                    const filename =xhr.getResponseHeader('Content-Disposition').split('filename=')[1];
