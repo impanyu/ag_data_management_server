@@ -517,6 +517,7 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
                      const pre = document.createElement('pre');
                      pre.classList.add("language-python")
                      pre.innerHTML = response;
+                     Prism.highlightAll();
                      document.querySelector("#file_content").appendChild(pre);
                      document.querySelector("#shp_dropdown").style.display="none";
                       document.querySelector("#map_main").style.display="none";
