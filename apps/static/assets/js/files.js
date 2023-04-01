@@ -439,12 +439,7 @@ function htmlToElement(html) {
 
 meta_data={};
 suffix = current_path.split(".")[1];
-if(suffix == "shp"){
-     for (i in meta_data["native"]["columns"]){
-         current_col = meta_data["native"]["columns"][i];
-         document.querySelector("#shp_col_list").innerHTML +=  '<a class="dropdown-item" href="#" onclick="get_file_content()">'+current_col+'</a>';
-     }
- }
+
 
 
 async function get_meta_and_content(){
@@ -472,6 +467,14 @@ async function get_meta_and_content(){
       document.querySelector("#upload_folder_button").style.display="none";
       document.querySelector("#create").style.display="none";
       await get_meta_data();
+      if(suffix == "shp"){
+           for (i in meta_data["native"]["columns"]){
+              current_col = meta_data["native"]["columns"][i];
+              document.querySelector("#shp_col_list").innerHTML +=  '<a class="dropdown-item" href="#" onclick="get_file_content()">'+current_col+'</a>';
+      }
+ }
+
+
       get_file_content();
 
    }
