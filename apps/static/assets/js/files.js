@@ -524,7 +524,7 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
 
                      pre.appendChild(code);
                      document.querySelector("#file_content").appendChild(pre);
-                     //hljs.highlightAll();
+                     hljs.highlightAll();
 
 
                      document.querySelector("#shp_dropdown").style.display="none";
