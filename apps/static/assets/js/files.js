@@ -517,6 +517,9 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
                      const p = document.createElement('p');
                      p.innerHTML = response;
                      document.querySelector("#file_content").appendChild(p);
+                     document.querySelector("#shp_dropdown").style.display="none";
+                      document.querySelector("#map_main").style.display="none";
+                      document.querySelector("#opacity-slider-container").style.display="none";
 
                 },
                 error: function(xhr, status, error) {
@@ -627,6 +630,9 @@ else if (suffix == "shp"){
                          img.src = url;
                          img.style.width="100%";
                          document.querySelector("#file_content").appendChild(img);
+                         document.querySelector("#shp_dropdown").style.display="none";
+                          document.querySelector("#map_main").style.display="none";
+                           document.querySelector("#opacity-slider-container").style.display="none";
                    }
 
                    //has geospatial info, render on map
