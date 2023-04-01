@@ -1107,7 +1107,7 @@ def get_meta_data(path):
     meta_data_file_name = "_".join(path.split("/")[1:]) + ".json"
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
         meta_data = json.load(meta_data_file)
-    '''
+
     file_name = path.split("/")[-1]
     if "." not in file_name:
         return meta_data
@@ -1123,7 +1123,7 @@ def get_meta_data(path):
         bounds = gdf.total_bounds if not gdf.empty else (-180, 0, -180, 0)
         minx, miny, maxx, maxy = bounds
         meta_data["native"]["spatial_range"]={"southwest":{"lat":miny,"lng":minx},"northeast":{"lat":maxy,"lng":maxx}}
-    '''
+
 
     return meta_data
 
