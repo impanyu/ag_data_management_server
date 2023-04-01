@@ -621,7 +621,7 @@ def data(request):
         elif load_template == 'get_file': # try to display file in front end
             file_path = request.POST['current_path']
             abs_path = os.path.join("/home", file_path)
-            print(os.path.basename(file_path))
+            print(file_path)
 
 
             # Check if the path exists

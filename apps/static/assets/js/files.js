@@ -461,9 +461,10 @@ async function get_meta_and_content(){
    */
 
    if(current_path.indexOf(".")==-1){ //folder
+    document.querySelector("#file_content").style.display="none";
      get_meta_data();
      get_file_list();
-     document.querySelector("#file_content").style.display="none";
+
    }
    else{//file
 
