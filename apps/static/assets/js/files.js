@@ -452,8 +452,9 @@ async function get_meta_and_content(){
    */
 
    if(current_path.indexOf(".")==-1){ //folder
-    get_meta_data();
+     get_meta_data();
      get_file_list();
+     document.querySelector("#data_panel").style.display="none";
    }
    else{//file
 
@@ -478,7 +479,7 @@ u = "";
 function get_file_content(){
 suffix = current_path.split(".")[1];
 
-if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suffix == "r" || suffix == "csv" || suffix == "xlsx" || suffix == "xls"){
+if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suffix == "r" || suffix == "csv" || suffix == "xlsx" || suffix == "xls" || suffix == "json" || suffix == "xml"){
        $.ajax({
                 url: '/get_file',
                 type: 'POST',
