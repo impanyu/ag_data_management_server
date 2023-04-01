@@ -517,9 +517,9 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
                      const pre = document.createElement('pre');
                      code = document.createElement('code');
 
-                     code.classList.add("language-css","line-numbers")
-                     code.innerHTML ="p { color: red }"; //= response;
-                    // Prism.highlightAll();
+                     code.classList.add("language-python")
+                     code.innerHTML = response;
+                     hljs.highlightAll();
 
                      pre.appendChild(code);
                      document.querySelector("#file_content").appendChild(pre);
