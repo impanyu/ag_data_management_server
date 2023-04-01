@@ -472,7 +472,8 @@ async function get_meta_and_content(){
       document.querySelector("#upload_folder_button").style.display="none";
       document.querySelector("#create").style.display="none";
       await get_meta_data();
-
+      if(suffix == "shp")
+        current_col =  meta_data["native"]["columns"][0];
 
       get_file_content();
 
@@ -602,7 +603,7 @@ else if (suffix == "shp"){
                           col = meta_data["native"]["columns"][i];
                           document.querySelector("#shp_col_list").innerHTML +=  '<span class="dropdown-item"  onclick="change_shp_dropdown(this)">'+col+'</span>';
                   }
-                  current_col =  meta_data["native"]["columns"][0];
+
 
             $.ajax({
                 url: '/get_file',
