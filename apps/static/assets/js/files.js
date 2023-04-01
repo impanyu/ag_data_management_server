@@ -647,9 +647,18 @@ else if (suffix == "shp"){
                         map_main.setZoom(15);
                         console.info(url);
 
+                        // Get the current overlays on the map
+                        var overlays = map_main.getOverlays();
+
+                        // Loop through each overlay and remove it
+                        for (var i = 0; i < overlays.length; i++) {
+                          overlays[i].setMap(null);
+                        }
+
 
                         const overlay = new google.maps.GroundOverlay(url, imageBounds);
-                        map_main.clearOverlays();
+
+
                         overlay.setMap(map_main);
 
                        // Create opacity slider
