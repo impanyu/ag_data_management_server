@@ -1185,7 +1185,7 @@ function init_map_main(){
     },
   });
 
-  drawingManager.setMap(map_main);
+ // drawingManager.setMap(map_main);
 
   google.maps.event.addListener(drawingManager, "overlaycomplete", function(event){
        if(lastOverlay)

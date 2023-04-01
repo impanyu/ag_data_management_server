@@ -1134,14 +1134,7 @@ def get_meta_data(path):
 def get_file(path):
    return
 
-def plot_shapefile(shp_path, output_path):
-    # Read shapefile using geopandas
-    gdf = gpd.read_file(shp_path)
-    gdf = gdf.to_crs('EPSG:4326')
-
-    # Get bounds of shapefile
-    bounds = gdf.total_bounds if not gdf.empty else (-180, 0, -180, 0)
-    minx, miny, maxx, maxy = bounds
+def plot_shapefile(shp_path, output_path,col,minx, miny, maxx, maxy):
 
     #print(gdf.columns)
 
@@ -1150,7 +1143,7 @@ def plot_shapefile(shp_path, output_path):
     cmap = ListedColormap(['#1a9850','#91cf60','#d9ef8b','#fee08b','#fc8d59','#d73027','#a50026','#f46d43','#fdae61','#f0f0f0'])
 
     aspect_ratio =(maxy - miny)/ (maxx-minx)
-    ax = gdf.plot(column=gdf.columns[0], cmap=cmap, figsize=(12, 12*aspect_ratio))
+    ax = gdf.plot(column=col, cmap=cmap, figsize=(12, 12*aspect_ratio))
 
 
     # Set x and y limits based on the converted coordinates
@@ -1168,32 +1161,68 @@ def plot_shapefile(shp_path, output_path):
     plt.savefig(output_path, dpi=300,bbox_inches='tight')
 
     # Return bounds as a tuple of (minx, miny, maxx, maxy)
-    return (minx, miny, maxx, maxy)
+    return
 
 
 
-def shp_to_image(shp_path):
-    img_path = f"{shp_path[:-3]}png"
-    if os.path.exists(img_path):
-        return img_path
-    minx, miny, maxx, maxy = plot_shapefile(shp_path,img_path)
+def shp_to_image(shp_path,col): # plot a column of shape file as png image
+    # Read shapefile using geopandas
+    gdf = gpd.read_file(shp_path)
+    gdf = gdf.to_crs('EPSG:4326')
 
-    meta_data = generate_meta_data_for_file(img_path)
-    meta_data["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
+    # Get bounds of shapefile
+    bounds = gdf.total_bounds if not gdf.empty else (-180, 0, -180, 0)
+    minx, miny, maxx, maxy = bounds
 
-    meta_data_file_name = "_".join(img_path.split("/")[1:]) + ".json"
+    img_paths=[]
 
-    with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "w") as meta_data_file:
-        json.dump(meta_data, meta_data_file)
-
-    parent_path = "/".join(img_path.split("/")[:-1])
-    parent_meta_data_file_name = "_".join(parent_path.split("/")[1:]) + ".json"
-    with open(os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name), "r") as parent_meta_data_file:
-        parent_meta_data = json.load(parent_meta_data_file)
-
-    parent_meta_data["subdirs"].append(img_path)
-    with open(os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name), "w") as parent_meta_data_file:
-        json.dump(parent_meta_data,parent_meta_data_file)
+    for col in gdf.columns:
 
 
-    return img_path
+        img_path = f"{shp_path[:-4]}_{col}.png"
+        img_paths.append(img_path)
+
+        if os.path.exists(img_path):
+            continue
+            # Define colormap and plot the shapefile
+        cmap = ListedColormap(['white', 'green', 'blue', 'yellow', 'purple', 'red'])
+        cmap = ListedColormap(
+            ['#1a9850', '#91cf60', '#d9ef8b', '#fee08b', '#fc8d59', '#d73027', '#a50026', '#f46d43', '#fdae61',
+             '#f0f0f0'])
+
+        aspect_ratio = (maxy - miny) / (maxx - minx)
+        ax = gdf.plot(column=col, cmap=cmap, figsize=(12, 12 * aspect_ratio))
+
+        # Set x and y limits based on the converted coordinates
+        ax.set_xlim(minx, maxx)
+        ax.set_ylim(miny, maxy)
+
+        # Add title and remove axes
+        # ax.set_title('Shapefile Plot')
+        ax.set_axis_off()
+        # remove all the margins
+        plt.subplots_adjust(left=0, right=1, bottom=0, top=1, wspace=0, hspace=0)
+        ax.margins(0)
+
+        # Save figure to file
+        plt.savefig(img_path, dpi=300, bbox_inches='tight')
+
+        meta_data = generate_meta_data_for_file(img_path)
+        meta_data["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
+
+        meta_data_file_name = "_".join(img_path.split("/")[1:]) + ".json"
+
+        with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "w") as meta_data_file:
+            json.dump(meta_data, meta_data_file)
+
+        parent_path = "/".join(img_path.split("/")[:-1])
+        parent_meta_data_file_name = "_".join(parent_path.split("/")[1:]) + ".json"
+        with open(os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name), "r") as parent_meta_data_file:
+            parent_meta_data = json.load(parent_meta_data_file)
+
+        parent_meta_data["subdirs"].append(img_path)
+        with open(os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name), "w") as parent_meta_data_file:
+            json.dump(parent_meta_data,parent_meta_data_file)
+
+
+    return img_paths
