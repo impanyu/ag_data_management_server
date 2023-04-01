@@ -519,6 +519,7 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
 
                      code.classList.add("language-python")
                      code.innerHTML = response;
+
                      hljs.highlightAll();
 
                      pre.appendChild(code);
