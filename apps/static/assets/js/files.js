@@ -647,13 +647,13 @@ else if (suffix == "shp"){
                         map_main.setZoom(15);
                         console.info(url);
 
-                        // Get the current overlays on the map
-                        var overlays = map_main.getOverlays();
+                        // Iterate over all overlays added to the map
+                            map_main.overlayMapTypes.forEach((overlay) => {
+                              // Check if the overlay is currently displayed on the map
+                                    overlays.setMap(null);
+                            });
 
-                        // Loop through each overlay and remove it
-                        for (var i = 0; i < overlays.length; i++) {
-                          overlays[i].setMap(null);
-                        }
+
 
 
                         const overlay = new google.maps.GroundOverlay(url, imageBounds);
