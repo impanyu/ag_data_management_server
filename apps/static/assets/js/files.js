@@ -488,6 +488,7 @@ function delete_file_or_folder(){
 }
 
 function change_shp_dropdown(self){
+ console.info(this);
   current_col = self.innerHTML;
   get_file_content();
 }
