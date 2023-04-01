@@ -517,7 +517,7 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
                      const pre = document.createElement('pre');
                      code = document.createElement('code');
 
-                     code.classList.add("language-python")
+                     code.classList.add("language-python line-numbers")
                      code.innerHTML = response;
                      hljs.highlightAll();
 
