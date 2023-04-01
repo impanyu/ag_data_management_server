@@ -5,11 +5,12 @@ background-color:#aaa;
 #opacity-slider-container {
   position: absolute;
   top: 10px;
-  right: 10px;
+  right: 180px;
   z-index: 1;
   background-color: white;
   border-radius: 4px;
   padding: 4px;
+  width: 260px;
 }
 
 
