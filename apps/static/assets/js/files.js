@@ -533,7 +533,7 @@ else if (suffix == "shp"){
             $.ajax({
                 url: '/get_file',
                 type: 'POST',
-                data: {current_path: current_path, col:col},
+                data: {current_path: current_path, col:current_col},
                 xhrFields: {
                     responseType: 'blob'
                 },
