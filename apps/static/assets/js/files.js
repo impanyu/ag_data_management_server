@@ -444,7 +444,7 @@ current_labels = new Set();
 document.querySelector("#other_meta").value ="";
 get_meta_and_content();
 
-current_col = meta_data["native"]["columns"][0];
+
 
 
 async function get_meta_and_content(){
@@ -477,7 +477,8 @@ async function get_meta_and_content(){
               current_col = meta_data["native"]["columns"][i];
               document.querySelector("#shp_col_list").innerHTML +=  '<a class="dropdown-item" href="#" onclick="get_file_content()">'+current_col+'</a>';
       }
- }
+      current_col = meta_data["native"]["columns"][0];
+    }
       get_file_content();
 
    }
