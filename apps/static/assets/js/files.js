@@ -444,6 +444,7 @@ current_labels = new Set();
 document.querySelector("#other_meta").value ="";
 get_meta_and_content();
 current_col = "";
+current_band = "";
 
 
 
@@ -477,6 +478,9 @@ async function get_meta_and_content(){
       if(suffix == "shp"){
         current_col =  meta_data["native"]["columns"][0];
      }
+     else if(suffix == "tiff" || suffix == "tif"){ 
+        current_band =  1;
+     }
       get_file_content();
 
    }
@@ -490,7 +494,7 @@ async function get_meta_and_content(){
 function delete_file_or_folder(){
 }
 
-function change_shp_dropdown(self){
+function change_channel_dropdown(self){
 
   current_col = self.innerHTML;
   get_file_content();
@@ -530,7 +534,7 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
                      //hljs.highlightAll();
                        Prism.highlightAll();
 
-                     document.querySelector("#shp_dropdown").style.display="none";
+                     document.querySelector("#channel_dropdown").style.display="none";
                       document.querySelector("#map_main").style.display="none";
                       document.querySelector("#opacity-slider-container").style.display="none";
 
@@ -542,7 +546,97 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
             });
 }
 
-else if (suffix == "tif" || suffix == "tiff" || suffix == "png" || suffix == "jpg" || suffix == "jpeg"){
+else if(suffix == "tif" || suffix == "tiff" ){
+             document.querySelector("#channel_col_list").innerHTML = "";
+             document.querySelector("#dropdownMenuButton").innerHTML = "Band";
+               for (band=1; band<=meta_data["native"]["bands"];band++){
+
+                       document.querySelector("#channel_col_list").innerHTML +=  '<span class="dropdown-item"  onclick="change_channel_dropdown(this)">'+band+'</span>';
+                  }
+
+
+            $.ajax({
+                url: '/get_file',
+                type: 'POST',
+                data: {current_path: current_path, band:current_band},
+                xhrFields: {
+                    responseType: 'blob'
+                },
+                success: function(response,status,xhr) {
+                  x=xhr;
+                  document.querySelector("#file_content").style.display="block";
+                  const contentType = xhr.getResponseHeader('Content-Type');
+                   // Extract the filename from the Content-Disposition header
+                   const filename =xhr.getResponseHeader('Content-Disposition').split('filename=')[1];
+                   const url = window.URL.createObjectURL(response);
+
+                   if (meta_data["spatial_range"]["northeast"]["lat"] == "0" &&  meta_data["spatial_range"]["northeast"]["lng"] == "-180"){
+                   //no geospatial info, only render a img
+
+                   // Create a URL object from the blob response
+                         const img = document.createElement('img');
+                         img.src = url;
+                         img.style.width="100%";
+                         document.querySelector("#file_content").appendChild(img);
+                         document.querySelector("#channel_dropdown").style.display="none";
+                          document.querySelector("#map_main").style.display="none";
+                           document.querySelector("#opacity-slider-container").style.display="none";
+                   }
+
+                   //has geospatial info, render on map
+                   else{
+                          north = parseFloat(meta_data["spatial_range"]["northeast"]["lat"]);
+                          south = parseFloat(meta_data["spatial_range"]["southwest"]["lat"]);
+                          east = meta_data["spatial_range"]["northeast"]["lng"];
+                          west = meta_data["spatial_range"]["southwest"]["lng"];
+
+                          const imageBounds = {
+                              north: north,
+                              south: south,
+                              east:  east,
+                              west:  west
+                          };
+
+                        new_center = new google.maps.LatLng((north+south)/2,(east+west)/2);
+                        map_main.setCenter(new_center);
+                        map_main.setZoom(15);
+                        console.info(url);
+
+                        // Iterate over all overlays added to the map
+                            map_main.overlayMapTypes.forEach((overlay) => {
+                              // Check if the overlay is currently displayed on the map
+                                    overlays.setMap(null);
+                            });
+
+
+
+
+                        const overlay = new google.maps.GroundOverlay(url, imageBounds);
+
+
+                        overlay.setMap(map_main);
+
+                       // Create opacity slider
+                        const slider = document.getElementById('opacity-slider');
+                        slider.addEventListener('input', () => {
+                          const opacity = slider.value / 100;
+                          overlay.setOpacity(opacity);
+                        });
+                   }
+                },
+                error: function(xhr, status, error) {
+
+                    console.error('Error retrieving file:', error);
+                }
+            });
+
+
+
+
+}
+
+
+else if (suffix == "png" || suffix == "jpg" || suffix == "jpeg"){
      $.ajax({
                 url: '/get_file',
                 type: 'POST',
@@ -566,7 +660,7 @@ else if (suffix == "tif" || suffix == "tiff" || suffix == "png" || suffix == "jp
                          img.src = url;
                          img.style.width="100%";
                          document.querySelector("#file_content").appendChild(img);
-                         document.querySelector("#shp_dropdown").style.display="none";
+                         document.querySelector("#channel_dropdown").style.display="none";
                           document.querySelector("#map_main").style.display="none";
                            document.querySelector("#opacity-slider-container").style.display="none";
 
@@ -575,7 +669,7 @@ else if (suffix == "tif" || suffix == "tiff" || suffix == "png" || suffix == "jp
                    //has geospatial info, render on map
                    else{
 
-                          document.querySelector("#shp_dropdown").style.display="none";
+                          document.querySelector("#channel_dropdown").style.display="none";
 
                           north = parseFloat(meta_data["spatial_range"]["northeast"]["lat"]);
                           south = parseFloat(meta_data["spatial_range"]["southwest"]["lat"]);
@@ -615,10 +709,10 @@ else if (suffix == "tif" || suffix == "tiff" || suffix == "png" || suffix == "jp
 }
 
 else if (suffix == "shp"){
-                document.querySelector("#shp_col_list").innerHTML = "";
+                document.querySelector("#channel_col_list").innerHTML = "";
                for (i in meta_data["native"]["columns"]){
                           col = meta_data["native"]["columns"][i];
-                          document.querySelector("#shp_col_list").innerHTML +=  '<span class="dropdown-item"  onclick="change_shp_dropdown(this)">'+col+'</span>';
+                          document.querySelector("#channel_col_list").innerHTML +=  '<span class="dropdown-item"  onclick="change_channel_dropdown(this)">'+col+'</span>';
                   }
 
 
@@ -645,7 +739,7 @@ else if (suffix == "shp"){
                          img.src = url;
                          img.style.width="100%";
                          document.querySelector("#file_content").appendChild(img);
-                         document.querySelector("#shp_dropdown").style.display="none";
+                         document.querySelector("#channel_dropdown").style.display="none";
                           document.querySelector("#map_main").style.display="none";
                            document.querySelector("#opacity-slider-container").style.display="none";
                    }

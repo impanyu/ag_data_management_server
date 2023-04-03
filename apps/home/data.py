@@ -847,7 +847,7 @@ def generate_meta_data_for_file(file_path):
         sf = shapefile.Reader(file_path)
 
         meta_data["native"] = {"fields": sf.fields, "numRecords": sf.numRecords, "shapeType": sf.shapeType,
-                               "shapeTypeName": sf.shapeTypeName, "type": sf.__geo_interface__['type'], "columns": columns}
+                               "shapeTypeName": sf.shapeTypeName, "type": sf.__geo_interface__['type'], "columns": columns,"spatial_range":meta_data["spatial_range"]}
 
 
     elif suffix == "m" or suffix == ".mlx":
@@ -866,7 +866,9 @@ def generate_meta_data_for_file(file_path):
         meta_data["format"] = ["Other"]
 
     if suffix == "tif" or suffix == "tiff":
-        meta_data["spatial_range"] = read_tif_meta(file_path)
+
+        meta_data["native"] = read_tif_meta(file_path)
+        meta_data["spatial_range"] = meta_data["native"]["spatial_range"]
 
     meta_data_file_name = "_".join(file_path.split("/")[1:]) + ".json"
 
@@ -952,6 +954,20 @@ def update_meta(file_path,new_meta_data):
         json.dump(meta_data,meta_data_file)
 
 def read_tif_meta(file_path):
+    native_meta = {}
+    with rasterio.open(file_path) as src:
+        # Create metadata dictionary
+        native_meta = {
+            'filename': src.name,
+            'bands': src.count,
+            'width': src.width,
+            'height': src.height,
+            'crs': src.crs.to_dict(),
+            'dtype': str(src.dtypes[0]),
+            'transform': src.transform,
+            'tags': src.tags()
+        }
+
     # Open the GeoTIFF file
     with rasterio.open(file_path) as src:
         # Get the image's CRS (Coordinate Reference System)
@@ -976,9 +992,10 @@ def read_tif_meta(file_path):
         se_lng, se_lat = transform_matrix * (width, height)
 
         lngs, lats = transform(src_crs, dst_crs, [nw_lng,se_lng],[nw_lat,se_lat])
+        native_meta["spatial_range"] = {"northeast": {"lat": lats[0], "lng": lngs[1]}, "southwest": {"lat": lats[1], "lng": lngs[0]}}
 
 
-    return {"northeast": {"lat": lats[0], "lng": lngs[1]}, "southwest": {"lat": lats[1], "lng": lngs[0]}}
+    return native_meta
 
 
 def adjust_meta_data(dir_path):
@@ -1140,35 +1157,6 @@ def get_meta_data(path):
 def get_file(path):
    return
 
-def plot_shapefile(shp_path, output_path,col,minx, miny, maxx, maxy):
-
-    #print(gdf.columns)
-
-    # Define colormap and plot the shapefile
-    cmap = ListedColormap(['white','green','blue','yellow','purple','red'])
-    cmap = ListedColormap(['#1a9850','#91cf60','#d9ef8b','#fee08b','#fc8d59','#d73027','#a50026','#f46d43','#fdae61','#f0f0f0'])
-
-    aspect_ratio =(maxy - miny)/ (maxx-minx)
-    ax = gdf.plot(column=col, cmap=cmap, figsize=(12, 12*aspect_ratio))
-
-
-    # Set x and y limits based on the converted coordinates
-    ax.set_xlim(minx, maxx)
-    ax.set_ylim(miny, maxy)
-
-    # Add title and remove axes
-    #ax.set_title('Shapefile Plot')
-    ax.set_axis_off()
-    # remove all the margins
-    plt.subplots_adjust(left=0, right=1, bottom=0, top=1, wspace=0, hspace=0)
-    ax.margins(0)
-
-    # Save figure to file
-    plt.savefig(output_path, dpi=300,bbox_inches='tight')
-
-    # Return bounds as a tuple of (minx, miny, maxx, maxy)
-    return
-
 
 
 def shp_to_image(shp_path,col): # plot a column of shape file as png image
@@ -1228,5 +1216,50 @@ def shp_to_image(shp_path,col): # plot a column of shape file as png image
     img_parent_meta_data["subdirs"].append(img_path)
     with open(os.path.join(settings.CORE_DIR, 'data', img_parent_meta_data_file_name), "w") as img_parent_meta_data_file:
         json.dump(img_parent_meta_data,img_parent_meta_data_file)
+
+    return img_path
+
+
+def tif_to_image(tif_path,band):
+
+    img_path = f"{tif_path[:-4]}_{band}.png"
+
+    if os.path.exists(img_path):
+        return img_path
+        # Define colormap and plot the shapefile
+
+    cmap = ListedColormap(
+        ['#1a9850', '#91cf60', '#d9ef8b', '#fee08b', '#fc8d59', '#d73027', '#a50026', '#f46d43', '#fdae61',
+         '#f0f0f0'])
+
+    # Open TIF file
+    with rasterio.open(tif_path) as dataset:
+
+        band_data = dataset.read(band)
+        band_min = np.max([np.nanmin(band_data), 0])
+        band_max = np.nanmax(band_data)
+        print(np.where(band_data <= 0, 0, band_data))
+        band_data_scaled = (255 * (band_data - band_min) / (band_max - band_min)).astype('uint8')
+        band_image = Image.fromarray(band_data_scaled)
+        band_image.save(img_path)
+
+
+
+        img_meta_data = generate_meta_data_for_file(img_path)
+        img_meta_data["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
+
+        img_meta_data_file_name = "_".join(img_path.split("/")[1:]) + ".json"
+
+        with open(os.path.join(settings.CORE_DIR, 'data', img_meta_data_file_name), "w") as img_meta_data_file:
+            json.dump(img_meta_data, img_meta_data_file)
+
+        img_parent_path = "/".join(img_path.split("/")[:-1])
+        img_parent_meta_data_file_name = "_".join(img_parent_path.split("/")[1:]) + ".json"
+        with open(os.path.join(settings.CORE_DIR, 'data', img_parent_meta_data_file_name), "r") as img_parent_meta_data_file:
+            img_parent_meta_data = json.load(img_parent_meta_data_file)
+
+        img_parent_meta_data["subdirs"].append(img_path)
+        with open(os.path.join(settings.CORE_DIR, 'data', img_parent_meta_data_file_name), "w") as img_parent_meta_data_file:
+            json.dump(img_parent_meta_data,img_parent_meta_data_file)
 
     return img_path

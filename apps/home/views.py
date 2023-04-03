@@ -639,6 +639,14 @@ def data(request):
                 response['Content-Type'] = 'image/jpg'
                 response['Content-Disposition'] = f'inline; filename={os.path.basename(img_path)}'
 
+            elif suffix == "tif" or suffix == "tiff":
+                band = request.POST['band']
+                img_path = tif_to_image(abs_path,band)
+                with open(img_path, 'rb') as file:
+                    response = HttpResponse(file.read())
+                response['Content-Type'] = 'image/jpg'
+                response['Content-Disposition'] = f'inline; filename={os.path.basename(img_path)}'
+
             elif suffix == "jpg" or suffix == "jpeg":
                 with open(abs_path, 'rb') as file:
                     response = HttpResponse(file.read())
