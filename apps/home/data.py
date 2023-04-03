@@ -1246,7 +1246,7 @@ def tif_to_image(tif_path,band):
 
 
         img_meta_data = generate_meta_data_for_file(img_path)
-        img_meta_data["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
+        img_meta_data["spatial_range"] = read_tif_meta(tif_path)["spatial_range"]
 
         img_meta_data_file_name = "_".join(img_path.split("/")[1:]) + ".json"
 
