@@ -1239,9 +1239,9 @@ def tif_to_image(tif_path,band):
 
         band_data = dataset.read(int(band))
         band_min = np.max([np.nanmin(band_data), 0])
-        band_min = np.nanmin(band_data)
-        #
         band_max = np.nanmax(band_data)
+        print(band_min)
+        print(band_max)
         #print(np.where(band_data <= 0, 0, band_data))
         band_data_scaled = (255 * (band_data - band_min) / (band_max - band_min)).astype('uint8')
         band_image = Image.fromarray(band_data_scaled)
