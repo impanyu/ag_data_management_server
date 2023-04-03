@@ -561,6 +561,10 @@ else if(suffix == "tif" || suffix == "tiff" ){
                        document.querySelector("#channel_col_list").innerHTML +=  '<span class="dropdown-item"  onclick="change_channel_dropdown(this)" id="channel_dropdown_item_'+band+'">'+band+'</span>';
                   }
 
+                 if (meta_data["native"]["bands"] == 4){
+                 document.querySelector("#channel_col_list").innerHTML += '<span class="dropdown-item"  onclick="change_channel_dropdown(this)" id="channel_dropdown_item_rgba">RGBA</span>';
+                 }
+
           document.querySelector("#channel_dropdown_item_"+current_band).style.backgroundColor = "#87CEEB";
 
             $.ajax({

@@ -1237,35 +1237,58 @@ def tif_to_image(tif_path,band):
     # Open TIF file
     with rasterio.open(tif_path) as dataset:
 
-        band_data = dataset.read(int(band))
-        band_min = np.max([np.nanmin(band_data), 0])
-        band_max = np.nanmax(band_data)
-        print(band_min)
-        print(band_max)
+        if band == "RGBA":
+            # Get image dimensions
+            height = dataset.height
+            width = dataset.width
 
-        #print(np.where(band_data <= 0, 0, band_data))
-        band_data_scaled = (255 * (band_data - band_min) / (band_max - band_min)).astype('uint8')
-        band_image = Image.fromarray(band_data_scaled)
-        band_image.save(img_path)
+            # Read red, green, blue, and alpha bands
+            bands = dataset.read([1, 2, 3, 4], out_shape=(4, height, width))
+
+            # Create a single RGBA array
+            rgba_data = np.dstack((bands[0], bands[1], bands[2], bands[3])).astype(np.float32)
+
+            # Scale the data to the range 0-255
+            rgba_min = np.nanmin(rgba_data)
+            rgba_max = np.nanmax(rgba_data)
+            rgba_data_scaled = (255 * (rgba_data - rgba_min) / (rgba_max - rgba_min)).astype('uint8')
+
+            # Create a PIL Image object and save as PNG
+            image = Image.fromarray(rgba_data_scaled, mode='RGBA')
+            image.save(img_path)
+
+        else:
+
+
+            band_data = dataset.read(int(band)).astype('float32')
+            band_min = np.max([np.nanmin(band_data), 0])
+            band_max = np.nanmax(band_data)
+            print(band_min)
+            print(band_max)
+
+            #print(np.where(band_data <= 0, 0, band_data))
+            band_data_scaled = (255 * (band_data - band_min) / (band_max - band_min)).astype('uint8')
+            band_image = Image.fromarray(band_data_scaled)
+            band_image.save(img_path)
 
 
 
-        img_meta_data = generate_meta_data_for_file(img_path)
-        img_meta_data["spatial_range"] = read_tif_meta(tif_path)["spatial_range"]
+    img_meta_data = generate_meta_data_for_file(img_path)
+    img_meta_data["spatial_range"] = read_tif_meta(tif_path)["spatial_range"]
 
-        img_meta_data_file_name = "_".join(img_path.split("/")[1:]) + ".json"
+    img_meta_data_file_name = "_".join(img_path.split("/")[1:]) + ".json"
 
-        with open(os.path.join(settings.CORE_DIR, 'data', img_meta_data_file_name), "w") as img_meta_data_file:
-            json.dump(img_meta_data, img_meta_data_file)
+    with open(os.path.join(settings.CORE_DIR, 'data', img_meta_data_file_name), "w") as img_meta_data_file:
+        json.dump(img_meta_data, img_meta_data_file)
 
-        img_parent_path = "/".join(img_path.split("/")[:-1])
-        img_parent_meta_data_file_name = "_".join(img_parent_path.split("/")[1:]) + ".json"
-        with open(os.path.join(settings.CORE_DIR, 'data', img_parent_meta_data_file_name), "r") as img_parent_meta_data_file:
-            img_parent_meta_data = json.load(img_parent_meta_data_file)
+    img_parent_path = "/".join(img_path.split("/")[:-1])
+    img_parent_meta_data_file_name = "_".join(img_parent_path.split("/")[1:]) + ".json"
+    with open(os.path.join(settings.CORE_DIR, 'data', img_parent_meta_data_file_name), "r") as img_parent_meta_data_file:
+        img_parent_meta_data = json.load(img_parent_meta_data_file)
 
-        img_parent_meta_data["subdirs"].append(img_path)
-        with open(os.path.join(settings.CORE_DIR, 'data', img_parent_meta_data_file_name), "w") as img_parent_meta_data_file:
-            json.dump(img_parent_meta_data,img_parent_meta_data_file)
+    img_parent_meta_data["subdirs"].append(img_path)
+    with open(os.path.join(settings.CORE_DIR, 'data', img_parent_meta_data_file_name), "w") as img_parent_meta_data_file:
+        json.dump(img_parent_meta_data,img_parent_meta_data_file)
 
 
     return img_path
