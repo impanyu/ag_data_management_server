@@ -561,7 +561,7 @@ else if(suffix == "tif" || suffix == "tiff" ){
                        document.querySelector("#channel_col_list").innerHTML +=  '<span class="dropdown-item"  onclick="change_channel_dropdown(this)" id="channel_dropdown_item_'+band+'">'+band+'</span>';
                   }
 
-          document.querySelector("#channel_dropdown_item_"+current_band).style.backgroundColor = "87CEEB";
+          document.querySelector("#channel_dropdown_item_"+current_band).style.backgroundColor = "#87CEEB";
 
             $.ajax({
                 url: '/get_file',
@@ -722,7 +722,7 @@ else if (suffix == "shp"){
                           col = meta_data["native"]["columns"][i];
                           document.querySelector("#channel_col_list").innerHTML +=  '<span class="dropdown-item"  onclick="change_channel_dropdown(this) id="channel_dropdown_item_'+col+'">'+col+'</span>';
                   }
-            document.querySelector("#channel_dropdown_item_"+current_col).style.backgroundColor = "87CEEB";
+            document.querySelector("#channel_dropdown_item_"+current_col).style.backgroundColor = "#87CEEB";
 
             $.ajax({
                 url: '/get_file',
