@@ -497,11 +497,11 @@ function delete_file_or_folder(){
 function change_channel_dropdown(self){
  if(suffix == "shp"){
    current_col = self.innerHTML;
-   document.querySelector(f"#channel_dropdown_item_{current_col}").style.backgroundColor = "blue";
+   document.querySelector("#channel_dropdown_item_"+current_col).style.backgroundColor = "blue";
   }
  else if(suffix == "tif" || suffix == "tiff"){
   current_band = self.innerHTML;
-  document.querySelector(f"#channel_dropdown_item_{current_band}").style.backgroundColor = "blue";
+  document.querySelector("#channel_dropdown_item_"+current_band).style.backgroundColor = "blue";
   }
 
   get_file_content();
