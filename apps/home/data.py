@@ -1232,6 +1232,8 @@ def tif_to_image(tif_path,band):
         ['#1a9850', '#91cf60', '#d9ef8b', '#fee08b', '#fc8d59', '#d73027', '#a50026', '#f46d43', '#fdae61',
          '#f0f0f0'])
 
+    print(img_path)
+
     # Open TIF file
     with rasterio.open(tif_path) as dataset:
 
