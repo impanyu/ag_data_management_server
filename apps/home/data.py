@@ -1237,14 +1237,13 @@ def tif_to_image(tif_path,band):
     # Open TIF file
     with rasterio.open(tif_path) as dataset:
 
-        band_data = dataset.read(band)
+        band_data = dataset.read(int(band))
         band_min = np.max([np.nanmin(band_data), 0])
         band_max = np.nanmax(band_data)
         print(np.where(band_data <= 0, 0, band_data))
         band_data_scaled = (255 * (band_data - band_min) / (band_max - band_min)).astype('uint8')
         band_image = Image.fromarray(band_data_scaled)
         band_image.save(img_path)
-        '''
 
 
 
@@ -1264,6 +1263,6 @@ def tif_to_image(tif_path,band):
         img_parent_meta_data["subdirs"].append(img_path)
         with open(os.path.join(settings.CORE_DIR, 'data', img_parent_meta_data_file_name), "w") as img_parent_meta_data_file:
             json.dump(img_parent_meta_data,img_parent_meta_data_file)
-        '''
+
 
     return img_path
