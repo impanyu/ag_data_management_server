@@ -501,7 +501,6 @@ function change_channel_dropdown(self){
   }
  else if(suffix == "tif" || suffix == "tiff"){
   current_band = self.innerHTML;
-  self.style.backgroundColor = "87CEEB";
   }
 
   get_file_content();
