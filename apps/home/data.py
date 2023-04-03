@@ -1165,7 +1165,7 @@ def shp_to_image(shp_path,col): # plot a column of shape file as png image
     #with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
     #    meta_data = json.dump(meta_data_file)
 
-    img_path = f"{shp_path[:-4]}_{col}.png"
+    img_path = f"{shp_path}_col_{col}.png"
 
     if os.path.exists(img_path):
         return img_path
@@ -1222,7 +1222,7 @@ def shp_to_image(shp_path,col): # plot a column of shape file as png image
 
 def tif_to_image(tif_path,band):
 
-    img_path = f"{tif_path[:-4]}_{band}.png"
+    img_path = f"{tif_path}_band_{band}.png"
 
     if os.path.exists(img_path):
         return img_path
@@ -1239,8 +1239,10 @@ def tif_to_image(tif_path,band):
 
         band_data = dataset.read(int(band))
         band_min = np.max([np.nanmin(band_data), 0])
+        band_min = np.nanmin(band_data)
+        #
         band_max = np.nanmax(band_data)
-        print(np.where(band_data <= 0, 0, band_data))
+        #print(np.where(band_data <= 0, 0, band_data))
         band_data_scaled = (255 * (band_data - band_min) / (band_max - band_min)).astype('uint8')
         band_image = Image.fromarray(band_data_scaled)
         band_image.save(img_path)
