@@ -495,8 +495,15 @@ function delete_file_or_folder(){
 }
 
 function change_channel_dropdown(self){
+ if(suffix == "shp"){
+   current_col = self.innerHTML;
+   document.querySelector(f"#channel_dropdown_item_{current_col}").style.backgroundColor = "blue";
+  }
+ else if(suffix == "tif" || suffix == "tiff"){
+  current_band = self.innerHTML;
+  document.querySelector(f"#channel_dropdown_item_{current_band}").style.backgroundColor = "blue";
+  }
 
-  current_col = self.innerHTML;
   get_file_content();
 }
 
@@ -551,7 +558,7 @@ else if(suffix == "tif" || suffix == "tiff" ){
              document.querySelector("#dropdownMenuButton").innerHTML = "Band";
                for (band=1; band<=meta_data["native"]["bands"];band++){
 
-                       document.querySelector("#channel_col_list").innerHTML +=  '<span class="dropdown-item"  onclick="change_channel_dropdown(this)">'+band+'</span>';
+                       document.querySelector("#channel_col_list").innerHTML +=  '<span class="dropdown-item"  onclick="change_channel_dropdown(this)" id="channel_dropdown_item_'+band+'">'+band+'</span>';
                   }
 
 
@@ -712,7 +719,7 @@ else if (suffix == "shp"){
                 document.querySelector("#channel_col_list").innerHTML = "";
                for (i in meta_data["native"]["columns"]){
                           col = meta_data["native"]["columns"][i];
-                          document.querySelector("#channel_col_list").innerHTML +=  '<span class="dropdown-item"  onclick="change_channel_dropdown(this)">'+col+'</span>';
+                          document.querySelector("#channel_col_list").innerHTML +=  '<span class="dropdown-item"  onclick="change_channel_dropdown(this) id="channel_dropdown_item_'+col+'">'+col+'</span>';
                   }
 
 
