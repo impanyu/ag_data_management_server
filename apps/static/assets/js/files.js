@@ -853,7 +853,7 @@ shapefile.open("/read_file?"+current_path)
 */
 
 $.ajax({
-    url: '/get_file',
+    url: '/download_file',
     type: 'POST',
     data: {current_path: current_path},
     xhrFields: {
