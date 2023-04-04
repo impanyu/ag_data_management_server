@@ -545,7 +545,7 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
                      const pre = document.createElement('pre');
                      document.querySelector("#file_content").appendChild(pre);
                      pre.setAttribute('id', 'editor');
-                     pre.innterHTML = response;
+                     pre.innerHTML = response;
 
                       var editor = ace.edit("editor");
                       editor.setTheme("ace/theme/ambiance");
