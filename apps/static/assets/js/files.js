@@ -442,6 +442,8 @@ suffix = current_path.split(".")[current_path.split(".").length-1];
 labels= ["Spidercam", "ENREC", "Wheat", "Crop", "Weather", "GIS", "Application", "UAV", "IoT", "Farm", "Machinery", "Disease", "Pest", "Fertilizer", "Water", "Nitrogen", "Cattle"];
 current_labels = new Set();
 document.querySelector("#other_meta").value ="";
+
+document.querySelector("#file_content").style.display="none";
 get_meta_and_content();
 current_col = "";
 current_band = "";
@@ -544,6 +546,9 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
                       document.querySelector("#map_main").style.display="none";
                       document.querySelector("#opacity-slider-container").style.display="none";
 
+                      document.querySelector("#file_content").style.display="block";
+                      document.querySelector("#preloader").style.display="none";
+
                 },
                 error: function(xhr, status, error) {
 
@@ -632,6 +637,8 @@ else if(suffix == "tif" || suffix == "tiff" ){
                           overlay.setOpacity(opacity);
                         });
                    }
+                   document.querySelector("#file_content").style.display="block";
+                      document.querySelector("#preloader").style.display="none";
                 },
                 error: function(xhr, status, error) {
 
@@ -708,6 +715,8 @@ else if (suffix == "png" || suffix == "jpg" || suffix == "jpeg"){
                           overlay.setOpacity(opacity);
                         });
                    }
+                   document.querySelector("#file_content").style.display="block";
+                      document.querySelector("#preloader").style.display="none";
                 },
                 error: function(xhr, status, error) {
 
@@ -793,6 +802,8 @@ else if (suffix == "shp"){
                           overlay.setOpacity(opacity);
                         });
                    }
+                   document.querySelector("#file_content").style.display="block";
+                      document.querySelector("#preloader").style.display="none";
                 },
                 error: function(xhr, status, error) {
 
