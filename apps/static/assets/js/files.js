@@ -620,8 +620,6 @@ else if(suffix == "tif" || suffix == "tiff" ){
                             });
 
 
-
-
                         const overlay = new google.maps.GroundOverlay(url, imageBounds);
 
 
