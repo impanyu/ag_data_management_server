@@ -512,10 +512,13 @@ function change_channel_dropdown(self){
 
 x={};
 u = "";
+file_format_names = {"txt":"plain_text","py":"python","m":"matlab","mlx":"matlab","r":"r","csv":"text","json":"json","xml":"xml","html":"html"};
+
 function get_file_content(){
 
 
-if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suffix == "r" || suffix == "csv" || suffix == "xlsx" || suffix == "xls" || suffix == "json" || suffix == "xml" || suffix=="html"){
+
+if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suffix == "r" || suffix == "csv" || suffix == "json" || suffix == "xml" || suffix=="html"){
        $.ajax({
                 url: '/get_file',
                 type: 'POST',
@@ -549,7 +552,7 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
 
                       var editor = ace.edit("editor");
                       editor.setTheme("ace/theme/ambiance");
-                      editor.session.setMode("ace/mode/python");
+                      editor.session.setMode("ace/mode/"+file_format_names[suffix]);
 
 
                      /*
