@@ -512,13 +512,13 @@ function change_channel_dropdown(self){
 
 x={};
 u = "";
-file_format_names = {"txt":"plain_text","py":"python","m":"matlab","mlx":"matlab","r":"r","csv":"text","json":"json","xml":"xml","html":"html"};
+file_format_names = {"txt":"plain_text","py":"python","m":"matlab","mlx":"matlab","r":"r","csv":"text","json":"json","xml":"xml","html":"html","prf":"plain_text","tfw":"plain_text"};
 
 function get_file_content(){
 
 
 
-if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suffix == "r" || suffix == "csv" || suffix == "json" || suffix == "xml" || suffix=="html"){
+if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suffix == "r" || suffix == "csv" || suffix == "json" || suffix == "xml" || suffix=="html" || suffix == "prj" || suffix == "tfw"){
        $.ajax({
                 url: '/get_file',
                 type: 'POST',
