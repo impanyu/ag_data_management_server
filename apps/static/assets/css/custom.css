@@ -2,18 +2,17 @@
 background-color:#aaa;
 }
 
- body {
-        overflow: hidden;
-    }
 
-    #editor {
-        margin: 0;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-    }
+
+#editor {
+    margin: 0;
+    height: 600px;
+    font: 20px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
 
 #channel_dropdown {
   position: absolute;
