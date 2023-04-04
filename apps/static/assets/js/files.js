@@ -553,15 +553,15 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
 }
 
 else if(suffix == "tif" || suffix == "tiff" ){
-             document.querySelector("#channel_col_list").innerHTML = "";
+             document.querySelector("#channel_list").innerHTML = "";
              document.querySelector("#dropdownMenuButton").innerHTML = "Band";
                for (band=1; band<=meta_data["native"]["bands"];band++){
 
-                       document.querySelector("#channel_col_list").innerHTML +=  '<span class="dropdown-item"  onclick="change_channel_dropdown(this)" id="channel_dropdown_item_'+band+'">'+band+'</span>';
+                       document.querySelector("#channel_list").innerHTML +=  '<span class="dropdown-item"  onclick="change_channel_dropdown(this)" id="channel_dropdown_item_'+band+'">'+band+'</span>';
                   }
 
                  if (meta_data["native"]["bands"] == 4){
-                 document.querySelector("#channel_col_list").innerHTML += '<span class="dropdown-item"  onclick="change_channel_dropdown(this)" id="channel_dropdown_item_RGBA">RGBA</span>';
+                 document.querySelector("#channel_list").innerHTML += '<span class="dropdown-item"  onclick="change_channel_dropdown(this)" id="channel_dropdown_item_RGBA">RGBA</span>';
                  }
 
           document.querySelector("#channel_dropdown_item_"+current_band).style.backgroundColor = "#87CEEB";
@@ -720,10 +720,10 @@ else if (suffix == "png" || suffix == "jpg" || suffix == "jpeg"){
 }
 
 else if (suffix == "shp"){
-                document.querySelector("#channel_col_list").innerHTML = "";
+                document.querySelector("#channel_list").innerHTML = "";
                for (i in meta_data["native"]["columns"]){
                           col = meta_data["native"]["columns"][i];
-                          document.querySelector("#channel_col_list").innerHTML +=  '<span class="dropdown-item"  onclick="change_channel_dropdown(this) id="channel_dropdown_item_'+col+'">'+col+'</span>';
+                          document.querySelector("#channel_list").innerHTML +=  '<span class="dropdown-item"  onclick="change_channel_dropdown(this)" id="channel_dropdown_item_'+col+'">'+col+'</span>';
                   }
             document.querySelector("#channel_dropdown_item_"+current_col).style.backgroundColor = "#87CEEB";
 
