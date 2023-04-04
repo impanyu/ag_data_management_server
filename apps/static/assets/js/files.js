@@ -525,6 +525,13 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
                 },
                 success: function(response,status,xhr) {
                   x=xhr;
+                  document.querySelector("#channel_dropdown").style.display="none";
+                   document.querySelector("#map_main").style.display="none";
+                   document.querySelector("#opacity-slider-container").style.display="none";
+
+                   document.querySelector("#file_content").style.display="block";
+
+
                   document.querySelector("#file_content").style.display="block";
                   const contentType = xhr.getResponseHeader('Content-Type');
                    // Extract the filename from the Content-Disposition header
@@ -536,8 +543,10 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
 
 
                      const pre = document.createElement('pre');
+                     document.querySelector("#file_content").appendChild(pre);
                      pre.setAttribute('id', 'editor');
                      pre.innterHTML = response;
+
                       var editor = ace.edit("editor");
                       editor.setTheme("ace/theme/ambiance");
                       editor.session.setMode("ace/mode/python");
@@ -553,19 +562,15 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
 
                      pre.appendChild(code);
 
-                     */
 
 
 
-                     document.querySelector("#file_content").appendChild(pre);
+
+
                      //hljs.highlightAll();
                        Prism.highlightAll();
+                      */
 
-                     document.querySelector("#channel_dropdown").style.display="none";
-                      document.querySelector("#map_main").style.display="none";
-                      document.querySelector("#opacity-slider-container").style.display="none";
-
-                      document.querySelector("#file_content").style.display="block";
                       document.querySelector("#preloader").style.display="none";
 
                 },
