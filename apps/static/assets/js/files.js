@@ -529,9 +529,21 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
                   const contentType = xhr.getResponseHeader('Content-Type');
                    // Extract the filename from the Content-Disposition header
                    const filename =xhr.getResponseHeader('Content-Disposition').split('filename=')[1];
-                    // Create a URL object from the blob response
+
+
+                     //create a text input area
+
+
 
                      const pre = document.createElement('pre');
+                     pre.setAttribute('id', 'editor');
+                     pre.innterHTML = response;
+                      var editor = ace.edit("editor");
+                      editor.setTheme("ace/theme/ambiance");
+                      editor.session.setMode("ace/mode/python");
+
+
+                     /*
                      code = document.createElement('code');
 
                      code.classList.add("language-python","line-numbers")
@@ -540,6 +552,11 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
 
 
                      pre.appendChild(code);
+
+                     */
+
+
+
                      document.querySelector("#file_content").appendChild(pre);
                      //hljs.highlightAll();
                        Prism.highlightAll();
