@@ -405,7 +405,7 @@ for(var i=0;i<files.length;i++){
 
 }
 
-$('#preloader3').style.display = "block";
+$('#preloader3')[0].style.display = "block";
  $.ajax({
 
              xhr: function() {
