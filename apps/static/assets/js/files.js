@@ -405,7 +405,7 @@ for(var i=0;i<files.length;i++){
 
 }
 
-
+$('#preloader3').style.display = "block";
  $.ajax({
 
              xhr: function() {
@@ -430,6 +430,7 @@ for(var i=0;i<files.length;i++){
             success: function (data) {
                 alert(data);
                 $("#file_list")[0].innerHTML="";
+                $('#preloader3').style.display = "none";
                 get_file_list();
             }
         });
