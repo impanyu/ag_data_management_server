@@ -490,7 +490,7 @@ function create_folder(new_folder_name){
             data: {
                current_path: current_path,
                new_folder_name: new_folder_name
-            }
+            },
             success: function (data) {
                 $("#file_list")[0].innerHTML="";
                 get_file_list();
