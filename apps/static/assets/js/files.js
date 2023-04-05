@@ -443,7 +443,7 @@ document.querySelector("#other_meta").value ="";
 
 document.querySelector("#file_content").style.display="none";
 if(current_path.indexOf(".")!=-1)
-  document.querySelector("#preloader2").style.display="block";
+  document.querySelector("#preloader2").style.display="flex";
 get_meta_and_content();
 current_col = "";
 current_band = "";
@@ -631,7 +631,7 @@ function delete_file_or_folder(){
 }
 
 function change_channel_dropdown(self){
- document.querySelector("#preloader2").style.display = "block";
+ document.querySelector("#preloader2").style.display = "flex";
  if(suffix == "shp"){
    current_col = self.innerHTML;
 
