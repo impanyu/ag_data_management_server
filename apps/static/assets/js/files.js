@@ -501,6 +501,8 @@ function create_folder(new_folder_name){
             success: function (data) {
                 console.info(data);
                 $("#file_list")[0].innerHTML="";
+                create_folder_overlay.style.display  = "none";
+
                 get_file_list();
             }
         });
