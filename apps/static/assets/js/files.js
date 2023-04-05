@@ -608,7 +608,7 @@ function set_tool_panel(){
                              '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>Entry Point</b></label>'+
                         '</div>'+
                          '<div class="col-lg-6 col-12">'+
-                             '<input class="form-control"   type="text" value="'+ meta_data['entry_point']+'" >'+
+                             '<input class="form-control"   type="text" value="/'+ meta_data['entry_point']+'" >'+
                         '</div></div>'
       }
 
@@ -624,7 +624,7 @@ function set_tool_panel(){
                              '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>Entry Point</b></label>'+
                         '</div>'+
                          '<div class="col-lg-6 col-12">'+
-                             '<input class="form-control"   type="text" value="'+ current_path+'" >'+
+                             '<input class="form-control"   type="text" value="/'+ current_path+'" >'+
                         '</div></div>'
 
 
