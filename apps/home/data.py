@@ -1174,7 +1174,7 @@ def get_meta_data(path):
         meta_data["native"][key] = native_meta[key]
 
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "w") as meta_data_file:
-        meta_data = json.load(meta_data_file)
+        json.dump(meta_data,meta_data_file)
 
 
     file_name = path.split("/")[-1]
