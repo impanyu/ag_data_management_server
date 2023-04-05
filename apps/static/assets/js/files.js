@@ -506,7 +506,7 @@ function update_file(){
         success: function(data, status){
           //console.info(data);
           //alert("file updated");
-           document.querySelector("preloader").style.display = "none";
+           document.querySelector("#preloader").style.display = "none";
 
   }});
 
@@ -583,7 +583,7 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
                        //check code change every 15s
                        setInterval(function(){
                             if(file_changed){
-                                document.querySelector("preloader").style.display = "block";
+                                document.querySelector("#preloader").style.display = "block";
                                 update_file();
                                 file_changed = false;
 
