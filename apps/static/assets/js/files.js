@@ -482,7 +482,7 @@ cancel_create_folder_button.addEventListener('click', function(event) {
 const create_folder_li = document.querySelector('#create_folder_li');
 
 create_folder_li.addEventListener('click', function(event) {
-   create_folder_overlay.style.display  = "block";
+   create_folder_overlay.style.display  = "flex";
 });
 
 
