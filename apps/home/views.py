@@ -302,7 +302,7 @@ def data(request):
         elif load_template == "create_folder":
             #current_path = request.POST['current_path']
             current_path = request.POST.get("current_path", "")
-            #new_folder_name = request.POST['new_folder_name']
+            new_folder_name = request.POST['new_folder_name']
             #abs_path = os.path.join("/home", current_path,new_folder_name)
             '''
             new_path = abs_path
