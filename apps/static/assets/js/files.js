@@ -453,10 +453,30 @@ file_content ="";
 file_changed = false;
 
 
-const create_folder_overlay = document.querySelector('#create_folder');
+const create_folder_overlay = document.querySelector('#create_folder_overlay');
 
 create_folder_overlay.addEventListener('click', function(event) {
     this.style.display  = "none";
+});
+
+const create_folder_tab = document.querySelector('#create_folder_tab');
+
+create_folder_tab.addEventListener('click', function(event) {
+   event.stopPropagation();
+});
+
+
+const create_folder_button = document.querySelector('#create_folder_button');
+
+create_folder_button.addEventListener('click', function(event) {
+
+});
+
+
+const cancel_create_folder_button = document.querySelector('#cancel_create_folder_button');
+
+cancel_create_folder_button.addEventListener('click', function(event) {
+   create_folder_overlay.style.display  = "none";
 });
 
 
