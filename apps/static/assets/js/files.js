@@ -507,7 +507,7 @@ const create_file_button = document.querySelector('#create_file_button');
 create_file_button.addEventListener('click', function(event) {
 
    new_file_name = document.querySelector("#new_file_name").value;
-   create_folder(new_file_name);
+   create_file(new_file_name);
 });
 
 
