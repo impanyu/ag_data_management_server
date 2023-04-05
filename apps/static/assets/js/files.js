@@ -490,7 +490,7 @@ create_folder_li.addEventListener('click', function(event) {
 
 function create_folder(new_folder_name){
     $.ajax({
-            method: "post",
+            type: "POST",
 
             url: "/create_folder",
             data: {
