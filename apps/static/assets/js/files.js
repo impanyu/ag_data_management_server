@@ -598,7 +598,7 @@ async function get_meta_and_content(){
    if(current_path.indexOf(".")==-1){ //folder
     document.querySelector("#file_content").style.display="none";
      await get_meta_data();
-     if(meta_data["mode"] == Tool){
+     if(meta_data["mode"] == "Tool"){
         document.querySelector("#tool_panel_tab").style.display = "block";
         document.querySelector("#tool_panel").style.display = "block";
 
@@ -621,7 +621,7 @@ async function get_meta_and_content(){
         current_band =  1;
      }
 
-     if(meta_data["mode"] == Tool){
+     if(meta_data["mode"] == "Tool"){
         document.querySelector("#tool_panel_tab").style.display = "block";
         document.querySelector("#tool_panel").style.display = "block";
 
