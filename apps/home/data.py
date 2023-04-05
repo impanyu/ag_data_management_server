@@ -929,16 +929,14 @@ def update_meta(file_path,new_meta_data):
             #print(meta_data[key])
         elif key == "realtime":
             meta_data[key] = new_meta_data[key]
-        '''
-        elif key == "public" and not meta_data[key] == new_meta_data[key]:
+
+        elif key == "public":
             meta_data[key] = new_meta_data[key]
 
             # recursively change the subdirs and files
             recursive_update_public(file_path,new_meta_data[key])
 
-        
-
-
+        '''
         elif key == "time_range":
             if new_meta_data["time_range"]["start"] == "start":
                 continue
