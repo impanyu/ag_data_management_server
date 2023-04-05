@@ -632,7 +632,9 @@ function delete_file_or_folder(){
 
 function change_channel_dropdown(self){
  document.querySelector("#preloader2").style.display = "flex";
+ document.querySelector("file_content").style.display = "none";
  if(suffix == "shp"){
+
    current_col = self.innerHTML;
 
   }
@@ -669,7 +671,6 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
                    document.querySelector("#file_content").style.display="block";
 
 
-                  document.querySelector("#file_content").style.display="block";
                   const contentType = xhr.getResponseHeader('Content-Type');
                    // Extract the filename from the Content-Disposition header
                    const filename =xhr.getResponseHeader('Content-Disposition').split('filename=')[1];
