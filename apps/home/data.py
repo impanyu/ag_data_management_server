@@ -555,7 +555,7 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, re
 
     has_time_pattern = False
     for r in realtime:
-        if r == "All" or r in meta_data["realtime"]:
+        if r == "All" or r ==  meta_data["realtime"]:
             has_time_pattern = True
             break
         # if l not in ["Spidercam","ENREC","Wheat"] and "Other" in label:
