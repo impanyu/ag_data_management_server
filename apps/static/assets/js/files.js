@@ -408,7 +408,18 @@ for(var i=0;i<files.length;i++){
 $('#preloader3')[0].style.display = "block";
  $.ajax({
 
-
+                 xhr: function() {
+                        var xhr = new window.XMLHttpRequest();
+                        xhr.upload.addEventListener("progress", function(evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = evt.loaded / evt.total;
+                                //console.info(percentComplete);
+                               #$('#preloader3').text('Uploading: ' + Math.round(percentComplete * 100) + '%');
+                                $('#preloader3')[0].style.width = Math.round(percentComplete * 100) + '%';
+                            }
+                        }, false);
+                        return xhr;
+                    },
             method: "post",
             processData: false,
             contentType: false,
