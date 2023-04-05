@@ -1376,7 +1376,7 @@ function update_meta(){
   if(document.querySelector("#realtime-toggle-switch").checked)
     meta_data["realtime"] = "Realtime";
    else
-     meta_data["realtime"] = "None-Realtime";
+     meta_data["realtime"] = "Non-Realtime";
 
     meta_data["time_range"] = {"start":document.querySelector("#start_date").value, "end":document.querySelector("#end_date").value};
     meta_data["spatial_range"] = {"southwest":document.querySelector("#southwest").value, "northeast":document.querySelector("#northeast").value};
@@ -1484,7 +1484,7 @@ function get_meta_data(){
                      }
                   else{
                      document.querySelector("#realtime-toggle-switch").checked = false;
-                     document.getElementById("realtime").innerHTML = "None-Realtime Data";
+                     document.getElementById("realtime").innerHTML = "Non-Realtime Data";
                      }
              }
 
@@ -1540,7 +1540,7 @@ realtime_toggle_switch.addEventListener("change", function() {
     realtime_content.innerHTML = "Realtime Data";
   } else {
     // Hide the content
-   realtime_content.innerHTML = "None-Realtime Data"
+   realtime_content.innerHTML = "Non-Realtime Data"
   }
 });
 
