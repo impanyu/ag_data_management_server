@@ -944,7 +944,7 @@ def update_meta(file_path,new_meta_data):
             #meta_data[key]={"start": "01/01/2030 00:00:00", "end": "01/01/2030 00:00:00"}
             meta_data[key]["start"] = datetime.strptime(new_meta_data["time_range"]["start"], "%m/%d/%Y").strftime("%m/%d/%Y %H:%M:%S")
             meta_data[key]["end"] = datetime.strptime(new_meta_data["time_range"]["end"], "%m/%d/%Y").strftime("%m/%d/%Y %H:%M:%S")
-
+        '''
         elif key == "other_meta":
             #other_meta = new_meta_data[key].replace("\n",",")
             #other_meta = json.loads("{" + other_meta + "}")
@@ -972,7 +972,7 @@ def update_meta(file_path,new_meta_data):
             meta_data["spatial_range"]["southwest"]["lng"] = left_ln
             meta_data["spatial_range"]["northeast"]["lat"] = upper_lat
             meta_data["spatial_range"]["northeast"]["lng"] = right_ln
-
+        '''
 
     print("meta_data")
     print(meta_data)
