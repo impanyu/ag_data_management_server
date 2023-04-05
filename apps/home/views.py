@@ -304,14 +304,14 @@ def data(request):
             current_path = request.POST.get("current_path", "")
             new_folder_name = request.POST['new_folder_name']
             abs_path = os.path.join("/home", current_path,new_folder_name)
-            '''
+
             new_path = abs_path
             i = 1
             while(os.path.exists(new_path)):
                 new_path = abs_path +"_"+str(i)
                 i = i+1
             os.makedirs(new_path)
-            '''
+
             return HttpResponse("folder creation complete!")
 
 
