@@ -790,7 +790,7 @@ def data(request):
 
             request_data = json.loads(request.body)
             current_path = request_data['current_path']
-            new_content = json.loads(request_data["new_content"])
+            new_content = request_data["new_content"]
 
 
             print(new_content)
