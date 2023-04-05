@@ -597,6 +597,35 @@ function toggle_tool_panel(){
 }
 
 
+
+function set_tool_panel(){
+  document.querySelector("#tool_panel_tab").style.display = "block";
+  if(current_path.indexOf(".")==-1){ //folder
+      if(meta_data["entry_point"]){
+           document.querySelector("#tool_panel_container").innerHTML +='<div class="col-lg-3 col-12">'+
+                             '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>Entry Point</b></label>'+
+                        '</div>'+
+                         '<div class="col-lg-6 col-12">'+
+                             '<input class="form-control"   type="text" value="'+ meta_data['entry_point'].substr(5)+'" >'+
+                        '</div>'
+      }
+
+      else{
+       document.querySelector("#tool_panel_container").innerHTML += "Not enough info. Please add 'entry_point' item in your meta data, indicating the path of your program entry point."
+      }
+
+  }
+
+  if("tool_arguments" in meta_data){
+      for(argument in meta_data["tool_arguments"])
+
+
+
+  }
+
+}
+
+
 async function get_meta_and_content(){
   /*await get_meta_data();
 
@@ -614,9 +643,7 @@ async function get_meta_and_content(){
     document.querySelector("#file_content").style.display="none";
      await get_meta_data();
      if(meta_data["mode"] == "Tool"){
-        document.querySelector("#tool_panel_tab").style.display = "block";
-        document.querySelector("#tool_panel").style.display = "block";
-
+        set_tool_panel();
      }
      get_file_list();
 
@@ -637,8 +664,7 @@ async function get_meta_and_content(){
      }
 
      if(meta_data["mode"] == "Tool"){
-        document.querySelector("#tool_panel_tab").style.display = "block";
-        document.querySelector("#tool_panel").style.display = "block";
+       set_tool_panel();
 
      }
       get_file_content();
@@ -1534,6 +1560,8 @@ function get_meta_data(){
                     for(k in meta_value)
 
                         document.querySelector("#native_meta").value += k+": "+JSON.stringify(meta_value[k])+ "\n";
+
+
                     //document.querySelector("#native_meta_panel").style.display = "block";
              }
 
