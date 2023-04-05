@@ -407,6 +407,18 @@ for(var i=0;i<files.length;i++){
 
 
  $.ajax({
+
+             xhr: function() {
+                        var xhr = new window.XMLHttpRequest();
+                        xhr.upload.addEventListener("progress", function(evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = evt.loaded / evt.total;
+                                console.info(percentComplete);
+                               // $('#progress_bar').text('Uploading: ' + Math.round(percentComplete * 100) + '%');
+                            }
+                        }, false);
+                        return xhr;
+                    },
             method: "post",
             processData: false,
             contentType: false,
