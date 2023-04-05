@@ -1523,7 +1523,7 @@ privilege_toggle_switch.addEventListener("change", function() {
     privilege_content.innerHTML = "Private Data";
   } else {
     // Hide the content
-   privilege_content.innerHTML = "Public Data"
+   privilege_content.innerHTML = "Public Data";
   }
 });
 
@@ -1540,7 +1540,7 @@ realtime_toggle_switch.addEventListener("change", function() {
     realtime_content.innerHTML = "Realtime Data";
   } else {
     // Hide the content
-   realtime_content.innerHTML = "Non-Realtime Data"
+   realtime_content.innerHTML = "Non-Realtime Data";
   }
 });
 
