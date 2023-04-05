@@ -550,7 +550,7 @@ function create_file(new_file_name){
     $.ajax({
             type: "POST",
 
-            url: "/create_folder",
+            url: "/create_file",
             data: {
                current_path: current_path,
                new_file_name: new_file_name

@@ -333,7 +333,7 @@ def data(request):
             generate_meta_data_for_file(new_path)
             update_parent_meta(new_path)
 
-            return HttpResponse("folder creation complete!")
+            return HttpResponse("file creation complete!")
 
 
 
