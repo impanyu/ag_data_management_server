@@ -505,7 +505,7 @@ function update_file(){
         },
         contentType: "text/plain",
         success: function(data, status){
-        console.info(data)
+        console.info(data);
           alert("file updated");
 
   }});
