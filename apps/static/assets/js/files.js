@@ -579,7 +579,7 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
                             file_changed = true;
                        });
 
-                       //check code change every 30s
+                       //check code change every 15s
                        setInterval(function(){
                             if(file_changed){
                                 update_file();
@@ -587,7 +587,7 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
 
                             }
 
-                       },30000);
+                       },15000);
 
 
                      /*
