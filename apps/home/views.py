@@ -321,11 +321,12 @@ def data(request):
             current_path = request.POST.get("current_path", "")
             new_file_name = request.POST['new_file_name']
             abs_path = os.path.join("/home", current_path,new_file_name)
+            suffix = abs_path.split(".")[-1]
 
             new_path = abs_path
             i = 1
             while(os.path.exists(new_path)):
-                new_path = abs_path +"_"+str(i)
+                new_path = abs_path[0:-(len(suffix)+1)] +"_"+str(i)+"."+suffix
                 i = i+1
 
             open(new_path, "w")
