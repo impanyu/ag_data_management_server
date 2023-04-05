@@ -467,7 +467,7 @@ create_folder_tab.addEventListener('click', function(event) {
 const create_folder_button = document.querySelector('#create_folder_button');
 
 create_folder_button.addEventListener('click', function(event) {
-  create_folder_overlay.style.display  = "block";
+
    new_folder_name = document.querySelector("#new_folder_name").value;
    create_folder(new_folder_name);
 });
@@ -478,6 +478,13 @@ const cancel_create_folder_button = document.querySelector('#cancel_create_folde
 cancel_create_folder_button.addEventListener('click', function(event) {
    create_folder_overlay.style.display  = "none";
 });
+
+const create_folder_li = document.querySelector('#create_folder_li');
+
+create_folder_li.addEventListener('click', function(event) {
+   create_folder_overlay.style.display  = "block";
+});
+
 
 
 
