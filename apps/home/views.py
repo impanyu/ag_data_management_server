@@ -794,6 +794,7 @@ def data(request):
 
             current_path = request.POST.get('current_path')
             new_content = request.POST.get('new_content')
+            print(new_content)
 
             update_file("/home/"+current_path,new_content)
             response = "success";
