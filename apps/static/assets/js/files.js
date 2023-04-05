@@ -453,6 +453,13 @@ file_content ="";
 file_changed = false;
 
 
+const create_folder_overlay = document.querySelector('#create_folder');
+
+create_folder_overlay.addEventListener('click', function(event) {
+    this.style.display  = "none";
+});
+
+
 
 
 async function get_meta_and_content(){
