@@ -631,6 +631,7 @@ function delete_file_or_folder(){
 }
 
 function change_channel_dropdown(self){
+ document.querySelector("#preloader2").style.display = "block";
  if(suffix == "shp"){
    current_col = self.innerHTML;
 
