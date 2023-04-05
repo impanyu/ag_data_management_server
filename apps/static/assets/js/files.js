@@ -632,7 +632,7 @@ function delete_file_or_folder(){
 
 function change_channel_dropdown(self){
  document.querySelector("#preloader2").style.display = "flex";
- document.querySelector("file_content").style.display = "none";
+ document.querySelector("#file_content").style.display = "none";
  if(suffix == "shp"){
 
    current_col = self.innerHTML;
