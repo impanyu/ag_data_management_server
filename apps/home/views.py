@@ -312,6 +312,7 @@ def data(request):
                 i = i+1
             os.makedirs(new_path)
             aggregate_meta_data(new_path)
+            update_parent_meta(abs_path)
 
             return HttpResponse("folder creation complete!")
 

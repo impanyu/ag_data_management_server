@@ -1296,3 +1296,26 @@ def tif_to_image(tif_path,band):
 
 
     return img_path
+
+
+def update_parent_meta(abs_path):
+    parent_dir = "/".join(abs_path.split("/")[:-1])
+    parent_meta_data_file_name = "_".join(parent_dir.split("/")[1:]) + ".json"
+    parent_meta_data_file_path = os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name)
+
+    if not os.path.exists(parent_meta_data_file_path):
+        parent_meta_data = {"subdirs": []}
+        parent_meta_data["subdirs"].append(abs_path)
+
+        # with open(parent_meta_data_file_path, "w") as parent_meta_data_file:
+        #    json.dump({"subdirs":[]}, parent_meta_data_file)
+
+    else:
+        with open(parent_meta_data_file_path, "r") as parent_meta_data_file:
+            parent_meta_data = json.load(parent_meta_data_file)
+            if "subdirs" not in parent_meta_data:
+                parent_meta_data["subdirs"] = []
+            parent_meta_data["subdirs"].append(abs_path)
+
+    with open(parent_meta_data_file_path, "w") as parent_meta_data_file:
+        json.dump(parent_meta_data, parent_meta_data_file)
