@@ -503,7 +503,7 @@ function update_file(){
           new_content: file_content
 
         },
-        contentType: "application/json",
+        contentType: "text/plain",
         success: function(data, status){
           alert("file updated");
 
