@@ -488,6 +488,42 @@ create_folder_li.addEventListener('click', function(event) {
 
 
 
+
+const create_file_overlay = document.querySelector('#create_file_overlay');
+
+create_file_overlay.addEventListener('click', function(event) {
+    this.style.display  = "none";
+});
+
+const create_file_tab = document.querySelector('#create_file_tab');
+
+create_file_tab.addEventListener('click', function(event) {
+   event.stopPropagation();
+});
+
+
+const create_file_button = document.querySelector('#create_file_button');
+
+create_file_button.addEventListener('click', function(event) {
+
+   new_file_name = document.querySelector("#new_file_name").value;
+   create_folder(new_file_name);
+});
+
+
+const cancel_create_file_button = document.querySelector('#cancel_create_file_button');
+
+cancel_create_file_button.addEventListener('click', function(event) {
+   create_file_overlay.style.display  = "none";
+});
+
+const create_file_li = document.querySelector('#create_file_li');
+
+create_file_li.addEventListener('click', function(event) {
+   create_file_overlay.style.display  = "flex";
+});
+
+
 function create_folder(new_folder_name){
     $.ajax({
             type: "POST",
@@ -496,6 +532,27 @@ function create_folder(new_folder_name){
             data: {
                current_path: current_path,
                new_folder_name: new_folder_name
+            },
+            success: function (data) {
+                console.info(data);
+                $("#file_list")[0].innerHTML="";
+                create_folder_overlay.style.display  = "none";
+
+                get_file_list();
+            }
+        });
+
+}
+
+
+function create_file(new_file_name){
+    $.ajax({
+            type: "POST",
+
+            url: "/create_folder",
+            data: {
+               current_path: current_path,
+               new_file_name: new_file_name
             },
             success: function (data) {
                 console.info(data);

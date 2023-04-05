@@ -312,7 +312,25 @@ def data(request):
                 i = i+1
             os.makedirs(new_path)
             aggregate_meta_data(new_path)
-            update_parent_meta(abs_path)
+            update_parent_meta(new_path)
+
+            return HttpResponse("folder creation complete!")
+
+        elif load_template == "create_file":
+            #current_path = request.POST['current_path']
+            current_path = request.POST.get("current_path", "")
+            new_file_name = request.POST['new_file_name']
+            abs_path = os.path.join("/home", current_path,new_file_name)
+
+            new_path = abs_path
+            i = 1
+            while(os.path.exists(new_path)):
+                new_path = abs_path +"_"+str(i)
+                i = i+1
+
+            open(new_path, "w")
+            generate_meta_data_for_file(new_path)
+            update_parent_meta(new_path)
 
             return HttpResponse("folder creation complete!")
 
