@@ -938,9 +938,9 @@ def update_meta(file_path,new_meta_data):
 
 
         elif key == "time_range":
-            meta_data[key]={"start": "01/01/2030 00:00:00", "end": "01/01/2030 00:00:00"}
             if new_meta_data["time_range"]["start"] == "start":
                 continue
+            #meta_data[key]={"start": "01/01/2030 00:00:00", "end": "01/01/2030 00:00:00"}
             meta_data[key]["start"] = datetime.strptime(new_meta_data["time_range"]["start"], "%m/%d/%Y").strftime("%m/%d/%Y %H:%M:%S")
             meta_data[key]["end"] = datetime.strptime(new_meta_data["time_range"]["end"], "%m/%d/%Y").strftime("%m/%d/%Y %H:%M:%S")
 
