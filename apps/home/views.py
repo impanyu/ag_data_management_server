@@ -787,11 +787,15 @@ def data(request):
             return HttpResponse(response)
 
         elif load_template == 'update_file':
-            request_data = json.loads(request.body)
-            file_path = request_data['current_path']
-            new_content = json.loads(request_data["new_content"])
 
-            update_file("/home/"+file_path,new_content)
+            #request_data = json.loads(request.body)
+            #file_path = request_data['current_path']
+            #new_content = json.loads(request_data["new_content"])
+
+            current_path = request.POST.get('current_path')
+            new_content = json.loads(request.POST.get('new_content'))
+
+            update_file("/home/"+current_path,new_content)
             response = "success";
             return HttpResponse(response)
 
