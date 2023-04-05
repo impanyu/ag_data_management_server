@@ -449,6 +449,8 @@ if(current_path.indexOf(".")!=-1)
 get_meta_and_content();
 current_col = "";
 current_band = "";
+file_content ="";
+file_changed = false;
 
 
 
@@ -491,7 +493,22 @@ async function get_meta_and_content(){
 
 }
 
+function update_file(){
+      $.ajax({
+         type: "POST",
+         url:"/update_file",
+         data:JSON.stringify({
+          current_path: current_path,
+          new_content: file_content
 
+        }),
+        contentType: "application/json",
+        success: function(data, status){
+          alert("file updated");
+
+  }});
+
+}
 
 
 
@@ -528,6 +545,7 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
                 },
                 success: function(response,status,xhr) {
                   x=xhr;
+
                   document.querySelector("#channel_dropdown").style.display="none";
                    document.querySelector("#map_main").style.display="none";
                    document.querySelector("#opacity-slider-container").style.display="none";
@@ -549,10 +567,26 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
                      document.querySelector("#file_content").appendChild(pre);
                      pre.setAttribute('id', 'editor');
                      pre.innerHTML = response;
+                     file_content = response;
 
                       var editor = ace.edit("editor");
                       editor.setTheme("ace/theme/ambiance");
                       editor.session.setMode("ace/mode/"+file_format_names[suffix]);
+
+                      editor.session.on('change', function(delta) {
+                            file_content = editor.getValue();
+                            file_changed = true;
+                       });
+
+                       //check code change every 30s
+                       setInterval(function(){
+                            if(file_changed){
+                                update_file();
+                                file_changed = false;
+
+                            }
+
+                       },30000);
 
 
                      /*
@@ -564,10 +598,6 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
 
 
                      pre.appendChild(code);
-
-
-
-
 
 
                      //hljs.highlightAll();
