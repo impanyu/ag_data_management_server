@@ -897,8 +897,7 @@ def recursive_update_public(file_path, value):
 
 def update_file(file_path, new_content):
     with open(file_path, "w") as data_file:
-        #print(meta_data)
-        json.dump(new_content,data_file)
+        data_file.write(new_content)
 
 
 def update_meta(file_path,new_meta_data):
