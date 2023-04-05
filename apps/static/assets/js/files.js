@@ -415,7 +415,7 @@ $('#preloader3').style.display = "block";
                                 var percentComplete = evt.loaded / evt.total;
                                 //console.info(percentComplete);
                                $('#preloader3').text('Uploading: ' + Math.round(percentComplete * 100) + '%');
-                                $('#preloader3').style.width = Math.round(percentComplete * 100) + '%';
+                                $('#preloader3')[0].style.width = Math.round(percentComplete * 100) + '%';
                             }
                         }, false);
                         return xhr;
