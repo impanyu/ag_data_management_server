@@ -467,6 +467,7 @@ create_folder_tab.addEventListener('click', function(event) {
 const create_folder_button = document.querySelector('#create_folder_button');
 
 create_folder_button.addEventListener('click', function(event) {
+  create_folder_overlay.style.display  = "block";
    new_folder_name = document.querySelector("#new_folder_name").value;
    create_folder(new_folder_name);
 });
