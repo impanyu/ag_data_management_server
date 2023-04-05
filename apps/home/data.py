@@ -962,7 +962,7 @@ def update_meta(file_path,new_meta_data):
 
                 meta_data[k] = v
 
-        '''
+
         elif key == "spatial_range":
             if new_meta_data[key]["southwest"] == "southwest":
                 continue
@@ -972,7 +972,7 @@ def update_meta(file_path,new_meta_data):
             meta_data["spatial_range"]["southwest"]["lng"] = left_ln
             meta_data["spatial_range"]["northeast"]["lat"] = upper_lat
             meta_data["spatial_range"]["northeast"]["lng"] = right_ln
-        '''
+
 
     print("meta_data")
     print(meta_data)
