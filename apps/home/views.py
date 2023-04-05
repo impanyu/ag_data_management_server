@@ -789,7 +789,7 @@ def data(request):
         elif load_template == 'update_file':
             request_data = json.loads(request.body)
             file_path = request_data['current_path']
-            new_content = request_data["new_content"]
+            new_content = json.loads(request_data["new_content"])
 
             update_file("/home/"+file_path,new_content)
             response = "success";
