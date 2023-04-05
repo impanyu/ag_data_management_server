@@ -793,7 +793,7 @@ def data(request):
             #new_content = json.loads(request_data["new_content"])
 
             current_path = request.POST.get('current_path')
-            new_content = json.loads(request.POST.get('new_content'))
+            new_content = request.POST.get('new_content')
 
             update_file("/home/"+current_path,new_content)
             response = "success";
