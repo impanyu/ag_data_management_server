@@ -932,6 +932,9 @@ def update_meta(file_path,new_meta_data):
             # recursively change the subdirs and files
             recursive_update_public(file_path,new_meta_data[key])
 
+        elif key == "realtime" and not meta_data[key] == new_meta_data[key]:
+            meta_data[key] = new_meta_data[key]
+
 
         elif key == "time_range":
             meta_data[key]={"start": "01/01/2030 00:00:00", "end": "01/01/2030 00:00:00"}
