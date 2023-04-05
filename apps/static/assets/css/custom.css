@@ -127,8 +127,12 @@ background-color:#aaa;
   //background-color: #0d6efd;
 }
 
-.toggle-switch-checkbox:checked + .toggle-switch-label {
+#realtime-toggle-switch-checkbox:checked + .toggle-switch-label {
   background-color: #0d6efd;
+}
+
+#privilege-toggle-switch-checkbox:checked + .toggle-switch-label {
+  background-color: red;
 }
 
 

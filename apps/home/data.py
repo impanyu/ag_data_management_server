@@ -492,7 +492,7 @@ def retrieve_sub_domain_data(subdomain_path, layer, time, session):
         return json.dumps({"soilwaters": soilwaters, "times": times})
 
 
-def filtering_condition(meta_data, search_box, category, mode, format, label, time_range, bounding_box):
+def filtering_condition(meta_data, search_box, category, mode, format, label, realtime, time_range, bounding_box):
     # return True
 
     if meta_data["name"] == "ag_data":
@@ -551,6 +551,17 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, ti
         #    has_label = True
     if not has_label:
         print("not has label")
+        return False
+
+    has_time_pattern = False
+    for r in realtime:
+        if r == "All" or r in meta_data["realtime"]:
+            has_time_pattern = True
+            break
+        # if l not in ["Spidercam","ENREC","Wheat"] and "Other" in label:
+        #    has_label = True
+    if not has_time_pattern:
+        print("not has time pattern")
         return False
 
     if not (time_range[0] == "start" or time_range[1] == "end"):
@@ -760,6 +771,7 @@ def aggregate_meta_data(dir_path):
     meta_data["abs_path"] = dir_path
     meta_data["public"] = "False"
     meta_data["name"] = dir_path.split("/")[-1]
+    meta_data["realtime"] = ["None Realtime"]
 
     # iterate through each sub path
     for p in os.listdir(dir_path):
@@ -821,6 +833,7 @@ def generate_meta_data_for_file(file_path):
     meta_data["subdirs"] = []
     meta_data["public"] = "False"
     meta_data["name"] = file_path.split("/")[-1]
+    meta_data["realtime"] = ["None Realtime"]
 
     suffix = file_path.split("/")[-1].split(".")[1]
 
@@ -1082,7 +1095,7 @@ def delete_meta_data(meta_data_path):
         delete_meta_data(sub_meta_data_path)
 
 
-def search(root_dir, search_box, category, mode, format, label, time_range, spatial_range):
+def search(root_dir, search_box, category, mode, format, label, realtime, time_range, spatial_range):
     result = []
     # print(len(search_box))
     # search data
@@ -1095,10 +1108,10 @@ def search(root_dir, search_box, category, mode, format, label, time_range, spat
     meta_data_file_name = "_".join(root_dir.split("/")[1:]) + ".json"
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
         meta_data = json.load(meta_data_file)
-        if filtering_condition(meta_data, search_box, category, mode, format, label, time_range, spatial_range):
+        if filtering_condition(meta_data, search_box, category, mode, format, label, realtime, time_range, spatial_range):
             result.append(meta_data)
         for subdir in meta_data["subdirs"]:
-            sub_result = search(subdir, search_box, category, mode, format, label, time_range, spatial_range)
+            sub_result = search(subdir, search_box, category, mode, format, label,  realtime, time_range, spatial_range)
             result += sub_result
 
     return result

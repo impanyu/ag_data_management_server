@@ -379,6 +379,13 @@ function get_item_list(){
         privilege.push(privilege_options[i].value);
   }
 
+ realtime = [];
+
+ realtime_options = document.querySelector("#realtime").options;
+  for (var i =0; i<realtime_options.length; i++){
+     if(realtime_options[i].selected)
+        realtime.push(realtime_options[i].value);
+  }
 
 
  //console.info(mode);
@@ -395,6 +402,7 @@ function get_item_list(){
           format:  format,
           label:  label,
           privilege: privilege,
+          realtime: realtime,
           time_range:  [document.querySelector("#start_date").value,document.querySelector("#end_date").value],
           bounding_box:  [document.querySelector("#southwest").value, document.querySelector("#northeast").value]
 

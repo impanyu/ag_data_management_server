@@ -1368,10 +1368,15 @@ function update_meta(){
   meta_data["label"] = label;
 
 
-  if(document.querySelector("#toggle-switch").checked)
+  if(document.querySelector("#privilege-toggle-switch").checked)
     meta_data["public"] = "False";
    else
      meta_data["public"] = "True";
+
+  if(document.querySelector("#realtime-toggle-switch").checked)
+    meta_data["realtime"] = "Realtime";
+   else
+     meta_data["realtime"] = "None-Realtime";
 
     meta_data["time_range"] = {"start":document.querySelector("#start_date").value, "end":document.querySelector("#end_date").value};
     meta_data["spatial_range"] = {"southwest":document.querySelector("#southwest").value, "northeast":document.querySelector("#northeast").value};
@@ -1463,14 +1468,26 @@ function get_meta_data(){
              else if (meta_key == "public"){
                  console.info(meta_value);
                   if(meta_value == "False"){
-                     document.querySelector("#toggle-switch").checked = true;
+                     document.querySelector("#privilege-toggle-switch").checked = true;
                      document.getElementById("privilege").innerHTML = "Private Data";
                      }
                   else{
-                     document.querySelector("#toggle-switch").checked = false;
+                     document.querySelector("#privilege-toggle-switch").checked = false;
                      document.getElementById("privilege").innerHTML = "Public Data";
                      }
              }
+             else if (meta_key == "realtime"){
+                 console.info(meta_value);
+                  if(meta_value == "Realtime"){
+                     document.querySelector("#realtime-toggle-switch").checked = true;
+                     document.getElementById("realtime").innerHTML = "Realtime Data";
+                     }
+                  else{
+                     document.querySelector("#realtime-toggle-switch").checked = false;
+                     document.getElementById("realtime").innerHTML = "None-Realtime Data";
+                     }
+             }
+
              else if (meta_key == "native"){
                     for(k in meta_value)
 
@@ -1494,19 +1511,36 @@ function get_meta_data(){
 }
 
 // Get the toggle switch element
-var toggleSwitch = document.getElementById("toggle-switch");
+var privilege_toggle_switch = document.getElementById("privilege-toggle-switch");
 
 // Get the content element
-var content = document.getElementById("privilege");
+var privilege_content = document.getElementById("privilege");
 
 // Add an event listener to the toggle switch
-toggleSwitch.addEventListener("change", function() {
-  if (toggleSwitch.checked) {
+privilege_toggle_switch.addEventListener("change", function() {
+  if (privilege_toggle_switch.checked) {
     // Show the content
-    content.innerHTML = "Private Data";
+    privilege_content.innerHTML = "Private Data";
   } else {
     // Hide the content
-   content.innerHTML = "Public Data"
+   privilege_content.innerHTML = "Public Data"
+  }
+});
+
+// Get the toggle switch element
+var realtime_toggle_switch = document.getElementById("realtime-toggle-switch");
+
+// Get the content element
+var realtime_content = document.getElementById("realtime");
+
+// Add an event listener to the toggle switch
+realtime_toggle_switch.addEventListener("change", function() {
+  if (realtime_toggle_switch.checked) {
+    // Show the content
+    realtime_content.innerHTML = "Realtime Data";
+  } else {
+    // Hide the content
+   realtime_content.innerHTML = "None-Realtime Data"
   }
 });
 

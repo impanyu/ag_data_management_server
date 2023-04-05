@@ -851,6 +851,7 @@ def data(request):
             format = request_data['format']
             label = request_data['label']
             privilege = request_data['privilege']
+            realtime = request_data['realtime']
             time_range = request_data['time_range']
             spatial_range = request_data['bounding_box']
 
@@ -893,7 +894,7 @@ def data(request):
             # search the user's own items
             if "My Own Data" in privilege:
                 root_dir = os.path.join("/home",request.user.get_username(),"ag_data")
-                response["items"] = search(root_dir,search_box,category,mode,format,label,time_range,spatial_range)
+                response["items"] = search(root_dir,search_box,category,mode,format,label,realtime,time_range,spatial_range)
             #if "Domain" in mode:
                 #search_domains()
                 print(response["items"])
