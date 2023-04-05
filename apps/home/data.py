@@ -927,14 +927,16 @@ def update_meta(file_path,new_meta_data):
             meta_data[key] = new_meta_data[key]
             #print(key)
             #print(meta_data[key])
+        elif key == "realtime":
+            meta_data[key] = new_meta_data[key]
+        '''
         elif key == "public" and not meta_data[key] == new_meta_data[key]:
             meta_data[key] = new_meta_data[key]
 
             # recursively change the subdirs and files
             recursive_update_public(file_path,new_meta_data[key])
 
-        elif key == "realtime":
-            meta_data[key] = new_meta_data[key]
+        
 
 
         elif key == "time_range":
@@ -971,7 +973,7 @@ def update_meta(file_path,new_meta_data):
             meta_data["spatial_range"]["southwest"]["lng"] = left_ln
             meta_data["spatial_range"]["northeast"]["lat"] = upper_lat
             meta_data["spatial_range"]["northeast"]["lng"] = right_ln
-
+        '''
 
     print("meta_data")
     print(meta_data)
