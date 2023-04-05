@@ -915,10 +915,11 @@ def update_file(file_path, new_content):
 
 def update_meta(file_path,new_meta_data):
     meta_data_file_name = "_".join(file_path.split("/")[1:]) + ".json"
-    #with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
-    #    meta_data = json.load(meta_data_file)
+    with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
+        meta_data = json.load(meta_data_file)
     #meta_data ={"public" : "True"}
-    meta_data = {}
+
+    #meta_data = {}
 
     print(new_meta_data)
     for key in new_meta_data:
@@ -936,7 +937,7 @@ def update_meta(file_path,new_meta_data):
             # recursively change the subdirs and files
             recursive_update_public(file_path,new_meta_data[key])
 
-        '''
+
         elif key == "time_range":
             if new_meta_data["time_range"]["start"] == "start":
                 continue
@@ -971,7 +972,7 @@ def update_meta(file_path,new_meta_data):
             meta_data["spatial_range"]["southwest"]["lng"] = left_ln
             meta_data["spatial_range"]["northeast"]["lat"] = upper_lat
             meta_data["spatial_range"]["northeast"]["lng"] = right_ln
-        '''
+
 
     print("meta_data")
     print(meta_data)
