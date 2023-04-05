@@ -127,11 +127,11 @@ background-color:#aaa;
   //background-color: #0d6efd;
 }
 
-#realtime-toggle-switch-checkbox:checked + .toggle-switch-label {
+#realtime-toggle-switch:checked + .toggle-switch-label {
   background-color: #0d6efd;
 }
 
-#privilege-toggle-switch-checkbox:checked + .toggle-switch-label {
+#privilege-toggle-switch:checked + .toggle-switch-label {
   background-color: red;
 }
 
