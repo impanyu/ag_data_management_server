@@ -492,7 +492,7 @@ function create_folder(new_folder_name){
     $.ajax({
             method: "post",
             processData: false,
-            contentType: text/plain,
+            contentType: "text/plain",
             cache: false,
             url: "/create_folder",
             data: {
