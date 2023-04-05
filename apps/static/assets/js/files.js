@@ -617,7 +617,14 @@ function set_tool_panel(){
   }
 
   if("tool_arguments" in meta_data){
-      for(argument in meta_data["tool_arguments"])
+             document.querySelector("#tool_panel_container").innerHTML +='<div class="col-lg-3 col-12">'+
+                             '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>Entry Point</b></label>'+
+                        '</div>'+
+                         '<div class="col-lg-6 col-12">'+
+                             '<input class="form-control"   type="text" value="'+ current_path.substr(5)+'" >'+
+                        '</div>'
+
+      //for(argument in meta_data["tool_arguments"])
 
 
 
