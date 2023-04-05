@@ -13,6 +13,7 @@ urlpatterns = [
 
     # The home page
     path('', views.index, name='home'),
+    re_path(r'^create_folder',views.data,name='create_folder'),
     re_path(r'^update_file',views.data,name='update_file'),
     re_path(r'^download_file',views.data,name='download_file'),
     re_path(r'^get_file',views.data,name='get_file'),

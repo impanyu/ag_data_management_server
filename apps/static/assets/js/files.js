@@ -361,9 +361,7 @@ this.value="";
 };
 
 
-function create_new_folder(){
 
-}
 
 
 function upload(){
@@ -469,7 +467,8 @@ create_folder_tab.addEventListener('click', function(event) {
 const create_folder_button = document.querySelector('#create_folder_button');
 
 create_folder_button.addEventListener('click', function(event) {
-
+   new_folder_name = document.querySelector("#new_folder_name").value;
+   create_folder(new_folder_name);
 });
 
 
@@ -480,6 +479,25 @@ cancel_create_folder_button.addEventListener('click', function(event) {
 });
 
 
+
+function create_folder(new_folder_name){
+    $.ajax({
+            method: "post",
+            processData: false,
+            contentType: text/plain,
+            cache: false,
+            url: "/create_folder",
+            data: {
+               current_path: current_path,
+               new_folder_name: new_folder_name
+            }
+            success: function (data) {
+                $("#file_list")[0].innerHTML="";
+                get_file_list();
+            }
+        });
+
+}
 
 
 async function get_meta_and_content(){
