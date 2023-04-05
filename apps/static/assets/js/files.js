@@ -413,8 +413,9 @@ for(var i=0;i<files.length;i++){
                         xhr.upload.addEventListener("progress", function(evt) {
                             if (evt.lengthComputable) {
                                 var percentComplete = evt.loaded / evt.total;
-                                console.info(percentComplete);
-                               // $('#progress_bar').text('Uploading: ' + Math.round(percentComplete * 100) + '%');
+                                //console.info(percentComplete);
+                               $('#preloader3').text('Uploading: ' + Math.round(percentComplete * 100) + '%');
+                                $('#preloader3').style.width = Math.round(percentComplete * 100) + '%';
                             }
                         }, false);
                         return xhr;
