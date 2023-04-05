@@ -445,7 +445,7 @@ document.querySelector("#other_meta").value ="";
 
 document.querySelector("#file_content").style.display="none";
 if(current_path.indexOf(".")!=-1)
-  document.querySelector("#preloader").style.display="block";
+  document.querySelector("#preloader2").style.display="block";
 get_meta_and_content();
 current_col = "";
 current_band = "";
@@ -504,8 +504,9 @@ function update_file(){
           }),
         contentType: "application/json",
         success: function(data, status){
-        console.info(data);
-          alert("file updated");
+          //console.info(data);
+          //alert("file updated");
+           document.querySelector("preloader").style.display = "none";
 
   }});
 
@@ -582,6 +583,7 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
                        //check code change every 15s
                        setInterval(function(){
                             if(file_changed){
+                                document.querySelector("preloader").style.display = "block";
                                 update_file();
                                 file_changed = false;
 
@@ -605,7 +607,7 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
                        Prism.highlightAll();
                       */
 
-                      document.querySelector("#preloader").style.display="none";
+                      document.querySelector("#preloader2").style.display="none";
 
                 },
                 error: function(xhr, status, error) {
@@ -696,7 +698,7 @@ else if(suffix == "tif" || suffix == "tiff" ){
                         });
                    }
                    document.querySelector("#file_content").style.display="block";
-                      document.querySelector("#preloader").style.display="none";
+                      document.querySelector("#preloader2").style.display="none";
                 },
                 error: function(xhr, status, error) {
 
@@ -774,7 +776,7 @@ else if (suffix == "png" || suffix == "jpg" || suffix == "jpeg"){
                         });
                    }
                    document.querySelector("#file_content").style.display="block";
-                      document.querySelector("#preloader").style.display="none";
+                      document.querySelector("#preloader2").style.display="none";
                 },
                 error: function(xhr, status, error) {
 
@@ -861,7 +863,7 @@ else if (suffix == "shp"){
                         });
                    }
                    document.querySelector("#file_content").style.display="block";
-                      document.querySelector("#preloader").style.display="none";
+                      document.querySelector("#preloader2").style.display="none";
                 },
                 error: function(xhr, status, error) {
 
