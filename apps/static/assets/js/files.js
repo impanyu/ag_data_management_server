@@ -498,11 +498,11 @@ function update_file(){
       $.ajax({
          type: "POST",
          url:"/update_file",
-         data:JSON.stringify({
+         data:{
           current_path: current_path,
           new_content: file_content
 
-        }),
+        },
         contentType: "application/json",
         success: function(data, status){
           alert("file updated");
