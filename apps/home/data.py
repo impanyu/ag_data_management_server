@@ -771,7 +771,7 @@ def aggregate_meta_data(dir_path):
     meta_data["abs_path"] = dir_path
     meta_data["public"] = "False"
     meta_data["name"] = dir_path.split("/")[-1]
-    meta_data["realtime"] = ["None Realtime"]
+    meta_data["realtime"] = "Non-Realtime"
 
     # iterate through each sub path
     for p in os.listdir(dir_path):
@@ -833,7 +833,7 @@ def generate_meta_data_for_file(file_path):
     meta_data["subdirs"] = []
     meta_data["public"] = "False"
     meta_data["name"] = file_path.split("/")[-1]
-    meta_data["realtime"] = ["None Realtime"]
+    meta_data["realtime"] = "Non-Realtime"
 
     suffix = file_path.split("/")[-1].split(".")[1]
 
