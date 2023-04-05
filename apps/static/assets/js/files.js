@@ -557,7 +557,7 @@ function create_file(new_file_name){
             success: function (data) {
                 console.info(data);
                 $("#file_list")[0].innerHTML="";
-                create_folder_overlay.style.display  = "none";
+                create_file_overlay.style.display  = "none";
 
                 get_file_list();
             }
