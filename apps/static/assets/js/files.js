@@ -618,8 +618,8 @@ function set_tool_panel(){
 
   }
 
-  if("tool_arguments" in meta_data){
-             document.querySelector("#tool_panel").innerHTML +='<div class="row align-items-center py-4" >'+
+  else{
+    document.querySelector("#tool_panel").innerHTML +='<div class="row align-items-center py-4" >'+
                          '<div class="col-lg-3 col-12">'+
                              '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>Entry Point</b></label>'+
                         '</div>'+
@@ -627,11 +627,12 @@ function set_tool_panel(){
                              '<input class="form-control"   type="text" value="'+ current_path.substr(5)+'" >'+
                         '</div></div>'
 
-      //for(argument in meta_data["tool_arguments"])
-
 
 
   }
+
+
+
 
 }
 
