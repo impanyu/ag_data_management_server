@@ -537,6 +537,7 @@ function create_folder(new_folder_name){
                 console.info(data);
                 $("#file_list")[0].innerHTML="";
                 create_folder_overlay.style.display  = "none";
+                document.querySelector("#new_file_name").value = "New Folder";
 
                 get_file_list();
             }
@@ -558,6 +559,7 @@ function create_file(new_file_name){
                 console.info(data);
                 $("#file_list")[0].innerHTML="";
                 create_file_overlay.style.display  = "none";
+                document.querySelector("#new_file_name").value = "New File";
 
                 get_file_list();
             }
