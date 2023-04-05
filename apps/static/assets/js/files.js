@@ -454,6 +454,7 @@ file_changed = false;
 
 
 
+
 async function get_meta_and_content(){
   /*await get_meta_data();
 
@@ -569,7 +570,7 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
                      pre.innerHTML = response;
                      file_content = response;
 
-                      var editor = ace.edit("editor");
+                      editor = ace.edit("editor");
                       editor.setTheme("ace/theme/ambiance");
                       editor.session.setMode("ace/mode/"+file_format_names[suffix]);
 
