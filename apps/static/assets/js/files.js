@@ -615,7 +615,7 @@ function set_tool_panel(){
                             '<div class="col-lg-3 col-12">'+
                              '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>Entry Point</b></label>'+
                         '</div>'+
-                         '<div class="col-lg-8 col-12">'+
+                         '<div class="col-lg-7 col-12">'+
                              '<input class="form-control"   type="text" value="Program Entry Point" id="entry_point" onclick="file_selection()"  disabled>'+
                         '</div></div>'
            if(meta_data["entry_point"])
@@ -628,7 +628,7 @@ function set_tool_panel(){
                          '<div class="col-lg-3 col-12">'+
                              '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>Entry Point</b></label>'+
                         '</div>'+
-                         '<div class="col-lg-8 col-12">'+
+                         '<div class="col-lg-7 col-12">'+
                              '<input class="form-control" id="entry_point"  type="text" value="/'+ current_path+'" disabled >'+
                         '</div></div>'
 
