@@ -635,7 +635,7 @@ function set_tool_panel(){
   }
   if(meta_data["args"]){
       for(arg in meta_data["args"]){
-          document.querySelector("#tool_panel_container").innerHTML +='<div class="row align-items-center py-4" >'+
+          document.querySelector("#tool_panel_container").innerHTML +='<div class="row align-items-center py-4" id="arg_container_'+arg+'">'+
 
                             '<div class="col-lg-3 col-12">'+
                              '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>'+arg+'</b></label>'+
@@ -644,7 +644,7 @@ function set_tool_panel(){
                              '<input class="form-control"   type="text" value="Specify Arguments: '+arg +' Here" id="'+arg+'" disabled>'+
                         '</div>'+
                           '<div class="col-lg-2 col-6">'+
-                                    '<div href="#" class="btn btn-lg btn-success"   id="remove_arg"  onclick="remove_tool_arg()">'  +
+                                    '<div href="#" class="btn btn-lg btn-success"   id="remove_arg_'+arg+'"  onclick="remove_tool_arg(this)">'  +
                                       '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">' +
 
                                       ' <path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"/>' +
@@ -654,7 +654,8 @@ function set_tool_panel(){
                          '</div>' +
 
                         '</div>'
-          if(arg.indexOf("file") !=-1 || arg.indexOf("dir") !=-1)
+           arg_type = meta_data["args"][arg]
+          if(arg.indexOf("file") !=-1 || arg.indexOf("dir") !=-1 || arg_type == "file" || arg_type == "dir")
                document.querySelector("#"+arg).addEventListener("click",file_selection());
 
       }
@@ -676,13 +677,37 @@ function run_tool(){
 
 }
 
-function remove_tool_arg(){
-
+function remove_tool_arg(self){
+  arg_container_name = "#arg_container_"+self.id.split("_")[2];
+  arg_container = document.querySelector(arg_container_name);
+  document.querySelector("#tool_panel_container").removeChild(arg_container);
 
 }
 
 function add_tool_arg(){
+   arg_name = document.querySelector("#arg_name").value;
+   arg_type = document.querySelector("#arg_type").value;
+   document.querySelector("#tool_panel_container").innerHTML +='<div class="row align-items-center py-4" id="arg_container_'+arg_name+'">'+
 
+                            '<div class="col-lg-3 col-12">'+
+                             '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>'+arg_name+'</b></label>'+
+                        '</div>'+
+                         '<div class="col-lg-7 col-6">'+
+                             '<input class="form-control"   type="text" value="Specify Arguments: '+arg_name +' Here" id="'+arg_name+'" disabled>'+
+                        '</div>'+
+                          '<div class="col-lg-2 col-6">'+
+                                    '<div href="#" class="btn btn-lg btn-success"   id="remove_arg_'+arg_name+'"  onclick="remove_tool_arg(this)">'  +
+                                      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">' +
+
+                                      ' <path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"/>' +
+                                   ' </svg>'+
+
+                             '</div>'  +
+                         '</div>' +
+
+                        '</div>'
+         if(arg_type == "file" || arg_type == "dir")
+               document.querySelector("#"+arg_name).addEventListener("click",file_selection());
 
 }
 
@@ -994,6 +1019,7 @@ else if (suffix == "png" || suffix == "jpg" || suffix == "jpeg"){
                           document.querySelector("#channel_dropdown").style.display="none";
 
                           north = parseFloat(meta_data["spatial_range"]["northeast"]["lat"]);
+                          south = parseFloat(meta_data["spatial_range"]["southwest"]["lat"]);
                           south = parseFloat(meta_data["spatial_range"]["southwest"]["lat"]);
                           east = meta_data["spatial_range"]["northeast"]["lng"];
                           west = meta_data["spatial_range"]["southwest"]["lng"];
