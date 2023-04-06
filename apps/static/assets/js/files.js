@@ -839,7 +839,9 @@ function update_file(){
 
 }
 
+function move_file_or_folder(){
 
+}
 
 function delete_file_or_folder(){
 }
