@@ -734,6 +734,7 @@ function add_tool_arg(){
    arg_type = document.querySelector("#arg_type").value;
    if(arg_name in args){
          display_warning_overlay("Argument: <span style='color:red'>"+arg_name+"</span> already exists!");
+         return;
    }
    document.querySelector("#tool_panel_container").innerHTML = document.querySelector("#tool_panel_container").innerHTML.substr(0,document.querySelector("#tool_panel_container").innerHTML.length - button_run.length);
    document.querySelector("#tool_panel_container").innerHTML +='<div class="row align-items-center py-4" id="arg_container_'+arg_name+'">'+
