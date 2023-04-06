@@ -13,6 +13,26 @@ var lastOverlay;
 var drawingManager;
 
 
+meta_data={};
+suffix = current_path.split(".")[current_path.split(".").length-1];
+labels= ["Spidercam", "ENREC", "Wheat", "Crop", "Weather", "GIS", "Application", "UAV", "IoT", "Farm", "Machinery", "Disease", "Pest", "Fertilizer", "Water", "Nitrogen", "Cattle"];
+current_labels = new Set();
+document.querySelector("#other_meta").value ="";
+
+document.querySelector("#file_content").style.display="none";
+if(current_path.indexOf(".")!=-1)
+  document.querySelector("#preloader2").style.display="flex";
+get_meta_and_content();
+current_col = "";
+current_band = "";
+file_content ="";
+file_changed = false;
+
+entry_point = "";
+args = {};
+
+
+
 
 function add_to_domain(path,file_name){
       if(file_name.split(".")[file_name.split(".").length-1] !="tif" && file_name.split(".")[file_name.split(".").length-1] !="tiff" && file_name.split(".")[file_name.split(".").length-1] !="png" && file_name.split(".")[file_name.split(".").length-1] !="jpg")
@@ -455,94 +475,119 @@ function htmlToElement(html) {
     return template.content.firstChild;
 }
 
-meta_data={};
-suffix = current_path.split(".")[current_path.split(".").length-1];
-labels= ["Spidercam", "ENREC", "Wheat", "Crop", "Weather", "GIS", "Application", "UAV", "IoT", "Farm", "Machinery", "Disease", "Pest", "Fertilizer", "Water", "Nitrogen", "Cattle"];
-current_labels = new Set();
-document.querySelector("#other_meta").value ="";
-
-document.querySelector("#file_content").style.display="none";
-if(current_path.indexOf(".")!=-1)
-  document.querySelector("#preloader2").style.display="flex";
-get_meta_and_content();
-current_col = "";
-current_band = "";
-file_content ="";
-file_changed = false;
 
 
-const create_folder_overlay = document.querySelector('#create_folder_overlay');
+function set_create_folder_overlay(){
+        const create_folder_overlay = document.querySelector('#create_folder_overlay');
 
-create_folder_overlay.addEventListener('click', function(event) {
-    this.style.display  = "none";
-});
+        create_folder_overlay.addEventListener('click', function(event) {
+            this.style.display  = "none";
+        });
 
-const create_folder_tab = document.querySelector('#create_folder_tab');
+        const create_folder_tab = document.querySelector('#create_folder_tab');
 
-create_folder_tab.addEventListener('click', function(event) {
-   event.stopPropagation();
-});
-
-
-const create_folder_button = document.querySelector('#create_folder_button');
-
-create_folder_button.addEventListener('click', function(event) {
-
-   new_folder_name = document.querySelector("#new_folder_name").value;
-   create_folder(new_folder_name);
-});
+        create_folder_tab.addEventListener('click', function(event) {
+           event.stopPropagation();
+        });
 
 
-const cancel_create_folder_button = document.querySelector('#cancel_create_folder_button');
+        const create_folder_button = document.querySelector('#create_folder_button');
 
-cancel_create_folder_button.addEventListener('click', function(event) {
-   create_folder_overlay.style.display  = "none";
-});
+        create_folder_button.addEventListener('click', function(event) {
 
-const create_folder_li = document.querySelector('#create_folder_li');
-
-create_folder_li.addEventListener('click', function(event) {
-   create_folder_overlay.style.display  = "flex";
-});
+           new_folder_name = document.querySelector("#new_folder_name").value;
+           create_folder(new_folder_name);
+        });
 
 
+        const cancel_create_folder_button = document.querySelector('#cancel_create_folder_button');
+
+        cancel_create_folder_button.addEventListener('click', function(event) {
+           create_folder_overlay.style.display  = "none";
+        });
+
+        const create_folder_li = document.querySelector('#create_folder_li');
+
+        create_folder_li.addEventListener('click', function(event) {
+           create_folder_overlay.style.display  = "flex";
+        });
+}
+
+
+function set_create_file_overlay(){
+
+    const create_file_overlay = document.querySelector('#create_file_overlay');
+
+    create_file_overlay.addEventListener('click', function(event) {
+        this.style.display  = "none";
+    });
+
+    const create_file_tab = document.querySelector('#create_file_tab');
+
+    create_file_tab.addEventListener('click', function(event) {
+       event.stopPropagation();
+    });
+
+
+    const create_file_button = document.querySelector('#create_file_button');
+
+    create_file_button.addEventListener('click', function(event) {
+
+       new_file_name = document.querySelector("#new_file_name").value;
+       create_file(new_file_name);
+    });
+
+
+    const cancel_create_file_button = document.querySelector('#cancel_create_file_button');
+
+    cancel_create_file_button.addEventListener('click', function(event) {
+       create_file_overlay.style.display  = "none";
+    });
+
+    const create_file_li = document.querySelector('#create_file_li');
+
+    create_file_li.addEventListener('click', function(event) {
+       create_file_overlay.style.display  = "flex";
+    });
+
+}
+
+
+function set_warning_overlay(){
+
+    const warning_overlay = document.querySelector('#warning_overlay');
+
+    warning_overlay.addEventListener('click', function(event) {
+        this.style.display  = "none";
+    });
+
+    const warning_tab = document.querySelector('#warning_tab');
+
+    warning_tab.addEventListener('click', function(event) {
+       event.stopPropagation();
+    });
+
+
+    const warning_button = document.querySelector('#warning_button');
+
+    warning_button.addEventListener('click', function(event) {
+           warning_overlay.style.display = "none";
+    });
+
+}
+
+function display_warning_overlay(warning_message){
+    document.querySelector("#warning_message").innerHTML = warning_message;
+    warning_overlay.style.display = "flex";
+
+
+}
 
 
 
-const create_file_overlay = document.querySelector('#create_file_overlay');
-
-create_file_overlay.addEventListener('click', function(event) {
-    this.style.display  = "none";
-});
-
-const create_file_tab = document.querySelector('#create_file_tab');
-
-create_file_tab.addEventListener('click', function(event) {
-   event.stopPropagation();
-});
-
-
-const create_file_button = document.querySelector('#create_file_button');
-
-create_file_button.addEventListener('click', function(event) {
-
-   new_file_name = document.querySelector("#new_file_name").value;
-   create_file(new_file_name);
-});
-
-
-const cancel_create_file_button = document.querySelector('#cancel_create_file_button');
-
-cancel_create_file_button.addEventListener('click', function(event) {
-   create_file_overlay.style.display  = "none";
-});
-
-const create_file_li = document.querySelector('#create_file_li');
-
-create_file_li.addEventListener('click', function(event) {
-   create_file_overlay.style.display  = "flex";
-});
-
+set_create_file_overlay();
+set_create_folder_overlay();
+set_warning_overlay();
 
 function create_folder(new_folder_name){
     $.ajax({
@@ -687,6 +732,9 @@ function remove_tool_arg(self){
 function add_tool_arg(){
    arg_name = document.querySelector("#arg_name").value;
    arg_type = document.querySelector("#arg_type").value;
+   if(arg_name in args){
+
+   }
    document.querySelector("#tool_panel_container").innerHTML = document.querySelector("#tool_panel_container").innerHTML.substr(0,document.querySelector("#tool_panel_container").innerHTML.length - button_run.length);
    document.querySelector("#tool_panel_container").innerHTML +='<div class="row align-items-center py-4" id="arg_container_'+arg_name+'">'+
 
@@ -709,6 +757,8 @@ function add_tool_arg(){
                         '</div>'
          if(arg_type == "file" || arg_type == "dir")
                document.querySelector("#"+arg_name).addEventListener("click",file_selection());
+
+         args[arg_name] = arg_type;
          document.querySelector("#tool_panel_container").innerHTML += button_run;
          document.querySelector("#tool_panel").style.height = document.querySelector("#tool_panel_container").offsetHeight + 450 + "px";
 
