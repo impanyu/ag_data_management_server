@@ -613,7 +613,7 @@ function set_tool_panel(){
                             '<div class="col-lg-3 col-12">'+
                              '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>Entry Point</b></label>'+
                         '</div>'+
-                         '<div class="col-lg-9 col-12">'+
+                         '<div class="col-lg-8 col-12">'+
                              '<input class="form-control"   type="text" value="Program Entry Point" disabled>'+
                         '</div></div>'
 
@@ -626,7 +626,7 @@ function set_tool_panel(){
                          '<div class="col-lg-3 col-12">'+
                              '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>Entry Point</b></label>'+
                         '</div>'+
-                         '<div class="col-lg-9 col-12">'+
+                         '<div class="col-lg-8 col-12">'+
                              '<input class="form-control"   type="text" value="/'+ current_path+'" disabled >'+
                         '</div></div>'
 
