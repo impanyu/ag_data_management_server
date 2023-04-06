@@ -592,14 +592,14 @@ function create_file(new_file_name){
 
 function toggle_tool_panel(){
    if(document.querySelector("#tool_panel").style.height == "0px"){
-     document.querySelector("#tool_panel").style.height = "900px";
+     document.querySelector("#tool_panel").style.height = document.querySelector("#tool_panel_container").offsetHeight || "900px";
      document.querySelector("#tool_panel").style.paddingTop = "1.25rem";
      document.querySelector("#tool_panel").style.paddingBottom = "1.25rem";
 
      }
     else{
      document.querySelector("#tool_panel").style.height = "0px";
-          document.querySelector("#tool_panel").style.paddingTop = "0rem";
+     document.querySelector("#tool_panel").style.paddingTop = "0rem";
      document.querySelector("#tool_panel").style.paddingBottom = "0rem";
      }
 }
