@@ -710,6 +710,7 @@ function add_tool_arg(){
          if(arg_type == "file" || arg_type == "dir")
                document.querySelector("#"+arg_name).addEventListener("click",file_selection());
          document.querySelector("#tool_panel_container").innerHTML += button_run;
+         document.querySelector("#tool_panel").style.height = document.querySelector("#tool_panel_container").offsetHeight + 450 + "px";
 
 }
 
