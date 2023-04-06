@@ -672,6 +672,10 @@ function set_tool_panel(){
 
 }
 
+function run_tool(){
+
+}
+
 function remove_tool_arg(){
 
 
