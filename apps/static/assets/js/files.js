@@ -664,9 +664,9 @@ function set_tool_panel(){
 
 
 
-      button_run= '<div class="row align-items-center ">'+
+      button_run= '<div class="row align-items-center " id="run_tool_container">'+
                   '<div class="col-12 col-lg-12 text-right">'+
-                     '<a href="#" class="btn btn-lg btn-primary" onclick="run_tool()" id = "run_too">Run</a>'+
+                     '<a href="#" class="btn btn-lg btn-primary" onclick="run_tool()" id = "run_tool">Run</a>'+
                  '</div>'+
            '</div>'
     document.querySelector("#tool_panel_container").innerHTML += button_run;
@@ -687,19 +687,20 @@ function remove_tool_arg(self){
 function add_tool_arg(){
    arg_name = document.querySelector("#arg_name").value;
    arg_type = document.querySelector("#arg_type").value;
+   document.querySelector("#tool_panel_container").removeChild(button_run);
    document.querySelector("#tool_panel_container").innerHTML +='<div class="row align-items-center py-4" id="arg_container_'+arg_name+'">'+
 
                             '<div class="col-lg-3 col-12">'+
                              '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>'+arg_name+'</b></label>'+
                         '</div>'+
                          '<div class="col-lg-7 col-6">'+
-                             '<input class="form-control"   type="text" value="Specify Arguments: '+arg_name +' Here" id="'+arg_name+'" disabled>'+
+                             '<input class="form-control"   type="text" value="Specify Arguments: '+arg_name +' Here" id="'+arg_name+'">'+
                         '</div>'+
                           '<div class="col-lg-2 col-6">'+
-                                    '<div href="#" class="btn btn-lg btn-success"   id="remove_arg_'+arg_name+'"  onclick="remove_tool_arg(this)">'  +
-                                      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">' +
+                                    '<div href="#" class="btn btn-lg btn-danger"   id="remove_arg_'+arg_name+'"  onclick="remove_tool_arg(this)">'  +
+                                      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="20" height="20">' +
 
-                                      ' <path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"/>' +
+                                      ' <path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z" fill="#FFFFFF"/>' +
                                    ' </svg>'+
 
                              '</div>'  +
@@ -708,6 +709,7 @@ function add_tool_arg(){
                         '</div>'
          if(arg_type == "file" || arg_type == "dir")
                document.querySelector("#"+arg_name).addEventListener("click",file_selection());
+         document.querySelector("#tool_panel_container").appendChild(button_run);
 
 }
 
