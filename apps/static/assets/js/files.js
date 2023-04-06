@@ -758,8 +758,10 @@ function add_tool_arg(){
                          '</div>' +
 
                         '</div>'
-         if(arg_type == "File" || arg_type == "Directory")
+         if(arg_type == "File" || arg_type == "Directory"){
                document.querySelector("#"+arg_name).addEventListener("click",file_selection());
+               document.querySelector("#"+arg_name).disabled = true;
+         }
 
          args[arg_name] = arg_type;
          document.querySelector("#tool_panel_container").innerHTML += button_run;
