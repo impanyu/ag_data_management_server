@@ -687,7 +687,7 @@ function remove_tool_arg(self){
 function add_tool_arg(){
    arg_name = document.querySelector("#arg_name").value;
    arg_type = document.querySelector("#arg_type").value;
-   document.querySelector("#tool_panel_container").removeChild(button_run);
+   document.querySelector("#tool_panel_container").innerHTML = document.querySelector("#tool_panel_container").innerHTML.substr(0,document.querySelector("#tool_panel_container").innerHTML.length - button_run.length);
    document.querySelector("#tool_panel_container").innerHTML +='<div class="row align-items-center py-4" id="arg_container_'+arg_name+'">'+
 
                             '<div class="col-lg-3 col-12">'+
@@ -709,7 +709,7 @@ function add_tool_arg(){
                         '</div>'
          if(arg_type == "file" || arg_type == "dir")
                document.querySelector("#"+arg_name).addEventListener("click",file_selection());
-         document.querySelector("#tool_panel_container").appendChild(button_run);
+         document.querySelector("#tool_panel_container").innerHTML += button_run;
 
 }
 
