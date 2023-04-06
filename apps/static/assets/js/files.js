@@ -607,20 +607,16 @@ function toggle_tool_panel(){
 function set_tool_panel(){
   document.querySelector("#tool_panel_tab").style.display = "block";
   if(current_path.indexOf(".")==-1){ //folder
-      if(meta_data["entry_point"]){
            document.querySelector("#tool_panel").innerHTML +='<div class="row align-items-center py-4" >'+
 
                             '<div class="col-lg-3 col-12">'+
                              '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>Entry Point</b></label>'+
                         '</div>'+
                          '<div class="col-lg-6 col-12">'+
-                             '<input class="form-control"   type="text" value="/'+ meta_data['entry_point']+'" >'+
+                             '<input class="form-control"   type="text" value="Program Entry Point" disabled>'+
                         '</div></div>'
-      }
 
-      else{
-       document.querySelector("#tool_panel_container").innerHTML += "Not enough info. Please add 'entry_point' item in your meta data, indicating the path of your program entry point."
-      }
+
 
   }
 
@@ -630,12 +626,14 @@ function set_tool_panel(){
                              '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>Entry Point</b></label>'+
                         '</div>'+
                          '<div class="col-lg-6 col-12">'+
-                             '<input class="form-control"   type="text" value="/'+ current_path+'" >'+
+                             '<input class="form-control"   type="text" value="/'+ current_path+'" disabled >'+
                         '</div></div>'
 
 
 
   }
+
+  for(var i=0; i<meta_data["command"][])
 
 
 
