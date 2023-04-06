@@ -723,9 +723,11 @@ function run_tool(){
 }
 
 function remove_tool_arg(self){
-  arg_container_name = "#arg_container_"+self.id.split("_")[2];
+  arg_name = self.id.split("_")[2];
+  arg_container_name = "#arg_container_"+arg_name;
   arg_container = document.querySelector(arg_container_name);
   document.querySelector("#tool_panel_container").removeChild(arg_container);
+  delete args[arg_name];
 
 }
 
