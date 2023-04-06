@@ -1477,7 +1477,13 @@ function update_meta(){
         contentType: "application/json",
         success: function(data, status){
           //alert("meta data updated");
-          set_tool_panel();
+          if(meta_data["Mode"] == "Tool")
+            set_tool_panel();
+          else{
+             document.querySelector("#tool_panel_tab").style.display = "none";
+             document.querySelector("#tool_panel_tab").style.height = "0px";
+          }
+
 
   }});
 
