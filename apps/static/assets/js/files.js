@@ -1477,7 +1477,7 @@ function update_meta(){
         contentType: "application/json",
         success: function(data, status){
           //alert("meta data updated");
-          if(meta_data["Mode"] == "Tool")
+          if(meta_data["mode"] == "Tool")
             set_tool_panel();
           else{
              document.querySelector("#tool_panel_tab").style.display = "none";
