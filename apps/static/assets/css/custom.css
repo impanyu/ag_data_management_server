@@ -1,3 +1,9 @@
+.file_and_dir_item:hover{
+ background-color: #eee;
+
+}
+
+
 .overlay {
   position: fixed;
   top: 0;
