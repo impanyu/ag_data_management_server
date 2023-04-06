@@ -641,7 +641,7 @@ function set_tool_panel(){
                              '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>'+arg+'</b></label>'+
                         '</div>'+
                          '<div class="col-lg-7 col-6">'+
-                             '<input class="form-control"   type="text" value="Specify Arguments: '+arg +' Here" id="'+arg+'" disabled>'+
+                             '<input class="form-control"   type="text" value="Specify arguments: '+arg +' here" id="'+arg+'" disabled>'+
                         '</div>'+
                           '<div class="col-lg-2 col-6">'+
                                     '<div href="#" class="btn btn-lg btn-success"   id="remove_arg_'+arg+'"  onclick="remove_tool_arg(this)">'  +
