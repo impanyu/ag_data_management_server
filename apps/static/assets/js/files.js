@@ -1481,7 +1481,7 @@ function update_meta(){
             set_tool_panel();
           else{
              document.querySelector("#tool_panel_tab").style.display = "none";
-             document.querySelector("#tool_panel_tab").style.height = "0px";
+             document.querySelector("#tool_panel").style.height = "0px";
           }
 
 
