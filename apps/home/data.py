@@ -503,7 +503,7 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, re
     has_words = False
 
     for w in searched_words:
-        if w in meta_data["abs_path"]:
+        if w in os.path.basename(meta_data["abs_path"]):
             has_words = True
             break
     if not has_words:
