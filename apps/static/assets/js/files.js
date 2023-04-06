@@ -588,6 +588,8 @@ function create_file(new_file_name){
 }
 
 
+
+
 function toggle_tool_panel(){
    if(document.querySelector("#tool_panel").style.height == "0px"){
      document.querySelector("#tool_panel").style.height = "900px";
@@ -614,10 +616,10 @@ function set_tool_panel(){
                              '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>Entry Point</b></label>'+
                         '</div>'+
                          '<div class="col-lg-8 col-12">'+
-                             '<input class="form-control"   type="text" value="Program Entry Point" disabled>'+
+                             '<input class="form-control"   type="text" value="Program Entry Point" id="entry_point" onclick="file_selection()"  disabled>'+
                         '</div></div>'
-
-
+           if(meta_data["entry_point"])
+               document.querySelector("#entry_point").value = meta_data["entry_point"];
 
   }
 
@@ -627,20 +629,63 @@ function set_tool_panel(){
                              '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>Entry Point</b></label>'+
                         '</div>'+
                          '<div class="col-lg-8 col-12">'+
-                             '<input class="form-control"   type="text" value="/'+ current_path+'" disabled >'+
+                             '<input class="form-control" id="entry_point"  type="text" value="/'+ current_path+'" disabled >'+
                         '</div></div>'
 
+  }
+  if(meta_data["args"]){
+      for(arg in meta_data["args"]){
+          document.querySelector("#tool_panel_container").innerHTML +='<div class="row align-items-center py-4" >'+
 
+                            '<div class="col-lg-3 col-12">'+
+                             '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>'+arg+'</b></label>'+
+                        '</div>'+
+                         '<div class="col-lg-7 col-6">'+
+                             '<input class="form-control"   type="text" value="Specify Arguments: '+arg +' Here" id="'+arg+'" disabled>'+
+                        '</div>'+
+                          <div class="col-lg-2 col-6">
+                                      <div href="#" class="btn btn-lg btn-success"   id="remove_arg"  onclick="remove_tool_arg()">
+                                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                        <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                        <path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"/>
+                                    </svg>
+
+                               </div>
+                          </div>
+
+                        '</div>'
+          if(arg.indexOf("file") !=-1 || arg.indexOf("dir") !=-1)
+               document.querySelector("#"+arg).addEventListener("click",file_selection());
+
+      }
 
   }
 
-  //for(var i=0; i<meta_data["command"][])
 
 
+      button_run= '<div class="row align-items-center ">'+
+                  '<div class="col-12 col-lg-12 text-right">'+
+                     '<a href="#" class="btn btn-lg btn-primary" onclick="run_tool()" id = "run_too">Run</a>'+
+                 '</div>'+
+           '</div>'
+    document.querySelector("#tool_panel_container").innerHTML += button_run;
+
+}
+
+function remove_tool_arg(){
 
 
 }
 
+function add_tool_arg(){
+
+
+}
+
+function file_selection(){
+
+
+}
 
 async function get_meta_and_content(){
   /*await get_meta_data();
