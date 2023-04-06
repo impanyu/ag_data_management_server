@@ -606,6 +606,7 @@ function toggle_tool_panel(){
 
 function set_tool_panel(){
   document.querySelector("#tool_panel_tab").style.display = "block";
+  document.querySelector("#tool_panel").innerHTML = "";
   if(current_path.indexOf(".")==-1){ //folder
            document.querySelector("#tool_panel").innerHTML +='<div class="row align-items-center py-4" >'+
 
