@@ -606,14 +606,14 @@ function toggle_tool_panel(){
 
 function set_tool_panel(){
   document.querySelector("#tool_panel_tab").style.display = "block";
-  document.querySelector("#tool_panel").innerHTML = "";
+  document.querySelector("#tool_panel_container").innerHTML = "";
   if(current_path.indexOf(".")==-1){ //folder
-           document.querySelector("#tool_panel").innerHTML +='<div class="row align-items-center py-4" >'+
+           document.querySelector("#tool_panel_container").innerHTML +='<div class="row align-items-center py-4" >'+
 
                             '<div class="col-lg-3 col-12">'+
                              '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>Entry Point</b></label>'+
                         '</div>'+
-                         '<div class="col-lg-6 col-12">'+
+                         '<div class="col-lg-9 col-12">'+
                              '<input class="form-control"   type="text" value="Program Entry Point" disabled>'+
                         '</div></div>'
 
@@ -622,11 +622,11 @@ function set_tool_panel(){
   }
 
   else{
-    document.querySelector("#tool_panel").innerHTML +='<div class="row align-items-center py-4" >'+
+    document.querySelector("#tool_panel_container").innerHTML +='<div class="row align-items-center py-4" >'+
                          '<div class="col-lg-3 col-12">'+
                              '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>Entry Point</b></label>'+
                         '</div>'+
-                         '<div class="col-lg-6 col-12">'+
+                         '<div class="col-lg-9 col-12">'+
                              '<input class="form-control"   type="text" value="/'+ current_path+'" disabled >'+
                         '</div></div>'
 
