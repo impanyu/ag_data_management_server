@@ -633,7 +633,7 @@ function set_tool_panel(){
 
   }
 
-  for(var i=0; i<meta_data["command"][])
+  //for(var i=0; i<meta_data["command"][])
 
 
 
