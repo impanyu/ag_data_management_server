@@ -1480,6 +1480,8 @@ function update_meta(){
           if(meta_data["mode"] == "Tool")
             set_tool_panel();
           else{
+
+             document.querySelector("#tool_panel").style.height = "1px";
               toggle_tool_panel();
           }
 
