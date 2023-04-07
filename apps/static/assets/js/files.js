@@ -685,7 +685,7 @@ function set_tool_panel(){
                              '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>Entry Point</b></label>'+
                         '</div>'+
                          '<div class="col-lg-7 col-12">'+
-                             '<input class="form-control"   type="text" value="Program Entry Point" id="arg_entry_point" onclick="display_file_selection(\'entry_point\',\''+ current_path + '\')"  disabled>'+
+                             '<input class="form-control"   type="text" value="Program Entry Point" id="arg_entry_point" onclick="display_file_selection(\'entry_point\',\''+ current_path + '\')"  >'+
                         '</div></div>'
            if(meta_data["entry_point"])
                document.querySelector("#entry_point").value = meta_data["entry_point"];
@@ -710,7 +710,7 @@ function set_tool_panel(){
                              '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>'+arg+'</b></label>'+
                         '</div>'+
                          '<div class="col-lg-7 col-6">'+
-                             '<input class="form-control"   type="text" value="Specify arguments: '+arg +'" id="arg_'+arg+'" disabled>'+
+                             '<input class="form-control"   type="text" value="Specify arguments: '+arg +'" id="arg_'+arg+'" >'+
                         '</div>'+
                           '<div class="col-lg-2 col-6">'+
                                     '<div href="#" class="btn btn-lg btn-success"   id="remove_arg_'+arg+'"  onclick="remove_tool_arg(this)">'  +
@@ -724,7 +724,7 @@ function set_tool_panel(){
 
                         '</div>'
            arg_type = meta_data["args"][arg];
-          if(arg.indexOf("File") !=-1 || arg.indexOf("Directory") !=-1 || arg_type == "file" || arg_type == "dir")
+          if(arg_type == "file" || arg_type == "dir")
                document.querySelector("#arg_"+arg).addEventListener("click",display_file_selection(arg,user));
 
       }
@@ -784,7 +784,7 @@ function add_tool_arg(){
                         '</div>'
          if(arg_type == "File" || arg_type == "Directory"){
                document.querySelector("#arg_"+arg_name).addEventListener("click",display_file_selection(arg_name,user));
-               document.querySelector("#arg_"+arg_name).disabled = true;
+               //document.querySelector("#arg_"+arg_name).disabled = true;
          }
 
          args[arg_name] = arg_type;
