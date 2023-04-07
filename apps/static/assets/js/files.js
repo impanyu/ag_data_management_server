@@ -863,7 +863,9 @@ function display_file_selection(arg_name,path){
             meta_data=JSON.parse(data);
             sub_dirs = meta_data["subdirs"];
             for (var i =0;i<sub_dirs.length;i++){
+
                    sub_dir = sub_dirs[i];
+                   console.info(sub_dir);
                    sub_dir_name = sub_dir.split("/")[sub_dir.split("/").length-1];
                    if(sub_dir.indexOf(".")){//file
                      item_html =  '<tr class="file_and_dir_item" id="'+sub_dir_name.replace(".","_")+'"  onclick="select_file(\''+ arg_name  +'\',\''+sub_dir.substr(6)+'\')" >'+
