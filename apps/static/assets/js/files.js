@@ -793,6 +793,7 @@ function add_tool_arg(){
 }
 
 function display_file_selection(arg_name,path){
+   $("#file_system_overlay")[0].style.display = "flex";
    $("#file_list_in_overlay")[0].innerHTML = "";
 
     $.post("/meta_data",
