@@ -842,7 +842,7 @@ function add_tool_arg(){
 
 
          }
-         document..querySelector("#tool_panel_container").appendChild(arg_container);
+         document.querySelector("#tool_panel_container").appendChild(arg_container);
          args[arg_name] = arg_type;
          document.querySelector("#tool_panel_container").appendChild(button_run);
          document.querySelector("#tool_panel").style.height = document.querySelector("#tool_panel_container").offsetHeight + 450 + "px";
