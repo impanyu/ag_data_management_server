@@ -760,12 +760,15 @@ function set_tool_panel(){
 
 
 
-      button_run= '<div class="row align-items-center " id="run_tool_container">'+
+      button_run_html= '<div class="row align-items-center " id="run_tool_container">'+
                   '<div class="col-12 col-lg-12 text-right">'+
                      '<a href="#" class="btn btn-lg btn-primary" onclick="run_tool()" id = "run_tool">Run</a>'+
                  '</div>'+
            '</div>'
-    document.querySelector("#tool_panel_container").innerHTML += button_run;
+
+     button_run = htmlToElement(button_run_html);
+
+    document.querySelector("#tool_panel_container").appendChild(button_run);
 
 }
 
@@ -789,8 +792,8 @@ function add_tool_arg(){
          display_warning_overlay("Argument: <span style='color:red'>"+arg_name+"</span> already exists!");
          return;
    }
-   document.querySelector("#tool_panel_container").innerHTML = document.querySelector("#tool_panel_container").innerHTML.substr(0,document.querySelector("#tool_panel_container").innerHTML.length - button_run.length);
-
+   //document.querySelector("#tool_panel_container").innerHTML = document.querySelector("#tool_panel_container").innerHTML.substr(0,document.querySelector("#tool_panel_container").innerHTML.length - button_run.length);
+  document.querySelector("#tool_panel_container").removeChild(button_run);
          if(arg_type == "File" || arg_type == "Directory"){
                console.info(document.querySelector("#arg_"+arg_name));
                //document.querySelector("#arg_"+arg_name).addEventListener("click",function(){display_file_selection(arg_name,user);});
@@ -840,7 +843,7 @@ function add_tool_arg(){
          }
 
          args[arg_name] = arg_type;
-         document.querySelector("#tool_panel_container").innerHTML += button_run;
+         document.querySelector("#tool_panel_container").appendChild(button_run);
          document.querySelector("#tool_panel").style.height = document.querySelector("#tool_panel_container").offsetHeight + 450 + "px";
 
 }
