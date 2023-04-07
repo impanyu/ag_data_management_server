@@ -690,7 +690,7 @@ function set_tool_panel(){
            document.querySelector("#tool_panel_container").innerHTML +='<div class="row align-items-center py-4" >'+
 
                             '<div class="col-lg-3 col-12">'+
-                             '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>Entry Point</b></label>'+
+                             '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>Program Entry Point</b></label>'+
                         '</div>'+
                          '<div class="col-lg-7 col-12">'+
                              '<input class="form-control"   type="text" value="Program Entry Point" id="arg_entry_point" onclick="display_file_selection(\'entry_point\',\''+ current_path + '\')"  >'+
