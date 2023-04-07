@@ -887,14 +887,18 @@ function display_file_selection(arg_name,path){
 }
 
 
-
+previous_selected_file = null;
 function select_file(arg_name,path){
     document.querySelector("#arg_"+arg_name).value = path;
 
     sub_dir_name = path.split("/")[path.split("/").length-1];
 
     document.querySelector("#"+sub_dir_name.replace(".","_")).style.backgroundColor = "blue";
-    document.querySelector(".file_and_dir_item").style.backgroundColor = "white";
+    if(previous_selected_file)
+      previous_selected_file.style.backgroundColor = "white";
+
+    previous_selected_file = document.querySelector("#"+sub_dir_name.replace(".","_"));
+    //document.querySelector(".file_and_dir_item").style.backgroundColor = "white";
 
 }
 
