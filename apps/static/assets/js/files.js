@@ -895,7 +895,7 @@ function select_file(arg_name,path){
 
     document.querySelector("#"+sub_dir_name.replace(".","_")).style.backgroundColor = "#69cfff";
     if(previous_selected_file)
-      previous_selected_file.style.backgroundColor = "white";
+      previous_selected_file.style.backgroundColor = "";
 
     previous_selected_file = document.querySelector("#"+sub_dir_name.replace(".","_"));
     //document.querySelector(".file_and_dir_item").style.backgroundColor = "white";
