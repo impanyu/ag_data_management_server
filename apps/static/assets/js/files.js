@@ -606,6 +606,7 @@ function set_file_system_overlay(){
 
     document.querySelector("#file_system_tab").onscroll=function(event){
         event.stopPropagation();
+         event.preventDefault();
 
     };
 
