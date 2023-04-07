@@ -797,7 +797,7 @@ function add_tool_arg(){
          if(arg_type == "File" || arg_type == "Directory"){
                console.info(document.querySelector("#arg_"+arg_name));
 
-                arg_item = htmlToElement('<div class="row align-items-center py-4" id="arg_container_'+arg_name+'">'+
+                arg_container = htmlToElement('<div class="row align-items-center py-4" id="arg_container_'+arg_name+'">'+
 
                             '<div class="col-lg-3 col-12">'+
                              '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>'+arg_name+'</b></label>'+
@@ -820,7 +820,7 @@ function add_tool_arg(){
 
          }
          else{
-             arg_item =htmlToElement('<div class="row align-items-center py-4" id="arg_container_'+arg_name+'">'+
+             arg_container =htmlToElement('<div class="row align-items-center py-4" id="arg_container_'+arg_name+'">'+
 
                             '<div class="col-lg-3 col-12">'+
                              '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>'+arg_name+'</b></label>'+
@@ -842,7 +842,7 @@ function add_tool_arg(){
 
 
          }
-         document..querySelector("#tool_panel_container").appendChild(arg_item);
+         document..querySelector("#tool_panel_container").appendChild(arg_container);
          args[arg_name] = arg_type;
          document.querySelector("#tool_panel_container").appendChild(button_run);
          document.querySelector("#tool_panel").style.height = document.querySelector("#tool_panel_container").offsetHeight + 450 + "px";
