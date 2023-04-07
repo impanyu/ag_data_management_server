@@ -4,7 +4,7 @@
 }
 
 .file_system_overlay_path_component:hover{
-   color: #fa6161;
+   color: #fa6161 !important;
 }
 .overlay {
   position: fixed;
