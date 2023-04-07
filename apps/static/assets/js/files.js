@@ -704,13 +704,15 @@ function set_tool_panel(){
   }
   if(meta_data["args"]){
       for(arg in meta_data["args"]){
+         arg_type =meta_data["args"][arg];
+          if(arg_type == "File" || arg_type == "Directory"){
           document.querySelector("#tool_panel_container").innerHTML +='<div class="row align-items-center py-4" id="arg_container_'+arg+'">'+
 
                             '<div class="col-lg-3 col-12">'+
                              '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>'+arg+'</b></label>'+
                         '</div>'+
                          '<div class="col-lg-7 col-6">'+
-                             '<input class="form-control"   type="text" value="Specify arguments: '+arg +'" id="arg_'+arg+'" >'+
+                             '<input class="form-control"  onclick="select_file(\''+ arg_name  +'\',\''+user+'/ag_data\')"  type="text" value="Specify arguments: '+arg +'" id="arg_'+arg+'" >'+
                         '</div>'+
                           '<div class="col-lg-2 col-6">'+
                                     '<div href="#" class="btn btn-lg btn-success"   id="remove_arg_'+arg+'"  onclick="remove_tool_arg(this)">'  +
@@ -722,10 +724,35 @@ function set_tool_panel(){
                              '</div>'  +
                          '</div>' +
 
-                        '</div>'
+                        '</div>';
+
+            }
+             else{
+             document.querySelector("#tool_panel_container").innerHTML +='<div class="row align-items-center py-4" id="arg_container_'+arg+'">'+
+
+                            '<div class="col-lg-3 col-12">'+
+                             '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>'+arg+'</b></label>'+
+                        '</div>'+
+                         '<div class="col-lg-7 col-6">'+
+                             '<input class="form-control"  type="text" value="Specify arguments: '+arg +'" id="arg_'+arg+'" >'+
+                        '</div>'+
+                          '<div class="col-lg-2 col-6">'+
+                                    '<div href="#" class="btn btn-lg btn-success"   id="remove_arg_'+arg+'"  onclick="remove_tool_arg(this)">'  +
+                                      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">' +
+
+                                      ' <path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"/>' +
+                                   ' </svg>'+
+
+                             '</div>'  +
+                         '</div>' +
+
+                        '</div>';
+
+             }
+               //document.querySelector("#arg_"+arg).addEventListener("click",function(){display_file_selection(arg,user);});
+
            arg_type = meta_data["args"][arg];
-          if(arg_type == "File" || arg_type == "Directory")
-               document.querySelector("#arg_"+arg).addEventListener("click",function(){display_file_selection(arg,user);});
+
 
       }
 
@@ -763,13 +790,17 @@ function add_tool_arg(){
          return;
    }
    document.querySelector("#tool_panel_container").innerHTML = document.querySelector("#tool_panel_container").innerHTML.substr(0,document.querySelector("#tool_panel_container").innerHTML.length - button_run.length);
-   document.querySelector("#tool_panel_container").innerHTML +='<div class="row align-items-center py-4" id="arg_container_'+arg_name+'">'+
+
+         if(arg_type == "File" || arg_type == "Directory"){
+               console.info(document.querySelector("#arg_"+arg_name));
+               //document.querySelector("#arg_"+arg_name).addEventListener("click",function(){display_file_selection(arg_name,user);});
+                document.querySelector("#tool_panel_container").innerHTML +='<div class="row align-items-center py-4" id="arg_container_'+arg_name+'">'+
 
                             '<div class="col-lg-3 col-12">'+
                              '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>'+arg_name+'</b></label>'+
                         '</div>'+
                          '<div class="col-lg-7 col-6">'+
-                             '<input class="form-control"   type="text" value="Specify arguments: '+arg_name +'" id="arg_'+arg_name+'">'+
+                             '<input class="form-control" onclick="select_file(\''+ arg_name  +'\',\''+user+'/ag_data\')" type="text" value="Specify arguments: '+arg_name +'" id="arg_'+arg_name+'">'+
                         '</div>'+
                           '<div class="col-lg-2 col-6">'+
                                     '<div href="#" class="btn btn-lg btn-danger"   id="remove_arg_'+arg_name+'"  onclick="remove_tool_arg(this)">'  +
@@ -781,12 +812,31 @@ function add_tool_arg(){
                              '</div>'  +
                          '</div>' +
 
-                        '</div>'
-         if(arg_type == "File" || arg_type == "Directory"){
-               console.info(document.querySelector("#arg_"+arg_name));
-               document.querySelector("#arg_"+arg_name).addEventListener("click",function(){display_file_selection(arg_name,user);});
-               //document.querySelector("#arg_"+arg_name).addEventListener("click",function(){console.info("display");});
-               //document.querySelector("#arg_"+arg_name).disabled = true;
+                        '</div>';
+
+         }
+         else{
+             document.querySelector("#tool_panel_container").innerHTML +='<div class="row align-items-center py-4" id="arg_container_'+arg_name+'">'+
+
+                            '<div class="col-lg-3 col-12">'+
+                             '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>'+arg_name+'</b></label>'+
+                        '</div>'+
+                         '<div class="col-lg-7 col-6">'+
+                             '<input class="form-control"  type="text" value="Specify arguments: '+arg_name +'" id="arg_'+arg_name+'">'+
+                        '</div>'+
+                          '<div class="col-lg-2 col-6">'+
+                                    '<div href="#" class="btn btn-lg btn-danger"   id="remove_arg_'+arg_name+'"  onclick="remove_tool_arg(this)">'  +
+                                      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="20" height="20">' +
+
+                                      ' <path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z" fill="#FFFFFF"/>' +
+                                   ' </svg>'+
+
+                             '</div>'  +
+                         '</div>' +
+
+                        '</div>';
+
+
          }
 
          args[arg_name] = arg_type;
@@ -836,10 +886,7 @@ function display_file_selection(arg_name,path){
 
 }
 
-function display_file_selection_recursive(path){
 
-
-}
 
 function select_file(arg_name,path){
     document.querySelector("#arg_"+arg_name).value = path;
