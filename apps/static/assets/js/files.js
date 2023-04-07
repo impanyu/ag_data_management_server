@@ -868,7 +868,7 @@ function display_file_selection(arg_name,path){
             $("#file_system_overlay_path")[0].innerHTML = "";
             for(var i = 2; i < file_system_overlay_path_components.length; i++){
                   path += file_system_overlay_path_components[i];
-                  item_html='<li class="breadcrumb-item"><a onclick="display_file_selection(\''+ arg_name  +'\',\''+path+'\')">'+file_system_overlay_path_components[i]+'</a></li>'
+                  item_html='<li class="breadcrumb-item"><a style="color:#5e7214;" class="file_system_overlay_path_component" onclick="display_file_selection(\''+ arg_name  +'\',\''+path+'\')">'+file_system_overlay_path_components[i]+'</a></li>'
                   path += "/";
                   item_node = htmlToElement(item_html);
 
