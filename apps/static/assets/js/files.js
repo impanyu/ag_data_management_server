@@ -783,6 +783,7 @@ function add_tool_arg(){
 
                         '</div>'
          if(arg_type == "File" || arg_type == "Directory"){
+               console.info(document.querySelector("#arg_"+arg_name));
                document.querySelector("#arg_"+arg_name).addEventListener("click",function(){display_file_selection(arg_name,user);});
                //document.querySelector("#arg_"+arg_name).disabled = true;
          }
