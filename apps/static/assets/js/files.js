@@ -712,7 +712,7 @@ function set_tool_panel(){
                              '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>'+arg+'</b></label>'+
                         '</div>'+
                          '<div class="col-lg-7 col-6">'+
-                             '<input class="form-control"  onclick="select_file(\''+ arg_name  +'\',\''+user+'/ag_data\')"  type="text" value="Specify arguments: '+arg +'" id="arg_'+arg+'" >'+
+                             '<input class="form-control"  onclick="display_file_selection(\''+ arg_name  +'\',\''+user+'/ag_data\')"  type="text" value="Specify arguments: '+arg +'" id="arg_'+arg+'" >'+
                         '</div>'+
                           '<div class="col-lg-2 col-6">'+
                                     '<div href="#" class="btn btn-lg btn-success"   id="remove_arg_'+arg+'"  onclick="remove_tool_arg(this)">'  +
@@ -800,7 +800,7 @@ function add_tool_arg(){
                              '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>'+arg_name+'</b></label>'+
                         '</div>'+
                          '<div class="col-lg-7 col-6">'+
-                             '<input class="form-control" onclick="select_file(\''+ arg_name  +'\',\''+user+'/ag_data\')" type="text" value="Specify arguments: '+arg_name +'" id="arg_'+arg_name+'">'+
+                             '<input class="form-control" onclick="display_file_selection(\''+ arg_name  +'\',\''+user+'/ag_data\')" type="text" value="Specify arguments: '+arg_name +'" id="arg_'+arg_name+'">'+
                         '</div>'+
                           '<div class="col-lg-2 col-6">'+
                                     '<div href="#" class="btn btn-lg btn-danger"   id="remove_arg_'+arg_name+'"  onclick="remove_tool_arg(this)">'  +
