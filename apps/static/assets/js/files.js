@@ -684,7 +684,7 @@ function set_tool_panel(){
                              '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>Entry Point</b></label>'+
                         '</div>'+
                          '<div class="col-lg-7 col-12">'+
-                             '<input class="form-control"   type="text" value="Program Entry Point" id="arg_entry_point" onclick="display_file_selection(\"entry_point\",\" '+ current_path + '\")"  disabled>'+
+                             '<input class="form-control"   type="text" value="Program Entry Point" id="arg_entry_point" onclick="display_file_selection(\'entry_point\',\''+ current_path + '\')"  disabled>'+
                         '</div></div>'
            if(meta_data["entry_point"])
                document.querySelector("#entry_point").value = meta_data["entry_point"];
@@ -808,7 +808,7 @@ function display_file_selection(arg_name,path){
                    if(sub_dir.indexOf(".")){
                      item_html =  '<tr class="file_and_dir_item">'+
                        '<td scope="row"><div class="media align-items-center"><div class="media-body"><i class="ni ni-folder-17 text-primary"></i><span class="name mb-0 text-sm">'+
-                       ' <a href="#" onclick="select_file(\"'+ arg_name  +'\",\"'+sub_dir.substr(6)+'\")" >&nbsp; ' +sub_dir_name+
+                       ' <a href="#" onclick="select_file(\''+ arg_name  +'\',\''+sub_dir.substr(6)+'\')" >&nbsp; ' +sub_dir_name+
                        '</a></span> </div></div></td>"' +
                        '</tr>';
 
@@ -816,7 +816,7 @@ function display_file_selection(arg_name,path){
                    else{
                        item_html =  '<tr class="file_and_dir_item">'+
                        '<td scope="row"><div class="media align-items-center"><div class="media-body"><i class="ni ni-folder-17 text-primary"></i><span class="name mb-0 text-sm">'+
-                       ' <a href="#" onclick="select_file(\"'+ arg_name  +'\",\"'+sub_dir.substr(6)+'\")" ondblclick="display_file_selection(\"'+arg_name+'\",\"'+sub_dir.substr(6)+'\")">&nbsp; ' +sub_dir_name+
+                       ' <a href="#" onclick="select_file(\''+ arg_name  +'\',\''+sub_dir.substr(6)+'\')" ondblclick="display_file_selection(\''+arg_name+'\',\''+sub_dir.substr(6)+'\')">&nbsp; ' +sub_dir_name+
                        '</a></span> </div></div></td>"' +
                        '</tr>';
 
