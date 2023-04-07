@@ -903,7 +903,7 @@ function select_file(arg_name,path){
     if(previous_selected_file)
       previous_selected_file.style.backgroundColor = "";
 
-    previous_selected_file = document.querySelector("#"+sub_dir_name.replace(".","_"));
+    previous_selected_file = document.querySelector("#file_item_"+sub_dir_name.replace(".","_"));
     //document.querySelector(".file_and_dir_item").style.backgroundColor = "white";
 
 }
