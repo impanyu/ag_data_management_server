@@ -583,6 +583,29 @@ function display_warning_overlay(warning_message){
 
 }
 
+function set_file_system_overlay(){
+
+    const file_system_overlay = document.querySelector('#file_system_overlay');
+
+    file_system_overlay.addEventListener('click', function(event) {
+        this.style.display  = "none";
+    });
+
+    const file_system_tab = document.querySelector('#file_system_tab');
+
+    file_system_tab.addEventListener('click', function(event) {
+       event.stopPropagation();
+    });
+
+
+    const file_system_button = document.querySelector('#file_system_button');
+
+    file_system_button.addEventListener('click', function(event) {
+           file_system_overlay.style.display = "none";
+    });
+
+}
+
 
 
 set_create_file_overlay();
@@ -661,7 +684,7 @@ function set_tool_panel(){
                              '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>Entry Point</b></label>'+
                         '</div>'+
                          '<div class="col-lg-7 col-12">'+
-                             '<input class="form-control"   type="text" value="Program Entry Point" id="entry_point" onclick="file_selection()"  disabled>'+
+                             '<input class="form-control"   type="text" value="Program Entry Point" id="arg_entry_point" onclick="display_file_selection(\"entry_point\",\" '+ current_path + '\")"  disabled>'+
                         '</div></div>'
            if(meta_data["entry_point"])
                document.querySelector("#entry_point").value = meta_data["entry_point"];
@@ -686,7 +709,7 @@ function set_tool_panel(){
                              '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>'+arg+'</b></label>'+
                         '</div>'+
                          '<div class="col-lg-7 col-6">'+
-                             '<input class="form-control"   type="text" value="Specify arguments: '+arg +'" id="'+arg+'" disabled>'+
+                             '<input class="form-control"   type="text" value="Specify arguments: '+arg +'" id="arg_'+arg+'" disabled>'+
                         '</div>'+
                           '<div class="col-lg-2 col-6">'+
                                     '<div href="#" class="btn btn-lg btn-success"   id="remove_arg_'+arg+'"  onclick="remove_tool_arg(this)">'  +
@@ -701,7 +724,7 @@ function set_tool_panel(){
                         '</div>'
            arg_type = meta_data["args"][arg]
           if(arg.indexOf("File") !=-1 || arg.indexOf("Directory") !=-1 || arg_type == "file" || arg_type == "dir")
-               document.querySelector("#"+arg).addEventListener("click",file_selection());
+               document.querySelector("#"+arg).addEventListener("click",display_file_selection(arg,user));
 
       }
 
@@ -745,7 +768,7 @@ function add_tool_arg(){
                              '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>'+arg_name+'</b></label>'+
                         '</div>'+
                          '<div class="col-lg-7 col-6">'+
-                             '<input class="form-control"   type="text" value="Specify arguments: '+arg_name +'" id="'+arg_name+'">'+
+                             '<input class="form-control"   type="text" value="Specify arguments: '+arg_name +'" id="arg_'+arg_name+'">'+
                         '</div>'+
                           '<div class="col-lg-2 col-6">'+
                                     '<div href="#" class="btn btn-lg btn-danger"   id="remove_arg_'+arg_name+'"  onclick="remove_tool_arg(this)">'  +
@@ -759,7 +782,7 @@ function add_tool_arg(){
 
                         '</div>'
          if(arg_type == "File" || arg_type == "Directory"){
-               document.querySelector("#"+arg_name).addEventListener("click",file_selection());
+               document.querySelector("#"+arg_name).addEventListener("click",display_file_selection(arg_name,user));
                document.querySelector("#"+arg_name).disabled = true;
          }
 
@@ -769,10 +792,54 @@ function add_tool_arg(){
 
 }
 
-function file_selection(){
+function display_file_selection(arg_name,path){
+   $("#file_list_in_overlay")[0].innerHTML = "";
+
+    $.post("/meta_data",
+        {
+          current_path: path
+         },
+         function(data, status){
+            meta_data=JSON.parse(data);
+            sub_dirs = meta_data["subdirs"];
+            for (var i =0;i<sub_dirs.length;i++){
+                   sub_dir = sub_dirs[i];
+                   sub_dir_name = sub_dir.split("/")[sub_dir.split("/").length-1];
+                   if(sub_dir.indexOf(".")){
+                     item_html =  '<tr class="file_and_dir_item">'+
+                       '<td scope="row"><div class="media align-items-center"><div class="media-body"><i class="ni ni-folder-17 text-primary"></i><span class="name mb-0 text-sm">'+
+                       ' <a href="#" onclick="select_file(\"'+ arg_name  +'\",\"'+sub_dir.substr(6)+'\")" >&nbsp; ' +sub_dir_name+
+                       '</a></span> </div></div></td>"' +
+                       '</tr>';
+
+                   }
+                   else{
+                       item_html =  '<tr class="file_and_dir_item">'+
+                       '<td scope="row"><div class="media align-items-center"><div class="media-body"><i class="ni ni-folder-17 text-primary"></i><span class="name mb-0 text-sm">'+
+                       ' <a href="#" onclick="select_file(\"'+ arg_name  +'\",\"'+sub_dir.substr(6)+'\")" ondblclick="display_file_selection(\"'+arg_name+'\",\"'+sub_dir.substr(6)+'\")">&nbsp; ' +sub_dir_name+
+                       '</a></span> </div></div></td>"' +
+                       '</tr>';
+
+                   }
+            item_node = htmlToElement(item_html);
+            $("#file_list_in_overlay")[0].appendChild(item_node);
+
+            }
+
+         });
+
+}
+
+function display_file_selection_recursive(path){
 
 
 }
+
+function select_file(arg_name,path){
+    document.querySelector("#arg_"+arg_name).value = path;
+
+}
+
 
 async function get_meta_and_content(){
   /*await get_meta_data();
@@ -1384,7 +1451,8 @@ function get_file_list(){
             current_folders_names.push(dir["dir_name"]);
 
             item_html =  '<tr class="file_and_dir_item"><td scope="row"><div class="media align-items-center"><div class="media-body"><i class="ni ni-folder-17 text-primary"></i><span class="name mb-0 text-sm"> <a href="/files.html?current_path='+current_path+'/'+dir["dir_name"] +'&dir=true">&nbsp; ' +dir["dir_name"]+
-            '</a></span> </div></div></td>" + "<td class="budget">'+dir["created_time"]+'</td>"' +
+            '</a></span> </div></div></td>"' +
+                   '"<td class="budget">'+dir["created_time"]+'</td>"' +
                    '<td> <span class="badge badge-dot mr-4">  <span class="status">'+dir["accessed_time"]+'</span></span></td>' +
                    '<td> <span class="badge badge-dot mr-4">  <span class="status">'+dir["size"]+'</span></span></td>' +
                    '<td> <div class="avatar-group"> <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title='+user+'><img alt="Image placeholder" src="/static/assets/img/theme/react.jpg"></a></div></td>' +
