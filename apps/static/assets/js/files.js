@@ -608,7 +608,7 @@ function set_file_system_overlay(){
         event.stopPropagation();
          event.preventDefault();
 
-    };
+    });
 
 }
 
