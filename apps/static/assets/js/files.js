@@ -604,7 +604,7 @@ function set_file_system_overlay(){
            file_system_overlay.style.display = "none";
     });
 
-    document.querySelector("#file_system_tab").onscroll=function(event){
+    document.querySelector("#file_system_tab").addEventListener('scroll',function(event){
         event.stopPropagation();
          event.preventDefault();
 
