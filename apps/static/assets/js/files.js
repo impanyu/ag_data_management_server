@@ -849,6 +849,7 @@ function add_tool_arg(){
 
 }
 
+
 function display_file_selection(arg_name,path){
    console.info("display_file_selection");
    console.info(arg_name);
@@ -862,6 +863,20 @@ function display_file_selection(arg_name,path){
          function(data, status){
             meta_data=JSON.parse(data);
             sub_dirs = meta_data["subdirs"];
+            file_system_overlay_path_components = meta_data["abs_path"].split("/");
+            path = "";
+            for(var i = 2; i < file_system_overlay_path_components.length; i++){
+                  path += file_system_overlay_path_components[i];
+                  item_html='<li class="breadcrumb-item"><a onclick="display_file_selection(\''+ arg_name  +'\',\''+path+'\')">'+file_system_overlay_path_components[i]+'</a></li>'
+                  path += "/";
+                  item_node = htmlToElement(item_html);
+                  $("#file_system_overlay_path")[0].appendChild(item_node);
+             }
+
+
+
+
+
             for (var i =0;i<sub_dirs.length;i++){
 
                    sub_dir = sub_dirs[i];
