@@ -611,6 +611,7 @@ function set_file_system_overlay(){
 set_create_file_overlay();
 set_create_folder_overlay();
 set_warning_overlay();
+set_file_system_overlay();
 
 function create_folder(new_folder_name){
     $.ajax({
