@@ -589,6 +589,7 @@ function set_file_system_overlay(){
 
     file_system_overlay.addEventListener('click', function(event) {
         this.style.display  = "none";
+        document.body.style.overflow = "auto";
     });
 
     const file_system_tab = document.querySelector('#file_system_tab');
@@ -602,11 +603,12 @@ function set_file_system_overlay(){
 
     file_system_button.addEventListener('click', function(event) {
            file_system_overlay.style.display = "none";
+           document.body.style.overflow = "auto";
     });
 
     document.querySelector("#file_system_tab").addEventListener('scroll',function(event){
-        event.stopPropagation();
-         event.preventDefault();
+       // event.stopPropagation();
+         //event.preventDefault();
 
     });
 
@@ -860,6 +862,7 @@ function display_file_selection(arg_name,path){
    console.info("display_file_selection");
    console.info(arg_name);
    $("#file_system_overlay")[0].style.display = "flex";
+   document.body.style.overflow = "hidden";
    $("#file_list_in_overlay")[0].innerHTML = "";
 
     $.post("/meta_data",
