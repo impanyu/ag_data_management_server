@@ -722,9 +722,9 @@ function set_tool_panel(){
                          '</div>' +
 
                         '</div>'
-           arg_type = meta_data["args"][arg]
+           arg_type = meta_data["args"][arg];
           if(arg.indexOf("File") !=-1 || arg.indexOf("Directory") !=-1 || arg_type == "file" || arg_type == "dir")
-               document.querySelector("#"+arg).addEventListener("click",display_file_selection(arg,user));
+               document.querySelector("#arg_"+arg).addEventListener("click",display_file_selection(arg,user));
 
       }
 
@@ -782,8 +782,8 @@ function add_tool_arg(){
 
                         '</div>'
          if(arg_type == "File" || arg_type == "Directory"){
-               document.querySelector("#"+arg_name).addEventListener("click",display_file_selection(arg_name,user));
-               document.querySelector("#"+arg_name).disabled = true;
+               document.querySelector("#arg_"+arg_name).addEventListener("click",display_file_selection(arg_name,user));
+               document.querySelector("#arg_"+arg_name).disabled = true;
          }
 
          args[arg_name] = arg_type;
