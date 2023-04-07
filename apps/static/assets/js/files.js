@@ -868,7 +868,7 @@ function display_file_selection(arg_name,path){
                    console.info(sub_dir);
                    sub_dir_name = sub_dir.split("/")[sub_dir.split("/").length-1];
                    if(sub_dir.indexOf(".") != -1){//file
-                     item_html =  '<tr class="file_and_dir_item" id="'+sub_dir_name.replace(".","_")+'"  onclick="select_file(\''+ arg_name  +'\',\''+sub_dir.substr(6)+'\')" >'+
+                     item_html =  '<tr class="file_and_dir_item" id="file_item_'+sub_dir_name.replace(".","_")+'"  onclick="select_file(\''+ arg_name  +'\',\''+sub_dir.substr(6)+'\')" >'+
                        '<td scope="row"><div class="media align-items-center"><div class="media-body"><span class="name mb-0 text-sm">'+
                        ' <a >&nbsp; ' +sub_dir_name+
                        '</a></span> </div></div></td>"' +
@@ -876,7 +876,7 @@ function display_file_selection(arg_name,path){
 
                    }
                    else{//dir
-                       item_html =  '<tr class="file_and_dir_item" id="'+sub_dir_name.replace(".","_")+'" onclick="select_file(\''+ arg_name  +'\',\''+sub_dir.substr(6)+'\')" ondblclick="display_file_selection(\''+arg_name+'\',\''+sub_dir.substr(6)+'\')">'+
+                       item_html =  '<tr class="file_and_dir_item" id="file_item_'+sub_dir_name.replace(".","_")+'" onclick="select_file(\''+ arg_name  +'\',\''+sub_dir.substr(6)+'\')" ondblclick="display_file_selection(\''+arg_name+'\',\''+sub_dir.substr(6)+'\')">'+
                        '<td scope="row"><div class="media align-items-center"><div class="media-body"><i class="ni ni-folder-17 text-primary"></i><span class="name mb-0 text-sm">'+
                        ' <a  >&nbsp; ' +sub_dir_name+
                        '</a></span> </div></div></td>"' +
@@ -899,7 +899,7 @@ function select_file(arg_name,path){
 
     sub_dir_name = path.split("/")[path.split("/").length-1];
 
-    document.querySelector("#"+sub_dir_name.replace(".","_")).style.backgroundColor = "#69cfff";
+    document.querySelector("#file_item_"+sub_dir_name.replace(".","_")).style.backgroundColor = "#69cfff";
     if(previous_selected_file)
       previous_selected_file.style.backgroundColor = "";
 
