@@ -867,7 +867,7 @@ function display_file_selection(arg_name,path){
                    sub_dir = sub_dirs[i];
                    console.info(sub_dir);
                    sub_dir_name = sub_dir.split("/")[sub_dir.split("/").length-1];
-                   if(sub_dir.indexOf(".")){//file
+                   if(sub_dir.indexOf(".") != -1){//file
                      item_html =  '<tr class="file_and_dir_item" id="'+sub_dir_name.replace(".","_")+'"  onclick="select_file(\''+ arg_name  +'\',\''+sub_dir.substr(6)+'\')" >'+
                        '<td scope="row"><div class="media align-items-center"><div class="media-body"><span class="name mb-0 text-sm">'+
                        ' <a >&nbsp; ' +sub_dir_name+
