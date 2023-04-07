@@ -783,7 +783,7 @@ function add_tool_arg(){
 
                         '</div>'
          if(arg_type == "File" || arg_type == "Directory"){
-               //document.querySelector("#arg_"+arg_name).addEventListener("click",display_file_selection(arg_name,user));
+               document.querySelector("#arg_"+arg_name).addEventListener("click",display_file_selection(arg_name,user));
                //document.querySelector("#arg_"+arg_name).disabled = true;
          }
 
@@ -798,7 +798,7 @@ function display_file_selection(arg_name,path){
    console.info(arg_name);
    $("#file_system_overlay")[0].style.display = "flex";
    $("#file_list_in_overlay")[0].innerHTML = "";
-
+   /*
     $.post("/meta_data",
         {
           current_path: path
@@ -830,7 +830,7 @@ function display_file_selection(arg_name,path){
 
             }
 
-         });
+         });*/
 
 }
 
