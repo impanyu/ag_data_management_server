@@ -713,6 +713,7 @@ function set_tool_panel(){
   if(meta_data["args"]){
       for(arg in meta_data["args"]){
          arg_type =meta_data["args"][arg];
+         args[arg_name] = arg_type;
           if(arg_type == "File" || arg_type == "Directory"){
           document.querySelector("#tool_panel_container").innerHTML +='<div class="row align-items-center py-4" id="arg_container_'+arg+'">'+
 
@@ -796,7 +797,7 @@ function run_tool(){
         }),
         contentType: "application/json",
         success: function(data, status){
-          //console.info(data);
+          console.info("meta data updated");
           //alert("meta data updated");
 
   }});
