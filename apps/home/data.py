@@ -1179,7 +1179,7 @@ def get_meta_data(path):
         else:
             meta_data["format"] = ["Folder"]
 
-        parent_path = "/".path.split("/")[:-1]
+        parent_path = "/".join(path.split("/")[:-1])
         parent_meta_data_file_name = "_".join(parent_path.split("/")[1:]) + ".json"
 
         with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "w") as meta_data_file:
