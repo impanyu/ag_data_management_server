@@ -994,7 +994,7 @@ async function get_meta_and_content(){
      if(meta_data["mode"] == "Tool"){
         set_tool_panel();
      }
-     get_file_list();
+     //get_file_list();
 
    }
    else{//file
