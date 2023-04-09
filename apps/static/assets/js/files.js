@@ -804,14 +804,14 @@ function run_tool(){
    for(arg in args){
        arg_values[arg] = document.querySelector("#arg_"+arg).value;
    }
-
+/*
   //then send run tool request
        $.ajax({
          type: "POST",
          url:"/run_tool",
          data:JSON.stringify({
           entry_point: new_meta_data["entry_point"],
-          arg_values: command,
+          arg_values: arg_values,
           arg_types : args
 
         }),
@@ -821,7 +821,7 @@ function run_tool(){
 
   }});
 
-
+*/
 }
 
 function remove_tool_arg(self){
