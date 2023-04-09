@@ -883,7 +883,8 @@ def generate_meta_data_for_file(file_path):
     if suffix == "tif" or suffix == "tiff":
 
         meta_data["native"] = read_tif_meta(file_path)
-        meta_data["spatial_range"] = meta_data["native"]["spatial_range"]
+        if "spatial_range" in meta_data["native"]:
+            meta_data["spatial_range"] = meta_data["native"]["spatial_range"]
 
     meta_data_file_name = "_".join(file_path.split("/")[1:]) + ".json"
 
@@ -1002,7 +1003,8 @@ def read_tif_meta(file_path):
         # Get the image's CRS (Coordinate Reference System)
         src_crs = src.crs
         dst_crs = CRS.from_epsg(4326)
-
+        if src_crs is None:
+            return native_meta
 
         #if src.crs != crs:
         #    return {"northeast": {"lat": 0, "lng": -180}, "southwest": {"lat": 90, "lng": 0}}
@@ -1365,7 +1367,9 @@ def tif_to_image(tif_path,band):
 
 
     img_meta_data = generate_meta_data_for_file(img_path)
-    img_meta_data["spatial_range"] = read_tif_meta(tif_path)["spatial_range"]
+    tif_meta = read_tif_meta(tif_path)
+    if "spatial_range" in tif_meta:
+        img_meta_data["spatial_range"] = tif_meta["spatial_range"]
 
     img_meta_data_file_name = "_".join(img_path.split("/")[1:]) + ".json"
 
