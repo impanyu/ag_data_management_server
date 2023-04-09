@@ -1448,6 +1448,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
         image_name,
         command=[main_cmd, script_path] + [arg_values[arg_name] for arg_name in arg_values],
         volumes={f"/data/{user}": {"bind": f"/{user}", "mode": "rw"}},
+        working_dir=working_dir,
         #environment={"VAR1": "value1", "VAR2": "value2"},
         detach=False,
         auto_remove = True
