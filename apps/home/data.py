@@ -1159,8 +1159,9 @@ def search(root_dir, search_box, category, mode, format, label, realtime, time_r
 
 def get_meta_data(path):
     meta_data_file_name = "_".join(path.split("/")[1:]) + ".json"
+    meta_data_file_path = os.path.join(settings.CORE_DIR, 'data', meta_data_file_name)
 
-    if not os.path.exists(path):
+    if not os.path.exists(meta_data_file_path):
         meta_data = {}
         meta_data["mode"] = ["Data"]
         meta_data["category"] = []
