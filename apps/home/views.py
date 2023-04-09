@@ -303,7 +303,7 @@ def data(request):
             #current_path = request.POST['current_path']
             current_path = request.POST.get("current_path", "")
             new_folder_name = request.POST['new_folder_name'].split(".")[0]
-            abs_path = os.path.join("/home", current_path,new_folder_name)
+            abs_path = os.path.join("/data", current_path,new_folder_name)
 
             new_path = abs_path
             i = 1
@@ -320,7 +320,7 @@ def data(request):
             #current_path = request.POST['current_path']
             current_path = request.POST.get("current_path", "")
             new_file_name = request.POST['new_file_name']
-            abs_path = os.path.join("/home", current_path,new_file_name)
+            abs_path = os.path.join("/data", current_path,new_file_name)
             suffix = abs_path.split(".")[-1]
 
             new_path = abs_path
@@ -368,14 +368,14 @@ def data(request):
                 #print(upload_file_paths)
 
                 if not upload_file_paths[0] == "":
-                    root_abs_path = os.path.join("/home", current_path, upload_file_paths[0].split("/")[0])
+                    root_abs_path = os.path.join("/data", current_path, upload_file_paths[0].split("/")[0])
                     if os.path.exists(root_abs_path):
                         return HttpResponse("Folder exists!")
 
                 #upload each file
                 for file in upload_files:
 
-                    position = os.path.join("/home",current_path,
+                    position = os.path.join("/data",current_path,
                                             '/'.join(upload_file_paths[upload_files.index(file)].split('/')[:-1]))
                     print(position)
                     print(file.name)
@@ -406,7 +406,7 @@ def data(request):
                 '''
                 cur = ""
                 meta_data = {}
-                current_abs_path = os.path.join("/home/" + request.user.get_username() + "/ag_data", current_path)
+                current_abs_path = os.path.join("/data/" + request.user.get_username() + "/ag_data", current_path)
                 for i,dir in enumerate(current_abs_path.split("/")):
                     cur = cur + "/"+ dir
                     if cur in data_points:
@@ -414,10 +414,10 @@ def data(request):
                 '''
                 #upload single file, not relative path
                 if(upload_file_paths[0] == ""):
-                    root_abs_path = os.path.join("/home",current_path,upload_files[0].name)
+                    root_abs_path = os.path.join("/data",current_path,upload_files[0].name)
 
                 else:
-                    root_abs_path = os.path.join("/home" ,current_path,upload_file_paths[0].split('/')[0])
+                    root_abs_path = os.path.join("/data" ,current_path,upload_file_paths[0].split('/')[0])
 
                 aggregate_meta_data(root_abs_path)
 
@@ -482,7 +482,7 @@ def data(request):
 
 
 
-                    #dir_root = os.path.join("/home/" + request.user.get_username() + "/ag_data", current_path,'/'.join(upload_file_paths[0].split('/')[0]))
+                    #dir_root = os.path.join("/data/" + request.user.get_username() + "/ag_data", current_path,'/'.join(upload_file_paths[0].split('/')[0]))
 
 
 
@@ -578,7 +578,7 @@ def data(request):
                 file_path = modified_file_path[1:]
             '''
 
-            abs_path = os.path.join("/home",file_path,file_name)
+            abs_path = os.path.join("/data",file_path,file_name)
 
             if os.path.isdir(abs_path):
                 # shutil.rmtree(os.path.join(settings.CORE_DIR, 'data/users', current_path, file_name))
@@ -624,7 +624,7 @@ def data(request):
 
         elif load_template == 'download_file': #directly download file or folder
             file_path = request.POST['current_path']
-            abs_path = os.path.join("/home", file_path)
+            abs_path = os.path.join("/data", file_path)
 
             # Check if the path exists
             if not os.path.exists(abs_path):
@@ -658,7 +658,7 @@ def data(request):
 
         elif load_template == 'get_file': # try to display file in front end
             file_path = request.POST['current_path']
-            abs_path = os.path.join("/home", file_path)
+            abs_path = os.path.join("/data", file_path)
             print(file_path)
 
 
@@ -723,8 +723,8 @@ def data(request):
             '''
 
             #fs = FileSystemStorage(location=os.path.join(settings.CORE_DIR, 'data') + "/users")
-            #fs = FileSystemStorage(location="/home/" + request.user.get_username() + "/ag_data")
-            fs = FileSystemStorage(location="/home/" + file_path)
+            #fs = FileSystemStorage(location="/data/" + request.user.get_username() + "/ag_data")
+            fs = FileSystemStorage(location="/data/" + file_path)
 
 
             #print(request.user.get_username())
@@ -736,10 +736,10 @@ def data(request):
 
             if modified_file_path == "":
                 file_path = "."
-                abs_path = "/home/" + request.user.get_username() + "/ag_data"
+                abs_path = "/data/" + request.user.get_username() + "/ag_data"
             else:
                 file_path = modified_file_path[1:]
-                abs_path = os.path.join("/home/" + request.user.get_username() + "/ag_data", file_path)
+                abs_path = os.path.join("/data/" + request.user.get_username() + "/ag_data", file_path)
             '''
 
 
@@ -811,8 +811,20 @@ def data(request):
         elif load_template == 'meta_data':
             current_path = request.POST['current_path']
             meta_data={}
-            meta_data = get_meta_data("/home/"+current_path)
+            meta_data = get_meta_data("/data/"+current_path)
             response = json.dumps(meta_data)
+            return HttpResponse(response)
+
+        elif load_template == 'run_tool':
+            request_data = json.loads(request.body)
+            entry_point = request_data["entry_point"]
+            arg_values = request_data["arg_values"]
+            arg_types = request_data["arg_types"]
+
+
+            run_tool(entry_point,arg_values, arg_types)
+
+            response = "success"
             return HttpResponse(response)
 
         elif load_template == 'update_meta':
@@ -820,8 +832,8 @@ def data(request):
             file_path = request_data['current_path']
             meta_data = request_data["meta_data"]
 
-            update_meta("/home/"+file_path,meta_data)
-            response = "success";
+            update_meta("/data/"+file_path,meta_data)
+            response = "success"
             return HttpResponse(response)
 
         elif load_template == 'update_file':
@@ -833,7 +845,7 @@ def data(request):
 
             print(new_content)
 
-            update_file("/home/"+current_path,new_content)
+            update_file("/data/"+current_path,new_content)
             response = "success";
             return HttpResponse(response)
 
@@ -862,7 +874,7 @@ def data(request):
             #print("label: " + str(label))
 
             # fs = FileSystemStorage(location=os.path.join(settings.CORE_DIR, 'data') + "/users")
-            #fs = FileSystemStorage(location="/home/" + request.user.get_username() + "/ag_data")
+            #fs = FileSystemStorage(location="/data/" + request.user.get_username() + "/ag_data")
 
             # print(request.user.get_username())
 
@@ -873,10 +885,10 @@ def data(request):
 
             if modified_file_path == "":
                 file_path = "."
-                abs_path = "/home/" + request.user.get_username() + "/ag_data"
+                abs_path = "/data/" + request.user.get_username() + "/ag_data"
             else:
                 file_path = modified_file_path[1:]
-                abs_path = os.path.join("/home/" + request.user.get_username() + "/ag_data", file_path)
+                abs_path = os.path.join("/data/" + request.user.get_username() + "/ag_data", file_path)
 
             dirs, files = fs.listdir(file_path)
             '''
@@ -893,7 +905,7 @@ def data(request):
 
             # search the user's own items
             if "My Own Data" in privilege:
-                root_dir = os.path.join("/home",request.user.get_username(),"ag_data")
+                root_dir = os.path.join("/data",request.user.get_username(),"ag_data")
                 response["items"] = search(root_dir,search_box,category,mode,format,label,realtime,time_range,spatial_range)
             #if "Domain" in mode:
                 #search_domains()
@@ -901,7 +913,7 @@ def data(request):
             # search public items
             # still need to differentiate between own and public items
             '''
-            root_dir = "/home/public/ag_data"
+            root_dir = "/data/public/ag_data"
             public_items = search(root_dir, search_box, category, mode, format, label, time_range, spatial_range)
 
             response["items"] += public_items

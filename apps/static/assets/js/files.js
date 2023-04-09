@@ -706,7 +706,7 @@ function set_tool_panel(){
                              '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>Entry Point</b></label>'+
                         '</div>'+
                          '<div class="col-lg-7 col-12">'+
-                             '<input class="form-control" id="entry_point"  type="text" value="/'+ current_path+'" disabled >'+
+                             '<input class="form-control" id="arg_entry_point"  type="text" value="/'+ current_path+'" disabled >'+
                         '</div></div>'
 
   }
@@ -781,6 +781,46 @@ function set_tool_panel(){
 }
 
 function run_tool(){
+  //first update meta data
+  new_meta_data = {};
+  new_meta_data["entry_point"] = document.querySelector("#entry_point").value;
+  new_meta_data["args"] = args;
+
+      $.ajax({
+         type: "POST",
+         url:"/update_meta",
+         data:JSON.stringify({
+          current_path: current_path,
+          meta_data: new_meta_data
+
+        }),
+        contentType: "application/json",
+        success: function(data, status){
+          //alert("meta data updated");
+
+  }});
+
+   arg_values ={};
+   for(arg in args){
+       arg_values[arg] = document.querySelector("#arg_"+arg).value;
+   }
+
+  //then send run tool request
+       $.ajax({
+         type: "POST",
+         url:"/run_tool",
+         data:JSON.stringify({
+          entry_point: new_meta_data["entry_point"],
+          arg_values: command,
+          arg_types : args
+
+        }),
+        contentType: "application/json",
+        success: function(data, status){
+          //alert("meta data updated");
+
+  }});
+
 
 }
 
@@ -1790,7 +1830,6 @@ function update_meta(){
 
 
 
-
 function get_meta_data(){
    return new Promise(function(resolve,reject){
     $.post("/meta_data",
@@ -1810,8 +1849,8 @@ function get_meta_data(){
               else if (meta_key == "mode" || meta_key == "category" || meta_key == "format"){
                  if(meta_value.length == 0)
                    continue;
-                 console.info(meta_key);
-                 console.info(meta_value);
+                 //console.info(meta_key);
+                 //console.info(meta_value);
                 document.querySelector("#"+meta_key).querySelector("option[value="+meta_value[0]+"]").selected=true;
               }
 

@@ -22,6 +22,8 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 
 
+import docker
+
 
 
 def convert_and_caching(file_path, username):
@@ -135,7 +137,7 @@ def query_domain(domain_name, start_date, end_date, southwest, northeast, query_
     return json.dumps(query_result)
 
 
-# map logic_path to real_path, for example impanyu/ENREC/1.png -> /home/impanyu/ag_data/ENREC/1.png
+# map logic_path to real_path, for example impanyu/ENREC/1.png -> /data/impanyu/ag_data/ENREC/1.png
 def map_file_path(logic_path, username):
     real_path = ""
 
@@ -147,7 +149,7 @@ def map_file_path(logic_path, username):
     else:
         real_path = real_path[1:]
 
-    real_path = os.path.join("/home/" + username + "/ag_data/", real_path)
+    real_path = os.path.join("/data/" + username + "/ag_data/", real_path)
     return real_path
 
 
@@ -1157,6 +1159,40 @@ def search(root_dir, search_box, category, mode, format, label, realtime, time_r
 
 def get_meta_data(path):
     meta_data_file_name = "_".join(path.split("/")[1:]) + ".json"
+
+    if not os.path.exists(path):
+        meta_data = {}
+        meta_data["mode"] = ["Data"]
+        meta_data["category"] = []
+        meta_data["label"] = []
+        meta_data["time_range"] = {"start": "01/01/2030 00:00:00", "end": "01/01/2030 00:00:00"}
+        meta_data["spatial_range"] = {"northeast": {"lat": 0, "lng": -180}, "southwest": {"lat": 0, "lng": -180}}
+        meta_data["subdirs"] = []
+        meta_data["abs_path"] = path
+        meta_data["public"] = "False"
+        meta_data["name"] = os.path.basename(path)
+        meta_data["realtime"] = "Non-Realtime"
+
+        if("." in os.path.basename(path)):
+            meta_data["format"] = ["File"]
+        else:
+            meta_data["format"] = ["Folder"]
+
+        parent_path = "/".path.split("/")[:-1]
+        parent_meta_data_file_name = "_".join(parent_path.split("/")[1:]) + ".json"
+
+        with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "w") as meta_data_file:
+            json.dump(meta_data,meta_data_file)
+
+        with open(os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name), "r") as parent_meta_data_file:
+            parent_meta_data = json.load(parent_meta_data_file)
+            parent_meta_data["sub_dirs"].append(path)
+
+        with open(os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name), "w") as parent_meta_data_file:
+            json.dump(parent_meta_data,parent_meta_data_file)
+
+
+
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
         meta_data = json.load(meta_data_file)
 
@@ -1366,3 +1402,39 @@ def update_parent_meta(abs_path):
 
     with open(parent_meta_data_file_path, "w") as parent_meta_data_file:
         json.dump(parent_meta_data, parent_meta_data_file)
+
+
+def run_tool(entry_point,arg_values, arg_types):
+
+    client = docker.from_env()
+
+    # assuming that the uploaded script is saved to a file on disk
+    script_path = f"/data/{entry_point}"
+
+    # assuming that the script takes command-line arguments
+
+    mount_dirs_on_host = ["/".join(script_path.split("/")[:-1])]
+
+    if "py" in entry_point:
+        image_name = "my-python-image"
+        main_cmd = "python"
+
+        for arg in arg_types:
+            if arg_types[arg] == "File":
+                file_path = f"/data/{arg_values[arg]}"
+                mount_dirs_on_host.append("/".join(file_path.split("/")[:-1]))
+            elif arg_types[arg] == "Directory":
+                dir_path = f"/data/{arg_values[arg]}"
+                mount_dirs_on_host.append(dir_path)
+
+    else:
+        return
+
+    container = client.containers.run(
+        image_name,
+        command=[main_cmd, script_path] + args,
+        volumes={"/path/on/host": {"bind": "/path/in/container", "mode": "rw"}},
+        environment={"VAR1": "value1", "VAR2": "value2"},
+        network="my-network",
+        detach=True,
+    )
