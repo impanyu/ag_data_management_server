@@ -925,7 +925,7 @@ def update_meta(file_path,new_meta_data):
     #meta_data = {}
 
     print(new_meta_data)
-    '''
+
     for key in new_meta_data:
         if key == "category" or key == "mode" or key == "format" or key == "label":
 
@@ -977,8 +977,8 @@ def update_meta(file_path,new_meta_data):
             meta_data["spatial_range"]["northeast"]["lat"] = upper_lat
             meta_data["spatial_range"]["northeast"]["lng"] = right_ln
 
-        elif key=="entry_point":
-            meta_data["entry_point"] = "/data"+meta_data["entry_point"]
+        elif key == "entry_point":
+            meta_data["entry_point"] = "/data"+new_meta_data["entry_point"]
 
 
     print("meta_data")
@@ -986,7 +986,7 @@ def update_meta(file_path,new_meta_data):
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "w") as meta_data_file:
         #print(meta_data)
         json.dump(meta_data,meta_data_file)
-    '''
+
 
 def read_tif_meta(file_path):
     native_meta = {}
