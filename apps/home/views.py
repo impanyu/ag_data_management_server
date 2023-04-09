@@ -832,7 +832,7 @@ def data(request):
             file_path = request_data['current_path']
             meta_data = request_data["meta_data"]
 
-            update_meta("/data/"+file_path,meta_data)
+            #update_meta("/data/"+file_path,meta_data)
             response = "success"
             return HttpResponse(response)
 
