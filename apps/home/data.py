@@ -1429,7 +1429,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
     client = docker.from_env()
 
     # assuming that the uploaded script is saved to a file on disk
-    script_path = f"/data{entry_point}"
+    script_path = f"{entry_point}"
 
     # assuming that the script takes command-line arguments
 
