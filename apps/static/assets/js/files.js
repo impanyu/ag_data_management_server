@@ -820,7 +820,6 @@ function run_tool(){
           //alert("meta data updated");
 
   }});
-
 */
 }
 
