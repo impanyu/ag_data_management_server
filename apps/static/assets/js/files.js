@@ -770,7 +770,7 @@ function set_tool_panel(){
 
       button_run_html= '<div class="row align-items-center " id="run_tool_container">'+
                   '<div class="col-12 col-lg-12 text-right">'+
-                     '<a href="#" class="btn btn-lg btn-primary" onclick="run_tool()" id = "run_tool">Run</a>'+
+                     '<a  class="btn btn-lg btn-primary" onclick="run_tool()" id = "run_tool">Run</a>'+
                  '</div>'+
            '</div>'
 
@@ -796,7 +796,7 @@ function run_tool(){
         }),
         contentType: "application/json",
         success: function(data, status){
-        console.info(data);
+          //console.info(data);
           //alert("meta data updated");
 
   }});
