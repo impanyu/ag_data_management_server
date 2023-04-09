@@ -980,6 +980,9 @@ def update_meta(file_path,new_meta_data):
         elif key == "entry_point":
             meta_data["entry_point"] = "/data"+new_meta_data["entry_point"]
 
+        elif key == "args":
+            meta_data["args"] = new_meta_data["args"]
+
 
     print("meta_data")
     print(meta_data)
