@@ -746,9 +746,9 @@ function set_tool_panel(){
                         '</div>'+
                           '<div class="col-lg-2 col-6">'+
                                     '<div href="#" class="btn btn-lg btn-success"   id="remove_arg_'+arg+'"  onclick="remove_tool_arg(this)">'  +
-                                      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">' +
+                                      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="20" height="20">' +
 
-                                      ' <path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"/>' +
+                                      ' <path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z" fill="#FFFFFF"/>' +
                                    ' </svg>'+
 
                              '</div>'  +
