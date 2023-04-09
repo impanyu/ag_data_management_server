@@ -1187,6 +1187,7 @@ def get_meta_data(path):
 
         print(parent_meta_data_file_name)
 
+
         with open(os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name), "r") as parent_meta_data_file:
             parent_meta_data = json.load(parent_meta_data_file)
             parent_meta_data["sub_dirs"].append(path)
