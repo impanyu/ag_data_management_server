@@ -1815,7 +1815,7 @@ function update_meta(){
         }),
         contentType: "application/json",
         success: function(data, status){
-          //alert("meta data updated");
+          alert("meta data updated");
           if(meta_data["mode"] == "Tool")
             set_tool_panel();
           else{
