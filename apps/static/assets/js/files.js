@@ -819,6 +819,7 @@ function run_tool(){
         contentType: "application/json",
         success: function(data, status){
           //alert("meta data updated");
+          console.info("program running complete!")
 
   }});
 
