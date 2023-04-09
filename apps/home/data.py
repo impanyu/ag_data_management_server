@@ -992,7 +992,6 @@ def read_tif_meta(file_path):
             'bands': src.count,
             'width': src.width,
             'height': src.height,
-            'crs': src.crs.to_dict(),
             'dtype': str(src.dtypes[0]),
             'transform': src.transform,
             'tags': src.tags()
@@ -1005,6 +1004,8 @@ def read_tif_meta(file_path):
         dst_crs = CRS.from_epsg(4326)
         if src_crs is None:
             return native_meta
+
+        native_meta['crs'] = src.crs.to_dict()
 
         #if src.crs != crs:
         #    return {"northeast": {"lat": 0, "lng": -180}, "southwest": {"lat": 90, "lng": 0}}
