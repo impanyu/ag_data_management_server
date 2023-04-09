@@ -1421,37 +1421,35 @@ def update_parent_meta(abs_path):
         json.dump(parent_meta_data, parent_meta_data_file)
 
 
-def run_tool(entry_point,arg_values, arg_types):
+def run_tool(entry_point,arg_values, arg_types,user):
+
+    working_dir = f"/{user}/ag_data"
+
 
     client = docker.from_env()
 
     # assuming that the uploaded script is saved to a file on disk
-    script_path = f"/data/{entry_point}"
+    script_path = f"/data{entry_point}"
 
     # assuming that the script takes command-line arguments
 
-    mount_dirs_on_host = ["/".join(script_path.split("/")[:-1])]
+    #mount_dirs_on_host = ["/".join(script_path.split("/")[:-1])]
 
     if "py" in entry_point:
-        image_name = "my-python-image"
+        image_name = "python-test"
         main_cmd = "python"
 
-        for arg in arg_types:
-            if arg_types[arg] == "File":
-                file_path = f"/data/{arg_values[arg]}"
-                mount_dirs_on_host.append("/".join(file_path.split("/")[:-1]))
-            elif arg_types[arg] == "Directory":
-                dir_path = f"/data/{arg_values[arg]}"
-                mount_dirs_on_host.append(dir_path)
+
+
 
     else:
         return
 
     container = client.containers.run(
         image_name,
-        command=[main_cmd, script_path] + args,
-        volumes={"/path/on/host": {"bind": "/path/in/container", "mode": "rw"}},
-        environment={"VAR1": "value1", "VAR2": "value2"},
-        network="my-network",
-        detach=True,
+        command=[main_cmd, script_path] + [arg_values[arg_name] for arg_name in arg_values],
+        volumes={f"/data/{user}": {"bind": f"/{user}", "mode": "rw"}},
+        #environment={"VAR1": "value1", "VAR2": "value2"},
+        detach=False,
+        auto_remove = True
     )

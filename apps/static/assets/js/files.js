@@ -805,7 +805,7 @@ function run_tool(){
    for(arg in args){
        arg_values[arg] = document.querySelector("#arg_"+arg).value;
    }
-/*
+
   //then send run tool request
        $.ajax({
          type: "POST",
@@ -821,7 +821,7 @@ function run_tool(){
           //alert("meta data updated");
 
   }});
-*/
+
 }
 
 function remove_tool_arg(self){

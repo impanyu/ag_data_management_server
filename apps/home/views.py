@@ -822,7 +822,7 @@ def data(request):
             arg_types = request_data["arg_types"]
 
 
-            run_tool(entry_point,arg_values, arg_types)
+            run_tool(entry_point,arg_values, arg_types,request.user.get_username())
 
             response = "success"
             return HttpResponse(response)
