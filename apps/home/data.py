@@ -976,6 +976,9 @@ def update_meta(file_path,new_meta_data):
             meta_data["spatial_range"]["northeast"]["lat"] = upper_lat
             meta_data["spatial_range"]["northeast"]["lng"] = right_ln
 
+        elif key=="entry_point":
+            meta_data["entry_point"] = "/data"+meta_data["entry_point"]
+
 
     print("meta_data")
     print(meta_data)
