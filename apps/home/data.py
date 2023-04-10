@@ -1544,8 +1544,8 @@ def run_tool(entry_point,arg_values, arg_types,user):
             written_meta_data["upstream"] = {}
 
         for read_file in read_files:
-            if read_file == entry_point:
-                continue
+            #if read_file == entry_point:
+            #    continue
 
             written_meta_data["upstream"][entry_point] = []
             written_meta_data["upstream"][entry_point].append(read_file)
