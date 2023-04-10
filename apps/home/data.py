@@ -1457,3 +1457,5 @@ def run_tool(entry_point,arg_values, arg_types,user):
         auto_remove = True
     )
 
+    return output
+
