@@ -21,3 +21,4 @@ pyshp
 geopandas
 matplotlib
 numpy
+pyinotify
