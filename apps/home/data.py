@@ -1503,7 +1503,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
 
 
     notifier.stop()
-    time.sleep(2)
+    time.sleep(1)
     notifier_thread.join()
 
     written_files = list(handler.written_files)
