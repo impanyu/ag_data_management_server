@@ -1447,9 +1447,9 @@ def run_tool(entry_point,arg_values, arg_types,user):
 
     output = client.containers.run(
         image_name,
-        command=[main_cmd, script_path] + [arg_values[arg_name] for arg_name in arg_values],
-        volumes={f"/data/{user}": {"bind": f"/{user}", "mode": "rw"}},
-        working_dir=working_dir,
+        #command=[main_cmd, script_path] + [arg_values[arg_name] for arg_name in arg_values],
+        #volumes={f"/data/{user}": {"bind": f"/{user}", "mode": "rw"}},
+        #working_dir=working_dir,
         #environment={"VAR1": "value1", "VAR2": "value2"},
         detach=False,
         auto_remove = True
