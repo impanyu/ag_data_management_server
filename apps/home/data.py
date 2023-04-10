@@ -1486,7 +1486,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
     # Start the notifier
     # Run the notifier in a separate thread
     import threading
-    #import time
+    import time
     notifier_thread = threading.Thread(target=notifier.loop)
     notifier_thread.start()
 
@@ -1503,7 +1503,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
 
 
     notifier.stop()
-    #time.sleep(2)
+    time.sleep(2)
     notifier_thread.join()
 
     written_files = list(handler.written_files)
