@@ -22,7 +22,10 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 
 
+import pyinotify
 import docker
+
+from .file_monitor import EventHandler
 
 
 
@@ -823,6 +826,30 @@ def aggregate_meta_data(dir_path):
     return meta_data
 
 
+def generate_meta_data_for_dir(dir_path):
+    meta_data = {}
+    meta_data["mode"] = ["Data"]
+    meta_data["category"] = []
+    meta_data["format"] = ["Folder"]
+    meta_data["label"] = []
+    meta_data["time_range"] = {"start": "01/01/2030 00:00:00", "end": "01/01/2030 00:00:00"}
+    meta_data["spatial_range"] = {"northeast": {"lat": 0, "lng": -180}, "southwest": {"lat": 0, "lng": -180}}
+    meta_data["abs_path"] = dir_path
+    meta_data["subdirs"] = []
+    meta_data["public"] = "False"
+    meta_data["name"] = dir_path.split("/")[-1]
+    meta_data["realtime"] = "Non-Realtime"
+
+
+    meta_data_dir_name = "_".join(dir_path.split("/")[1:]) + ".json"
+
+    with open(os.path.join(settings.CORE_DIR, 'data', meta_data_dir_name), "w") as meta_data_file:
+        json.dump(meta_data, meta_data_file)
+
+    return meta_data
+
+
+
 def generate_meta_data_for_file(file_path):
     meta_data = {}
     meta_data["mode"] = ["Data"]
@@ -1424,7 +1451,7 @@ def update_parent_meta(abs_path):
 def run_tool(entry_point,arg_values, arg_types,user):
 
 
-    working_dir = f"/{user}/ag_data"
+    root_dir = f"/{user}/ag_data"
 
 
     client = docker.from_env()
@@ -1445,16 +1472,93 @@ def run_tool(entry_point,arg_values, arg_types,user):
         return
 
 
+    # Define the PID of the program to filter out
+    pid = 1234
+
+    # Define the events to watch for
+    mask = pyinotify.IN_MODIFY | pyinotify.IN_CREATE | pyinotify.IN_DELETE | pyinotify.IN_ACCESS
+
+    # Create a new WatchManager
+    wm = pyinotify.WatchManager()
+
+    # Associate the event handler with the WatchManager
+    handler = EventHandler(pid)
+    notifier = pyinotify.Notifier(wm, handler)
+
+    # Add a watch for the path with the specified mask
+    wm.add_watch(root_dir, mask,rec=True,auto_add=True)
+
+    # Start the notifier
+    notifier.loop()
+
     output = client.containers.run(
         image_name,
         command=[main_cmd, script_path] + [arg_values[arg_name] for arg_name in arg_values],
-        #command=[main_cmd, script_path],
+        # command=[main_cmd, script_path],
         volumes={f"/data/{user}": {"bind": f"/{user}", "mode": "rw"}},
-        #working_dir=working_dir,
-        #environment={"VAR1": "value1", "VAR2": "value2"},
+        # working_dir=working_dir,
+        # environment={"VAR1": "value1", "VAR2": "value2"},
         detach=False,
-        auto_remove = True
+        auto_remove=True
     )
+
+    notifier.stop()
+    written_files = list(handler.written_files)
+    read_files = list(handler.accessed_files.difference(handler.written_files))
+    created_files = list(handler.created_files)
+
+    sorted_created_files = sorted(created_files, key=len)
+
+    for created_file in sorted_created_files:
+        if os.path.isfile(created_file):
+            generate_meta_data_for_file(created_file)
+        else:
+            generate_meta_data_for_dir(created_file)
+
+        parent_path = "/".join(created_file.split("/")[:-1])
+        parent_meta_data_file_name = "_".join(parent_path.split("/")[1:]) + ".json"
+
+        with open(os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name),"r") as parent_meta_data_file:
+            parent_meta_data = json.load(parent_meta_data_file)
+            parent_meta_data["subdirs"].append(created_file)
+
+        with open(os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name), "w") as parent_meta_data_file:
+            json.dump(parent_meta_data, parent_meta_data_file)
+
+
+    for written_file in written_files:
+
+        written_meta_data_file_name = "_".join(written_file.split("/")[1:]) + ".json"
+        with open(os.path.join(settings.CORE_DIR, 'data', written_meta_data_file_name),"r") as written_meta_data_file:
+            written_meta_data = json.load(written_meta_data_file)
+        if "upstream" not in written_meta_data:
+            written_meta_data["upstream"] = {}
+
+        for read_file in read_files:
+            if entry_point not in written_meta_data["upstream"]:
+                written_meta_data["upstream"][entry_point] = []
+            written_meta_data["upstream"][entry_point].append(read_file)
+
+        with open(os.path.join(settings.CORE_DIR, 'data', written_meta_data_file_name),"w") as written_meta_data_file:
+            json.dump(written_meta_data,written_meta_data_file)
+
+    for read_file in read_files:
+
+        read_meta_data_file_name = "_".join(read_file.split("/")[1:]) + ".json"
+        with open(os.path.join(settings.CORE_DIR, 'data', read_meta_data_file_name), "r") as read_meta_data_file:
+            read_meta_data = json.load(read_meta_data_file)
+        if "downstream" not in read_meta_data:
+            read_meta_data["downstream"] = {}
+
+        for written_file in written_files:
+            if entry_point not in read_meta_data["downstream"]:
+                read_meta_data["downstream"][entry_point] = []
+            read_meta_data["downstream"][entry_point].append(written_file)
+
+        with open(os.path.join(settings.CORE_DIR, 'data',  read_meta_data_file_name),"w") as  read_meta_data_file:
+            json.dump( read_meta_data, read_meta_data_file)
+
+
 
     return output
 
