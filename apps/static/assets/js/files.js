@@ -782,6 +782,8 @@ function set_tool_panel(){
 }
 
 function run_tool(){
+
+  document.querySelector("#run_tool").disabled = true;
   //first update meta data
   new_meta_data = {};
   new_meta_data["entry_point"] = document.querySelector("#arg_entry_point").value;
@@ -823,6 +825,7 @@ function run_tool(){
           //alert("meta data updated");
           console.info(data);
           console.info("program running complete!")
+          document.querySelector("#run_tool").disabled = false;
 
   }});
 
