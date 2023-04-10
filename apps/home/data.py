@@ -1511,12 +1511,13 @@ def run_tool(entry_point,arg_values, arg_types,user):
 
     notifier.stop()
     notifier_thread.join()
+    '''
     written_files = list(handler.written_files)
     read_files = list(handler.accessed_files.difference(handler.written_files))
     created_files = list(handler.created_files)
 
     sorted_created_files = sorted(created_files, key=len)
-    '''
+    
     for created_file in sorted_created_files:
         if os.path.isfile(created_file):
             generate_meta_data_for_file(created_file)
