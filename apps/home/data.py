@@ -864,7 +864,7 @@ def generate_meta_data_for_file(file_path):
     meta_data["name"] = file_path.split("/")[-1]
     meta_data["realtime"] = "Non-Realtime"
 
-    suffix = file_path.split("/")[-1].split(".")[1]
+    suffix = file_path.split("/")[-1].split(".")[-1]
 
     if suffix == "py":
         meta_data["format"]=["Python"]
