@@ -797,7 +797,7 @@ function run_tool(){
         }),
         contentType: "application/json",
         success: function(data, status){
-          console.info(data);
+          //console.info(data);
           console.info("meta data updated");
           //alert("meta data updated");
 
@@ -821,6 +821,7 @@ function run_tool(){
         contentType: "application/json",
         success: function(data, status){
           //alert("meta data updated");
+          console.info(data);
           console.info("program running complete!")
 
   }});
