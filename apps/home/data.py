@@ -1487,7 +1487,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
     # Run the notifier in a separate thread
     import threading
     import time
-    notifier_thread = threading.Thread(target=notifier.loop)
+    notifier_thread = threading.Thread(target=notifier.loop,daemon=True)
     notifier_thread.start()
 
     output = client.containers.run(
@@ -1503,8 +1503,8 @@ def run_tool(entry_point,arg_values, arg_types,user):
 
 
     notifier.stop()
-    time.sleep(3)
-    notifier_thread.join()
+    #time.sleep(3)
+    #notifier_thread.join()
 
     written_files = list(handler.written_files)
     read_files = list(handler.accessed_files.difference(handler.written_files))
