@@ -797,6 +797,7 @@ function run_tool(){
         }),
         contentType: "application/json",
         success: function(data, status){
+          console.info(data);
           console.info("meta data updated");
           //alert("meta data updated");
 

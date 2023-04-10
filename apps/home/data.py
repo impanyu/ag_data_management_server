@@ -1436,7 +1436,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
     #mount_dirs_on_host = ["/".join(script_path.split("/")[:-1])]
 
     if "py" in entry_point:
-        image_name = "python-test"
+        image_name = "python_test"
         main_cmd = "python"
 
 
