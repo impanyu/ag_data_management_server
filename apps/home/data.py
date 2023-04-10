@@ -1442,8 +1442,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
 
 
     else:
-        image_name = "python-test"
-        main_cmd = "python"
+        return
 
 
     output = client.containers.run(
