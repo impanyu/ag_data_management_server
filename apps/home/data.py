@@ -1483,13 +1483,16 @@ def run_tool(entry_point,arg_values, arg_types,user):
 
     # Associate the event handler with the WatchManager
     handler = EventHandler(pid)
-    notifier = pyinotify.Notifier(wm, handler)
 
     # Add a watch for the path with the specified mask
-    wm.add_watch(root_dir, mask,rec=True,auto_add=True)
+    wm.add_watch(root_dir, mask, rec=True, auto_add=True)
+
+    notifier = pyinotify.Notifier(wm, handler)
+
+
 
     # Start the notifier
-    #notifier.loop()
+    notifier.loop()
 
     output = client.containers.run(
         image_name,
@@ -1502,7 +1505,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
         auto_remove=True
     )
 
-    #notifier.stop()
+    notifier.stop()
     written_files = list(handler.written_files)
     read_files = list(handler.accessed_files.difference(handler.written_files))
     created_files = list(handler.created_files)
