@@ -825,7 +825,7 @@ def data(request):
 
             output = run_tool(entry_point,arg_values, arg_types,request.user.get_username())
 
-            response = output
+            response = "success"
             return HttpResponse(response)
 
         elif load_template == 'update_meta':
