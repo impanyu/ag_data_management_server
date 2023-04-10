@@ -1544,8 +1544,10 @@ def run_tool(entry_point,arg_values, arg_types,user):
             written_meta_data["upstream"] = {}
 
         for read_file in read_files:
-            if entry_point not in written_meta_data["upstream"]:
-                written_meta_data["upstream"][entry_point] = []
+            if read_file == entry_point:
+                continue
+
+            written_meta_data["upstream"][entry_point] = []
             written_meta_data["upstream"][entry_point].append(read_file)
 
         with open(os.path.join(settings.CORE_DIR, 'data', written_meta_data_file_name),"w") as written_meta_data_file:
@@ -1560,8 +1562,8 @@ def run_tool(entry_point,arg_values, arg_types,user):
             read_meta_data["downstream"] = {}
 
         for written_file in written_files:
-            if entry_point not in read_meta_data["downstream"]:
-                read_meta_data["downstream"][entry_point] = []
+
+            read_meta_data["downstream"][entry_point] = []
             read_meta_data["downstream"][entry_point].append(written_file)
 
         with open(os.path.join(settings.CORE_DIR, 'data',  read_meta_data_file_name),"w") as  read_meta_data_file:
