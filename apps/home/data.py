@@ -1568,5 +1568,5 @@ def run_tool(entry_point,arg_values, arg_types,user):
     '''
 
 
-    return output
+    return
 

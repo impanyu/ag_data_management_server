@@ -823,7 +823,7 @@ def data(request):
             print(request.user.get_username())
 
 
-            output = run_tool(entry_point,arg_values, arg_types,request.user.get_username())
+            run_tool(entry_point,arg_values, arg_types,request.user.get_username())
 
             response = "success"
             return HttpResponse(response)
