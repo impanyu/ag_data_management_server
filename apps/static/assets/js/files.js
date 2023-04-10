@@ -1008,7 +1008,7 @@ async function get_meta_and_content(){
       document.querySelector("#upload_folder_button").style.display="none";
       document.querySelector("#create").style.display="none";
       document.querySelector("#file_content").style.display="none";
-      //await get_meta_data();
+      await get_meta_data();
       if(suffix == "shp"){
         current_col =  meta_data["native"]["columns"][0];
      }
