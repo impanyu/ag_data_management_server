@@ -1451,7 +1451,7 @@ def update_parent_meta(abs_path):
 def run_tool(entry_point,arg_values, arg_types,user):
 
 
-    root_dir = f"/{user}/ag_data"
+    root_dir = f"/data/{user}/ag_data"
 
 
     client = docker.from_env()
@@ -1492,7 +1492,10 @@ def run_tool(entry_point,arg_values, arg_types,user):
 
 
     # Start the notifier
-    notifier.loop()
+    # Run the notifier in a separate thread
+    import threading
+    notifier_thread = threading.Thread(target=notifier.loop)
+    notifier_thread.start()
 
     output = client.containers.run(
         image_name,
@@ -1506,6 +1509,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
     )
 
     notifier.stop()
+    notifier_thread.join()
     written_files = list(handler.written_files)
     read_files = list(handler.accessed_files.difference(handler.written_files))
     created_files = list(handler.created_files)
