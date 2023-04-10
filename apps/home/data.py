@@ -1200,35 +1200,23 @@ def get_meta_data(path):
     meta_data_file_path = os.path.join(settings.CORE_DIR, 'data', meta_data_file_name)
 
     if not os.path.exists(meta_data_file_path):
-        meta_data = {}
-        meta_data["mode"] = ["Data"]
-        meta_data["category"] = []
-        meta_data["label"] = []
-        meta_data["time_range"] = {"start": "01/01/2030 00:00:00", "end": "01/01/2030 00:00:00"}
-        meta_data["spatial_range"] = {"northeast": {"lat": 0, "lng": -180}, "southwest": {"lat": 0, "lng": -180}}
-        meta_data["subdirs"] = []
-        meta_data["abs_path"] = path
-        meta_data["public"] = "False"
-        meta_data["name"] = os.path.basename(path)
-        meta_data["realtime"] = "Non-Realtime"
 
         if("." in os.path.basename(path)):
-            meta_data["format"] = ["File"]
+            generate_meta_data_for_file(path)
         else:
-            meta_data["format"] = ["Folder"]
+            generate_meta_data_for_dir(path)
 
         parent_path = "/".join(path.split("/")[:-1])
         parent_meta_data_file_name = "_".join(parent_path.split("/")[1:]) + ".json"
 
-        with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "w") as meta_data_file:
-            json.dump(meta_data,meta_data_file)
 
         print(parent_meta_data_file_name)
 
 
         with open(os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name), "r") as parent_meta_data_file:
             parent_meta_data = json.load(parent_meta_data_file)
-            parent_meta_data["subdirs"].append(path)
+            if path not in parent_meta_data["subdirs"]:
+                parent_meta_data["subdirs"].append(path)
 
         with open(os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name), "w") as parent_meta_data_file:
             json.dump(parent_meta_data,parent_meta_data_file)
@@ -1342,7 +1330,8 @@ def shp_to_image(shp_path,col): # plot a column of shape file as png image
     with open(os.path.join(settings.CORE_DIR, 'data', img_parent_meta_data_file_name), "r") as img_parent_meta_data_file:
         img_parent_meta_data = json.load(img_parent_meta_data_file)
 
-    img_parent_meta_data["subdirs"].append(img_path)
+    if img_path not in img_parent_meta_data["subdirs"]:
+        img_parent_meta_data["subdirs"].append(img_path)
     with open(os.path.join(settings.CORE_DIR, 'data', img_parent_meta_data_file_name), "w") as img_parent_meta_data_file:
         json.dump(img_parent_meta_data,img_parent_meta_data_file)
 
@@ -1417,7 +1406,8 @@ def tif_to_image(tif_path,band):
     with open(os.path.join(settings.CORE_DIR, 'data', img_parent_meta_data_file_name), "r") as img_parent_meta_data_file:
         img_parent_meta_data = json.load(img_parent_meta_data_file)
 
-    img_parent_meta_data["subdirs"].append(img_path)
+    if img_path not in img_parent_meta_data["subdirs"]:
+        img_parent_meta_data["subdirs"].append(img_path)
     with open(os.path.join(settings.CORE_DIR, 'data', img_parent_meta_data_file_name), "w") as img_parent_meta_data_file:
         json.dump(img_parent_meta_data,img_parent_meta_data_file)
 
@@ -1432,7 +1422,8 @@ def update_parent_meta(abs_path):
 
     if not os.path.exists(parent_meta_data_file_path):
         parent_meta_data = {"subdirs": []}
-        parent_meta_data["subdirs"].append(abs_path)
+        if abs_path not in parent_meta_data["subdirs"]:
+            parent_meta_data["subdirs"].append(abs_path)
 
         # with open(parent_meta_data_file_path, "w") as parent_meta_data_file:
         #    json.dump({"subdirs":[]}, parent_meta_data_file)
@@ -1442,7 +1433,8 @@ def update_parent_meta(abs_path):
             parent_meta_data = json.load(parent_meta_data_file)
             if "subdirs" not in parent_meta_data:
                 parent_meta_data["subdirs"] = []
-            parent_meta_data["subdirs"].append(abs_path)
+            if abs_path not in parent_meta_data["subdirs"]:
+                parent_meta_data["subdirs"].append(abs_path)
 
     with open(parent_meta_data_file_path, "w") as parent_meta_data_file:
         json.dump(parent_meta_data, parent_meta_data_file)
@@ -1529,7 +1521,8 @@ def run_tool(entry_point,arg_values, arg_types,user):
 
         with open(os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name),"r") as parent_meta_data_file:
             parent_meta_data = json.load(parent_meta_data_file)
-            parent_meta_data["subdirs"].append(created_file)
+            if created_file not in parent_meta_data["subdirs"]:
+                parent_meta_data["subdirs"].append(created_file)
 
         with open(os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name), "w") as parent_meta_data_file:
             json.dump(parent_meta_data, parent_meta_data_file)
@@ -1544,8 +1537,8 @@ def run_tool(entry_point,arg_values, arg_types,user):
             written_meta_data["upstream"] = {}
 
         for read_file in read_files:
-            #if read_file == entry_point:
-            #    continue
+            if read_file == entry_point:
+                continue
 
             written_meta_data["upstream"][entry_point] = []
             written_meta_data["upstream"][entry_point].append(read_file)
