@@ -1508,7 +1508,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
     created_files = list(handler.created_files)
 
     sorted_created_files = sorted(created_files, key=len)
-
+    '''
     for created_file in sorted_created_files:
         if os.path.isfile(created_file):
             generate_meta_data_for_file(created_file)
@@ -1557,7 +1557,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
 
         with open(os.path.join(settings.CORE_DIR, 'data',  read_meta_data_file_name),"w") as  read_meta_data_file:
             json.dump( read_meta_data, read_meta_data_file)
-
+    '''
 
 
     return output
