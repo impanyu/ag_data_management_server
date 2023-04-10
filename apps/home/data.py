@@ -1489,7 +1489,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
     wm.add_watch(root_dir, mask,rec=True,auto_add=True)
 
     # Start the notifier
-    #notifier.loop()
+    notifier.loop()
 
     output = client.containers.run(
         image_name,
@@ -1501,7 +1501,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
         detach=False,
         auto_remove=True
     )
-    '''
+
     notifier.stop()
     written_files = list(handler.written_files)
     read_files = list(handler.accessed_files.difference(handler.written_files))
@@ -1559,6 +1559,6 @@ def run_tool(entry_point,arg_values, arg_types,user):
             json.dump( read_meta_data, read_meta_data_file)
 
 
-    '''
+
     return output
 
