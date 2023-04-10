@@ -1494,8 +1494,8 @@ def run_tool(entry_point,arg_values, arg_types,user):
     # Start the notifier
     # Run the notifier in a separate thread
     import threading
-    notifier_thread = threading.Thread(target=notifier.loop)
-    notifier_thread.start()
+    #notifier_thread = threading.Thread(target=notifier.loop)
+    #notifier_thread.start()
 
     output = client.containers.run(
         image_name,
@@ -1508,8 +1508,8 @@ def run_tool(entry_point,arg_values, arg_types,user):
         auto_remove=True
     )
 
-    notifier.stop()
-    notifier_thread.join()
+    #notifier.stop()
+    #notifier_thread.join()
     written_files = list(handler.written_files)
     read_files = list(handler.accessed_files.difference(handler.written_files))
     created_files = list(handler.created_files)
