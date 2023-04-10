@@ -1441,7 +1441,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
 
 
     else:
-        image_name = "python_test"
+        image_name = "python-test"
         main_cmd = "python"
 
 
