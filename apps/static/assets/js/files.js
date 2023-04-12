@@ -2037,7 +2037,17 @@ function update_meta(){
 
     meta_data["time_range"] = {"start":document.querySelector("#start_date").value, "end":document.querySelector("#end_date").value};
     meta_data["spatial_range"] = {"southwest":document.querySelector("#southwest").value, "northeast":document.querySelector("#northeast").value};
-    meta_data["other_meta"] = document.querySelector("#other_meta").value;
+    other_meta = document.querySelector("#other_meta").value;
+
+    for(k_v_pair in other_meta.split("\n") ){
+        if (k_v_pair.indexOf(":")==-1)
+         continue;
+        first_split_index = k_v_pair.indexOf(":");
+        k = k_v_pair.substring(0,first_split_index);
+        v = k_v_pair.substring(first_split_index);
+
+        meta_data[k] = JSON.parse(v);
+    }
 
     $.ajax({
          type: "POST",
