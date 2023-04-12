@@ -1159,6 +1159,8 @@ function draw_pipeline(graph){
         .selectAll(".node-label")
         .data(nodes)
         .enter()
+          .append("a") // Add an <a> element to wrap the node labels
+        .attr("xlink:href", (d) => { if (d.label.indexOf("/")!=-1 || d.label == "/"+user) return "/files.html?current_path="+d.label.substr(1); else return "#"}) // Set the link URL based on the node data}
         .append("text")
         .attr("class", "node-label")
         .attr("text-anchor", "middle")
