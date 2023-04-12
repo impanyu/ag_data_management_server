@@ -749,7 +749,7 @@ def data(request):
             domains = []
 
             for domain_path in meta_data["subdirs"]:
-                domain_meta_data = get_domain_meta(domain_path)
+                domain_meta_data = get_meta_data(domain_path)
                 domains.append(domain_meta_data)
 
             response = json.dumps(domains)
