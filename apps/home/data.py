@@ -1596,35 +1596,39 @@ def get_pipeline(path):
         for upstream_tool in meta_data["upstream"]:
             for upstream_path in meta_data["upstream"][upstream_tool]:
                 graph["links"].append({"source":upstream_path,"target":path,"label":upstream_tool})
-                if os.path.exists(upstream_path):
-                    get_upstream(upstream_path,graph)
+
+                get_upstream(upstream_path,graph)
 
     if "downstream" in meta_data:
         for downstream_tool in meta_data["downstream"]:
             for downstream_path in meta_data["downstream"][downstream_tool]:
                 graph["links"].append({"source":path,"target":downstream_path,"label":downstream_tool})
-                if os.path.exists(downstream_path):
-                    get_downstream(downstream_path,graph)
+
+                get_downstream(downstream_path,graph)
     return graph
 
 def get_upstream(path,graph):
     graph["nodes"].append({"id": path, "label": path})
+    if not os.path.exists(path):
+        return
     meta_data = get_meta_data(path)
     if "upstream" in meta_data:
         for upstream_tool in meta_data["upstream"]:
             for upstream_path in meta_data["upstream"][upstream_tool]:
                 graph["links"].append({"source":upstream_path,"target":path,"label":upstream_tool})
-                if os.path.exists(upstream_path):
-                    get_upstream(upstream_path, graph)
+
+                get_upstream(upstream_path, graph)
 
 
 def get_downstream(path,graph):
     graph["nodes"].append({"id": path, "label": path})
+    if not os.path.exists(path):
+        return
     meta_data = get_meta_data(path)
     if "downstream" in meta_data:
         for downstream_tool in meta_data["downstream"]:
             for downstream_path in meta_data["downstream"][downstream_tool]:
                 graph["links"].append({"source":path,"target":downstream_path,"label":downstream_tool})
-                if os.path.exists(downstream_path):
-                    get_downstream(downstream_path, graph)
+
+                get_downstream(downstream_path, graph)
 
