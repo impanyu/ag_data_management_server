@@ -1157,7 +1157,10 @@ function draw_pipeline(graph){
         .attr("class", "node-label")
         .attr("text-anchor", "middle")
         .attr("dy", 0)
-        .text((d) => d.label);
+        .text((d) => d.label)
+        .attr("dominant-baseline", "central")
+        .attr("font-size","15px")
+        .attr("font-weight","bold");
 
          // Add link labels
       const linkLabels = svg
@@ -1167,6 +1170,9 @@ function draw_pipeline(graph){
         .append("text")
         .attr("class", "link-label")
         .attr("text-anchor", "middle")
+      .attr("dominant-baseline", "central")
+      .attr("font-size", "12px") // Set the font size here
+      .attr("font-weight", "bold") // Set the font weight to bold here
         .attr("dy", -10)
         .text((d) => d.label);
 
