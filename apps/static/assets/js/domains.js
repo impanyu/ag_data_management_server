@@ -1,4 +1,4 @@
-function create_domain(){
+function create_domain(new_domain_name){
 
 
 
