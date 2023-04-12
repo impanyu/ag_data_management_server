@@ -1049,7 +1049,7 @@ function set_pipeline_panel(){
         .append("marker")
         .attr("id", String)
         .attr("viewBox", "0 -5 10 10")
-        .attr("refX", 15)
+        .attr("refX", 30)
         .attr("refY", -1.5)
         .attr("markerWidth", 6)
         .attr("markerHeight", 6)
@@ -1098,7 +1098,7 @@ function set_pipeline_panel(){
         .enter()
         .append("circle")
         .attr("class", "node")
-        .attr("r", 50)
+        .attr("r", 30)
         .attr("fill", "#69b3a2");
 
       // Add node labels
