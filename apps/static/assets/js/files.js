@@ -1063,8 +1063,8 @@ function set_pipeline_panel(){
           //console.info("meta data updated");
           //alert("meta data updated");
           graph = JSON.parse(data);
-          nodes = data["nodes"];
-          links = data["links"];
+          nodes = graph["nodes"];
+          links = graph["links"];
 
   }});
 
