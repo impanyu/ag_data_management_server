@@ -1076,7 +1076,7 @@ function set_pipeline_panel(){
         .forceSimulation(nodes)
         .force(
           "link",
-          d3.forceLink(links).id((d) => d.id).distance(200)
+          d3.forceLink(links).id((d) => d.id).distance(300)
         )
         .force("charge", d3.forceManyBody().strength(-300))
         .force("center", d3.forceCenter(svg_width / 2, svg_height / 2));
@@ -1120,7 +1120,7 @@ function set_pipeline_panel(){
         .append("text")
         .attr("class", "link-label")
         .attr("text-anchor", "middle")
-        .attr("dy", -5)
+        .attr("dy", -10)
         .text((d) => d.label);
 
       // Update the position of the nodes, links, and labels on each tick of the simulation
