@@ -1163,7 +1163,7 @@ function draw_pipeline(graph){
         .attr("class", "node-label")
         .attr("text-anchor", "middle")
         .attr("dy", 0)
-        .text((d) => d.label)
+        .text((d) => d.label.split("/")[d.label.split("/").length-1])
         .attr("dominant-baseline", "central")
         .attr("font-size","14px")
         .attr("font-weight","bold");
@@ -1181,7 +1181,7 @@ function draw_pipeline(graph){
       .attr("font-weight", "bold") // Set the font weight to bold here
         .attr("dy", -10)
         .attr("fill","blue")
-        .text((d) => d.label);
+        .text((d) => d.label.split("/")[d.label.split("/").length-1]);
 
       // Update the position of the nodes, links, and labels on each tick of the simulation
       simulation.on("tick", () => {
