@@ -1133,9 +1133,13 @@ function draw_pipeline(graph){
         .attr("r", 30)
         .attr("fill", "#69b3a2")
          .attr("fill", (d) => {
-                if (d.current_node == "true") {
+                if (d.node_status == "current") {
                     return "red"; // Assign a specific color, e.g., red, to the special node
-                } else {
+                }
+                else if (d.node_status == "dead"){
+                   return "#999";
+                }
+                else {
                     return "steelblue"; // Assign the default color to all other nodes
                 }
       });
