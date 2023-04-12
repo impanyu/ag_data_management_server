@@ -1109,7 +1109,7 @@ function set_pipeline_panel(){
         .append("text")
         .attr("class", "node-label")
         .attr("text-anchor", "middle")
-        .attr("dy", -15)
+        .attr("dy", 0)
         .text((d) => d.label);
 
          // Add link labels
