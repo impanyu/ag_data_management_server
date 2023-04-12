@@ -1076,7 +1076,7 @@ function set_pipeline_panel(){
           "link",
           d3.forceLink(links).id((d) => d.id).distance(100)
         )
-        .force("charge", d3.forceManyBody().strength(-200))
+        .force("charge", d3.forceManyBody().strength(-300))
         .force("center", d3.forceCenter(400, 200));
 
       // Draw links
