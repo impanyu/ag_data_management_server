@@ -2042,6 +2042,7 @@ function update_meta(){
     for(k_v_pair in other_meta.split("\n") ){
         if (k_v_pair.indexOf(":")==-1)
          continue;
+        console.info(k_v_pair);
         first_split_index = k_v_pair.indexOf(":");
         k = k_v_pair.substring(0,first_split_index);
         v = k_v_pair.substring(first_split_index);

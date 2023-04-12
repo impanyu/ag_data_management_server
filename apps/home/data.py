@@ -1002,6 +1002,26 @@ def update_meta(file_path,new_meta_data):
 
         elif key == "args":
             meta_data["args"] = new_meta_data["args"]
+        else:
+            meta_data[key] = meta_data[key]
+        '''
+          elif key == "other_meta":
+              #other_meta = new_meta_data[key].replace("\n",",")
+              #other_meta = json.loads("{" + other_meta + "}")
+              #meta_data.update(other_meta)
+
+
+              for p in new_meta_data[key].split("\n"):
+                  if ":" not in p:
+                      continue
+                  k = p.split(":")[0].strip()
+                  v = p.split(":")[1].strip()
+
+
+                  v = json.loads(v)
+
+                  meta_data[k] = v
+          '''
 
 
 
