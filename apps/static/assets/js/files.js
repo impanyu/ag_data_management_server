@@ -1036,57 +1036,107 @@ async function get_meta_and_content(){
 
 function set_pipeline_panel(){
 
-  var cy = cytoscape({
-    container: document.getElementById('cy'),
+   const svg = d3.select("svg");
 
-    elements: [
-      // nodes
-      { data: { id: 'a', label: 'Node A' } },
-      { data: { id: 'b', label: 'Node B' } },
-      { data: { id: 'c', label: 'Node C' } },
+      // Define arrow markers
+      svg
+        .append("defs")
+        .selectAll("marker")
+        .data(["end-arrow"])
+        .enter()
+        .append("marker")
+        .attr("id", String)
+        .attr("viewBox", "0 -5 10 10")
+        .attr("refX", 15)
+        .attr("refY", -1.5)
+        .attr("markerWidth", 6)
+        .attr("markerHeight", 6)
+        .attr("orient", "auto")
+        .append("path")
+        .attr("d", "M0,-5L10,0L0,5")
+        .attr("fill", "#000");
 
-      // edges
-      { data: { id: 'ab', source: 'a', target: 'b', label: 'Edge A to B' } },
-      { data: { id: 'bc', source: 'b', target: 'c', label: 'Edge B to C' } },
-    ],
+      // Data for nodes and links
+      const nodes = [
+        { id: 1, label: "A" },
+        { id: 2, label: "B" },
+        { id: 3, label: "C" },
+      ];
 
-    style: [
-      {
-        selector: 'node',
-        style: {
-          'background-color': '#666',
-          'label': 'data(label)',
-          'text-valign': 'bottom',
-          'text-halign': 'center',
-          'text-outline-color': '#666',
-          'text-outline-width': '2px',
-          'color': '#fff'
-        }
-      },
+      const links = [
+        { source: 1, target: 2, label: "a" },
+        { source: 2, target: 3, label: "b" },
+        { source: 3, target: 1, label: "c" },
+      ];
 
-      {
-        selector: 'edge',
-        style: {
-          'width': 3,
-          'line-color': '#ccc',
-          'target-arrow-color': '#ccc',
-          'target-arrow-shape': 'triangle',
-          'curve-style': 'bezier',
-          'label': 'data(label)',
-          'text-valign': 'center',
-          'text-halign': 'center',
-          'text-outline-color': '#ccc',
-          'text-outline-width': '1px',
-          'color': '#666'
-        }
-      }
-    ],
+      // Create a simulation with nodes and links
+      const simulation = d3
+        .forceSimulation(nodes)
+        .force(
+          "link",
+          d3.forceLink(links).id((d) => d.id).distance(100)
+        )
+        .force("charge", d3.forceManyBody().strength(-200))
+        .force("center", d3.forceCenter(400, 200));
 
-    layout: {
-      name: 'grid',
-      rows: 1
-    }
-  });
+      // Draw links
+      const link = svg
+        .selectAll(".link")
+        .data(links)
+        .enter()
+        .append("line")
+        .attr("class", "link");
+
+      // Draw nodes
+      const node = svg
+        .selectAll(".node")
+        .data(nodes)
+        .enter()
+        .append("circle")
+        .attr("class", "node")
+        .attr("r", 10)
+        .attr("fill", "#69b3a2");
+
+      // Add node labels
+      const nodeLabels = svg
+        .selectAll(".node-label")
+        .data(nodes)
+        .enter()
+        .append("text")
+        .attr("class", "node-label")
+        .attr("text-anchor", "middle")
+        .attr("dy", -15)
+        .text((d) => d.label);
+
+         // Add link labels
+      const linkLabels = svg
+        .selectAll(".link-label")
+        .data(links)
+        .enter()
+        .append("text")
+        .attr("class", "link-label")
+        .attr("text-anchor", "middle")
+        .attr("dy", -5)
+        .text((d) => d.label);
+
+      // Update the position of the nodes, links, and labels on each tick of the simulation
+      simulation.on("tick", () => {
+        link
+          .attr("x1", (d) => d.source.x)
+          .attr("y1", (d) => d.source.y)
+          .attr("x2", (d) => d.target.x)
+          .attr("y2", (d) => d.target.y);
+
+        node.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
+
+        nodeLabels
+          .attr("x", (d) => d.x)
+          .attr("y", (d) => d.y);
+
+        linkLabels.attr("x", (d) => (d.source.x + d.target.x) / 2)
+          .attr("y", (d) => (d.source.y + d.target.y) / 2);
+      });
+
 
 
 }

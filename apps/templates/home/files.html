@@ -376,10 +376,7 @@
           </div>
             <div style="padding:10px; background:#ccc;" id="pipeline_panel_tab" onclick="toggle_pipeline_panel()"><h3 style="color:#666;margin-bottom:0px"><b>Pipeline Panel</b></h3></div>
            <div  class="card-header border-0" id = "pipeline_panel" style = "background:#ccc;height:0px;">
-               <div id="cy">
-
-
-               </div>
+                 <svg width="800" height="400"></svg>
 
 
            </div>
@@ -535,7 +532,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
 <script src="/static/assets/js/filter_condition_display.js"></script>
-<script src="https://unpkg.com/cytoscape@3.19.0/dist/cytoscape.min.js"></script>
+<script src="https://d3js.org/d3.v6.min.js"></script>
+
+<!--<script src="https://unpkg.com/cytoscape@3.19.0/dist/cytoscape.min.js"></script>-->
 <script>
 //original in files.html
 var form = $("#upload_form");
