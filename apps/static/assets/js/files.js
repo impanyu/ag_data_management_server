@@ -1080,6 +1080,7 @@ function set_pipeline_panel(){
         )
         .force("charge", d3.forceManyBody().strength(-300))
         .force("center", d3.forceCenter(svg_width / 2, svg_height / 2));
+        .on("tick", ticked);
 
       // Draw links
       const link = svg
@@ -1097,7 +1098,7 @@ function set_pipeline_panel(){
         .enter()
         .append("circle")
         .attr("class", "node")
-        .attr("r", 20)
+        .attr("r", 50)
         .attr("fill", "#69b3a2");
 
       // Add node labels
