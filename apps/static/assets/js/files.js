@@ -2045,7 +2045,7 @@ function update_meta(){
         console.info(k_v_pair);
         first_split_index = k_v_pair.indexOf(":");
         k = k_v_pair.substring(0,first_split_index);
-        v = k_v_pair.substring(first_split_index);
+        v = k_v_pair.substring(first_split_index+1);
 
         meta_data[k] = JSON.parse(v);
     }
