@@ -17,7 +17,8 @@ class EventHandler(pyinotify.ProcessEvent):
         #print(f"File {event.pathname} was read by PID {event.pid}")
 
     def process_IN_CREATE(self, event):
-        self.created_files.add(event.pathname)
+        if not event.dir:
+            self.created_files.add(event.pathname)
         #print(f"File {event.pathname} was created by PID {event.pid}")
 
     def process_IN_DELETE(self, event):

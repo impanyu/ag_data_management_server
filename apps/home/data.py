@@ -761,11 +761,11 @@ def register_file_meta(file_path, data_points):
         data_points[file_path]["format"].append("Other")
 
 
-def aggregate_meta_data(dir_path):
+def aggregate_meta_data(dir_path,upstream):
     meta_data = {}
     # if this is a file
     if not os.path.isdir(dir_path):
-        return generate_meta_data_for_file(dir_path)
+        return generate_meta_data_for_file(dir_path,upstream)
     meta_data["mode"] = ["Data"]
     meta_data["category"] = []
     meta_data["format"] = ["Folder"]
@@ -777,11 +777,12 @@ def aggregate_meta_data(dir_path):
     meta_data["public"] = "False"
     meta_data["name"] = dir_path.split("/")[-1]
     meta_data["realtime"] = "Non-Realtime"
+    meta_data["upstream"] = upstream
 
     # iterate through each sub path
     for p in os.listdir(dir_path):
         sub_path = os.path.join(dir_path, p)
-        sub_meta_data = aggregate_meta_data(sub_path)
+        sub_meta_data = aggregate_meta_data(sub_path,upstream)
         meta_data["subdirs"].append(sub_path)
         '''
         for c in sub_meta_data["category"]:
@@ -826,7 +827,7 @@ def aggregate_meta_data(dir_path):
     return meta_data
 
 
-def generate_meta_data_for_dir(dir_path):
+def generate_meta_data_for_dir(dir_path,upstream):
     meta_data = {}
     meta_data["mode"] = ["Data"]
     meta_data["category"] = []
@@ -839,6 +840,7 @@ def generate_meta_data_for_dir(dir_path):
     meta_data["public"] = "False"
     meta_data["name"] = dir_path.split("/")[-1]
     meta_data["realtime"] = "Non-Realtime"
+    meta_data["upstream"] = upstream
 
 
     meta_data_dir_name = "_".join(dir_path.split("/")[1:]) + ".json"
@@ -854,7 +856,7 @@ def generate_meta_data_for_dir(dir_path):
 
 
 
-def generate_meta_data_for_file(file_path):
+def generate_meta_data_for_file(file_path, upstream):
     meta_data = {}
     meta_data["mode"] = ["Data"]
     meta_data["category"] = []
@@ -867,6 +869,7 @@ def generate_meta_data_for_file(file_path):
     meta_data["public"] = "False"
     meta_data["name"] = file_path.split("/")[-1]
     meta_data["realtime"] = "Non-Realtime"
+    meta_data["upstream"] = upstream
 
     suffix = file_path.split("/")[-1].split(".")[-1]
 
@@ -1210,9 +1213,9 @@ def get_meta_data(path):
     if not os.path.exists(meta_data_file_path):
 
         if("." in os.path.basename(path)):
-            generate_meta_data_for_file(path)
+            generate_meta_data_for_file(path,{"create":["null"]})
         else:
-            generate_meta_data_for_dir(path)
+            generate_meta_data_for_dir(path,{"create":["null"]})
 
         parent_path = "/".join(path.split("/")[:-1])
         parent_meta_data_file_name = "_".join(parent_path.split("/")[1:]) + ".json"
@@ -1325,7 +1328,7 @@ def shp_to_image(shp_path,col): # plot a column of shape file as png image
     # Save figure to file
     plt.savefig(img_path, dpi=300, bbox_inches='tight')
 
-    img_meta_data = generate_meta_data_for_file(img_path)
+    img_meta_data = generate_meta_data_for_file(img_path,{"shp to image":[shp_path]})
     img_meta_data["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
 
     img_meta_data_file_name = "_".join(img_path.split("/")[1:]) + ".json"
@@ -1399,7 +1402,7 @@ def tif_to_image(tif_path,band):
 
 
 
-    img_meta_data = generate_meta_data_for_file(img_path)
+    img_meta_data = generate_meta_data_for_file(img_path,{"tif to image":tif_path})
     tif_meta = read_tif_meta(tif_path)
     if "spatial_range" in tif_meta:
         img_meta_data["spatial_range"] = tif_meta["spatial_range"]
@@ -1522,9 +1525,9 @@ def run_tool(entry_point,arg_values, arg_types,user):
     
     for created_file in sorted_created_files:
         if os.path.isfile(created_file):
-            generate_meta_data_for_file(created_file)
+            generate_meta_data_for_file(created_file,{})
         else:
-            generate_meta_data_for_dir(created_file)
+            generate_meta_data_for_dir(created_file,{})
 
         parent_path = "/".join(created_file.split("/")[:-1])
         parent_meta_data_file_name = "_".join(parent_path.split("/")[1:]) + ".json"

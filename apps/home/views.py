@@ -311,7 +311,7 @@ def data(request):
                 new_path = abs_path +"_"+str(i)
                 i = i+1
             os.makedirs(new_path)
-            aggregate_meta_data(new_path)
+            aggregate_meta_data(new_path,{"create":["null"]})
             update_parent_meta(new_path)
 
             return HttpResponse("folder creation complete!")
@@ -419,7 +419,7 @@ def data(request):
                 else:
                     root_abs_path = os.path.join("/data" ,current_path,upload_file_paths[0].split('/')[0])
 
-                aggregate_meta_data(root_abs_path)
+                aggregate_meta_data(root_abs_path,{"upload":"external resources"})
 
                 # adjust meta data of its parent dir
 
