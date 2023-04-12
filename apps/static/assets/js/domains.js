@@ -70,7 +70,7 @@ function get_domain_list(){
                 domains = JSON.parse(data);
                 for(domain of domains){
                     document.querySelector("#box_container").innerHTML += '<div class="col-lg-3 col-md-6">'+
-                      '<button type="button" class="btn-block" data-clipboard-text="active-40"  onclick="/domain.html?current_path='+user+'/ag_data/domain/'+domain["name"]+'">'+
+                      '<button type="button" class="btn-block" data-clipboard-text="active-40" onclick="window.open(\'/domain.html?current_path='+user+'/ag_data/domain/'+domain["name"]+'\',\'_self\').focus()">'+
                         '<div>'+
                           '<i class="ni ni-map-big "></i>'+
                           '<span>'+domain["name"]+'</span>'+
