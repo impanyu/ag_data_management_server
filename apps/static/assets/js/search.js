@@ -340,6 +340,8 @@ function htmlToElement(html) {
 
 //$("option").click(function(){this.selected=true});
 
+search_results_title = "Search Results:";
+
 function get_item_list(){
 
   $("#file_list")[0].innerHTML="";
@@ -420,7 +422,7 @@ function get_item_list(){
 
           color_scale_map = {"CSV/Spreadsheet":1, "Image":2, "Other":3}
           console.info(items);
-          document.querySelector("#result_number").innerHTML="<b>Search Results: "+items.length+"</b>";
+          document.querySelector("#result_number").innerHTML= "<b>"+search_results_title+" "+items.length+"</b>";
           for(i in items){
              items[i]["2d"] = points[i];
              if(items[i]["format"].length > 0)

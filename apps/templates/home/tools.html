@@ -221,9 +221,8 @@
 
 
 
-            <div style="padding:10px; background:white;display:none;"><span id = "result_number"><h3 style="color:#666;margin-bottom:0px"><b>Search Results</b></h3></span></div>
+            <div style="padding:10px; background:white;"><span id = "result_number"><h3 style="color:#666;margin-bottom:0px"><b>Tools</b></h3></span></div>
 
-        <div style="padding:10px; background:white;"><span id = "tool"><h3 style="color:#666;margin-bottom:0px"><b>Tools</b></h3></span></div>
 
           <!-- Light table -->
           <div class="table-responsive" style="background:white">
@@ -309,7 +308,7 @@ path ="";
 </script>
 <script src="/static/assets/js/search.js"></script>
 <script>
-
+ search_results_title = "Tools: ";
   mode_options = document.querySelector("#mode").options;
   for (var i =0; i<mode_options.length; i++){
      if(mode_options[i].value == "Tool")
