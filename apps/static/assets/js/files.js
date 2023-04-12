@@ -1168,11 +1168,19 @@ function draw_pipeline(graph){
         .attr("font-size","14px")
         .attr("font-weight","bold");
 
-         // Add link labels
+
+
+
+
+
+        if( d.indexOf("/") != -1){
+             // Add link labels
       const linkLabels = svg
         .selectAll(".link-label")
         .data(links)
         .enter()
+          .append("a") // Add an <a> element to wrap the node labels
+        .attr("xlink:href", (d) => "/files.html?current_path="+d.substr(1)); // Set the link URL based on the node data}
         .append("text")
         .attr("class", "link-label")
         .attr("text-anchor", "middle")
@@ -1182,6 +1190,30 @@ function draw_pipeline(graph){
         .attr("dy", -10)
         .attr("fill","blue")
         .text((d) => d.label.split("/")[d.label.split("/").length-1]);
+
+        }
+
+        else{
+               // Add link labels
+          const linkLabels = svg
+            .selectAll(".link-label")
+            .data(links)
+            .enter()
+            .append("text")
+            .attr("class", "link-label")
+            .attr("text-anchor", "middle")
+          .attr("dominant-baseline", "central")
+          .attr("font-size", "12px") // Set the font size here
+          .attr("font-weight", "bold") // Set the font weight to bold here
+            .attr("dy", -10)
+            .attr("fill","blue")
+            .text((d) => d.label.split("/")[d.label.split("/").length-1]);
+        }
+
+
+
+
+
 
       // Update the position of the nodes, links, and labels on each tick of the simulation
       simulation.on("tick", () => {
