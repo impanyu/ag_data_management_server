@@ -1036,7 +1036,7 @@ async function get_meta_and_content(){
 
 function set_pipeline_panel(){
 
-   const svg = d3.select("svg");
+   const svg = d3.select("#pipeline_svg");
 
       // Define arrow markers
       svg
