@@ -1192,6 +1192,25 @@ function draw_pipeline(graph){
 
 }
 
+
+function dragstarted(event, d) {
+  if (!event.active) simulation.alphaTarget(0.3).restart();
+  d.fx = d.x;
+  d.fy = d.y;
+}
+
+function dragged(event, d) {
+  d.fx = event.x;
+  d.fy = event.y;
+}
+
+function dragended(event, d) {
+  if (!event.active) simulation.alphaTarget(0);
+  d.fx = null;
+  d.fy = null;
+}
+
+
 function toggle_pipeline_panel(){
    if(document.querySelector("#pipeline_panel").style.height == "0px"){
      document.querySelector("#pipeline_panel").style.height = "500px";
