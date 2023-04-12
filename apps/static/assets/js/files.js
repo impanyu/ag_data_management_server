@@ -1085,7 +1085,8 @@ function set_pipeline_panel(){
         .data(links)
         .enter()
         .append("line")
-        .attr("class", "link");
+        .attr("class", "link")
+        .style("stroke-width", 3); // Increase the edge thickness
 
       // Draw nodes
       const node = svg
@@ -1094,7 +1095,7 @@ function set_pipeline_panel(){
         .enter()
         .append("circle")
         .attr("class", "node")
-        .attr("r", 10)
+        .attr("r", 20)
         .attr("fill", "#69b3a2");
 
       // Add node labels
