@@ -1053,11 +1053,10 @@ function set_pipeline_panel(){
         $.ajax({
          type: "POST",
          url:"/get_pipeline",
-         data:JSON.stringify({
+         data:{
           current_path: current_path
-
-        }),
-        contentType: "application/json",
+        },
+        //contentType: "application/json",
         success: function(data, status){
           //console.info(data);
           //console.info("meta data updated");
