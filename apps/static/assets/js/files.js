@@ -825,6 +825,7 @@ function run_tool(){
           //alert("meta data updated");
           console.info(data);
           console.info("program running complete!")
+          display_warning_overlay("Program execution complete!");
           document.querySelector("#run_tool").onclick = run_tool;
 
   }});
