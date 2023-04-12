@@ -1019,6 +1019,8 @@ def update_meta(file_path,new_meta_data):
 
         elif key == "args":
             meta_data["args"] = new_meta_data["args"]
+        else:
+            meta_data[key] = new_meta_data[key]
 
 
     print("meta_data")
