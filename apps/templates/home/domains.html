@@ -127,7 +127,11 @@
                         </ul>
 
                        </div>
-                      <!--<a class="btn btn-lg btn-danger" onclick="delete_file_or_folder()" style="color:white">Delete</a>-->
+
+                      <a class="btn btn-lg btn-light" onclick="change_view()" style="color:white">Change View</a>
+                      <!--<a  class="btn btn-lg btn-primary" onclick="move_file_or_folder()" style="color:white">Move</a>
+                      <a  class="btn btn-lg btn-warning" onclick="copy_file_or_folder()" style="color:white">Copy</a>
+                      <a class="btn btn-lg btn-info" onclick="download_file_or_folder()" style="color:white">Download</a>-->
 
                   </div>
              </div>
@@ -208,7 +212,7 @@
 
 <!-- Specific JS goes HERE --> 
 {% block javascripts %}
-
+<script src="/static/assets/js/change_view.js"></script>
 <script src="/static/assets/vendor/clipboard/dist/clipboard.min.js"></script>
 <script src="/static/assets/vendor/moment/min/moment-with-locales.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
