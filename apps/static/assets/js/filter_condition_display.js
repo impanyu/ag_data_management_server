@@ -7,7 +7,7 @@ function toggle_filter_condition(){
 
 function toggle_filter_condition_2(){
    if(document.querySelector("#filter-condition").style.height == "0px"){
-     document.querySelector("#filter-condition").style.height = "1980px";
+     document.querySelector("#filter-condition").style.height = "1740px";
      document.querySelector("#filter-condition").style.paddingTop = "1.25rem";
      document.querySelector("#filter-condition").style.paddingBottom = "1.25rem";
 
