@@ -1130,9 +1130,12 @@ function draw_pipeline(graph){
         .selectAll(".node")
         .data(nodes)
         .enter()
-        .append("circle")
+        .append("rect")
         .attr("class", "node")
-        .attr("r", 30)
+        .attr("width", (d)=> len(d.label)*10)
+        .attr("height", 20)
+        .attr("x",0)
+        .attr("y",0)
         .attr("fill", "#69b3a2")
          .attr("fill", (d) => {
                 if (d.node_status == "current") {
