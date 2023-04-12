@@ -1486,6 +1486,14 @@ def run_tool(entry_point,arg_values, arg_types,user):
     # assuming that the uploaded script is saved to a file on disk
     script_path = f"{entry_point}"
 
+
+    entry_point_path = f"/data{entry_point}"
+    entry_point_meta_data = get_meta_data(entry_point_path)
+    tool = entry_point_path
+
+    if "main_tool" in entry_point_meta_data:
+        tool = entry_point_meta_data["main_tool"]
+
     # assuming that the script takes command-line arguments
 
     #mount_dirs_on_host = ["/".join(script_path.split("/")[:-1])]
@@ -1574,21 +1582,21 @@ def run_tool(entry_point,arg_values, arg_types,user):
             written_meta_data = json.load(written_meta_data_file)
         if "upstream" not in written_meta_data:
             written_meta_data["upstream"] = {}
-        written_meta_data["upstream"][entry_point] = []
+        written_meta_data["upstream"][tool] = []
 
         for read_file in read_files:
             if os.path.isdir(read_file):
                 continue
-            if read_file == f"/data{entry_point}":
+            if tool in read_file:
                 continue
 
-            written_meta_data["upstream"][entry_point].append(read_file)
+            written_meta_data["upstream"][tool].append(read_file)
 
         with open(os.path.join(settings.CORE_DIR, 'data', written_meta_data_file_name),"w") as written_meta_data_file:
             json.dump(written_meta_data,written_meta_data_file)
 
     for read_file in read_files:
-        if os.path.isdir(read_file) or read_file == f"/data{entry_point}":
+        if os.path.isdir(read_file) or tool in read_file:
             continue
 
         read_meta_data_file_name = "_".join(read_file.split("/")[1:]) + ".json"
@@ -1596,13 +1604,13 @@ def run_tool(entry_point,arg_values, arg_types,user):
             read_meta_data = json.load(read_meta_data_file)
         if "downstream" not in read_meta_data:
             read_meta_data["downstream"] = {}
-        read_meta_data["downstream"][entry_point] = []
+        read_meta_data["downstream"][tool] = []
 
         for written_file in written_files:
             if os.path.isdir(written_file):
                 continue
 
-            read_meta_data["downstream"][entry_point].append(written_file)
+            read_meta_data["downstream"][tool].append(written_file)
 
         with open(os.path.join(settings.CORE_DIR, 'data',  read_meta_data_file_name),"w") as  read_meta_data_file:
             json.dump( read_meta_data, read_meta_data_file)
