@@ -1180,7 +1180,7 @@ function draw_pipeline(graph){
         .data(links)
         .enter()
           .append("a") // Add an <a> element to wrap the node labels
-        .attr("xlink:href", (d) => "/files.html?current_path="+d.substr(1)); // Set the link URL based on the node data}
+        .attr("xlink:href", (d) => "/files.html?current_path="+d.substr(1)) // Set the link URL based on the node data}
         .append("text")
         .attr("class", "link-label")
         .attr("text-anchor", "middle")
