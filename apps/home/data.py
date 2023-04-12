@@ -1609,8 +1609,8 @@ def run_tool(entry_point,arg_values, arg_types,user):
 
 
 def trim_path_header(path):
-    if path[:6] == "/data/":
-        return path[6:]
+    if path[:5] == "/data":
+        return path[5:]
     else:
         return path
 
