@@ -10,6 +10,19 @@
 {% endblock stylesheets %}
 
 {% block content %}
+  <div class="overlay" id="create_domain_overlay" style="display:none">
+  <div class="input-window row align-items-center" style="border-radius:10px" id="create_domain_tab">
+    <h2 class="col-12 col-lg-12">Create domain</h2>
+
+      <input  type="text" id="new_domain_name" value="New domain" class="form-control col-12 col-lg-12">
+      <div class=" col-lg-12 col-12 text-right" style="margin-top:20px">
+      <button type="submit" class="btn btn-lg btn-info" id="create_domain_button">Create</button>
+        <button type="submit" class="btn btn-lg btn-info" id="cancel_create_domain_button">Cancel</button>
+      </div>
+  </div>
+</div>
+
+
 
     <!-- Header -->
     <div class="header bg-unl pb-8 pt-5 pt-md-8" style="display:none; min-height: 400px; background-image: url(/static/assets/img/brand/ianr_bg.jpg); background-size: cover; background-position: center top; ">
@@ -116,22 +129,19 @@
              <div class="row align-items-center ">
 
                   <div class="col-lg-12 col-12 text-right">
-                       <div href="#" class="btn btn-lg btn-success "  data-toggle="dropdown" id="create">
+                       <div href="#" class="btn btn-lg btn-success "  data-toggle="dropdown" id="create" onclick="create_domain()">
                            New
                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
   <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
 </svg>
-                        <ul class="dropdown-menu" style="overflow:auto;max-height:300px">
-                            <li id="create_folder_li"><span  style="display:block;padding:3px 20px;">Folder</span></li>
-                            <li id="create_file_li"><span  style="display:block;padding:3px 20px;">File</span></li>
-                        </ul>
+
 
                        </div>
 
                       <a class="btn btn-lg btn-light" onclick="change_view()" style="color:white">Change View</a>
-                      <!--<a  class="btn btn-lg btn-primary" onclick="move_file_or_folder()" style="color:white">Move</a>
-                      <a  class="btn btn-lg btn-warning" onclick="copy_file_or_folder()" style="color:white">Copy</a>
-                      <a class="btn btn-lg btn-info" onclick="download_file_or_folder()" style="color:white">Download</a>-->
+                      <!--<a  class="btn btn-lg btn-primary" onclick="move_file_or_domain()" style="color:white">Move</a>
+                      <a  class="btn btn-lg btn-warning" onclick="copy_file_or_domain()" style="color:white">Copy</a>
+                      <a class="btn btn-lg btn-info" onclick="download_file_or_domain()" style="color:white">Download</a>-->
 
                   </div>
              </div>
@@ -213,6 +223,8 @@
 <!-- Specific JS goes HERE --> 
 {% block javascripts %}
 <script src="/static/assets/js/change_view.js"></script>
+<script src="/static/assets/js/domains.js"></script>
+
 <script src="/static/assets/vendor/clipboard/dist/clipboard.min.js"></script>
 <script src="/static/assets/vendor/moment/min/moment-with-locales.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
