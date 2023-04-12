@@ -1136,7 +1136,7 @@ function draw_pipeline(graph){
         //.attr("height", 20)
         //.attr("x",(d) => d.x)
         //.attr("y",(d) => d.y)
-        .attr("r",35)
+        .attr("r",40)
         .attr("fill", "#69b3a2")
          .attr("fill", (d) => {
                 if (d.node_status == "current") {
