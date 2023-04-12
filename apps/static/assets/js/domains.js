@@ -1,5 +1,19 @@
 function create_domain(new_domain_name){
+       $.ajax({
+            type: "POST",
 
+            url: "/create_domain",
+            data: {
+               new_domain_name: new_domain_name
+            },
+            success: function (data) {
+                console.info(data);
+                //$("#box_container")[0].innerHTML="";
+                create_domain_overlay.style.display  = "none";
+                document.querySelector("#new_domain_name").value = "New Domain";
+                get_domain_list();
+            }
+        });
 
 
 
@@ -42,4 +56,10 @@ function set_create_domain_overlay(){
         });
 }
 
+
+function get_domain_list(){
+
+}
+
 set_create_domain_overlay();
+get_domain_list();

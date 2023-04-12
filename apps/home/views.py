@@ -202,6 +202,32 @@ def data(request):
 
             return HttpResponse("domain created")
 
+        elif load_template == "create_domain":
+            #current_path = request.POST['current_path']
+            current_path = request.user.get_username()+"/ag_data/domain"
+            new_domain_name = request.POST['new_domain_name']
+            abs_path = os.path.join("/data", current_path,new_domain_name)
+            suffix = abs_path.split(".")[-1]
+
+            new_path = abs_path
+            i = 1
+            while(os.path.exists(new_path)):
+                new_path = abs_path+"_"+str(i)
+                i = i+1
+
+            open(new_path, "w")
+            meta_data = generate_meta_data_for_dir(new_path,{"create":["null"]})
+            update_parent_meta(new_path)
+
+            meta_data["mode"] = "Domain"
+            meta_data_name = "_".join(new_path.split("/")[1:]) + ".json"
+
+
+            with open(os.path.join(settings.CORE_DIR, 'data', meta_data_name), "w") as meta_data_file:
+                json.dump(meta_data, meta_data_file)
+
+            return HttpResponse("domain creation complete!")
+
 
         elif load_template == 'domain_data':
             subdomain_path = request.GET.get('subdomain_path', "")

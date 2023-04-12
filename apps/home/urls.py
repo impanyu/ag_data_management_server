@@ -29,7 +29,7 @@ urlpatterns = [
     re_path(r'^get_domains_meta',views.data,name='get_domains_meta'),
 
     re_path(r'^add_to_domain',views.data,name='add_to_domain'),
-    re_path(r'^create_new_domain',views.data,name='create_new_domain'),
+    re_path(r'^create_domain',views.data,name='create_domain'),
     re_path(r'^domain_data',views.data,name='domain_data'),
     re_path(r'^domain_time',views.data,name='domain_time'),
     re_path(r'^file_system',views.data,name='file_system'),
