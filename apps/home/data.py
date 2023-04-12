@@ -843,6 +843,10 @@ def generate_meta_data_for_dir(dir_path):
 
     meta_data_dir_name = "_".join(dir_path.split("/")[1:]) + ".json"
 
+    if os.path.exists(os.path.join(settings.CORE_DIR, 'data', meta_data_dir_name)):
+        with open(os.path.join(settings.CORE_DIR, 'data', meta_data_dir_name), "r") as meta_data_file:
+            return json.load(meta_data_file)
+
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_dir_name), "w") as meta_data_file:
         json.dump(meta_data, meta_data_file)
 
@@ -914,6 +918,10 @@ def generate_meta_data_for_file(file_path):
             meta_data["spatial_range"] = meta_data["native"]["spatial_range"]
 
     meta_data_file_name = "_".join(file_path.split("/")[1:]) + ".json"
+
+    if os.path.exists(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name)):
+        with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
+            return json.load(meta_data_file)
 
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "w") as meta_data_file:
         json.dump(meta_data, meta_data_file)
