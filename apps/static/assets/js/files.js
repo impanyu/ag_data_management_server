@@ -1122,6 +1122,7 @@ function draw_pipeline(graph){
         .enter()
         .append("line")
         .attr("class", "link")
+        .attr("stroke-color","#999")
         .style("stroke-width", 3); // Increase the edge thickness
 
       // Draw nodes
@@ -1175,6 +1176,7 @@ function draw_pipeline(graph){
       .attr("font-size", "12px") // Set the font size here
       .attr("font-weight", "bold") // Set the font weight to bold here
         .attr("dy", -10)
+        .attr("color","#999")
         .text((d) => d.label);
 
       // Update the position of the nodes, links, and labels on each tick of the simulation
