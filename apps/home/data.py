@@ -1584,7 +1584,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
             json.dump(written_meta_data,written_meta_data_file)
 
     for read_file in read_files:
-        if os.path.isdir(read_file):
+        if os.path.isdir(read_file) or read_file == f"/data{entry_point}":
             continue
 
         read_meta_data_file_name = "_".join(read_file.split("/")[1:]) + ".json"
