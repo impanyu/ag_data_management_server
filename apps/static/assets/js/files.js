@@ -1036,6 +1036,58 @@ async function get_meta_and_content(){
 
 function set_pipeline_panel(){
 
+  var cy = cytoscape({
+    container: document.getElementById('cy'),
+
+    elements: [
+      // nodes
+      { data: { id: 'a', label: 'Node A' } },
+      { data: { id: 'b', label: 'Node B' } },
+      { data: { id: 'c', label: 'Node C' } },
+
+      // edges
+      { data: { id: 'ab', source: 'a', target: 'b', label: 'Edge A to B' } },
+      { data: { id: 'bc', source: 'b', target: 'c', label: 'Edge B to C' } },
+    ],
+
+    style: [
+      {
+        selector: 'node',
+        style: {
+          'background-color': '#666',
+          'label': 'data(label)',
+          'text-valign': 'bottom',
+          'text-halign': 'center',
+          'text-outline-color': '#666',
+          'text-outline-width': '2px',
+          'color': '#fff'
+        }
+      },
+
+      {
+        selector: 'edge',
+        style: {
+          'width': 3,
+          'line-color': '#ccc',
+          'target-arrow-color': '#ccc',
+          'target-arrow-shape': 'triangle',
+          'curve-style': 'bezier',
+          'label': 'data(label)',
+          'text-valign': 'center',
+          'text-halign': 'center',
+          'text-outline-color': '#ccc',
+          'text-outline-width': '1px',
+          'color': '#666'
+        }
+      }
+    ],
+
+    layout: {
+      name: 'grid',
+      rows: 1
+    }
+  });
+
 
 }
 

@@ -3,6 +3,20 @@
 
 }
 
+ #cy {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .label {
+    text-valign: center;
+    text-halign: center;
+    font-size: 12px;
+  }
+
 .file_system_overlay_path_component:hover{
    color: #fa6161 !important;
 }
