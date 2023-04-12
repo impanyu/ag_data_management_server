@@ -1335,7 +1335,7 @@ def shp_to_image(shp_path,col): # plot a column of shape file as png image
     if "downstream" not in shp_meta:
         shp_meta["downstream"] = {}
 
-    shp_meta["downstream"]["shp to image"] = img_path
+    shp_meta["downstream"]["shp to image"] = [img_path]
     shp_meta_data_file_name = "_".join(shp_path.split("/")[1:]) + ".json"
     with open(os.path.join(settings.CORE_DIR, 'data', shp_meta_data_file_name), "w") as shp_meta_data_file:
         json.dump(shp_meta, shp_meta_data_file)
@@ -1418,7 +1418,7 @@ def tif_to_image(tif_path,band):
     if "downstream" not in tif_meta:
         tif_meta["downstream"] = {}
 
-    tif_meta["downstream"]["tif to image"] = img_path
+    tif_meta["downstream"]["tif to image"] = [img_path]
     tif_meta_data_file_name = "_".join(tif_path.split("/")[1:]) + ".json"
     with open(os.path.join(settings.CORE_DIR, 'data', tif_meta_data_file_name), "w") as tif_meta_data_file:
         json.dump(tif_meta,tif_meta_data_file)
