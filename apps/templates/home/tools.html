@@ -1,942 +1,325 @@
 {% extends 'layouts/base.html' %}
 
-{% block title %} Icons {% endblock title %}
-
-<!-- Specific CSS goes HERE -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block title %} Search {% endblock title %}
 
 {% block content %}
 
-    <!-- Header -->
-    <div class="header bg-unl pb-8 pt-5 pt-md-8" style="min-height: 400px; background-image: url(/static/assets/img/brand/ianr_bg.jpg); background-size: cover; background-position: center top; ">
-      <div class="container-fluid">
-        <div class="header-body">
-          <!-- Card stats -->
-          <!--
-          <div class="row">
-            <div class="col-xl-3 col-lg-6">
-              <div class="card card-stats mb-4 mb-xl-0">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">Traffic</h5>
-                      <span class="h2 font-weight-bold mb-0">350,897</span>
-                    </div>
-                    <div class="col-auto">
-                      <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
-                        <i class="fas fa-chart-bar"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="mt-3 mb-0 text-muted text-sm">
-                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                    <span class="text-nowrap">Since last month</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-lg-6">
-              <div class="card card-stats mb-4 mb-xl-0">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">New users</h5>
-                      <span class="h2 font-weight-bold mb-0">2,356</span>
-                    </div>
-                    <div class="col-auto">
-                      <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
-                        <i class="fas fa-chart-pie"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="mt-3 mb-0 text-muted text-sm">
-                    <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 3.48%</span>
-                    <span class="text-nowrap">Since last week</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-lg-6">
-              <div class="card card-stats mb-4 mb-xl-0">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">Sales</h5>
-                      <span class="h2 font-weight-bold mb-0">924</span>
-                    </div>
-                    <div class="col-auto">
-                      <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
-                        <i class="fas fa-users"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="mt-3 mb-0 text-muted text-sm">
-                    <span class="text-warning mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span>
-                    <span class="text-nowrap">Since yesterday</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-lg-6">
-              <div class="card card-stats mb-4 mb-xl-0">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">Performance</h5>
-                      <span class="h2 font-weight-bold mb-0">49,65%</span>
-                    </div>
-                    <div class="col-auto">
-                      <div class="icon icon-shape bg-info text-white rounded-circle shadow">
-                        <i class="fas fa-percent"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="mt-3 mb-0 text-muted text-sm">
-                    <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span>
-                    <span class="text-nowrap">Since last month</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>-->
-        </div>
-      </div>
-    </div>
 
-    <div class="container-fluid mt--7 bg-unl">
 
-      <div class="row">
-        <div class="col">
-          <div class="card shadow">
-            <div class="card-header bg-transparent">
-              <h3 class="mb-0">Tools</h3>
+  <!-- Page content -->
+
+    <!--<div class="row">
+      <div class="col">-->
+        <div class="card bg-unl">
+          <!-- Card header -->
+            <div style="padding:10px; background:#ddd" onclick="toggle_filter_condition_2()"><span id = "search_filter" ><h3 style="display:none;color:#666;margin-bottom:0px"><b>Search Filter</b></h3></span></div>
+
+
+
+          <div class="card-header border-0" id = "filter-condition" style="display:none; position:relative;height:1740px;background:#ddd;padding-top:1.25rem; padding-bottom:1.25rem">
+                       <div class="row  py-4">
+              <div class="col-lg-12 col-12">
+              <div class="form-group mb-0">
+          <div class="input-group input-group-alternative input-group-merge">
+            <div class="input-group-prepend">
+              <span class="input-group-text " id="search"><i class="fas fa-search"></i></span>
             </div>
-            <div class="card-body">
-              <div class="row icon-examples">
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="active-40" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-app"></i>
-                      <span>Spidercam_add_data</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="air-baloon" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-app"></i>
-                      <span>Tool 2</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="album-2" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-app"></i>
-                      <span>Tool 3</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="align-center" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-app"></i>
-                      <span>Tool 4</span>
-                    </div>
-                  </button>
-                </div>
-                
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="align-left-2" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-app"></i>
-                      <span>Tool 5</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="ambulance" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-app"></i>
-                      <span>Tool 6</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="app" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-app"></i>
-                      <span>Tool 7</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="archive-2" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-app"></i>
-                      <span>Tool 8</span>
-                    </div>
-                  </button>
-                </div>
-               <!-- <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="atom" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-atom"></i>
-                      <span>atom</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="badge" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-badge"></i>
-                      <span>badge</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="bag-17" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-bag-17"></i>
-                      <span>bag-17</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="basket" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-basket"></i>
-                      <span>basket</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="bell-55" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-bell-55"></i>
-                      <span>bell-55</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="bold-down" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-bold-down"></i>
-                      <span>bold-down</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="bold-left" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-bold-left"></i>
-                      <span>bold-left</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="bold-right" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-bold-right"></i>
-                      <span>bold-right</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="bold-up" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-bold-up"></i>
-                      <span>bold-up</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="bold" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-bold"></i>
-                      <span>bold</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="book-bookmark" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-book-bookmark"></i>
-                      <span>book-bookmark</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="books" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-books"></i>
-                      <span>books</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="box-2" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-box-2"></i>
-                      <span>box-2</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="briefcase-24" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-briefcase-24"></i>
-                      <span>briefcase-24</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="building" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-building"></i>
-                      <span>building</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="bulb-61" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-bulb-61"></i>
-                      <span>bulb-61</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="bullet-list-67" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-bullet-list-67"></i>
-                      <span>bullet-list-67</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="bus-front-12" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-bus-front-12"></i>
-                      <span>bus-front-12</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="button-pause" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-button-pause"></i>
-                      <span>button-pause</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="button-play" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-button-play"></i>
-                      <span>button-play</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="button-power" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-button-power"></i>
-                      <span>button-power</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="calendar-grid-58" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-calendar-grid-58"></i>
-                      <span>calendar-grid-58</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="camera-compact" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-camera-compact"></i>
-                      <span>camera-compact</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="caps-small" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-caps-small"></i>
-                      <span>caps-small</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="cart" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-cart"></i>
-                      <span>cart</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="chart-bar-32" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-chart-bar-32"></i>
-                      <span>chart-bar-32</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="chart-pie-35" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-chart-pie-35"></i>
-                      <span>chart-pie-35</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="chat-round" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-chat-round"></i>
-                      <span>chat-round</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="check-bold" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-check-bold"></i>
-                      <span>check-bold</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="circle-08" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-circle-08"></i>
-                      <span>circle-08</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="cloud-download-95" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-cloud-download-95"></i>
-                      <span>cloud-download-95</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="cloud-upload-96" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-cloud-upload-96"></i>
-                      <span>cloud-upload-96</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="compass-04" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-compass-04"></i>
-                      <span>compass-04</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="controller" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-controller"></i>
-                      <span>controller</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="credit-card" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-credit-card"></i>
-                      <span>credit-card</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="curved-next" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-curved-next"></i>
-                      <span>curved-next</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="delivery-fast" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-delivery-fast"></i>
-                      <span>delivery-fast</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="diamond" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-diamond"></i>
-                      <span>diamond</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="email-83" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-email-83"></i>
-                      <span>email-83</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="fat-add" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-fat-add"></i>
-                      <span>fat-add</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="fat-delete" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-fat-delete"></i>
-                      <span>fat-delete</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="fat-remove" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-fat-remove"></i>
-                      <span>fat-remove</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="favourite-28" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-favourite-28"></i>
-                      <span>favourite-28</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="folder-17" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-folder-17"></i>
-                      <span>folder-17</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="glasses-2" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-glasses-2"></i>
-                      <span>glasses-2</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="hat-3" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-hat-3"></i>
-                      <span>hat-3</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="headphones" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-headphones"></i>
-                      <span>headphones</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="html5" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-html5"></i>
-                      <span>html5</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="istanbul" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-istanbul"></i>
-                      <span>istanbul</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="circle-08" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-circle-08"></i>
-                      <span>circle-08</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="key-25" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-key-25"></i>
-                      <span>key-25</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="laptop" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-laptop"></i>
-                      <span>laptop</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="like-2" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-like-2"></i>
-                      <span>like-2</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="lock-circle-open" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-lock-circle-open"></i>
-                      <span>lock-circle-open</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="map-big" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-map-big"></i>
-                      <span>map-big</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="mobile-button" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-mobile-button"></i>
-                      <span>mobile-button</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="money-coins" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-money-coins"></i>
-                      <span>money-coins</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="note-03" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-note-03"></i>
-                      <span>note-03</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="notification-70" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-notification-70"></i>
-                      <span>notification-70</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="palette" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-palette"></i>
-                      <span>palette</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="paper-diploma" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-paper-diploma"></i>
-                      <span>paper-diploma</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="pin-3" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-pin-3"></i>
-                      <span>pin-3</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="planet" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-planet"></i>
-                      <span>planet</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="ruler-pencil" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-ruler-pencil"></i>
-                      <span>ruler-pencil</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="satisfied" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-satisfied"></i>
-                      <span>satisfied</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="scissors" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-scissors"></i>
-                      <span>scissors</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="send" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-send"></i>
-                      <span>send</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="settings-gear-65" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-settings-gear-65"></i>
-                      <span>settings-gear-65</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="settings" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-settings"></i>
-                      <span>settings</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="single-02" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-single-02"></i>
-                      <span>single-02</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="single-copy-04" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-single-copy-04"></i>
-                      <span>single-copy-04</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="sound-wave" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-sound-wave"></i>
-                      <span>sound-wave</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="spaceship" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-spaceship"></i>
-                      <span>spaceship</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="square-pin" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-square-pin"></i>
-                      <span>square-pin</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="support-16" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-support-16"></i>
-                      <span>support-16</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="tablet-button" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-tablet-button"></i>
-                      <span>tablet-button</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="tag" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-tag"></i>
-                      <span>tag</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="tie-bow" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-tie-bow"></i>
-                      <span>tie-bow</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="time-alarm" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-time-alarm"></i>
-                      <span>time-alarm</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="trophy" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-trophy"></i>
-                      <span>trophy</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="tv-2" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-tv-2"></i>
-                      <span>tv-2</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="umbrella-13" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-umbrella-13"></i>
-                      <span>umbrella-13</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="user-run" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-user-run"></i>
-                      <span>user-run</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="vector" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-vector"></i>
-                      <span>vector</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="watch-time" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-watch-time"></i>
-                      <span>watch-time</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="world" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-world"></i>
-                      <span>world</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="zoom-split-in" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-zoom-split-in"></i>
-                      <span>zoom-split-in</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="collection" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-collection"></i>
-                      <span>collection</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="image" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-image"></i>
-                      <span>image</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="shop" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-shop"></i>
-                      <span>shop</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="ungroup" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-ungroup"></i>
-                      <span>ungroup</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="world-2" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-world-2"></i>
-                      <span>world-2</span>
-                    </div>
-                  </button>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <button type="button" class="btn-block" data-clipboard-text="ui-04" title="Copy to clipboard">
-                    <div>
-                      <i class="ni ni-ui-04"></i>
-                      <span>ui-04</span>
-                    </div>
-                  </button>
-                </div>-->
-              </div>
-            </div>
+            <!--<div class="input-group-prepend">
+              <span class="input-group-text " id="search-filter" onclick="toggle_filter_condition_2()"><i class="ni ni-bullet-list-67"></i></span>
+            </div>-->
+            <input class="form-control" placeholder="Search" type="text" id="search_box">
           </div>
         </div>
-      </div>
+              </div>
+                       </div>
 
-      {% include "includes/footer.html" %}
 
-    </div>
+
+
+
+            <div class="row  py-4">
+              <div class="col-lg-6 col-6">
+                  <label class="form-check-label" for="category" style="width:100%;margin: 15px"><b>Category</b></label>
+                  <select  class="form-control" multiple size = "4" aria-label="catetory" id="category" style="display: inline-block; width:80%">
+                  <!--<option  value="UAV">UAV</option>-->
+                      <option selected value = "All"> All </option>
+                  <option value="Genotype">Genotype</option>
+                  <option  value="Phenotype">Phenotype</option>
+                      <option value = "Soil"> Soil </option>
+                      <option value = "Atmosphere"> Atmosphere </option>
+
+
+                </select>
+                  </div>
+
+
+                   <div class="col-lg-6 col-6">
+                  <label class="form-check-label" for="mode" style="width:100%;margin: 15px"><b>Mode</b></label>
+                  <select  class="form-control" multiple size = "4" aria-label="mode" id="mode" style="display: inline-block; width:80%; ">
+                      <option selected value="All">All</option>
+                      <option  value="Data">Data</option>
+                  <option  value="Domain">Domain</option>
+                  <option value="Tool">Tool</option>
+                      <option value="Model">Model</option>
+                </select>
+
+              </div>
+              </div>
+
+
+              <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-6">
+                    <label class="form-check-label" for="format" style="width:100%; margin:15px"><b>Format</b></label>
+                <select class="custom-select" multiple size = "4" aria-label="format" id="format" style="display: inline-block; width:80%; ">
+                    <option selected value="All">All</option>
+                     <option   value="Folder">Folder</option>
+                  <option   value="Image">Image</option>
+                    <option  value="Shape">Shape</option>
+                  <option value="CSV">CSV</option>
+                  <option value="Spreadsheet">Spreadsheet</option>
+                  <option value="Python">Python</option>
+                    <option value="R">R</option>
+                    <option value="Matlab">Matlab</option>
+
+
+
+                </select>
+                </div>
+                  <div class="col-lg-6 col-6">
+                <label class="form-check-label" for="label" style="width:100%;margin:15px"><b>Label</b></label>
+                <select class="custom-select" multiple size = "4" aria-label="label" id="label" style="display: inline-block; width:80%;">
+                    <option selected value="All">All</option>
+                  <option value="Spidercam">Spidercam</option>
+                  <option value="ENREC">ENREC</option>
+                    <option value="Wheat">Wheat</option>
+                    <option value="Crop">Crop</option>
+                    <option value="Weather">Wheather</option>
+                    <option value="GIS">GIS</option>
+                    <option value="Application">Application</option>
+                    <option value="UAV">UAV</option>
+                     <option value="IoT">IoT</option>
+                    <option value="Farm">Farm</option>
+                    <option value="Machinery">Machinery</option>
+                    <option value="Disease">Disease</option>
+                    <option value="Pest">Pest</option>
+                    <option value="Fertilizer">Fertilizer</option>
+                    <option value="Water">Water</option>
+                    <option value="Nitrogen">Nitrogen</option>
+                    <option value="Cattle">Cattle</option>
+
+                </select>
+                </div>
+
+              </div>
+
+
+                <div class="row align-items-center py-4">
+                    <div class="col-lg-6 col-6">
+                        <label class="form-check-label" for="privilege" style="width:100%; margin:15px"><b>Privilege</b></label>
+                    <select class="custom-select" multiple size = "2" aria-label="privilege" id="privilege" style="display: inline-block; width:80%; ">
+                      <option  selected value="My Own Data">My Own Data</option>
+                        <option  value="Public Data">Public Data</option>
+
+
+                    </select>
+                    </div>
+
+
+                     <div class="col-lg-6 col-6">
+                        <label class="form-check-label" for="realtime" style="width:100%; margin:15px"><b>Realtime</b></label>
+                    <select class="custom-select" multiple size = "2" aria-label="realtime" id="realtime" style="display: inline-block; width:80%; ">
+                      <option  selected value="Non-Realtime">Non-Realtime</option>
+                        <option  value="Realtime">Realtime</option>
+
+
+                    </select>
+                    </div>
+
+              </div>
+
+
+
+            <div class="row align-items-center py-4 input-daterange datepicker">
+                 <div class="col col-lg-12">
+                <label class="form-check-label" style="margin-bottom:20px"><b>Time Range</b></label>
+                     </div>
+                <div class="col-6 col-lg-6 ">
+                <div class="form-group">
+                   <div class="input-group input-group-alternative">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                        </div>
+                        <input class="form-control"  placeholder="Start date" type="text" value="start" id="start_date">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-lg-6">
+                <div class="form-group">
+                   <div class="input-group input-group-alternative">
+                       <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                        </div>
+                        <input class="form-control" placeholder="End date" type="text" value="end" id="end_date">
+                    </div>
+                </div>
+            </div>
+
+            </div>
+
+            <div class="row align-items-center py-4">
+                 <div class="col col-lg-12">
+                <label class="form-check-label" style="margin-bottom:20px"><b>Spatial Range</b></label>
+                     </div>
+
+              <div class="col-6 col-lg-6 ">
+                  <div class="form-group">
+                     <div class="input-group input-group-alternative">
+
+                          <input type="text" placeholder="Southwest Corner" class="form-control" id = "southwest" value="southwest"/>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-6 col-lg-6">
+                  <div class="form-group">
+                      <div class="input-group input-group-alternative">
+                          <input type="text" placeholder="Northeast Corner" class="form-control" id="northeast" value="northeast"/>
+
+                      </div>
+                  </div>
+              </div>
+
+
+
+            </div>
+              <div class="row align-items-center">
+                  <div class="col-12 col-lg-12 text-right">
+                      <a href="#" class="btn btn-lg btn-primary" onclick="get_item_list()" id = "filter_submit">Search</a>
+                 </div>
+              </div>
+
+            <form id="upload_form"  action="" method="post" enctype="multipart/form-data" style="position: absolute; top:15px; right:0px;">
+                {% csrf_token %}
+              <input type="file" name="file" class="upload" id="upload_dir" multiple="" webkitdirectory style="display:none;">
+              <input type="file" name="file"  class="upload" id="upload_file" multiple=""  style="display:none;">
+
+              <!--<input type="submit" style="display:none" id="submit">-->
+
+            </form>
+
+              <hr class="d-block" style="margin-bottom:1rem;border:1px solid rgba(0,0,0,.1)">
+
+
+              <div class="row align-items-center py-4" id="map_area" style="position:relative; ">
+          <div id="map_main" style="width:100%; height: 600px; margin: auto; margin-bottom: 1.5rem"> </div>
+            <div id="files_plot" style="display:none;width:100%; height: 600px; margin: auto; margin-bottom: 1.5rem;background-color:white"></div>
+                <input class="btn btn-secondary" type="button" onclick="change_file_plot()" id="change_map" style = "position: absolute; top:40px; right:80px" value="Change Map">
+                <div id="tooltip"></div>
+            </div>
+
+          </div>
+
+
+
+            <div style="padding:10px; background:white"><span id = "result_number"><h3 style="color:#666;margin-bottom:0px"><b>Search Results</b></h3></span></div>
+
+
+
+          <!-- Light table -->
+          <div class="table-responsive" style="background:white">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col" class="sort" data-sort="name">Name</th>
+                    <th scope="col" class="sort" data-sort="name">Mode</th>
+                  <th scope="col" class="sort" data-sort="budget">Labels</th>
+                    <th scope="col">Category</th>
+                  <th scope="col" class="sort" data-sort="status">Owner</th>
+                  <!--<th scope="col" class="sort" data-sort="status">Size (Bytes)</th>-->
+
+                  <!--<th scope="col" class="sort" data-sort="completion">Completion</th>-->
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="list" id="file_list">
+
+
+              </tbody>
+            </table>
+          </div>
+
+            <div style="height:1200px; background-color:white"></div>
+
+          <!-- Card footer -->
+         <!-- <div class="card-footer py-4">
+            <nav aria-label="...">
+              <ul class="pagination justify-content-end mb-0">
+                <li class="page-item disabled">
+                  <a class="page-link" href="#" tabindex="-1">
+                    <i class="fas fa-angle-left"></i>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                </li>
+                <li class="page-item active">
+                  <a class="page-link" href="#">1</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                  <a class="page-link" href="#">
+                    <i class="fas fa-angle-right"></i>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>-->
+      <!--</div>
+    </div>-->
+
+        </div>
+
+
+    {% include "includes/footer.html" %}
+
 
 {% endblock content %}
 
-<!-- Specific JS goes HERE --> 
+<!-- Specific JS goes HERE -->
 {% block javascripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<!--<script src="/static/assets/js/create_domain.js"></script>-->
 
-<script src="/static/assets/vendor/clipboard/dist/clipboard.min.js"></script>
+
+<!--<script src="https://d3js.org/d3.v6.js"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.4/d3.min.js"></script>
+<script src="/static/assets/js/scatterplot2.js"></script>
+<script src="/static/assets/js/filter_condition_display.js"></script>
+<script>
+//original in files.html
+current_path = "{{current_path}}";
+user = "{{user}}";
+current_path_components = current_path.split("/");
+path ="";
+
+
+</script>
+<script src="/static/assets/js/search.js"></script>
+<script>
+
+  mode_options = document.querySelector("#mode").options;
+  for (var i =0; i<mode_options.length; i++){
+     if(mode_options[i].value == "Tool")
+        mode_options[i].selected = true;
+     else
+        mode_options[i].selected = false;
+  }
+  get_item_list();
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU1RvtD5YF8-dwMmCIYP8ds-6Np5QVHFY&libraries=drawing&v=weekly&callback=init_map_main"></script>
 
 {% endblock javascripts %}
