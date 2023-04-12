@@ -1036,18 +1036,6 @@ async function get_meta_and_content(){
 
 function set_pipeline_panel(){
 
-      // Data for nodes and links
-      nodes = [
-        { id: 1, label: "A" },
-        { id: 2, label: "B" },
-        { id: 3, label: "C" },
-      ];
-
-      links = [
-        { source: 1, target: 2, label: "a" },
-        { source: 2, target: 3, label: "b" },
-        { source: 3, target: 1, label: "c" },
-      ];
 
 
         $.ajax({
@@ -1062,12 +1050,33 @@ function set_pipeline_panel(){
           //console.info("meta data updated");
           //alert("meta data updated");
           graph = JSON.parse(data);
-          nodes = graph["nodes"];
-          links = graph["links"];
+
+          draw_pipeline(graph);
 
   }});
 
+  }
 
+
+
+function draw_pipeline(graph){
+
+  // Data for nodes and links
+      nodes = [
+        { id: 1, label: "A" },
+        { id: 2, label: "B" },
+        { id: 3, label: "C" },
+      ];
+
+      links = [
+        { source: 1, target: 2, label: "a" },
+        { source: 2, target: 3, label: "b" },
+        { source: 3, target: 1, label: "c" },
+      ];
+
+
+nodes = graph["nodes"];
+  links = graph["links"];
 
   svg_width = 800;
   svg_height= 400;
