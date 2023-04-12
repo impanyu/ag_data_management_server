@@ -1075,7 +1075,7 @@ function draw_pipeline(graph){
       ];
 
 
-nodes = graph["nodes"];
+  nodes = graph["nodes"];
   links = graph["links"];
 
   svg_width = 800;

@@ -330,7 +330,7 @@ def data(request):
                 i = i+1
 
             open(new_path, "w")
-            generate_meta_data_for_file(new_path)
+            generate_meta_data_for_file(new_path,{"create":["null"]})
             update_parent_meta(new_path)
 
             return HttpResponse("file creation complete!")

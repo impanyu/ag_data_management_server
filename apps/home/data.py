@@ -1211,6 +1211,7 @@ def get_meta_data(path):
     meta_data_file_path = os.path.join(settings.CORE_DIR, 'data', meta_data_file_name)
 
     if not os.path.exists(meta_data_file_path):
+        return {}
 
         if("." in os.path.basename(path)):
             generate_meta_data_for_file(path,{"create":["null"]})
@@ -1402,7 +1403,7 @@ def tif_to_image(tif_path,band):
 
 
 
-    img_meta_data = generate_meta_data_for_file(img_path,{"tif to image":tif_path})
+    img_meta_data = generate_meta_data_for_file(img_path,{"tif to image":[tif_path]})
     tif_meta = read_tif_meta(tif_path)
     if "spatial_range" in tif_meta:
         img_meta_data["spatial_range"] = tif_meta["spatial_range"]
@@ -1527,7 +1528,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
         if os.path.isfile(created_file):
             generate_meta_data_for_file(created_file,{})
         else:
-            generate_meta_data_for_dir(created_file,{"create":"null"})
+            generate_meta_data_for_dir(created_file,{"create":["null"]})
 
         parent_path = "/".join(created_file.split("/")[:-1])
         parent_meta_data_file_name = "_".join(parent_path.split("/")[1:]) + ".json"
