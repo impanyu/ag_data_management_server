@@ -54,7 +54,8 @@ LOGOUT_REDIRECT_URL = "home"  # Route defined in home/urls.py
 TEMPLATE_DIR = os.path.join(CORE_DIR, "apps/templates")  # ROOT dir for templates
 
 AUTHENTICATION_BACKENDS = [
-    'django_pam.auth.backends.PAMBackend' # 'django.contrib.auth.backends.ModelBackend',
+    #'django_pam.auth.backends.PAMBackend', #
+    'django.contrib.auth.backends.ModelBackend'
 ]
 
 TEMPLATES = [
