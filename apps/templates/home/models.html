@@ -1,0 +1,325 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Search {% endblock title %}
+
+{% block content %}
+
+
+
+  <!-- Page content -->
+
+    <!--<div class="row">
+      <div class="col">-->
+        <div class="card bg-unl">
+          <!-- Card header -->
+            <div style="padding:10px; background:#ddd;display:none;" onclick="toggle_filter_condition_2()"><span id = "search_filter" ><h3 style="color:#666;margin-bottom:0px"><b>Search Filter</b></h3></span></div>
+
+
+
+          <div class="card-header border-0" id = "filter-condition" style="display:none; position:relative;height:1740px;background:#ddd;padding-top:1.25rem; padding-bottom:1.25rem">
+                       <div class="row  py-4">
+              <div class="col-lg-12 col-12">
+              <div class="form-group mb-0">
+          <div class="input-group input-group-alternative input-group-merge">
+            <div class="input-group-prepend">
+              <span class="input-group-text " id="search"><i class="fas fa-search"></i></span>
+            </div>
+            <!--<div class="input-group-prepend">
+              <span class="input-group-text " id="search-filter" onclick="toggle_filter_condition_2()"><i class="ni ni-bullet-list-67"></i></span>
+            </div>-->
+            <input class="form-control" placeholder="Search" type="text" id="search_box">
+          </div>
+        </div>
+              </div>
+                       </div>
+
+
+
+
+
+            <div class="row  py-4">
+              <div class="col-lg-6 col-6">
+                  <label class="form-check-label" for="category" style="width:100%;margin: 15px"><b>Category</b></label>
+                  <select  class="form-control" multiple size = "4" aria-label="catetory" id="category" style="display: inline-block; width:80%">
+                  <!--<option  value="UAV">UAV</option>-->
+                      <option selected value = "All"> All </option>
+                  <option value="Genotype">Genotype</option>
+                  <option  value="Phenotype">Phenotype</option>
+                      <option value = "Soil"> Soil </option>
+                      <option value = "Atmosphere"> Atmosphere </option>
+
+
+                </select>
+                  </div>
+
+
+                   <div class="col-lg-6 col-6">
+                  <label class="form-check-label" for="mode" style="width:100%;margin: 15px"><b>Mode</b></label>
+                  <select  class="form-control" multiple size = "4" aria-label="mode" id="mode" style="display: inline-block; width:80%; ">
+                      <option selected value="All">All</option>
+                      <option  value="Data">Data</option>
+                  <option  value="Domain">Domain</option>
+                  <option value="Tool">Tool</option>
+                      <option value="Model">Model</option>
+                </select>
+
+              </div>
+              </div>
+
+
+              <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-6">
+                    <label class="form-check-label" for="format" style="width:100%; margin:15px"><b>Format</b></label>
+                <select class="custom-select" multiple size = "4" aria-label="format" id="format" style="display: inline-block; width:80%; ">
+                    <option selected value="All">All</option>
+                     <option   value="Folder">Folder</option>
+                  <option   value="Image">Image</option>
+                    <option  value="Shape">Shape</option>
+                  <option value="CSV">CSV</option>
+                  <option value="Spreadsheet">Spreadsheet</option>
+                  <option value="Python">Python</option>
+                    <option value="R">R</option>
+                    <option value="Matlab">Matlab</option>
+
+
+
+                </select>
+                </div>
+                  <div class="col-lg-6 col-6">
+                <label class="form-check-label" for="label" style="width:100%;margin:15px"><b>Label</b></label>
+                <select class="custom-select" multiple size = "4" aria-label="label" id="label" style="display: inline-block; width:80%;">
+                    <option selected value="All">All</option>
+                  <option value="Spidercam">Spidercam</option>
+                  <option value="ENREC">ENREC</option>
+                    <option value="Wheat">Wheat</option>
+                    <option value="Crop">Crop</option>
+                    <option value="Weather">Wheather</option>
+                    <option value="GIS">GIS</option>
+                    <option value="Application">Application</option>
+                    <option value="UAV">UAV</option>
+                     <option value="IoT">IoT</option>
+                    <option value="Farm">Farm</option>
+                    <option value="Machinery">Machinery</option>
+                    <option value="Disease">Disease</option>
+                    <option value="Pest">Pest</option>
+                    <option value="Fertilizer">Fertilizer</option>
+                    <option value="Water">Water</option>
+                    <option value="Nitrogen">Nitrogen</option>
+                    <option value="Cattle">Cattle</option>
+
+                </select>
+                </div>
+
+              </div>
+
+
+                <div class="row align-items-center py-4">
+                    <div class="col-lg-6 col-6">
+                        <label class="form-check-label" for="privilege" style="width:100%; margin:15px"><b>Privilege</b></label>
+                    <select class="custom-select" multiple size = "2" aria-label="privilege" id="privilege" style="display: inline-block; width:80%; ">
+                      <option  selected value="My Own Data">My Own Data</option>
+                        <option  value="Public Data">Public Data</option>
+
+
+                    </select>
+                    </div>
+
+
+                     <div class="col-lg-6 col-6">
+                        <label class="form-check-label" for="realtime" style="width:100%; margin:15px"><b>Realtime</b></label>
+                    <select class="custom-select" multiple size = "2" aria-label="realtime" id="realtime" style="display: inline-block; width:80%; ">
+                      <option  selected value="Non-Realtime">Non-Realtime</option>
+                        <option  value="Realtime">Realtime</option>
+
+
+                    </select>
+                    </div>
+
+              </div>
+
+
+
+            <div class="row align-items-center py-4 input-daterange datepicker">
+                 <div class="col col-lg-12">
+                <label class="form-check-label" style="margin-bottom:20px"><b>Time Range</b></label>
+                     </div>
+                <div class="col-6 col-lg-6 ">
+                <div class="form-group">
+                   <div class="input-group input-group-alternative">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                        </div>
+                        <input class="form-control"  placeholder="Start date" type="text" value="start" id="start_date">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-lg-6">
+                <div class="form-group">
+                   <div class="input-group input-group-alternative">
+                       <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                        </div>
+                        <input class="form-control" placeholder="End date" type="text" value="end" id="end_date">
+                    </div>
+                </div>
+            </div>
+
+            </div>
+
+            <div class="row align-items-center py-4">
+                 <div class="col col-lg-12">
+                <label class="form-check-label" style="margin-bottom:20px"><b>Spatial Range</b></label>
+                     </div>
+
+              <div class="col-6 col-lg-6 ">
+                  <div class="form-group">
+                     <div class="input-group input-group-alternative">
+
+                          <input type="text" placeholder="Southwest Corner" class="form-control" id = "southwest" value="southwest"/>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-6 col-lg-6">
+                  <div class="form-group">
+                      <div class="input-group input-group-alternative">
+                          <input type="text" placeholder="Northeast Corner" class="form-control" id="northeast" value="northeast"/>
+
+                      </div>
+                  </div>
+              </div>
+
+
+
+            </div>
+              <div class="row align-items-center">
+                  <div class="col-12 col-lg-12 text-right">
+                      <a href="#" class="btn btn-lg btn-primary" onclick="get_item_list()" id = "filter_submit">Search</a>
+                 </div>
+              </div>
+
+            <form id="upload_form"  action="" method="post" enctype="multipart/form-data" style="position: absolute; top:15px; right:0px;">
+                {% csrf_token %}
+              <input type="file" name="file" class="upload" id="upload_dir" multiple="" webkitdirectory style="display:none;">
+              <input type="file" name="file"  class="upload" id="upload_file" multiple=""  style="display:none;">
+
+              <!--<input type="submit" style="display:none" id="submit">-->
+
+            </form>
+
+              <hr class="d-block" style="margin-bottom:1rem;border:1px solid rgba(0,0,0,.1)">
+
+
+              <div class="row align-items-center py-4" id="map_area" style="position:relative; ">
+          <div id="map_main" style="width:100%; height: 600px; margin: auto; margin-bottom: 1.5rem"> </div>
+            <div id="files_plot" style="display:none;width:100%; height: 600px; margin: auto; margin-bottom: 1.5rem;background-color:white"></div>
+                <input class="btn btn-secondary" type="button" onclick="change_file_plot()" id="change_map" style = "position: absolute; top:40px; right:80px" value="Change Map">
+                <div id="tooltip"></div>
+            </div>
+
+          </div>
+
+
+
+            <div style="padding:10px; background:white;display:none;"><span id = "result_number"><h3 style="color:#666;margin-bottom:0px"><b>Search Results</b></h3></span></div>
+
+        <div style="padding:10px; background:white;"><span id = "model"><h3 style="color:#666;margin-bottom:0px"><b>Models</b></h3></span></div>
+
+          <!-- Light table -->
+          <div class="table-responsive" style="background:white">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col" class="sort" data-sort="name">Name</th>
+                    <th scope="col" class="sort" data-sort="name">Mode</th>
+                  <th scope="col" class="sort" data-sort="budget">Labels</th>
+                    <th scope="col">Category</th>
+                  <th scope="col" class="sort" data-sort="status">Owner</th>
+                  <!--<th scope="col" class="sort" data-sort="status">Size (Bytes)</th>-->
+
+                  <!--<th scope="col" class="sort" data-sort="completion">Completion</th>-->
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="list" id="file_list">
+
+
+              </tbody>
+            </table>
+          </div>
+
+            <div style="height:1200px; background-color:white"></div>
+
+          <!-- Card footer -->
+         <!-- <div class="card-footer py-4">
+            <nav aria-label="...">
+              <ul class="pagination justify-content-end mb-0">
+                <li class="page-item disabled">
+                  <a class="page-link" href="#" tabindex="-1">
+                    <i class="fas fa-angle-left"></i>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                </li>
+                <li class="page-item active">
+                  <a class="page-link" href="#">1</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                  <a class="page-link" href="#">
+                    <i class="fas fa-angle-right"></i>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>-->
+      <!--</div>
+    </div>-->
+
+        </div>
+
+
+    {% include "includes/footer.html" %}
+
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<!--<script src="/static/assets/js/create_domain.js"></script>-->
+
+
+<!--<script src="https://d3js.org/d3.v6.js"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.4/d3.min.js"></script>
+<script src="/static/assets/js/scatterplot2.js"></script>
+<script src="/static/assets/js/filter_condition_display.js"></script>
+<script>
+//original in files.html
+current_path = "{{current_path}}";
+user = "{{user}}";
+current_path_components = current_path.split("/");
+path ="";
+
+
+</script>
+<script src="/static/assets/js/search.js"></script>
+<script>
+
+  mode_options = document.querySelector("#mode").options;
+  for (var i =0; i<mode_options.length; i++){
+     if(mode_options[i].value == "Model")
+        mode_options[i].selected = true;
+     else
+        mode_options[i].selected = false;
+  }
+  get_item_list();
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU1RvtD5YF8-dwMmCIYP8ds-6Np5QVHFY&libraries=drawing&v=weekly&callback=init_map_main"></script>
+
+{% endblock javascripts %}
