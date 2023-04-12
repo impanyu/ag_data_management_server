@@ -1035,6 +1035,8 @@ async function get_meta_and_content(){
 
 
 function set_pipeline_panel(){
+  svg_width = 800;
+  svg_height= 400;
 
    const svg = d3.select("#pipeline_svg");
 
@@ -1074,10 +1076,10 @@ function set_pipeline_panel(){
         .forceSimulation(nodes)
         .force(
           "link",
-          d3.forceLink(links).id((d) => d.id).distance(100)
+          d3.forceLink(links).id((d) => d.id).distance(200)
         )
         .force("charge", d3.forceManyBody().strength(-300))
-        .force("center", d3.forceCenter(400, 200));
+        .force("center", d3.forceCenter(svg_width / 2, svg_height / 2));
 
       // Draw links
       const link = svg
