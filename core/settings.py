@@ -34,8 +34,30 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.home',  # Enable the inner home (home)
-    'django_pam'
+    'django_pam',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': '567478796459-bph771bus2porjpnm7j3duashbmsjcl8.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        },
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -55,7 +77,8 @@ TEMPLATE_DIR = os.path.join(CORE_DIR, "apps/templates")  # ROOT dir for template
 
 AUTHENTICATION_BACKENDS = [
     #'django_pam.auth.backends.PAMBackend', #
-    'django.contrib.auth.backends.ModelBackend'
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend'
 ]
 
 TEMPLATES = [
