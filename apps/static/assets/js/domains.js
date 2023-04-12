@@ -35,7 +35,7 @@ function set_create_domain_overlay(){
            create_domain_overlay.style.display  = "none";
         });
 
-        const create_domain_li = document.querySelector('#create_domain_li');
+        const create_domain_li = document.querySelector('#create_domain');
 
         create_domain_li.addEventListener('click', function(event) {
            create_domain_overlay.style.display  = "flex";
