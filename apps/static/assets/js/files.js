@@ -1142,7 +1142,11 @@ function draw_pipeline(graph){
                 else {
                     return "steelblue"; // Assign the default color to all other nodes
                 }
-      });
+      })
+      .call(d3.drag()
+        .on("start", dragstarted)
+        .on("drag", dragged)
+        .on("end", dragended));
 
       // Add node labels
       const nodeLabels = svg
