@@ -422,6 +422,7 @@ function get_item_list(){
 
           color_scale_map = {"CSV/Spreadsheet":1, "Image":2, "Other":3}
           console.info(items);
+          console.info(search_results_title);
           document.querySelector("#result_number").innerHTML= "<b>"+search_results_title+" "+items.length+"</b>";
           for(i in items){
              items[i]["2d"] = points[i];
