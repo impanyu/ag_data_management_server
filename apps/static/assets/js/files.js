@@ -1058,7 +1058,7 @@ function set_pipeline_panel(){
         },
         //contentType: "application/json",
         success: function(data, status){
-          //console.info(data);
+           console.info(data);
           //console.info("meta data updated");
           //alert("meta data updated");
           graph = JSON.parse(data);
