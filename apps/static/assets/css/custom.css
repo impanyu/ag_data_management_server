@@ -2,20 +2,20 @@
  background-color: #eee;
 
 }
-  .link {
-        stroke: #000;
-        stroke-width: 1.5px;
-        marker-end: url(#end-arrow);
-      }
+.link {
+    stroke: #000;
+    stroke-width: 1.5px;
+    marker-end: url(#end-arrow);
+  }
 
-      .node {
-        stroke: #fff;
-        stroke-width: 1.5px;
-      }
+.node {
+stroke: #fff;
+stroke-width: 1.5px;
+}
 
-      text {
-        font: 12px sans-serif;
-      }
+text {
+//font: 12px sans-serif;
+}
 
 
 
