@@ -1079,7 +1079,7 @@ function set_pipeline_panel(){
           d3.forceLink(links).id((d) => d.id).distance(200)
         )
         .force("charge", d3.forceManyBody().strength(-300))
-        .force("center", d3.forceCenter(svg_width / 2, svg_height / 2));
+        .force("center", d3.forceCenter(svg_width / 2, svg_height / 2))
         .on("tick", ticked);
 
       // Draw links
