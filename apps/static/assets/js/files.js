@@ -1131,7 +1131,14 @@ function draw_pipeline(graph){
         .append("circle")
         .attr("class", "node")
         .attr("r", 30)
-        .attr("fill", "#69b3a2");
+        .attr("fill", "#69b3a2")
+         .attr("fill", (d) => {
+                if (d.current_node == "true") {
+                    return "red"; // Assign a specific color, e.g., red, to the special node
+                } else {
+                    return "steelblue"; // Assign the default color to all other nodes
+                }
+      });
 
       // Add node labels
       const nodeLabels = svg

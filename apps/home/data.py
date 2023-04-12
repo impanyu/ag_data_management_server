@@ -1609,7 +1609,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
 
 def get_pipeline(path):
     graph = {"nodes":[],"links":[]}
-    graph["nodes"].append({"id":path, "label":path})
+    graph["nodes"].append({"id":path, "label":path,"current_node":"true"})
     meta_data = get_meta_data(path)
     if "upstream" in meta_data:
         for upstream_tool in meta_data["upstream"]:
