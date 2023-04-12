@@ -1,0 +1,532 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Tables {% endblock title %}
+
+{% block content %}
+
+<div class="overlay" id="create_folder_overlay" style="display:none">
+  <div class="input-window row align-items-center" style="border-radius:10px" id="create_folder_tab">
+    <h2 class="col-12 col-lg-12">Create Folder</h2>
+
+      <input  type="text" id="new_folder_name" value="New Folder" class="form-control col-12 col-lg-12">
+      <div class=" col-lg-12 col-12 text-right" style="margin-top:20px">
+      <button type="submit" class="btn btn-lg btn-info" id="create_folder_button">Create</button>
+        <button type="submit" class="btn btn-lg btn-info" id="cancel_create_folder_button">Cancel</button>
+      </div>
+  </div>
+</div>
+
+<div class="overlay" id="create_file_overlay" style="display:none">
+  <div class="input-window row align-items-center" style="border-radius:10px" id="create_file_tab">
+    <h2 class="col-12 col-lg-12">Create File</h2>
+
+      <input  type="text" id="new_file_name" value="New File" class="form-control col-12 col-lg-12">
+      <div class=" col-lg-12 col-12 text-right" style="margin-top:20px">
+      <button type="submit" class="btn btn-lg btn-info" id="create_file_button">Create</button>
+        <button type="submit" class="btn btn-lg btn-info" id="cancel_create_file_button">Cancel</button>
+      </div>
+  </div>
+</div>
+
+
+<div class="overlay" id="warning_overlay" style="display:none">
+  <div class="input-window row align-items-center" style="border-radius:10px" id="warning_tab">
+    <h2 class="col-12 col-lg-12" id="warning_message"></h2>
+
+      <div class=" col-lg-12 col-12 text-right" style="margin-top:20px">
+      <button type="submit" class="btn btn-lg btn-info" id="warning_button">OK</button>
+
+      </div>
+  </div>
+</div>
+
+
+<div class="overlay " id="file_system_overlay" style="display:none">
+  <div class="input-window row align-items-center" style="border-radius:10px; " id="file_system_tab">
+      <div class="col-lg-12 col-12" style="padding-left:0px">
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ">
+                      <ol class="breadcrumb breadcrumb-links breadcrumb-dark" id="file_system_overlay_path">
+                       <!-- <li class="breadcrumb-item"><a href="/files.html?current_path={{user}}"><i class="fas fa-home"></i></a></li>-->
+
+                        <!--<li class="breadcrumb-item active" aria-current="page">Tables</li>-->
+                      </ol>
+                    </nav>
+      </div>
+      <div class=" col-lg-12 col-12" style="padding:10px; background-color:#eee; "> <b>NAME </b></div>
+      <div class=" col-lg-12 col-12" style="height: 300px;overflow:scroll; padding-left:0px " >
+                 <table class="table align-items-center table-flush" style="">
+                          <thead class="thead-light">
+                            <!--<tr>
+                              <th scope="col" class="sort" data-sort="name">Name</th>
+                            </tr>-->
+                          </thead>
+                          <tbody class="list" id="file_list_in_overlay">
+
+
+                          </tbody>
+                        </table>
+
+     </div>
+
+       <div class=" col-lg-12 col-12 text-right" style="margin-top:20px">
+
+      <button type="submit" class="btn btn-lg btn-info" id="file_system_button">OK</button>
+
+      </div>
+
+  </div>
+
+
+</div>
+
+
+  <!-- Page content -->
+  <div class=" bg-unl">
+    <!--<div class="row">
+      <div class="col">-->
+        <div class="card" style = "border-radius:0px;">
+
+          <!-- Card header -->
+          <div class="card-header border-0" style="position:relative">
+             <div class="row align-items-center ">
+
+                  <div class="col-lg-12 col-12 text-right">
+
+                      <a class="btn btn-lg btn-danger" onclick="delete_file_or_folder()" style="color:white">Delete</a>
+
+
+                  </div>
+             </div>
+
+
+            <form id="upload_form"  action="" method="post" enctype="multipart/form-data" style="position: absolute; top:15px; right:0px;">
+                {% csrf_token %}
+              <input type="file" name="file" class="upload" id="upload_dir" multiple="" webkitdirectory style="display:none;">
+              <input type="file" name="file"  class="upload" id="upload_file" multiple=""  style="display:none;">
+
+              <!--<input type="submit" style="display:none" id="submit">-->
+
+            </form>
+
+          </div>
+            <div style="padding:10px; background:#ddd" onclick="toggle_filter_condition_3()"><span id = "search_filter" ><h3 style="color:#666;margin-bottom:0px"><b>Meta Data</b></h3></span></div>
+
+
+          <div  class="card-header border-0" id = "meta_data_panel" style = "background:#ddd;height:0px;" >
+            <div class="row  py-4">
+                <div class="col-lg-6 col-6">
+                     <label class="form-check-label" for="category" style="width:100%;margin-bottom: 15px"><b>Category</b></label>
+                </div>
+                 <div class="col-lg-6 col-6">
+                      <label class="form-check-label" for="mode" style="width:100%;margin-bottom: 15px"><b>Mode</b></label>
+                </div>
+              <div class="col-lg-6 col-6">
+
+                  <select  class="form-control" size = "3" aria-label="catetory" id="category" style="display: inline-block; width:80%">
+                  <!--<option  value="UAV">UAV</option>-->
+
+                  <option value="Genotype">Genotype</option>
+                  <option  value="Phenotype">Phenotype</option>
+                      <option value = "Soil"> Soil </option>
+                      <option value = "Atmosphere"> Atmosphere </option>
+                      <option value = "Other"> Other </option>
+
+
+                </select>
+                  </div>
+
+
+                   <div class="col-lg-6 col-6">
+
+                  <select  class="form-control"  size = "3" aria-label="mode" id="mode" style="display: inline-block; width:80%; ">
+                      <option  value="Data">Data</option>
+                  <option  value="Domain">Domain</option>
+                  <option value="Tool">Tool</option>
+                      <option value="Model">Model</option>
+                </select>
+
+              </div>
+              </div>
+
+              <div class="row align-items-center py-4">
+                  <div class="col col-lg-12">
+                       <label class="form-check-label" for="format" style="width:100%; margin-bottom:15px"><b>Format</b></label>
+                  </div>
+                <div class="col-lg-6 col-6">
+
+                <select class="custom-select"  size = "3" aria-label="format" id="format" style="display: inline-block; width:80%; ">
+
+                     <option   value="Folder">Folder</option>
+                  <option   value="Image">Image</option>
+                    <option  value="Shape">Shape</option>
+                  <option value="CSV">CSV</option>
+                  <option value="Spreadsheet">Spreadsheet</option>
+                  <option value="Python">Python</option>
+                    <option value="R">R</option>
+                    <option value="Matlab">Matlab</option>
+                    <option value = "Other"> Other </option>
+
+
+                </select>
+                </div>
+                <!--
+                  <div class="col-lg-6 col-6">
+                <label class="form-check-label" for="label" style="width:100%;margin:15px"><b>Label</b></label>
+                <select class="custom-select" multiple size = "3" aria-label="label" id="label" style="display: inline-block; width:80%;">
+                  <option value="Spidercam">Spidercam</option>
+                  <option value="ENREC">ENREC</option>
+                    <option value="Wheat">Wheat</option>
+
+                </select>
+                </div>-->
+
+              </div>
+
+            <div class="row align-items-center py-4" >
+              <div class="col-lg-12 col-12">
+              <label class="form-check-label" style="width:100%; margin-bottom:15px"><b>Label</b></label>
+              </div>
+
+
+               <div class="dropdown col-lg-12 col-12 d-flex align-items-center">
+
+                    <div id= "label" class="border shadow p-3 bg-white rounded d-flex align-items-center" style = "background-color:white; height:2.8rem; width:80%; padding-left:1rem; padding-right:1rem">
+
+                      </div>
+                     <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Add<span class="caret"></span>
+                        <ul id="label_option" class="dropdown-menu" style="overflow:auto;max-height:300px">
+                        </ul>
+
+                     </button>
+
+               </div>
+            </div>
+
+
+
+ <!--
+             <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-6">
+                    <label class="form-check-label" for="privilege" style="width:100%; margin:15px"><b>Privilege</b></label>
+                <select class="custom-select" multiple size = "2" aria-label="privilege" id="privilege" style="display: inline-block; width:80%; ">
+                  <option  selected value="My Own Data">My Own Data</option>
+                    <option  value="Public Data">Public Data</option>
+
+
+                </select>
+                </div>
+              </div>-->
+
+                  <div class="row align-items-center py-4">
+                      <div class="col-12 col-lg-12">
+                          <label class="form-check-label" style="width:100%; margin-bottom:15px"><b>Privilege</b></label>
+                      </div>
+                <div class="col-lg-6 col-6">
+
+                    <div class="toggle-switch">
+                      <input type="checkbox" class="toggle-switch-checkbox" id="privilege-toggle-switch">
+                      <label class="toggle-switch-label" for="privilege-toggle-switch">
+                        <span class="toggle-switch-inner"></span>
+                        <span class="toggle-switch-switch"></span>
+                      </label>
+                    </div>
+                    <span id = "privilege" style="margin-left:20px;">Private Data</span>
+                </div>
+
+
+
+              </div>
+
+
+              <div class="row align-items-center py-4">
+                      <div class="col-12 col-lg-12">
+                          <label class="form-check-label" style="width:100%; margin-bottom:15px"><b>Realtime vs Non-Realtime</b></label>
+                      </div>
+                <div class="col-lg-6 col-12">
+
+                    <div class="toggle-switch">
+                      <input type="checkbox" class="toggle-switch-checkbox" id="realtime-toggle-switch">
+                      <label class="toggle-switch-label" for="realtime-toggle-switch">
+                        <span class="toggle-switch-inner"></span>
+                        <span class="toggle-switch-switch"></span>
+                      </label>
+                    </div>
+                    <span id = "realtime" style="margin-left:20px;">Non-Realtime Data</span>
+                </div>
+
+
+
+              </div>
+
+
+
+
+
+            <div class="row align-items-center py-4 input-daterange datepicker">
+                 <div class="col col-lg-12">
+                <label class="form-check-label" style="margin-bottom:20px"><b>Time Range</b></label>
+                     </div>
+                <div class="col-6 col-lg-6 ">
+                <div class="form-group">
+                   <div class="input-group input-group-alternative">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                        </div>
+                        <input class="form-control"  placeholder="Start date" type="text" value="start" id="start_date">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-lg-6">
+                <div class="form-group">
+                   <div class="input-group input-group-alternative">
+                       <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                        </div>
+                        <input class="form-control" placeholder="End date" type="text" value="end" id="end_date">
+                    </div>
+                </div>
+            </div>
+
+            </div>
+
+            <div class="row align-items-center py-4">
+                 <div class="col col-lg-12">
+                <label class="form-check-label" style="margin-bottom:20px"><b>Spatial Range</b></label>
+                     </div>
+
+              <div class="col-6 col-lg-6 ">
+                  <div class="form-group">
+                     <div class="input-group input-group-alternative">
+
+                          <input type="text" placeholder="Southwest Corner" class="form-control" id = "southwest" value="southwest"/>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-6 col-lg-6">
+                  <div class="form-group">
+                      <div class="input-group input-group-alternative">
+                          <input type="text" placeholder="Northeast Corner" class="form-control" id="northeast" value="northeast"/>
+
+                      </div>
+                  </div>
+              </div>
+
+
+            </div>
+
+                     <div class="row align-items-center py-4">
+                             <div class="col-12 col-lg-12">
+
+                              <label for="other_meta" class="form-label"><b>Other Meta Data</b></label>
+                              <textarea class="form-control" id="other_meta" rows="5" style="resize:none;"></textarea>
+
+
+
+
+                            </div>
+                     </div>
+
+
+                  <div class="row align-items-center py-4" id="native_meta_panel" >
+                             <div class="col-12 col-lg-12">
+
+                              <label for="native_meta" class="form-label"><b>Native Meta Data</b></label>
+                              <textarea readonly class="form-control" id="native_meta" rows="5" style="resize:none;"></textarea>
+
+
+
+
+                            </div>
+                     </div>
+
+
+              <div class="row align-items-center ">
+                  <div class="col-12 col-lg-12 text-right">
+                      <a  class="btn btn-lg btn-primary" onclick="update_meta()" id = "update_meta" style="color:white">Update</a>
+                 </div>
+              </div>
+
+                <!--<hr class="d-block" style="margin-bottom:2rem;border:1px solid rgba(0,0,0,.1)">-->
+
+
+
+
+          </div>
+            <div style="padding:10px; background:#ccc;" id="pipeline_panel_tab" onclick="toggle_pipeline_panel()"><h3 style="color:#666;margin-bottom:0px"><b>Pipeline Panel</b></h3></div>
+           <div  class="card-header border-0 align-items-center row" id = "pipeline_panel" style = "background:#ccc;height:0px;">
+                 <svg class="col-lg-10 col-12" id="pipeline_svg" style="margin:auto;height:460px;display:flex"></svg>
+
+
+           </div>
+
+
+            <div style="padding:10px; background:#aaa; display:none" id="tool_panel_tab" onclick="toggle_tool_panel()"><h3 style="color:#666;margin-bottom:0px"><b>Tool Panel</b></h3></div>
+
+
+
+
+            <div  class="card-header border-0" id = "tool_panel" style = "background:#aaa;height:0px;">
+                    <h3 style="color:#666"><b>Edit arguments of the tool here</b></h3>
+                  <div>
+                  <div class="row align-items-center py-4" >
+                       <div class="col-lg-3 col-6">
+                             <label class="form-check-label"  style="width:100%;"><b>Argument Name</b></label>
+                        </div>
+                         <div class="col-lg-3 col-6">
+                             <input class="form-control"   type="text" value="Name" id="arg_name">
+
+                        </div>
+                  </div>
+                      <div class="row align-items-center py-4" >
+                        <div class="col-lg-3 col-12">
+                             <label class="form-check-label"  style="width:100%;"><b>Argument Type</b></label>
+                        </div>
+                         <div class="col-lg-3 col-6">
+
+                             <select class="form-control" aria-label="Default select example" id="arg_type">
+                              <option selected value="File">File</option>
+                              <option value="Directory">Directory</option>
+                              <option value="Number">Number</option>
+                              <option value="Text">Text</option>
+                            </select>
+
+                        </div>
+                          <div class="col-lg-3 col-6">
+                                      <div class="btn btn-lg btn-success"   id="add_arg"  onclick="add_tool_arg()">
+                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"  width="20" height="20">
+                                      <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                      <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"  fill="#FFFFFF" />
+                                  </svg>
+
+                               </div>
+                          </div>
+
+
+
+
+
+
+                 </div>
+
+                 <hr class="d-block" style="margin-bottom:2rem;border:1px solid rgba(0,0,0,.1)">
+                </div>
+                <div id="tool_panel_container"></div>
+
+
+            </div>
+
+
+                <!-- <div style="padding:10px; background:white" ><span id = "data_tab" ><h3><b>Data</b></h3></span></div>-->
+          <div id ="data_panel" style="position:relative">
+                      <!-- Light table -->
+              <div id="preloader" style="position:absolute;left:0px;top:0px;width:35%;display:none;z-index:5;background-color:white"><img src="/static/assets/img/icons/preloader.gif" style="height:35px"><span><b>Saving...</b></span>  </div>
+              <div id="preloader2" class="row align-items-center py-4" style="z-index:5;height:600px;display:none;width:100%"  ><img  class="col-2 col-lg-2" src="/static/assets/img/icons/preloader_2.gif" style="display:block; width:20%; margin:auto"></div>
+              <div id="preloader3" style="z-index:5;height:5px;display:none;width:0px;background-color:blue" ></div>
+
+              <div id="file_content" style="position:relative">
+                   <div id="opacity-slider-container">
+                      <input type="range" min="0" max="100" value="100" id="opacity-slider" style="width:100%">
+                    </div>
+
+                  <div class="dropdown" id="channel_dropdown" >
+                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  style="margin:0px">
+                        Column
+                      </button>
+                      <div  id="channel_list" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                      </div>
+                    </div>
+
+                  <div class="row align-items-center py-4" id="map_main" style=" height: 600px; "> </div>
+
+
+              </div>
+          <div class="table-responsive" id="file_table">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col" class="sort" data-sort="name">Name</th>
+                  <th scope="col" class="sort" data-sort="budget">Created Time</th>
+                  <th scope="col" class="sort" data-sort="status">Accessed Time</th>
+                  <th scope="col" class="sort" data-sort="status">Size (Bytes)</th>
+                  <th scope="col">Owner</th>
+                  <!--<th scope="col" class="sort" data-sort="completion">Completion</th>-->
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="list" id="file_list">
+
+
+              </tbody>
+            </table>
+          </div>
+          <!-- Card footer -->
+          <!--<div class="card-footer py-4">
+            <nav aria-label="...">
+              <ul class="pagination justify-content-end mb-0">
+                <li class="page-item disabled">
+                  <a class="page-link" href="#" tabindex="-1">
+                    <i class="fas fa-angle-left"></i>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                </li>
+                <li class="page-item active">
+                  <a class="page-link" href="#">1</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                  <a class="page-link" href="#">
+                    <i class="fas fa-angle-right"></i>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>-->
+      <!--</div>
+    </div>-->
+
+
+          </div>
+
+
+
+
+     </div>
+  </div>
+
+    {% include "includes/footer.html" %}
+
+
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+<script src="/static/assets/js/filter_condition_display.js"></script>
+<script src="https://d3js.org/d3.v6.min.js"></script>
+
+<!--<script src="https://unpkg.com/cytoscape@3.19.0/dist/cytoscape.min.js"></script>-->
+<script>
+//original in files.html
+var form = $("#upload_form");
+current_path = "{{current_path}}";
+user = "{{user}}";
+current_path_components = current_path.split("/");
+path ="";
+
+</script>
+<script src="https://unpkg.com/shapefile@0.6"></script>
+<script src="/static/assets/js/files.js"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU1RvtD5YF8-dwMmCIYP8ds-6Np5QVHFY&libraries=drawing&v=weekly&callback=init_map_main"></script>
+
+
+{% endblock javascripts %}
