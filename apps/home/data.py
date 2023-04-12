@@ -1587,3 +1587,39 @@ def run_tool(entry_point,arg_values, arg_types,user):
 
     return
 
+def get_pipeline(path):
+    graph = {"nodes":[],"links":[]}
+    graph["nodes"].append({"id":path, "label":path})
+    meta_data = get_meta_data(path)
+    if "upstream" in meta_data:
+        for upstream_tool in meta_data["upstream"]:
+            for upstream_path in meta_data["upstream"][upstream_tool]:
+                graph["links"].append({"source":upstream_path,"target":path,"label":upstream_tool})
+                get_upstream(upstream_path,graph)
+
+    if "downstream" in meta_data:
+        for downstream_tool in meta_data["downstream"]:
+            for downstream_path in meta_data["downstream"][downstream_tool]:
+                graph["links"].append({"source":path,"target":downstream_path,"label":downstream_tool})
+                get_downstream(downstream_path,graph)
+    return graph
+
+def get_upstream(path,graph):
+    graph["nodes"].append({"id": path, "label": path})
+    meta_data = get_meta_data(path)
+    if "upstream" in meta_data:
+        for upstream_tool in meta_data["upstream"]:
+            for upstream_path in meta_data["upstream"][upstream_tool]:
+                graph["links"].append({"source":upstream_path,"target":path,"label":upstream_tool})
+                get_upstream(upstream_path,graph)
+
+
+def get_downstream(path,graph):
+    graph["nodes"].append({"id": path, "label": path})
+    meta_data = get_meta_data(path)
+    if "downstream" in meta_data:
+        for downstream_tool in meta_data["downstream"]:
+            for downstream_path in meta_data["downstream"][downstream_tool]:
+                graph["links"].append({"source":path,"target":downstream_path,"label":downstream_tool})
+                get_downstream(downstream_path,graph)
+

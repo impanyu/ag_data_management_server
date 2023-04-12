@@ -1035,6 +1035,41 @@ async function get_meta_and_content(){
 
 
 function set_pipeline_panel(){
+
+      // Data for nodes and links
+      nodes = [
+        { id: 1, label: "A" },
+        { id: 2, label: "B" },
+        { id: 3, label: "C" },
+      ];
+
+      links = [
+        { source: 1, target: 2, label: "a" },
+        { source: 2, target: 3, label: "b" },
+        { source: 3, target: 1, label: "c" },
+      ];
+
+
+        $.ajax({
+         type: "POST",
+         url:"/get_pipeline",
+         data:JSON.stringify({
+          current_path: current_path
+
+        }),
+        contentType: "application/json",
+        success: function(data, status){
+          //console.info(data);
+          //console.info("meta data updated");
+          //alert("meta data updated");
+          graph = JSON.parse(data);
+          nodes = data["nodes"];
+          links = data["links"];
+
+  }});
+
+
+
   svg_width = 800;
   svg_height= 400;
 
@@ -1058,18 +1093,7 @@ function set_pipeline_panel(){
         .attr("d", "M0,-5L10,0L0,5")
         .attr("fill", "#000");
 
-      // Data for nodes and links
-      const nodes = [
-        { id: 1, label: "A" },
-        { id: 2, label: "B" },
-        { id: 3, label: "C" },
-      ];
 
-      const links = [
-        { source: 1, target: 2, label: "a" },
-        { source: 2, target: 3, label: "b" },
-        { source: 3, target: 1, label: "c" },
-      ];
 
       // Create a simulation with nodes and links
       const simulation = d3

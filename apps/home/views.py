@@ -811,6 +811,14 @@ def data(request):
 
             return HttpResponse(response)
 
+        elif load_template == 'get_pipeline':
+            current_path = request.POST['current_path']
+
+
+            graph = get_pipeline("/data/" + current_path)
+            response = json.dumps(graph)
+            return HttpResponse(response)
+
         elif load_template == 'meta_data':
             current_path = request.POST['current_path']
             meta_data={}
