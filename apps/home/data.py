@@ -1527,7 +1527,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
         if os.path.isfile(created_file):
             generate_meta_data_for_file(created_file,{})
         else:
-            generate_meta_data_for_dir(created_file,{})
+            generate_meta_data_for_dir(created_file,{"create":"null"})
 
         parent_path = "/".join(created_file.split("/")[:-1])
         parent_meta_data_file_name = "_".join(parent_path.split("/")[1:]) + ".json"
@@ -1542,6 +1542,8 @@ def run_tool(entry_point,arg_values, arg_types,user):
 
 
     for written_file in written_files:
+        if os.path.isdir(written_file):
+            continue
 
         written_meta_data_file_name = "_".join(written_file.split("/")[1:]) + ".json"
         with open(os.path.join(settings.CORE_DIR, 'data', written_meta_data_file_name),"r") as written_meta_data_file:
@@ -1551,6 +1553,8 @@ def run_tool(entry_point,arg_values, arg_types,user):
         written_meta_data["upstream"][entry_point] = []
 
         for read_file in read_files:
+            if os.path.isdir(read_file):
+                continue
             if read_file == f"/data{entry_point}":
                 continue
 
@@ -1560,6 +1564,8 @@ def run_tool(entry_point,arg_values, arg_types,user):
             json.dump(written_meta_data,written_meta_data_file)
 
     for read_file in read_files:
+        if os.path.isdir(read_file):
+            continue
 
         read_meta_data_file_name = "_".join(read_file.split("/")[1:]) + ".json"
         with open(os.path.join(settings.CORE_DIR, 'data', read_meta_data_file_name), "r") as read_meta_data_file:
@@ -1569,7 +1575,8 @@ def run_tool(entry_point,arg_values, arg_types,user):
         read_meta_data["downstream"][entry_point] = []
 
         for written_file in written_files:
-
+            if os.path.isdir(written_file):
+                continue
 
             read_meta_data["downstream"][entry_point].append(written_file)
 

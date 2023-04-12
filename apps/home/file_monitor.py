@@ -11,14 +11,14 @@ class EventHandler(pyinotify.ProcessEvent):
         self.created_files = set()
 
     def process_IN_ACCESS(self, event):
-        if not event.dir:
-            self.accessed_files.add(event.pathname)
+        #if not event.dir:
+        self.accessed_files.add(event.pathname)
 
         #print(f"File {event.pathname} was read by PID {event.pid}")
 
     def process_IN_CREATE(self, event):
-        if not event.dir:
-            self.created_files.add(event.pathname)
+        #if not event.dir:
+        self.created_files.add(event.pathname)
         #print(f"File {event.pathname} was created by PID {event.pid}")
 
     def process_IN_DELETE(self, event):
@@ -26,8 +26,8 @@ class EventHandler(pyinotify.ProcessEvent):
             print(f"File {event.pathname} was deleted by PID {event.pid}")
 
     def process_IN_MODIFY(self, event):
-        if not event.dir:
-            self.written_files.add(event.pathname)
+        #if not event.dir:
+        self.written_files.add(event.pathname)
             #print(f"File {event.pathname} was modified by PID {event.pid}")
 
 
