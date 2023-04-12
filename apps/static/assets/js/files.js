@@ -1132,7 +1132,7 @@ function draw_pipeline(graph){
         .enter()
         .append("rect")
         .attr("class", "node")
-        .attr("width", (d)=> len(d.label)*10)
+        .attr("width", (d)=> d.label.length*10)
         .attr("height", 20)
         .attr("x",0)
         .attr("y",0)
