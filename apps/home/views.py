@@ -741,6 +741,21 @@ def data(request):
 
             return response
 
+        elif load_template == "file_system_virtual":
+            current_path = f"{request.user.get_username()}/ag_data/domain"
+            abs_path = f"/data/{current_path}"
+            meta_data = get_meta_data(abs_path)
+
+            domains = []
+
+            for domain_path in meta_data["subdirs"]:
+                domain_meta_data = get_domain_meta(domain_path)
+                domains.append(domain_meta_data)
+
+            response = json.dumps(domains)
+
+            return HttpResponse(response)
+
 
 
         elif load_template == 'file_system':

@@ -13,6 +13,7 @@ urlpatterns = [
 
     # The home page
     path('', views.index, name='home'),
+    re_path(r'^file_system_virtual',views.data,name='file_system_virtual'),
     re_path(r'^get_pipeline',views.data,name='get_pipeline'),
     re_path(r'^run_tool',views.data,name='run_tool'),
     re_path(r'^create_file',views.data,name='create_file'),

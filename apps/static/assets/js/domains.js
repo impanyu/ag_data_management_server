@@ -58,7 +58,29 @@ function set_create_domain_overlay(){
 
 
 function get_domain_list(){
+       $.ajax({
+            type: "POST",
 
+            url: "/file_system_virtual",
+            data: {
+
+            },
+            success: function (data) {
+                console.info(data);
+                domains = JSON.parse(data);
+                for(domain of domains){
+                    document.querySelector("#box_container").innerHTML += '<div class="col-lg-3 col-md-6">'+
+                      '<button type="button" class="btn-block" data-clipboard-text="active-40"  onclick="/domain.html?current_path={{user}}/ag_data/domain/'+domain["name"]+'">'+
+                        '<div>'+
+                          '<i class="ni ni-map-big "></i>'+
+                          '<span>'+domain["name"]+'</span>'+
+                       '</div>'+
+                      '</button>'+
+                    '</div>';
+                }
+
+            }
+        });
 }
 
 set_create_domain_overlay();
