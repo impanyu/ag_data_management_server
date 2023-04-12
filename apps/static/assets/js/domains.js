@@ -41,3 +41,5 @@ function set_create_domain_overlay(){
            create_domain_overlay.style.display  = "flex";
         });
 }
+
+set_create_domain_overlay();
