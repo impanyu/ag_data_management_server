@@ -1123,7 +1123,7 @@ function draw_pipeline(graph){
         .append("line")
         .attr("class", "link")
         .attr("stroke","#888")
-        .style("stroke-width", 3); // Increase the edge thickness
+        .style("stroke-width", 6); // Increase the edge thickness
 
       // Draw nodes
       const node = svg
