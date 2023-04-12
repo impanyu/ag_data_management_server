@@ -24,6 +24,7 @@ from matplotlib.colors import ListedColormap
 
 import pyinotify
 import docker
+import docker.errors
 
 from .file_monitor import EventHandler
 
@@ -1540,10 +1541,19 @@ def run_tool(entry_point,arg_values, arg_types,user):
         volumes={f"/data/{user}": {"bind": f"/{user}", "mode": "rw"}},
         # working_dir=working_dir,
         # environment={"VAR1": "value1", "VAR2": "value2"},
-        detach=False,
+        detach=True,
         auto_remove=True
     )
 
+
+    timeout_seconds = 60  # Set your desired timeout value in seconds
+
+    try:
+        output.wait(timeout=timeout_seconds)
+    except docker.errors.Timeout:
+        print(f"Container exceeded the {timeout_seconds} seconds time limit.")
+        output.stop()
+        output.remove(force=True)
 
     notifier.stop()
     #time.sleep(3)
@@ -1614,7 +1624,6 @@ def run_tool(entry_point,arg_values, arg_types,user):
 
         with open(os.path.join(settings.CORE_DIR, 'data',  read_meta_data_file_name),"w") as  read_meta_data_file:
             json.dump( read_meta_data, read_meta_data_file)
-
 
 
     return
