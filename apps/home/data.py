@@ -846,8 +846,8 @@ def generate_meta_data_for_dir(dir_path,upstream):
     meta_data_dir_name = "_".join(dir_path.split("/")[1:]) + ".json"
 
     if os.path.exists(os.path.join(settings.CORE_DIR, 'data', meta_data_dir_name)):
-        with open(os.path.join(settings.CORE_DIR, 'data', meta_data_dir_name), "r") as meta_data_file:
-            return json.load(meta_data_file)
+
+        return get_meta_data(dir_path)
 
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_dir_name), "w") as meta_data_file:
         json.dump(meta_data, meta_data_file)
@@ -923,8 +923,7 @@ def generate_meta_data_for_file(file_path, upstream):
     meta_data_file_name = "_".join(file_path.split("/")[1:]) + ".json"
 
     if os.path.exists(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name)):
-        with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
-            return json.load(meta_data_file)
+        return get_meta_data(file_path)
 
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "w") as meta_data_file:
         json.dump(meta_data, meta_data_file)
@@ -1332,6 +1331,17 @@ def shp_to_image(shp_path,col): # plot a column of shape file as png image
     img_meta_data = generate_meta_data_for_file(img_path,{"shp to image":[shp_path]})
     img_meta_data["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
 
+    shp_meta = get_meta_data(shp_path)
+    if "downstream" not in shp_meta:
+        shp_meta["downstream"] = {}
+
+    shp_meta["downstream"]["shp to image"] = img_path
+    shp_meta_data_file_name = "_".join(shp_path.split("/")[1:]) + ".json"
+    with open(os.path.join(settings.CORE_DIR, 'data', shp_meta_data_file_name), "w") as shp_meta_data_file:
+        json.dump(shp_meta, shp_meta_data_file)
+
+
+
     img_meta_data_file_name = "_".join(img_path.split("/")[1:]) + ".json"
 
     with open(os.path.join(settings.CORE_DIR, 'data', img_meta_data_file_name), "w") as img_meta_data_file:
@@ -1404,7 +1414,16 @@ def tif_to_image(tif_path,band):
 
 
     img_meta_data = generate_meta_data_for_file(img_path,{"tif to image":[tif_path]})
-    tif_meta = read_tif_meta(tif_path)
+    tif_meta = get_meta_data(tif_path)
+    if "downstream" not in tif_meta:
+        tif_meta["downstream"] = {}
+
+    tif_meta["downstream"]["tif to image"] = img_path
+    tif_meta_data_file_name = "_".join(tif_path.split("/")[1:]) + ".json"
+    with open(os.path.join(settings.CORE_DIR, 'data', tif_meta_data_file_name), "w") as tif_meta_data_file:
+        json.dump(tif_meta,tif_meta_data_file)
+
+
     if "spatial_range" in tif_meta:
         img_meta_data["spatial_range"] = tif_meta["spatial_range"]
 
