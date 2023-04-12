@@ -1641,6 +1641,10 @@ def get_upstream(path,graph):
     if not os.path.exists(path):
         graph["nodes"].append({"id": trim_path_header(path), "label": trim_path_header(path),"node_status":"dead"})
         return
+
+    for node in graph["nodes"]:
+        if node["id"] == trim_path_header(path):
+            return
     graph["nodes"].append({"id": trim_path_header(path), "label": trim_path_header(path)})
 
     meta_data = get_meta_data(path)
@@ -1656,6 +1660,10 @@ def get_downstream(path,graph):
     if not os.path.exists(path):
         graph["nodes"].append({"id": trim_path_header(path), "label": trim_path_header(path),"node_status":"dead"})
         return
+
+    for node in graph["nodes"]:
+        if node["id"] == trim_path_header(path):
+            return
 
     graph["nodes"].append({"id": trim_path_header(path), "label": trim_path_header(path)})
 
