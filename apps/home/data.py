@@ -1609,7 +1609,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
 
 def get_pipeline(path):
     graph = {"nodes":[],"links":[]}
-    graph["nodes"].append({"id":path, "label":path,"node_status":"current"})
+    graph["nodes"].append({"id":path[6:], "label":path,"node_status":"current"})
     meta_data = get_meta_data(path)
     if "upstream" in meta_data:
         for upstream_tool in meta_data["upstream"]:
@@ -1628,7 +1628,7 @@ def get_pipeline(path):
 
 def get_upstream(path,graph):
     if not os.path.exists(path):
-        graph["nodes"].append({"id": path, "label": path,"node_status":"dead"})
+        graph["nodes"].append({"id": path[6:], "label": path,"node_status":"dead"})
         return
     graph["nodes"].append({"id": path, "label": path})
 
@@ -1643,7 +1643,7 @@ def get_upstream(path,graph):
 
 def get_downstream(path,graph):
     if not os.path.exists(path):
-        graph["nodes"].append({"id": path, "label": path,"node_status":"dead"})
+        graph["nodes"].append({"id": path[6:], "label": path,"node_status":"dead"})
         return
 
     graph["nodes"].append({"id": path, "label": path})
