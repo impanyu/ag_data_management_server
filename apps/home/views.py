@@ -219,7 +219,7 @@ def data(request):
             meta_data = generate_meta_data_for_dir(new_path,{"create":["null"]})
             update_parent_meta(new_path)
 
-            meta_data["mode"] = "Domain"
+            meta_data["mode"] = ["Domain"]
             meta_data_name = "_".join(new_path.split("/")[1:]) + ".json"
 
 
