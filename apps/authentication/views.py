@@ -47,37 +47,62 @@ def register_user(request):
             #user = authenticate(username=username, password=raw_password)
             #create the home folder /data/username
 
-            data_file_name = f"/data/{username}"
+
+            user_file_name = f"/data/{username}"
+            user_meta_file_name = "_".join(user_file_name.split("/")[1:]) + ".json"
+            data_file_name = f"/data/{username}/ag_data"
+            meta_data_file_name = "_".join(data_file_name.split("/")[1:]) + ".json"
+            domain_file_name = f"{data_file_name}/domain"
+            domain_meta_file_name = "_".join(domain_file_name.split("/")[1:]) + ".json"
+
+            # create user file
+            if not os.path.exists(user_file_name):
+                os.makedirs(user_file_name)
+
+            # create data file
             if not os.path.exists(data_file_name):
                 os.makedirs(data_file_name)
 
+            # create domain file
+            if not os.path.exists(domain_file_name):
+                os.makedirs(domain_file_name)
 
-            '''
-            meta_data_file_name =  "_".join(data_file_name.split("/")[1:]) + ".json"
-            if not os.path.exists(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name)):
-                meta_data = generate_meta_data_for_dir(meta_data_file_name)
 
-            with open(os.path.join(settings.CORE_DIR, 'data.json'),'r') as root_meta_data_file:
+            if not os.path.exists(os.path.join(settings.CORE_DIR, 'data', user_meta_file_name)):
+                user_meta_data = generate_meta_data_for_dir(user_file_name)
+
+            with open(os.path.join(settings.CORE_DIR, 'data','data.json'), 'r') as root_meta_data_file:
                 root_meta_data = json.load(root_meta_data_file)
-                if data_file_name not in root_meta_data["subdirs"]:
-                    root_meta_data["subdirs"].append(data_file_name)
+                if user_file_name not in root_meta_data["subdirs"]:
+                    root_meta_data["subdirs"].append(user_file_name)
 
-            with open(os.path.join(settings.CORE_DIR, 'data.json'), 'w') as root_meta_data_file:
-                json.dump(root_meta_data,root_meta_data_file)
+            with open(os.path.join(settings.CORE_DIR, 'data','data.json'), 'w') as root_meta_data_file:
+                json.dump(root_meta_data, root_meta_data_file)
 
 
 
-            domain_file_name = f"{data_file_name}/domain"
-            domain_meta_data_file_name = "_".join(domain_file_name.split("/")[1:]) + ".json"
-            if not os.path.exists(os.path.join(settings.CORE_DIR, 'data', domain_meta_data_file_name)):
-                generate_meta_data_for_dir(domain_meta_data_file_name)
+            if not os.path.exists(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name)):
+                meta_data = generate_meta_data_for_dir(data_file_name)
+
+            if data_file_name not in user_meta_data["subdirs"]:
+                user_meta_data["subdirs"].append(data_file_name)
+
+            with open(os.path.join(settings.CORE_DIR, 'data', user_meta_file_name), 'w') as user_meta_data_file:
+                json.dump(user_meta_data, user_meta_data_file)
+
+
+
+            if not os.path.exists(os.path.join(settings.CORE_DIR, 'data', domain_meta_file_name)):
+                domain_meta_data = generate_meta_data_for_dir(domain_file_name)
 
             if domain_file_name not in meta_data["subdirs"]:
                 meta_data["subdirs"].append(domain_file_name)
 
-            with open(os.path.join(settings.CORE_DIR, meta_data_file_name), 'w') as meta_data_file:
+            with open(os.path.join(settings.CORE_DIR,'data', meta_data_file_name), 'w') as meta_data_file:
                 json.dump(meta_data,meta_data_file)
-            '''
+
+
+
             msg = 'User created - please <a href="/login/">login</a>.'
             success = True
 
