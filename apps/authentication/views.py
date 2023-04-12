@@ -52,7 +52,7 @@ def register_user(request):
                 os.makedirs(data_file_name)
 
 
-
+            '''
             meta_data_file_name =  "_".join(data_file_name.split("/")[1:]) + ".json"
             if not os.path.exists(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name)):
                 meta_data = generate_meta_data_for_dir(meta_data_file_name)
@@ -77,9 +77,8 @@ def register_user(request):
 
             with open(os.path.join(settings.CORE_DIR, meta_data_file_name), 'w') as meta_data_file:
                 json.dump(meta_data,meta_data_file)
-
-
-            msg = 'User created - please <a href="/login">login</a>.'
+            '''
+            msg = 'User created - please <a href="/login/">login</a>.'
             success = True
 
             # return redirect("/login/")
