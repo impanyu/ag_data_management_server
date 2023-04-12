@@ -998,6 +998,8 @@ async function get_meta_and_content(){
    if(current_path.indexOf(".")==-1){ //folder
     document.querySelector("#file_content").style.display="none";
      await get_meta_data();
+     set_pipeline_panel();
+
      if(meta_data["mode"] == "Tool"){
         set_tool_panel();
      }
@@ -1012,6 +1014,8 @@ async function get_meta_and_content(){
       document.querySelector("#create").style.display="none";
       document.querySelector("#file_content").style.display="none";
       await get_meta_data();
+
+      set_pipeline_panel();
       if(suffix == "shp"){
         current_col =  meta_data["native"]["columns"][0];
      }
@@ -1028,6 +1032,13 @@ async function get_meta_and_content(){
    }
 
 }
+
+
+function set_pipeline_panel(){
+
+
+}
+
 
 function update_file(){
       $.ajax({
