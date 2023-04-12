@@ -68,8 +68,8 @@ def register_user(request):
                 os.makedirs(domain_file_name)
 
 
-            if not os.path.exists(os.path.join(settings.CORE_DIR, 'data', user_meta_file_name)):
-                user_meta_data = generate_meta_data_for_dir(user_file_name)
+
+            user_meta_data = generate_meta_data_for_dir(user_file_name)
 
             with open(os.path.join(settings.CORE_DIR, 'data','data.json'), 'r') as root_meta_data_file:
                 root_meta_data = json.load(root_meta_data_file)
@@ -81,8 +81,8 @@ def register_user(request):
 
 
 
-            if not os.path.exists(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name)):
-                meta_data = generate_meta_data_for_dir(data_file_name)
+
+            meta_data = generate_meta_data_for_dir(data_file_name)
 
             if data_file_name not in user_meta_data["subdirs"]:
                 user_meta_data["subdirs"].append(data_file_name)
@@ -92,8 +92,8 @@ def register_user(request):
 
 
 
-            if not os.path.exists(os.path.join(settings.CORE_DIR, 'data', domain_meta_file_name)):
-                domain_meta_data = generate_meta_data_for_dir(domain_file_name)
+
+            domain_meta_data = generate_meta_data_for_dir(domain_file_name)
 
             if domain_file_name not in meta_data["subdirs"]:
                 meta_data["subdirs"].append(domain_file_name)
