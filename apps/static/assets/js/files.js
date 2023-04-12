@@ -1049,7 +1049,7 @@ function set_pipeline_panel(){
         .append("marker")
         .attr("id", String)
         .attr("viewBox", "0 -5 10 10")
-        .attr("refX", 20)
+        .attr("refX", 25)
         .attr("refY", 0)
         .attr("markerWidth", 6)
         .attr("markerHeight", 6)
