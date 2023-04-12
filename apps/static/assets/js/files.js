@@ -1188,12 +1188,7 @@ function draw_pipeline(graph){
           .attr("y", (d) => (d.source.y + d.target.y) / 2);
       });
 
-
-
-}
-
-
-function dragstarted(event, d) {
+  function dragstarted(event, d) {
   if (!event.active) simulation.alphaTarget(0.3).restart();
   d.fx = d.x;
   d.fy = d.y;
@@ -1209,6 +1204,11 @@ function dragended(event, d) {
   d.fx = null;
   d.fy = null;
 }
+
+
+}
+
+
 
 
 function toggle_pipeline_panel(){
