@@ -1159,7 +1159,7 @@ function draw_pipeline(graph){
         .attr("dy", 0)
         .text((d) => d.label)
         .attr("dominant-baseline", "central")
-        .attr("font-size","15px")
+        .attr("font-size","25px")
         .attr("font-weight","bold");
 
          // Add link labels
