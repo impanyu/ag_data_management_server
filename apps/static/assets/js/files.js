@@ -2039,7 +2039,7 @@ function update_meta(){
     meta_data["spatial_range"] = {"southwest":document.querySelector("#southwest").value, "northeast":document.querySelector("#northeast").value};
     other_meta = document.querySelector("#other_meta").value;
 
-    for(k_v_pair in other_meta.split("\n") ){
+    for(k_v_pair of other_meta.split("\n") ){
         if (k_v_pair.indexOf(":")==-1)
          continue;
         console.info(k_v_pair);
