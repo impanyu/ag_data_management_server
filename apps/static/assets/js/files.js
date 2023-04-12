@@ -1130,12 +1130,13 @@ function draw_pipeline(graph){
         .selectAll(".node")
         .data(nodes)
         .enter()
-        .append("rect")
+        .append("circle")
         .attr("class", "node")
-        .attr("width", (d)=> d.label.length*10)
-        .attr("height", 20)
-        .attr("x",(d) => d.x)
-        .attr("y",(d) => d.y)
+        //.attr("width", (d)=> d.label.length*10)
+        //.attr("height", 20)
+        //.attr("x",(d) => d.x)
+        //.attr("y",(d) => d.y)
+        .attr("r",30)
         .attr("fill", "#69b3a2")
          .attr("fill", (d) => {
                 if (d.node_status == "current") {
@@ -1190,7 +1191,7 @@ function draw_pipeline(graph){
           .attr("x2", (d) => d.target.x)
           .attr("y2", (d) => d.target.y);
 
-        node.attr("x", (d) => d.x).attr("y", (d) => d.y);
+        node.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
 
         nodeLabels
           .attr("x", (d) => d.x)
