@@ -1078,7 +1078,7 @@ function draw_pipeline(graph){
   nodes = graph["nodes"];
   links = graph["links"];
 
-  //svg_width = document.querySelector("#pipeline_panel").offsetWidth;
+  svg_width = document.querySelector("#pipeline_svg").offsetWidth;
   svg_height= document.querySelector("#pipeline_panel").offsetHeight;
 
    const svg = d3.select("#pipeline_svg");
