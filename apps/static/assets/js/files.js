@@ -1032,8 +1032,7 @@ async function get_meta_and_content(){
    }
 
 }
-var nodes = [];
-var links =[];
+
 
 function set_pipeline_panel(){
 
