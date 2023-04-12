@@ -1607,52 +1607,59 @@ def run_tool(entry_point,arg_values, arg_types,user):
 
     return
 
+
+def trim_path_header(path):
+    if path[:6] == "/data/":
+        return path[6:]
+    else:
+        return path
+
 def get_pipeline(path):
     graph = {"nodes":[],"links":[]}
-    graph["nodes"].append({"id":path[6:], "label":path,"node_status":"current"})
+    graph["nodes"].append({"id":trim_path_header(path), "label":trim_path_header(path),"node_status":"current"})
     meta_data = get_meta_data(path)
     if "upstream" in meta_data:
         for upstream_tool in meta_data["upstream"]:
             for upstream_path in meta_data["upstream"][upstream_tool]:
-                graph["links"].append({"source":upstream_path,"target":path,"label":upstream_tool})
+                graph["links"].append({"source":trim_path_header(upstream_path),"target":trim_path_header(path),"label":trim_path_header(upstream_tool)})
 
                 get_upstream(upstream_path,graph)
 
     if "downstream" in meta_data:
         for downstream_tool in meta_data["downstream"]:
             for downstream_path in meta_data["downstream"][downstream_tool]:
-                graph["links"].append({"source":path,"target":downstream_path,"label":downstream_tool})
+                graph["links"].append({"source":trim_path_header(path),"target":trim_path_header(downstream_path),"label":trim_path_header(downstream_tool)})
 
                 get_downstream(downstream_path,graph)
     return graph
 
 def get_upstream(path,graph):
     if not os.path.exists(path):
-        graph["nodes"].append({"id": path[6:], "label": path,"node_status":"dead"})
+        graph["nodes"].append({"id": trim_path_header(path), "label": trim_path_header(path),"node_status":"dead"})
         return
-    graph["nodes"].append({"id": path, "label": path})
+    graph["nodes"].append({"id": trim_path_header(path), "label": trim_path_header(path)})
 
     meta_data = get_meta_data(path)
     if "upstream" in meta_data:
         for upstream_tool in meta_data["upstream"]:
             for upstream_path in meta_data["upstream"][upstream_tool]:
-                graph["links"].append({"source":upstream_path,"target":path,"label":upstream_tool})
+                graph["links"].append({"source":trim_path_header(upstream_path),"target":trim_path_header(path),"label":trim_path_header(upstream_tool)})
 
                 get_upstream(upstream_path, graph)
 
 
 def get_downstream(path,graph):
     if not os.path.exists(path):
-        graph["nodes"].append({"id": path[6:], "label": path,"node_status":"dead"})
+        graph["nodes"].append({"id": trim_path_header(path), "label": trim_path_header(path),"node_status":"dead"})
         return
 
-    graph["nodes"].append({"id": path, "label": path})
+    graph["nodes"].append({"id": trim_path_header(path), "label": trim_path_header(path)})
 
     meta_data = get_meta_data(path)
     if "downstream" in meta_data:
         for downstream_tool in meta_data["downstream"]:
             for downstream_path in meta_data["downstream"][downstream_tool]:
-                graph["links"].append({"source":path,"target":downstream_path,"label":downstream_tool})
+                graph["links"].append({"source":trim_path_header(path),"target":trim_path_header(downstream_path),"label":trim_path_header(downstream_tool)})
 
                 get_downstream(downstream_path, graph)
 
