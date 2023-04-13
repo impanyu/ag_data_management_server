@@ -2173,6 +2173,11 @@ function get_meta_data(){
                     //document.querySelector("#native_meta_panel").style.display = "block";
              }
 
+                   else if (meta_key == "introduction"){
+                  document.querySelector("#introduction").value =  meta_value + "\n";
+             }
+
+
 
 
              else{
