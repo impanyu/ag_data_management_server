@@ -69,7 +69,7 @@ def pages(request):
             html_template = loader.get_template('home/domain_main_page.html')
             return HttpResponse(html_template.render(context, request))
 
-        elif load_template == 'domains.html':
+        elif load_template == 'collections.html':
             context = {'segment': 'index'}
             #print("in domains")
             domains = get_domains()
@@ -80,7 +80,7 @@ def pages(request):
 
             context["domains"] = domain_names
 
-            html_template = loader.get_template('home/domains.html')
+            html_template = loader.get_template('home/collections.html')
             return HttpResponse(html_template.render(context, request))
 
         elif load_template == 'admin':
@@ -120,12 +120,12 @@ def pages(request):
             html_template = loader.get_template('home/files.html')
             return HttpResponse(html_template.render(context, request))
 
-        elif load_template == "domain.html":
+        elif load_template == "collection.html":
             context['current_path'] = request.GET['current_path']
             context['segment'] = load_template
 
 
-            html_template = loader.get_template('home/domain.html')
+            html_template = loader.get_template('home/collection.html')
             return HttpResponse(html_template.render(context, request))
 
         elif load_template == "search.html":
@@ -211,11 +211,11 @@ def data(request):
 
             return HttpResponse("domain created")
 
-        elif load_template == "create_domain":
+        elif load_template == "create_collection":
             #current_path = request.POST['current_path']
-            current_path = request.user.get_username()+"/ag_data/domain"
-            new_domain_name = request.POST['new_domain_name']
-            abs_path = os.path.join("/data", current_path,new_domain_name)
+            current_path = request.user.get_username()+"/ag_data/collections"
+            new_collection_name = request.POST['new_collection_name']
+            abs_path = os.path.join("/data", current_path,new_collection_name)
             suffix = abs_path.split(".")[-1]
 
             new_path = abs_path
@@ -228,14 +228,14 @@ def data(request):
             meta_data = generate_meta_data_for_dir(new_path,{"create":["null"]})
             update_parent_meta(new_path)
 
-            meta_data["mode"] = ["Domain"]
+            meta_data["mode"] = ["Collection"]
             meta_data_name = "_".join(new_path.split("/")[1:]) + ".json"
 
 
             with open(os.path.join(settings.CORE_DIR, 'data', meta_data_name), "w") as meta_data_file:
                 json.dump(meta_data, meta_data_file)
 
-            return HttpResponse("domain creation complete!")
+            return HttpResponse("collection creation complete!")
 
 
         elif load_template == 'domain_data':
@@ -751,17 +751,17 @@ def data(request):
             return response
 
         elif load_template == "file_system_virtual":
-            current_path = f"{request.user.get_username()}/ag_data/domain"
+            current_path = f"{request.user.get_username()}/ag_data/collections"
             abs_path = f"/data/{current_path}"
             meta_data = get_meta_data(abs_path)
 
-            domains = []
+            collections = []
 
-            for domain_path in meta_data["subdirs"]:
-                domain_meta_data = get_meta_data(domain_path)
-                domains.append(domain_meta_data)
+            for collection_path in meta_data["subdirs"]:
+                collection_meta_data = get_meta_data(collection_path)
+                collections.append(collection_meta_data)
 
-            response = json.dumps(domains)
+            response = json.dumps(collections)
 
             return HttpResponse(response)
 

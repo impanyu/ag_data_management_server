@@ -10,14 +10,14 @@
 {% endblock stylesheets %}
 
 {% block content %}
-  <div class="overlay" id="create_domain_overlay" style="display:none">
-  <div class="input-window row align-items-center" style="border-radius:10px" id="create_domain_tab">
-    <h2 class="col-12 col-lg-12">Create domain</h2>
+  <div class="overlay" id="create_collection_overlay" style="display:none">
+  <div class="input-window row align-items-center" style="border-radius:10px" id="create_collection_tab">
+    <h2 class="col-12 col-lg-12">Create Collection</h2>
 
-      <input  type="text" id="new_domain_name" value="New domain" class="form-control col-12 col-lg-12">
+      <input  type="text" id="new_collection_name" value="New Collection" class="form-control col-12 col-lg-12">
       <div class=" col-lg-12 col-12 text-right" style="margin-top:20px">
-      <button type="submit" class="btn btn-lg btn-info" id="create_domain_button">Create</button>
-        <button type="submit" class="btn btn-lg btn-info" id="cancel_create_domain_button">Cancel</button>
+      <button type="submit" class="btn btn-lg btn-info" id="create_collection_button">Create</button>
+        <button type="submit" class="btn btn-lg btn-info" id="cancel_create_collection_button">Cancel</button>
       </div>
   </div>
 </div>
@@ -124,12 +124,12 @@
 
 
           <div class="card shadow">
-              <div style="padding:10px; background:white;"><span id = "model"><h3 style="color:#666;margin-bottom:0px"><b>Domains</b></h3></span></div>
+              <div style="padding:10px; background:white;"><span id = "model"><h3 style="color:#666;margin-bottom:0px"><b>Collections</b></h3></span></div>
               <div class="card-header border-0" style="position:relative">
              <div class="row align-items-center ">
 
                   <div class="col-lg-12 col-12 text-right">
-                       <div class="btn btn-lg btn-success "  id="create_domain" >
+                       <div class="btn btn-lg btn-success "  id="create_collection" >
                            New
                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
   <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
@@ -236,7 +236,7 @@ user = "{{user}}";
 
 
 <script src="/static/assets/js/change_view.js"></script>
-<script src="/static/assets/js/domains.js"></script>
+<script src="/static/assets/js/collections.js"></script>
 
 <script src="/static/assets/vendor/clipboard/dist/clipboard.min.js"></script>
 <script src="/static/assets/vendor/moment/min/moment-with-locales.min.js"></script>
