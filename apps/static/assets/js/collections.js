@@ -70,7 +70,7 @@ function get_collection_list(){
                 collections = JSON.parse(data);
                 for(collection of collections){
                     document.querySelector("#box_container").innerHTML += '<div class="col-lg-3 col-md-6">'+
-                      '<button type="button" class="btn-block" data-clipboard-text="active-40" onclick="window.open(\'/collection.html?current_path='+user+'/ag_data/collection/'+collection["name"]+'\',\'_self\').focus()">'+
+                      '<button type="button" class="btn-block" data-clipboard-text="active-40" onclick="window.open(\'/collection.html?current_path='+user+'/ag_data/collections/'+collection["name"]+'\',\'_self\').focus()">'+
                         '<div>'+
                           '<i class="ni ni-map-big "></i>'+
                           '<span>'+collection["name"]+'</span>'+
