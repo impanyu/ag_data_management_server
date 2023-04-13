@@ -2094,7 +2094,7 @@ function get_meta_data(){
              if (meta_key == "subdirs" || meta_key =="abs_path" )
               continue;
 
-              else if (meta_key == "mode" || meta_key == "category" ){
+              else if (meta_key == "format" || meta_key == "category" ){
                  if(meta_value.length == 0)
                    continue;
                  //console.info(meta_key);
@@ -2172,6 +2172,8 @@ function get_meta_data(){
 
                     //document.querySelector("#native_meta_panel").style.display = "block";
              }
+
+
 
              else{
                 document.querySelector("#other_meta").value += meta_key + ": "+ JSON.stringify(meta_value) + "\n";
