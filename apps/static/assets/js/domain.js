@@ -2094,7 +2094,7 @@ function get_meta_data(){
              if (meta_key == "subdirs" || meta_key =="abs_path" )
               continue;
 
-              else if (meta_key == "mode" || meta_key == "category" || meta_key == "format"){
+              else if (meta_key == "mode" || meta_key == "category" ){
                  if(meta_value.length == 0)
                    continue;
                  //console.info(meta_key);

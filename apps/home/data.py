@@ -765,24 +765,17 @@ def register_file_meta(file_path, data_points):
 def aggregate_meta_data(dir_path,upstream):
     meta_data = {}
     # if this is a file
+    update_parent_meta(dir_path)
     if not os.path.isdir(dir_path):
         return generate_meta_data_for_file(dir_path,upstream)
-    meta_data["mode"] = ["Data"]
-    meta_data["category"] = []
-    meta_data["format"] = ["Folder"]
-    meta_data["label"] = []
-    meta_data["time_range"] = {"start": "01/01/2030 00:00:00", "end": "01/01/2030 00:00:00"}
-    meta_data["spatial_range"] = {"northeast": {"lat": 0, "lng": -180}, "southwest": {"lat": 0, "lng": -180}}
-    meta_data["subdirs"] = []
-    meta_data["abs_path"] = dir_path
-    meta_data["public"] = "False"
-    meta_data["name"] = dir_path.split("/")[-1]
-    meta_data["realtime"] = "Non-Realtime"
-    meta_data["upstream"] = upstream
+    else:
+        meta_data = generate_meta_data_for_dir(dir_path,upstream)
 
     # iterate through each sub path
     for p in os.listdir(dir_path):
+
         sub_path = os.path.join(dir_path, p)
+
         sub_meta_data = aggregate_meta_data(sub_path,upstream)
         meta_data["subdirs"].append(sub_path)
         '''
@@ -842,6 +835,9 @@ def generate_meta_data_for_dir(dir_path,upstream):
     meta_data["name"] = dir_path.split("/")[-1]
     meta_data["realtime"] = "Non-Realtime"
     meta_data["upstream"] = upstream
+    meta_data["introduction"] = ""
+    from .views import username
+    meta_data["owner"] = username
 
 
     meta_data_dir_name = "_".join(dir_path.split("/")[1:]) + ".json"
@@ -871,6 +867,9 @@ def generate_meta_data_for_file(file_path, upstream):
     meta_data["name"] = file_path.split("/")[-1]
     meta_data["realtime"] = "Non-Realtime"
     meta_data["upstream"] = upstream
+    meta_data["introduction"] = ""
+    from .views import username
+    meta_data["owner"] = username
 
     suffix = file_path.split("/")[-1].split(".")[-1]
 

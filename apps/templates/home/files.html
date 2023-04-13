@@ -131,11 +131,25 @@
             </form>
 
           </div>
-            <div style="padding:10px; background:#ddd" onclick="toggle_meta_data_panel()"><span id = "search_filter" ><h3 style="color:#666;margin-bottom:0px"><b>Meta Data</b></h3></span></div>
+            <div style="padding:10px; background:#ddd" onclick="toggle_meta_data_panel()"><span id = "search_filter" ><h3 style="color:#666;margin-bottom:0px"><b>Meta Data Panel</b></h3></span></div>
 
 
           <div  class="card-header border-0" id = "meta_data_panel" style = "background:#ddd;height:0px;" >
-            <div class="row  py-4">
+              <div class="row align-items-center py-4">
+                 <div class="col-12 col-lg-12">
+
+                              <label for="introduction" class="form-label"><b>Introduction</b></label>
+                              <textarea class="form-control" id="introduction" rows="5" style="resize:none;"></textarea>
+
+
+
+
+                            </div>
+
+
+              </div>
+
+            <div class="row align-items-center py-4">
                 <div class="col-lg-6 col-6">
                      <label class="form-check-label" for="category" style="width:100%;margin-bottom: 15px"><b>Category</b></label>
                 </div>

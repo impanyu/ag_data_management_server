@@ -33,16 +33,16 @@ from .forms import UploadFileForm
 
 
 # import matlab.engine as mat_eng
-
+username = ""
 
 @login_required(login_url="/login/")
 def index(request):
     context = {'segment': 'index'}
 
-    print("in domains")
-    domains = get_domains()
+    #print("in domains")
+    #domains = get_domains()
 
-    context["domains"] = domains
+    #context["domains"] = domains
 
     html_template = loader.get_template('home/search.html')
     return HttpResponse(html_template.render(context, request))
@@ -131,6 +131,7 @@ def pages(request):
         elif load_template == "search.html":
             context['current_path'] = request.GET['current_path']
             context['segment'] = load_template
+            username = request.user.get_username
 
             html_template = loader.get_template('home/search.html')
             return HttpResponse(html_template.render(context, request))
