@@ -1173,7 +1173,7 @@ def search(root_dir, search_box, category, mode, format, label, realtime, time_r
     # root_dir = root_dir + "/ag_data"
     meta_data_file_name = "_".join(root_dir.split("/")[1:]) + ".json"
     if not os.path.exists(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name)):
-        return [root_dir,os.path.join(settings.CORE_DIR, 'data', meta_data_file_name)]
+        return ["123",os.path.join(settings.CORE_DIR, 'data', meta_data_file_name)]
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
         meta_data = json.load(meta_data_file)
         #if filtering_condition(meta_data, search_box, category, mode, format, label, realtime, time_range, spatial_range):
