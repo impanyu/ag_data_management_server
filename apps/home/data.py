@@ -1340,7 +1340,12 @@ def shp_to_image(shp_path,col): # plot a column of shape file as png image
     if "downstream" not in shp_meta:
         shp_meta["downstream"] = {}
 
-    shp_meta["downstream"]["shp to image"] = [img_path]
+    if "shp to image" not in shp_meta["downstream"]:
+        shp_meta["downstream"]["shp to image"] = []
+    if img_path not in shp_meta["downstream"]["shp to image"]:
+        shp_meta["downstream"]["shp to image"].append(img_path)
+
+    #shp_meta["downstream"]["shp to image"] = [img_path]
     shp_meta_data_file_name = "_".join(shp_path.split("/")[1:]) + ".json"
     with open(os.path.join(settings.CORE_DIR, 'data', shp_meta_data_file_name), "w") as shp_meta_data_file:
         json.dump(shp_meta, shp_meta_data_file)
@@ -1423,7 +1428,12 @@ def tif_to_image(tif_path,band):
     if "downstream" not in tif_meta:
         tif_meta["downstream"] = {}
 
-    tif_meta["downstream"]["tif to image"] = [img_path]
+    if "tif to image" not in tif_meta["downstream"]:
+        tif_meta["downstream"]["tif to image"] = []
+
+    if img_path not in tif_meta["downstream"]["tif to image"]:
+        tif_meta["downstream"]["tif to image"].append(img_path)
+
     tif_meta_data_file_name = "_".join(tif_path.split("/")[1:]) + ".json"
     with open(os.path.join(settings.CORE_DIR, 'data', tif_meta_data_file_name), "w") as tif_meta_data_file:
         json.dump(tif_meta,tif_meta_data_file)
@@ -1592,12 +1602,16 @@ def run_tool(entry_point,arg_values, arg_types,user):
             written_meta_data = json.load(written_meta_data_file)
         if "upstream" not in written_meta_data:
             written_meta_data["upstream"] = {}
-        written_meta_data["upstream"][tool] = []
+        if tool not in written_meta_data["upstream"]:
+            written_meta_data["upstream"][tool] = []
+        #written_meta_data["upstream"][tool] = []
 
         for read_file in read_files:
             if os.path.isdir(read_file):
                 continue
             if tool in read_file:
+                continue
+            if read_file in written_meta_data["upstream"][tool]:
                 continue
 
             written_meta_data["upstream"][tool].append(read_file)
@@ -1614,10 +1628,14 @@ def run_tool(entry_point,arg_values, arg_types,user):
             read_meta_data = json.load(read_meta_data_file)
         if "downstream" not in read_meta_data:
             read_meta_data["downstream"] = {}
-        read_meta_data["downstream"][tool] = []
+        #read_meta_data["downstream"][tool] = []
+        if tool not in read_meta_data["downstream"]:
+            read_meta_data["downstream"][tool] = []
 
         for written_file in written_files:
             if os.path.isdir(written_file):
+                continue
+            if written_file in read_meta_data["downstream"][tool]:
                 continue
 
             read_meta_data["downstream"][tool].append(written_file)

@@ -1110,7 +1110,7 @@ function draw_pipeline(graph){
         .forceSimulation(nodes)
         .force(
           "link",
-          d3.forceLink(links).id((d) => d.id).distance(200)
+          d3.forceLink(links).id((d) => d.id).distance(250)
         )
         .force("charge", d3.forceManyBody().strength(-300))
         .force("center", d3.forceCenter(svg_width / 2, svg_height / 2));
