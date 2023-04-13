@@ -1243,7 +1243,7 @@ def get_meta_data(path):
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
         meta_data = json.load(meta_data_file)
 
-    if "collection" in meta_data["mode"]:
+    if "Collection" in meta_data["mode"]:
         return meta_data
 
     # Get file/directory size
