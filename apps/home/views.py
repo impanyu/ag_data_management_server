@@ -844,8 +844,8 @@ def data(request):
             for dir in dirs:
                 if dir[0] == ".":
                     continue
-                if file_path == "ypan12/ag_data" and dir == "domain":
-                    continue
+                #if file_path == "ypan12/ag_data" and dir == "collections":
+                #    continue
                 created_time = fs.get_created_time( dir)
                 accessed_time = fs.get_accessed_time( dir)
                 size = fs.size( dir)

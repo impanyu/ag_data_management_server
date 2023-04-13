@@ -1214,9 +1214,9 @@ def search(root_dir, search_box, category, mode, format, label, realtime, time_r
 def get_meta_data(path):
     meta_data_file_name = "_".join(path.split("/")[1:]) + ".json"
     meta_data_file_path = os.path.join(settings.CORE_DIR, 'data', meta_data_file_name)
-
+    '''
     if not os.path.exists(meta_data_file_path):
-        return {}
+ 
 
         if("." in os.path.basename(path)):
             generate_meta_data_for_file(path,{"create":["null"]})
@@ -1237,11 +1237,14 @@ def get_meta_data(path):
 
         with open(os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name), "w") as parent_meta_data_file:
             json.dump(parent_meta_data,parent_meta_data_file)
-
+    '''
 
 
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
         meta_data = json.load(meta_data_file)
+
+    if meta_data["mode"] == "Collection":
+        return meta_data
 
     # Get file/directory size
     size = os.path.getsize(path)
