@@ -2333,6 +2333,7 @@ function get_item_list(){
         function(data, status){
           //console.info(data);
           data=JSON.parse(data);
+          console.info(data);
           subdomains=[];
           times=[];
 
@@ -2346,15 +2347,18 @@ function get_item_list(){
 
           //for(file of data.files){
           for(var i=0;i<data.length;i++){
+
           file=data[i]; //meta data for file or dir
+          if(file["mode"] == "Collection")
+            continue;
           current_files_names.push(file["name"]);
           if (file["name"].indexOf(".") == -1)
-             folder_icon = '<i class="ni ni-folder-17 text-primary"></i>';
+             folder_icon =  '<i class="ni ni-folder-17 text-primary"></i>'
           else
              folder_icon = '';
 
-            item_html =  '<tr  class="file_and_dir_item"><td scope="row"><div class="media align-items-center"><div class="media-body">'+folder_icon+'<span class="name mb-0 text-sm"> &nbsp;<a href="/files.html?current_path='+current_path+'/'+file["name"]+'&dir=false"> ' +file["name"]+
-                  '</a></span> </div></div></td>" + "<td class="budget">'+file["native"]["created_time"]+'</td>"' +
+            item_html =  '<tr  class="file_and_dir_item" id="file_and_dir_item_'+file["name"]+'"><td scope="row"><div class="media align-items-center"><div class="media-body">'+folder_icon+'<span class="name mb-0 text-sm"> &nbsp;<a href="/files.html?current_path='+current_path+'/'+file["name"]+
+                  '&dir=false"> ' +file["name"]+ '</a></span> </div></div></td>" + "<td class="budget">'+file["native"]["created_time"]+'</td>"' +
                    '<td> <span class="badge badge-dot mr-4">  <span class="status">'+file["native"]["access_time"]+'</span></span></td>' +
                    '<td> <span class="badge badge-dot mr-4">  <span class="status">'+file["native"]["size"]+'</span></span></td>' +
                    '<td> <div class="avatar-group"> <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title='+user+'><img alt="Image placeholder" src="/static/assets/img/theme/react.jpg"></a></div></td>' +
@@ -2368,6 +2372,19 @@ function get_item_list(){
                    '</div> </div></td></tr>';
             item_node = htmlToElement(item_html);
             $("#file_list")[0].appendChild(item_node);
+
+            $("#file_and_dir_item_"+file["name"]).click(function(){
+                //file_name = this.id.split("_")[this.id.split("_").length-1]
+
+               this.style.backgroundColor = "#69cfff";
+                if(previous_selected_file_and_dir)
+                  previous_selected_collection.style.backgroundColor = "";
+
+                previous_selected_collection = this;
+
+
+
+            })
 
 
             $("#"+i+"_file_delete").click(function(){
@@ -2422,7 +2439,6 @@ function get_item_list(){
 
     });
 }
-
 
 
 function toggle_meta_data_panel(){

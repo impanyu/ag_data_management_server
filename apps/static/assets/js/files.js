@@ -2398,7 +2398,7 @@ function get_item_list(){
           else
              folder_icon = '';
 
-            item_html =  '<tr  class="file_and_dir_item"><td scope="row"><div class="media align-items-center"><div class="media-body">'+folder_icon+'<span class="name mb-0 text-sm"> &nbsp;<a href="/files.html?current_path='+current_path+'/'+file["name"]+
+            item_html =  '<tr  class="file_and_dir_item" id="file_and_dir_item_'+file["name"]+'"><td scope="row"><div class="media align-items-center"><div class="media-body">'+folder_icon+'<span class="name mb-0 text-sm"> &nbsp;<a href="/files.html?current_path='+current_path+'/'+file["name"]+
                   '&dir=false"> ' +file["name"]+ '</a></span> </div></div></td>" + "<td class="budget">'+file["native"]["created_time"]+'</td>"' +
                    '<td> <span class="badge badge-dot mr-4">  <span class="status">'+file["native"]["access_time"]+'</span></span></td>' +
                    '<td> <span class="badge badge-dot mr-4">  <span class="status">'+file["native"]["size"]+'</span></span></td>' +
@@ -2413,6 +2413,19 @@ function get_item_list(){
                    '</div> </div></td></tr>';
             item_node = htmlToElement(item_html);
             $("#file_list")[0].appendChild(item_node);
+
+            $("#file_and_dir_item_"+file["name"]).click(function(){
+                //file_name = this.id.split("_")[this.id.split("_").length-1]
+
+               this.style.backgroundColor = "#69cfff";
+                if(previous_selected_file_and_dir)
+                  previous_selected_collection.style.backgroundColor = "";
+
+                previous_selected_collection = this;
+
+
+
+            })
 
 
             $("#"+i+"_file_delete").click(function(){
@@ -2540,6 +2553,7 @@ function display_collections_selection(){
 }
 
 previous_selected_collection = null;
+previous_selected_file_and_dir =null;
 function select_collection(collection_name){
    selected_collection = collection_name;
 
