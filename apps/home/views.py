@@ -788,6 +788,8 @@ def data(request):
 
             for collection_path in meta_data["subdirs"]:
                 collection_meta_data = get_meta_data(collection_path)
+                if collection_path == f"{abs}/collections":
+                    continue
                 collections.append(collection_meta_data)
 
             response = json.dumps(collections)

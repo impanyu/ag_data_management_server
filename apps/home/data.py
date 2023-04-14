@@ -1237,6 +1237,7 @@ def search(root_dir, search_box, category, mode, format, label,  realtime, time_
     result = []
     #if not os.path.exists(root_dir):
     #    return result
+
     # print(len(search_box))
     # search data
     # if we need to do a full search
@@ -1250,7 +1251,7 @@ def search(root_dir, search_box, category, mode, format, label,  realtime, time_
     #    return [root_dir,os.path.join(settings.CORE_DIR, 'data', meta_data_file_name)]
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
         meta_data = json.load(meta_data_file)
-        if filtering_condition(meta_data, search_box, category, mode, format, label, realtime, time_range, spatial_range):
+        if not root_dir[-19:] == "ag_data/collections" and  filtering_condition(meta_data, search_box, category, mode, format, label, realtime, time_range, spatial_range):
             result.append(meta_data)
         for subdir in meta_data["subdirs"]:
             sub_result = search(subdir, search_box, category, mode, format, label,  realtime, time_range, spatial_range)
