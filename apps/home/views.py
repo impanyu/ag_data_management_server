@@ -203,6 +203,8 @@ def data(request):
         elif load_template == 'add_to_collection':
             selected_collection = request.POST.get("selected_collection", "")
             selected_file_path = request.POST.get("selected_file_path", "")
+
+            print(selected_collection)
             add_to_collection(selected_collection,selected_file_path)
 
             return HttpResponse("item added to collection")
