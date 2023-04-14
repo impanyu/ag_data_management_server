@@ -646,10 +646,10 @@ function init_map_main(){
 }
 
 var data_cat_color_map = {};
-data_cat_color_map["Genotype"] = "pink";
-data_cat_color_map["Soil"] = "blue";
-data_cat_color_map["Phenotype"] = "red";
-data_cat_color_map["Atmosphere"] = "green";
+data_cat_color_map["Data"] = "pink";
+data_cat_color_map["Tool"] = "blue";
+data_cat_color_map["Model"] = "red";
+data_cat_color_map["Collection"] = "green";
 
 function draw_points(data_points){
 
@@ -659,14 +659,14 @@ function draw_points(data_points){
 
    for (i in data_points) {
    data_point = data_points[i]
-    data_cat = data_point["category"];
+    data_mode = data_point["mode"];
     data_loc = data_point["spatial_range"][0]; // northeast corner
     //size = data_point["size"];
     const point = new google.maps.Circle({
       strokeColor: "black",
       strokeOpacity: 0.5,
       strokeWeight: 2,
-      fillColor: data_cat_color_map[data_cat],
+      fillColor: mode_color_map[data_mode],
       fillOpacity: 0.5,
       map:map_main,
       center: data_loc,
