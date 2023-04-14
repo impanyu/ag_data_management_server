@@ -986,8 +986,8 @@ function select_file(arg_name,path){
     console.info("here");
 
     document.querySelector("#file_item_"+i).style.backgroundColor = "#69cfff";
-    if(previous_selected_file && previous_selected_file!= document.querySelector("#file_item_"+i)
-      previous_selected_file.style.backgroundColor = "";
+    //if(previous_selected_file && previous_selected_file!= document.querySelector("#file_item_"+i)
+    //  previous_selected_file.style.backgroundColor = "";
 
     previous_selected_file = document.querySelector("#file_item_"+i);
     //document.querySelector(".file_and_dir_item").style.backgroundColor = "white";
