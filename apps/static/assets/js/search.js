@@ -420,16 +420,16 @@ function get_item_list(){
           items = data["items"];
           points = data["2d_points"]
 
-          color_scale_map = {"CSV/Spreadsheet":1, "Image":2, "Other":3}
+          color_scale_map = {"Data":1, "Tool":2, "Collection":3, "Model":4}
           console.info(items);
           console.info(search_results_title);
           document.querySelector("#result_number").innerHTML= "<b>"+search_results_title+" "+items.length+"</b>";
           for(i in items){
              items[i]["2d"] = points[i];
-             if(items[i]["format"].length > 0)
-               items[i]["2d"].push(color_scale_map[items[i]["format"][0]]);
-             else
-               items[i]["2d"].push(0);
+             //if(items[i]["format"].length > 0)
+               items[i]["2d"].push(color_scale_map[items[i]["mode"][0]]);
+             //else
+               //items[i]["2d"].push(0);
           }
 
           draw_points(items);
