@@ -656,6 +656,8 @@ function draw_points(data_points){
   //clear circles
   google_map_circles.forEach(function(circle){circle.setMap(null)});
   google_map_circles=[];
+  lat_center = 0;
+  lng_center = 0;
 
    for (i in data_points) {
    data_point = data_points[i]
@@ -663,6 +665,9 @@ function draw_points(data_points){
     data_loc = {"lat": (data_point["spatial_range"]["southwest"]["lat"]+ data_point["spatial_range"]["northeast"]["lat"])/2, "lng":(data_point["spatial_range"]["southwest"]["lng"]+ data_point["spatial_range"]["northeast"]["lng"])/2}
 
     if (data_loc["lat"] == 0) continue;
+
+     lat_center += data_loc["lat"];
+    lng_center += data_loc["lng"];
     //size = data_point["size"];
     const point = new google.maps.Circle({
       strokeColor: "black",
@@ -675,6 +680,7 @@ function draw_points(data_points){
       radius:2000//Math.min(size,1000),
     });
     google_map_circles.push(point);
+    map_main.setCenter({"lat":lat_center,"lng":lng_center});
   }
 }
 
