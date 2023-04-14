@@ -211,7 +211,7 @@ def data(request):
             selected_file_path = request.POST.get("selected_file_path", "")
 
 
-            add_to_collection(selected_collection,selected_file_path)
+            add_to_collection(selected_collection,selected_file_path,request.user.get_username())
 
             return HttpResponse("add to collection")
 

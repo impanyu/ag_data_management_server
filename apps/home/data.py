@@ -1728,8 +1728,8 @@ def get_downstream(path,graph):
                 get_downstream(downstream_path, graph)
 
 
-def add_to_collection(selected_collection,selected_file_path):
-    from .views import username
+def add_to_collection(selected_collection,selected_file_path,username):
+
     selected_collection_path = f"/data/{username}/ag_data/collections/{selected_collection}"
 
     selected_collection_meta_data = get_meta_data(selected_collection_path)
