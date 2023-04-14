@@ -2518,6 +2518,7 @@ function duplicate(file_path){
             },
             success: function (data) {
                 console.info(data);
+                get_item_list();
 
                display_warning_overlay("A copy of "+file_path.split("/")[file_path.split("/").length-1]+" is generated.");
 
