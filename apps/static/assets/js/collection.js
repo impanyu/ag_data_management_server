@@ -2621,10 +2621,12 @@ function set_collections_overlay(){
             url: "/add_to_collection",
             data: {
                  selected_collection:selected_collection,
-                 selected_file: selected_file_path
+                 selected_file_path: selected_file_path
             },
             success: function (data) {
                 console.info(data);
+
+                display_warning_overlay(selected_file_path.split("/")[selected_file_path.split("/").length-1]+" added to colletion: "+selected_collection);
 
             }
         });
