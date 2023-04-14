@@ -245,7 +245,7 @@ def data(request):
                 new_path = abs_path+"_"+str(i)
                 i = i+1
 
-            open(new_path, "w")
+            #open(new_path, "w")
             meta_data = generate_meta_data_for_dir(new_path,{"create":["null"]})
             update_parent_meta(new_path)
 

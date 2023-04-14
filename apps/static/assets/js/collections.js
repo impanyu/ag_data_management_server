@@ -68,6 +68,7 @@ function get_collection_list(){
             success: function (data) {
                 console.info(data);
                 collections = JSON.parse(data);
+                document.querySelector("#box_container").innerHTML = "";
                 for(collection of collections){
                     document.querySelector("#box_container").innerHTML += '<div class="col-lg-3 col-md-6">'+
                       '<button type="button" class="btn-block" data-clipboard-text="active-40" onclick="window.open(\'/collection.html?current_path='+user+'/ag_data/collections/'+collection["name"]+'\',\'_self\').focus()">'+
