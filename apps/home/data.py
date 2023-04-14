@@ -630,8 +630,8 @@ def distance(x, y):
         d +=1
     if not x["public"] == y["public"]:
         d +=1
-    if not x["owner"] == y["owner"]:
-        d +=1
+    #if not x["owner"] == y["owner"]:
+     #   d +=1
 
     if not overlap(x["time_range"]["start"], x["time_range"]["end"], y["time_range"]["start"], y["time_range"]["end"]):
         d += 1
