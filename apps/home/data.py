@@ -1239,8 +1239,8 @@ def get_meta_data(path):
         with open(os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name), "w") as parent_meta_data_file:
             json.dump(parent_meta_data,parent_meta_data_file)
     '''
-
-
+    if not os.path.exists(path):
+        return {}
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
         meta_data = json.load(meta_data_file)
 
