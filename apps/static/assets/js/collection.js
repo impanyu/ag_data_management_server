@@ -2038,7 +2038,6 @@ function update_meta(){
          data:JSON.stringify({
           current_path: current_path,
           meta_data: meta_data
-
         }),
         contentType: "application/json",
         success: function(data, status){
