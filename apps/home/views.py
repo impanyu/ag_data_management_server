@@ -761,7 +761,7 @@ def data(request):
             return response
 
         elif load_template == "file_system_virtual":
-            current_path = f"{request.user.get_username()}/ag_data/collections"
+            current_path = request.POST['current_path']#f"{request.user.get_username()}/ag_data/collections"
             abs_path = f"/data/{current_path}"
             meta_data = get_meta_data(abs_path)
 

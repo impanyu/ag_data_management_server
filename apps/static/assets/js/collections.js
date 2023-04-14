@@ -63,7 +63,7 @@ function get_collection_list(){
 
             url: "/file_system_virtual",
             data: {
-
+               current_path: current_path
             },
             success: function (data) {
                 console.info(data);
