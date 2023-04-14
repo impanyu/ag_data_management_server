@@ -451,8 +451,6 @@ function get_item_list(){
                    '<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">'+
                    '<a class="dropdown-item" href="#" id="'+i+'_file_delete">Delete</a>'+
                    '<a class="dropdown-item" href="#" id="'+i+'_add_domain">Add to Domain</a>'+
-                   '<a class="dropdown-item" href="#" id="'+i+'_meta_data">Meta Data</a>'+
-                   '<a class="dropdown-item" href="#" id="'+i+'_google_earth_engine">Earth Engine</a>'+
                    '</div> </div></td></tr>';
             item_node = htmlToElement(item_html);
             $("#file_list")[0].appendChild(item_node);
