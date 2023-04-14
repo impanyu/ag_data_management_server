@@ -119,7 +119,7 @@ def pages(request):
         elif load_template == "files.html":
             context['current_path'] = request.GET['current_path']
             context['segment'] = load_template
-
+            username = request.user.get_username()
 
 
             html_template = loader.get_template('home/files.html')
@@ -128,6 +128,7 @@ def pages(request):
         elif load_template == "collection.html":
             context['current_path'] = request.GET['current_path']
             context['segment'] = load_template
+            username = request.user.get_username()
 
 
 
@@ -137,6 +138,7 @@ def pages(request):
         elif load_template == "search.html":
             context['current_path'] = request.GET['current_path']
             context['segment'] = load_template
+            username = request.user.get_username()
 
 
             html_template = loader.get_template('home/search.html')
