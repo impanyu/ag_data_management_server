@@ -43,7 +43,7 @@ def index(request):
     #domains = get_domains()
 
     #context["domains"] = domains
-    username = request.user.get_username()
+    global username = request.user.get_username()
 
     html_template = loader.get_template('home/search.html')
     return HttpResponse(html_template.render(context, request))
