@@ -667,12 +667,12 @@ function draw_points(data_points){
     const point = new google.maps.Circle({
       strokeColor: "black",
       strokeOpacity: 0.5,
-      strokeWeight: 2,
+      strokeWeight: 5,
       fillColor: mode_color_map[data_mode[0]],
-      fillOpacity: 0.5,
+      fillOpacity: 0.8,
       map:map_main,
       center: data_loc,
-      radius: 1000//Math.min(size,1000),
+      radius:2000//Math.min(size,1000),
     });
     google_map_circles.push(point);
   }
