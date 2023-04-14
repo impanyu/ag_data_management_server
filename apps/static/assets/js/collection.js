@@ -2502,7 +2502,7 @@ function select_collection(collection_name){
 
 
 
-    document.querySelector("#file_item_"+collection_name.replace(".","_")).style.backgroundColor = "#69cfff";
+    document.querySelector("#collection_item_"+collection_name.replace(".","_")).style.backgroundColor = "#69cfff";
     if(previous_selected_collection)
       previous_selected_collection.style.backgroundColor = "";
 
