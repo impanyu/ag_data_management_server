@@ -92,13 +92,7 @@ function draw_2d_points(data){
 
     svg = d3.select("#files_plot")
         .append("svg")
-         .attr("viewBox", [0, 0, width, height])
-     .on("mouseover", function() {
-      document.body.style.overflow = "hidden";
-    })
-    .on("mouseout", function() {
-      document.body.style.overflow = "auto";
-    });
+         .attr("viewBox", [0, 0, width, height]);
 
 
 
