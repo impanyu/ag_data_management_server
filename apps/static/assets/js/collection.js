@@ -2478,10 +2478,9 @@ function toggle_meta_data_panel(){
 
 selected_collection = "";
 selected_file_path = "";
+function add_to_collection(file_path){
 
-function add_to_collection(current_path,file_name){
-
-   selected_file_path = current_path+"/"+file_name;
+   selected_file_path = file_path;
 
    display_collections_selection();
 
