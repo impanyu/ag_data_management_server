@@ -1269,11 +1269,11 @@ def get_meta_data(path):
     if "native" not in meta_data:
         meta_data["native"] = {}
 
-    #for key in native_meta:
-    #    meta_data["native"][key] = native_meta[key]
+    for key in native_meta:
+        meta_data["native"][key] = native_meta[key]
 
-    with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "w") as meta_data_file:
-        json.dump(meta_data,meta_data_file)
+    #with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "w") as meta_data_file:
+    #    json.dump(meta_data,meta_data_file)
 
 
     file_name = path.split("/")[-1]
