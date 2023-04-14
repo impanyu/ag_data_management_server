@@ -942,11 +942,10 @@ def recursive_update_public(file_path, value):
         #print(meta_data)
         json.dump(meta_data,meta_data_file)
 
-    if os.path.isfile(file_path):
-        return
-    for p in os.listdir(file_path):
-        sub_path = os.path.join(file_path, p)
-        recursive_update_public(sub_path,value)
+
+    for p in meta_data["subdirs"]:
+        #sub_path = os.path.join(file_path, p)
+        recursive_update_public(p,value)
 
 def update_file(file_path, new_content):
     with open(file_path, "w") as data_file:
@@ -970,7 +969,7 @@ def update_meta(file_path,new_meta_data):
             meta_data[key] = new_meta_data[key]
             #print(key)
             #print(meta_data[key])
-        '''
+
         elif key == "realtime":
             meta_data[key] = new_meta_data[key]
 
@@ -1007,7 +1006,7 @@ def update_meta(file_path,new_meta_data):
 
         else:
             meta_data[key] = new_meta_data[key]
-        '''
+
         '''
           elif key == "other_meta":
               #other_meta = new_meta_data[key].replace("\n",",")
