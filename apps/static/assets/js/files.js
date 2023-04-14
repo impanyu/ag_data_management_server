@@ -913,7 +913,9 @@ function add_tool_arg(){
 }
 
 select_file_names = [];
+
 function display_file_selection(arg_name,path){
+
    console.info("display_file_selection");
    console.info(arg_name);
    $("#file_system_overlay")[0].style.display = "flex";
@@ -2490,8 +2492,10 @@ function get_item_list(){
 
             $("#"+i+"_duplicate").click(function(){
                file_name= data[parseInt(this.id.split("_")[0])]["name"];
+               file_path = data[parseInt(this.id.split("_")[0])]["abs_path"]
                //console.info(file_name);
                //add_to_domain(current_path,file_name);
+               duplicate(file_path);
 
 
             });
@@ -2500,11 +2504,27 @@ function get_item_list(){
           }
 
 
-
-
     });
 }
 
+function duplicate(file_path){
+     $.ajax({
+            type: "POST",
+
+            url: "/duplicate",
+            data: {
+                 file_path:file_path,
+
+            },
+            success: function (data) {
+                console.info(data);
+
+               display_warning_overlay("A copy of "+file_path.split("/")[file_path.split("/").length-1]+" is generated.");
+
+            }
+        });
+
+}
 
 
 function toggle_meta_data_panel(){

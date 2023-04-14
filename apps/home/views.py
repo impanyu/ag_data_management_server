@@ -640,6 +640,27 @@ def data(request):
 
                 # return HttpResponse("upload complete!")
 
+        elif load_template == "duplicate":
+            file_path = request.POST['file_path']
+            file_name = os.path.basename(file_path)
+            parent_path = os.path.dirname(file_path)
+
+            suffix = file_path.split(".")[-1]
+
+            new_path = file_path
+            i = 1
+            while (os.path.exists(new_path)):
+                new_path = file_path[0:-(len(suffix) + 1)] + "_" + str(i) + "." + suffix
+                i = i + 1
+
+            open(new_path, "w")
+            generate_meta_data_for_file(new_path, {"duplicate": [file_path]})
+            update_parent_meta(new_path)
+
+            return HttpResponse("file duplicated!")
+
+
+
         elif load_template == "delete_file":
             file_path = request.POST['current_path']
             file_name = request.POST['file_name']
