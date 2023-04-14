@@ -223,7 +223,7 @@ def data(request):
 
             remove_from_collection(collection_name, file_path, request.user.get_username())
 
-            return HttpResponse("add to collection")
+            return HttpResponse("removed from collection")
 
 
 
