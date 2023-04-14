@@ -2074,6 +2074,10 @@ function get_meta_data(){
              if (meta_key == "subdirs" || meta_key =="abs_path" )
               continue;
 
+              else if (meta_key == "name"){
+                document.querySelector("collection_name").innerHTML = "Collection: "+ meta_value;
+              }
+
               else if (meta_key == "format" || meta_key == "category" ){
                  if(meta_value.length == 0)
                    continue;
