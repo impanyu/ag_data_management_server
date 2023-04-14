@@ -2459,7 +2459,7 @@ function display_collections_selection(){
 
    $("#collections_overlay")[0].style.display = "flex";
    document.body.style.overflow = "hidden";
-   $("#collections_list_in_overlay")[0].innerHTML = "";
+   $("#collections_in_overlay")[0].innerHTML = "";
 
     $.post("/meta_data",
         {
