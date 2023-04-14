@@ -2405,9 +2405,9 @@ function get_item_list(){
                    '<td> <div class="avatar-group"> <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title='+user+'><img alt="Image placeholder" src="/static/assets/img/theme/react.jpg"></a></div></td>' +
                    '<td ><div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>'+
                    '<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">'+
-                   '<a class="dropdown-item" href="#" id="'+i+'_file_delete">Delete</a>'+
-                   '<a class="dropdown-item" href="#" id="'+i+'_move">Move</a>'+
-                   '<a class="dropdown-item" href="#" id="'+i+'_duplicate">Duplicate</a>'+
+                   '<a class="dropdown-item"  id="'+i+'_file_delete">Delete</a>'+
+                   '<a class="dropdown-item" id="'+i+'_move">Move</a>'+
+                   '<a class="dropdown-item"  id="'+i+'_duplicate">Duplicate</a>'+
 
                    '<a class="dropdown-item" href="#" id="'+i+'_add_to_collection">Add to Collection</a>'
                    '</div> </div></td></tr>';
@@ -2428,8 +2428,9 @@ function get_item_list(){
             })
 
 
-            $("#"+i+"_file_delete").click(function(){
-               file_name= data[parseInt(this.id.split("_")[0])]["name"];
+            $(".file_and_dir_item").dblclick(function(){
+               //file_name= data[parseInt(this.id.split("_")[0])]["name"];
+               file_name = this.id.split("_")[this.id.split("_").length-1];
 
 
                console.info(file_name);

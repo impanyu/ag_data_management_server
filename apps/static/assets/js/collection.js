@@ -2312,7 +2312,6 @@ function init_map_main(){
 
 
 
-
 function get_item_list(){
 
   $.post("/file_system_virtual",
@@ -2373,11 +2372,11 @@ function get_item_list(){
             item_node = htmlToElement(item_html);
             $("#file_list")[0].appendChild(item_node);
 
-            $("#file_and_dir_item_"+file["name"]).click(function(){
+            $(".file_and_dir_item").click(function(){
                 //file_name = this.id.split("_")[this.id.split("_").length-1]
 
                this.style.backgroundColor = "#69cfff";
-                if(previous_selected_file_and_dir)
+                if(previous_selected_file_and_dir && previous_selected_file_and_dir != this)
                   previous_selected_file_and_dir.style.backgroundColor = "";
 
                 previous_selected_file_and_dir = this;
@@ -2439,6 +2438,7 @@ function get_item_list(){
 
     });
 }
+
 
 
 function toggle_meta_data_panel(){
