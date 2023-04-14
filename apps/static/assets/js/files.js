@@ -2379,7 +2379,10 @@ function get_item_list(){
 
           //for(file of data.files){
           for(var i=0;i<data.length;i++){
+
           file=data[i]; //meta data for file or dir
+          if(file["mode"] == "Collection")
+            continue;
           current_files_names.push(file["name"]);
           if (file["name"].indexOf(".") == -1)
              folder_icon =  '<i class="ni ni-folder-17 text-primary"></i>'
