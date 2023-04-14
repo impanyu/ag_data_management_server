@@ -130,8 +130,8 @@ function draw_2d_points(data){
 
   function addLegend(svg, colorScale) {
   const legendSize = 30;
-  const legendSpacing = 5;
-  const legendX = width - 100;
+  const legendSpacing = 60;
+  const legendX = width - 200;
   const legendY = 100;
 
   const legend = svg.selectAll('.legend')
