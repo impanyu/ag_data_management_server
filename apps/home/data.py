@@ -970,6 +970,7 @@ def update_meta(file_path,new_meta_data):
             meta_data[key] = new_meta_data[key]
             #print(key)
             #print(meta_data[key])
+        '''
         elif key == "realtime":
             meta_data[key] = new_meta_data[key]
 
@@ -1006,6 +1007,7 @@ def update_meta(file_path,new_meta_data):
 
         else:
             meta_data[key] = new_meta_data[key]
+        '''
         '''
           elif key == "other_meta":
               #other_meta = new_meta_data[key].replace("\n",",")
