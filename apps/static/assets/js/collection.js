@@ -2488,7 +2488,7 @@ function add_to_collection(file_path){
 }
 
 
-
+collection_names = [];
 function display_collections_selection(){
    path = user+"/ag_data/collections";
 
@@ -2513,8 +2513,10 @@ function display_collections_selection(){
                    sub_dir = sub_dirs[i];
                    console.info(sub_dir);
                    collection_name = sub_dir.split("/")[sub_dir.split("/").length-1];
+                   collection_names.push(collection_name);
+
                    if(collection_name.indexOf(".") == -1){//folder
-                     item_html =  '<tr class="collection_item" id="collection_item_'+collection_name.replace(".","_").replace(" ","_")+'"  onclick="select_collection(this)" >'+
+                     item_html =  '<tr class="collection_item" id="collection_item_'+i+'"  onclick="select_collection(this)" >'+
                        '<td scope="row"><div class="media align-items-center"><div class="media-body"><span class="name mb-0 text-sm">'+
                        ' <a >&nbsp; ' +collection_name+
                        '</a></span> </div></div></td>"' +
@@ -2535,8 +2537,8 @@ previous_selected_collection = null;
 previous_selected_file_and_dir =null;
 
 function select_collection(self){
-   collection_name = self.id.substr("collection_item_".length);
-   selected_collection = collection_name;
+   i = self.id.substr("collection_item_".length);
+   selected_collection = collection_names[i];
 
 
 
