@@ -90,6 +90,10 @@ function draw_2d_points(data){
         .append("svg")
          .attr("viewBox", [0, 0, width, height]);
 
+     document.querySelector("#files_plot svg").addEventListener("wheel", function(e) {
+          e.preventDefault();
+        });
+
       const gGrid = svg.append("g");
 
     /*
