@@ -341,6 +341,8 @@ function htmlToElement(html) {
 //$("option").click(function(){this.selected=true});
 
 search_results_title = "Search Results:";
+color_scale_map = {"Data":0, "Tool":1, "Collection":2, "Model":3};
+
 
 function get_item_list(){
 
@@ -420,7 +422,7 @@ function get_item_list(){
           items = data["items"];
           points = data["2d_points"]
 
-          color_scale_map = {"Data":1, "Tool":2, "Collection":3, "Model":4}
+
           console.info(items);
           console.info(search_results_title);
           document.querySelector("#result_number").innerHTML= "<b>"+search_results_title+" "+items.length+"</b>";
