@@ -969,7 +969,7 @@ def add_to_public(file_path):
     public_collection_file_name = f"{public_data_file_name}/collections"
     public_collection_meta_file_name = "_".join(public_collection_file_name.split("/")[1:]) + ".json"
 
-    if not os.path.exists(public_user_meta_file_name):
+    if not os.path.exists(os.path.join(settings.CORE_DIR, 'data', public_user_meta_file_name)):
 
         public_user_meta_data = generate_meta_data_for_dir(public_user_file_name)
 
@@ -998,7 +998,9 @@ def add_to_public(file_path):
             json.dump(public_meta_data, public_meta_data_file)
 
 
+    '''    
     meta_data = get_meta_data(file_path)
+    
 
     if "Collection" in meta_data["mode"]:
         public_collection_meta_data = generate_meta_data_for_dir(public_collection_file_name)
@@ -1015,7 +1017,7 @@ def add_to_public(file_path):
         with open(os.path.join(settings.CORE_DIR, 'data', public_meta_data_file_name), 'w') as public_meta_data_file:
             json.dump(public_meta_data, public_meta_data_file)
 
-
+    '''
 
 
 
@@ -1046,8 +1048,8 @@ def update_meta(file_path,new_meta_data):
             # recursively change the subdirs and files
             recursive_update_public(file_path,new_meta_data[key])
 
-            #if new_meta_data[key] == "True":
-            #    add_to_public(file_path)
+            if new_meta_data[key] == "True":
+                add_to_public(file_path)
 
 
         elif key == "time_range":
