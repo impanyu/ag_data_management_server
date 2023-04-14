@@ -440,7 +440,7 @@ function get_item_list(){
           item = data["items"][i];
           item_path = item["abs_path"].substr(6)
 
-            item_html =  '<tr><td scope="row"><div class="media align-items-center"><div class="media-body"><span class="name mb-0 text-sm"> &nbsp;<a href="/files.html?current_path='+item_path+'"> ' +item["name"]+
+            item_html =  '<tr class="file_and_dir_item"><td scope="row"><div class="media align-items-center"><div class="media-body"><span class="name mb-0 text-sm"> &nbsp;<a href="/files.html?current_path='+item_path+'"> ' +item["name"]+
                      '</a></span> </div></div></td>" + "<td class="budget">'+item["mode"]+'</td>"' +
                    '<td> <span class="badge badge-dot mr-4">  <span class="status">'+item["label"]+'</span></span></td>' +
                    '<td> <span class="badge badge-dot mr-4">  <span class="status">'+item["category"]+'</span></span></td>' +
