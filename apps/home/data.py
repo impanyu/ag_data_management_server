@@ -980,7 +980,7 @@ def add_to_public(file_path):
 
         with open(os.path.join(settings.CORE_DIR, 'data', 'data.json'), 'w') as root_meta_data_file:
             json.dump(root_meta_data, root_meta_data_file)
-        '''
+
         public_meta_data = generate_meta_data_for_dir(public_data_file_name,{"create":["null"]})
 
         if public_data_file_name not in public_user_meta_data["subdirs"]:
@@ -1017,7 +1017,7 @@ def add_to_public(file_path):
         with open(os.path.join(settings.CORE_DIR, 'data', public_meta_data_file_name), 'w') as public_meta_data_file:
             json.dump(public_meta_data, public_meta_data_file)
 
-    '''
+
 
 
 
