@@ -2448,7 +2448,7 @@ function add_to_collection(current_path,file_name){
 
    selected_file_path = current_path+"/"+file_name;
 
-   display_file_selection();
+   display_collections_selection();
 
 }
 
