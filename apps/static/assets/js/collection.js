@@ -2312,6 +2312,7 @@ function init_map_main(){
 
 
 
+
 function get_item_list(){
 
   $.post("/file_system_virtual",
@@ -2422,8 +2423,9 @@ function get_item_list(){
 
             $("#"+i+"_add_to_collection").click(function(){
                file_name= data[parseInt(this.id.split("_")[0])]["name"];
+               file_path = data[parseInt(this.id.split("_")[0])]["abs_path"]
                console.info(file_name);
-               add_to_collection(current_path,file_name);
+               add_to_collection(file_path);
 
 
             });

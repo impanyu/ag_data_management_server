@@ -2465,8 +2465,9 @@ function get_item_list(){
 
             $("#"+i+"_add_to_collection").click(function(){
                file_name= data[parseInt(this.id.split("_")[0])]["name"];
+               file_path = data[parseInt(this.id.split("_")[0])]["abs_path"]
                console.info(file_name);
-               add_to_collection(current_path,file_name);
+               add_to_collection(file_path);
 
 
             });
@@ -2515,9 +2516,9 @@ function toggle_meta_data_panel(){
 
 
 
-function add_to_collection(current_path,file_name){
+function add_to_collection(file_path){
 
-   selected_file_path = current_path+"/"+file_name;
+   selected_file_path = file_path;
 
    display_collections_selection();
 
