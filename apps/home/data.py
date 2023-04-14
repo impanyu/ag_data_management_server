@@ -1732,7 +1732,7 @@ def add_to_collection(selected_collection,selected_file_path):
     from .views import username
     selected_collection_path = f"/data/{username}/ag_data/collections/{selected_collection}"
 
-    selected_collection_meta_data = get_meta_data(selected_collection_path)
+    #selected_collection_meta_data = get_meta_data(selected_collection_path)
 
     return selected_collection_path
     '''
