@@ -2042,6 +2042,7 @@ function update_meta(){
         }),
         contentType: "application/json",
         success: function(data, status){
+          console.info(data);
           alert("meta data updated");
           if(meta_data["mode"] == "Tool")
             set_tool_panel();
