@@ -127,6 +127,38 @@ function draw_2d_points(data){
       .style("left", (d3.pointer(e)[0]+100) + "px")
       .style("top", (d3.pointer(e)[1]) + "px")
   };
+
+  function addLegend(svg, colorScale) {
+  const legendSize = 20;
+  const legendSpacing = 5;
+  const legendX = width - 100;
+  const legendY = 50;
+
+  const legend = svg.selectAll('.legend')
+    .data(colorScale.domain())
+    .enter()
+    .append('g')
+    .attr('class', 'legend')
+    .attr('transform', (d, i) => `translate(0, ${i * (legendSize + legendSpacing)})`);
+
+  legend.append('rect')
+    .attr('x', legendX)
+    .attr('y', legendY)
+    .attr('width', legendSize)
+    .attr('height', legendSize)
+    .style('fill', colorScale);
+
+  legend.append('text')
+    .attr('x', legendX - legendSpacing)
+    .attr('y', legendY + legendSize / 2)
+    .attr('dy', '.35em')
+    .style('text-anchor', 'end')
+    .text(d => d);
+}
+
+
+
+
   var mouseleave = function(d) {
     Tooltip
       .style("opacity", 0)
@@ -148,6 +180,7 @@ function draw_2d_points(data){
             .on("mouseout",function(){d3.select(this).attr("r",20);mouseleave();})
             .on("mousemove",mousemove);
 
+      addLegend(svg, z);
 
 
       const gx = svg.append("g");
