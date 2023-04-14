@@ -2468,7 +2468,7 @@ function display_collections_selection(){
          function(data, status){
             meta_data=JSON.parse(data);
             sub_dirs = meta_data["subdirs"];
-            collections_overlay_path_components = meta_data["abs_path"].split("/");
+            //collections_overlay_path_components = meta_data["abs_path"].split("/");
             path = "";
             $("#collections_overlay_path")[0].innerHTML = "Collections";
 
@@ -2478,7 +2478,7 @@ function display_collections_selection(){
                    sub_dir = sub_dirs[i];
                    console.info(sub_dir);
                    collection_name = sub_dir.split("/")[sub_dir.split("/").length-1];
-                   if(collection_name.indexOf(".") != -1){//file
+                   if(collection_name.indexOf(".") == -1){//folder
                      item_html =  '<tr class="collection_item" id="collection_item_'+sub_dir_name.replace(".","_")+'"  onclick="select_collection(\''+collection_name+'\')" >'+
                        '<td scope="row"><div class="media align-items-center"><div class="media-body"><span class="name mb-0 text-sm">'+
                        ' <a >&nbsp; ' +sub_dir_name+

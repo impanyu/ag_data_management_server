@@ -1735,7 +1735,7 @@ def add_to_collection(selected_collection,selected_file_path):
         selected_collection_meta_data["subdirs"].append(selected_file_path)
 
     selected_collection_meta_data_file_name = "_".join(selected_collection_path.split("/")[1:]) + ".json"
-    with open(os.path.join(settings.CORE_DIR, 'data', selected_collection_meta_data_file_name), "r") as selected_collection_meta_data_file:
+    with open(os.path.join(settings.CORE_DIR, 'data', selected_collection_meta_data_file_name), "w") as selected_collection_meta_data_file:
         json.dump(selected_collection_meta_data,selected_collection_meta_data_file)
 
 
