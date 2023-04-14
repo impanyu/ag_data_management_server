@@ -2431,7 +2431,7 @@ function get_item_list(){
             $(".file_and_dir_item").dblclick(function(){
                 file_name= data[parseInt(this.id.split("_")[0])]["name"];
 
-                link = '/files.html?current_path=current_path/'+file_name;
+                link = '/files.html?current_path='+current_path+'/'+file_name;
 
                 window.location.href =link;
 
@@ -2568,6 +2568,7 @@ function display_collections_selection(){
 
 previous_selected_collection = null;
 previous_selected_file_and_dir =null;
+
 function select_collection(collection_name){
    selected_collection = collection_name;
 
