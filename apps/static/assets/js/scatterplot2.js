@@ -86,14 +86,18 @@ function draw_2d_points(data){
           .scaleExtent([0.75, 1.5])
           .on("zoom", zoomed);
 
+   function preventScroll(e) {
+  e.preventDefault();
+}
+
     svg = d3.select("#files_plot")
         .append("svg")
          .attr("viewBox", [0, 0, width, height])
-             .on("mouseover", function() {
-      document.body.classList.add("no-scroll");
+     .on("mouseover", function() {
+      window.addEventListener("wheel", preventScroll, { passive: false });
     })
     .on("mouseout", function() {
-      document.body.classList.remove("no-scroll");
+      window.removeEventListener("wheel", preventScroll);
     });
 
 
