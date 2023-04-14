@@ -342,7 +342,7 @@ function htmlToElement(html) {
 
 search_results_title = "Search Results:";
 color_scale_map = {"Data":0, "Tool":1, "Collection":2, "Model":3};
-
+modes = ["Data","Tool","Collection","Model"];
 
 function get_item_list(){
 

@@ -153,7 +153,7 @@ function draw_2d_points(data){
     .attr('y', legendY + legendSize / 2)
     .attr('dy', '.35em')
     .style('text-anchor', 'end')
-    .text(d => d);
+    .text(d => modes[d]);
 }
 
 
