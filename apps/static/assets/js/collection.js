@@ -2378,9 +2378,9 @@ function get_item_list(){
 
                this.style.backgroundColor = "#69cfff";
                 if(previous_selected_file_and_dir)
-                  previous_selected_collection.style.backgroundColor = "";
+                  previous_selected_file_and_dir.style.backgroundColor = "";
 
-                previous_selected_collection = this;
+                previous_selected_file_and_dir = this;
 
 
 
