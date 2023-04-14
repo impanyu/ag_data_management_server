@@ -2349,9 +2349,9 @@ function get_item_list(){
           file=data[i]; //meta data for file or dir
           current_files_names.push(file["name"]);
           if (file["name"].indexOf(".") == -1)
-             folder_icon = "";
-          else
              folder_icon = '<i class="ni ni-folder-17 text-primary"></i>';
+          else
+             folder_icon = '';
 
             item_html =  '<tr  class="file_and_dir_item"><td scope="row"><div class="media align-items-center"><div class="media-body">'+folder_icon+'<span class="name mb-0 text-sm"> &nbsp;<a href="/files.html?current_path='+current_path+'/'+file["name"]+'&dir=false"> ' +file["name"]+
                   '</a></span> </div></div></td>" + "<td class="budget">'+file["native"]["created_time"]+'</td>"' +
