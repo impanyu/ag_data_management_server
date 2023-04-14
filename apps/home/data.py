@@ -1734,7 +1734,7 @@ def add_to_collection(selected_collection,selected_file_path):
 
     selected_collection_meta_data = get_meta_data(selected_collection_path)
 
-    if selected_file_path not in selected_collection_meta_data["subdirs"]:
+    if f"/data/{selected_file_path}" not in selected_collection_meta_data["subdirs"]:
         selected_collection_meta_data["subdirs"].append(f"/data/{selected_file_path}")
     
     selected_collection_meta_data_file_name = "_".join(selected_collection_path.split("/")[1:]) + ".json"

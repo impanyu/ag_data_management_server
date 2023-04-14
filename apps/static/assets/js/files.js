@@ -2418,7 +2418,7 @@ function get_item_list(){
                 //file_name = this.id.split("_")[this.id.split("_").length-1]
 
                this.style.backgroundColor = "#69cfff";
-                if(previous_selected_file_and_dir)
+                if(previous_selected_file_and_dir && previous_selected_file_and_dir != this)
                   previous_selected_file_and_dir.style.backgroundColor = "";
 
                 previous_selected_file_and_dir = this;
@@ -2560,7 +2560,7 @@ function select_collection(collection_name){
 
 
     document.querySelector("#collection_item_"+collection_name.replace(".","_")).style.backgroundColor = "#69cfff";
-    if(previous_selected_collection)
+    if(previous_selected_collection && previous != document.querySelector("#collection_item_"+collection_name.replace(".","_")))
       previous_selected_collection.style.backgroundColor = "";
 
     previous_selected_collection = document.querySelector("#collection_item_"+collection_name.replace(".","_"));
