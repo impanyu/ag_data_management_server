@@ -11,7 +11,7 @@ function create_collection(new_collection_name){
                 //$("#box_container")[0].innerHTML="";
                 create_collection_overlay.style.display  = "none";
                 document.querySelector("#new_collection_name").value = "New collection";
-                get_collection_list();
+                //get_collection_list();
             }
         });
 
