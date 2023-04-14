@@ -1253,7 +1253,7 @@ def get_meta_data(path):
         create_time = datetime.fromtimestamp(os.path.getctime(path)).strftime("%m/%d/%Y, %H:%M:%S")
         # Get file/directory access time
         access_time = datetime.fromtimestamp(os.path.getatime(path)).strftime("%m/%d/%Y, %H:%M:%S")
-    '''
+
     else:
         # Get file/directory size
         size = os.path.getsize(meta_data_file_path)
@@ -1261,7 +1261,7 @@ def get_meta_data(path):
         create_time = datetime.fromtimestamp(os.path.getctime(meta_data_file_path)).strftime("%m/%d/%Y, %H:%M:%S")
         # Get file/directory access time
         access_time = datetime.fromtimestamp(os.path.getatime(meta_data_file_path)).strftime("%m/%d/%Y, %H:%M:%S")
-    '''
+
 
     native_meta = {"name": os.path.basename(path), "created_time": create_time,
      "access_time": access_time, "size": size}
@@ -1272,8 +1272,8 @@ def get_meta_data(path):
     for key in native_meta:
         meta_data["native"][key] = native_meta[key]
 
-    with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "w") as meta_data_file:
-        json.dump(meta_data,meta_data_file)
+    #with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "w") as meta_data_file:
+    #    json.dump(meta_data,meta_data_file)
 
 
     file_name = path.split("/")[-1]
