@@ -130,7 +130,7 @@ function draw_2d_points(data){
 
   function addLegend(svg, colorScale) {
   const legendSize = 30;
-  const legendSpacing = 60;
+  const legendSpacing = 5;
   const legendX = width - 200;
   const legendY = 100;
 
@@ -149,7 +149,7 @@ function draw_2d_points(data){
     .style('fill', colorScale);
 
   legend.append('text')
-    .attr('x', legendX + legendSpacing)
+    .attr('x', legendX - legendSpacing)
     .attr('y', legendY + legendSize / 2)
     .attr('dy', '.35em')
     .style('text-anchor', 'end')
