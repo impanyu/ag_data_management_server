@@ -2471,7 +2471,7 @@ function get_item_list(){
 
 function toggle_meta_data_panel(){
    if(document.querySelector("#meta_data_panel").style.height == "0px"){
-     document.querySelector("#meta_data_panel").style.height = "1600px";
+     document.querySelector("#meta_data_panel").style.height = "1800px";
      document.querySelector("#meta_data_panel").style.paddingTop = "1.25rem";
      document.querySelector("#meta_data_panel").style.paddingBottom = "1.25rem";
 
