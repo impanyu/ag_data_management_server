@@ -2349,7 +2349,7 @@ function get_item_list(){
           file=data[i]; //meta data for file or dir
           current_files_names.push(file["name"]);
           if (file["name"].indexOf(".") == -1)
-           folder_icon = "";
+             folder_icon = "";
           else
              folder_icon = '<i class="ni ni-folder-17 text-primary"></i>';
 
