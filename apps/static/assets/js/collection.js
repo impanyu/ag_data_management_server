@@ -2361,7 +2361,7 @@ function get_item_list(){
           else
              folder_icon = '';
 
-            item_html =  '<tr  class="file_and_dir_item" id="'+i+'_file_and_dir"><td scope="row"><div class="media align-items-center"><div class="media-body">'+folder_icon+'<span class="name mb-0 text-sm"> &nbsp;<a href="/files.html?current_path='+current_path+'/'+file["name"]+
+            item_html =  '<tr  class="file_and_dir_item" id="'+i+'_file_and_dir"><td scope="row"><div class="media align-items-center"><div class="media-body">'+folder_icon+'<span class="name mb-0 text-sm"> &nbsp;<a href="/files.html?current_path='+file["abs_path"].substr(6)+
                   '&dir=false"> ' +file["name"]+ '</a></span> </div></div></td>" + "<td class="budget">'+file["native"]["created_time"]+'</td>"' +
                    '<td> <span class="badge badge-dot mr-4">  <span class="status">'+file["native"]["access_time"]+'</span></span></td>' +
                    '<td> <span class="badge badge-dot mr-4">  <span class="status">'+file["native"]["size"]+'</span></span></td>' +
@@ -2393,8 +2393,9 @@ function get_item_list(){
 
             $(".file_and_dir_item").dblclick(function(){
                 file_name= data[parseInt(this.id.split("_")[0])]["name"];
+                file_path= data[parseInt(this.id.split("_")[0])]["abs_path"].substr(6);
 
-                link = '/files.html?current_path='+current_path+'/'+file_name;
+                link = '/files.html?current_path='+file_path;
 
                 window.location.href =link;
 
