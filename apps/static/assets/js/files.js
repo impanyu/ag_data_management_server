@@ -2414,7 +2414,7 @@ function get_item_list(){
             item_node = htmlToElement(item_html);
             $("#file_list")[0].appendChild(item_node);
 
-            $("#file_and_dir_item_"+file["name"]).click(function(){
+            $(".file_and_dir_item").click(function(){
                 //file_name = this.id.split("_")[this.id.split("_").length-1]
 
                this.style.backgroundColor = "#69cfff";
