@@ -122,6 +122,9 @@ function draw_2d_points(data){
 
   };
   var mousemove = function(e,d) {
+      const circle = d3.select(this);
+    const circleX = parseFloat(circle.attr("cx"));
+    const circleY = parseFloat(circle.attr("cy"));
     Tooltip
       .html("name: "+d["name"]+"<br>"+"category: "+d["category"]+"<br>"+"label: "+d["label"]+"<br>"+"mode: "+d["mode"]+"<br>"+"format: "+d["format"])
       .style("left", (d3.pointer(e)[0]+100) + "px")
