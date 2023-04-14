@@ -94,6 +94,7 @@ def register_user(request):
 
 
             collection_meta_data = generate_meta_data_for_dir(collection_file_name,{"create":["null"]})
+            collection_meta_data["mode"] = ["Collection"]
 
             if collection_file_name not in meta_data["subdirs"]:
                 meta_data["subdirs"].append(collection_file_name)
@@ -101,6 +102,8 @@ def register_user(request):
             with open(os.path.join(settings.CORE_DIR,'data', meta_data_file_name), 'w') as meta_data_file:
                 json.dump(meta_data,meta_data_file)
 
+            with open(os.path.join(settings.CORE_DIR,'data', collection_meta_file_name), 'w') as collection_meta_file:
+                json.dump(collection_meta_data,collection_meta_file)
 
 
             msg = 'User created - please <a href="/login/">login</a>.'

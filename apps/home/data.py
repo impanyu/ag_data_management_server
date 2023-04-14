@@ -990,12 +990,16 @@ def add_to_public(file_path):
             json.dump(public_user_meta_data, public_user_meta_data_file)
 
         public_collection_meta_data = generate_meta_data_for_dir(public_collection_file_name,{"create":["null"]})
+        public_collection_meta_data["mode"] = ["Collection"]
 
         if public_collection_file_name not in public_meta_data["subdirs"]:
             public_meta_data["subdirs"].append(public_collection_file_name)
 
         with open(os.path.join(settings.CORE_DIR, 'data', public_meta_data_file_name), 'w') as public_meta_data_file:
             json.dump(public_meta_data, public_meta_data_file)
+
+        with open(os.path.join(settings.CORE_DIR, 'data', public_collection_meta_file_name), 'w') as public_collection_meta_file:
+            json.dump(public_collection_meta_data, public_collection_meta_file)
 
 
    
@@ -1251,11 +1255,18 @@ def search(root_dir, search_box, category, mode, format, label,  realtime, time_
     #    return [root_dir,os.path.join(settings.CORE_DIR, 'data', meta_data_file_name)]
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
         meta_data = json.load(meta_data_file)
-        if not root_dir[-19:] == "ag_data/collections" and  filtering_condition(meta_data, search_box, category, mode, format, label, realtime, time_range, spatial_range):
-            result.append(meta_data)
-        for subdir in meta_data["subdirs"]:
-            sub_result = search(subdir, search_box, category, mode, format, label,  realtime, time_range, spatial_range)
-            result += sub_result
+        if meta_data["mode"] == "Collection" and meta_data["name"] == "collections":
+            for subdir in meta_data["subdirs"]:
+                if filtering_condition(meta_data, search_box, category, mode, format, label, realtime, time_range, spatial_range):
+                    sub_meta = get_meta_data(subdir)
+                    result.append(sub_meta)
+        else:
+            if filtering_condition(meta_data, search_box, category, mode, format, label, realtime, time_range, spatial_range):
+                result.append(meta_data)
+            for subdir in meta_data["subdirs"]:
+
+                sub_result = search(subdir, search_box, category, mode, format, label,  realtime, time_range, spatial_range)
+                result += sub_result
 
     return result
 
