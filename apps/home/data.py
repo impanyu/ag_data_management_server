@@ -1255,7 +1255,7 @@ def search(root_dir, search_box, category, mode, format, label,  realtime, time_
     #    return [root_dir,os.path.join(settings.CORE_DIR, 'data', meta_data_file_name)]
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
         meta_data = json.load(meta_data_file)
-        if meta_data["mode"] == "Collection" and meta_data["name"] == "collections":
+        if "Collection" in meta_data["mode"]  and meta_data["name"] == "collections":
             for subdir in meta_data["subdirs"]:
                 if filtering_condition(meta_data, search_box, category, mode, format, label, realtime, time_range, spatial_range):
                     sub_meta = get_meta_data(subdir)
