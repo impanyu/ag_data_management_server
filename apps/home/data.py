@@ -1046,8 +1046,8 @@ def update_meta(file_path,new_meta_data):
             # recursively change the subdirs and files
             recursive_update_public(file_path,new_meta_data[key])
 
-            if new_meta_data[key] == "True":
-                add_to_public(file_path)
+            #if new_meta_data[key] == "True":
+            #    add_to_public(file_path)
 
 
         elif key == "time_range":
