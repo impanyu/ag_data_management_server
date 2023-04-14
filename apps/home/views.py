@@ -769,9 +769,9 @@ def data(request):
 
             collections = []
 
-            for collection_path in meta_data["subdirs"]:
-                collection_meta_data = get_meta_data(collection_path)
-                collections.append(collection_meta_data)
+            #for collection_path in meta_data["subdirs"]:
+            #    collection_meta_data = get_meta_data(collection_path)
+            #    collections.append(collection_meta_data)
 
             response = json.dumps(collections)
 

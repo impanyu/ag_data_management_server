@@ -1771,8 +1771,8 @@ $.ajax({
 
 
 function get_file_list(){
-//get_item_list();
-//return;
+get_item_list();
+return;
  /*
   $("#file_list")[0].innerHTML="";
    mode = [];
