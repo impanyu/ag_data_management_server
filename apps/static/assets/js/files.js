@@ -35,8 +35,7 @@ args = {};
 selected_collection = "";
 selected_file_path = "";
 set_collections_overlay();
-selected_collection = "";
-selected_file_path = "";
+
 
 set_create_file_overlay();
 set_create_folder_overlay();
@@ -2573,7 +2572,7 @@ function set_collections_overlay(){
 
             url: "/add_to_collection",
             data: {
-                 selected_collection:selected_collection,
+                 selected_collection:s elected_collection,
                  selected_file_path: selected_file_path
             },
             success: function (data) {
