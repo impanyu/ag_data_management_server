@@ -1007,7 +1007,7 @@ async function get_meta_and_content(){
    if(current_path.indexOf(".")==-1){ //folder
     document.querySelector("#file_content").style.display="none";
      await get_meta_data();
-     set_pipeline_panel();
+     //set_pipeline_panel();
 
      if(meta_data["mode"] == "Tool"){
         set_tool_panel();
@@ -1771,8 +1771,8 @@ $.ajax({
 
 
 function get_file_list(){
-//get_item_list();
-//return;
+get_item_list();
+return;
  /*
   $("#file_list")[0].innerHTML="";
    mode = [];
