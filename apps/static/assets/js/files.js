@@ -912,7 +912,7 @@ function add_tool_arg(){
 
 }
 
-
+select_file_names = [];
 function display_file_selection(arg_name,path){
    console.info("display_file_selection");
    console.info(arg_name);
@@ -948,6 +948,8 @@ function display_file_selection(arg_name,path){
                    sub_dir = sub_dirs[i];
                    console.info(sub_dir);
                    sub_dir_name = sub_dir.split("/")[sub_dir.split("/").length-1];
+                   select_file_names.push(sub_dir_name);
+
                    if(sub_dir_name.indexOf(".") != -1){//file
                      item_html =  '<tr class="file_and_dir_item" id="file_item_'+sub_dir_name.replace(".","_").replace(" ","_")+'"  onclick="select_file(\''+ arg_name  +'\',\''+sub_dir.substr(6)+'\')" >'+
                        '<td scope="row"><div class="media align-items-center"><div class="media-body"><span class="name mb-0 text-sm">'+
@@ -2526,7 +2528,6 @@ function add_to_collection(file_path){
 }
 
 
-
 function display_collections_selection(){
    path = user+"/ag_data/collections";
 
@@ -2551,8 +2552,10 @@ function display_collections_selection(){
                    sub_dir = sub_dirs[i];
                    console.info(sub_dir);
                    collection_name = sub_dir.split("/")[sub_dir.split("/").length-1];
+                   collection_names.push(collection_name);
+
                    if(collection_name.indexOf(".") == -1){//folder
-                     item_html =  '<tr class="collection_item" id="collection_item_'+collection_name.replace(".","_").replace(" ","_")+'"  onclick="select_collection(\''+collection_name+'\')" >'+
+                     item_html =  '<tr class="collection_item" id="collection_item_'+i+'"  onclick="select_collection(this)" >'+
                        '<td scope="row"><div class="media align-items-center"><div class="media-body"><span class="name mb-0 text-sm">'+
                        ' <a >&nbsp; ' +collection_name+
                        '</a></span> </div></div></td>"' +
@@ -2568,20 +2571,21 @@ function display_collections_selection(){
          });
 
 }
-
 previous_selected_collection = null;
 previous_selected_file_and_dir =null;
 
-function select_collection(collection_name){
-   selected_collection = collection_name;
+
+function select_collection(self){
+   i = self.id.substr("collection_item_".length);
+   selected_collection = collection_names[i];
 
 
 
-    document.querySelector("#collection_item_"+collection_name.replace(".","_").replace(" ","_")).style.backgroundColor = "#69cfff";
-    if(previous_selected_collection && previous != document.querySelector("#collection_item_"+collection_name.replace(".","_").replace(" ","_")))
+   self.style.backgroundColor = "#69cfff";
+    if(previous_selected_collection && previous_selected_collection != self)
       previous_selected_collection.style.backgroundColor = "";
 
-    previous_selected_collection = document.querySelector("#collection_item_"+collection_name.replace(".","_").replace(" ","_"));
+    previous_selected_collection = self;
     //document.querySelector(".file_and_dir_item").style.backgroundColor = "white";
 
 }
