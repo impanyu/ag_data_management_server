@@ -999,38 +999,11 @@ async function get_meta_and_content(){
    if(current_path.indexOf(".")==-1){ //folder
     document.querySelector("#file_content").style.display="none";
      await get_meta_data();
-     set_pipeline_panel();
 
-     if(meta_data["mode"] == "Tool"){
-        set_tool_panel();
-     }
-     get_file_list();
+     get_item_list();
 
    }
-   else{//file
 
-      document.querySelector("#file_table").style.display="none";
-      document.querySelector("#upload_file_button").style.display="none";
-      document.querySelector("#upload_folder_button").style.display="none";
-      document.querySelector("#create").style.display="none";
-      document.querySelector("#file_content").style.display="none";
-      await get_meta_data();
-
-      set_pipeline_panel();
-      if(suffix == "shp"){
-        current_col =  meta_data["native"]["columns"][0];
-     }
-     else if(suffix == "tiff" || suffix == "tif"){
-        current_band =  1;
-     }
-
-     if(meta_data["mode"] == "Tool"){
-       set_tool_panel();
-
-     }
-      get_file_content();
-
-   }
 
 }
 
@@ -1757,10 +1730,6 @@ $.ajax({
 */
 
 }
-
-
-
-
 
 function get_file_list(){
  /*
