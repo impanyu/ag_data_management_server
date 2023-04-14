@@ -32,6 +32,17 @@ entry_point = "";
 args = {};
 
 
+selected_collection = "";
+selected_file_path = "";
+set_collections_overlay();
+selected_collection = "";
+selected_file_path = "";
+
+set_create_file_overlay();
+set_create_folder_overlay();
+set_warning_overlay();
+set_file_system_overlay();
+previous_selected_file = null;
 
 
 function add_to_domain(path,file_name){
@@ -616,10 +627,7 @@ function set_file_system_overlay(){
 
 
 
-set_create_file_overlay();
-set_create_folder_overlay();
-set_warning_overlay();
-set_file_system_overlay();
+
 
 function create_folder(new_folder_name){
     $.ajax({
@@ -967,7 +975,7 @@ function display_file_selection(arg_name,path){
 }
 
 
-previous_selected_file = null;
+
 function select_file(arg_name,path){
     document.querySelector("#arg_"+arg_name).value = "/"+path;
 
@@ -2477,8 +2485,6 @@ function toggle_meta_data_panel(){
 
 
 
-selected_collection = "";
-selected_file_path = "";
 
 function add_to_collection(current_path,file_name){
 
@@ -2589,6 +2595,4 @@ function set_collections_overlay(){
 }
 
 
-set_collections_overlay();
-selected_collection = "";
-selected_file_path = "";
+

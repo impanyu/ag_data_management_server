@@ -1257,7 +1257,7 @@ def get_meta_data(path):
 
     else:
         # Get file/directory size
-        size = os.path.getsize(meta_data_file_path )
+        size = os.path.getsize(meta_data_file_path)
         # Get file/directory creation time
         create_time = datetime.fromtimestamp(os.path.getctime(meta_data_file_path)).strftime("%m/%d/%Y, %H:%M:%S")
         # Get file/directory access time
