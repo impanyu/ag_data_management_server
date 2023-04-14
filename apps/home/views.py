@@ -43,6 +43,7 @@ def index(request):
     #domains = get_domains()
 
     #context["domains"] = domains
+    username = request.user.get_username()
 
     html_template = loader.get_template('home/search.html')
     return HttpResponse(html_template.render(context, request))
@@ -119,6 +120,7 @@ def pages(request):
             context['segment'] = load_template
 
 
+
             html_template = loader.get_template('home/files.html')
             return HttpResponse(html_template.render(context, request))
 
@@ -127,13 +129,14 @@ def pages(request):
             context['segment'] = load_template
 
 
+
             html_template = loader.get_template('home/collection.html')
             return HttpResponse(html_template.render(context, request))
 
         elif load_template == "search.html":
             context['current_path'] = request.GET['current_path']
             context['segment'] = load_template
-            username = request.user.get_username()
+
 
             html_template = loader.get_template('home/search.html')
             return HttpResponse(html_template.render(context, request))
