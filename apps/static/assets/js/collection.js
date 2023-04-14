@@ -2508,9 +2508,9 @@ function display_collections_selection(){
                    console.info(sub_dir);
                    collection_name = sub_dir.split("/")[sub_dir.split("/").length-1];
                    if(collection_name.indexOf(".") == -1){//folder
-                     item_html =  '<tr class="collection_item" id="collection_item_'+sub_dir_name.replace(".","_")+'"  onclick="select_collection(\''+collection_name+'\')" >'+
+                     item_html =  '<tr class="collection_item" id="collection_item_'+collection_name.replace(".","_")+'"  onclick="select_collection(\''+collection_name+'\')" >'+
                        '<td scope="row"><div class="media align-items-center"><div class="media-body"><span class="name mb-0 text-sm">'+
-                       ' <a >&nbsp; ' +sub_dir_name+
+                       ' <a >&nbsp; ' +collection_name+
                        '</a></span> </div></div></td>"' +
                        '</tr>';
 
@@ -2526,20 +2526,21 @@ function display_collections_selection(){
 }
 
 previous_selected_collection = null;
+previous_selected_file_and_dir =null;
+
 function select_collection(collection_name){
    selected_collection = collection_name;
 
 
 
     document.querySelector("#collection_item_"+collection_name.replace(".","_")).style.backgroundColor = "#69cfff";
-    if(previous_selected_collection)
+    if(previous_selected_collection && previous != document.querySelector("#collection_item_"+collection_name.replace(".","_")))
       previous_selected_collection.style.backgroundColor = "";
 
     previous_selected_collection = document.querySelector("#collection_item_"+collection_name.replace(".","_"));
     //document.querySelector(".file_and_dir_item").style.backgroundColor = "white";
 
 }
-
 
 
 function set_collections_overlay(){
@@ -2591,5 +2592,6 @@ function set_collections_overlay(){
     });
 
 }
+
 
 
