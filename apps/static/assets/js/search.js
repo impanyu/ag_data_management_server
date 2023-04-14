@@ -645,11 +645,11 @@ function init_map_main(){
 
 }
 
-var data_cat_color_map = {};
-data_cat_color_map["Data"] = "pink";
-data_cat_color_map["Tool"] = "blue";
-data_cat_color_map["Model"] = "red";
-data_cat_color_map["Collection"] = "green";
+var mode_color_map = {};
+mode_color_map["Data"] = "pink";
+mode_color_map["Tool"] = "blue";
+mode_color_map["Model"] = "red";
+mode_color_map["Collection"] = "green";
 
 function draw_points(data_points){
 
