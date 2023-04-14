@@ -2506,7 +2506,7 @@ function select_collection(collection_name){
     if(previous_selected_collection)
       previous_selected_collection.style.backgroundColor = "";
 
-    previous_selected_collection = document.querySelector("#collection_item_"+collection_name_name.replace(".","_"));
+    previous_selected_collection = document.querySelector("#collection_item_"+collection_name.replace(".","_"));
     //document.querySelector(".file_and_dir_item").style.backgroundColor = "white";
 
 }
