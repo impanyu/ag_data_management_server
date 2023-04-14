@@ -2343,7 +2343,7 @@ function get_item_list(){
           //draw_points(data_points);
 
 
-          for(var i=0;i<data['dirs'].length;i++){
+          /*for(var i=0;i<data['dirs'].length;i++){
             dir=data["dirs"][i];
             current_folders_names.push(dir["dir_name"]);
 
@@ -2435,9 +2435,9 @@ function get_item_list(){
 
             });
 
-          }
+          }*/
 
-          foler_icon = '<i class="ni ni-folder-17 text-primary"></i>';
+          folder_icon = '<i class="ni ni-folder-17 text-primary"></i>';
           //for(file of data.files){
           for(var i=0;i<data.length;i++){
           file=data[i]; //meta data for file or dir
