@@ -2019,6 +2019,7 @@ function update_meta(){
     meta_data["time_range"] = {"start":document.querySelector("#start_date").value, "end":document.querySelector("#end_date").value};
     meta_data["spatial_range"] = {"southwest":document.querySelector("#southwest").value, "northeast":document.querySelector("#northeast").value};
     other_meta = document.querySelector("#other_meta").value;
+    meta_data["introduction"] = document.querySelector('#introduction').value;
 
     for(k_v_pair of other_meta.split("\n") ){
         if (k_v_pair.indexOf(":")==-1)
