@@ -133,7 +133,7 @@ def pages(request):
         elif load_template == "search.html":
             context['current_path'] = request.GET['current_path']
             context['segment'] = load_template
-            username = request.user.get_username
+            username = request.user.get_username()
 
             html_template = loader.get_template('home/search.html')
             return HttpResponse(html_template.render(context, request))
