@@ -2075,7 +2075,7 @@ function get_meta_data(){
               continue;
 
               else if (meta_key == "name"){
-                document.querySelector("collection_name").innerHTML = "Collection: "+ meta_value;
+                document.querySelector("#collection_name").innerHTML = "Collection: "+ meta_value;
               }
 
               else if (meta_key == "format" || meta_key == "category" ){
