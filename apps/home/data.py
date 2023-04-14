@@ -1001,7 +1001,7 @@ def add_to_public(file_path):
    
     meta_data = get_meta_data(file_path)
     
-    '''
+
     if "Collection" in meta_data["mode"]:
         public_collection_meta_data = generate_meta_data_for_dir(public_collection_file_name)
         if meta_data["abs_path"] not in public_collection_meta_data["subdirs"]:
@@ -1016,7 +1016,7 @@ def add_to_public(file_path):
             public_meta_data["subdirs"].append(meta_data["abs_path"])
         with open(os.path.join(settings.CORE_DIR, 'data', public_meta_data_file_name), 'w') as public_meta_data_file:
             json.dump(public_meta_data, public_meta_data_file)
-    '''
+
 
 
 
