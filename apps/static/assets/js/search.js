@@ -666,7 +666,7 @@ function draw_points(data_points){
       strokeColor: "black",
       strokeOpacity: 0.5,
       strokeWeight: 2,
-      fillColor: mode_color_map[data_mode],
+      fillColor: mode_color_map[data_mode[0]],
       fillOpacity: 0.5,
       map:map_main,
       center: data_loc,
