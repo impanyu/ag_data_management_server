@@ -2376,17 +2376,20 @@ function get_item_list(){
           //draw_points(data_points);
 
 
-          folder_icon = '<i class="ni ni-folder-17 text-primary"></i>';
+
           //for(file of data.files){
           for(var i=0;i<data.length;i++){
           file=data[i]; //meta data for file or dir
           current_files_names.push(file["name"]);
           if (file["name"].indexOf(".") == -1)
-           folder_icon = "";
+             folder_icon = "";
+          else
+             folder_icon = '<i class="ni ni-folder-17 text-primary"></i>';
 
-            item_html =  '<tr  class="file_and_dir_item"><td scope="row"><div class="media align-items-center"><div class="media-body">'+folder_icon+'<span class="name mb-0 text-sm"> &nbsp;<a href="/files.html?current_path='+current_path+'/'+file["name"]+'&dir=false"> ' +file["name"]+ '</a></span> </div></div></td>" + "<td class="budget">'+file["created_time"]+'</td>"' +
-                   '<td> <span class="badge badge-dot mr-4">  <span class="status">'+file["accessed_time"]+'</span></span></td>' +
-                   '<td> <span class="badge badge-dot mr-4">  <span class="status">'+file["size"]+'</span></span></td>' +
+            item_html =  '<tr  class="file_and_dir_item"><td scope="row"><div class="media align-items-center"><div class="media-body">'+folder_icon+'<span class="name mb-0 text-sm"> &nbsp;<a href="/files.html?current_path='+current_path+'/'+file["name"]+
+                  '&dir=false"> ' +file["name"]+ '</a></span> </div></div></td>" + "<td class="budget">'+file["native"]["created_time"]+'</td>"' +
+                   '<td> <span class="badge badge-dot mr-4">  <span class="status">'+file["native"]["accessed_time"]+'</span></span></td>' +
+                   '<td> <span class="badge badge-dot mr-4">  <span class="status">'+file["native"]["size"]+'</span></span></td>' +
                    '<td> <div class="avatar-group"> <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title='+user+'><img alt="Image placeholder" src="/static/assets/img/theme/react.jpg"></a></div></td>' +
                    '<td ><div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>'+
                    '<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">'+
