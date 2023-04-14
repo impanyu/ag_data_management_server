@@ -971,7 +971,7 @@ def add_to_public(file_path):
 
     if not os.path.exists(os.path.join(settings.CORE_DIR, 'data', public_user_meta_file_name)):
 
-        public_user_meta_data = generate_meta_data_for_dir(public_user_file_name)
+        public_user_meta_data = generate_meta_data_for_dir(public_user_file_name,{"create":["null"]})
 
         with open(os.path.join(settings.CORE_DIR, 'data', 'data.json'), 'r') as root_meta_data_file:
             root_meta_data = json.load(root_meta_data_file)
@@ -981,7 +981,7 @@ def add_to_public(file_path):
         with open(os.path.join(settings.CORE_DIR, 'data', 'data.json'), 'w') as root_meta_data_file:
             json.dump(root_meta_data, root_meta_data_file)
         '''
-        public_meta_data = generate_meta_data_for_dir(public_data_file_name)
+        public_meta_data = generate_meta_data_for_dir(public_data_file_name,{"create":["null"]})
 
         if public_data_file_name not in public_user_meta_data["subdirs"]:
             public_user_meta_data["subdirs"].append(public_data_file_name)
@@ -989,7 +989,7 @@ def add_to_public(file_path):
         with open(os.path.join(settings.CORE_DIR, 'data', public_user_meta_file_name), 'w') as public_user_meta_data_file:
             json.dump(public_user_meta_data, public_user_meta_data_file)
 
-        public_collection_meta_data = generate_meta_data_for_dir(public_collection_file_name)
+        public_collection_meta_data = generate_meta_data_for_dir(public_collection_file_name,{"create":["null"]})
 
         if public_collection_file_name not in public_meta_data["subdirs"]:
             public_meta_data["subdirs"].append(public_collection_file_name)
