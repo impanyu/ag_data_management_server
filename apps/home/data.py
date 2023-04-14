@@ -1003,7 +1003,7 @@ def add_to_public(file_path):
     
 
     if "Collection" in meta_data["mode"]:
-        public_collection_meta_data = generate_meta_data_for_dir(public_collection_file_name)
+        public_collection_meta_data = generate_meta_data_for_dir(public_collection_file_name,{"create":["null"]})
         if meta_data["abs_path"] not in public_collection_meta_data["subdirs"]:
             public_collection_meta_data["subdirs"].append(meta_data["abs_path"])
         with open(os.path.join(settings.CORE_DIR, 'data', public_collection_meta_file_name), 'w') as public_collection_meta_file:
@@ -1011,7 +1011,7 @@ def add_to_public(file_path):
 
 
     else:
-        public_meta_data = generate_meta_data_for_dir(public_data_file_name)
+        public_meta_data = generate_meta_data_for_dir(public_data_file_name,{"create":["null"]})
         if meta_data["abs_path"] not in public_meta_data["subdirs"]:
             public_meta_data["subdirs"].append(meta_data["abs_path"])
         with open(os.path.join(settings.CORE_DIR, 'data', public_meta_data_file_name), 'w') as public_meta_data_file:
