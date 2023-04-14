@@ -88,11 +88,15 @@ function draw_2d_points(data){
 
     svg = d3.select("#files_plot")
         .append("svg")
-         .attr("viewBox", [0, 0, width, height]);
+         .attr("viewBox", [0, 0, width, height])
+             .on("mouseover", function() {
+      document.body.classList.add("no-scroll");
+    })
+    .on("mouseout", function() {
+      document.body.classList.remove("no-scroll");
+    });
 
-     document.querySelector("#files_plot svg").addEventListener("wheel", function(e) {
-          e.preventDefault();
-        });
+
 
       const gGrid = svg.append("g");
 
