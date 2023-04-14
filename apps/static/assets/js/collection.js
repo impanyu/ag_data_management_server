@@ -2536,6 +2536,7 @@ previous_selected_file_and_dir =null;
 
 function select_collection(self){
    collection_name = self.id.substr("collection_item_".length);
+   selected_collection = collection_name;
 
 
 
