@@ -2522,7 +2522,7 @@ function display_collections_selection(){
                    sub_dir = sub_dirs[i];
                    console.info(sub_dir);
                    collection_name = sub_dir.split("/")[sub_dir.split("/").length-1];
-                   if(collection_name.indexOf(".") != -1){//folder
+                   if(collection_name.indexOf(".") == -1){//folder
                      item_html =  '<tr class="collection_item" id="collection_item_'+collection_name.replace(".","_")+'"  onclick="select_collection(\''+collection_name+'\')" >'+
                        '<td scope="row"><div class="media align-items-center"><div class="media-body"><span class="name mb-0 text-sm">'+
                        ' <a >&nbsp; ' +collection_name+
