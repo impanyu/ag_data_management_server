@@ -2425,12 +2425,25 @@ function get_item_list(){
 
 
 
-            })
+            });
 
 
             $(".file_and_dir_item").dblclick(function(){
-               //file_name= data[parseInt(this.id.split("_")[0])]["name"];
-               file_name = this.id.split("_")[this.id.split("_").length-1];
+                file_name = this.id.split("_")[this.id.split("_").length-1];
+
+                link = '/files.html?current_path=current_path/'+file_name;
+
+                window.location.href =link;
+
+
+
+
+            });
+
+
+
+            $("#"+i+"_file_delete").dblclick(function(){
+               file_name= data[parseInt(this.id.split("_")[0])]["name"];
 
 
                console.info(file_name);
