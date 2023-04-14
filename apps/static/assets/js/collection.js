@@ -2496,10 +2496,21 @@ function display_collections_selection(){
 
 }
 
+previous_selected_collection = null;
 function select_collection(collection_name){
    selected_collection = collection_name;
 
+
+
+    document.querySelector("#file_item_"+collection_name.replace(".","_")).style.backgroundColor = "#69cfff";
+    if(previous_selected_collection)
+      previous_selected_collection.style.backgroundColor = "";
+
+    previous_selected_collection = document.querySelector("#collection_item_"+collection_name_name.replace(".","_"));
+    //document.querySelector(".file_and_dir_item").style.backgroundColor = "white";
+
 }
+
 
 
 function set_collections_overlay(){
