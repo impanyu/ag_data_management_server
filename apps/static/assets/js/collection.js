@@ -2408,8 +2408,6 @@ function get_item_list(){
                //file_name= data[parseInt(this.id.split("_")[0])]["name"];
                file_path= data[parseInt(this.id.split("_")[0])]["abs_path"].substr(6);
 
-
-               console.info(file_name);
                $.post("/remove_from_collection",
                       {
                         collection_name : meta_data["name"],
