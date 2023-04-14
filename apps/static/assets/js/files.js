@@ -1763,6 +1763,8 @@ $.ajax({
 
 
 function get_file_list(){
+get_item_list();
+return;
  /*
   $("#file_list")[0].innerHTML="";
    mode = [];
@@ -2340,3 +2342,247 @@ function toggle_meta_data_panel(){
      document.querySelector("#meta_data_panel").style.paddingBottom = "0rem";
      }
 }
+
+
+
+
+function get_item_list(){
+
+  $.post("/file_system_virtual",
+        {
+          current_path: current_path,
+          /*
+          search_box: document.querySelector("#search_box").value,
+          category: document.querySelector("#category").value,
+          mode: mode,
+          format: format,
+          label: label,
+          time_range: [document.querySelector("#start_date").value,document.querySelector("#end_date").value],
+          bounding_box: [document.querySelector("#southwest").value, document.querySelector("#northeast").value]
+          */
+
+
+        },
+        function(data, status){
+          //console.info(data);
+          data=JSON.parse(data);
+          subdomains=[];
+          times=[];
+
+
+          current_files_names = [];
+          current_folders_names = [];
+          //console.info(data_points)
+          //draw_points(data_points);
+
+
+          folder_icon = '<i class="ni ni-folder-17 text-primary"></i>';
+          //for(file of data.files){
+          for(var i=0;i<data.length;i++){
+          file=data[i]; //meta data for file or dir
+          current_files_names.push(file["name"]);
+          if (file["name"].indexOf(".") == -1)
+           folder_icon = "";
+
+            item_html =  '<tr  class="file_and_dir_item"><td scope="row"><div class="media align-items-center"><div class="media-body">'+folder_icon+'<span class="name mb-0 text-sm"> &nbsp;<a href="/files.html?current_path='+current_path+'/'+file["name"]+'&dir=false"> ' +file["name"]+ '</a></span> </div></div></td>" + "<td class="budget">'+file["created_time"]+'</td>"' +
+                   '<td> <span class="badge badge-dot mr-4">  <span class="status">'+file["accessed_time"]+'</span></span></td>' +
+                   '<td> <span class="badge badge-dot mr-4">  <span class="status">'+file["size"]+'</span></span></td>' +
+                   '<td> <div class="avatar-group"> <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title='+user+'><img alt="Image placeholder" src="/static/assets/img/theme/react.jpg"></a></div></td>' +
+                   '<td ><div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>'+
+                   '<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">'+
+                   '<a class="dropdown-item" href="#" id="'+i+'_file_delete">Delete</a>'+
+                   '<a class="dropdown-item" href="#" id="'+i+'_move">Move</a>'+
+                   '<a class="dropdown-item" href="#" id="'+i+'_duplicate">Duplicate</a>'+
+
+                   '<a class="dropdown-item" href="#" id="'+i+'_add_to_collection">Add to Collection</a>'
+                   '</div> </div></td></tr>';
+            item_node = htmlToElement(item_html);
+            $("#file_list")[0].appendChild(item_node);
+
+
+            $("#"+i+"_file_delete").click(function(){
+               file_name= data[parseInt(this.id.split("_")[0])]["name"];
+
+
+               console.info(file_name);
+               $.post("/delete_file",
+                      {
+                        current_path : current_path,
+                        file_name: file_name
+                      },
+                      function(data, status){
+                          $("#file_list")[0].innerHTML="";
+                          get_item_list();
+                          alert(data);
+                      });
+
+
+            });
+
+
+            $("#"+i+"_add_to_collection").click(function(){
+               file_name= data[parseInt(this.id.split("_")[0])]["name"];
+               console.info(file_name);
+               add_to_collection(current_path,file_name);
+
+
+            });
+
+            $("#"+i+"_move").click(function(){
+               file_name= data[parseInt(this.id.split("_")[0])]["name"];
+               //console.info(file_name);
+               //add_to_domain(current_path,file_name);
+
+
+            });
+
+            $("#"+i+"_duplicate").click(function(){
+               file_name= data[parseInt(this.id.split("_")[0])]["name"];
+               //console.info(file_name);
+               //add_to_domain(current_path,file_name);
+
+
+            });
+
+
+          }
+
+
+
+
+    });
+}
+
+
+
+function toggle_meta_data_panel(){
+   if(document.querySelector("#meta_data_panel").style.height == "0px"){
+     document.querySelector("#meta_data_panel").style.height = "1600px";
+     document.querySelector("#meta_data_panel").style.paddingTop = "1.25rem";
+     document.querySelector("#meta_data_panel").style.paddingBottom = "1.25rem";
+
+     }
+    else{
+     document.querySelector("#meta_data_panel").style.height = "0px";
+          document.querySelector("#meta_data_panel").style.paddingTop = "0rem";
+     document.querySelector("#meta_data_panel").style.paddingBottom = "0rem";
+     }
+}
+
+
+
+selected_collection = "";
+selected_file_path = "";
+
+function add_to_collection(current_path,file_name){
+
+   selected_file_path = current_path+"/"+file_name;
+
+   display_file_selection();
+
+}
+
+
+
+function display_collections_selection(){
+   path = user+"/ag_data/collections";
+
+   $("#collections_overlay")[0].style.display = "flex";
+   document.body.style.overflow = "hidden";
+   $("#collections_list_in_overlay")[0].innerHTML = "";
+
+    $.post("/meta_data",
+        {
+          current_path: path
+         },
+         function(data, status){
+            meta_data=JSON.parse(data);
+            sub_dirs = meta_data["subdirs"];
+            collections_overlay_path_components = meta_data["abs_path"].split("/");
+            path = "";
+            $("#collections_overlay_path")[0].innerHTML = "Collections";
+
+
+            for (var i =0;i<sub_dirs.length;i++){
+
+                   sub_dir = sub_dirs[i];
+                   console.info(sub_dir);
+                   collection_name = sub_dir.split("/")[sub_dir.split("/").length-1];
+                   if(collection_name.indexOf(".") != -1){//file
+                     item_html =  '<tr class="collection_item" id="collection_item_'+sub_dir_name.replace(".","_")+'"  onclick="select_collection(\''+collection_name+'\')" >'+
+                       '<td scope="row"><div class="media align-items-center"><div class="media-body"><span class="name mb-0 text-sm">'+
+                       ' <a >&nbsp; ' +sub_dir_name+
+                       '</a></span> </div></div></td>"' +
+                       '</tr>';
+
+                   }
+
+            item_node = htmlToElement(item_html);
+            $("#collections_in_overlay")[0].appendChild(item_node);
+
+            }
+
+         });
+
+}
+
+function select_collection(collection_name){
+   selected_collection = collection_name;
+
+}
+
+
+function set_collections_overlay(){
+
+    const collections_overlay = document.querySelector('#collections_overlay');
+
+    collections_overlay.addEventListener('click', function(event) {
+        this.style.display  = "none";
+        document.body.style.overflow = "auto";
+    });
+
+    const collections_tab = document.querySelector('#collections_tab');
+
+    collections_tab.addEventListener('click', function(event) {
+       event.stopPropagation();
+    });
+
+
+    const collections_button = document.querySelector('#collections_button');
+
+    collections_button.addEventListener('click', function(event) {
+           collections_overlay.style.display = "none";
+           document.body.style.overflow = "auto";
+
+              $.ajax({
+            type: "POST",
+
+            url: "/add_to_collection",
+            data: {
+                 selected_collection:selected_collection,
+                 selected_file_path: selected_file_path
+            },
+            success: function (data) {
+                console.info(data);
+
+                display_warning_overlay(selected_file_path.split("/")[selected_file_path.split("/").length-1]+" added to colletion: "+selected_collection);
+
+            }
+        });
+
+
+
+    });
+
+    document.querySelector("#collections_tab").addEventListener('scroll',function(event){
+       // event.stopPropagation();
+         //event.preventDefault();
+
+    });
+
+}
+
+
+set_collections_overlay();
+selected_collection = "";
+selected_file_path = "";
