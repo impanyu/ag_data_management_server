@@ -1244,15 +1244,24 @@ def get_meta_data(path):
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
         meta_data = json.load(meta_data_file)
 
-    if "Collection" in meta_data["mode"]:
-        return meta_data
+    #if "Collection" in meta_data["mode"]:
+    #    return meta_data
 
-    # Get file/directory size
-    size = os.path.getsize(path)
-    # Get file/directory creation time
-    create_time = datetime.fromtimestamp(os.path.getctime(path)).strftime("%m/%d/%Y, %H:%M:%S")
-    # Get file/directory access time
-    access_time = datetime.fromtimestamp(os.path.getatime(path)).strftime("%m/%d/%Y, %H:%M:%S")
+    if os.path.exists(path):
+        # Get file/directory size
+        size = os.path.getsize(path)
+        # Get file/directory creation time
+        create_time = datetime.fromtimestamp(os.path.getctime(path)).strftime("%m/%d/%Y, %H:%M:%S")
+        # Get file/directory access time
+        access_time = datetime.fromtimestamp(os.path.getatime(path)).strftime("%m/%d/%Y, %H:%M:%S")
+
+    else:
+        # Get file/directory size
+        size = os.path.getsize(meta_data_file_path )
+        # Get file/directory creation time
+        create_time = datetime.fromtimestamp(os.path.getctime(meta_data_file_path)).strftime("%m/%d/%Y, %H:%M:%S")
+        # Get file/directory access time
+        access_time = datetime.fromtimestamp(os.path.getatime(meta_data_file_path)).strftime("%m/%d/%Y, %H:%M:%S")
 
 
 
