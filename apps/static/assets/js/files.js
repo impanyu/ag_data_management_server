@@ -981,7 +981,7 @@ function select_file(arg_name,path){
     sub_dir_name = path.split("/")[path.split("/").length-1];
 
     document.querySelector("#file_item_"+sub_dir_name.replace(".","_")).style.backgroundColor = "#69cfff";
-    if(previous_selected_file)
+    if(previous_selected_file && previous_selected_file!= document.querySelector("#file_item_"+sub_dir_name.replace(".","_")))
       previous_selected_file.style.backgroundColor = "";
 
     previous_selected_file = document.querySelector("#file_item_"+sub_dir_name.replace(".","_"));
