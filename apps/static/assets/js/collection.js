@@ -2368,9 +2368,7 @@ function get_item_list(){
                    '<td> <div class="avatar-group"> <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title='+user+'><img alt="Image placeholder" src="/static/assets/img/theme/react.jpg"></a></div></td>' +
                    '<td ><div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>'+
                    '<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">'+
-                   '<a class="dropdown-item"  id="'+i+'_file_delete">Delete</a>'+
-                   '<a class="dropdown-item" id="'+i+'_move">Move</a>'+
-                   '<a class="dropdown-item"  id="'+i+'_duplicate">Duplicate</a>'+
+                   '<a class="dropdown-item"  id="'+i+'_remove">Remove from this Collection</a>'+
 
                    '<a class="dropdown-item" href="#" id="'+i+'_add_to_collection">Add to Collection</a>'
                    '</div> </div></td></tr>';
@@ -2406,15 +2404,16 @@ function get_item_list(){
 
 
 
-            $("#"+i+"_file_delete").click(function(){
-               file_name= data[parseInt(this.id.split("_")[0])]["name"];
+            $("#"+i+"_remove").click(function(){
+               //file_name= data[parseInt(this.id.split("_")[0])]["name"];
+               file_path= data[parseInt(this.id.split("_")[0])]["abs_path"].substr(6);
 
 
                console.info(file_name);
-               $.post("/delete_file",
+               $.post("/remove_from_collection",
                       {
-                        current_path : current_path,
-                        file_name: file_name
+                        collection_name : meta_data["name"],
+                        file_path: file_path
                       },
                       function(data, status){
                           $("#file_list")[0].innerHTML="";
@@ -2435,21 +2434,9 @@ function get_item_list(){
 
             });
 
-            $("#"+i+"_move").click(function(){
-               file_name= data[parseInt(this.id.split("_")[0])]["name"];
-               //console.info(file_name);
-               //add_to_domain(current_path,file_name);
 
 
-            });
 
-            $("#"+i+"_duplicate").click(function(){
-               file_name= data[parseInt(this.id.split("_")[0])]["name"];
-               //console.info(file_name);
-               //add_to_domain(current_path,file_name);
-
-
-            });
 
 
           }

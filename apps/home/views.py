@@ -217,6 +217,14 @@ def data(request):
 
             #return HttpResponse(a)
 
+        elif load_template == 'remove_from_collection':
+            collection_name = request.POST.get("collection_name", "")
+            file_path = request.POST.get("file_path", "")
+
+            remove_from_collection(collection_name, file_path, request.user.get_username())
+
+            return HttpResponse("add to collection")
+
 
 
         elif load_template == 'create_new_domain':

@@ -1746,3 +1746,17 @@ def add_to_collection(selected_collection,selected_file_path,username):
 
 
 
+def remove_from_collection(collection_name, file_path, username):
+    collection_path = f"/data/{username}/ag_data/collections/{collection_name}"
+    collection_meta_data = get_meta_data(collection_path)
+
+    collection_meta_data["subdirs"].remove(file_path)
+
+    collection_meta_data_file_name = "_".join(collection_path.split("/")[1:]) + ".json"
+    with open(os.path.join(settings.CORE_DIR, 'data', collection_meta_data_file_name),
+              "w") as collection_meta_data_file:
+        json.dump(collection_meta_data, collection_meta_data_file)
+
+
+
+
