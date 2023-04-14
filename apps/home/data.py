@@ -622,7 +622,7 @@ def distance(x, y):
     d = 0
 
 
-    d += list_distance(x["mode"] == y["mode"])
+    d += list_distance(x["mode"] ,y["mode"])
     d += list_distance(x["category"], y["category"])
     d += list_distance(x["label"], y["label"])
     d += list_distance(x["format"], y["format"])

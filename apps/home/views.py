@@ -1020,7 +1020,7 @@ def data(request):
 
             response["items"] += public_items
             '''
-            #response["2d_points"] = dim_reduction(response["items"]).tolist()
+            response["2d_points"] = dim_reduction(response["items"]).tolist()
 
 
 
