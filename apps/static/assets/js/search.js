@@ -660,7 +660,9 @@ function draw_points(data_points){
    for (i in data_points) {
    data_point = data_points[i]
     data_mode = data_point["mode"];
-    data_loc = data_point["spatial_range"][0]; // northeast corner
+    data_loc = {"lat": (data_point["spatial_range"]["southwest"][0]+ data_point["spatial_range"]["northeast"][0])/2, "lng":(data_point["spatial_range"]["southwest"][1]+ data_point["spatial_range"]["northeast"][1])/2}
+
+    if (data_loc["lat"] == 0) continue;
     //size = data_point["size"];
     const point = new google.maps.Circle({
       strokeColor: "black",
