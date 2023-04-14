@@ -616,10 +616,14 @@ function set_file_system_overlay(){
 
 
 
-set_create_file_overlay();
-set_create_folder_overlay();
+
+
+
+//set_create_file_overlay();
+//set_create_folder_overlay();
 set_warning_overlay();
-set_file_system_overlay();
+//set_file_system_overlay();
+set_collections_overlay();
 
 function create_folder(new_folder_name){
     $.ajax({
@@ -965,6 +969,13 @@ function display_file_selection(arg_name,path){
          });
 
 }
+
+
+
+
+
+
+
 
 
 previous_selected_file = null;
@@ -1884,9 +1895,9 @@ function get_file_list(){
           //for(file of data.files){
           for(var i=0;i<data['files'].length;i++){
           file=data["files"][i];
-          current_files_names.push(file["file_name"]);
+          current_files_names.push(file["name"]);
 
-            item_html =  '<tr  class="file_and_dir_item"><td scope="row"><div class="media align-items-center"><div class="media-body"><span class="name mb-0 text-sm"> &nbsp;<a href="/files.html?current_path='+current_path+'/'+file["file_name"]+'&dir=false"> ' +file["file_name"]+ '</a></span> </div></div></td>" + "<td class="budget">'+file["created_time"]+'</td>"' +
+            item_html =  '<tr  class="file_and_dir_item"><td scope="row"><div class="media align-items-center"><div class="media-body"><span class="name mb-0 text-sm"> &nbsp;<a href="/files.html?current_path='+current_path+'/'+file["file_name"]+'&dir=false"> ' +file["name"]+ '</a></span> </div></div></td>" + "<td class="budget">'+file["created_time"]+'</td>"' +
                    '<td> <span class="badge badge-dot mr-4">  <span class="status">'+file["accessed_time"]+'</span></span></td>' +
                    '<td> <span class="badge badge-dot mr-4">  <span class="status">'+file["size"]+'</span></span></td>' +
                    '<td> <div class="avatar-group"> <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title='+user+'><img alt="Image placeholder" src="/static/assets/img/theme/react.jpg"></a></div></td>' +
@@ -2328,7 +2339,7 @@ function get_item_list(){
 
           current_files_names = [];
           current_folders_names = [];
-          console.info(data_points)
+          //console.info(data_points)
           //draw_points(data_points);
 
 
@@ -2426,29 +2437,32 @@ function get_item_list(){
 
           }
 
-
+          foler_icon = '<i class="ni ni-folder-17 text-primary"></i>';
           //for(file of data.files){
-          for(var i=0;i<data['files'].length;i++){
-          file=data["files"][i];
-          current_files_names.push(file["file_name"]);
+          for(var i=0;i<data.length;i++){
+          file=data[i]; //meta data for file or dir
+          current_files_names.push(file["name"]);
+          if (file["name"].indexOf(".") == -1)
+           folder_icon = "";
 
-            item_html =  '<tr  class="file_and_dir_item"><td scope="row"><div class="media align-items-center"><div class="media-body"><span class="name mb-0 text-sm"> &nbsp;<a href="/files.html?current_path='+current_path+'/'+file["file_name"]+'&dir=false"> ' +file["file_name"]+ '</a></span> </div></div></td>" + "<td class="budget">'+file["created_time"]+'</td>"' +
+            item_html =  '<tr  class="file_and_dir_item"><td scope="row"><div class="media align-items-center"><div class="media-body">'+folder_icon+'<span class="name mb-0 text-sm"> &nbsp;<a href="/files.html?current_path='+current_path+'/'+file["file_name"]+'&dir=false"> ' +file["file_name"]+ '</a></span> </div></div></td>" + "<td class="budget">'+file["created_time"]+'</td>"' +
                    '<td> <span class="badge badge-dot mr-4">  <span class="status">'+file["accessed_time"]+'</span></span></td>' +
                    '<td> <span class="badge badge-dot mr-4">  <span class="status">'+file["size"]+'</span></span></td>' +
                    '<td> <div class="avatar-group"> <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title='+user+'><img alt="Image placeholder" src="/static/assets/img/theme/react.jpg"></a></div></td>' +
                    '<td ><div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>'+
                    '<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">'+
                    '<a class="dropdown-item" href="#" id="'+i+'_file_delete">Delete</a>'+
-                   '<a class="dropdown-item" href="#" id="'+i+'_add_domain">Add to Domain</a>'+
-                   '<a class="dropdown-item" href="#" id="'+i+'_meta_data">Meta Data</a>'+
-                   '<a class="dropdown-item" href="#" id="'+i+'_google_earth_engine">Earth Engine</a>'+
+                   '<a class="dropdown-item" href="#" id="'+i+'_move">Move</a>'+
+                   '<a class="dropdown-item" href="#" id="'+i+'_duplicate">Duplicate</a>'+
+
+                   '<a class="dropdown-item" href="#" id="'+i+'_add_to_collection">Add to Collection</a>'
                    '</div> </div></td></tr>';
             item_node = htmlToElement(item_html);
             $("#file_list")[0].appendChild(item_node);
 
 
             $("#"+i+"_file_delete").click(function(){
-               file_name= data["files"][parseInt(this.id.split("_")[0])]["file_name"];
+               file_name= data[parseInt(this.id.split("_")[0])]["name"];
 
 
                console.info(file_name);
@@ -2459,7 +2473,7 @@ function get_item_list(){
                       },
                       function(data, status){
                           $("#file_list")[0].innerHTML="";
-                          get_file_list();
+                          get_item_list();
                           alert(data);
                       });
 
@@ -2467,21 +2481,31 @@ function get_item_list(){
             });
 
 
-            $("#"+i+"_add_domain").click(function(){
-               file_name= data["files"][parseInt(this.id.split("_")[0])]["file_name"];
+            $("#"+i+"_add_to_collection").click(function(){
+               file_name= data[parseInt(this.id.split("_")[0])]["name"];
                console.info(file_name);
-               add_to_domain(current_path,file_name);
+               add_to_collection(current_path,file_name);
 
 
             });
 
-             $("#"+i+"_meta_data").click(function(){
-               file_name= data["files"][parseInt(this.id.split("_")[0])]["file_name"];
-               console.info(file_name);
-               //get_meta_data(current_path,file_name);
+            $("#"+i+"_move").click(function(){
+               file_name= data[parseInt(this.id.split("_")[0])]["name"];
+               //console.info(file_name);
+               //add_to_domain(current_path,file_name);
 
 
             });
+
+            $("#"+i+"_duplicate").click(function(){
+               file_name= data[parseInt(this.id.split("_")[0])]["name"];
+               //console.info(file_name);
+               //add_to_domain(current_path,file_name);
+
+
+            });
+
+
           }
 
 
@@ -2508,8 +2532,113 @@ function toggle_meta_data_panel(){
 
 
 
+selected_collection = "";
+selected_file_path = "";
+
+function add_to_collection(current_path,file_name){
+
+   selected_file_path = current_path+"/"+file_name;
+
+   display_file_selection();
+
+}
 
 
 
+function display_collections_selection(){
+   path = user+"/ag_data/collections";
+
+   $("#collections_overlay")[0].style.display = "flex";
+   document.body.style.overflow = "hidden";
+   $("#collections_list_in_overlay")[0].innerHTML = "";
+
+    $.post("/meta_data",
+        {
+          current_path: path
+         },
+         function(data, status){
+            meta_data=JSON.parse(data);
+            sub_dirs = meta_data["subdirs"];
+            collections_overlay_path_components = meta_data["abs_path"].split("/");
+            path = "";
+            $("#collections_overlay_path")[0].innerHTML = "Collections";
+
+
+            for (var i =0;i<sub_dirs.length;i++){
+
+                   sub_dir = sub_dirs[i];
+                   console.info(sub_dir);
+                   collection_name = sub_dir.split("/")[sub_dir.split("/").length-1];
+                   if(collection_name.indexOf(".") != -1){//file
+                     item_html =  '<tr class="collection_item" id="collection_item_'+sub_dir_name.replace(".","_")+'"  onclick="select_collection(\''+collection_name+'\')" >'+
+                       '<td scope="row"><div class="media align-items-center"><div class="media-body"><span class="name mb-0 text-sm">'+
+                       ' <a >&nbsp; ' +sub_dir_name+
+                       '</a></span> </div></div></td>"' +
+                       '</tr>';
+
+                   }
+
+            item_node = htmlToElement(item_html);
+            $("#collections_in_overlay")[0].appendChild(item_node);
+
+            }
+
+         });
+
+}
+
+function select_collection(collection_name){
+   selected_collection = collection_name;
+
+}
+
+
+function set_collections_overlay(){
+
+    const collections_overlay = document.querySelector('#collections_overlay');
+
+    collections_overlay.addEventListener('click', function(event) {
+        this.style.display  = "none";
+        document.body.style.overflow = "auto";
+    });
+
+    const collections_tab = document.querySelector('#collections_tab');
+
+    collections_tab.addEventListener('click', function(event) {
+       event.stopPropagation();
+    });
+
+
+    const collections_button = document.querySelector('#collections_button');
+
+    collections_button.addEventListener('click', function(event) {
+           collections_overlay.style.display = "none";
+           document.body.style.overflow = "auto";
+
+              $.ajax({
+            type: "POST",
+
+            url: "/add_to_collection",
+            data: {
+                 selected_collection:selected_collection,
+                 selected_file: selected_file_path
+            },
+            success: function (data) {
+                console.info(data);
+
+            }
+        });
+
+
+
+    });
+
+    document.querySelector("#collections_tab").addEventListener('scroll',function(event){
+       // event.stopPropagation();
+         //event.preventDefault();
+
+    });
+
+}
 
 

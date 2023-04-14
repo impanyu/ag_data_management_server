@@ -941,7 +941,7 @@ function display_file_selection(arg_name,path){
                    sub_dir = sub_dirs[i];
                    console.info(sub_dir);
                    sub_dir_name = sub_dir.split("/")[sub_dir.split("/").length-1];
-                   if(sub_dir.indexOf(".") != -1){//file
+                   if(sub_dir_name.indexOf(".") != -1){//file
                      item_html =  '<tr class="file_and_dir_item" id="file_item_'+sub_dir_name.replace(".","_")+'"  onclick="select_file(\''+ arg_name  +'\',\''+sub_dir.substr(6)+'\')" >'+
                        '<td scope="row"><div class="media align-items-center"><div class="media-body"><span class="name mb-0 text-sm">'+
                        ' <a >&nbsp; ' +sub_dir_name+
@@ -2039,6 +2039,7 @@ function update_meta(){
     meta_data["time_range"] = {"start":document.querySelector("#start_date").value, "end":document.querySelector("#end_date").value};
     meta_data["spatial_range"] = {"southwest":document.querySelector("#southwest").value, "northeast":document.querySelector("#northeast").value};
     other_meta = document.querySelector("#other_meta").value;
+    meta_data["introduction"] = document.querySelector('#introduction').value;
 
     for(k_v_pair of other_meta.split("\n") ){
         if (k_v_pair.indexOf(":")==-1)

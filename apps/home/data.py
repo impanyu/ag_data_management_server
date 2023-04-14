@@ -1002,6 +1002,7 @@ def update_meta(file_path,new_meta_data):
 
         elif key == "args":
             meta_data["args"] = new_meta_data["args"]
+
         else:
             meta_data[key] = new_meta_data[key]
         '''
@@ -1716,4 +1717,18 @@ def get_downstream(path,graph):
                 graph["links"].append({"source":trim_path_header(path),"target":trim_path_header(downstream_path),"label":trim_path_header(downstream_tool)})
 
                 get_downstream(downstream_path, graph)
+
+
+def add_to_collection(selected_collection,selected_file_path):
+    from .views import username
+    selected_collection_path = f"/data/{username}/ag_data/collections/{selected_collection}"
+
+    selected_collection_meta_data = get_meta_data(selected_collection_path)
+    if selected_file_path not in selected_collection_meta_data["subdirs"]:
+        selected_collection_meta_data["subdirs"].append(selected_file_path)
+
+    selected_collection_meta_data_file_name = "_".join(selected_collection_path.split("/")[1:]) + ".json"
+    with open(os.path.join(settings.CORE_DIR, 'data', selected_collection_meta_data_file_name), "r") as selected_collection_meta_data_file:
+        json.dump(selected_collection_meta_data,selected_collection_meta_data_file)
+
 

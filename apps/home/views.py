@@ -198,6 +198,16 @@ def data(request):
             add_to_domain(domain_name,start_date,end_date,southwest,northeast,data_content)
             return HttpResponse("item added to domain")
 
+        elif load_template == 'add_to_collection':
+            selected_collection = request.POST.get("selected_collection", "")
+            selected_file_path = request.POST.get("selected_file_path", "")
+            add_to_collection(selected_collection,selected_file_path)
+
+            return HttpResponse("item added to collection")
+
+
+
+
         elif load_template == 'create_new_domain':
             new_domain_name = request.POST.get("new_domain_name","")
             start_date = request.POST.get("start_date", "")
