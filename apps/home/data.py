@@ -968,7 +968,7 @@ def add_to_public(file_path):
     public_meta_data_file_name = "_".join(public_data_file_name.split("/")[1:]) + ".json"
     public_collection_file_name = f"{public_data_file_name}/collections"
     public_collection_meta_file_name = "_".join(public_collection_file_name.split("/")[1:]) + ".json"
-    '''  
+
     if not os.path.exists(os.path.join(settings.CORE_DIR, 'data', public_user_meta_file_name)):
 
         public_user_meta_data = generate_meta_data_for_dir(public_user_file_name)
@@ -980,7 +980,7 @@ def add_to_public(file_path):
 
         with open(os.path.join(settings.CORE_DIR, 'data', 'data.json'), 'w') as root_meta_data_file:
             json.dump(root_meta_data, root_meta_data_file)
-
+        '''
         public_meta_data = generate_meta_data_for_dir(public_data_file_name)
 
         if public_data_file_name not in public_user_meta_data["subdirs"]:
@@ -998,7 +998,7 @@ def add_to_public(file_path):
             json.dump(public_meta_data, public_meta_data_file)
 
 
-      
+   
     meta_data = get_meta_data(file_path)
     
 
