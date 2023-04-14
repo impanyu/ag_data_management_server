@@ -621,11 +621,18 @@ def list_distance(l1, l2):
 def distance(x, y):
     d = 0
 
-    if not x["mode"] == y["mode"]:
-        d = d + 1
+
+    d += list_distance(x["mode"] == y["mode"])
     d += list_distance(x["category"], y["category"])
     d += list_distance(x["label"], y["label"])
     d += list_distance(x["format"], y["format"])
+    if not x["realtime"] == y["realtime"]:
+        d +=1
+    if not x["public"] == y["public"]:
+        d +=1
+    if not x["owner"] == y["owner"]:
+        d +=1
+
     if not overlap(x["time_range"]["start"], x["time_range"]["end"], y["time_range"]["start"], y["time_range"]["end"]):
         d += 1
 
@@ -952,6 +959,66 @@ def update_file(file_path, new_content):
         data_file.write(new_content)
 
 
+def add_to_public(file_path):
+
+
+    public_user_file_name = f"/data/public"
+    public_user_meta_file_name = "_".join(public_user_file_name.split("/")[1:]) + ".json"
+    public_data_file_name = f"/data/public/ag_data"
+    public_meta_data_file_name = "_".join(public_data_file_name.split("/")[1:]) + ".json"
+    public_collection_file_name = f"{public_data_file_name}/collections"
+    public_collection_meta_file_name = "_".join(public_collection_file_name.split("/")[1:]) + ".json"
+
+    if not os.path.exists(public_user_meta_file_name):
+
+        public_user_meta_data = generate_meta_data_for_dir(public_user_file_name)
+
+        with open(os.path.join(settings.CORE_DIR, 'data', 'data.json'), 'r') as root_meta_data_file:
+            root_meta_data = json.load(root_meta_data_file)
+            if public_user_file_name not in root_meta_data["subdirs"]:
+                root_meta_data["subdirs"].append(public_user_file_name)
+
+        with open(os.path.join(settings.CORE_DIR, 'data', 'data.json'), 'w') as root_meta_data_file:
+            json.dump(root_meta_data, root_meta_data_file)
+
+        public_meta_data = generate_meta_data_for_dir(public_data_file_name)
+
+        if public_data_file_name not in public_user_meta_data["subdirs"]:
+            public_user_meta_data["subdirs"].append(public_data_file_name)
+
+        with open(os.path.join(settings.CORE_DIR, 'data', public_user_meta_file_name), 'w') as public_user_meta_data_file:
+            json.dump(public_user_meta_data, public_user_meta_data_file)
+
+        public_collection_meta_data = generate_meta_data_for_dir(public_collection_file_name)
+
+        if public_collection_file_name not in public_meta_data["subdirs"]:
+            public_meta_data["subdirs"].append(public_collection_file_name)
+
+        with open(os.path.join(settings.CORE_DIR, 'data', public_meta_data_file_name), 'w') as public_meta_data_file:
+            json.dump(public_meta_data, public_meta_data_file)
+
+
+    meta_data = get_meta_data(file_path)
+
+    if "Collection" in meta_data["mode"]:
+        public_collection_meta_data = generate_meta_data_for_dir(public_collection_file_name)
+        if meta_data["abs_path"] not in public_collection_meta_data["subdirs"]:
+            public_collection_meta_data["subdirs"].append(meta_data["abs_path"])
+        with open(os.path.join(settings.CORE_DIR, 'data', public_collection_meta_file_name), 'w') as public_collection_meta_file:
+            json.dump(public_collection_meta_data, public_collection_meta_file)
+
+
+    else:
+        public_meta_data = generate_meta_data_for_dir(public_data_file_name)
+        if meta_data["abs_path"] not in public_meta_data["subdirs"]:
+            public_meta_data["subdirs"].append(meta_data["abs_path"])
+        with open(os.path.join(settings.CORE_DIR, 'data', public_meta_data_file_name), 'w') as public_meta_data_file:
+            json.dump(public_meta_data, public_meta_data_file)
+
+
+
+
+
 def update_meta(file_path,new_meta_data):
     meta_data_file_name = "_".join(file_path.split("/")[1:]) + ".json"
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
@@ -978,6 +1045,9 @@ def update_meta(file_path,new_meta_data):
 
             # recursively change the subdirs and files
             recursive_update_public(file_path,new_meta_data[key])
+
+            if key == "True":
+                add_to_public(file_path)
 
 
         elif key == "time_range":
@@ -1162,7 +1232,7 @@ def delete_meta_data(meta_data_path):
         delete_meta_data(sub_meta_data_path)
 
 
-def search(root_dir, search_box, category, mode, format, label, realtime, time_range, spatial_range):
+def search(root_dir, search_box, category, mode, format, label,  realtime, time_range, spatial_range):
     result = []
     if not os.path.exists(root_dir):
         return result

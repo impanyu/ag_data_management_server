@@ -52,8 +52,8 @@ def register_user(request):
             user_meta_file_name = "_".join(user_file_name.split("/")[1:]) + ".json"
             data_file_name = f"/data/{username}/ag_data"
             meta_data_file_name = "_".join(data_file_name.split("/")[1:]) + ".json"
-            domain_file_name = f"{data_file_name}/domain"
-            domain_meta_file_name = "_".join(domain_file_name.split("/")[1:]) + ".json"
+            collection_file_name = f"{data_file_name}/collections"
+            collection_meta_file_name = "_".join(collection_file_name.split("/")[1:]) + ".json"
 
             # create user file
             if not os.path.exists(user_file_name):
@@ -64,8 +64,8 @@ def register_user(request):
                 os.makedirs(data_file_name)
 
             # create domain file
-            if not os.path.exists(domain_file_name):
-                os.makedirs(domain_file_name)
+            #if not os.path.exists(collection_file_name):
+            #    os.makedirs(collection_file_name)
 
 
 
@@ -93,10 +93,10 @@ def register_user(request):
 
 
 
-            domain_meta_data = generate_meta_data_for_dir(domain_file_name)
+            collection_meta_data = generate_meta_data_for_dir(collection_file_name)
 
-            if domain_file_name not in meta_data["subdirs"]:
-                meta_data["subdirs"].append(domain_file_name)
+            if collection_file_name not in meta_data["subdirs"]:
+                meta_data["subdirs"].append(collection_file_name)
 
             with open(os.path.join(settings.CORE_DIR,'data', meta_data_file_name), 'w') as meta_data_file:
                 json.dump(meta_data,meta_data_file)

@@ -1005,6 +1005,11 @@ def data(request):
             if "My Own Data" in privilege:
                 root_dir = os.path.join("/data",request.user.get_username(),"ag_data")
                 response["items"] = search(root_dir,search_box,category,mode,format,label,realtime,time_range,spatial_range)
+            if "Public Data" in privilege:
+                root_dir = os.path.join("/data", "public", "ag_data")
+                response["items"] += search(root_dir, search_box, category, mode, format, label, realtime, time_range,
+                                       spatial_range)
+
             #if "Domain" in mode:
                 #search_domains()
                 print(response["items"])
