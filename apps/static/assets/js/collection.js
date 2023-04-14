@@ -2406,7 +2406,7 @@ function get_item_list(){
 
 
 
-            $("#"+i+"_file_delete").dblclick(function(){
+            $("#"+i+"_file_delete").click(function(){
                file_name= data[parseInt(this.id.split("_")[0])]["name"];
 
 
