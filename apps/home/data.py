@@ -1243,7 +1243,7 @@ def get_meta_data(path):
 
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
         meta_data = json.load(meta_data_file)
-    return meta_data
+
 
     #if "Collection" in meta_data["mode"]:
     #    return meta_data
@@ -1732,7 +1732,9 @@ def add_to_collection(selected_collection,selected_file_path):
     from .views import username
     selected_collection_path = f"/data/{username}/ag_data/collections/{selected_collection}"
 
-    selected_collection_meta_data = get_meta_data(selected_collection_path)
+    #selected_collection_meta_data = get_meta_data(selected_collection_path)
+
+    return selected_collection_path
     '''
     if selected_file_path not in selected_collection_meta_data["subdirs"]:
         selected_collection_meta_data["subdirs"].append(f"/data/{selected_file_path}")
