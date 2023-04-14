@@ -1004,8 +1004,8 @@ def update_meta(file_path,new_meta_data):
         elif key == "args":
             meta_data["args"] = new_meta_data["args"]
 
-        #else:
-        #    meta_data[key] = new_meta_data[key]
+        else:
+            meta_data[key] = new_meta_data[key]
         '''
           elif key == "other_meta":
               #other_meta = new_meta_data[key].replace("\n",",")
