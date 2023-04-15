@@ -2498,7 +2498,7 @@ function get_item_list(){
                file_name= data[parseInt(this.id.split("_")[0])]["name"];
                file_path= data[parseInt(this.id.split("_")[0])]["abs_path"].substr(6);
                deleted_file_path = file_path;
-               document.querySelector('#delete_file_overlay').style.display= "block";
+               document.querySelector('#delete_file_overlay').style.display= "flex";
 
 
 
@@ -2554,6 +2554,7 @@ function duplicate(file_path){
             },
             success: function (data) {
                 console.info(data);
+                $("#file_list")[0].innerHTML="";
                 get_item_list();
 
                display_warning_overlay("A copy of "+file_path.split("/")[file_path.split("/").length-1]+" is generated.");
