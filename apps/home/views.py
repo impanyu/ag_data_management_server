@@ -654,8 +654,25 @@ def data(request):
                 i = i + 1
 
             open(new_path, "w")
-            generate_meta_data_for_file(new_path, {"duplicate": [file_path]})
+
+            meta_data = get_meta_data(file_path)
+            meta_data["name"] = os.path.basename(new_path)
+            meta_data["abs_path"] = new_path
+            meta_data["upstream"]["duplicate"] = [file_path]
+
+            new_meta_data_file_name = "_".join(new_path.split("/")[1:]) + ".json"
+
+            with open(os.path.join(settings.CORE_DIR, 'data', new_meta_data_file_name), "w") as new_meta_data_file:
+                json.dump(meta_data, new_meta_data_file)
+
+            #generate_meta_data_for_file(new_path, {"duplicate": [file_path]})
             update_parent_meta(new_path)
+
+            if "." in file_name:
+                shutil.copy2(file_path,new_path)
+            else:
+                shutil.copytree(file_path,new_path)
+
 
             return HttpResponse("file duplicated!")
 
