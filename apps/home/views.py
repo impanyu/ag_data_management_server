@@ -662,8 +662,9 @@ def data(request):
 
 
         elif load_template == "delete_file":
-            file_path = request.POST['current_path']
-            file_name = request.POST['file_name']
+            file_path = request.POST['file_path']
+            #file_name = request.POST['file_name']
+
 
             '''
             modified_file_path = ""
@@ -676,7 +677,7 @@ def data(request):
                 file_path = modified_file_path[1:]
             '''
 
-            abs_path = os.path.join("/data",file_path,file_name)
+            abs_path = file_path#os.path.join("/data",file_path,file_name)
 
             if os.path.isdir(abs_path):
                 # shutil.rmtree(os.path.join(settings.CORE_DIR, 'data/users', current_path, file_name))

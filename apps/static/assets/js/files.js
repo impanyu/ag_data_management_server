@@ -41,8 +41,9 @@ set_create_file_overlay();
 set_create_folder_overlay();
 set_warning_overlay();
 set_file_system_overlay();
+set_delete_file_overlay()
 previous_selected_file = null;
-
+deleted_file_path = "";
 
 function add_to_domain(path,file_name){
       if(file_name.split(".")[file_name.split(".").length-1] !="tif" && file_name.split(".")[file_name.split(".").length-1] !="tiff" && file_name.split(".")[file_name.split(".").length-1] !="png" && file_name.split(".")[file_name.split(".").length-1] !="jpg")
@@ -559,6 +560,48 @@ function set_create_file_overlay(){
     create_file_li.addEventListener('click', function(event) {
        create_file_overlay.style.display  = "flex";
     });
+
+}
+
+function set_delete_file_overlay(){
+
+    const delete_file_overlay = document.querySelector('#delete_file_overlay');
+
+    delete_file_overlay.addEventListener('click', function(event) {
+        this.style.display  = "none";
+    });
+
+    const delete_file_tab = document.querySelector('#delete_file_tab');
+
+    delete_file_tab.addEventListener('click', function(event) {
+       event.stopPropagation();
+    });
+
+
+    const delete_file_button = document.querySelector('#delete_file_button');
+
+    delete_file_button.addEventListener('click', function(event) {
+
+        $.post("/delete_file",
+                      {
+                        file_path : deleted_file_path
+                        //file_name: file_name
+                      },
+                      function(data, status){
+                          $("#file_list")[0].innerHTML="";
+                          get_item_list();
+                          alert(data);
+                      });
+    });
+
+
+    const cancel_delete_file_button = document.querySelector('#cancel_delete_file_button');
+
+    cancel_delete_file_button.addEventListener('click', function(event) {
+       delete_file_overlay.style.display  = "none";
+    });
+
+
 
 }
 
@@ -1296,8 +1339,6 @@ function move_file_or_folder(){
 function copy_file_or_folder(){
 }
 
-function delete_file_or_folder(){
-}
 
 function change_channel_dropdown(self){
  document.querySelector("#preloader2").style.display = "flex";
@@ -2455,19 +2496,14 @@ function get_item_list(){
 
             $("#"+i+"_file_delete").click(function(){
                file_name= data[parseInt(this.id.split("_")[0])]["name"];
+               file_path= data[parseInt(this.id.split("_")[0])]["abs_path"].substr(6);
+               deleted_file_path = file_path;
+               document.querySelector('#delete_file_overlay').style.display= "block";
+
 
 
                console.info(file_name);
-               $.post("/delete_file",
-                      {
-                        current_path : current_path,
-                        file_name: file_name
-                      },
-                      function(data, status){
-                          $("#file_list")[0].innerHTML="";
-                          get_item_list();
-                          alert(data);
-                      });
+
 
 
             });
