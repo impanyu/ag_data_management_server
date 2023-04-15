@@ -592,6 +592,9 @@ function set_delete_file_overlay(){
                           get_item_list();
                           alert(data);
                       });
+         delete_file_overlay.style.display  = "none";
+
+
     });
 
 
@@ -2496,7 +2499,7 @@ function get_item_list(){
 
             $("#"+i+"_file_delete").click(function(){
                file_name= data[parseInt(this.id.split("_")[0])]["name"];
-               file_path= data[parseInt(this.id.split("_")[0])]["abs_path"].substr(6);
+               file_path= data[parseInt(this.id.split("_")[0])]["abs_path"];
                deleted_file_path = file_path;
                document.querySelector('#delete_file_overlay').style.display= "flex";
 
