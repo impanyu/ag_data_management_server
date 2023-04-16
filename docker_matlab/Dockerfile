@@ -1,5 +1,6 @@
 FROM mathworks/matlab:r2023a
 
+USER root
 # Create a custom directory for the license file
 RUN mkdir -p /opt/matlab-licenses
 
