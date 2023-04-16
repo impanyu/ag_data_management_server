@@ -1682,6 +1682,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
         return
 
 
+
     '''
     timeout_seconds = 1000  # Set your desired timeout value in seconds
 
@@ -1692,6 +1693,9 @@ def run_tool(entry_point,arg_values, arg_types,user):
         output.stop()
         output.remove(force=True)
     '''
+
+    output.wait()
+    notifier.stop()
 
     #time.sleep(3)
     #notifier_thread.join()
@@ -1772,7 +1776,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
         with open(os.path.join(settings.CORE_DIR, 'data',  read_meta_data_file_name),"w") as  read_meta_data_file:
             json.dump( read_meta_data, read_meta_data_file)
 
-    notifier.stop()
+
 
 
     return
