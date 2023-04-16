@@ -1653,7 +1653,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
             auto_remove=True
         )
     elif ".m" in entry_point.split("/")[-1]:
-        image_name = "mathworks/matlab"
+        image_name = "matlab_image"
         args =""
         i = 1
         for arg_value in arg_values:
@@ -1670,7 +1670,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
             # command=[main_cmd, script_path],
             volumes={f"/data/{user}": {"bind": f"/{user}", "mode": "rw"}},
             # working_dir=working_dir,
-             environment={"MLM_LICENSE_FILE": f"/{user}/ag_data/license.lic"},
+            # environment={"MLM_LICENSE_FILE": f"/{user}/ag_data/license.lic"},
             detach=True,
             auto_remove=True,
             user='root:root',
