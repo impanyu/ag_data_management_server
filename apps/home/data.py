@@ -1666,7 +1666,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
         command = f"matlab -nodisplay -nosplash -nodesktop -r \""+matlab_cmd+"\""
         output = client.containers.run(
             image_name,
-            command="fopen('/ypan12/ag_data/canopyheight.txt', 'w');exit",
+            command="fid=fopen('/ypan12/ag_data/canopyheight.txt', 'w');fclose(fid);exit",
             # command=[main_cmd, script_path],
             volumes={f"/data/{user}": {"bind": f"/{user}", "mode": "rw"}},
             # working_dir=working_dir,
