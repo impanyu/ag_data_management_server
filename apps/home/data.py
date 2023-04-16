@@ -1672,7 +1672,10 @@ def run_tool(entry_point,arg_values, arg_types,user):
             # working_dir=working_dir,
              environment={"MLM_LICENSE_FILE": f"/{user}/ag_data/license.lic"},
             detach=True,
-            auto_remove=True
+            auto_remove=True,
+            user='root:root',
+            mac_address='02:42:EF:BA:E1:95'
+
         )
 
 
