@@ -1682,10 +1682,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
         return
 
 
-
-
-
-
+    '''
     timeout_seconds = 10  # Set your desired timeout value in seconds
 
     try:
@@ -1698,7 +1695,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
     notifier.stop()
     #time.sleep(3)
     #notifier_thread.join()
-    '''
+    
 
     written_files = list(handler.written_files)
     read_files = list(handler.accessed_files.difference(handler.written_files))
