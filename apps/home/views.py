@@ -658,7 +658,7 @@ def data(request):
             meta_data = get_meta_data(file_path)
             meta_data["name"] = os.path.basename(new_path)
             meta_data["abs_path"] = new_path
-            meta_data["upstream"] = []
+            meta_data["upstream"] = {}
             meta_data["upstream"]["duplicate"] = [file_path]
 
             new_meta_data_file_name = "_".join(new_path.split("/")[1:]) + ".json"
