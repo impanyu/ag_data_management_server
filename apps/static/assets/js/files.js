@@ -990,7 +990,7 @@ function display_file_selection(arg_name,path){
 
 
 
-
+           select_file_names = [];
             for (var i =0;i<sub_dirs.length;i++){
 
                    sub_dir = sub_dirs[i];
