@@ -1670,7 +1670,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
             # command=[main_cmd, script_path],
             volumes={f"/data/{user}": {"bind": f"/{user}", "mode": "rw"}},
             # working_dir=working_dir,
-            # environment={"VAR1": "value1", "VAR2": "value2"},
+             environment={"MLM_LICENSE_FILE": f"/{user}/ag_data/license.lic", },
             detach=True,
             auto_remove=True
         )
