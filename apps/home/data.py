@@ -1609,13 +1609,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
 
     #mount_dirs_on_host = ["/".join(script_path.split("/")[:-1])]
 
-    if "py" in entry_point:
-        image_name = "python_test"
-        main_cmd = "python"
 
-
-    else:
-        return
 
 
     # Define the PID of the program to filter out
@@ -1635,25 +1629,59 @@ def run_tool(entry_point,arg_values, arg_types,user):
 
     notifier = pyinotify.Notifier(wm, handler)
 
-
-
+    import threading
     # Start the notifier
     # Run the notifier in a separate thread
-    import threading
+
     import time
-    notifier_thread = threading.Thread(target=notifier.loop,daemon=True)
+    notifier_thread = threading.Thread(target=notifier.loop, daemon=True)
     notifier_thread.start()
 
-    output = client.containers.run(
-        image_name,
-        command=[main_cmd, script_path] + [arg_values[arg_name] for arg_name in arg_values],
-        # command=[main_cmd, script_path],
-        volumes={f"/data/{user}": {"bind": f"/{user}", "mode": "rw"}},
-        # working_dir=working_dir,
-        # environment={"VAR1": "value1", "VAR2": "value2"},
-        detach=True,
-        auto_remove=True
-    )
+    if ".py" in entry_point.split("/")[-1]:
+        image_name = "python_test"
+        main_cmd = "python"
+
+
+        output = client.containers.run(
+            image_name,
+            command=[main_cmd, script_path] + [arg_values[arg_name] for arg_name in arg_values],
+            # command=[main_cmd, script_path],
+            volumes={f"/data/{user}": {"bind": f"/{user}", "mode": "rw"}},
+            # working_dir=working_dir,
+            # environment={"VAR1": "value1", "VAR2": "value2"},
+            detach=True,
+            auto_remove=True
+        )
+    elif ".m" in entry_point.split("/")[-1]:
+        image_name = "mathworks/matlab"
+        args =""
+        i = 1
+        for arg_value in arg_values:
+            args += f"arg{i}='{arg_value}';"
+            i = i+1
+
+        #args = "arg1='{arg1}';arg2='{arg2}'"
+        matlab_cmd = f"{args} run('{entry_point}');exit;"
+
+        command = f"matlab -nodisplay -nosplash -nodesktop -r \""+matlab_cmd+"\""
+        output = client.containers.run(
+            image_name,
+            command=command,
+            # command=[main_cmd, script_path],
+            volumes={f"/data/{user}": {"bind": f"/{user}", "mode": "rw"}},
+            # working_dir=working_dir,
+            # environment={"VAR1": "value1", "VAR2": "value2"},
+            detach=True,
+            auto_remove=True
+        )
+
+
+    else:
+        return
+
+
+
+
 
 
     timeout_seconds = 60  # Set your desired timeout value in seconds
