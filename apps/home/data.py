@@ -1696,7 +1696,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
     #time.sleep(3)
     #notifier_thread.join()
 
-    '''
+
     written_files = list(handler.written_files)
     read_files = list(handler.accessed_files.difference(handler.written_files))
     created_files = list(handler.created_files)
@@ -1771,7 +1771,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
 
         with open(os.path.join(settings.CORE_DIR, 'data',  read_meta_data_file_name),"w") as  read_meta_data_file:
             json.dump( read_meta_data, read_meta_data_file)
-    '''
+
 
     return
 
