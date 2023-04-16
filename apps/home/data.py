@@ -1682,7 +1682,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
         return
 
 
-
+    '''
     timeout_seconds = 1000  # Set your desired timeout value in seconds
 
     try:
@@ -1691,7 +1691,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
         print(f"Container exceeded the {timeout_seconds} seconds time limit.")
         output.stop()
         output.remove(force=True)
-
+    '''
     notifier.stop()
     #time.sleep(3)
     #notifier_thread.join()
