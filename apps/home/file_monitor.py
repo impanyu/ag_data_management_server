@@ -13,17 +13,21 @@ class EventHandler(pyinotify.ProcessEvent):
         self.container_id = container_id
 
     def process_IN_ACCESS(self, event):
-        pid = self.get_pid(event)
-        if self.find_container_id_by_pid(pid) == None or self.find_container_id_by_pid(pid) == self.container_id:
-            self.accessed_files.add(event.pathname)
+        pids = self.get_pid(event)
+        for pid in pids:
+            if self.find_container_id_by_pid(pid) == self.container_id:
+                self.accessed_files.add(event.pathname)
+                return
 
         #print(f"File {event.pathname} was read by PID {event.pid}")
 
     def process_IN_CREATE(self, event):
         #if not event.dir:
-        pid = self.get_pid(event)
-        if self.find_container_id_by_pid(pid) == None or self.find_container_id_by_pid(pid) == self.container_id:
-            self.created_files.add(event.pathname)
+        pids = self.get_pid(event)
+        for pid in pids:
+            if self.find_container_id_by_pid(pid) == self.container_id:
+                self.created_files.add(event.pathname)
+                return
         #print(f"File {event.pathname} was created by PID {event.pid}")
 
     def process_IN_DELETE(self, event):
@@ -32,9 +36,11 @@ class EventHandler(pyinotify.ProcessEvent):
 
     def process_IN_MODIFY(self, event):
         #if not event.dir:
-        pid = self.get_pid(event)
-        if self.find_container_id_by_pid(pid) == None or self.find_container_id_by_pid(pid) == self.container_id:
-            self.written_files.add(event.pathname)
+        pids = self.get_pid(event)
+        for pid in pids:
+            if self.find_container_id_by_pid(pid) == self.container_id:
+                self.written_files.add(event.pathname)
+                return
             #print(f"File {event.pathname} was modified by PID {event.pid}")
 
     @staticmethod
@@ -53,13 +59,15 @@ class EventHandler(pyinotify.ProcessEvent):
 
     @staticmethod
     def get_pid(event):
+        pids =[]
         for proc in psutil.process_iter(['pid', 'open_files']):
             try:
                 for file in proc.info['open_files']:
                     if file.path == event.pathname:
-                        return proc.info['pid']
+                        pids.append(proc.info['pid'])
             except (psutil.AccessDenied, TypeError):
-                return -1
+                pass
+        return pids
 
 
 
