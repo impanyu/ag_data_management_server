@@ -14,7 +14,7 @@ class EventHandler(pyinotify.ProcessEvent):
 
     def process_IN_ACCESS(self, event):
         pid = self.get_pid(event)
-        if pid ==-1 or self.find_container_id_by_pid(pid) == self.container_id:
+        if self.find_container_id_by_pid(pid) == None or self.find_container_id_by_pid(pid) == self.container_id:
             self.accessed_files.add(event.pathname)
 
         #print(f"File {event.pathname} was read by PID {event.pid}")
@@ -22,7 +22,7 @@ class EventHandler(pyinotify.ProcessEvent):
     def process_IN_CREATE(self, event):
         #if not event.dir:
         pid = self.get_pid(event)
-        if pid ==-1 or self.find_container_id_by_pid(pid) == self.container_id:
+        if self.find_container_id_by_pid(pid) == None or self.find_container_id_by_pid(pid) == self.container_id:
             self.created_files.add(event.pathname)
         #print(f"File {event.pathname} was created by PID {event.pid}")
 
@@ -33,7 +33,7 @@ class EventHandler(pyinotify.ProcessEvent):
     def process_IN_MODIFY(self, event):
         #if not event.dir:
         pid = self.get_pid(event)
-        if pid ==-1 or self.find_container_id_by_pid(pid) == self.container_id:
+        if self.find_container_id_by_pid(pid) == None or self.find_container_id_by_pid(pid) == self.container_id:
             self.written_files.add(event.pathname)
             #print(f"File {event.pathname} was modified by PID {event.pid}")
 
