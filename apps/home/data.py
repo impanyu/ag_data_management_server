@@ -1664,9 +1664,11 @@ def run_tool(entry_point,arg_values, arg_types,user):
         matlab_cmd = f"{args} run('{entry_point}');exit;"
 
         command = f"matlab -nodisplay -nosplash -nodesktop -r \""+matlab_cmd+"\""
+        command = "matlab -nodisplay -nosplash -nodesktop  -r \"arg1='/ypan12/ag_data/winterwheatDataExample/0805_Wheat_Yufeng_1375_NoIrrigation_20210521175855_20210521125855_14728-71189-4874-9000--9000'; arg2='/ypan12/ag_data'; run('/ypan12/ag_data/calcualte_canopy_height.m');exit\""
+
         output = client.containers.run(
             image_name,
-            command="matlab -nodisplay -nosplash -nodesktop -r \"arg1='/ypan12/ag_data'; arg2='/ypan12/ag_data'; run('/ypan12/ag_data/calcualte_canopy_height_1.m');exit\"" ,#"matlab -nodisplay -nosplash -nodesktop -r \"fid=fopen('/ypan12/ag_data/canopyheight.txt', 'w');fclose(fid);exit\"",
+            command=command,#"matlab -nodisplay -nosplash -nodesktop -r \"arg1='/ypan12/ag_data'; arg2='/ypan12/ag_data'; run('/ypan12/ag_data/calcualte_canopy_height_1.m');exit\"" ,#"matlab -nodisplay -nosplash -nodesktop -r \"fid=fopen('/ypan12/ag_data/canopyheight.txt', 'w');fclose(fid);exit\"",
             # command=[main_cmd, script_path],
             volumes={f"/data/{user}": {"bind": f"/{user}", "mode": "rw"}},
             # working_dir=working_dir,
