@@ -1676,7 +1676,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
 
         hash_value = hash(f"{entry_point.replace('/','_')}_{datetime.now()}")
 
-        bash_script = f"while true; do if [ -e  /tmp/{hash_value} ]; then rm /tmp/{hash_value}; exit 0; fi; sleep 3; done"
+        bash_script = f"bash -c 'while true; do if [ -e  /tmp/{hash_value} ]; then rm /tmp/{hash_value}; exit 0; fi; sleep 3; done'"
 
         container = client.containers.run(
             image_name,
