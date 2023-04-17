@@ -1674,7 +1674,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
             matlab_cmd
         ]
 
-        hash_value = hash(f" {entry_point.replace('/','_')}_{datetime.now()}")
+        hash_value = hash(f"{entry_point.replace('/','_')}_{datetime.now()}")
 
         bash_script = f"while true; do if [ -e  /tmp/{hash_value} ]; then rm /tmp/{hash_value}; exit 0; fi; sleep 3; done"
 
@@ -1697,7 +1697,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
 
         notifier = pyinotify.Notifier(wm, handler)
 
-        container.exec_run(command)
+
         notifier_thread = threading.Thread(target=notifier.loop, daemon=True)
         notifier_thread.start()
 
