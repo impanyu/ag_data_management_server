@@ -23,11 +23,11 @@ class EventHandler(pyinotify.ProcessEvent):
 
     def process_IN_CREATE(self, event):
         #if not event.dir:
-        pids = self.get_pid(event)
-        for pid in pids:
-            if self.find_container_id_by_pid(pid) == self.container_id:
-                self.created_files.add(event.pathname)
-                return
+        #pids = self.get_pid(event)
+        #for pid in pids:
+            #if self.find_container_id_by_pid(pid) == self.container_id:
+        self.created_files.add(event.pathname)
+                #return
         #print(f"File {event.pathname} was created by PID {event.pid}")
 
     def process_IN_DELETE(self, event):
