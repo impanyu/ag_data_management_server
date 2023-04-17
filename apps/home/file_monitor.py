@@ -1,4 +1,5 @@
 import pyinotify
+import psutil
 import os
 
 # Define the event handler
@@ -12,14 +13,14 @@ class EventHandler(pyinotify.ProcessEvent):
         self.container_id = container_id
 
     def process_IN_ACCESS(self, event):
-        if self.find_container_id_by_pid(event.pid) == self.container_id:
+        if self.find_container_id_by_pid(event.pid) == self.get_pid(event):
             self.accessed_files.add(event.pathname)
 
         #print(f"File {event.pathname} was read by PID {event.pid}")
 
     def process_IN_CREATE(self, event):
         #if not event.dir:
-        if self.find_container_id_by_pid(event.pid) == self.container_id:
+        if self.find_container_id_by_pid(event.pid) == self.get_pid(event):
             self.created_files.add(event.pathname)
         #print(f"File {event.pathname} was created by PID {event.pid}")
 
@@ -29,7 +30,7 @@ class EventHandler(pyinotify.ProcessEvent):
 
     def process_IN_MODIFY(self, event):
         #if not event.dir:
-        if self.find_container_id_by_pid(event.pid) == self.container_id:
+        if self.find_container_id_by_pid(event.pid) == self.get_pid(event):
             self.written_files.add(event.pathname)
             #print(f"File {event.pathname} was modified by PID {event.pid}")
 
@@ -46,6 +47,16 @@ class EventHandler(pyinotify.ProcessEvent):
         except FileNotFoundError:
             print(f"Process with PID {pid} not found.")
             return None
+
+    @staticmethod
+    def get_pid(event):
+        for proc in psutil.process_iter(['pid', 'open_files']):
+            try:
+                for file in proc.info['open_files']:
+                    if file.path == event.pathname:
+                        return proc.info['pid']
+            except (psutil.AccessDenied, TypeError):
+                return -1
 
 
 

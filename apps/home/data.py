@@ -1691,9 +1691,9 @@ def run_tool(entry_point,arg_values, arg_types,user):
             mac_address='02:42:EF:BA:E1:95'
         )
 
-        container_id = container.id
+
         # Associate the event handler with the WatchManager
-        handler = EventHandler(pid,container_id)
+        handler = EventHandler(pid,container.id)
 
         notifier = pyinotify.Notifier(wm, handler)
 
