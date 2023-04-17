@@ -1621,28 +1621,26 @@ def run_tool(entry_point,arg_values, arg_types,user):
     # Create a new WatchManager
     wm = pyinotify.WatchManager()
 
-    # Associate the event handler with the WatchManager
-    handler = EventHandler(pid)
 
     # Add a watch for the path with the specified mask
     wm.add_watch(root_dir, mask, rec=True, auto_add=True)
 
-    notifier = pyinotify.Notifier(wm, handler)
+
 
     import threading
     # Start the notifier
     # Run the notifier in a separate thread
 
-    import time
-    notifier_thread = threading.Thread(target=notifier.loop, daemon=True)
-    notifier_thread.start()
+    #import time
+
+
 
     if ".py" in entry_point.split("/")[-1]:
         image_name = "python_test"
         main_cmd = "python"
 
 
-        output = client.containers.run(
+        container = client.containers.run(
             image_name,
             command=[main_cmd, script_path] + [arg_values[arg_name] for arg_name in arg_values],
             # command=[main_cmd, script_path],
@@ -1665,14 +1663,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
         matlab_cmd = f"{args} run('{entry_point}');exit;"
 
         command = f"matlab -nodisplay -nosplash -nodesktop -r \""+matlab_cmd+"\""
-        command = [
-            "matlab",
-            "-nodisplay",
-            "-nosplash",
-            "-nodesktop",
-            "-r",
-            "arg1='/ypan12/ag_data/winterwheatDataExample/0805_Wheat_Yufeng_1375_NoIrrigation_20210521175855_20210521125855_14728-71189-4874-9000--9000'; arg2='/ypan12/ag_data'; run('/ypan12/ag_data/calcualte_canopy_height.m');exit"
-        ]
+
 
         command = [
             "matlab",
@@ -1683,10 +1674,13 @@ def run_tool(entry_point,arg_values, arg_types,user):
             matlab_cmd
         ]
 
+        hash_value = hash(f" {entry_point.replace('/','_')}_{datetime.now()}")
 
-        output = client.containers.run(
+        bash_script = f"while true; do if [ -e  /tmp/{hash_value} ]; then rm /tmp/{hash_value}; exit 0; fi; sleep 3; done"
+
+        container = client.containers.run(
             image_name,
-            command=command,#"matlab -nodisplay -nosplash -nodesktop -r \"arg1='/ypan12/ag_data'; arg2='/ypan12/ag_data'; run('/ypan12/ag_data/calcualte_canopy_height_1.m');exit\"" ,#"matlab -nodisplay -nosplash -nodesktop -r \"fid=fopen('/ypan12/ag_data/canopyheight.txt', 'w');fclose(fid);exit\"",
+            command=bash_script,#"bash -c 'while true; do sleep 5; done'",#command,#"matlab -nodisplay -nosplash -nodesktop -r \"arg1='/ypan12/ag_data'; arg2='/ypan12/ag_data'; run('/ypan12/ag_data/calcualte_canopy_height_1.m');exit\"" ,#"matlab -nodisplay -nosplash -nodesktop -r \"fid=fopen('/ypan12/ag_data/canopyheight.txt', 'w');fclose(fid);exit\"",
             # command=[main_cmd, script_path],
             volumes={f"/data/{user}": {"bind": f"/{user}", "mode": "rw"}},
             # working_dir=working_dir,
@@ -1696,6 +1690,20 @@ def run_tool(entry_point,arg_values, arg_types,user):
             user='root:root',
             mac_address='02:42:EF:BA:E1:95'
         )
+
+        container_id = container.id
+        # Associate the event handler with the WatchManager
+        handler = EventHandler(pid,container_id)
+
+        notifier = pyinotify.Notifier(wm, handler)
+
+        container.exec_run(command)
+        notifier_thread = threading.Thread(target=notifier.loop, daemon=True)
+        notifier_thread.start()
+
+        container.exec_run(command)
+        container.exec_run(f"touch /tmp/{hash_value}")
+
 
 
     else:
@@ -1714,7 +1722,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
         output.remove(force=True)
     '''
 
-    output.wait()
+    container.wait()
     notifier.stop()
 
     #time.sleep(3)
