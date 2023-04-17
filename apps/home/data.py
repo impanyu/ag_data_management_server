@@ -1656,7 +1656,8 @@ def run_tool(entry_point,arg_values, arg_types,user):
         image_name = "matlab_image"
         args =""
         i = 1
-        for arg_value in arg_values:
+        for arg_name in arg_values:
+            arg_value = arg_values[arg_name]
             args += f"arg{i}='{arg_value}';"
             i = i+1
 
