@@ -1100,7 +1100,8 @@ def update_meta(file_path,new_meta_data):
             meta_data[key] = new_meta_data[key]
 
             # recursively change the subdirs and files
-            recursive_update_public(file_path,new_meta_data[key])
+            if "Collection" not in meta_data["mode"]:
+                recursive_update_public(file_path,new_meta_data[key])
 
             if new_meta_data[key] == "True":
                 add_to_public(file_path)
