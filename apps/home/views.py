@@ -684,6 +684,7 @@ def data(request):
             #file_name = request.POST['file_name']
 
 
+
             '''
             modified_file_path = ""
             for i in range(1, len(file_path.split("/"))):
@@ -696,6 +697,9 @@ def data(request):
             '''
 
             abs_path = file_path#os.path.join("/data",file_path,file_name)
+
+            if not abs_path.split("/")[1] == request.user.get_username():
+                return HttpResponse("can not delete other's data!")
 
             if os.path.isdir(abs_path):
                 # shutil.rmtree(os.path.join(settings.CORE_DIR, 'data/users', current_path, file_name))
@@ -827,9 +831,14 @@ def data(request):
         elif load_template == "file_system_virtual":
             current_path = request.POST['current_path']#f"{request.user.get_username()}/ag_data/collections"
             abs_path = f"/data/{current_path}"
+
+
             meta_data = get_meta_data(abs_path)
 
             collections = []
+
+            if not current_path.split("/")[0] == request.user.get_username() or not current_path.split("/")[0] == "public":
+                return json.dumps(collections)
 
             for collection_path in meta_data["subdirs"]:
                 #if collection_path == f"/data/{request.user.get_username()}/collections":
@@ -1055,7 +1064,7 @@ def data(request):
                 response["items"] = search(root_dir,search_box,category,mode,format,label,realtime,time_range,spatial_range)
 
                 root_dir = os.path.join("/data", request.user.get_username(), "collections")
-                response["items"] = search(root_dir, search_box, category, mode, format, label, realtime, time_range, spatial_range)
+                response["items"] += search(root_dir, search_box, category, mode, format, label, realtime, time_range, spatial_range)
 
 
             if "Public Data" in privilege:
@@ -1063,7 +1072,7 @@ def data(request):
                 response["items"] += search(root_dir, search_box, category, mode, format, label, realtime, time_range,spatial_range)
 
                 root_dir = os.path.join("/data", "public", "collections")
-                response["items"] = search(root_dir, search_box, category, mode, format, label, realtime, time_range,spatial_range)
+                response["items"] += search(root_dir, search_box, category, mode, format, label, realtime, time_range,spatial_range)
 
 
             #remove duplicates
