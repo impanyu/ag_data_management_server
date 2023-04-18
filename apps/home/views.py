@@ -837,7 +837,7 @@ def data(request):
 
             collections = []
 
-            if not abs_path.split("/")[2] == request.user.get_username() or not abs_path.split("/")[2] == "public":
+            if not abs_path.split("/")[2] == request.user.get_username() and not abs_path.split("/")[2] == "public":
                 return json.dumps(collections)
 
             for collection_path in meta_data["subdirs"]:
