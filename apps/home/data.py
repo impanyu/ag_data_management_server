@@ -1021,7 +1021,7 @@ def add_to_public(file_path):
     public_user_meta_file_name = "_".join(public_user_file_name.split("/")[1:]) + ".json"
     public_data_file_name = f"/data/public/ag_data"
     public_meta_data_file_name = "_".join(public_data_file_name.split("/")[1:]) + ".json"
-    public_collection_file_name = f"{public_user_meta_file_name}/collections"
+    public_collection_file_name = f"{public_user_file_name}/collections"
     public_collection_meta_file_name = "_".join(public_collection_file_name.split("/")[1:]) + ".json"
 
 

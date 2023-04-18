@@ -855,7 +855,7 @@ def data(request):
 
             public_collections = get_meta_data(public_abs_path)
 
-            for collection_path in public_collections:
+            for collection_path in public_collections["subdirs"]:
                 collection_meta_data = get_meta_data(collection_path)
 
                 collections.append(collection_meta_data)
