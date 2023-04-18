@@ -213,7 +213,7 @@ def data(request):
 
         elif load_template == 'add_to_collection':
             selected_collection = request.POST.get("selected_collection", "")
-            selected_file_path = request.POST.get("selected_file_path", "")
+            selected_file_path = request.POST.get("selected_file_path", "")#already abs path
 
 
             add_to_collection(selected_collection,selected_file_path,request.user.get_username())
@@ -224,7 +224,7 @@ def data(request):
 
         elif load_template == 'remove_from_collection':
             collection_name = request.POST.get("collection_name", "")
-            file_path = request.POST.get("file_path", "")
+            file_path = request.POST.get("file_path", "")#already abs path
 
             remove_from_collection(collection_name, file_path, request.user.get_username())
 
@@ -832,8 +832,8 @@ def data(request):
             collections = []
 
             for collection_path in meta_data["subdirs"]:
-                if collection_path == f"/data/{request.user.get_username()}/ag_data/collections":
-                    continue
+                #if collection_path == f"/data/{request.user.get_username()}/collections":
+                #    continue
                 collection_meta_data = get_meta_data(collection_path)
 
                 collections.append(collection_meta_data)
@@ -1053,13 +1053,26 @@ def data(request):
             if "My Own Data" in privilege:
                 root_dir = os.path.join("/data",request.user.get_username(),"ag_data")
                 response["items"] = search(root_dir,search_box,category,mode,format,label,realtime,time_range,spatial_range)
+
+                root_dir = os.path.join("/data", request.user.get_username(), "collections")
+                response["items"] = search(root_dir, search_box, category, mode, format, label, realtime, time_range, spatial_range)
+
+
             if "Public Data" in privilege:
                 root_dir = os.path.join("/data", "public", "ag_data")
                 response["items"] += search(root_dir, search_box, category, mode, format, label, realtime, time_range,spatial_range)
 
+                root_dir = os.path.join("/data", "public", "collections")
+                response["items"] = search(root_dir, search_box, category, mode, format, label, realtime, time_range,spatial_range)
+
+
+            #remove duplicates
+            response["items"] = set(json.dumps(d) for d in response["items"])
+            response["items"] = [json.loads(s) for s in response["items"]]
+
             #if "Domain" in mode:
                 #search_domains()
-                print(response["items"])
+                #print(response["items"])
             # search public items
             # still need to differentiate between own and public items
             '''

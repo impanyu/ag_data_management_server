@@ -2595,7 +2595,7 @@ function add_to_collection(file_path){
 
 collection_names=[];
 function display_collections_selection(){
-   path = user+"/ag_data/collections";
+   path = user+"/collections";
 
    $("#collections_overlay")[0].style.display = "flex";
    document.body.style.overflow = "hidden";

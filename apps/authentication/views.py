@@ -52,7 +52,7 @@ def register_user(request):
             user_meta_file_name = "_".join(user_file_name.split("/")[1:]) + ".json"
             data_file_name = f"/data/{username}/ag_data"
             meta_data_file_name = "_".join(data_file_name.split("/")[1:]) + ".json"
-            collection_file_name = f"{data_file_name}/collections"
+            collection_file_name = f"{user_file_name}/collections"
             collection_meta_file_name = "_".join(collection_file_name.split("/")[1:]) + ".json"
 
             # create user file
@@ -83,12 +83,13 @@ def register_user(request):
 
 
             meta_data = generate_meta_data_for_dir(data_file_name,{"create":["null"]})
+            meta_data["subdirs"].append("/data/public/ag_data")
 
             if data_file_name not in user_meta_data["subdirs"]:
                 user_meta_data["subdirs"].append(data_file_name)
 
-            with open(os.path.join(settings.CORE_DIR, 'data', user_meta_file_name), 'w') as user_meta_data_file:
-                json.dump(user_meta_data, user_meta_data_file)
+            with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), 'w') as meta_data_file:
+                json.dump(meta_data, meta_data_file)
 
 
 
@@ -96,14 +97,16 @@ def register_user(request):
             collection_meta_data = generate_meta_data_for_dir(collection_file_name,{"create":["null"]})
             collection_meta_data["mode"] = ["Collection"]
 
-            if collection_file_name not in meta_data["subdirs"]:
-                meta_data["subdirs"].append(collection_file_name)
+            if collection_file_name not in user_meta_data["subdirs"]:
+                user_meta_data["subdirs"].append(collection_file_name)
 
-            with open(os.path.join(settings.CORE_DIR,'data', meta_data_file_name), 'w') as meta_data_file:
-                json.dump(meta_data,meta_data_file)
+            with open(os.path.join(settings.CORE_DIR, 'data', user_meta_file_name), 'w') as user_meta_data_file:
+                json.dump(user_meta_data, user_meta_data_file)
 
             with open(os.path.join(settings.CORE_DIR,'data', collection_meta_file_name), 'w') as collection_meta_file:
                 json.dump(collection_meta_data,collection_meta_file)
+
+
 
 
             msg = 'User created - please <a href="/login/">login</a>.'

@@ -966,7 +966,7 @@ def add_to_public(file_path):
     public_user_meta_file_name = "_".join(public_user_file_name.split("/")[1:]) + ".json"
     public_data_file_name = f"/data/public/ag_data"
     public_meta_data_file_name = "_".join(public_data_file_name.split("/")[1:]) + ".json"
-    public_collection_file_name = f"{public_data_file_name}/collections"
+    public_collection_file_name = f"{public_user_meta_file_name}/collections"
     public_collection_meta_file_name = "_".join(public_collection_file_name.split("/")[1:]) + ".json"
 
     if not os.path.exists(os.path.join(settings.CORE_DIR, 'data', public_user_meta_file_name)):
@@ -982,21 +982,23 @@ def add_to_public(file_path):
             json.dump(root_meta_data, root_meta_data_file)
 
         public_meta_data = generate_meta_data_for_dir(public_data_file_name,{"create":["null"]})
+        public_meta_data["name"] = "public_data"
 
         if public_data_file_name not in public_user_meta_data["subdirs"]:
             public_user_meta_data["subdirs"].append(public_data_file_name)
 
-        with open(os.path.join(settings.CORE_DIR, 'data', public_user_meta_file_name), 'w') as public_user_meta_data_file:
-            json.dump(public_user_meta_data, public_user_meta_data_file)
+        with open(os.path.join(settings.CORE_DIR, 'data', public_meta_data_file_name), 'w') as public_meta_data_file:
+            json.dump(public_meta_data, public_meta_data_file)
+
 
         public_collection_meta_data = generate_meta_data_for_dir(public_collection_file_name,{"create":["null"]})
         public_collection_meta_data["mode"] = ["Collection"]
 
-        if public_collection_file_name not in public_meta_data["subdirs"]:
-            public_meta_data["subdirs"].append(public_collection_file_name)
+        if public_collection_file_name not in public_user_meta_data["subdirs"]:
+            public_user_meta_data["subdirs"].append(public_collection_file_name)
 
-        with open(os.path.join(settings.CORE_DIR, 'data', public_meta_data_file_name), 'w') as public_meta_data_file:
-            json.dump(public_meta_data, public_meta_data_file)
+        with open(os.path.join(settings.CORE_DIR, 'data', public_user_meta_file_name),'w') as public_user_meta_data_file:
+            json.dump(public_user_meta_data, public_user_meta_data_file)
 
         with open(os.path.join(settings.CORE_DIR, 'data', public_collection_meta_file_name), 'w') as public_collection_meta_file:
             json.dump(public_collection_meta_data, public_collection_meta_file)
@@ -1007,7 +1009,7 @@ def add_to_public(file_path):
     
 
     if "Collection" in meta_data["mode"]:
-        public_collection_meta_data = generate_meta_data_for_dir(public_collection_file_name,{"create":["null"]})
+        public_collection_meta_data = get_meta_data(public_collection_file_name,{"create":["null"]})
         if meta_data["abs_path"] not in public_collection_meta_data["subdirs"]:
             public_collection_meta_data["subdirs"].append(meta_data["abs_path"])
         with open(os.path.join(settings.CORE_DIR, 'data', public_collection_meta_file_name), 'w') as public_collection_meta_file:
@@ -1015,7 +1017,7 @@ def add_to_public(file_path):
 
 
     else:
-        public_meta_data = generate_meta_data_for_dir(public_data_file_name,{"create":["null"]})
+        public_meta_data = get_meta_data(public_data_file_name,{"create":["null"]})
         if meta_data["abs_path"] not in public_meta_data["subdirs"]:
             public_meta_data["subdirs"].append(meta_data["abs_path"])
         with open(os.path.join(settings.CORE_DIR, 'data', public_meta_data_file_name), 'w') as public_meta_data_file:
@@ -1897,7 +1899,7 @@ def get_downstream(path,graph):
 
 def add_to_collection(selected_collection,selected_file_path,username):
 
-    selected_collection_path = f"/data/{username}/ag_data/collections/{selected_collection}"
+    selected_collection_path = f"/data/{username}/collections/{selected_collection}"
 
     selected_collection_meta_data = get_meta_data(selected_collection_path)
 
@@ -1914,7 +1916,7 @@ def add_to_collection(selected_collection,selected_file_path,username):
 
 
 def remove_from_collection(collection_name, file_path, username):
-    collection_path = f"/data/{username}/ag_data/collections/{collection_name}"
+    collection_path = f"/data/{username}/collections/{collection_name}"
     collection_meta_data = get_meta_data(collection_path)
 
     collection_meta_data["subdirs"].remove(file_path)
