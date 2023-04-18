@@ -843,8 +843,8 @@ def generate_meta_data_for_dir(dir_path,upstream):
     meta_data["realtime"] = "Non-Realtime"
     meta_data["upstream"] = upstream
     meta_data["introduction"] = ""
-    from .views import username
-    meta_data["owner"] = username
+    #from .views import username
+    meta_data["owner"] = dir_path.split("/")[1]
 
 
     meta_data_dir_name = "_".join(dir_path.split("/")[1:]) + ".json"
@@ -875,8 +875,8 @@ def generate_meta_data_for_file(file_path, upstream):
     meta_data["realtime"] = "Non-Realtime"
     meta_data["upstream"] = upstream
     meta_data["introduction"] = ""
-    from .views import username
-    meta_data["owner"] = username
+    #from .views import username
+    meta_data["owner"] = file_path.split("/")[1]
 
     suffix = file_path.split("/")[-1].split(".")[-1]
 
