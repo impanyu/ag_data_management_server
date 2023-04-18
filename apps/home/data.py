@@ -1644,7 +1644,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
 
     #import time
 
-    def wait_for_container(container,notifier):
+    def wait_for_container(container,notifier,command):
 
         container.exec_run(command)
         container.exec_run(f"touch /tmp/{hash_value}")
@@ -1722,12 +1722,8 @@ def run_tool(entry_point,arg_values, arg_types,user):
         notifier_thread.start()
 
         # Start a separate thread to wait for the container to stop
-        waiting_thread = threading.Thread(target=wait_for_container, args=(container,notifier))
+        waiting_thread = threading.Thread(target=wait_for_container, args=(container,notifier,command))
         waiting_thread.start()
-
-
-
-
 
 
 
