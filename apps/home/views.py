@@ -247,7 +247,7 @@ def data(request):
 
         elif load_template == "create_collection":
             #current_path = request.POST['current_path']
-            current_path = request.user.get_username()+"/ag_data/collections"
+            current_path = request.user.get_username()+"/collections"
             new_collection_name = request.POST['new_collection_name']
             abs_path = os.path.join("/data", current_path,new_collection_name)
             suffix = abs_path.split(".")[-1]
