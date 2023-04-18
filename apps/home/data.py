@@ -1644,6 +1644,13 @@ def run_tool(entry_point,arg_values, arg_types,user):
 
     #import time
 
+    def wait_for_container(container,notifier):
+
+        container.exec_run(command)
+        container.exec_run(f"touch /tmp/{hash_value}")
+        container.wait()
+        notifier.stop()
+
 
 
 
@@ -1705,17 +1712,22 @@ def run_tool(entry_point,arg_values, arg_types,user):
         )
 
 
+
+
         # Associate the event handler with the WatchManager
         handler = EventHandler(pid,container.id)
 
         notifier = pyinotify.Notifier(wm, handler)
-
-
         notifier_thread = threading.Thread(target=notifier.loop, daemon=True)
         notifier_thread.start()
 
-        container.exec_run(command)
-        container.exec_run(f"touch /tmp/{hash_value}")
+        # Start a separate thread to wait for the container to stop
+        waiting_thread = threading.Thread(target=wait_for_container, args=(container,notifier))
+        waiting_thread.start()
+
+
+
+
 
 
 
@@ -1735,8 +1747,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
         output.remove(force=True)
     '''
 
-    container.wait()
-    notifier.stop()
+
 
     #time.sleep(3)
     #notifier_thread.join()

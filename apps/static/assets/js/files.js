@@ -877,8 +877,8 @@ function run_tool(){
         success: function(data, status){
           //alert("meta data updated");
           console.info(data);
-          console.info("program running complete!")
-          display_warning_overlay("Program execution complete!");
+          console.info("Program starts running.")
+          display_warning_overlay("Program starts running.");
           document.querySelector("#run_tool").onclick = run_tool;
 
   }});
