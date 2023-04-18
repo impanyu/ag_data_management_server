@@ -61,9 +61,9 @@ function get_collection_list(){
        $.ajax({
             type: "POST",
 
-            url: "/file_system_virtual",
+            url: "/get_collections",
             data: {
-               current_path: current_path
+
             },
             success: function (data) {
                 console.info(data);

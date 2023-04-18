@@ -836,6 +836,39 @@ def data(request):
 
             return response
 
+        elif load_template == "get_colletions":
+
+            abs_path = f"/data/{request.user.get_username()}/collections"
+
+            meta_data = get_meta_data(abs_path)
+
+            collections = []
+
+            for collection_path in meta_data["subdirs"]:
+                # if collection_path == f"/data/{request.user.get_username()}/collections":
+                #    continue
+                collection_meta_data = get_meta_data(collection_path)
+
+                collections.append(collection_meta_data)
+
+            public_abs_path = "/data/public/collections"
+
+            public_collections = get_meta_data(public_abs_path)
+
+            for collection_path in public_collections:
+                collection_meta_data = get_meta_data(collection_path)
+
+                collections.append(collection_meta_data)
+
+            # remove duplicates
+            collections = set(json.dumps(d) for d in collections)
+            collections = [json.loads(s) for s in collections]
+
+            response = json.dumps(collections)
+
+            return HttpResponse(response)
+
+
         elif load_template == "file_system_virtual":
             current_path = request.POST['current_path']#f"{request.user.get_username()}/ag_data/collections"
             abs_path = f"/data/{current_path}"
