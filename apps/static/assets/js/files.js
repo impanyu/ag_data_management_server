@@ -895,7 +895,7 @@ function remove_tool_arg(self){
 }
 
 function add_tool_arg(){
-   arg_name = document.querySelector("#arg_name").value;
+   arg_name = document.querySelector("#arg_name").value.replace(" ","_").replace(".","_");
    arg_type = document.querySelector("#arg_type").value;
    if(arg_name in args){
          display_warning_overlay("Argument: <span style='color:red'>"+arg_name+"</span> already exists!");
