@@ -2457,6 +2457,12 @@ function get_item_list(){
              folder_icon = '';
              current_files_names.push(file["name"]);
          }
+
+           if (file["abs_path"] == "/data/public/ag_data")
+               delete_tab = "";
+           else
+               delete_tab = '<a class="dropdown-item"  id="'+i+'_file_delete">Delete</a>'
+
             item_html =  '<tr  class="file_and_dir_item" id="'+i+'_file_and_dir"><td scope="row"><div class="media align-items-center"><div class="media-body">'+folder_icon+'<span class="name mb-0 text-sm"> &nbsp;<a href="/files.html?current_path='+file["abs_path"].substr(6)+
                   '&dir=false"> ' +file["name"]+ '</a></span> </div></div></td>" + "<td class="budget">'+file["native"]["created_time"]+'</td>"' +
                    '<td> <span class="badge badge-dot mr-4">  <span class="status">'+file["native"]["access_time"]+'</span></span></td>' +
@@ -2464,7 +2470,7 @@ function get_item_list(){
                    '<td> <div class="avatar-group"> <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title='+user+'><img alt="Image placeholder" src="/static/assets/img/theme/react.jpg"></a></div></td>' +
                    '<td ><div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>'+
                    '<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">'+
-                   '<a class="dropdown-item"  id="'+i+'_file_delete">Delete</a>'+
+                   delete_tab+
                    '<a class="dropdown-item" id="'+i+'_move">Move</a>'+
                    '<a class="dropdown-item"  id="'+i+'_duplicate">Duplicate</a>'+
 
