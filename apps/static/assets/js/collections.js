@@ -71,7 +71,7 @@ function get_collection_list(){
                 document.querySelector("#box_container").innerHTML = "";
                 for(collection of collections){
                     document.querySelector("#box_container").innerHTML += '<div class="col-lg-3 col-md-6">'+
-                      '<button type="button" class="btn-block" data-clipboard-text="active-40" onclick="window.open(\'/collection.html?current_path='+user+'/collections/'+collection["name"]+'\',\'_self\').focus()">'+
+                      '<button type="button" class="btn-block" data-clipboard-text="active-40" onclick="window.open(\'/collection.html?current_path='+collection["abs_path"].substr(6)+'\',\'_self\').focus()">'+
                         '<div>'+
                           '<i class="ni ni-map-big "></i>'+
                           '<span>'+collection["name"]+'</span>'+
