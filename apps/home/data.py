@@ -1586,6 +1586,96 @@ def update_parent_meta(abs_path):
         json.dump(parent_meta_data, parent_meta_data_file)
 
 
+
+
+def wait_for_container(container,notifier,handler,command,tool,hash_value):
+
+    container.exec_run(command)
+    container.exec_run(f"touch /tmp/{hash_value}")
+    container.wait()
+    notifier.stop()
+
+    written_files = list(handler.written_files)
+    read_files = list(handler.accessed_files.difference(handler.written_files))
+    created_files = list(handler.created_files)
+
+    sorted_created_files = sorted(created_files, key=len)
+
+    for created_file in sorted_created_files:
+        if os.path.isfile(created_file):
+            generate_meta_data_for_file(created_file, {})
+        else:
+            generate_meta_data_for_dir(created_file, {"create": ["null"]})
+
+        parent_path = "/".join(created_file.split("/")[:-1])
+        parent_meta_data_file_name = "_".join(parent_path.split("/")[1:]) + ".json"
+
+        with open(os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name),
+                  "r") as parent_meta_data_file:
+            parent_meta_data = json.load(parent_meta_data_file)
+            if created_file not in parent_meta_data["subdirs"]:
+                parent_meta_data["subdirs"].append(created_file)
+
+        with open(os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name),
+                  "w") as parent_meta_data_file:
+            json.dump(parent_meta_data, parent_meta_data_file)
+
+    for written_file in written_files:
+        if os.path.isdir(written_file):
+            continue
+
+        written_meta_data_file_name = "_".join(written_file.split("/")[1:]) + ".json"
+        with open(os.path.join(settings.CORE_DIR, 'data', written_meta_data_file_name),
+                  "r") as written_meta_data_file:
+            written_meta_data = json.load(written_meta_data_file)
+        if "upstream" not in written_meta_data:
+            written_meta_data["upstream"] = {}
+        if tool not in written_meta_data["upstream"]:
+            written_meta_data["upstream"][tool] = []
+        # written_meta_data["upstream"][tool] = []
+
+        for read_file in read_files:
+            if os.path.isdir(read_file):
+                continue
+            if tool in read_file:
+                continue
+            if read_file in written_meta_data["upstream"][tool]:
+                continue
+
+            written_meta_data["upstream"][tool].append(read_file)
+
+        with open(os.path.join(settings.CORE_DIR, 'data', written_meta_data_file_name),
+                  "w") as written_meta_data_file:
+            json.dump(written_meta_data, written_meta_data_file)
+
+    for read_file in read_files:
+        if os.path.isdir(read_file) or tool in read_file:
+            continue
+
+        read_meta_data_file_name = "_".join(read_file.split("/")[1:]) + ".json"
+        with open(os.path.join(settings.CORE_DIR, 'data', read_meta_data_file_name), "r") as read_meta_data_file:
+            read_meta_data = json.load(read_meta_data_file)
+        if "downstream" not in read_meta_data:
+            read_meta_data["downstream"] = {}
+        # read_meta_data["downstream"][tool] = []
+        if tool not in read_meta_data["downstream"]:
+            read_meta_data["downstream"][tool] = []
+
+        for written_file in written_files:
+            if os.path.isdir(written_file):
+                continue
+            if written_file in read_meta_data["downstream"][tool]:
+                continue
+
+            read_meta_data["downstream"][tool].append(written_file)
+
+        with open(os.path.join(settings.CORE_DIR, 'data', read_meta_data_file_name), "w") as read_meta_data_file:
+            json.dump(read_meta_data, read_meta_data_file)
+
+
+
+
+
 def run_tool(entry_point,arg_values, arg_types,user):
 
 
@@ -1644,28 +1734,24 @@ def run_tool(entry_point,arg_values, arg_types,user):
 
     #import time
 
-    def wait_for_container(container,notifier,command):
+    hash_value = hash(f"{entry_point.replace('/', '_')}_{datetime.now()}")
 
-        container.exec_run(command)
-        container.exec_run(f"touch /tmp/{hash_value}")
-        container.wait()
-        notifier.stop()
-
-
+    bash_script = f"bash -c 'while true; do if [ -e  /tmp/{hash_value} ]; then rm /tmp/{hash_value}; exit 0; fi; sleep 3; done'"
 
 
 
     if ".py" in entry_point.split("/")[-1]:
         image_name = "python_test"
         main_cmd = "python"
+        command = [main_cmd, script_path] + [arg_values[arg_name] for arg_name in arg_values]
 
 
         container = client.containers.run(
             image_name,
-            command=[main_cmd, script_path] + [arg_values[arg_name] for arg_name in arg_values],
+            command=bash_script,#[main_cmd, script_path] + [arg_values[arg_name] for arg_name in arg_values],
             # command=[main_cmd, script_path],
             volumes={f"/data/{user}": {"bind": f"/{user}", "mode": "rw"}},
-            # working_dir=working_dir,
+            working_dir=working_dir,
             # environment={"VAR1": "value1", "VAR2": "value2"},
             detach=True,
             auto_remove=True
@@ -1694,9 +1780,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
             matlab_cmd
         ]
 
-        hash_value = hash(f"{entry_point.replace('/','_')}_{datetime.now()}")
 
-        bash_script = f"bash -c 'while true; do if [ -e  /tmp/{hash_value} ]; then rm /tmp/{hash_value}; exit 0; fi; sleep 3; done'"
 
         container = client.containers.run(
             image_name,
@@ -1712,23 +1796,16 @@ def run_tool(entry_point,arg_values, arg_types,user):
         )
 
 
+    # Associate the event handler with the WatchManager
+    handler = EventHandler(pid,container.id)
 
+    notifier = pyinotify.Notifier(wm, handler)
+    notifier_thread = threading.Thread(target=notifier.loop, daemon=True)
+    notifier_thread.start()
 
-        # Associate the event handler with the WatchManager
-        handler = EventHandler(pid,container.id)
-
-        notifier = pyinotify.Notifier(wm, handler)
-        notifier_thread = threading.Thread(target=notifier.loop, daemon=True)
-        notifier_thread.start()
-
-        # Start a separate thread to wait for the container to stop
-        waiting_thread = threading.Thread(target=wait_for_container, args=(container,notifier,command))
-        waiting_thread.start()
-
-
-
-    else:
-        return
+    # Start a separate thread to wait for the container to stop
+    waiting_thread = threading.Thread(target=wait_for_container, args=(container,notifier,handler,command,tool,hash_value))
+    waiting_thread.start()
 
 
 
@@ -1747,85 +1824,6 @@ def run_tool(entry_point,arg_values, arg_types,user):
 
     #time.sleep(3)
     #notifier_thread.join()
-
-
-    written_files = list(handler.written_files)
-    read_files = list(handler.accessed_files.difference(handler.written_files))
-    created_files = list(handler.created_files)
-
-    sorted_created_files = sorted(created_files, key=len)
-    
-    
-    for created_file in sorted_created_files:
-        if os.path.isfile(created_file):
-            generate_meta_data_for_file(created_file,{})
-        else:
-            generate_meta_data_for_dir(created_file,{"create":["null"]})
-
-        parent_path = "/".join(created_file.split("/")[:-1])
-        parent_meta_data_file_name = "_".join(parent_path.split("/")[1:]) + ".json"
-
-        with open(os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name),"r") as parent_meta_data_file:
-            parent_meta_data = json.load(parent_meta_data_file)
-            if created_file not in parent_meta_data["subdirs"]:
-                parent_meta_data["subdirs"].append(created_file)
-
-        with open(os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name), "w") as parent_meta_data_file:
-            json.dump(parent_meta_data, parent_meta_data_file)
-
-
-    for written_file in written_files:
-        if os.path.isdir(written_file):
-            continue
-
-        written_meta_data_file_name = "_".join(written_file.split("/")[1:]) + ".json"
-        with open(os.path.join(settings.CORE_DIR, 'data', written_meta_data_file_name),"r") as written_meta_data_file:
-            written_meta_data = json.load(written_meta_data_file)
-        if "upstream" not in written_meta_data:
-            written_meta_data["upstream"] = {}
-        if tool not in written_meta_data["upstream"]:
-            written_meta_data["upstream"][tool] = []
-        #written_meta_data["upstream"][tool] = []
-
-        for read_file in read_files:
-            if os.path.isdir(read_file):
-                continue
-            if tool in read_file:
-                continue
-            if read_file in written_meta_data["upstream"][tool]:
-                continue
-
-            written_meta_data["upstream"][tool].append(read_file)
-
-        with open(os.path.join(settings.CORE_DIR, 'data', written_meta_data_file_name),"w") as written_meta_data_file:
-            json.dump(written_meta_data,written_meta_data_file)
-
-    for read_file in read_files:
-        if os.path.isdir(read_file) or tool in read_file:
-            continue
-
-        read_meta_data_file_name = "_".join(read_file.split("/")[1:]) + ".json"
-        with open(os.path.join(settings.CORE_DIR, 'data', read_meta_data_file_name), "r") as read_meta_data_file:
-            read_meta_data = json.load(read_meta_data_file)
-        if "downstream" not in read_meta_data:
-            read_meta_data["downstream"] = {}
-        #read_meta_data["downstream"][tool] = []
-        if tool not in read_meta_data["downstream"]:
-            read_meta_data["downstream"][tool] = []
-
-        for written_file in written_files:
-            if os.path.isdir(written_file):
-                continue
-            if written_file in read_meta_data["downstream"][tool]:
-                continue
-
-            read_meta_data["downstream"][tool].append(written_file)
-
-        with open(os.path.join(settings.CORE_DIR, 'data',  read_meta_data_file_name),"w") as  read_meta_data_file:
-            json.dump( read_meta_data, read_meta_data_file)
-
-
-
 
     return
 
