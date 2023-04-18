@@ -36,7 +36,7 @@
                   <p>{{ msg }}</p>
                 {% else %}
                   <p>
-                   Or sign in with credentials
+                   Sign in with credentials
                   </p>
                 {% endif %}  
 
@@ -71,7 +71,7 @@
                   </label>
                 </div>
                 <div class="text-center">
-                  <button type="submit" class="btn btn-primary my-4">Sign in</button>
+                  <button type="submit" class="btn btn-primary my-4" id="submit_button">Sign in</button>
                 </div>
               </form>
             </div>
@@ -82,6 +82,7 @@
             </div>
             <div class="col-6 text-right">
               <!--<a href="https://appseed.us/support" class="text-light"><small>Get Support</small></a>-->
+              <a  class="text-light" id="login_as_guest"><small>Login as guest</small></a>
             </div>
           </div>
         </div>
@@ -91,4 +92,20 @@
 {% endblock content %}
 
 <!-- Specific JS goes HERE --> 
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+
+<script>
+  document.querySelector("#login_as_guest").addEventListener("click",function(){
+            document.querySelector("#id_username").value = "guest";
+            document.querySelector("#id_password").value = "thisismypasswordforguest";
+            document.querySelector("#submit_button").click();
+
+
+
+
+  });
+
+</script>
+
+
+{% endblock javascripts %}
