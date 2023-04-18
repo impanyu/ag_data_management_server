@@ -1015,6 +1015,33 @@ def register_public():
 
 
 def add_to_public(file_path):
+    public_user_file_name = f"/data/public"
+    public_user_meta_file_name = "_".join(public_user_file_name.split("/")[1:]) + ".json"
+    public_data_file_name = f"/data/public/ag_data"
+    public_meta_data_file_name = "_".join(public_data_file_name.split("/")[1:]) + ".json"
+    public_collection_file_name = f"{public_user_file_name}/collections"
+    public_collection_meta_file_name = "_".join(public_collection_file_name.split("/")[1:]) + ".json"
+
+    meta_data = get_meta_data(file_path)
+
+    if "Collection" in meta_data["mode"]:
+        public_collection_meta_data = get_meta_data(public_collection_file_name)
+        if meta_data["abs_path"] not in public_collection_meta_data["subdirs"]:
+            public_collection_meta_data["subdirs"].append(meta_data["abs_path"])
+        with open(os.path.join(settings.CORE_DIR, 'data', public_collection_meta_file_name),
+                  'w') as public_collection_meta_file:
+            json.dump(public_collection_meta_data, public_collection_meta_file)
+
+
+    else:
+        public_meta_data = get_meta_data(public_data_file_name)
+        if meta_data["abs_path"] not in public_meta_data["subdirs"]:
+            public_meta_data["subdirs"].append(meta_data["abs_path"])
+        with open(os.path.join(settings.CORE_DIR, 'data', public_meta_data_file_name), 'w') as public_meta_data_file:
+            json.dump(public_meta_data, public_meta_data_file)
+
+
+def remove_from_public(file_path):
 
 
     public_user_file_name = f"/data/public"
@@ -1030,16 +1057,16 @@ def add_to_public(file_path):
 
     if "Collection" in meta_data["mode"]:
         public_collection_meta_data = get_meta_data(public_collection_file_name)
-        if meta_data["abs_path"] not in public_collection_meta_data["subdirs"]:
-            public_collection_meta_data["subdirs"].append(meta_data["abs_path"])
+        if meta_data["abs_path"]  in public_collection_meta_data["subdirs"]:
+            public_collection_meta_data["subdirs"].remove(meta_data["abs_path"])
         with open(os.path.join(settings.CORE_DIR, 'data', public_collection_meta_file_name), 'w') as public_collection_meta_file:
             json.dump(public_collection_meta_data, public_collection_meta_file)
 
 
     else:
         public_meta_data = get_meta_data(public_data_file_name)
-        if meta_data["abs_path"] not in public_meta_data["subdirs"]:
-            public_meta_data["subdirs"].append(meta_data["abs_path"])
+        if meta_data["abs_path"] in public_meta_data["subdirs"]:
+            public_meta_data["subdirs"].remove(meta_data["abs_path"])
         with open(os.path.join(settings.CORE_DIR, 'data', public_meta_data_file_name), 'w') as public_meta_data_file:
             json.dump(public_meta_data, public_meta_data_file)
 
@@ -1068,6 +1095,8 @@ def update_meta(file_path,new_meta_data):
             meta_data[key] = new_meta_data[key]
 
         elif key == "public":
+            if meta_data[key] == new_meta_data[key]:
+                continue
             meta_data[key] = new_meta_data[key]
 
             # recursively change the subdirs and files
@@ -1075,6 +1104,8 @@ def update_meta(file_path,new_meta_data):
 
             if new_meta_data[key] == "True":
                 add_to_public(file_path)
+            else:
+                remove_from_public(file_path)
 
 
         elif key == "time_range":
