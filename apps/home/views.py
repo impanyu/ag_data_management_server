@@ -698,7 +698,7 @@ def data(request):
 
             abs_path = file_path#os.path.join("/data",file_path,file_name)
 
-            if not abs_path.split("/")[1] == request.user.get_username():
+            if not abs_path.split("/")[2] == request.user.get_username():
                 return HttpResponse("can not delete other's data!")
 
             if os.path.isdir(abs_path):
@@ -837,7 +837,7 @@ def data(request):
 
             collections = []
 
-            if not current_path.split("/")[0] == request.user.get_username() or not current_path.split("/")[0] == "public":
+            if not abs_path.split("/")[2] == request.user.get_username() or not abs_path.split("/")[2] == "public":
                 return json.dumps(collections)
 
             for collection_path in meta_data["subdirs"]:
