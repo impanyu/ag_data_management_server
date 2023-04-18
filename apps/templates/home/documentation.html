@@ -52,9 +52,29 @@ By providing an integrated platform for agricultural data management and analysi
   <section id="architecture" class="row align-items-center ">
   <h2 class="col-lg-12 col-12 ">System Architecture</h2>
       <div class="col-lg-2 col-12"></div>
-      <div class="col-lg-8 col-12">
+      <div class="col-lg-8 col-12 text-center">
+          <figure>
           <img src="/static/assets/img/agricultural_data_management_platform.png" style="width:100%" >
+               <figcaption>Figure 1. System Architecture</figcaption>
+          </figure>
       </div>
+      <p style="font-weight:400">
+          Figure 1 illustrates the overall architecture of the systems. There are six components: data source, batch processing, real-time processing, actuators, server and Front end.
+
+The data source is mainly composed of four parts: RDBMS, NoSQL database and file system for storing the historical data, sensors for collecting real-time data streams, metadata for storing the formats and configuration about all the data and tools.
+
+Batch processing component is the engine of the whole system, where big data processing occurs. This component can be further divided into two environments: container environment and native environment. The container environment can host various types of containerized tools such as R, Python, Matlab, Tensorflow, Cuda, MPI and many more customized tools for the specific disciplines. There is a  container scheduler such as swarm or Kubernetes to manage the running of containers. Various user defined data processing and model training can be conducted in the container environment. The native environment contains all the necessary parts in a typical big data configuration, such as HDFS for file management, YARN for scheduling, SPARK for data processing, HIVE for data retrieving and HBase for data storage. We decided to use map reduce based data processing paradigm to accommodate various types of data processing requirements.  The output of the batch processing will be stored back to the data source for further retrieval and processing.
+
+Real-time processing component connects to the sensors and uses pipes to stream the real-time data for further processing. Several open source frameworks can be used here: Kafka manages a pipe for data stream collection, Spark Streaming/Flink/Storm are options for real-time data stream processing and Redis is an in-memory database for low latency data storage. Container environment is also supported, where hosted pre-trained models and customized tools can process data and make decisions in real-time or near real-time fashion.  The real time analytical results can be fed to the data processing module and data service API inside the server component. The decisions and commands can be output to the actuator to execute. This component is a necessary complement to batch processing when real-time analysis and control is required and relatively low accuracy is tolerated.
+
+The actuator is included in the system to make it more like a fully functioning control system. Connected to the real-time processing component, the actuator executes the commands/decisions output by the hosted models or user coded tools. The types of actuators vary among different disciplines. For biological system engineering, to name a few, there are actuators such as irrigation systems, robotics and field operation machines.
+
+The server is the operational handler of the whole system. Data management module is responsible for the ordinary operation such as file search, retrieve, upload, delete, update and processing. Version control is also considered in the future implementation. Tool management module keeps the information of the tool sets used in the system. Model management module is responsible for maintaining all the pre-trained models. Data processing module talks to and manages the batch processing and real-time processing components. This module is an umbrella module for all the data processing jobs such as data pre-processing, data co-locating, batch processing, model training,  model hosting, real-time processing, etc.  Security and authentication module guarantees the data storage & transmission is secure and each user has a separate access permission and view to the data. Data service API acts as the portal for the front-end to manipulate the data in our system.
+
+The front end runs on the user side machine and can take the forms of web browser, command-line or third-party software. The front end communicates with the server through the data service API. Users of our system can conduct ordinary file management operations and initiate data processing requests to the system. The analytical results can be displayed in the front end for the user to view.
+
+
+      </p>
   </section>
    <section id="search_module">
   <h2> Search </h2>
