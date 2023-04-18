@@ -960,6 +960,11 @@ def update_file(file_path, new_content):
 
 
 def register_public():
+    root_file_name = "/data"
+    root_meta_file_name = "data.json"
+
+
+
     public_user_file_name = f"/data/public"
     public_user_meta_file_name = "_".join(public_user_file_name.split("/")[1:]) + ".json"
     public_data_file_name = f"/data/public/ag_data"
@@ -973,10 +978,11 @@ def register_public():
         public_user_meta_data["public"] = "True"
 
 
-        with open(os.path.join(settings.CORE_DIR, 'data', 'data.json'), 'r') as root_meta_data_file:
-            root_meta_data = json.load(root_meta_data_file)
-            if public_user_file_name not in root_meta_data["subdirs"]:
-                root_meta_data["subdirs"].append(public_user_file_name)
+
+        root_meta_data = {"subdirs" :[], "name":"data","abs_path":"/data"}
+        if public_user_file_name not in root_meta_data["subdirs"]:
+             root_meta_data["subdirs"].append(public_user_file_name)
+
 
         with open(os.path.join(settings.CORE_DIR, 'data', 'data.json'), 'w') as root_meta_data_file:
             json.dump(root_meta_data, root_meta_data_file)
