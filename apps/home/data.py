@@ -1621,10 +1621,21 @@ def run_tool(entry_point,arg_values, arg_types,user):
     # Create a new WatchManager
     wm = pyinotify.WatchManager()
 
+    dirs_to_watch=[]
+    for arg_name in arg_values:
+        path = f"/data{arg_values[arg_name]}"
+        if os.path.exists(path):
+            if os.path.isfile(path):
+                dirs_to_watch.append(os.path.dirname(path))
+            else:
+                dirs_to_watch.append(path)
+
+    working_dir = f"/data/{user}/ag_data"
+
+
 
     # Add a watch for the path with the specified mask
-    wm.add_watch(root_dir, mask, rec=True, auto_add=True)
-
+    wm.add_watch(dirs_to_watch, mask, rec=True, auto_add=True)
 
 
     import threading
@@ -1632,6 +1643,8 @@ def run_tool(entry_point,arg_values, arg_types,user):
     # Run the notifier in a separate thread
 
     #import time
+
+
 
 
 
@@ -1683,7 +1696,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
             command=bash_script,#"bash -c 'while true; do sleep 5; done'",#command,#"matlab -nodisplay -nosplash -nodesktop -r \"arg1='/ypan12/ag_data'; arg2='/ypan12/ag_data'; run('/ypan12/ag_data/calcualte_canopy_height_1.m');exit\"" ,#"matlab -nodisplay -nosplash -nodesktop -r \"fid=fopen('/ypan12/ag_data/canopyheight.txt', 'w');fclose(fid);exit\"",
             # command=[main_cmd, script_path],
             volumes={f"/data/{user}": {"bind": f"/{user}", "mode": "rw"}},
-            # working_dir=working_dir,
+            working_dir=working_dir,
             # environment={"MLM_LICENSE_FILE": f"/{user}/ag_data/license.lic"},
             detach=True,
             auto_remove=True,

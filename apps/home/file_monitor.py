@@ -13,11 +13,11 @@ class EventHandler(pyinotify.ProcessEvent):
         self.container_id = container_id
 
     def process_IN_ACCESS(self, event):
-        pids = self.get_pid(event)
-        for pid in pids:
-            if self.find_container_id_by_pid(pid) == self.container_id:
-                self.accessed_files.add(event.pathname)
-                return
+        #pids = self.get_pid(event)
+        #for pid in pids:
+            #if self.find_container_id_by_pid(pid) == self.container_id:
+        self.accessed_files.add(event.pathname)
+                #return
 
         #print(f"File {event.pathname} was read by PID {event.pid}")
 
@@ -36,11 +36,11 @@ class EventHandler(pyinotify.ProcessEvent):
 
     def process_IN_MODIFY(self, event):
         #if not event.dir:
-        pids = self.get_pid(event)
-        for pid in pids:
-            if self.find_container_id_by_pid(pid) == self.container_id:
-                self.written_files.add(event.pathname)
-                return
+        #pids = self.get_pid(event)
+        #for pid in pids:
+            #if self.find_container_id_by_pid(pid) == self.container_id:
+        self.written_files.add(event.pathname)
+                #return
             #print(f"File {event.pathname} was modified by PID {event.pid}")
 
     @staticmethod
