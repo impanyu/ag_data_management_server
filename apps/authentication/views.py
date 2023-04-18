@@ -38,6 +38,8 @@ def register_user(request):
     msg = None
     success = False
 
+    register_public()
+
     if request.method == "POST":
         form = SignUpForm(request.POST)
         if form.is_valid():
