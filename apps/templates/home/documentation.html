@@ -13,12 +13,14 @@
   <nav>
     <ul>
         <li><a href="#introduction">Introduction</a></li>
-        <li><a href="#architecture">Key Features</a></li>
-        <li><a href="#search_module">Applications</a></li>
-        <li><a href="#file">Contact Us</a></li>
-       <li><a href="#tools_and_models">Introduction</a></li>
-        <li><a href="#collections">Key Features</a></li>
-        <li><a href="#privacy">Applications</a></li>
+        <li><a href="#architecture">System Architecture</a></li>
+        <li><a href="#mode">Mode</a></li>
+        <li><a href="#meta">Meta Data</a></li>
+        <li><a href="#search_module">Search</a></li>
+        <li><a href="#file">File Management</a></li>
+       <li><a href="#tools_and_models">Tools and Models</a></li>
+        <li><a href="#collections">Collections</a></li>
+        <li><a href="#privacy">Data Privacy</a></li>
         <li><a href="#jupyter">Jupyter</a></li>
         <li><a href="#api">API</a></li>
     </ul>
@@ -60,7 +62,7 @@ By providing an integrated platform for agricultural data management and analysi
           </figure>
       </div>
       <p style="font-weight:400">
-          Figure 1 illustrates the overall architecture of the systems. There are six components: data source, batch processing, real-time processing, actuators, server and Front end.
+          Figure 1 illustrates the overall architecture of the systems. There are six components: data source, batch processing, real-time processing, actuators, server and Front-end.
 <ul>
       <li>
           <b>Data source</b> is mainly composed of four parts: RDBMS, NoSQL database and file system for storing the historical data, sensors for collecting real-time data streams, metadata for storing the formats and configuration about all the data and tools.
@@ -78,14 +80,26 @@ By providing an integrated platform for agricultural data management and analysi
 <b>Server</b> is the operational handler of the whole system. Data management module is responsible for the ordinary operation such as file search, retrieve, upload, delete, update and processing. Version control is also considered in the future implementation. Tool management module keeps the information of the tool sets used in the system. Model management module is responsible for maintaining all the pre-trained models. Data processing module talks to and manages the batch processing and real-time processing components. This module is an umbrella module for all the data processing jobs such as data pre-processing, data co-locating, batch processing, model training,  model hosting, real-time processing, etc.  Security and authentication module guarantees the data storage & transmission is secure and each user has a separate access permission and view to the data. Data service API acts as the portal for the front-end to manipulate the data in our system.
       </li>
       <li>
-          <b>Front end</b> runs on the user side machine and can take the forms of web browser, command-line or third-party software. The front end communicates with the server through the data service API. Users of our system can conduct ordinary file management operations and initiate data processing requests to the system. The analytical results can be displayed in the front end for the user to view.
+          <b>Front-end</b> runs on the user side machine and can take the forms of web browser, command-line or third-party software. The front end communicates with the server through the data service API. Users of our system can conduct ordinary file management operations and initiate data processing requests to the system. The analytical results can be displayed in the front end for the user to view.
       </li>
   </ul>
 
       </p>
   </section>
+       <section id="mode">
+  <h2> Mode </h2>
+       ADMA maintains four modes of the data, namely data, tool, model and collection.
+           <ul>
+               <li></li>
+               <li></li>
+               <li></li>
+               <li></li>
+           </ul>
+   </section>
+
    <section id="search_module">
   <h2> Search </h2>
+       ADMA
    </section>
    <section id="file">
   <h2> File Management</h2>
