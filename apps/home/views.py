@@ -836,7 +836,7 @@ def data(request):
 
             return response
 
-        elif load_template == "get_colletions":
+        elif load_template == "get_collections":
 
             abs_path = f"/data/{request.user.get_username()}/collections"
 
