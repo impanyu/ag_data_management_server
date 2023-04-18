@@ -844,7 +844,7 @@ def generate_meta_data_for_dir(dir_path,upstream):
     meta_data["upstream"] = upstream
     meta_data["introduction"] = ""
     #from .views import username
-    meta_data["owner"] = dir_path.split("/")[1]
+    meta_data["owner"] = dir_path.split("/")[2]
 
 
     meta_data_dir_name = "_".join(dir_path.split("/")[1:]) + ".json"
@@ -876,7 +876,7 @@ def generate_meta_data_for_file(file_path, upstream):
     meta_data["upstream"] = upstream
     meta_data["introduction"] = ""
     #from .views import username
-    meta_data["owner"] = file_path.split("/")[1]
+    meta_data["owner"] = file_path.split("/")[2]
 
     suffix = file_path.split("/")[-1].split(".")[-1]
 
@@ -970,6 +970,8 @@ def register_public():
     if not os.path.exists(os.path.join(settings.CORE_DIR, 'data', public_user_meta_file_name)):
 
         public_user_meta_data = generate_meta_data_for_dir(public_user_file_name, {"create": ["null"]})
+        public_user_meta_data["public"] = "True"
+
 
         with open(os.path.join(settings.CORE_DIR, 'data', 'data.json'), 'r') as root_meta_data_file:
             root_meta_data = json.load(root_meta_data_file)
@@ -981,6 +983,7 @@ def register_public():
 
         public_meta_data = generate_meta_data_for_dir(public_data_file_name, {"create": ["null"]})
         public_meta_data["name"] = "public_data"
+        public_meta_data["public"] = "True"
 
         if public_data_file_name not in public_user_meta_data["subdirs"]:
             public_user_meta_data["subdirs"].append(public_data_file_name)
@@ -990,9 +993,11 @@ def register_public():
 
         public_collection_meta_data = generate_meta_data_for_dir(public_collection_file_name, {"create": ["null"]})
         public_collection_meta_data["mode"] = ["Collection"]
+        public_collection_meta_data["public"] = "True"
 
         if public_collection_file_name not in public_user_meta_data["subdirs"]:
             public_user_meta_data["subdirs"].append(public_collection_file_name)
+
 
         with open(os.path.join(settings.CORE_DIR, 'data', public_user_meta_file_name),
                   'w') as public_user_meta_data_file:

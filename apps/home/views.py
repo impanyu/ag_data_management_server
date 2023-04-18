@@ -698,8 +698,19 @@ def data(request):
 
             abs_path = file_path#os.path.join("/data",file_path,file_name)
 
-            if not abs_path.split("/")[2] == request.user.get_username():
+            # remove corresponding meta data files
+            meta_data_file_name = "_".join(abs_path.split("/")[1:]) + ".json"
+            meta_data_path = os.path.join(settings.CORE_DIR, 'data', meta_data_file_name)
+            meta_data = get_meta_data(abs_path)
+
+            if not meta_data["owner"] == request.user.get_username():
                 return HttpResponse("can not delete other's data!")
+
+            delete_meta_data(meta_data_path)
+
+
+
+
 
             if os.path.isdir(abs_path):
                 # shutil.rmtree(os.path.join(settings.CORE_DIR, 'data/users', current_path, file_name))
@@ -707,10 +718,7 @@ def data(request):
             else:
                 os.remove(abs_path)
 
-            # remove corresponding meta data files
-            meta_data_file_name = "_".join(abs_path.split("/")[1:]) + ".json"
-            meta_data_path = os.path.join(settings.CORE_DIR, 'data', meta_data_file_name)
-            delete_meta_data(meta_data_path)
+
 
             # adjust meta data of its parent dir
             if not abs_path.split("/")[-2] == "home":
@@ -837,7 +845,7 @@ def data(request):
 
             collections = []
 
-            if not abs_path.split("/")[2] == request.user.get_username() and not abs_path.split("/")[2] == "public":
+            if not abs_path.split("/")[2] == request.user.get_username() and  meta_data["public"] == "False":
                 return json.dumps(collections)
 
             for collection_path in meta_data["subdirs"]:
