@@ -2268,6 +2268,7 @@ function get_running_containers(){
                                     current_path: current_path
                             },
                             success: function (data) {
+                            document.querySelector("#container_list").innerHTML = "";
                                 console.info(data);
                                 containers = JSON.parse(data);
                                  for(container of containers){
