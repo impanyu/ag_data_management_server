@@ -1665,7 +1665,7 @@ def update_parent_meta(abs_path):
 def wait_for_container(container,notifier,handler,command,tool,hash_value):
 
     #tool_meta_data = get_meta_data(tool)
-    notifier_thread = threading.Thread(target=notifier.loop, daemon=True)
+    notifier_thread = threading.Thread(target=notifier.loop, daemon=False)
     notifier_thread.start()
 
     time.sleep(1)
@@ -1674,7 +1674,7 @@ def wait_for_container(container,notifier,handler,command,tool,hash_value):
     container.exec_run(command)
     container.exec_run(f"touch /tmp/{hash_value}")
     container.wait()
-    notifier.stop()
+    #notifier.stop()
 
     #if container.id in tool_meta_data["running_containers"]:
     #   tool_meta_data["running_containers"].remove(container.id)
