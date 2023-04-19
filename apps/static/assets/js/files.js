@@ -1064,7 +1064,9 @@ async function get_meta_and_content(){
 
      if(meta_data["mode"] == "Tool"){
         set_tool_panel();
+        get_running_containers();
      }
+
      get_file_list();
 
    }
@@ -1087,6 +1089,7 @@ async function get_meta_and_content(){
 
      if(meta_data["mode"] == "Tool"){
        set_tool_panel();
+       get_running_containers();
 
      }
       get_file_content();
@@ -2247,7 +2250,9 @@ function get_meta_data(){
              }
 
           }
-          get_running_containers();
+
+
+
 
 
 
