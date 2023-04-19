@@ -1183,7 +1183,7 @@ def read_tif_meta(file_path):
         }
 
     # Open the GeoTIFF file
-    with rasterio.open(file_path) as src:
+    #with rasterio.open(file_path) as src:
         # Get the image's CRS (Coordinate Reference System)
         src_crs = src.crs
         dst_crs = CRS.from_epsg(4326)
@@ -1543,7 +1543,7 @@ def tif_to_image(tif_path,band):
     print(img_path)
 
     # Open TIF file
-    with rasterio.open(tif_path,BIGTIFF='YES') as dataset:
+    with rasterio.open(tif_path) as dataset:
 
         if band == "RGBA":
             # Get image dimensions
@@ -1559,7 +1559,7 @@ def tif_to_image(tif_path,band):
             # Scale the data to the range 0-255
             rgba_min = np.nanmin(rgba_data)
             rgba_max = np.nanmax(rgba_data)
-            rgba_data_scaled = (255 * (rgba_data - rgba_min) / (rgba_max - rgba_min+0.01)).astype('uint8')
+            rgba_data_scaled = (255 * (rgba_data - rgba_min) / (rgba_max - rgba_min)).astype('uint8')
 
             # Create a PIL Image object and save as PNG
             image = Image.fromarray(rgba_data_scaled, mode='RGBA')
@@ -1577,7 +1577,7 @@ def tif_to_image(tif_path,band):
             print(band_max)
 
             #print(np.where(band_data <= 0, 0, band_data))
-            band_data_scaled = (255 * (band_data - band_min) / (band_max - band_min+0.01)).astype('uint8')
+            band_data_scaled = (255 * (band_data - band_min) / (band_max - band_min)).astype('uint8')
             band_image = Image.fromarray(band_data_scaled)
             band_image = downsample_image(band_image, 1000)
             band_image.save(img_path)
