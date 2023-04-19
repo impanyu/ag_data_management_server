@@ -724,7 +724,7 @@ def data(request):
 
 
             # adjust meta data of its parent dir
-            if not abs_path.split("/")[-2] == "home":
+            if not abs_path.split("/")[-2] == "data":
                 parent_dir = "/".join(abs_path.split("/")[:-1])
                 parent_meta_data_file_name = "_".join(parent_dir.split("/")[1:]) + ".json"
                 parent_meta_data_file_path = os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name)
@@ -890,25 +890,26 @@ def data(request):
 
             meta_data = get_meta_data(abs_path)
 
-            collections = []
+            items = []
 
             if  not abs_path.split("/")[2] == request.user.get_username() and  meta_data["public"] == "False":
-                return HttpResponse(json.dumps(collections))
+                return HttpResponse(json.dumps(items))
 
-            for collection_path in meta_data["subdirs"]:
+            for sub_path in meta_data["subdirs"]:
                 #if collection_path == f"/data/{request.user.get_username()}/collections":
                 #    continue
-                collection_meta_data = get_meta_data(collection_path)
-                if "Tool" in collection_meta_data["mode"]:
-                    running_containers = get_running_containers(collection_path)
+                sub_meta_data = get_meta_data(sub_path)
+                if "Tool" in sub_meta_data["mode"]:
+                    running_containers = get_running_containers(sub_path)
                     if len(running_containers) == 0:
-                        collection_meta_data["running"] = "False"
+                        sub_meta_data["running"] = "False"
                     else:
-                        collection_meta_data["running"] = "True"
+                        sub_meta_data["running"] = "True"
 
-                collections.append(collection_meta_data)
+                items.append(sub_meta_data)
+            items = sorted(items, key= function(item){return item["name"]})
 
-            response = json.dumps(collections)
+            response = json.dumps(items)
 
             return HttpResponse(response)
 
