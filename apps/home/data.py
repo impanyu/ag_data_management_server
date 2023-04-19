@@ -2035,7 +2035,7 @@ def get_running_containers(abs_path):
 
             # Get the container start timestamp
             started_at = container.attrs['State']['StartedAt']
-            start_time = datetime.datetime.fromisoformat(started_at.replace('Z', '+00:00'))
+            start_time = datetime.datetime.strptime(started_at, '%Y-%m-%dT%H:%M:%S.%fZ')
 
             # Calculate the duration in seconds
             duration = (datetime.datetime.utcnow() - start_time).total_seconds()
