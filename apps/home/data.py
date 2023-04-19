@@ -1810,6 +1810,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
     wm = pyinotify.WatchManager()
 
     dirs_to_watch=[]
+    volumes = {f"/data/{user}": {"bind": f"/{user}", "mode": "rw"}}
     for arg_name in arg_values:
         path = f"/data{arg_values[arg_name]}"
         if os.path.exists(path):
@@ -1817,8 +1818,11 @@ def run_tool(entry_point,arg_values, arg_types,user):
                 dirs_to_watch.append(os.path.dirname(path))
             else:
                 dirs_to_watch.append(path)
+            host_root = "/".join(path.split("/")[:3])
+            virtual_root = "/"+path.split("/")[2]
+            volumes[host_root]={"bind": virtual_root, "mode": "rw"}
 
-    working_dir = f"/data/{user}/ag_data"
+    working_dir = f"/{user}/ag_data"
 
 
 
@@ -1848,7 +1852,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
             image_name,
             command=bash_script,#[main_cmd, script_path] + [arg_values[arg_name] for arg_name in arg_values],
             # command=[main_cmd, script_path],
-            volumes={f"/data/{user}": {"bind": f"/{user}", "mode": "rw"}},
+            volumes=volumes,#{f"/data/{user}": {"bind": f"/{user}", "mode": "rw"}},
             working_dir=working_dir,
             # environment={"VAR1": "value1", "VAR2": "value2"},
             detach=True,
@@ -1884,7 +1888,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
             image_name,
             command=bash_script,#"bash -c 'while true; do sleep 5; done'",#command,#"matlab -nodisplay -nosplash -nodesktop -r \"arg1='/ypan12/ag_data'; arg2='/ypan12/ag_data'; run('/ypan12/ag_data/calcualte_canopy_height_1.m');exit\"" ,#"matlab -nodisplay -nosplash -nodesktop -r \"fid=fopen('/ypan12/ag_data/canopyheight.txt', 'w');fclose(fid);exit\"",
             # command=[main_cmd, script_path],
-            volumes={f"/data/{user}": {"bind": f"/{user}", "mode": "rw"}},
+            volumes=volumes,#{f"/data/{user}": {"bind": f"/{user}", "mode": "rw"}},
             working_dir=working_dir,
             # environment={"MLM_LICENSE_FILE": f"/{user}/ag_data/license.lic"},
             detach=True,
