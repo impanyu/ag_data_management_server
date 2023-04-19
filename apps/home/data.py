@@ -1531,6 +1531,13 @@ def shp_to_image(shp_path,col): # plot a column of shape file as png image
 def tif_to_image(tif_path,band):
 
     img_path = f"{tif_path}_band_{band}.png"
+    tif_meta = get_meta_data(tif_path)
+
+    if tif_meta["native"]["width"] >5000 or tif_meta["native"]["height"] > 5000:
+        return ""
+
+
+
 
     if os.path.exists(img_path):
         return img_path
@@ -1585,7 +1592,7 @@ def tif_to_image(tif_path,band):
 
 
     img_meta_data = generate_meta_data_for_file(img_path,{"tif to image":[tif_path]})
-    tif_meta = get_meta_data(tif_path)
+
     if "downstream" not in tif_meta:
         tif_meta["downstream"] = {}
 
