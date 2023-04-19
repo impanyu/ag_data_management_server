@@ -812,9 +812,9 @@ def data(request):
             elif suffix == "tif" or suffix == "tiff":
                 band = request.POST['band']
                 img_path = tif_to_image(abs_path,band)
-                #with open(img_path, 'rb') as file:
-                #    response = HttpResponse(file.read())
-                response = HttpResponse()
+                with open(img_path, 'rb') as file:
+                    response = HttpResponse(file.read())
+                #response = HttpResponse()
                 response['Content-Type'] = 'image/jpg'
                 response['Content-Disposition'] = f'inline; filename={os.path.basename(img_path)}'
 

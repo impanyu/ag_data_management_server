@@ -1559,26 +1559,27 @@ def tif_to_image(tif_path,band):
             # Scale the data to the range 0-255
             rgba_min = np.nanmin(rgba_data)
             rgba_max = np.nanmax(rgba_data)
-            rgba_data_scaled = (255 * (rgba_data - rgba_min) / (rgba_max - rgba_min)).astype('uint8')
+            rgba_data_scaled = (255 * (rgba_data - rgba_min) / (rgba_max - rgba_min+0.01)).astype('uint8')
 
             # Create a PIL Image object and save as PNG
             image = Image.fromarray(rgba_data_scaled, mode='RGBA')
-            #image = downsample_image(image,1000)
+            image = downsample_image(image,1000)
             image.save(img_path)
 
         else:
 
 
             band_data = dataset.read(int(band)).astype('float32')
+            #band_min = np.max([np.nanmin(band_data), 0])
             band_min = np.max([np.nanmin(band_data), 0])
             band_max = np.nanmax(band_data)
             print(band_min)
             print(band_max)
 
             #print(np.where(band_data <= 0, 0, band_data))
-            band_data_scaled = (255 * (band_data - band_min) / (band_max - band_min)).astype('uint8')
+            band_data_scaled = (255 * (band_data - band_min) / (band_max - band_min+0.01)).astype('uint8')
             band_image = Image.fromarray(band_data_scaled)
-            #band_image = downsample_image(band_image, 1000)
+            band_image = downsample_image(band_image, 1000)
             band_image.save(img_path)
 
 
