@@ -814,6 +814,7 @@ def data(request):
                 img_path = tif_to_image(abs_path,band)
                 #with open(img_path, 'rb') as file:
                 #    response = HttpResponse(file.read())
+                response = HttpResponse()
                 response['Content-Type'] = 'image/jpg'
                 response['Content-Disposition'] = f'inline; filename={os.path.basename(img_path)}'
 
