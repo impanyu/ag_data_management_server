@@ -25,6 +25,9 @@ from matplotlib.colors import ListedColormap
 import pyinotify
 import docker
 import docker.errors
+import threading
+import time
+
 
 from .file_monitor import EventHandler
 from django.core.cache import cache
@@ -1646,6 +1649,10 @@ def update_parent_meta(abs_path):
 def wait_for_container(container,notifier,handler,command,tool,hash_value):
 
     #tool_meta_data = get_meta_data(tool)
+    notifier_thread = threading.Thread(target=notifier.loop, daemon=True)
+    notifier_thread.start()
+
+    time.sleep(1)
 
 
     container.exec_run(command)
@@ -1803,7 +1810,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
     wm.add_watch(dirs_to_watch, mask, rec=True, auto_add=True)
 
 
-    import threading
+
     # Start the notifier
     # Run the notifier in a separate thread
 
@@ -1889,8 +1896,7 @@ def run_tool(entry_point,arg_values, arg_types,user):
     handler = EventHandler(pid,container.id)
 
     notifier = pyinotify.Notifier(wm, handler)
-    notifier_thread = threading.Thread(target=notifier.loop, daemon=True)
-    notifier_thread.start()
+
 
     # Start a separate thread to wait for the container to stop
     waiting_thread = threading.Thread(target=wait_for_container, args=(container,notifier,handler,command,tool,hash_value))
