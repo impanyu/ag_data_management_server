@@ -1674,7 +1674,7 @@ def wait_for_container(container,notifier,handler,command,tool,hash_value):
     container.exec_run(command)
     container.exec_run(f"touch /tmp/{hash_value}")
     container.wait()
-    #notifier.stop()
+    notifier.stop()
 
     #if container.id in tool_meta_data["running_containers"]:
     #   tool_meta_data["running_containers"].remove(container.id)
