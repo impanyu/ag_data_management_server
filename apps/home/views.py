@@ -849,7 +849,7 @@ def data(request):
             client = docker.from_env()
 
 
-            for container_id in running_containers:
+            #for container_id in running_containers:
                 # Get the container object using the container ID
                 #container = client.containers.get(container_id)
                 # Get the container status
@@ -857,7 +857,7 @@ def data(request):
                 # Get the container image name
                 #image_name = container.image.tags[0] if container.image.tags else "No image tag"
                 #response.append({"container_id": container_id, "status":status, "image":image_name})
-                response.append({"container_id": container_id})
+            response.append({"container_id": running_containers})
 
 
 
