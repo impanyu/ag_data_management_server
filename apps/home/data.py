@@ -1870,10 +1870,10 @@ def run_tool(entry_point,arg_values, arg_types,user):
             mac_address='02:42:EF:BA:E1:95'
         )
 
-    if "running_containers" not in tool_meta_data:
-        tool_meta_data["running_containers"] = []
+    #if "running_containers" not in tool_meta_data:
+    #    tool_meta_data["running_containers"] = []
 
-    tool_meta_data["running_containers"].append(container.id)
+    #tool_meta_data["running_containers"].append(container.id)
 
     running_containers = cache.get(tool)
     if running_containers is None:

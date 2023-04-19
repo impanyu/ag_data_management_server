@@ -848,6 +848,7 @@ def data(request):
             # Create a Docker client
             client = docker.from_env()
 
+            '''
             for container_id in running_containers:
                 # Get the container object using the container ID
                 container = client.containers.get(container_id)
@@ -856,6 +857,7 @@ def data(request):
                 # Get the container image name
                 image_name = container.image.tags[0] if container.image.tags else "No image tag"
                 response.append({"container_id": container_id, "status":status, "image":image_name})
+            '''
 
 
             response = json.dumps(response)
