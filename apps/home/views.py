@@ -842,28 +842,10 @@ def data(request):
         elif load_template == "get_running_containers":
             current_path = request.POST['current_path']
             abs_path = f"/data/{current_path}"
-            running_containers = cache.get(abs_path)
-
-            response = []
-            # Create a Docker client
-            client = docker.from_env()
-            if running_containers is not None:
+            running_containers = get_running_containers(abs_path)
 
 
-                for container_id in running_containers:
-                    # Get the container object using the container ID
-                    container = client.containers.get(container_id)
-                    # Get the container status
-                    status = container.status
-                    # Get the container image name
-                    image_name = container.image.tags[0] if container.image.tags else "No image tag"
-                    response.append({"container_id": container_id, "status":status, "image":image_name})
-
-                    #response.append({"container_id": key})
-
-
-
-            response = json.dumps(response)
+            response = json.dumps(running_containers)
             return HttpResponse(response)
 
 
@@ -916,6 +898,12 @@ def data(request):
                 #if collection_path == f"/data/{request.user.get_username()}/collections":
                 #    continue
                 collection_meta_data = get_meta_data(collection_path)
+                if "Tool" in collection_meta_data["mode"]:
+                    running_containers = get_running_containers(collection_path)
+                    if len(running_containers) == 0:
+                        collection_meta_data["running"] = "False"
+                    else:
+                        collection_meta_data["running"] = "True"
 
                 collections.append(collection_meta_data)
 

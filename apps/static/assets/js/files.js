@@ -2494,12 +2494,18 @@ function get_item_list(){
            // continue;
 
           if (file["name"].indexOf(".") == -1){
-             folder_icon =  '<i class="ni ni-folder-17 text-primary"></i>'
+             icon =  '<i class="ni ni-folder-17 text-primary"></i>'
              current_folders_names.push(file["name"]);
 
              }
+          else if (file["running"] == "True"){
+              icon = '<div class="green-dot"></div>';
+          }
+          else if (file["running"] == "False"){
+             icon = '<div class="red-dot"></div>';
+          }
           else{
-             folder_icon = '';
+             icon = '';
              current_files_names.push(file["name"]);
          }
 
@@ -2510,7 +2516,7 @@ function get_item_list(){
                     '<a class="dropdown-item" id="'+i+'_move">Move</a>'+
                    '<a class="dropdown-item"  id="'+i+'_duplicate">Duplicate</a>'
 
-            item_html =  '<tr  class="file_and_dir_item" id="'+i+'_file_and_dir"><td scope="row"><div class="media align-items-center"><div class="media-body">'+folder_icon+'<span class="name mb-0 text-sm"> &nbsp;<a href="/files.html?current_path='+file["abs_path"].substr(6)+
+            item_html =  '<tr  class="file_and_dir_item" id="'+i+'_file_and_dir"><td scope="row"><div class="media align-items-center"><div class="media-body">'+icon+'<span class="name mb-0 text-sm"> &nbsp;<a href="/files.html?current_path='+file["abs_path"].substr(6)+
                   '&dir=false"> ' +file["name"]+ '</a></span> </div></div></td>" + "<td class="budget">'+file["native"]["created_time"]+'</td>"' +
                    '<td> <span class="badge badge-dot mr-4">  <span class="status">'+file["native"]["access_time"]+'</span></span></td>' +
                    '<td> <span class="badge badge-dot mr-4">  <span class="status">'+file["native"]["size"]+'</span></span></td>' +

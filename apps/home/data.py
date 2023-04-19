@@ -1917,6 +1917,8 @@ def run_tool(entry_point,arg_values, arg_types,user):
     return
 
 
+
+
 def trim_path_header(path):
     if path[:5] == "/data":
         return path[5:]
@@ -2015,4 +2017,22 @@ def remove_from_collection(collection_name, file_path, username):
 
 
 
+def get_running_containers(abs_path):
+    running_containers = cache.get(abs_path)
 
+    response = []
+    # Create a Docker client
+    client = docker.from_env()
+    if running_containers is not None:
+
+        for container_id in running_containers:
+            # Get the container object using the container ID
+            container = client.containers.get(container_id)
+            # Get the container status
+            status = container.status
+            # Get the container image name
+            image_name = container.image.tags[0] if container.image.tags else "No image tag"
+            response.append({"container_id": container_id, "status": status, "image": image_name})
+
+            # response.append({"container_id": key})
+    return response
