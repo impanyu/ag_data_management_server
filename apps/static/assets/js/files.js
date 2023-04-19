@@ -2272,7 +2272,7 @@ function get_running_containers(){
                                 containers = JSON.parse(data);
                                  for(container of containers){
 
-                                      document.querySelector("# container_list").innerHTML += '<tr>'+
+                                      document.querySelector("#container_list").innerHTML += '<tr>'+
                                          '<td scope="row" >'+container["container_id"]+'</td>'+
                                          '<td scope="row" >'+container["image"]+'</td>'+
                                          '<td scope="row" >'+container["status"]+'</td>'+
