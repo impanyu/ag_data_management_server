@@ -2259,7 +2259,7 @@ function get_meta_data(){
 }
 
 
-function get_running_containers{
+function get_running_containers(){
  setInterval(function(){
                          $.ajax({
                             type: "POST",
