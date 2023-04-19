@@ -1563,6 +1563,7 @@ def tif_to_image(tif_path,band):
 
             # Create a PIL Image object and save as PNG
             image = Image.fromarray(rgba_data_scaled, mode='RGBA')
+            image = downsample_image(image,1000)
             image.save(img_path)
 
         else:
@@ -1577,6 +1578,7 @@ def tif_to_image(tif_path,band):
             #print(np.where(band_data <= 0, 0, band_data))
             band_data_scaled = (255 * (band_data - band_min) / (band_max - band_min)).astype('uint8')
             band_image = Image.fromarray(band_data_scaled)
+            band_image = downsample_image(band_image, 1000)
             band_image.save(img_path)
 
 
@@ -1618,6 +1620,19 @@ def tif_to_image(tif_path,band):
 
     return img_path
 
+
+def downsample_image(im, threshold):
+
+    # Get the new size of the image
+    width, height = im.size
+    if width > threshold or height>threshold:
+        factor = threshold/max(width,height)
+        new_size = (int(width*factor), int(height*factor))
+        # Resize the image
+        im_resized = im.resize(new_size)
+        return im_resized
+    else:
+        return im
 
 def update_parent_meta(abs_path):
     parent_dir = "/".join(abs_path.split("/")[:-1])
