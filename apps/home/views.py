@@ -857,7 +857,8 @@ def data(request):
                 # Get the container image name
                 #image_name = container.image.tags[0] if container.image.tags else "No image tag"
                 #response.append({"container_id": container_id, "status":status, "image":image_name})
-            response.append({"container_id": running_containers})
+            for key in cache:
+                response.append({"container_id": key})
 
 
 
