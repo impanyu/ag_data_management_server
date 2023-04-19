@@ -2035,12 +2035,12 @@ def get_running_containers(abs_path):
 
             # Get the container start timestamp
             started_at = container.attrs['State']['StartedAt']
-            start_time = datetime.strptime(started_at, '%Y-%m-%dT%H:%M:%S.%fZs')
+            #start_time = datetime.strptime(started_at, '%Y-%m-%dT%H:%M:%S.%fZs')
 
             # Calculate the duration in seconds
             #duration = (datetime.utcnow() - start_time).total_seconds()
 
-            response.append({"container_id": container_id, "status": status, "image": image_name,"running_time": start_time})
+            response.append({"container_id": container_id, "status": status, "image": image_name,"running_time": start_at})
 
             # response.append({"container_id": key})
     return response
