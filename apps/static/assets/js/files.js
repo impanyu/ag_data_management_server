@@ -2392,8 +2392,14 @@ function init_map_main(){
 
 
 function toggle_meta_data_panel(){
+   if(meta_data["mode"].indexOf("Tool") !=-1)
+       meta_data_panel_height = "2000px";
+   else
+       meta_data_panel_height = "1800px";
+
+
    if(document.querySelector("#meta_data_panel").style.height == "0px"){
-     document.querySelector("#meta_data_panel").style.height = "1800px";
+     document.querySelector("#meta_data_panel").style.height = meta_data_panel_height;
      document.querySelector("#meta_data_panel").style.paddingTop = "1.25rem";
      document.querySelector("#meta_data_panel").style.paddingBottom = "1.25rem";
 
@@ -2578,19 +2584,6 @@ function duplicate(file_path){
 }
 
 
-function toggle_meta_data_panel(){
-   if(document.querySelector("#meta_data_panel").style.height == "0px"){
-     document.querySelector("#meta_data_panel").style.height = "1800px";
-     document.querySelector("#meta_data_panel").style.paddingTop = "1.25rem";
-     document.querySelector("#meta_data_panel").style.paddingBottom = "1.25rem";
-
-     }
-    else{
-     document.querySelector("#meta_data_panel").style.height = "0px";
-          document.querySelector("#meta_data_panel").style.paddingTop = "0rem";
-     document.querySelector("#meta_data_panel").style.paddingBottom = "0rem";
-     }
-}
 
 
 

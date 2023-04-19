@@ -1644,10 +1644,17 @@ def update_parent_meta(abs_path):
 
 def wait_for_container(container,notifier,handler,command,tool,hash_value):
 
+    program_meta_data = get_meta_data(tool)
+
+
     container.exec_run(command)
     container.exec_run(f"touch /tmp/{hash_value}")
     container.wait()
     notifier.stop()
+
+    if container.id in program_meta_data["running_containers"]:
+        program_meta_data["running_containers"].remove(container.id)
+
 
     written_files = list(handler.written_files)
     read_files = list(handler.accessed_files.difference(handler.written_files))
@@ -1749,6 +1756,9 @@ def run_tool(entry_point,arg_values, arg_types,user):
     if "main_tool" in entry_point_meta_data:
         tool = entry_point_meta_data["main_tool"]
 
+    if not tool == entry_point_path:
+        entry_point_meta_data = get_meta_data(tool)
+
     # assuming that the script takes command-line arguments
 
     #mount_dirs_on_host = ["/".join(script_path.split("/")[:-1])]
@@ -1848,6 +1858,13 @@ def run_tool(entry_point,arg_values, arg_types,user):
             user='root:root',
             mac_address='02:42:EF:BA:E1:95'
         )
+
+    if "running_containers" not in entry_point_meta_data:
+        entry_point_meta_data["running_containers"] = []
+
+    entry_point_meta_data["running_containers"].append(container.id)
+
+
 
 
     # Associate the event handler with the WatchManager
