@@ -2284,6 +2284,7 @@ function get_running_containers(){
                                          '<td scope="row" ><b>'+container["container_id"].substr(0,12)+'</b></td>'+
                                          '<td scope="row" ><b>'+container["image"]+'</b></td>'+
                                          '<td scope="row" ><b>'+container["status"]+'</b></td>'+
+                                         '<td scope="row" ><b>'+container["running_time"]+'s</b></td>'+
                                           '</tr>';
 
 

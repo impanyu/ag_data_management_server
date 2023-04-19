@@ -2032,7 +2032,15 @@ def get_running_containers(abs_path):
             status = container.status
             # Get the container image name
             image_name = container.image.tags[0] if container.image.tags else "No image tag"
-            response.append({"container_id": container_id, "status": status, "image": image_name})
+
+            # Get the container start timestamp
+            started_at = container.attrs['State']['StartedAt']
+            start_time = datetime.datetime.fromisoformat(started_at.replace('Z', '+00:00'))
+
+            # Calculate the duration in seconds
+            duration = (datetime.datetime.utcnow() - start_time).total_seconds()
+
+            response.append({"container_id": container_id, "status": status, "image": image_name,"running_time": duration})
 
             # response.append({"container_id": key})
     return response
