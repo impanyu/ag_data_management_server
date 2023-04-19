@@ -1543,7 +1543,7 @@ def tif_to_image(tif_path,band):
     print(img_path)
 
     # Open TIF file
-    with rasterio.open(tif_path) as dataset:
+    with rasterio.open(tif_path,BIGTIFF='YES') as dataset:
 
         if band == "RGBA":
             # Get image dimensions
