@@ -973,9 +973,9 @@ function display_file_selection(arg_name,path){
           current_path: path
          },
          function(data, status){
-            meta_data=JSON.parse(data);
-            sub_dirs = meta_data["subdirs"];
-            file_system_overlay_path_components = meta_data["abs_path"].split("/");
+            selection_meta_data=JSON.parse(data);
+            sub_dirs = selection_meta_data["subdirs"];
+            file_system_overlay_path_components = selection_meta_data["abs_path"].split("/");
             path = "";
             $("#file_system_overlay_path")[0].innerHTML = "";
             for(var i = 2; i < file_system_overlay_path_components.length; i++){
