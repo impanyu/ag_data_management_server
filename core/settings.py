@@ -24,6 +24,16 @@ MEDIA_URL = '/data/'
 # load production server from .env
 ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1', config('SERVER', default='127.0.0.1')]
 
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+    }
+}
+
+
+
 # Application definition
 
 INSTALLED_APPS = [

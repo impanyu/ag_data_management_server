@@ -24,6 +24,9 @@ import os
 import shutil
 import zipfile
 
+from django.core.cache import cache
+import docker
+
 import copy
 
 from PIL import Image
@@ -835,6 +838,29 @@ def data(request):
 
 
             return response
+
+        elif load_template == "get_running_containers":
+            current_path = request.POST['current_path']
+            abs_path = f"/data/{current_path}"
+            running_containers = cache.get(abs_path)
+
+            response = []
+            # Create a Docker client
+            client = docker.from_env()
+
+            for container_id in running_containers:
+                # Get the container object using the container ID
+                container = client.containers.get(container_id)
+                # Get the container status
+                status = container.status
+                # Get the container image name
+                image_name = container.image.tags[0] if container.image.tags else "No image tag"
+                response.append({"container_id": container_id, "status":status, "image":image_name})
+
+
+            response = json.dumps(response)
+            return HttpResponse(response)
+
 
         elif load_template == "get_collections":
 

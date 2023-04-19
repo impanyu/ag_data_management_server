@@ -422,6 +422,31 @@
                               <label for="native_meta" class="form-label"><b>Native Meta Data</b></label>
                               <textarea readonly class="form-control" id="native_meta" rows="5" style="resize:none;"></textarea>
 
+                            </div>
+                     </div>
+
+              <div class="row align-items-center py-4" id="running_containers_panel" >
+                             <div class="col-12 col-lg-12">
+
+                              <label for="running_containers" class="form-label"><b>Running Containers</b></label>
+                              <table  id="running_containers"  style="">
+                                  <thead class="thead-light">
+                                     <tr>
+                                         <th scope="col" class="sort" data-sort="container_id">Container ID</th>
+                                         <th scope="col" class="sort" data-sort="image">Docker Image</th>
+                                         <th scope="col" class="sort" data-sort="status">Status</th>
+                                     </tr>
+
+
+                                  </thead>
+                                  <tbody class="list" id="container_list">
+
+
+                                  </tbody>
+
+
+                              </table>
+
 
 
 

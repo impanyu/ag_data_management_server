@@ -27,6 +27,7 @@ import docker
 import docker.errors
 
 from .file_monitor import EventHandler
+from django.core.cache import cache
 
 
 
@@ -1644,7 +1645,7 @@ def update_parent_meta(abs_path):
 
 def wait_for_container(container,notifier,handler,command,tool,hash_value):
 
-    program_meta_data = get_meta_data(tool)
+    #tool_meta_data = get_meta_data(tool)
 
 
     container.exec_run(command)
@@ -1652,8 +1653,17 @@ def wait_for_container(container,notifier,handler,command,tool,hash_value):
     container.wait()
     notifier.stop()
 
-    if container.id in program_meta_data["running_containers"]:
-        program_meta_data["running_containers"].remove(container.id)
+    #if container.id in tool_meta_data["running_containers"]:
+    #   tool_meta_data["running_containers"].remove(container.id)
+
+    running_containers = cache.get(tool)
+    if running_containers is not None and container.id in running_containers:
+        running_containers.remove(container.id)
+        cache.set(tool,running_containers)
+
+
+
+
 
 
     written_files = list(handler.written_files)
@@ -1752,12 +1762,13 @@ def run_tool(entry_point,arg_values, arg_types,user):
     entry_point_path = f"/data{entry_point}"
     entry_point_meta_data = get_meta_data(entry_point_path)
     tool = entry_point_path
+    tool_meta_data = entry_point_meta_data
 
     if "main_tool" in entry_point_meta_data:
         tool = entry_point_meta_data["main_tool"]
 
     if not tool == entry_point_path:
-        entry_point_meta_data = get_meta_data(tool)
+        tool_meta_data = get_meta_data(tool)
 
     # assuming that the script takes command-line arguments
 
@@ -1859,10 +1870,17 @@ def run_tool(entry_point,arg_values, arg_types,user):
             mac_address='02:42:EF:BA:E1:95'
         )
 
-    if "running_containers" not in entry_point_meta_data:
-        entry_point_meta_data["running_containers"] = []
+    if "running_containers" not in tool_meta_data:
+        tool_meta_data["running_containers"] = []
 
-    entry_point_meta_data["running_containers"].append(container.id)
+    tool_meta_data["running_containers"].append(container.id)
+
+    running_containers = cache.get(tool)
+    if running_containers is None:
+        running_containers = []
+
+    running_containers.append(container.id)
+    cache.set(tool, running_containers)
 
 
 

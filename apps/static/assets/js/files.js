@@ -2137,8 +2137,6 @@ function update_meta(){
 
 
   }});
-
-
 }
 
 
@@ -2242,12 +2240,15 @@ function get_meta_data(){
                   document.querySelector("#introduction").value =  meta_value + "\n";
              }
 
+
              else{
                 document.querySelector("#other_meta").value += meta_key + ": "+ JSON.stringify(meta_value) + "\n";
             //    document.querySelector("#other_meta").value += meta_key + ": "+ meta_value + "\n";
              }
 
           }
+          get_running_containers();
+
 
 
 
@@ -2255,6 +2256,36 @@ function get_meta_data(){
 
          }); });
 
+}
+
+
+function get_running_containers{
+ setInterval(function(){
+                         $.ajax({
+                            type: "POST",
+                            url: "/get_running_containers",
+                            data:{
+                                    current_path: current_path
+                            },
+                            success: function (data) {
+                                console.info(data);
+                                containers = JSON.parse(data);
+                                 for(container of containers){
+
+                                      document.querySelector("# container_list").innerHTML += '<tr>'+
+                                         '<td scope="row" >'+container["container_id"]+'</td>'+
+                                         '<td scope="row" >'+container["image"]+'</td>'+
+                                         '<td scope="row" >'+container["status"]+'</td>'+
+                                          '</tr>';
+
+
+                                 }
+
+
+                            }
+                        });
+
+                  },5000);
 }
 
 // Get the toggle switch element
@@ -2575,7 +2606,6 @@ function duplicate(file_path){
                 console.info(data);
                 $("#file_list")[0].innerHTML="";
                 get_item_list();
-
                display_warning_overlay("A copy of "+file_path.split("/")[file_path.split("/").length-1]+" is generated.");
 
             }
