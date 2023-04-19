@@ -2281,9 +2281,9 @@ function get_running_containers(){
                                  for(container of containers){
 
                                       document.querySelector("#container_list").innerHTML += '<tr>'+
-                                         '<td scope="row" >'+container["container_id"]+'</td>'+
-                                         '<td scope="row" >'+container["image"]+'</td>'+
-                                         '<td scope="row" >'+container["status"]+'</td>'+
+                                         '<td scope="row" ><b>'+container["container_id"]+'</b></td>'+
+                                         '<td scope="row" ><b>'+container["image"]+'</b></td>'+
+                                         '<td scope="row" ><b>'+container["status"]+'</b></td>'+
                                           '</tr>';
 
 
