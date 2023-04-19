@@ -847,18 +847,19 @@ def data(request):
             response = []
             # Create a Docker client
             client = docker.from_env()
+            if running_containers is not None:
 
 
-            #for container_id in running_containers:
-                # Get the container object using the container ID
-                #container = client.containers.get(container_id)
-                # Get the container status
-                #status = container.status
-                # Get the container image name
-                #image_name = container.image.tags[0] if container.image.tags else "No image tag"
-                #response.append({"container_id": container_id, "status":status, "image":image_name})
-            for key in cache:
-                response.append({"container_id": key})
+                for container_id in running_containers:
+                    # Get the container object using the container ID
+                    container = client.containers.get(container_id)
+                    # Get the container status
+                    status = container.status
+                    # Get the container image name
+                    image_name = container.image.tags[0] if container.image.tags else "No image tag"
+                    response.append({"container_id": container_id, "status":status, "image":image_name})
+
+                    #response.append({"container_id": key})
 
 
 
