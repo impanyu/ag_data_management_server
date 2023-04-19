@@ -907,7 +907,7 @@ def data(request):
                         sub_meta_data["running"] = "True"
 
                 items.append(sub_meta_data)
-            items = sorted(items, key= function(item){return item["name"]})
+            items = sorted(items, key= lambda item: item["name"])
 
             response = json.dumps(items)
 
