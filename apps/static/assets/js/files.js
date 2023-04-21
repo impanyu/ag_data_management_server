@@ -1146,7 +1146,7 @@ function draw_pipeline(graph){
   links = graph["links"];
 
   svg_width = document.querySelector("#pipeline_panel").offsetWidth;
-  svg_height= document.querySelector("#pipeline_panel").offsetHeight;
+  svg_height= 760;
 
 
    const svg = d3.select("#pipeline_svg");
@@ -1154,7 +1154,7 @@ function draw_pipeline(graph){
       // Define arrow markers
       svg
           .attr("width", svg_width)
-          .attr("height", svg_height)
+          .attr("height", 760)
         .append("defs")
         .selectAll("marker")
         .data(["end-arrow"])
