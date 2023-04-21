@@ -444,7 +444,7 @@ function get_item_list(){
 
             item_html =  '<tr class="file_and_dir_item"><td scope="row"><div class="media align-items-center"><div class="media-body"><span class="name mb-0 text-sm"> &nbsp;<a href="/files.html?current_path='+item_path+'"> ' +item["name"]+
                      '</a></span> </div></div></td>" + "<td class="budget">'+item["mode"]+'</td>"' +
-                   '<td> <span class="badge badge-dot mr-4">  <span class="status">'+item["label"]+'</span></span></td>' +
+                   '<td> <span class="badge badge-dot mr-4">  <span class="status">'+item["format"]+'</span></span></td>' +
                    '<td> <span class="badge badge-dot mr-4">  <span class="status">'+item["category"]+'</span></span></td>' +
                    '<td> <div class="avatar-group"> <a href="#" class=" " data-toggle="tooltip" data-original-title='+item["owner"]+'>'+item["owner"]+'</a></div></td>' +
                    '<td ><div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>'+
