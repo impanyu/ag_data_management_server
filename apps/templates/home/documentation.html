@@ -15,10 +15,11 @@
         <li><a href="#introduction">Introduction</a></li>
         <li><a href="#architecture">System Architecture</a></li>
         <li><a href="#mode">Mode</a></li>
-        <li><a href="#meta">Meta Data</a></li>
+        <!--<li><a href="#meta">Meta Data</a></li>-->
         <li><a href="#search_module">Search</a></li>
         <li><a href="#file">File Management</a></li>
-       <li><a href="#tools_and_models">Tools and Models</a></li>
+       <li><a href="#data_tools_and_models">Data, Tools and Models</a></li>
+        <li><a href="#running_tools">Running Tools</a></li>
         <li><a href="#pipeline">Pipeline Management</a></li>
         <li><a href="#collections">Collections</a></li>
         <li><a href="#privacy">Data Privacy</a></li>
@@ -136,12 +137,13 @@ By providing an integrated platform for agricultural data management and analysi
    <section id="file" class="row align-items-center ">
   <h2> File Management</h2>
        <p class="col-lg-12 col-12 " style="font-weight:400"><a href="/files.html?current_path={{user}}" >File management</a> module in ADMA supports basic operations on file such as: create, upload, delete, move, copy, download, edit (Figure 6). Each user will be assigned a root dir named by their username: "/username"
-           and all the data will be put into the directory: "/username/ag_data". Each user will also see a folder named "public_data" under "/username/ag_data", which contains all the public data from other users. ADMA keeps a metadata panel for each folder or file, which can be used to update various meta data items (Figure 7). </p>
+           and all the data will be put into the directory: "/username/ag_data". Each user will also see a folder named "public_data" under "/username/ag_data", which contains all the public data from other users. ADMA keeps a metadata panel for each folder or file, which can be used to update various meta data items (Figure 7).
+         For user uploaded program or script, the system presents a tool panel for execution of the tool and we'll introduce it in <a href="#running_tools">Running Tools</a> . Each folder or file also has a pipeline panel which will be introduced in <a href="#pipeline">Pipeline Management</a>. </p>
 
          <div class="col-lg-6  col-12 text-center mx-auto">
           <figure>
           <img src="/static/assets/img/files.png" style="width:80%" >
-               <figcaption><p><b>Figure 6. File Management</b><p></figcaption>
+               <figcaption><b>Figure 6. File Management</b></figcaption>
           </figure>
       </div>
 
@@ -155,8 +157,9 @@ By providing an integrated platform for agricultural data management and analysi
 
 
    </section>
-   <section id="tools_and_models">
-  <h2> Tools and Models</h2>
+   <section id="data_tools_and_models">
+  <h2> Data, Tools and Models</h2>
+
    </section>
       <section id="pipeline">
   <h2>Pipeline Management</h2>
