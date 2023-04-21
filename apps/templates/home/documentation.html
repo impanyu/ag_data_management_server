@@ -28,13 +28,13 @@
     </ul>
 </nav>
   <main>
-   <section id="introduction" class="row align-items-center ">
+   <section id="introduction" class="row align-items-center " style="margin-bottom:20px">
   <h2 style="font-size:1.5rem">Introduction</h2>
-   <div class="col-lg-12 col-12"><b>Agriculture Data Management and Analytics (ADMA)</b> is a comprehensive data management platform developed for experts within and outside IANR. It is a state-of-the-art solution designed to address the multifaceted challenges faced by modern agriculture. As the world grapples with population growth, climate change, and diminishing natural resources, the need for data-driven innovation in agroecosystems has never been more critical.
+   <p class="col-lg-12 col-12" style="font-size:1.25rem; font-weight:400"><b>Agriculture Data Management and Analytics (ADMA)</b> is a comprehensive data management platform developed for experts within and outside IANR. It is a state-of-the-art solution designed to address the multifaceted challenges faced by modern agriculture. As the world grapples with population growth, climate change, and diminishing natural resources, the need for data-driven innovation in agroecosystems has never been more critical.
 
 ADMA is a comprehensive platform that harnesses the power of advanced technologies, such as IoT, high-resolution sensors, and cloud computing, to facilitate data collection, integration, and analysis across various agricultural disciplines. By incorporating the FAIR principles (Findable, Accessible, Interoperable, and Reusable), ADMA aims to break down data silos and promote collaboration among researchers, policymakers, and industry stakeholders.
 
-Key features of the ADMA platform include:</div>
+Key features of the ADMA platform include:</p>
 
   <ul>
   <li>
@@ -50,12 +50,12 @@ Key features of the ADMA platform include:</div>
    <b>Pipeline management</b>: ADMA keeps track of different operations on each file, maintains and visualize the pipeline record for each file.
   </li>
  </ul>
-By providing an integrated platform for agricultural data management and analysis, ADMA is poised to play a pivotal role in enhancing the productivity, sustainability, and resilience of our agroecosystems. Join us in revolutionizing the future of agriculture through data-driven insights and informed decision-making.
+<p class="col-lg-12 col-12" style="font-size:1.25rem; font-weight:400">By providing an integrated platform for agricultural data management and analysis, ADMA is poised to play a pivotal role in enhancing the productivity, sustainability, and resilience of our agroecosystems. Join us in revolutionizing the future of agriculture through data-driven insights and informed decision-making.</p>
 
 
    </section>
 
-  <section id="architecture" class="row align-items-center ">
+  <section id="architecture" class="row align-items-center" style="margin-bottom:20px">
   <h2 style="font-size:1.5rem" class="col-lg-12 col-12 ">System Architecture</h2>
       <div class="col-lg-2 col-12"></div>
       <div class="col-lg-8 col-12 text-center">
@@ -64,8 +64,9 @@ By providing an integrated platform for agricultural data management and analysi
                <figcaption ><b>Figure 1. System Architecture</b></figcaption>
           </figure>
       </div>
-      <div class="col-lg-12 col-12 ">
+      <p class="col-lg-12 col-12" style="font-size:1.25rem; font-weight:400">
           Figure 1 illustrates the overall architecture of the systems. There are six components: data source, batch processing, real-time processing, actuators, server and Front-end.
+      </p>
 <ul>
       <li>
           <b>Data source</b> is mainly composed of four parts: RDBMS, NoSQL database and file system for storing the historical data, sensors for collecting real-time data streams, metadata for storing the formats and configuration about all the data and tools.
@@ -88,12 +89,12 @@ By providing an integrated platform for agricultural data management and analysi
   </ul>
 
 
-
-      </div>
   </section>
-       <section id="mode" class="row align-items-center ">
+
+
+       <section id="mode" class="row align-items-center "style="margin-bottom:20px">
   <h2 style="font-size:1.5rem"> Mode </h2>
-       ADMA maintains four modes, namely data, tool, model and collection.
+       <p class="col-lg-12 col-12" style="font-size:1.25rem; font-weight:400">ADMA maintains four modes, namely data, tool, model and collection.</p>
            <ul>
                <li><b>Data</b> is the most general and default mode. </li>
                <li><b>Tool</b> represents any native or user uploaded programs or scripts. Tools operate on data and can form pipelines of various forms.</li>
@@ -102,9 +103,9 @@ By providing an integrated platform for agricultural data management and analysi
            </ul>
    </section>
 
-   <section id="search_module" class="row align-items-center ">
+   <section id="search_module" class="row align-items-center "style="margin-bottom:20px">
    <h2 style="font-size:1.5rem" class="col-lg-12 col-12 ">  Search </h2>
-       <p class="col-lg-12 col-12 " >ADMA supports <a href="/search.html?current_path={{user}}" >search </a> by various criteria, including by key word and by common metadata such as category, mode, format, label, priviledge, realtime/non-realtime, time range, spatial range (Figure 2).</p>
+       <p class="col-lg-12 col-12" style="font-size:1.25rem; font-weight:400">ADMA supports <a href="/search.html?current_path={{user}}" >search </a> by various criteria, including by key word and by common metadata such as category, mode, format, label, priviledge, realtime/non-realtime, time range, spatial range (Figure 2).</p>
        <div class="col-lg-2 col-12"></div>
       <div class="col-lg-8 col-12 text-center">
           <figure>
@@ -112,7 +113,7 @@ By providing an integrated platform for agricultural data management and analysi
                <figcaption><b>Figure 2. Search Filter</b></figcaption>
           </figure>
       </div>
-        <p class="col-lg-12 col-12 " >Search results will be displayed on map based on their locations (Figure 3), or visualized on a 2D space based on the similarity of their metadata (Figure 4), where each dot represents a file or folder and each color denotes a mode.</p>
+        <p class="col-lg-12 col-12" style="font-size:1.25rem; font-weight:400">Search results will be displayed on map based on their locations (Figure 3), or visualized on a 2D space based on the similarity of their metadata (Figure 4), where each dot represents a file or folder and each color denotes a mode.</p>
        <div class="col-lg-6 col-12 text-center mx-auto">
           <figure>
           <img src="/static/assets/img/search_results_on_map.png" style="width:80%" >
@@ -126,7 +127,7 @@ By providing an integrated platform for agricultural data management and analysi
           </figure>
       </div>
 
-          <p class="col-lg-12 col-12 " >Search results will also be displayed in list as typical cloud storage system (Figure 5).</p>
+          <p class="col-lg-12 col-12" style="font-size:1.25rem; font-weight:400">Search results will also be displayed in list as typical cloud storage system (Figure 5).</p>
          <div class="col-lg-8 col-12 text-center mx-auto">
           <figure>
           <img src="/static/assets/img/search_results.png" style="width:80%" >
@@ -135,9 +136,9 @@ By providing an integrated platform for agricultural data management and analysi
       </div>
 
    </section>
-   <section id="file" class="row align-items-center ">
+   <section id="file" class="row align-items-center "style="margin-bottom:20px">
   <h2 style="font-size:1.5rem"> File Management</h2>
-       <p class="col-lg-12 col-12 " ><a href="/files.html?current_path={{user}}" >File management</a> module in ADMA supports basic operations on file such as: create, upload, delete, move, copy, download, edit (Figure 6). Each user will be assigned a root dir named by their username: "/username"
+       <p class="col-lg-12 col-12" style="font-size:1.25rem; font-weight:400"><a href="/files.html?current_path={{user}}" >File management</a> module in ADMA supports basic operations on file such as: create, upload, delete, move, copy, download, edit (Figure 6). Each user will be assigned a root dir named by their username: "/username"
            and all the data will be put into the directory: "/username/ag_data". Each user will also see a folder named "public_data" under "/username/ag_data", which contains all the public data from other users. ADMA keeps a metadata panel for each folder or file, which can be used to update various meta data items (Figure 7).
          For user uploaded program or script, the system presents a tool panel for execution of the tool and we'll introduce it in <a href="#running_tools">Running Tools</a> . Each folder or file also has a pipeline panel which will be introduced in <a href="#pipeline">Pipeline Management</a>. </p>
 
@@ -154,34 +155,35 @@ By providing an integrated platform for agricultural data management and analysi
                <figcaption><b>Figure 7. Metadata Panel</b></figcaption>
           </figure>
       </div>
-       <p class="col-lg-12 col-12 " >ADMA provides native supports for visualizing or editing some frequently used data formats, such as tif, shp files and scripting languages such as python,  </p>
+      <p class="col-lg-12 col-12" style="font-size:1.25rem; font-weight:400">ADMA provides native supports for visualizing or editing some frequently used data formats, such as tif, shp files and scripting languages such as python,  </p>
        R and matlab (Figure 8).
 
 
    </section>
-   <section id="data_tools_and_models" class="row align-items-center ">
+
+   <section id="data_tools_and_models" class="row align-items-center "style="margin-bottom:20px">
   <h2 style="font-size:1.5rem"> Data, Tools and Models</h2>
 
    </section>
-      <section id="running_tools" class="row align-items-center ">
+      <section id="running_tools" class="row align-items-center "style="margin-bottom:20px">
   <h2 style="font-size:1.5rem">Running Tools</h2>
 
    </section>
 
-      <section id="pipeline" class="row align-items-center ">
+      <section id="pipeline" class="row align-items-center "style="margin-bottom:20px">
   <h2 style="font-size:1.5rem">Pipeline Management</h2>
           For each file or folder, ADMA keeps a pipeline panel
    </section>
-   <section id="collections" class="row align-items-center ">
+   <section id="collections" class="row align-items-center "style="margin-bottom:20px">
   <h2 style="font-size:1.5rem"> Collections</h2>
    </section>
-   <section id="privacy" class="row align-items-center ">
+   <section id="privacy" class="row align-items-center "style="margin-bottom:20px">
   <h2 style="font-size:1.5rem"> Data Privacy</h2>
    </section>
-   <section id="jupyter" class="row align-items-center ">
+   <section id="jupyter" class="row align-items-center "style="margin-bottom:20px">
   <h2 style="font-size:1.5rem"> JupyterHub</h2>
    </section>
-      <section id="api" class="row align-items-center ">
+      <section id="api" class="row align-items-center "style="margin-bottom:20px">
   <h2 style="font-size:1.5rem">Data API</h2>
    </section>
 </main>
