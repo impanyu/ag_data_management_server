@@ -1536,7 +1536,7 @@ def tif_to_image(tif_path,band):
     img_path = f"{tif_path}_band_{band}.png"
     tif_meta = get_meta_data(tif_path)
 
-    if tif_meta["native"]["width"] >5000 or tif_meta["native"]["height"] > 5000:
+    if tif_meta["native"]["width"] >5000 and tif_meta["native"]["height"] > 5000:
         return ""
 
 
