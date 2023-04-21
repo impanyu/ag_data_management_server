@@ -1318,6 +1318,8 @@ def search(root_dir, search_box, category, mode, format, label,  realtime, time_
                 if filtering_condition(meta_data, search_box, category, mode, format, label, realtime, time_range, spatial_range):
                     sub_meta = get_meta_data(subdir)
                     result.append(sub_meta)
+        elif meta_data["abs_path"] == "/data/public/ag_data":
+            return result
         else:
             if filtering_condition(meta_data, search_box, category, mode, format, label, realtime, time_range, spatial_range):
                 result.append(meta_data)

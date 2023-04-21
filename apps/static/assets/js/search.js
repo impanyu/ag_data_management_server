@@ -446,7 +446,7 @@ function get_item_list(){
                      '</a></span> </div></div></td>" + "<td class="budget">'+item["mode"]+'</td>"' +
                    '<td> <span class="badge badge-dot mr-4">  <span class="status">'+item["label"]+'</span></span></td>' +
                    '<td> <span class="badge badge-dot mr-4">  <span class="status">'+item["category"]+'</span></span></td>' +
-                   '<td> <div class="avatar-group"> <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title='+item["owner"]+'><img alt="Image placeholder" src="/static/assets/img/theme/react.jpg"></a></div></td>' +
+                   '<td> <div class="avatar-group"> <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title='+item["owner"]+'>'+item["owner"]+'</a></div></td>' +
                    '<td ><div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>'+
                    '<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">'+
                    '<a class="dropdown-item" href="#" id="'+i+'_file_delete">Delete</a>'+
