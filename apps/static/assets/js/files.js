@@ -1309,7 +1309,7 @@ function dragended(event, d) {
 
 function toggle_pipeline_panel(){
    if(document.querySelector("#pipeline_panel").style.height == "0px"){
-     document.querySelector("#pipeline_panel").style.height = "500px";
+     document.querySelector("#pipeline_panel").style.height = "800px";
      document.querySelector("#pipeline_panel").style.paddingTop = "1.25rem";
      document.querySelector("#pipeline_panel").style.paddingBottom = "1.25rem";
 
