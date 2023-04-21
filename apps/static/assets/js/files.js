@@ -1154,7 +1154,7 @@ function draw_pipeline(graph){
       // Define arrow markers
       svg
           .attr("width", svg_width)
-          .attr("height", svg_height-20)
+          .attr("height", svg_height)
         .append("defs")
         .selectAll("marker")
         .data(["end-arrow"])
