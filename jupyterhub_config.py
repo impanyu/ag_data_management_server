@@ -824,8 +824,9 @@ def set_user_notebook_dir(spawner):
     return spawner.notebook_dir
 
 c.DockerSpawner.pre_spawn_hook = set_user_notebook_dir
-c.DockerSpawner.container_user = "root"
-
+#c.DockerSpawner.container_user = "root"
+c.DockerSpawner.uid = 0
+c.DockerSpawner.gid = 0
 ## Path to SSL certificate file for the public facing interface of the proxy
 #  
 #          When setting this, you should also set ssl_key
