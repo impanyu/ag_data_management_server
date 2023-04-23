@@ -898,7 +898,7 @@ def user_post_start_hook(spawner):
     spawner.execute(['sudo', 'chroot', homedir])
 
 
-c.Spawner.post_start_hook = user_post_start_hook
+c.DockerSpawner.post_start_hook = user_post_start_hook
 
 #c.DockerSpawner.container_user = "root"
 
