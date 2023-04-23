@@ -418,7 +418,7 @@ c.JupyterHub.authenticator_class = DjangoAuthenticator#jupyterhub.auth.PAMAuthen
 #          .. versionadded:: 0.8
 #  Default: ''
 #c.JupyterHub.hub_connect_ip = '10.128.0.4'
-c.JupyterHub.hub_connect_ip = '0.0.0.0'
+c.JupyterHub.hub_connect_ip = '172.17.0.1'
 
 ## DEPRECATED
 #  
@@ -456,7 +456,7 @@ c.JupyterHub.hub_connect_ip = '0.0.0.0'
 #  Default: '127.0.0.1'
 # c.JupyterHub.hub_ip = '127.0.0.1'
 #c.JupyterHub.hub_ip = '10.128.0.4'
-c.JupyterHub.hub_ip = '0.0.0.0'
+c.JupyterHub.hub_ip = '172.17.0.1'
 
 ## The internal port for the Hub process.
 #  
@@ -843,7 +843,7 @@ c.JupyterHub.spawner_class = DockerSpawner
 # Set the Docker image you want to use for the single-user servers
 c.DockerSpawner.image = "jupyter/datascience-notebook:latest"
 c.DockerSpawner.environment = {
-    'JUPYTERHUB_API_URL': 'http://0.0.0.0:8081/hub/api',
+    'JUPYTERHUB_API_URL': 'http://172.17.0.1:8081/hub/api',
 }
 
 c.DockerSpawner.remove_containers = True
