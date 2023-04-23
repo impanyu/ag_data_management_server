@@ -853,8 +853,8 @@ c.CustomDockerSpawner.image = "jupyter/datascience-notebook:latest"
 #c.DockerSpawner.network_name = "bridge"
 #c.DockerSpawner.extra_host_config = {'network_mode': 'bridge'}
 
-#c.DockerSpawner.extra_host_config = {"network_mode": "host"}
-#c.DockerSpawner.port_range = (10000, 11000)
+c.DockerSpawner.extra_host_config = {"network_mode": "host"}
+c.DockerSpawner.port_range = (10000, 11000)
 
 
 # (Optional) Set the notebook directory
