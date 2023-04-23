@@ -801,6 +801,8 @@ class CustomSpawner(Spawner):
         self.notebook_dir = f"/data/{self.user.name}"
         return await super().start()
 
+c.JupyterHub.spawner_class = CustomSpawner
+
 
 '''
 from dockerspawner import DockerSpawner
