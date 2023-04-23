@@ -798,11 +798,11 @@ c.JupyterHub.spawner_class = DockerSpawner #'jupyterhub.spawner.LocalProcessSpaw
 # Set the Docker image you want to use for the single-user servers
 c.DockerSpawner.image = "jupyter/datascience-notebook:latest"
 
-print(username)
-print(userid)
+#print(username)
+#print(userid)
 
 # Specify the container's name format
-c.DockerSpawner.name_template = "jupyter-{ypan12}"
+c.DockerSpawner.name_template = "jupyter-{c.DockerSpawner.user.name}"
 
 # Enable users to access the Docker host
 c.DockerSpawner.network_name = "bridge"
