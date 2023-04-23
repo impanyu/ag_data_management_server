@@ -799,22 +799,19 @@ c.JupyterHub.spawner_class = DockerSpawner #'jupyterhub.spawner.LocalProcessSpaw
 c.DockerSpawner.image = "jupyter/datascience-notebook:latest"
 
 # Specify the container's name format
-c.DockerSpawner.container_name_template = "jupyter-{username}-{userid}"
+c.DockerSpawner.name_template = "jupyter-{username}-{userid}"
 
 # Enable users to access the Docker host
-c.DockerSpawner.extra_host_config = {"network_mode": "host"}
+c.DockerSpawner.network_name = "bridge"
+c.DockerSpawner.extra_host_config = {'network_mode': 'bridge'}
+
+#c.DockerSpawner.extra_host_config = {"network_mode": "host"}
 
 # (Optional) Set the notebook directory
 #c.DockerSpawner.notebook_dir = "/home/jovyan/work"
 
 
-def set_user_notebook_dir(spawner):
-    # Customize the user-specific directory pattern here
-    spawner.notebook_dir = f"/{spawner.user.name}"
-    return spawner.notebook_dir
 
-
-c.DockerSpawner.pre_spawn_hook = set_user_notebook_dir
 
 def set_user_notebook_dir(spawner):
     # Customize the user-specific directory pattern here
