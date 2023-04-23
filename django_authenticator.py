@@ -13,9 +13,9 @@ class DjangoAuthenticator(Authenticator):
         auth_url = "http://unlagdatamanagement.hopto.org/api/authenticate/"
 
         response = requests.post(auth_url, data={"username": username, "password": password})
-        print(response.status_code)
+        #print(response.status_code)
 
         if response.status_code == 200:
             return username
         else:
-            return username
+            return None
