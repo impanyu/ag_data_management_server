@@ -819,8 +819,8 @@ def custom_username(spawner):
 
 #c.Spawner.pre_spawn_hook = custom_username
 
-c.Spawner.notebook_dir = "~/ag_data"
-'''
+#c.Spawner.notebook_dir = "~/ag_data"
+
 from dockerspawner import DockerSpawner
 
 class CustomDockerSpawner(DockerSpawner):
@@ -878,7 +878,7 @@ c.CustomDockerSpawner.pre_spawn_hook = set_user_notebook_dir
 c.CustomDockerSpawner.environment = {
     'JUPYTERHUB_API_URL': 'http://unlagdatamanagement.hopto.org:8000/hub/api',
 }
-'''
+
 #c.DockerSpawner.container_user = "root"
 
 ## Path to SSL certificate file for the public facing interface of the proxy
