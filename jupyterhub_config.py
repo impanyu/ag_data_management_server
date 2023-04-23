@@ -838,7 +838,7 @@ class CustomDockerSpawner(DockerSpawner):
 c.JupyterHub.spawner_class = CustomDockerSpawner
 
 # Set the Docker image you want to use for the single-user servers
-c.CustomDockerSpawner.image = "jupyter/datascience-notebook:latest"
+c.DockerSpawner.image = "jupyter/datascience-notebook:latest"
                           
 
 #print(username)
