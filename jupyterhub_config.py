@@ -802,7 +802,7 @@ print(username)
 print(userid)
 
 # Specify the container's name format
-c.DockerSpawner.name_template = "jupyter-{username}-{userid}"
+c.DockerSpawner.name_template = "jupyter-{ypan12}"
 
 # Enable users to access the Docker host
 c.DockerSpawner.network_name = "bridge"
