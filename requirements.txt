@@ -24,3 +24,4 @@ numpy
 pyinotify
 django-allauth
 psutil
+dockerspawner
