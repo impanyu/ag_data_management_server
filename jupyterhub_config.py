@@ -799,13 +799,13 @@ class CustomSpawner(Spawner):
     async def start(self):
         # Set notebook_dir to /data/username
         self.notebook_dir = f"/data/{self.user.name}"
-        return await super().start()
+
 
     async def stop(self):
-        return await super().stop()
+       pass
 
     async def poll(self):
-        return await super().poll()
+       pass
 
 c.JupyterHub.spawner_class = CustomSpawner
 
