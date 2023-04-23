@@ -812,8 +812,8 @@ c.DockerSpawner.image = "jupyter/datascience-notebook:latest"
 
 #print(username)
 #print(userid)
-c.DockerSpawner.uid = 0
-c.DockerSpawner.gid = 0
+#c.DockerSpawner.uid = 0
+#c.DockerSpawner.gid = 0
 
 # Specify the container's name format
 #c.DockerSpawner.name_template = f"jupyter-{c.DockerSpawner.user.name}"
