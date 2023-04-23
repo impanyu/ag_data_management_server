@@ -816,7 +816,7 @@ class CustomSpawner(Spawner):
         self.user_options = self.user_options or {}
         username = self.user_options.get('name', self.user.name)
         self.notebook_dir = f"/data/{username}"
-        await super().start()
+
 
     async def stop(self, now=False):
         # Stop the container, and wait for it to stop
