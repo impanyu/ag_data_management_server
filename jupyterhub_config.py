@@ -798,11 +798,12 @@ from dockerspawner import DockerSpawner
 class CustomDockerSpawner(DockerSpawner):
     name_template = "jupyter-{username}"
 
-    def start(self):
+    @property
+    def container_name(self):
         username = self.user.name
-        self.container_name = self.name_template.format(username=username)
+        #self.container_name = self.name_template.format(username=username)
 
-        return super().start()
+        return self.name_template.format(username=username)
 
 c.JupyterHub.spawner_class = CustomDockerSpawner
 
