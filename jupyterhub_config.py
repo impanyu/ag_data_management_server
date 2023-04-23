@@ -881,6 +881,7 @@ def set_user_notebook_dir(spawner):
 
     # Mount the host directory to the user's notebook directory in the container
     spawner.volumes = {host_dir: spawner.notebook_dir}
+    spawner.post_start_cmd = f"sudo chroot {spawner.notebook_dir}"
 
     return spawner.notebook_dir
 
@@ -898,7 +899,7 @@ def user_post_start_hook(spawner):
     spawner.execute(['sudo', 'chroot', homedir])
 
 
-c.DockerSpawner.post_spawn_hook = user_post_start_hook
+#c.DockerSpawner.post_start_cmd = user_post_start_hook
 
 #c.DockerSpawner.container_user = "root"
 
