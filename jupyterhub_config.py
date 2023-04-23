@@ -817,9 +817,9 @@ def custom_username(spawner):
 
     #spawner.default_url = f"/user/{custom_name}/tree/data/{custom_name}"
 
-c.Spawner.pre_spawn_hook = custom_username
+#c.Spawner.pre_spawn_hook = custom_username
 
-c.Spawner.notebook_dir = f"/data/ypan12"
+c.Spawner.notebook_dir = "/data/ypan12"
 '''
 from dockerspawner import DockerSpawner
 
