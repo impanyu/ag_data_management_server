@@ -1163,7 +1163,7 @@ def data(request):
 
             sorted_item = sorted(response["items"],key=len)
             for item in sorted_item:
-                if item_set.os.path.dirname(item) in item_set:
+                if os.path.dirname(item) in item_set:
                     response["items"].remove(item)
 
 
