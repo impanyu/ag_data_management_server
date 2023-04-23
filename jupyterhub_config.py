@@ -844,8 +844,8 @@ def set_user_notebook_dir(spawner):
 
 c.DockerSpawner.pre_spawn_hook = set_user_notebook_dir
 
-c.DockerSpawner.environment = {
-    'JUPYTERHUB_API_URL': 'http://34.172.167.183:8000/hub/api',
+c.Spawner.environment = {
+    'JUPYTERHUB_API_URL': 'http://unlagdatamanagement.hopto.org:8000/hub/api',
 }
 
 #c.DockerSpawner.container_user = "root"
