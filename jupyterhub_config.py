@@ -874,6 +874,9 @@ def set_user_notebook_dir(spawner):
 
     # Mount the host directory to the user's notebook directory in the container
     spawner.volumes = {host_dir: spawner.notebook_dir}
+    spawner.environment = {
+    'JUPYTERHUB_API_URL': 'http://0.0.0.0:8081/hub/api',
+}
     return spawner.notebook_dir
 
 c.DockerSpawner.pre_spawn_hook = set_user_notebook_dir
