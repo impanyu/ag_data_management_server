@@ -793,6 +793,8 @@ c.JupyterHub.authenticator_class = DjangoAuthenticator#jupyterhub.auth.PAMAuthen
 #  Default: 'jupyterhub.spawner.LocalProcessSpawner'
 #c.JupyterHub.spawner_class = 'jupyterhub.spawner.LocalProcessSpawner'
 
+c.Spawner.notebook_dir = f'/data/{username}'
+'''
 from dockerspawner import DockerSpawner
 
 class CustomDockerSpawner(DockerSpawner):
@@ -811,6 +813,7 @@ c.JupyterHub.spawner_class = CustomDockerSpawner
 
 # Set the Docker image you want to use for the single-user servers
 c.CustomDockerSpawner.image = "jupyter/datascience-notebook:latest"
+                          
 
 #print(username)
 #print(userid)
@@ -849,7 +852,7 @@ c.CustomDockerSpawner.pre_spawn_hook = set_user_notebook_dir
 c.CustomDockerSpawner.environment = {
     'JUPYTERHUB_API_URL': 'http://unlagdatamanagement.hopto.org:8000/hub/api',
 }
-
+'''
 #c.DockerSpawner.container_user = "root"
 
 ## Path to SSL certificate file for the public facing interface of the proxy
