@@ -2,7 +2,7 @@ import requests
 from jupyterhub.auth import Authenticator
 from tornado import gen
 
-import requests
+
 from bs4 import BeautifulSoup
 
 

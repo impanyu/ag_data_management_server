@@ -28,6 +28,8 @@ from django.contrib.auth import authenticate
 from django.http import JsonResponse
 
 
+
+
 from django.core.cache import cache
 import docker
 
@@ -56,7 +58,7 @@ def index(request):
     html_template = loader.get_template('home/search.html')
     return HttpResponse(html_template.render(context, request))
 
-
+@csrf_exempt
 def authenticate_user(request):
     username = request.POST.get('username')
     password = request.POST.get('password')
