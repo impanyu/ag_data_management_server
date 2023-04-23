@@ -794,39 +794,25 @@ c.JupyterHub.authenticator_class = DjangoAuthenticator#jupyterhub.auth.PAMAuthen
 #c.JupyterHub.spawner_class = 'jupyterhub.spawner.LocalProcessSpawner'
 
 from jupyterhub.spawner import Spawner
-'''
-class CustomSpawner(Spawner):
-    def start(self):
-        # Set notebook_dir to /data/username
-        self.notebook_dir = f"/data/{self.user.name}"
 
+import re
 
-    def stop(self):
-       pass
+def custom_username(spawner):
+    # Get the user's authenticated name
+    auth_name = spawner.user.name
 
-    def poll(self):
-       pass
+    # Modify the authenticated name as needed. Here's an example that replaces
+    # special characters with underscores and makes the name lowercase.
+    #custom_name = re.sub(r'\W+', '_', auth_name).lower()
+    custom_name = auth_name
+    # Set the custom name as the spawner's user name
+    spawner.user.name = custom_name
 
-c.JupyterHub.spawner_class = CustomSpawner
-'''
+    # Update the notebook directory
+    spawner.notebook_dir = f"/data/{custom_name}"
 
+c.Spawner.pre_spawn_hook = custom_username
 
-class CustomSpawner(Spawner):
-    async def start(self):
-        self.user_options = self.user_options or {}
-        username = self.user_options.get('name', self.user.name)
-        self.notebook_dir = f"/data/{username}"
-
-
-    async def stop(self, now=False):
-        # Stop the container, and wait for it to stop
-        pass
-
-    async def poll(self):
-        # Check if the container is running
-        pass
-
-c.JupyterHub.spawner_class = CustomSpawner
 
 #c.Spawner.notebook_dir = f"/data/{c.Spawner.user.name}"
 '''
