@@ -794,7 +794,7 @@ c.JupyterHub.authenticator_class = DjangoAuthenticator#jupyterhub.auth.PAMAuthen
 #c.JupyterHub.spawner_class = 'jupyterhub.spawner.LocalProcessSpawner'
 
 from jupyterhub.spawner import Spawner
-
+'''
 class CustomSpawner(Spawner):
     def start(self):
         # Set notebook_dir to /data/username
@@ -808,7 +808,7 @@ class CustomSpawner(Spawner):
        pass
 
 c.JupyterHub.spawner_class = CustomSpawner
-
+'''
 
 '''
 from dockerspawner import DockerSpawner
