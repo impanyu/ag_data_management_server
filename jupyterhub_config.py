@@ -826,14 +826,14 @@ from dockerspawner import DockerSpawner
 class CustomDockerSpawner(DockerSpawner):
     name_template = "jupyter-{username}"
 
-    @property
-    def container_name(self):
+
+    def _container_name_default(self):
         username = self.user.name
         #self.environment.update({    'JUPYTERHUB_API_URL': 'http://unlagdatamanagement.hopto.org:8000/hub/api'})
 
         #self.container_name = self.name_template.format(username=username)
 
-        return self.name_template.format(username=username)+"1"
+        return self.name_template.format(username=username)
 
 c.JupyterHub.spawner_class = CustomDockerSpawner
 
