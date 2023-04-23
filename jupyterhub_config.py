@@ -886,7 +886,19 @@ def set_user_notebook_dir(spawner):
 
 c.DockerSpawner.pre_spawn_hook = set_user_notebook_dir
 
+import os
 
+#c.Spawner.cmd = ['jupyter-labhub', '--LabApp.base_url=/user/{username}/', '--LabApp.allow_origin=*', '--no-browser', '--notebook-dir=/home/{username}']
+#c.Spawner.default_url = '/lab'
+
+
+def user_post_start_hook(spawner):
+    username = spawner.user.name
+    homedir = spawner.notebook_dir
+    spawner.execute(['sudo', 'chroot', homedir])
+
+
+c.Spawner.post_start_hook = user_post_start_hook
 
 #c.DockerSpawner.container_user = "root"
 
