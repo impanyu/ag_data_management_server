@@ -454,7 +454,7 @@ c.JupyterHub.authenticator_class = DjangoAuthenticator#jupyterhub.auth.PAMAuthen
 #          or `hub_bind_url` for setting the full bind URL.
 #  Default: '127.0.0.1'
 # c.JupyterHub.hub_ip = '127.0.0.1'
-c.JupyterHub.hub_ip =''
+#c.JupyterHub.hub_ip =''
 ## The internal port for the Hub process.
 #  
 #          This is the internal port of the hub itself. It should never be accessed directly.
@@ -853,8 +853,8 @@ c.DockerSpawner.gid = 0
 #c.DockerSpawner.network_name = "bridge"
 #c.DockerSpawner.extra_host_config = {'network_mode': 'bridge'}
 
-#c.DockerSpawner.extra_host_config = {"network_mode": "host"}
-c.DockerSpawner.port_range = (10000, 11000)
+c.DockerSpawner.extra_host_config = {"network_mode": "host"}
+#c.DockerSpawner.port_range = (10000, 11000)
 
 
 # (Optional) Set the notebook directory
@@ -873,9 +873,9 @@ def set_user_notebook_dir(spawner):
     spawner.volumes = {host_dir: spawner.notebook_dir}
     return spawner.notebook_dir
 
-c.CustomDockerSpawner.pre_spawn_hook = set_user_notebook_dir
+c.DockerSpawner.pre_spawn_hook = set_user_notebook_dir
 
-c.CustomDockerSpawner.environment = {
+c.DockerSpawner.environment = {
     'JUPYTERHUB_API_URL': 'http://unlagdatamanagement.hopto.org:8000/hub/api',
 }
 
