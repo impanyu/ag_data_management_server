@@ -791,7 +791,7 @@ c.JupyterHub.authenticator_class = DjangoAuthenticator#jupyterhub.auth.PAMAuthen
 #    - localprocess: jupyterhub.spawner.LocalProcessSpawner
 #    - simple: jupyterhub.spawner.SimpleLocalProcessSpawner
 #  Default: 'jupyterhub.spawner.LocalProcessSpawner'
-c.JupyterHub.spawner_class = 'jupyterhub.spawner.LocalProcessSpawner'
+#c.JupyterHub.spawner_class = 'jupyterhub.spawner.LocalProcessSpawner'
 
 from jupyterhub.spawner import Spawner
 
@@ -835,7 +835,7 @@ class CustomDockerSpawner(DockerSpawner):
 
         return "jupyter"#self.name_template.format(username=username)
 
-c.JupyterHub.spawner_class = CustomDockerSpawner
+c.JupyterHub.spawner_class = DockerSpawner
 
 # Set the Docker image you want to use for the single-user servers
 c.DockerSpawner.image = "jupyter/datascience-notebook:latest"
