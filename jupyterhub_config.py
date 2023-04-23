@@ -822,7 +822,9 @@ c.DockerSpawner.image = "jupyter/datascience-notebook:latest"
 #c.DockerSpawner.network_name = "bridge"
 #c.DockerSpawner.extra_host_config = {'network_mode': 'bridge'}
 
-#c.DockerSpawner.extra_host_config = {"network_mode": "host"}
+c.DockerSpawner.extra_host_config = {"network_mode": "host"}
+c.DockerSpawner.port_range = (10000, 11000)
+
 
 # (Optional) Set the notebook directory
 #c.DockerSpawner.notebook_dir = "/home/jovyan/work"
@@ -841,6 +843,9 @@ def set_user_notebook_dir(spawner):
     return spawner.notebook_dir
 
 c.DockerSpawner.pre_spawn_hook = set_user_notebook_dir
+
+
+
 #c.DockerSpawner.container_user = "root"
 
 ## Path to SSL certificate file for the public facing interface of the proxy
