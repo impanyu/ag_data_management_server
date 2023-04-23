@@ -796,16 +796,16 @@ c.JupyterHub.authenticator_class = DjangoAuthenticator#jupyterhub.auth.PAMAuthen
 from jupyterhub.spawner import Spawner
 
 class CustomSpawner(Spawner):
-    def start(self):
+    async def start(self):
         # Set notebook_dir to /data/username
         self.notebook_dir = f"/data/{self.user.name}"
-        return super().start()
+        return await super().start()
 
-    def stop(self):
-        super().stop()
+    async def stop(self):
+        return await super().stop()
 
-    def poll(self):
-        return super().poll()
+    async def poll(self):
+        return await super().poll()
 
 c.JupyterHub.spawner_class = CustomSpawner
 
