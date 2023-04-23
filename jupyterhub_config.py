@@ -820,18 +820,11 @@ class CustomSpawner(Spawner):
 
     async def stop(self, now=False):
         # Stop the container, and wait for it to stop
-        container = await self.get_container()
-        await self.docker('stop', container['Id'])
+        pass
 
     async def poll(self):
         # Check if the container is running
-        container = await self.get_container()
-        if container is None:
-            return 0
-        if container['State']['Running']:
-            return None
-        else:
-            return container['State']['ExitCode']
+        pass
 
 c.JupyterHub.spawner_class = CustomSpawner
 
