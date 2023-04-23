@@ -417,7 +417,7 @@ c.JupyterHub.authenticator_class = DjangoAuthenticator#jupyterhub.auth.PAMAuthen
 #  
 #          .. versionadded:: 0.8
 #  Default: ''
-# c.JupyterHub.hub_connect_ip = ''
+c.JupyterHub.hub_connect_ip = '10.128.0.4'
 
 ## DEPRECATED
 #  
@@ -454,7 +454,7 @@ c.JupyterHub.authenticator_class = DjangoAuthenticator#jupyterhub.auth.PAMAuthen
 #          or `hub_bind_url` for setting the full bind URL.
 #  Default: '127.0.0.1'
 # c.JupyterHub.hub_ip = '127.0.0.1'
-c.JupyterHub.hub_ip ='34.172.167.183'
+c.JupyterHub.hub_ip =''
 ## The internal port for the Hub process.
 #  
 #          This is the internal port of the hub itself. It should never be accessed directly.
@@ -850,10 +850,10 @@ c.DockerSpawner.gid = 0
 #c.DockerSpawner.name_template = f"jupyter-{c.DockerSpawner.user.name}"
 
 # Enable users to access the Docker host
-#c.DockerSpawner.network_name = "bridge"
+c.DockerSpawner.network_name = "bridge"
 #c.DockerSpawner.extra_host_config = {'network_mode': 'bridge'}
 
-c.DockerSpawner.extra_host_config = {"network_mode": "host"}
+#c.DockerSpawner.extra_host_config = {"network_mode": "host"}
 #c.DockerSpawner.port_range = (10000, 11000)
 
 
