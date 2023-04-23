@@ -1164,8 +1164,8 @@ def data(request):
             sorted_item = sorted(response["items"],key=len)
             for item in sorted_item:
                 if os.path.dirname(item) in item_set:
-                    response["items"].remove(item)
-
+                    #response["items"].remove(item)
+                    pass
 
 
             #if "Domain" in mode:
