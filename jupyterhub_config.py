@@ -795,7 +795,16 @@ c.JupyterHub.authenticator_class = DjangoAuthenticator#jupyterhub.auth.PAMAuthen
 
 from dockerspawner import DockerSpawner
 
-c.JupyterHub.spawner_class = DockerSpawner
+class CustomDockerSpawner(DockerSpawner):
+    name_template = "jupyter-{username}"
+
+    def start(self):
+        username = self.user.name
+        self.container_name = self.name_template.format(username=username)
+
+        return super().start()
+
+c.JupyterHub.spawner_class = CustomDockerSpawner
 
 # Set the Docker image you want to use for the single-user servers
 c.DockerSpawner.image = "jupyter/datascience-notebook:latest"
@@ -806,7 +815,7 @@ c.DockerSpawner.uid = 0
 c.DockerSpawner.gid = 0
 
 # Specify the container's name format
-c.DockerSpawner.name_template = f"jupyter-{c.DockerSpawner.user.name}"
+#c.DockerSpawner.name_template = f"jupyter-{c.DockerSpawner.user.name}"
 
 # Enable users to access the Docker host
 c.DockerSpawner.network_name = "bridge"
