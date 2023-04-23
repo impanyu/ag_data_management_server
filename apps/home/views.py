@@ -1161,11 +1161,15 @@ def data(request):
             item_set = set(json.dumps(d) for d in response["items"])
             response["items"] = [json.loads(s) for s in item_set]
 
-            #sorted_item = sorted(response["items"],key=len)
-            for item in item_set:
-                if os.path.dirname(item) in item_set:
-                    #response["items"].remove(item)
-                    pass
+            item_paths_set = set([item["abs_path"] for item in response["items"]])
+
+            new_items = []
+            for item in response["items"]:
+                if os.path.dirname(item["abs_path"]) not in item_paths_set:
+                    new_items.append(item)
+            response["items"] = new_items
+
+
 
 
             #if "Domain" in mode:
