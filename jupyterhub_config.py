@@ -454,7 +454,7 @@ c.JupyterHub.authenticator_class = DjangoAuthenticator#jupyterhub.auth.PAMAuthen
 #          or `hub_bind_url` for setting the full bind URL.
 #  Default: '127.0.0.1'
 # c.JupyterHub.hub_ip = '127.0.0.1'
-
+c.JupyterHub.hub_ip =''
 ## The internal port for the Hub process.
 #  
 #          This is the internal port of the hub itself. It should never be accessed directly.
