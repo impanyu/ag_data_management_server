@@ -176,6 +176,12 @@ c = get_config()  #noqa
 #    - pam: jupyterhub.auth.PAMAuthenticator
 #  Default: 'jupyterhub.auth.PAMAuthenticator'
 
+import sys
+import os
+
+current_directory = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(current_directory)
+
 from django_authenticator import DjangoAuthenticator
 c.JupyterHub.authenticator_class = DjangoAuthenticator#jupyterhub.auth.PAMAuthenticator'
 
