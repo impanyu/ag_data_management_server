@@ -868,6 +868,9 @@ c.DockerSpawner.network_name = "bridge"
 #c.DockerSpawner.notebook_dir = "/home/jovyan/work"
 
 #c.JupyterHub.bind_url = 'http://0.0.0.0:8081'
+c.DockerSpawner.user_options = {
+    'user': 'root'
+}
 
 
 def set_user_notebook_dir(spawner):
