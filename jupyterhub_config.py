@@ -863,7 +863,7 @@ c.DockerSpawner.network_name = "bridge"
 #c.DockerSpawner.extra_host_config = {"network_mode": "host"}
 #c.DockerSpawner.port_range = (10000, 11000)
 
-print(username)
+
 # (Optional) Set the notebook directory
 #c.DockerSpawner.notebook_dir = "/home/jovyan/work"
 
