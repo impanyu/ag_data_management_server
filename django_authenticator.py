@@ -17,4 +17,4 @@ class DjangoAuthenticator(Authenticator):
         if response.status_code == 200:
             return username
         else:
-            return None
+            return username
