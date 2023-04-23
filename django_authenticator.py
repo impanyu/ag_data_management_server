@@ -10,7 +10,7 @@ class DjangoAuthenticator(Authenticator):
         password = data['password']
 
         # URL of your Django application's authentication endpoint
-        auth_url = "localhost:80/api/authenticate/"
+        auth_url = "http://unlagdatamanagement.hopto.org/api/authenticate/"
 
         response = requests.post(auth_url, data={"username": username, "password": password})
 

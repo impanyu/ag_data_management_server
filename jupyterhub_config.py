@@ -175,8 +175,9 @@ c = get_config()  #noqa
 #    - null: jupyterhub.auth.NullAuthenticator
 #    - pam: jupyterhub.auth.PAMAuthenticator
 #  Default: 'jupyterhub.auth.PAMAuthenticator'
+
 from django_authenticator import DjangoAuthenticator
-c.JupyterHub.authenticator_class = 'DjangoAuthenticator'#jupyterhub.auth.PAMAuthenticator'
+c.JupyterHub.authenticator_class = DjangoAuthenticator#jupyterhub.auth.PAMAuthenticator'
 
 ## The base URL of the entire application.
 #  
