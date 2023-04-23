@@ -812,7 +812,7 @@ def custom_username(spawner):
     spawner.notebook_dir = f"/data/{custom_name}/ag_data"
 
     # Update the root directory
-    spawner.default_url = f"/tree/{spawner.notebook_dir}"
+    #spawner.default_url = f"/tree/{spawner.notebook_dir}"
 
     #spawner.default_url = f"/user/{custom_name}/tree/data/{custom_name}"
 
