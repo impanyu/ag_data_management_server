@@ -799,14 +799,14 @@ c.JupyterHub.spawner_class = DockerSpawner
 
 # Set the Docker image you want to use for the single-user servers
 c.DockerSpawner.image = "jupyter/datascience-notebook:latest"
-'''
+
 #print(username)
 #print(userid)
 c.DockerSpawner.uid = 0
 c.DockerSpawner.gid = 0
 
 # Specify the container's name format
-c.DockerSpawner.name_template = "jupyter-{ypan12}"
+c.DockerSpawner.name_template = f"jupyter-{username}"
 
 # Enable users to access the Docker host
 c.DockerSpawner.network_name = "bridge"
@@ -832,7 +832,7 @@ def set_user_notebook_dir(spawner):
 
 c.DockerSpawner.pre_spawn_hook = set_user_notebook_dir
 #c.DockerSpawner.container_user = "root"
-'''
+
 ## Path to SSL certificate file for the public facing interface of the proxy
 #  
 #          When setting this, you should also set ssl_key
