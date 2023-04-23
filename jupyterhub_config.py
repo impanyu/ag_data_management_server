@@ -796,10 +796,10 @@ c.JupyterHub.authenticator_class = DjangoAuthenticator#jupyterhub.auth.PAMAuthen
 from dockerspawner import DockerSpawner
 
 c.JupyterHub.spawner_class = DockerSpawner
-'''
+
 # Set the Docker image you want to use for the single-user servers
 c.DockerSpawner.image = "jupyter/datascience-notebook:latest"
-
+'''
 #print(username)
 #print(userid)
 c.DockerSpawner.uid = 0
