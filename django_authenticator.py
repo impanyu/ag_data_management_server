@@ -28,7 +28,7 @@ class DjangoAuthenticator(Authenticator):
         #csrf_token = 'token_value'
         headers = {'X-CSRFToken': csrf_token}
 
-        response = requests.post(auth_url, data={"username": username, "password": password})
+        response = requests.post(auth_url,headers=headers, data={"username": username, "password": password})
         print(response.status_code)
 
         if response.status_code == 200:
