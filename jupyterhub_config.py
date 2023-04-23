@@ -801,7 +801,7 @@ class CustomDockerSpawner(DockerSpawner):
     @property
     def container_name(self):
         username = self.user.name
-        self.environment.update({    'JUPYTERHUB_API_URL': 'http://unlagdatamanagement.hopto.org:8000/hub/api'})
+        #self.environment.update({    'JUPYTERHUB_API_URL': 'http://unlagdatamanagement.hopto.org:8000/hub/api'})
 
         #self.container_name = self.name_template.format(username=username)
 
@@ -810,7 +810,7 @@ class CustomDockerSpawner(DockerSpawner):
 c.JupyterHub.spawner_class = CustomDockerSpawner
 
 # Set the Docker image you want to use for the single-user servers
-c.DockerSpawner.image = "jupyter/datascience-notebook:latest"
+c.CustomDockerSpawner.image = "jupyter/datascience-notebook:latest"
 
 #print(username)
 #print(userid)
@@ -844,11 +844,11 @@ def set_user_notebook_dir(spawner):
     spawner.volumes = {host_dir: spawner.notebook_dir}
     return spawner.notebook_dir
 
-c.DockerSpawner.pre_spawn_hook = set_user_notebook_dir
+c.CustomDockerSpawner.pre_spawn_hook = set_user_notebook_dir
 
-#c.Spawner.environment = {
-#    'JUPYTERHUB_API_URL': 'http://unlagdatamanagement.hopto.org:8000/hub/api',
-#}
+c.CustomDockerSpawner.environment = {
+    'JUPYTERHUB_API_URL': 'http://unlagdatamanagement.hopto.org:8000/hub/api',
+}
 
 #c.DockerSpawner.container_user = "root"
 
