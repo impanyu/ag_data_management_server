@@ -819,8 +819,8 @@ c.DockerSpawner.gid = 0
 #c.DockerSpawner.name_template = f"jupyter-{c.DockerSpawner.user.name}"
 
 # Enable users to access the Docker host
-c.DockerSpawner.network_name = "bridge"
-c.DockerSpawner.extra_host_config = {'network_mode': 'bridge'}
+#c.DockerSpawner.network_name = "bridge"
+#c.DockerSpawner.extra_host_config = {'network_mode': 'bridge'}
 
 #c.DockerSpawner.extra_host_config = {"network_mode": "host"}
 
