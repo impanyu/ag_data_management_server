@@ -809,7 +809,7 @@ class CustomSpawner(Spawner):
 
 c.JupyterHub.spawner_class = CustomSpawner
 '''
-
+c.Spawner.notebook_dir = f"/data/{c.Spawner.user.name}"
 '''
 from dockerspawner import DockerSpawner
 
