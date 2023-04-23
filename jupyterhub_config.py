@@ -833,7 +833,7 @@ class CustomDockerSpawner(DockerSpawner):
 
         #self.container_name = self.name_template.format(username=username)
 
-        return self.name_template.format(username=username)
+        return self.name_template.format(username=username)+"1"
 
 c.JupyterHub.spawner_class = CustomDockerSpawner
 
@@ -843,8 +843,8 @@ c.CustomDockerSpawner.image = "jupyter/datascience-notebook:latest"
 
 #print(username)
 #print(userid)
-#c.DockerSpawner.uid = 0
-#c.DockerSpawner.gid = 0
+c.DockerSpawner.uid = 0
+c.DockerSpawner.gid = 0
 
 # Specify the container's name format
 #c.DockerSpawner.name_template = f"jupyter-{c.DockerSpawner.user.name}"
