@@ -806,7 +806,7 @@ c.DockerSpawner.uid = 0
 c.DockerSpawner.gid = 0
 
 # Specify the container's name format
-c.DockerSpawner.name_template = f"jupyter-{username}"
+c.DockerSpawner.name_template = f"jupyter-{c.DockerSpawner.user.name}"
 
 # Enable users to access the Docker host
 c.DockerSpawner.network_name = "bridge"
