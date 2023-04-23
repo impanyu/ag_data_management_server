@@ -808,6 +808,7 @@ def custom_username(spawner):
     # Set the custom name as the spawner's user name
     spawner.user.name = custom_name
 
+
     # Update the notebook directory
     spawner.notebook_dir = f"/data/{custom_name}/ag_data"
 
