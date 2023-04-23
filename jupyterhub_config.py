@@ -822,8 +822,8 @@ c.DockerSpawner.image = "jupyter/datascience-notebook:latest"
 #c.DockerSpawner.network_name = "bridge"
 #c.DockerSpawner.extra_host_config = {'network_mode': 'bridge'}
 
-c.DockerSpawner.extra_host_config = {"network_mode": "host"}
-c.DockerSpawner.port_range = (10000, 11000)
+#c.DockerSpawner.extra_host_config = {"network_mode": "host"}
+#c.DockerSpawner.port_range = (10000, 11000)
 
 
 # (Optional) Set the notebook directory
@@ -844,7 +844,9 @@ def set_user_notebook_dir(spawner):
 
 c.DockerSpawner.pre_spawn_hook = set_user_notebook_dir
 
-
+c.Spawner.environment = {
+    'JUPYTERHUB_API_URL': 'http://unlagdatamanagement.hopto.org:8000/hub/api',
+}
 
 #c.DockerSpawner.container_user = "root"
 
