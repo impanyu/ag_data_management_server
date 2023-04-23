@@ -24,6 +24,10 @@ import os
 import shutil
 import zipfile
 
+from django.contrib.auth import authenticate
+from django.http import JsonResponse
+
+
 from django.core.cache import cache
 import docker
 
@@ -52,6 +56,17 @@ def index(request):
     html_template = loader.get_template('home/search.html')
     return HttpResponse(html_template.render(context, request))
 
+
+def authenticate_user(request):
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+
+    user = authenticate(request, username=username, password=password)
+
+    if user is not None:
+        return JsonResponse({"authenticated": True})
+    else:
+        return JsonResponse({"authenticated": False}, status=401)
 
 @login_required(login_url="/login/")
 def pages(request):
