@@ -860,7 +860,7 @@ c.CustomDockerSpawner.image = "jupyter/datascience-notebook:latest"
 # (Optional) Set the notebook directory
 #c.DockerSpawner.notebook_dir = "/home/jovyan/work"
 
-
+c.JupyterHub.bind_url = 'http://0.0.0.0:8081'
 
 
 def set_user_notebook_dir(spawner):
