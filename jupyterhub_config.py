@@ -791,6 +791,8 @@ c.JupyterHub.authenticator_class = DjangoAuthenticator#jupyterhub.auth.PAMAuthen
 #    - localprocess: jupyterhub.spawner.LocalProcessSpawner
 #    - simple: jupyterhub.spawner.SimpleLocalProcessSpawner
 #  Default: 'jupyterhub.spawner.LocalProcessSpawner'
+c.JupyterHub.spawner_class = 'jupyterhub.spawner.LocalProcessSpawner'
+'''
 from dockerspawner import DockerSpawner
 
 c.JupyterHub.spawner_class = DockerSpawner #'jupyterhub.spawner.LocalProcessSpawner'
@@ -830,7 +832,7 @@ def set_user_notebook_dir(spawner):
 
 c.DockerSpawner.pre_spawn_hook = set_user_notebook_dir
 #c.DockerSpawner.container_user = "root"
-
+'''
 ## Path to SSL certificate file for the public facing interface of the proxy
 #  
 #          When setting this, you should also set ssl_key
