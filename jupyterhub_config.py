@@ -801,6 +801,12 @@ class CustomSpawner(Spawner):
         self.notebook_dir = f"/data/{self.user.name}"
         return super().start()
 
+    def stop(self):
+        super().stop()
+
+    def poll(self):
+        return super().poll()
+
 c.JupyterHub.spawner_class = CustomSpawner
 
 
