@@ -811,12 +811,30 @@ c.JupyterHub.spawner_class = CustomSpawner
 '''
 
 
+from jupyterhub.spawner import Spawner
+
 class CustomSpawner(Spawner):
     async def start(self):
         self.user_options = self.user_options or {}
         username = self.user_options.get('name', self.user.name)
         self.notebook_dir = f"/data/{username}"
         await super().start()
+
+    async def stop(self, now=False):
+        # Stop the container, and wait for it to stop
+        container = await self.get_container()
+        await self.docker('stop', container['Id'])
+
+    async def poll(self):
+        # Check if the container is running
+        container = await self.get_container()
+        if container is None:
+            return 0
+        if container['State']['Running']:
+            return None
+        else:
+            return container['State']['ExitCode']
+
 
 c.Spawner.notebook_dir = f"/data/{c.Spawner.user.name}"
 '''
