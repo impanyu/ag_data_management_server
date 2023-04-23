@@ -846,6 +846,9 @@ c.DockerSpawner.environment = {
     'JUPYTERHUB_API_URL': 'http://0.0.0.0:8081/hub/api',
 }
 
+c.DockerSpawner.remove_containers = True
+c.DockerSpawner.remove = True
+
 #print(username)
 #print(userid)
 c.DockerSpawner.uid = 0
