@@ -833,7 +833,7 @@ class CustomDockerSpawner(DockerSpawner):
 
         #self.container_name = self.name_template.format(username=username)
 
-        return self.name_template.format(username=username)
+        return "jupyter"#self.name_template.format(username=username)
 
 c.JupyterHub.spawner_class = CustomDockerSpawner
 
