@@ -842,7 +842,9 @@ c.JupyterHub.spawner_class = DockerSpawner
 
 # Set the Docker image you want to use for the single-user servers
 c.DockerSpawner.image = "jupyter/datascience-notebook:latest"
-                          
+c.DockerSpawner.environment = {
+    'JUPYTERHUB_API_URL': 'http://0.0.0.0:8081/hub/api',
+}
 
 #print(username)
 #print(userid)
@@ -853,7 +855,7 @@ c.DockerSpawner.gid = 0
 #c.DockerSpawner.name_template = f"jupyter-{c.DockerSpawner.user.name}"
 
 # Enable users to access the Docker host
-c.DockerSpawner.network_name = "bridge"
+#c.DockerSpawner.network_name = "bridge"
 #c.DockerSpawner.extra_host_config = {'network_mode': 'bridge'}
 
 c.DockerSpawner.extra_host_config = {"network_mode": "host"}
@@ -864,9 +866,7 @@ c.DockerSpawner.extra_host_config = {"network_mode": "host"}
 #c.DockerSpawner.notebook_dir = "/home/jovyan/work"
 
 #c.JupyterHub.bind_url = 'http://0.0.0.0:8081'
-c.DockerSpawner.environment = {
-    'JUPYTERHUB_API_URL': 'http://0.0.0.0:8081/hub/api',
-}
+
 
 def set_user_notebook_dir(spawner):
     # Customize the user-specific directory pattern here
