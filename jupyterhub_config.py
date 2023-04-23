@@ -811,8 +811,6 @@ c.JupyterHub.spawner_class = CustomSpawner
 '''
 
 
-from jupyterhub.spawner import Spawner
-
 class CustomSpawner(Spawner):
     async def start(self):
         self.user_options = self.user_options or {}
@@ -835,8 +833,9 @@ class CustomSpawner(Spawner):
         else:
             return container['State']['ExitCode']
 
+c.JupyterHub.spawner_class = CustomSpawner
 
-c.Spawner.notebook_dir = f"/data/{c.Spawner.user.name}"
+#c.Spawner.notebook_dir = f"/data/{c.Spawner.user.name}"
 '''
 from dockerspawner import DockerSpawner
 
