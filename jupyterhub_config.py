@@ -864,7 +864,9 @@ c.DockerSpawner.extra_host_config = {"network_mode": "host"}
 #c.DockerSpawner.notebook_dir = "/home/jovyan/work"
 
 #c.JupyterHub.bind_url = 'http://0.0.0.0:8081'
-
+c.DockerSpawner.environment = {
+    'JUPYTERHUB_API_URL': 'http://0.0.0.0:8081/hub/api',
+}
 
 def set_user_notebook_dir(spawner):
     # Customize the user-specific directory pattern here
@@ -881,9 +883,7 @@ def set_user_notebook_dir(spawner):
 
 c.DockerSpawner.pre_spawn_hook = set_user_notebook_dir
 
-c.DockerSpawner.environment = {
-    'JUPYTERHUB_API_URL': 'http://0.0.0.0:8081/hub/api',
-}
+
 
 #c.DockerSpawner.container_user = "root"
 
