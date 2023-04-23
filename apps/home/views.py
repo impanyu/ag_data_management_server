@@ -1158,8 +1158,15 @@ def data(request):
 
 
             #remove duplicates
-            response["items"] = set(json.dumps(d) for d in response["items"])
-            response["items"] = [json.loads(s) for s in response["items"]]
+            item_set = set(json.dumps(d) for d in response["items"])
+            response["items"] = [json.loads(s) for s in item_set]
+
+            sorted_item = sorted(response["items"],key=len)
+            for item in sorted_item:
+                if item_set.os.path.dirname(item) in item_set:
+                    response["items"].remove(item)
+
+
 
             #if "Domain" in mode:
                 #search_domains()
