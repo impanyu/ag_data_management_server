@@ -819,7 +819,7 @@ def custom_username(spawner):
 
 #c.Spawner.pre_spawn_hook = custom_username
 
-c.Spawner.notebook_dir = "/data/ypan12"
+c.Spawner.notebook_dir = "~/ag_data"
 '''
 from dockerspawner import DockerSpawner
 
