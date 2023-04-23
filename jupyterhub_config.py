@@ -454,7 +454,8 @@ c.JupyterHub.hub_connect_ip = '10.128.0.4'
 #          or `hub_bind_url` for setting the full bind URL.
 #  Default: '127.0.0.1'
 # c.JupyterHub.hub_ip = '127.0.0.1'
-c.JupyterHub.hub_ip =''
+c.JupyterHub.hub_ip = '10.128.0.4'
+
 ## The internal port for the Hub process.
 #  
 #          This is the internal port of the hub itself. It should never be accessed directly.
@@ -876,7 +877,7 @@ def set_user_notebook_dir(spawner):
 c.DockerSpawner.pre_spawn_hook = set_user_notebook_dir
 
 c.DockerSpawner.environment = {
-    'JUPYTERHUB_API_URL': 'http://unlagdatamanagement.hopto.org:8000/hub/api',
+    'JUPYTERHUB_API_URL': 'http://10.128.0.4:8081/hub/api',
 }
 
 #c.DockerSpawner.container_user = "root"
