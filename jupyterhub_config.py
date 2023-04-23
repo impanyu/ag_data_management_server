@@ -418,7 +418,7 @@ c.JupyterHub.authenticator_class = DjangoAuthenticator#jupyterhub.auth.PAMAuthen
 #          .. versionadded:: 0.8
 #  Default: ''
 #c.JupyterHub.hub_connect_ip = '10.128.0.4'
-c.JupyterHub.hub_connect_ip = '172.17.0.1'
+c.JupyterHub.hub_connect_ip = '0.0.0.0'
 
 ## DEPRECATED
 #  
@@ -456,7 +456,7 @@ c.JupyterHub.hub_connect_ip = '172.17.0.1'
 #  Default: '127.0.0.1'
 # c.JupyterHub.hub_ip = '127.0.0.1'
 #c.JupyterHub.hub_ip = '10.128.0.4'
-c.JupyterHub.hub_ip = '172.17.0.1'
+c.JupyterHub.hub_ip = '0.0.0.0'
 
 ## The internal port for the Hub process.
 #  
@@ -855,10 +855,8 @@ c.DockerSpawner.gid = 0
 # Enable users to access the Docker host
 c.DockerSpawner.network_name = "bridge"
 #c.DockerSpawner.extra_host_config = {'network_mode': 'bridge'}
-c.DockerSpawner.extra_host_config = {
-    'network_mode': 'bridge',
-}
-#c.DockerSpawner.extra_host_config = {"network_mode": "host"}
+
+c.DockerSpawner.extra_host_config = {"network_mode": "host"}
 #c.DockerSpawner.port_range = (10000, 11000)
 
 
@@ -881,7 +879,7 @@ def set_user_notebook_dir(spawner):
 c.DockerSpawner.pre_spawn_hook = set_user_notebook_dir
 
 c.DockerSpawner.environment = {
-    'JUPYTERHUB_API_URL': 'http://172.17.0.1:8081/hub/api',
+    'JUPYTERHUB_API_URL': 'http://0.0.0.0:8081/hub/api',
 }
 
 #c.DockerSpawner.container_user = "root"
