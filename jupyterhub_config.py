@@ -853,6 +853,8 @@ c.DockerSpawner.remove = True
 #print(userid)
 c.DockerSpawner.user_id = 0
 c.DockerSpawner.group_id = 0
+c.DockerSpawner.user = "root"
+
 
 # Specify the container's name format
 #c.DockerSpawner.name_template = f"jupyter-{c.DockerSpawner.user.name}"
