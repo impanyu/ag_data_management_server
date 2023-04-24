@@ -851,8 +851,8 @@ c.DockerSpawner.remove = True
 
 #print(username)
 #print(userid)
-c.DockerSpawner.uid = 0
-c.DockerSpawner.gid = 0
+#c.DockerSpawner.uid = 0
+#c.DockerSpawner.gid = 0
 
 #c.DockerSpawner.user = "root"
 
@@ -863,7 +863,8 @@ c.DockerSpawner.gid = 0
 # Enable users to access the Docker host
 c.DockerSpawner.network_name = "bridge"
 #c.DockerSpawner.extra_create_kwargs = {'user': 'root', 'uid': 0, 'gid': 0}
-c.DockerSpawner.extra_create_kwargs.update({'user': 'root'})
+# Set the container user to root.
+c.DockerSpawner.extra_start_kwargs.update({'user': 'root'})
 
 #c.DockerSpawner.extra_host_config = {'network_mode': 'bridge'}
 #c.DockerSpawner.extra_host_config = {"network_mode": "host"}
