@@ -6,9 +6,10 @@
 
 <div class ="bg-unl"  style="font-size:1.25rem">
  <div class="card" style = "border-radius:0px;padding:30px">
-   <header>
+   <header style="margin-bottom:20px">
   <h1 style="font-size:1.75rem">Documentation</h1>
    </header>
+     <section id="content" class="row align-items-center " style="margin-bottom:30px">
   <h2 style="font-size:1.5rem">Content</h2>
   <nav>
     <ul >
@@ -28,8 +29,9 @@
         <li><a href="#api">Data API</a></li>
     </ul>
 </nav>
+     </section>
   <main>
-   <section id="introduction" class="row align-items-center " style="margin-bottom:20px">
+   <section id="introduction" class="row align-items-center " style="margin-bottom:30px">
   <h2 style="font-size:1.5rem">Introduction</h2>
    <p class="col-lg-12 col-12" style="font-size:1.25rem; font-weight:400"><b>Agriculture Data Management and Analytics (ADMA)</b> is a comprehensive data management platform developed for experts within and outside IANR. It is a state-of-the-art solution designed to address the multifaceted challenges faced by modern agriculture. As the world grapples with population growth, climate change, and diminishing natural resources, the need for data-driven innovation in agroecosystems has never been more critical.
 
@@ -56,7 +58,7 @@ Key features of the ADMA platform include:</p>
 
    </section>
 
-  <section id="architecture" class="row align-items-center" style="margin-bottom:20px">
+  <section id="architecture" class="row align-items-center" style="margin-bottom:30px">
   <h2 style="font-size:1.5rem" class="col-lg-12 col-12 ">System Architecture</h2>
       <div class="col-lg-2 col-12"></div>
       <div class="col-lg-8 col-12 text-center">
@@ -93,7 +95,7 @@ Key features of the ADMA platform include:</p>
   </section>
 
 
-       <section id="mode" class="row align-items-center "style="margin-bottom:20px">
+       <section id="mode" class="row align-items-center "style="margin-bottom:30px">
   <h2 style="font-size:1.5rem"> Mode </h2>
        <p class="col-lg-12 col-12" style="font-size:1.25rem; font-weight:400">ADMA maintains four modes, namely data, tool, model and collection, as the first class species in the system.</p>
            <ul>
@@ -104,7 +106,7 @@ Key features of the ADMA platform include:</p>
            </ul>
    </section>
 
-   <section id="search_module" class="row align-items-center "style="margin-bottom:20px">
+   <section id="search_module" class="row align-items-center "style="margin-bottom:30px">
    <h2 style="font-size:1.5rem" class="col-lg-12 col-12 ">  Search </h2>
        <p class="col-lg-12 col-12" style="font-size:1.25rem; font-weight:400">ADMA supports <a href="/search.html?current_path={{user}}" >search </a> by various criteria, including by key word and by common metadata such as category, mode, format, label, priviledge, realtime/non-realtime, time range, spatial range (Figure 2).</p>
        <div class="col-lg-2 col-12"></div>
@@ -137,7 +139,7 @@ Key features of the ADMA platform include:</p>
       </div>
 
    </section>
-   <section id="file" class="row align-items-center "style="margin-bottom:20px">
+   <section id="file" class="row align-items-center "style="margin-bottom:30px">
   <h2 style="font-size:1.5rem"> File Management</h2>
        <p class="col-lg-12 col-12" style="font-size:1.25rem; font-weight:400"><a href="/files.html?current_path={{user}}" >File management</a> module in ADMA supports basic operations on file such as: create, upload, delete, move, copy, download, edit (Figure 6). Each user will be assigned a root dir named by their username: "/username"
            and all the data will be put into the directory: "/username/ag_data". Each user will also see a folder named "public_data" under "/username/ag_data", which contains all the public data from other users. ADMA keeps a metadata panel for each folder or file, which can be used to update various meta data items (Figure 7).
@@ -173,13 +175,13 @@ Key features of the ADMA platform include:</p>
 
    </section>
 
-   <section id="data_tools_and_models" class="row align-items-center "style="margin-bottom:20px">
+   <section id="data_tools_and_models" class="row align-items-center "style="margin-bottom:30px">
   <h2 style="font-size:1.5rem"> Data, Tools and Models</h2>
        <p class="col-lg-12 col-12" style="font-size:1.25rem; font-weight:400">ADMA has a separate page for manage <a href="/data.html?current_path={{user}}" >data</a>, <a href="/tools.html?current_path={{user}}">tools</a> and <a href="/models.html?current_path={{user}}">models</a>. The three pages will list both user's privately owned data and public data.</p>
 
 
    </section>
-      <section id="running_tools" class="row align-items-center "style="margin-bottom:20px">
+      <section id="running_tools" class="row align-items-center "style="margin-bottom:30px">
   <h2 style="font-size:1.5rem">Running Tools</h2>
           <p class="col-lg-12 col-12" style="font-size:1.25rem; font-weight:400"> For each user uploaded tool, ADMA displays a tool panel, in which the user can edit, add or remove command-line arguments of the tool (Figure 9). If the argument is a path, ADMA allows user to select files in their ag_data folder (Figure 10).
             Once "Run" button is clicked, a message will be prompted indicating the program starts running in a containerized environment(Figure 11). Then the user can check the execution status of the program by scroll to the bottom of the metadata panel, where the container id, docker image, status and running time of the running instances of the tool will be displayed (Figure 12).
@@ -217,11 +219,11 @@ Key features of the ADMA platform include:</p>
 
    </section>
 
-      <section id="training_models" class="row align-items-center "style="margin-bottom:20px">
+      <section id="training_models" class="row align-items-center "style="margin-bottom:30px">
   <h2 style="font-size:1.5rem">Training Models</h2>
       </section>
 
-      <section id="pipeline" class="row align-items-center "style="margin-bottom:20px">
+      <section id="pipeline" class="row align-items-center "style="margin-bottom:30px">
   <h2 style="font-size:1.5rem">Pipeline Management</h2>
          <p class="col-lg-12 col-12" style="font-size:1.25rem; font-weight:400"> For each file or folder, ADMA keeps track of its history and keeps a pipeline panel illustrating the position of the file or folder in the pipeline, together with the upstream and downstream locations and corresponding operations of each step. ADMA keeps track of all native operations and user submitted tools.
           For instance, in Figure 13, when user uploads a file named "21_E1801_A103_rgba_green.png", the pipeline will show it is uploaded from external resource. In Figure 14, when user create a new folder, the pipeline of it will indicate it is created from "null". Figure 15 shows the pipeline of a user uploaded TIF file being converted to PNGs for
@@ -259,7 +261,7 @@ Key features of the ADMA platform include:</p>
 
 
    </section>
-   <section id="collections" class="row align-items-center "style="margin-bottom:20px">
+   <section id="collections" class="row align-items-center "style="margin-bottom:30px">
   <h2 style="font-size:1.5rem"> Collections</h2>
        <p class="col-lg-12 col-12" style="font-size:1.25rem; font-weight:400">
            Besides original file hierarchies, <a href="/collections.html?current_path={{user}}/collections">collections</a> are another way to organize data. ADMA allows user to create new collection (Figure 17) and add their data to the collection (Figure 18). Collection is also one of the 4 mode in ADMA, besides data, tools and models, which means
@@ -281,7 +283,7 @@ Key features of the ADMA platform include:</p>
       </div>
 
    </section>
-   <section id="privacy" class="row align-items-center "style="margin-bottom:20px">
+   <section id="privacy" class="row align-items-center "style="margin-bottom:30px">
   <h2 style="font-size:1.5rem"> Data Privacy</h2>
        <p class="col-lg-12 col-12" style="font-size:1.25rem; font-weight:400">
          ADMA protects data privacy by differentiating private data and public data. User can choose to publish their data by toggling the locker icon and updating the metadata of a folder or file. Once a file is made public, all its sub-folders and files within in will be
@@ -294,7 +296,7 @@ Key features of the ADMA platform include:</p>
 
 
    </section>
-   <section id="jupyter" class="row align-items-center "style="margin-bottom:20px">
+   <section id="jupyter" class="row align-items-center "style="margin-bottom:30px">
   <h2 style="font-size:1.5rem"> JupyterHub</h2>
        <p class="col-lg-12 col-12" style="font-size:1.25rem; font-weight:400">
            To provide users with more flexibility, ADMA connects with <a href="https://jupyter.org/hub">JupyterHub</a>. Each user can create their own <a href="https://jupyter.org/">JupyterLab</a>, which is the latest web-based interactive development environment for notebooks, code, and data
@@ -311,7 +313,7 @@ Key features of the ADMA platform include:</p>
       </div>
 
    </section>
-      <section id="api" class="row align-items-center "style="margin-bottom:20px">
+      <section id="api" class="row align-items-center "style="margin-bottom:30px">
   <h2 style="font-size:1.5rem">Data API</h2>
    </section>
 </main>
