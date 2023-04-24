@@ -883,8 +883,8 @@ import subprocess
 def set_user_notebook_dir(spawner):
     # Customize the user-specific directory pattern here
     username = spawner.user.name
-    spawner.notebook_dir = f"/{username}"
-    host_dir = f"/data/{username}"
+    spawner.notebook_dir = f"/{username}/ag_data"
+    host_dir = f"/data/{username}/ag_data"
 
     # Mount the host directory to the user's notebook directory in the container
     spawner.volumes = {host_dir: spawner.notebook_dir}
@@ -901,7 +901,7 @@ def restore_mounted_directory_permissions(spawner):
     """
     Post-stop hook function to restore the permissions of the mounted directory.
     """
-    mounted_directory = f'/data/{spawner.user.name}'
+    mounted_directory = f'/data/{spawner.user.name}/ag_data'
 
     # Change the owner and group of the mounted directory back to the desired values
     # Replace 'desired_user' and 'desired_group' with the user and group you want to set
