@@ -915,6 +915,26 @@ def data(request):
             if not abs_path.split("/")[2] == request.user.get_username() and  meta_data["public"] == "False":
                 return HttpResponse(json.dumps(items))
 
+            if abs_path == f"/data/public/ag_data":
+                for sub_path in meta_data["subdirs"]:
+
+                    # if collection_path == f"/data/{request.user.get_username()}/collections":
+                    #    continue
+                    sub_meta_data = get_meta_data(sub_path)
+                    if "Tool" in sub_meta_data["mode"]:
+                        running_containers = get_running_containers(sub_path)
+                        if len(running_containers) == 0:
+                            sub_meta_data["running"] = "False"
+                        else:
+                            sub_meta_data["running"] = "True"
+
+                    items.append(sub_meta_data)
+                items = sorted(items, key=lambda item: item["name"])
+
+                response = json.dumps(items)
+
+                return HttpResponse(response)
+
             if abs_path == f"/data/{request.user.get_username()}/ag_data":
                 sub_meta_data = get_meta_data("/data/public/ag_data")
                 items.append(sub_meta_data)
