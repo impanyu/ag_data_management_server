@@ -861,9 +861,8 @@ c.DockerSpawner.user = "root"
 
 # Enable users to access the Docker host
 c.DockerSpawner.network_name = "bridge"
-c.DockerSpawner.extra_create_kwargs.update({
-    'user': '0:0'
-})
+c.DockerSpawner.extra_create_kwargs = {'user': 'root', 'uid': 0, 'gid': 0}
+
 
 #c.DockerSpawner.extra_host_config = {'network_mode': 'bridge'}
 #c.DockerSpawner.extra_host_config = {"network_mode": "host"}
