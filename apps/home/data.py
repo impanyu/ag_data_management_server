@@ -1311,17 +1311,19 @@ def search(root_dir, search_box, category, mode, format, label,  realtime, time_
     meta_data_file_name = "_".join(root_dir.split("/")[1:]) + ".json"
     #if not os.path.exists(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name)):
     #    return [root_dir,os.path.join(settings.CORE_DIR, 'data', meta_data_file_name)]
-    with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
-        meta_data = json.load(meta_data_file)
-        if "Collection" in meta_data["mode"]  and meta_data["name"] == "collections":
-            for subdir in meta_data["subdirs"]:
-                if filtering_condition(meta_data, search_box, category, mode, format, label, realtime, time_range, spatial_range):
-                    sub_meta = get_meta_data(subdir)
-                    result.append(sub_meta)
+    #with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
+    meta_data = get_meta_data(root_dir)
+    if "Collection" in meta_data["mode"]  and meta_data["name"] == "collections":
+        for subdir in meta_data["subdirs"]:
+            sub_meta = get_meta_data(subdir)
+            if filtering_condition(sub_meta, search_box, category, mode, format, label, realtime, time_range, spatial_range):
 
+                result.append(sub_meta)
+
+    else:
+        if filtering_condition(meta_data, search_box, category, mode, format, label, realtime, time_range, spatial_range):
+            result.append(meta_data)
         else:
-            if filtering_condition(meta_data, search_box, category, mode, format, label, realtime, time_range, spatial_range):
-                result.append(meta_data)
             for subdir in meta_data["subdirs"]:
                 if subdir ==  "/data/public/ag_data":
                     continue
