@@ -915,7 +915,7 @@ def data(request):
             if not abs_path.split("/")[2] == request.user.get_username() and  meta_data["public"] == "False":
                 return HttpResponse(json.dumps(items))
 
-            if abs_path == f"/data/public/ag_data":
+            if  f"/data/public" in abs_path or "Collection" in meta_data["mode"]:
                 for sub_path in meta_data["subdirs"]:
 
                     # if collection_path == f"/data/{request.user.get_username()}/collections":
