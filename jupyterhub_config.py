@@ -851,9 +851,10 @@ c.DockerSpawner.remove = True
 
 #print(username)
 #print(userid)
-c.DockerSpawner.user_id = 0
-c.DockerSpawner.group_id = 0
-c.DockerSpawner.user = "root"
+c.DockerSpawner.uid = 0
+c.DockerSpawner.gid = 0
+
+#c.DockerSpawner.user = "root"
 
 
 # Specify the container's name format
@@ -861,7 +862,7 @@ c.DockerSpawner.user = "root"
 
 # Enable users to access the Docker host
 c.DockerSpawner.network_name = "bridge"
-c.DockerSpawner.extra_create_kwargs = {'user': 'root', 'uid': 0, 'gid': 0}
+#c.DockerSpawner.extra_create_kwargs = {'user': 'root', 'uid': 0, 'gid': 0}
 
 
 #c.DockerSpawner.extra_host_config = {'network_mode': 'bridge'}
@@ -873,9 +874,7 @@ c.DockerSpawner.extra_create_kwargs = {'user': 'root', 'uid': 0, 'gid': 0}
 #c.DockerSpawner.notebook_dir = "/home/jovyan/work"
 
 #c.JupyterHub.bind_url = 'http://0.0.0.0:8081'
-c.DockerSpawner.user_options = {
-    'user': 'root'
-}
+
 
 
 def set_user_notebook_dir(spawner):
