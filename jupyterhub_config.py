@@ -877,7 +877,7 @@ c.DockerSpawner.extra_create_kwargs.update({'user': '0'})
 #c.DockerSpawner.notebook_dir = "/home/jovyan/work"
 
 #c.JupyterHub.bind_url = 'http://0.0.0.0:8081'
-
+import subprocess
 
 
 def set_user_notebook_dir(spawner):
@@ -888,11 +888,29 @@ def set_user_notebook_dir(spawner):
 
     # Mount the host directory to the user's notebook directory in the container
     spawner.volumes = {host_dir: spawner.notebook_dir}
+
+    # Change the owner and group of the mounted directory
+    subprocess.run(['chown', '-R', '1000:100', host_dir])
     #spawner.post_start_cmd = f"sudo chroot {spawner.notebook_dir}"
 
     return spawner.notebook_dir
 
 c.DockerSpawner.pre_spawn_hook = set_user_notebook_dir
+
+def restore_mounted_directory_permissions(spawner):
+    """
+    Post-stop hook function to restore the permissions of the mounted directory.
+    """
+    mounted_directory = f'/data/{spawner.user.name}'
+
+    # Change the owner and group of the mounted directory back to the desired values
+    # Replace 'desired_user' and 'desired_group' with the user and group you want to set
+    subprocess.run(['chown', '-R', '0:0', mounted_directory])
+
+c.Spawner.post_stop_hook = restore_mounted_directory_permissions
+
+
+
 
 import os
 
