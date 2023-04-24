@@ -85,7 +85,7 @@ def register_user(request):
 
 
             meta_data = generate_meta_data_for_dir(data_file_name,{"create":["null"]})
-            meta_data["subdirs"].append("/data/public/ag_data")
+            #meta_data["subdirs"].append("/data/public/ag_data")
 
             if data_file_name not in user_meta_data["subdirs"]:
                 user_meta_data["subdirs"].append(data_file_name)

@@ -1297,8 +1297,8 @@ def delete_meta_data(meta_data_path):
 
 def search(root_dir, search_box, category, mode, format, label,  realtime, time_range, spatial_range):
     result = []
-    if os.path.basename(root_dir)[0] == ".":
-        return result
+    #if os.path.basename(root_dir)[0] == ".":
+    #    return result
     #if not os.path.exists(root_dir):
     #    return result
 
