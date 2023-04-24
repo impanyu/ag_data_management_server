@@ -863,8 +863,10 @@ c.DockerSpawner.remove = True
 # Enable users to access the Docker host
 c.DockerSpawner.network_name = "bridge"
 #c.DockerSpawner.extra_create_kwargs = {'user': 'root', 'uid': 0, 'gid': 0}
-# Set the container user to root.
-c.DockerSpawner.extra_start_kwargs.update({'user': 'root'})
+c.DockerSpawner.extra_create_kwargs.update({'user': '0'})
+
+# Set the environment variable to start the notebook server as root.
+c.DockerSpawner.environment.update({'NB_USER': 'root', 'NB_UID': '0'})
 
 #c.DockerSpawner.extra_host_config = {'network_mode': 'bridge'}
 #c.DockerSpawner.extra_host_config = {"network_mode": "host"}
