@@ -968,7 +968,7 @@ function display_file_selection(arg_name,path){
    document.body.style.overflow = "hidden";
    $("#file_list_in_overlay")[0].innerHTML = "";
 
-    $.get("/meta_data",
+    $.post("/meta_data",
         {
           current_path: path
          },
@@ -2150,7 +2150,7 @@ function update_meta(){
 
 function get_meta_data(){
    return new Promise(function(resolve,reject){
-    $.get("/meta_data",
+    $.post("/meta_data",
         {
           current_path: current_path
          },
@@ -2651,7 +2651,7 @@ function display_collections_selection(){
    document.body.style.overflow = "hidden";
    $("#collections_in_overlay")[0].innerHTML = "";
 
-    $.get("/meta_data",
+    $.post("/meta_data",
         {
           current_path: path
          },
