@@ -53,7 +53,7 @@ def data(request):
             meta_data = get_meta_data("/data" + current_path)
             if api_key in api_keys and (user in api_keys[api_key] or meta_data["public"] == "True"):
                 for sub_path in meta_data["subdirs"]:
-                    items.append(sub_path.substr(5))
+                    items.append(sub_path.substr[5:])
                 items = sorted(items, key=lambda item: item)
             else:
                 items = "API key is not valid!"
