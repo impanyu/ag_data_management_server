@@ -5,6 +5,7 @@ Copyright (c) 2019 - present AppSeed.us
 
 from django.urls import path, re_path
 from apps.home import views
+from apps.home import api
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -14,6 +15,7 @@ urlpatterns = [
     # The home page
     path('', views.index, name='home'),
     path('api/authenticate/', views.authenticate_user, name='authenticate_user'),
+    re_path(r'^api_meta_data',api.data,name='api_meta_data'),
     re_path(r'^get_running_containers',views.data,name='get_running_containers'),
     re_path(r'^get_collections',views.data,name='get_collections'),
     re_path(r'^duplicate',views.data,name='duplicate'),

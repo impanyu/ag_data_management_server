@@ -17,3 +17,32 @@ from django.views.decorators.csrf import csrf_exempt
 
 from django.contrib.auth import authenticate
 from django.http import JsonResponse
+
+
+
+@csrf_exempt
+def data(request):
+    context = {}
+    # All resource paths end in .html.
+    # Pick out the html file name from the url. And load that template.
+    try:
+        load_template = request.path.split('/')[-1]
+        load_template = load_template.split('?')[0]
+
+        if load_template == 'api_meta_data':
+            current_path = request.GET['current_path']
+            api_key = request.GET['key']
+            meta_data = {}
+            if api_key == "AIzaSyBU1RvtD5YF8":
+                meta_data = get_meta_data("/data/" + current_path)
+            response = json.dumps(meta_data)
+            return HttpResponse(response)
+
+    except template.TemplateDoesNotExist:
+
+        html_template = loader.get_template('home/page-404.html')
+        return HttpResponse(html_template.render(context, request))
+
+    except:
+        html_template = loader.get_template('home/page-500.html')
+        return HttpResponse(html_template.render(context, request))
