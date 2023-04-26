@@ -358,8 +358,45 @@ Key features of the ADMA platform include:</p>
 </code></pre>
          </p>
      </li>
-    <li><span style="background-color: #eee">/api_list_sub_items?path={path}&key={key}</span>
-        <p style="font-size:1.25rem; font-weight:400">This API will list the sub files or directories for any {path} which are visible to the user when the a {key} is specified.</p></li>
+     <li><span style="background-color: #eee"><b>/api_list_sub_items?path=<span style="color:red">{path}</span>&key=<span style="color:red">{key}</span></b></span>
+        <p style="font-size:1.25rem; font-weight:400">This API will list the files or directories within any {path} which are visible to the user when the a {key} is specified.</p>
+        <p style="font-size:1.25rem; font-weight:400">For example, if the request url is <span style="background-color: #eee">/api_list_sub_items?path=/ypan12/ag_data/green&key=dwMmCIYP8ds</span>,
+            we can retrieve all the files and folders inside the directory: /ypan12/ag_data/green.
+         The returned metadata will be in JSON format as follows:
+              <pre class="doc_code"><code>
+             [
+             "/ypan12/ag_data/green/0",
+             "/ypan12/ag_data/green/1",
+             "/ypan12/ag_data/green/2",
+             "/ypan12/ag_data/green/21_E1801_AI03_green.info",
+             "/ypan12/ag_data/green/21_E1801_AI03_green.pool",
+             "/ypan12/ag_data/green/21_E1801_AI03_index_green.dbf",
+             "/ypan12/ag_data/green/21_E1801_AI03_index_green.prj",
+             "/ypan12/ag_data/green/21_E1801_AI03_index_green.shp",
+             "/ypan12/ag_data/green/21_E1801_AI03_index_green.shp_col_geometry.png",
+             "/ypan12/ag_data/green/21_E1801_AI03_index_green.shp_col_green.png",
+             "/ypan12/ag_data/green/21_E1801_AI03_index_green.shx",
+             "/ypan12/ag_data/green/21_E1801_AI03_index_green.tfw",
+             "/ypan12/ag_data/green/21_E1801_AI03_index_green.tif",
+             "/ypan12/ag_data/green/21_E1801_AI03_index_green.tif_band_1.png",
+             "/ypan12/ag_data/green/21_E1801_AI03_rgba_green.jpg",
+             "/ypan12/ag_data/green/21_E1801_AI03_rgba_green.kml",
+             "/ypan12/ag_data/green/21_E1801_AI03_rgba_green.png",
+             "/ypan12/ag_data/green/21_E1801_AI03_rgba_green.prj",
+             "/ypan12/ag_data/green/21_E1801_AI03_rgba_green.tfw",
+             "/ypan12/ag_data/green/21_E1801_AI03_rgba_green.tif",
+             "/ypan12/ag_data/green/21_E1801_AI03_rgba_green.tif_band_1.png",
+             "/ypan12/ag_data/green/21_E1801_AI03_rgba_green.tif_band_2.png",
+             "/ypan12/ag_data/green/21_E1801_AI03_rgba_green.tif_band_3.png",
+             "/ypan12/ag_data/green/21_E1801_AI03_rgba_green.tif_band_4.png",
+             "/ypan12/ag_data/green/21_E1801_AI03_rgba_green.tif_band_RGBA.png",
+             "/ypan12/ag_data/green/21_E1801_AI03_scale_green.pdf",
+             "/ypan12/ag_data/green/4",
+             "/ypan12/ag_data/green/Untitled.ipynb",
+             "/ypan12/ag_data/green/tiles"]
+         </code>
+         </pre>
+     </li>
 </ul>
 
    </section>
