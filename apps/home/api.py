@@ -35,6 +35,8 @@ def data(request):
             meta_data = {}
             if api_key == "AIzaSyBU1RvtD5YF8":
                 meta_data = get_meta_data("/data/" + current_path)
+            else:
+                meta_data = "API key is not valid!"
             response = json.dumps(meta_data)
             return HttpResponse(response)
 
