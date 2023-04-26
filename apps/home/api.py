@@ -31,7 +31,7 @@ def data(request):
 
         if load_template == 'api_meta_data':
             #here current data is like: /username/1/2/3
-            current_path = request.GET['current_path']
+            current_path = request.GET['path']
             api_key = request.GET['key']
             user = current_path.split("/")[1]
             meta_data = {}
@@ -45,7 +45,7 @@ def data(request):
             return HttpResponse(response)
 
         elif load_template == 'api_list_sub_items':
-            current_path = request.GET['current_path']
+            current_path = request.GET['path']
             api_key = request.GET['key']
             user = current_path.split("/")[1]
             items = []
