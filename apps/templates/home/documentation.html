@@ -319,8 +319,10 @@ Key features of the ADMA platform include:</p>
                ADMA exposes several data APIs to facilitate the data retrieval by authorized third-party programs. Data API is in REST style and the returned value is in human readable JSON format. Currently exposed API is as follows:
           </p>
  <ul>
-     <li><b>unlagdatamanagement.hopto.org/api_meta_data?path={path}&key={key}</b> </li>
-    <li>List sub files:</li>
+     <li><b>unlagdatamanagement.hopto.org/api_meta_data?path={path}&key={key}</b>
+         <p>This API will retrieve the metadata for any {path} which are visible to the user when the a {key} is specified.</p></li>
+    <li><b>unlagdatamanagement.hopto.org/api_list_sub_items?path={path}&key={key}</b>
+        <p>This API will list the sub files or directories for any {path} which are visible to the user when the a {key} is specified.</p></li>
 </ul>
 
    </section>
