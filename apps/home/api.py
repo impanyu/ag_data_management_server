@@ -30,6 +30,7 @@ def data(request):
         load_template = load_template.split('?')[0]
 
         if load_template == 'api_meta_data':
+            #here current data is like: /username/1/2/3
             current_path = request.GET['current_path']
             api_key = request.GET['key']
             user = current_path.split("/")[1]

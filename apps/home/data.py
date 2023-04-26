@@ -1368,6 +1368,8 @@ def get_meta_data(path):
     meta_data_file_path = os.path.join(settings.CORE_DIR, 'data', meta_data_file_name)
 
     if not os.path.exists(meta_data_file_path):
+        if not os.path.exists(path):
+            return {}
 
 
         if("." in os.path.basename(path)):
