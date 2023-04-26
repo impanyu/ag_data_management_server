@@ -1073,7 +1073,7 @@ def data(request):
             return HttpResponse(response)
 
         elif load_template == 'meta_data':
-            current_path = request.POST['current_path']
+            current_path = request.GET['current_path']
             meta_data={}
             meta_data = get_meta_data("/data/"+current_path)
             response = json.dumps(meta_data)
