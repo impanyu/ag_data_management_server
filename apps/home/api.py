@@ -53,17 +53,8 @@ def data(request):
             meta_data = get_meta_data("/data" + current_path)
             if api_key in api_keys and (user in api_keys[api_key] or meta_data["public"] == "True"):
                 for sub_path in meta_data["subdirs"]:
-
-                    sub_meta_data = get_meta_data(sub_path)
-                    if "Tool" in sub_meta_data["mode"]:
-                        running_containers = get_running_containers(sub_path)
-                        if len(running_containers) == 0:
-                            sub_meta_data["running"] = "False"
-                        else:
-                            sub_meta_data["running"] = "True"
-                    items.append(sub_meta_data)
+                    items.append(sub_path.substr(5))
                 items = sorted(items, key=lambda item: item["name"])
-
             else:
                 items = "API key is not valid!"
             response = json.dumps(items)
