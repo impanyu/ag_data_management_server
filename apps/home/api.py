@@ -36,7 +36,8 @@ def data(request):
             user = current_path.split("/")[1]
             meta_data = {}
             api_keys = get_api_keys()
-            if api_key in api_keys and user in api_keys[api_key]:
+            meta_data = get_meta_data("/data" + current_path)
+            if api_key in api_keys and (user in api_keys[api_key] or meta_data["public"] == "True"):
                 meta_data = get_meta_data("/data" + current_path)
             else:
                 meta_data = "API key is not valid!"
