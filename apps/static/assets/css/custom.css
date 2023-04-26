@@ -1,6 +1,14 @@
 html {
   font-size: 16px; /* You can set this to any desired value */
 }
+
+pre.doc_code {
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow-x: auto;
+        }
+
 figcaption{
 margin-top:20px;
 

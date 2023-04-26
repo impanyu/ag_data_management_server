@@ -323,38 +323,38 @@ Key features of the ADMA platform include:</p>
          <p style="font-size:1.25rem; font-weight:400">This API will retrieve the metadata for any {path} which are visible to the user when the a {key} is specified.</p>
          <p style="font-size:1.25rem; font-weight:400">For example, if the request url is <span style="background-color: #eee">unlagdatamanagement.hopto.org/api_meta_data?path=/ypan12/ag_data/green/21_E1801_AI03_index_green.shp&key=dwMmCIYP8ds</span>, we can retrieve the metadata for the file: /ypan12/ag_data/green/21_E1801_AI03_index_green.shp.
          The returned metadata will be in JSON format as follows:
-              <pre><code>
-     {
-     "mode": ["Data"],
-     "category": [],
-     "format": ["Shape"],
-     "label": [],
-     "time_range": {"start": "01/01/2030 00:00:00", "end": "01/01/2030 00:00:00"},
-     "spatial_range": {"southwest": {"lat": 41.17456760772918, "lng": -96.4644417742758}, "northeast": {"lat": 41.17873101181431, "lng": -96.45313039705833}},
-     "abs_path": "/data/ypan12/ag_data/green/21_E1801_AI03_index_green.shp",
-     "subdirs": [],
-     "public": "True",
-     "name": "21_E1801_AI03_index_green.shp",
-     "realtime": "Non-Realtime",
-     "upstream": {"upload": ["external resources"]},
-     "introduction": "",
-     "owner": "ypan12",
-     "native": {
-                "fields": [["DeletionFlag", "C", 1, 0], ["green", "N", 24, 15]],
-                "numRecords": 115938,
-                "shapeType": 11,
-                "shapeTypeName": "POINTZ",
-                "type": "FeatureCollection",
-                "columns": ["green", "geometry"],
-                "spatial_range": {"southwest": {"lat": 41.17456760772918, "lng": -96.4644417742758}, "northeast": {"lat": 41.17873101181431, "lng": -96.45313039705833}},
-                "name": "21_E1801_AI03_index_green.shp",
-                "created_time": "04/24/2023, 18:38:24",
-                "access_time": "04/21/2023, 22:21:46",
-                "size": 4173868},
-                "downstream": {
-                                "shp to image": ["/data/ypan12/ag_data/green/21_E1801_AI03_index_green.shp_col_green.png", "/data/ypan12/ag_data/green/21_E1801_AI03_index_green.shp_col_geometry.png"]
-                }
-     }
+              <pre class="doc_code"><code>
+ {
+ "mode": ["Data"],
+ "category": [],
+ "format": ["Shape"],
+ "label": [],
+ "time_range": {"start": "01/01/2030 00:00:00", "end": "01/01/2030 00:00:00"},
+ "spatial_range": {"southwest": {"lat": 41.17456760772918, "lng": -96.4644417742758}, "northeast": {"lat": 41.17873101181431, "lng": -96.45313039705833}},
+ "abs_path": "/data/ypan12/ag_data/green/21_E1801_AI03_index_green.shp",
+ "subdirs": [],
+ "public": "True",
+ "name": "21_E1801_AI03_index_green.shp",
+ "realtime": "Non-Realtime",
+ "upstream": {"upload": ["external resources"]},
+ "introduction": "",
+ "owner": "ypan12",
+ "native": {
+            "fields": [["DeletionFlag", "C", 1, 0], ["green", "N", 24, 15]],
+            "numRecords": 115938,
+            "shapeType": 11,
+            "shapeTypeName": "POINTZ",
+            "type": "FeatureCollection",
+            "columns": ["green", "geometry"],
+            "spatial_range": {"southwest": {"lat": 41.17456760772918, "lng": -96.4644417742758}, "northeast": {"lat": 41.17873101181431, "lng": -96.45313039705833}},
+            "name": "21_E1801_AI03_index_green.shp",
+            "created_time": "04/24/2023, 18:38:24",
+            "access_time": "04/21/2023, 22:21:46",
+            "size": 4173868},
+            "downstream": {
+                            "shp to image": ["/data/ypan12/ag_data/green/21_E1801_AI03_index_green.shp_col_green.png", "/data/ypan12/ag_data/green/21_E1801_AI03_index_green.shp_col_geometry.png"]
+            }
+ }
 </code></pre>
          </p>
      </li>
