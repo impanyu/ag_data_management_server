@@ -32,9 +32,11 @@ def data(request):
         if load_template == 'api_meta_data':
             current_path = request.GET['current_path']
             api_key = request.GET['key']
+            user = current_path.split("/")[1]
             meta_data = {}
-            if api_key == "AIzaSyBU1RvtD5YF8":
-                meta_data = get_meta_data("/data/" + current_path)
+            api_keys = get_api_keys()
+            if api_key in api_keys and user in api_keys[api_key]:
+                meta_data = get_meta_data("/data" + current_path)
             else:
                 meta_data = "API key is not valid!"
             response = json.dumps(meta_data)

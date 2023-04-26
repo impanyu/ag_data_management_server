@@ -969,6 +969,7 @@ def register_public():
 
 
 
+
     public_user_file_name = f"/data/public"
     public_user_meta_file_name = "_".join(public_user_file_name.split("/")[1:]) + ".json"
     public_data_file_name = f"/data/public/ag_data"
@@ -2086,3 +2087,18 @@ def get_running_containers(abs_path):
 
             # response.append({"container_id": key})
     return response
+
+
+def get_api_keys():
+    api_keys = cache.get("api_keys","")
+    if api_keys == "":
+        if not os.path.exists(os.path.join(settings.CORE_DIR, 'data','api_keys.json')):
+            with open(os.path.join(settings.CORE_DIR, 'data', 'api_keys.json'), "w") as api_keys_file:
+                json.dump(api_keys,api_keys_file)
+        else:
+            with open(os.path.join(settings.CORE_DIR, 'data','api_keys.json'), "r") as api_keys_file:
+                api_keys = json.load(api_keys_file)
+
+
+    #api_keys = {"AIzaSyBU1RvtD5YF8" : ""}
+    return api_keys
