@@ -918,9 +918,14 @@ def data(request):
             if f"/data/public" in abs_path or "Collection" in meta_data["mode"]:
                 for sub_path in meta_data["subdirs"]:
 
+
+
                     # if collection_path == f"/data/{request.user.get_username()}/collections":
                     #    continue
                     sub_meta_data = get_meta_data(sub_path)
+
+                    if not sub_path.split("/")[2] == request.user.get_username() and sub_meta_data["public"] == "False":
+                        continue
                     if "Tool" in sub_meta_data["mode"]:
                         running_containers = get_running_containers(sub_path)
                         if len(running_containers) == 0:
@@ -947,6 +952,9 @@ def data(request):
                 #if collection_path == f"/data/{request.user.get_username()}/collections":
                 #    continue
                 sub_meta_data = get_meta_data(sub_path)
+
+                if not sub_path.split("/")[2] == request.user.get_username() and sub_meta_data["public"] == "False":
+                    continue
                 if "Tool" in sub_meta_data["mode"]:
                     running_containers = get_running_containers(sub_path)
                     if len(running_containers) == 0:

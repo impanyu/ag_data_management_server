@@ -1518,6 +1518,8 @@ def shp_to_image(shp_path,col): # plot a column of shape file as png image
     with open(os.path.join(settings.CORE_DIR, 'data', shp_meta_data_file_name), "w") as shp_meta_data_file:
         json.dump(shp_meta, shp_meta_data_file)
 
+    img_meta_data["public"] = shp_meta["public"]
+
 
 
     img_meta_data_file_name = "_".join(img_path.split("/")[1:]) + ".json"
@@ -1619,6 +1621,8 @@ def tif_to_image(tif_path,band):
 
     if "spatial_range" in tif_meta:
         img_meta_data["spatial_range"] = tif_meta["spatial_range"]
+
+    img_meta_data["public"] = tif_meta["public"]
 
     img_meta_data_file_name = "_".join(img_path.split("/")[1:]) + ".json"
 
