@@ -683,7 +683,8 @@ def data(request):
 
             open(new_path, "w")
 
-            meta_data = get_meta_data(new_path)
+            meta_data = generate_meta_data_for_file(new_path,{"duplicate":[file_path]})
+            '''
             meta_data["name"] = os.path.basename(new_path)
             meta_data["abs_path"] = new_path
             meta_data["upstream"] = {}
@@ -694,6 +695,7 @@ def data(request):
 
             with open(os.path.join(settings.CORE_DIR, 'data', new_meta_data_file_name), "w") as new_meta_data_file:
                 json.dump(meta_data, new_meta_data_file)
+            '''
 
             #generate_meta_data_for_file(new_path, {"duplicate": [file_path]})
             update_parent_meta(new_path)
