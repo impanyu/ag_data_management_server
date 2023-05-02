@@ -666,20 +666,29 @@ def data(request):
             parent_path = os.path.dirname(file_path)
 
             suffix = file_path.split(".")[-1]
+            original_user = file_path.split("/")[1]
 
-            new_path = file_path
+            if request.user.get_username is original_user:
+                new_path = file_path
+                initial_path = file_path
+            else:
+                initial_path = os.path.join("/",request.user.get_username,"ag_data",file_name)
+                new_path = os.path.join("/",request.user.get_username,"ag_data",file_name)
+
             i = 1
+
             while (os.path.exists(new_path)):
-                new_path = file_path[0:-(len(suffix) + 1)] + "_" + str(i) + "." + suffix
+                new_path = initial_path[0:-(len(suffix) + 1)] + "_" + str(i) + "." + suffix
                 i = i + 1
 
             open(new_path, "w")
 
-            meta_data = get_meta_data(file_path)
+            meta_data = get_meta_data(new_path)
             meta_data["name"] = os.path.basename(new_path)
             meta_data["abs_path"] = new_path
             meta_data["upstream"] = {}
             meta_data["upstream"]["duplicate"] = [file_path]
+
 
             new_meta_data_file_name = "_".join(new_path.split("/")[1:]) + ".json"
 
