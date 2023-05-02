@@ -666,14 +666,14 @@ def data(request):
             parent_path = os.path.dirname(file_path)
 
             suffix = file_path.split(".")[-1]
-            original_user = file_path.split("/")[1]
+            original_user = file_path.split("/")[2]
 
             if request.user.get_username() is original_user:
                 new_path = file_path
                 initial_path = file_path
             else:
-                initial_path = os.path.join("/",request.user.get_username(),"ag_data",file_name)
-                new_path = os.path.join("/",request.user.get_username(),"ag_data",file_name)
+                initial_path = os.path.join("/data",request.user.get_username(),"ag_data",file_name)
+                new_path = os.path.join("/data",request.user.get_username(),"ag_data",file_name)
 
             i = 1
 
@@ -683,7 +683,7 @@ def data(request):
 
             open(new_path, "w")
 
-            meta_data = generate_meta_data_for_file(new_path,{"duplicate":[file_path]})
+
             '''
             meta_data["name"] = os.path.basename(new_path)
             meta_data["abs_path"] = new_path
@@ -702,8 +702,10 @@ def data(request):
 
             if "." in file_name:
                 shutil.copy2(file_path,new_path)
+                meta_data = generate_meta_data_for_file(new_path, {"duplicate": [file_path]})
             else:
                 shutil.copytree(file_path,new_path)
+                meta_data = generate_meta_data_for_dir(new_path, {"duplicate": [file_path]})
 
 
             return HttpResponse("file duplicated!")
