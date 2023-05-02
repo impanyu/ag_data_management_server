@@ -672,8 +672,8 @@ def data(request):
                 new_path = file_path
                 initial_path = file_path
             else:
-                initial_path = os.path.join("/",request.user.get_username,"ag_data",file_name)
-                new_path = os.path.join("/",request.user.get_username,"ag_data",file_name)
+                initial_path = os.path.join("/",request.user.get_username(),"ag_data",file_name)
+                new_path = os.path.join("/",request.user.get_username(),"ag_data",file_name)
 
             i = 1
 
