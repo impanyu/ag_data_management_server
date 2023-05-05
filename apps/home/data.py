@@ -1736,7 +1736,7 @@ def wait_for_container(container,notifier,handler,command,tool,hash_value):
             json.dump(parent_meta_data, parent_meta_data_file)
 
     upstream_privilege = "True"
-
+    '''
     for read_file in read_files:
         if os.path.isdir(read_file) or tool in read_file:
             continue
@@ -1763,7 +1763,7 @@ def wait_for_container(container,notifier,handler,command,tool,hash_value):
         with open(os.path.join(settings.CORE_DIR, 'data', read_meta_data_file_name), "w") as read_meta_data_file:
             json.dump(read_meta_data, read_meta_data_file)
 
-    '''
+   
     for written_file in written_files:
         if os.path.isdir(written_file):
             continue
