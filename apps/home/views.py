@@ -1118,8 +1118,14 @@ def data(request):
             file_path = request_data['current_path']
             meta_data = request_data["meta_data"]
 
-            update_meta("/data/"+file_path,meta_data)
+            abs_path = "/data/"+file_path
             response = "success"
+
+            if not abs_path.split("/")[2] == request.user.get_username() and  meta_data["public"] == "False":
+                pass
+            else:
+                update_meta("/data/"+file_path,meta_data)
+
             return HttpResponse(response)
 
         elif load_template == 'update_file':

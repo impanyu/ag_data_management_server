@@ -1437,7 +1437,7 @@ def get_meta_data(path):
         return meta_data
     suffix = file_name.split(".")[1]
     '''
-    if suffix == "shp":
+    if suffix == "":
         sf = shapefile.Reader(path)
         meta_data["native"] = {"fields":sf.fields, "numRecords":sf.numRecords, "shapeType":sf.shapeType,"shapeTypeName":sf.shapeTypeName,"type":sf.__geo_interface__['type']}
 
@@ -1735,6 +1735,34 @@ def wait_for_container(container,notifier,handler,command,tool,hash_value):
                   "w") as parent_meta_data_file:
             json.dump(parent_meta_data, parent_meta_data_file)
 
+    upstream_privilege = True
+
+    for read_file in read_files:
+        if os.path.isdir(read_file) or tool in read_file:
+            continue
+
+        read_meta_data_file_name = "_".join(read_file.split("/")[1:]) + ".json"
+        with open(os.path.join(settings.CORE_DIR, 'data', read_meta_data_file_name), "r") as read_meta_data_file:
+            read_meta_data = json.load(read_meta_data_file)
+        if not read_meta_data["public"]:
+            upstream_privilege = False
+        if "downstream" not in read_meta_data:
+            read_meta_data["downstream"] = {}
+        # read_meta_data["downstream"][tool] = []
+        if tool not in read_meta_data["downstream"]:
+            read_meta_data["downstream"][tool] = []
+
+        for written_file in written_files:
+            if os.path.isdir(written_file):
+                continue
+            if written_file in read_meta_data["downstream"][tool]:
+                continue
+
+            read_meta_data["downstream"][tool].append(written_file)
+
+        with open(os.path.join(settings.CORE_DIR, 'data', read_meta_data_file_name), "w") as read_meta_data_file:
+            json.dump(read_meta_data, read_meta_data_file)
+
     for written_file in written_files:
         if os.path.isdir(written_file):
             continue
@@ -1743,6 +1771,9 @@ def wait_for_container(container,notifier,handler,command,tool,hash_value):
         with open(os.path.join(settings.CORE_DIR, 'data', written_meta_data_file_name),
                   "r") as written_meta_data_file:
             written_meta_data = json.load(written_meta_data_file)
+
+        written_meta_data["public"] = upstream_privilege
+
         if "upstream" not in written_meta_data:
             written_meta_data["upstream"] = {}
         if tool not in written_meta_data["upstream"]:
@@ -1762,30 +1793,6 @@ def wait_for_container(container,notifier,handler,command,tool,hash_value):
         with open(os.path.join(settings.CORE_DIR, 'data', written_meta_data_file_name),
                   "w") as written_meta_data_file:
             json.dump(written_meta_data, written_meta_data_file)
-
-    for read_file in read_files:
-        if os.path.isdir(read_file) or tool in read_file:
-            continue
-
-        read_meta_data_file_name = "_".join(read_file.split("/")[1:]) + ".json"
-        with open(os.path.join(settings.CORE_DIR, 'data', read_meta_data_file_name), "r") as read_meta_data_file:
-            read_meta_data = json.load(read_meta_data_file)
-        if "downstream" not in read_meta_data:
-            read_meta_data["downstream"] = {}
-        # read_meta_data["downstream"][tool] = []
-        if tool not in read_meta_data["downstream"]:
-            read_meta_data["downstream"][tool] = []
-
-        for written_file in written_files:
-            if os.path.isdir(written_file):
-                continue
-            if written_file in read_meta_data["downstream"][tool]:
-                continue
-
-            read_meta_data["downstream"][tool].append(written_file)
-
-        with open(os.path.join(settings.CORE_DIR, 'data', read_meta_data_file_name), "w") as read_meta_data_file:
-            json.dump(read_meta_data, read_meta_data_file)
 
 
 
