@@ -1764,7 +1764,6 @@ def wait_for_container(container,notifier,handler,command,tool,hash_value):
             json.dump(read_meta_data, read_meta_data_file)
 
     '''
-
     for written_file in written_files:
         if os.path.isdir(written_file):
             continue
