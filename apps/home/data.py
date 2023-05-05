@@ -1763,6 +1763,8 @@ def wait_for_container(container,notifier,handler,command,tool,hash_value):
         with open(os.path.join(settings.CORE_DIR, 'data', read_meta_data_file_name), "w") as read_meta_data_file:
             json.dump(read_meta_data, read_meta_data_file)
 
+    '''
+
     for written_file in written_files:
         if os.path.isdir(written_file):
             continue
@@ -1793,8 +1795,7 @@ def wait_for_container(container,notifier,handler,command,tool,hash_value):
         with open(os.path.join(settings.CORE_DIR, 'data', written_meta_data_file_name),
                   "w") as written_meta_data_file:
             json.dump(written_meta_data, written_meta_data_file)
-
-
+    '''
 
 
 
