@@ -1773,7 +1773,7 @@ def wait_for_container(container,notifier,handler,command,tool,hash_value):
                   "r") as written_meta_data_file:
             written_meta_data = json.load(written_meta_data_file)
 
-        written_meta_data["public"] = "True"
+        written_meta_data["public"] = upstream_privilege
 
         if "upstream" not in written_meta_data:
             written_meta_data["upstream"] = {}
