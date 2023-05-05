@@ -1735,7 +1735,7 @@ def wait_for_container(container,notifier,handler,command,tool,hash_value):
                   "w") as parent_meta_data_file:
             json.dump(parent_meta_data, parent_meta_data_file)
 
-    upstream_privilege = True
+    upstream_privilege = "True"
 
     for read_file in read_files:
         if os.path.isdir(read_file) or tool in read_file:
@@ -1744,8 +1744,8 @@ def wait_for_container(container,notifier,handler,command,tool,hash_value):
         read_meta_data_file_name = "_".join(read_file.split("/")[1:]) + ".json"
         with open(os.path.join(settings.CORE_DIR, 'data', read_meta_data_file_name), "r") as read_meta_data_file:
             read_meta_data = json.load(read_meta_data_file)
-        if not read_meta_data["public"]:
-            upstream_privilege = False
+        if read_meta_data["public"] == "False":
+            upstream_privilege = "False"
         if "downstream" not in read_meta_data:
             read_meta_data["downstream"] = {}
         # read_meta_data["downstream"][tool] = []
@@ -1772,7 +1772,7 @@ def wait_for_container(container,notifier,handler,command,tool,hash_value):
                   "r") as written_meta_data_file:
             written_meta_data = json.load(written_meta_data_file)
 
-        written_meta_data["public"] = upstream_privilege
+        written_meta_data["public"] = "True"
 
         if "upstream" not in written_meta_data:
             written_meta_data["upstream"] = {}
