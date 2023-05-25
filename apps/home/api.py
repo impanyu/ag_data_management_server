@@ -21,6 +21,10 @@ from django.http import JsonResponse
 
 
 @csrf_exempt
+# function data(request) defines two apis as follows:
+# 1. api_meta_data: returns meta data of a file or folder
+# 2. api_list_sub_items: returns list of sub items of a folder
+
 def data(request):
     context = {}
     # All resource paths end in .html.
@@ -28,7 +32,7 @@ def data(request):
     try:
         load_template = request.path.split('/')[-1]
         load_template = load_template.split('?')[0]
-
+        
         if load_template == 'api_meta_data':
             #here current data is like: /username/1/2/3
             current_path = request.GET['path']
@@ -70,3 +74,4 @@ def data(request):
     except:
         html_template = loader.get_template('home/page-500.html')
         return HttpResponse(html_template.render(context, request))
+
