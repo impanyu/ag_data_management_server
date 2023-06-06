@@ -763,6 +763,24 @@ function set_tool_panel(){
                         '</div></div>'
 
   }
+  document.querySelector("#tool_panel_container").innerHTML +='<div class="row align-items-center py-4" >'+
+  '<div class="col-lg-3 col-12">'+
+      '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>Execution Environment</b></label>'+
+ '</div>'+
+  '<div class="col-lg-7 col-12">'+
+    
+ '<select class="form-control" aria-label="Default select example" id="exe_env">'+
+ '<option selected value="python_regular">Python Regular</option>'+
+ '<option value="python_ag">Python Agriculture</option>'+
+ '<option value="matlab">Matlab</option>'+
+  '</select>'+
+ '</div></div>'
+
+
+
+
+
+
   if(meta_data["args"]){
       for(arg in meta_data["args"]){
          arg_type =meta_data["args"][arg];
