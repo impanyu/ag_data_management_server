@@ -1798,7 +1798,9 @@ def wait_for_container(container,notifier,handler,command,tool,hash_value):
 
 
 
-def run_tool(entry_point,arg_values, arg_types,user):
+def run_tool(entry_point,arg_values, arg_types,user,exe_env):
+    env_to_image_name_mapper={"default":"","python_regular":"python_test","matlab":"matlab_image","python_ag":"python_ag"}
+    image_name = env_to_image_name_mapper[exe_env]
 
 
     root_dir = f"/data/{user}/ag_data"
@@ -1871,7 +1873,8 @@ def run_tool(entry_point,arg_values, arg_types,user):
 
 
     if ".py" in entry_point.split("/")[-1]:
-        image_name = "python_test"
+        if image_name == "":
+            image_name = "python_test"
         main_cmd = "python"
         command = [main_cmd, script_path] + [arg_values[arg_name] for arg_name in arg_values]
 
@@ -1887,7 +1890,8 @@ def run_tool(entry_point,arg_values, arg_types,user):
             auto_remove=True
         )
     elif ".m" in entry_point.split("/")[-1]:
-        image_name = "matlab_image"
+        if image_name == "":
+            image_name = "matlab_image"
         args =""
         i = 1
         for arg_name in arg_values:

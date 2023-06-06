@@ -1106,10 +1106,11 @@ def data(request):
             entry_point = request_data["entry_point"]
             arg_values = request_data["arg_values"]
             arg_types = request_data["arg_types"]
+            exe_env = request_data["exe_env"]
             print(request.user.get_username())
 
 
-            run_tool(entry_point,arg_values, arg_types,request.user.get_username())
+            run_tool(entry_point,arg_values, arg_types,request.user.get_username(),exe_env)
 
             response = "success"
             return HttpResponse(response)

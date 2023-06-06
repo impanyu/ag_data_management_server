@@ -768,9 +768,11 @@ function set_tool_panel(){
       '<label class="form-check-label"  style="width:100%;margin-bottom: 15px"><b>Execution Environment</b></label>'+
  '</div>'+
   '<div class="col-lg-7 col-12">'+
-    
+
+
  '<select class="form-control" aria-label="Default select example" id="exe_env">'+
- '<option selected value="python_regular">Python Regular</option>'+
+ '<option selected value="default">Default</option>'+
+ '<option value="python_regular">Python Regular</option>'+
  '<option value="python_ag">Python Agriculture</option>'+
  '<option value="matlab">Matlab</option>'+
   '</select>'+
@@ -881,12 +883,15 @@ function run_tool(){
        arg_values[arg] = document.querySelector("#arg_"+arg).value;
    }
 
+   exe_env = document.querySelector("#exe_env").value;
+
   //then send run tool request
        $.ajax({
          type: "POST",
          url:"/run_tool",
          data:JSON.stringify({
           entry_point: new_meta_data["entry_point"],
+          exe_env: exe_env,
           arg_values: arg_values,
           arg_types : args
 
