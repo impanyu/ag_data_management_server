@@ -91,6 +91,23 @@ def pages(request):
 
             html_template = loader.get_template('home/domain_main_page.html')
             return HttpResponse(html_template.render(context, request))
+        
+        elif load_template == 'stock.html':
+            context['current_path'] = request.GET['current_path']
+            context['segment'] = load_template
+
+            #context = {'segment': 'index'}
+            #print("in domains")
+            #domains = get_domains()
+
+            #domain_names=[]
+            #for domain_name in domains:
+            #    domain_names.append(domain_name)
+
+            #context["domains"] = domain_names
+
+            html_template = loader.get_template('home/stock.html')
+            return HttpResponse(html_template.render(context, request))
 
         elif load_template == 'collections.html':
             context['current_path'] = request.GET['current_path']
