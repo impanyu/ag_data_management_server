@@ -94,12 +94,13 @@ def pages(request):
         
         elif load_template == 'stock.html':
             #context['current_path'] = request.GET['current_path']
+            context['s'] = "123"
             context['segment'] = load_template
 
             file_names = ["super_high_freq_BCH"]
 
             stock_data = [1]#{"high_freq_BCH":{},"super_high_freq_BCH":{}}
-            context['s'] = "123"
+            
 
             '''
             for file_name in file_names:
