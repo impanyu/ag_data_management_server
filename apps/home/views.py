@@ -94,7 +94,7 @@ def pages(request):
         
         elif load_template == 'stock.html':
             #context['current_path'] = request.GET['current_path']
-            context['s'] = "123"
+            context['aaa'] = "123"
             context['segment'] = load_template
 
             file_names = ["super_high_freq_BCH"]
