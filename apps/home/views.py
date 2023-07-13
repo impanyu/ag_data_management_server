@@ -98,7 +98,7 @@ def pages(request):
 
             file_names = ["super_high_freq_BCH"]
 
-            stock_data = []#{"high_freq_BCH":{},"super_high_freq_BCH":{}}
+            stock_data = [1]#{"high_freq_BCH":{},"super_high_freq_BCH":{}}
             context['stock_data'] = stock_data
 
             '''
