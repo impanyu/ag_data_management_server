@@ -123,8 +123,10 @@ def pages(request):
 
             #context["domains"] = domain_names
 
+            from django.shortcuts import render
             html_template = loader.get_template('home/stock.html')
-            return HttpResponse(html_template.render(context, request))
+            return render(request, "home/stock.html", context)
+            #return HttpResponse(html_template.render(context, request))
 
         elif load_template == 'collections.html':
             context['current_path'] = request.GET['current_path']
