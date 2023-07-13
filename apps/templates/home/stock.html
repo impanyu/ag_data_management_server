@@ -4,7 +4,7 @@
 
 {% block content %}
 
-
+{% if stock_data %}
 {% for stock in stock_data %}
     
      <p>Title: {{ stock.name }}</p>
@@ -21,6 +21,9 @@
 
      <img src="/static/{{stock.name}}.png">
   {% endfor %} 
+  {% else %}
+  <p>No stock data available</p>
+{% endif %}
 
    
    <img src="/static/super_high_freq_BCH.png">
