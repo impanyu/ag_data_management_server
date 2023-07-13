@@ -96,7 +96,7 @@ def pages(request):
             #context['current_path'] = request.GET['current_path']
             context['segment'] = load_template
 
-            file_names = ["super_high_freq_BCH"]
+            file_names = ["super_high_freq_BCH","high_freq_BCH"]
 
             stock_data = []#{"high_freq_BCH":{},"super_high_freq_BCH":{}}
             
