@@ -94,7 +94,6 @@ def pages(request):
         
         elif load_template == 'stock.html':
             context['current_path'] = request.GET['current_path']
-            context['aaa'] = "123"
             context['segment'] = load_template
 
             file_names = ["super_high_freq_BCH"]
@@ -114,7 +113,6 @@ def pages(request):
                     print("The file does not exist.")
           
 
-
             context['stocks'] = stock_data
       
             #context = {'segment': 'index'}
@@ -127,10 +125,10 @@ def pages(request):
 
             #context["domains"] = domain_names
 
-            from django.shortcuts import render
+            #from django.shortcuts import render
             html_template = loader.get_template('home/stock.html')
-            return render(request, "home/stock.html", context)
-            #return HttpResponse(html_template.render(context, request))
+            #return render(request, "home/stock.html", context)
+            return HttpResponse(html_template.render(context, request))
 
         elif load_template == 'collections.html':
             context['current_path'] = request.GET['current_path']
