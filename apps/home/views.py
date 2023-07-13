@@ -118,7 +118,7 @@ def pages(request):
             }
 
             context['stock'] = stock_data[0]
-            context['stock1'] = my_dict
+            context['stock1'] = 1
             #context = {'segment': 'index'}
             #print("in domains")
             #domains = get_domains()
