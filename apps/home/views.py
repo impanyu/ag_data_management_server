@@ -99,10 +99,10 @@ def pages(request):
 
             file_names = ["super_high_freq_BCH"]
 
-            stock_data = [1]#{"high_freq_BCH":{},"super_high_freq_BCH":{}}
+            stock_data = []#{"high_freq_BCH":{},"super_high_freq_BCH":{}}
             
 
-            '''
+            
             for file_name in file_names:
                 file_path = "/home/impanyu/stock/{}.json".format(file_name)
                 try:
@@ -112,10 +112,10 @@ def pages(request):
                 
                 except FileNotFoundError:
                     print("The file does not exist.")
-            '''
+          
 
 
-            #context['stocks'] = stock_data
+            context['stocks'] = stock_data
       
             #context = {'segment': 'index'}
             #print("in domains")
