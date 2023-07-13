@@ -111,7 +111,7 @@ def pages(request):
                     print("The file does not exist.")
 
 
-            context['stock'] = stock_data
+            context['stock_data'] = stock_data
       
             #context = {'segment': 'index'}
             #print("in domains")
