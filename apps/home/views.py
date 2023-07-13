@@ -110,15 +110,9 @@ def pages(request):
                 except FileNotFoundError:
                     print("The file does not exist.")
 
-            my_dict = {
-                'key1': 'value1',
-                'key2': 'value2',
-                'profit': 'value3'
-                # add as many keys and values as you need
-            }
 
-            context['stock'] = stock_data[0]
-            context['stock1'] = 1
+            context['stock'] = stock_data
+      
             #context = {'segment': 'index'}
             #print("in domains")
             #domains = get_domains()

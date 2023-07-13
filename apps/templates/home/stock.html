@@ -1,29 +1,45 @@
+{% extends 'layouts/base.html' %}
 
-<html>
-  <head>
-    <title>
-      Stock Trading
-      </title>
-      <script>
-setTimeout(function(){
-   location.reload();
-}, 300000);
+{% block title %} Tables {% endblock title %}
 
-      </script>
-    </head>
-  <body>
-    
-    
-     
-     <p>Profit: {{ stock1 }}</p>
-    
+{% block content %}
 
-   <img src="/static/high_freq_BCH.png">
+
+{% for stock in stock_data %}
+    
+     <p>Title: {{ stock.name }}</p>
+     <p>Step: {{ stock.step }}</p>
+     <p>Time: {{ stock.time }}</p>
+     <p>Price: {{ stock.price }}</p>
+     <p>MA: {{ stock.ma }}</p>
+     <p>Price/MA: {{ stock.percent_to_ma }}</p>
+     <p>Cash: {{ stock.cash }}</p>
+     <p>Invested: {{ stock.invested }}</p>
+     <p>Invested Quantity: {{ stock.invested_quantity }}</p>
+     <p>Total: {{ stock.total }}</p>
+     <p>Profit: {{ stock.profit }}</p>
+
+     <img src="/static/{{stock.name}}.png">
+  {% endfor %} 
+
+   
    <img src="/static/super_high_freq_BCH.png">
 
 
+   {% include "includes/footer.html" %}
 
 
-</body>
-</html>
 
+   {% endblock content %}
+
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}
+
+<script>
+  setTimeout(function(){
+     location.reload();
+  }, 300000);
+  
+        </script>
+{% endblock javascripts %}
