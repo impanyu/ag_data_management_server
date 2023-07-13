@@ -99,6 +99,7 @@ def pages(request):
             file_names = ["super_high_freq_BCH"]
 
             stock_data = []#{"high_freq_BCH":{},"super_high_freq_BCH":{}}
+            context['stock_data'] = stock_data
 
             for file_name in file_names:
                 file_path = "/home/impanyu/stock/{}.json".format(file_name)
