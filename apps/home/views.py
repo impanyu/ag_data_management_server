@@ -93,7 +93,7 @@ def pages(request):
             return HttpResponse(html_template.render(context, request))
         
         elif load_template == 'stock.html':
-            context['current_path'] = request.GET['current_path']
+            #context['current_path'] = request.GET['current_path']
             context['segment'] = load_template
 
             file_names = ["super_high_freq_BCH"]
