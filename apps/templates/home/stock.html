@@ -1,4 +1,14 @@
-{% if stocks %}
+<html>
+  <head>
+    <script>
+      setTimeout(function(){
+         location.reload();
+      }, 300000);
+      
+        </script>
+    
+    </head>
+    <body>{% if stocks %}
 {% for stock in stocks %}
     
      <p>Title: {{ stock["name"] }}</p>
@@ -17,14 +27,9 @@
   {% endfor %} 
   {% else %}
   <p>No stock data available</p>
-{% endif %}
+{% endif %}</body>
 
+</html>
   
 
 
-<script>
-  setTimeout(function(){
-     location.reload();
-  }, 300000);
-  
-    </script>
