@@ -93,7 +93,7 @@ def pages(request):
             return HttpResponse(html_template.render(context, request))
         
         elif load_template == 'stock.html':
-            #context['current_path'] = request.GET['current_path']
+            context['current_path'] = request.GET['current_path']
             context['aaa'] = "123"
             context['segment'] = load_template
 
