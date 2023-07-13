@@ -107,7 +107,9 @@ def pages(request):
                 try:
                     # Attempt to open the file
                     with open(file_path, 'r') as f:
-                        stock_data.append (json.load(f))
+                        stock = json.load(f)
+                        if "name" in stock:
+                            stock_data.append (stock)
                 
                 except FileNotFoundError:
                     print("The file does not exist.")
