@@ -110,7 +110,7 @@ def pages(request):
                 except FileNotFoundError:
                     print("The file does not exist.")
 
-            context['stock_data'] = stock_data
+            context['stock'] = stock_data[0]
             #context = {'segment': 'index'}
             #print("in domains")
             #domains = get_domains()
