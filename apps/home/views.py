@@ -96,6 +96,21 @@ def pages(request):
             context['current_path'] = request.GET['current_path']
             context['segment'] = load_template
 
+            file_names = ["high_freq_BCH","super_high_freq_BCH"]
+
+            stock_data = []#{"high_freq_BCH":{},"super_high_freq_BCH":{}}
+
+            for file_name in file_names:
+                file_path = "/home/impanyu/stock/{}.json".format(file_name)
+                try:
+                    # Attempt to open the file
+                    with open(file_path, 'r') as f:
+                        stock_data.append (json.load(f))
+                
+                except FileNotFoundError:
+                    print("The file does not exist.")
+
+            context['stock_data'] = stock_data
             #context = {'segment': 'index'}
             #print("in domains")
             #domains = get_domains()

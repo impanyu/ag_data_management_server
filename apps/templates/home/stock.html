@@ -12,7 +12,28 @@ setTimeout(function(){
       </script>
     </head>
   <body>
-<img src="/static/stock.png">
+    {% for stock in stock_data %}
+     <p>Title: {{ stock.name }}</p>
+     <p>Step: {{ stock.step }}</p>
+     <p>Time: {{ stock.time }}</p>
+     <p>Price: {{ stock.price }}</p>
+     <p>MA: {{ stock.ma }}</p>
+     <p>Price/MA: {{ stock.percent_to_ma }}</p>
+     <p>Cash: {{ stock.cash }}</p>
+     <p>Invested: {{ stock.invested }}</p>
+     <p>Invested Quantity: {{ stock.invested_quantity }}</p>
+     <p>Total: {{ stock.total }}</p>
+     <p>Profit: {{ stock.profit }}</p>
+    
+
+
+     <img src="/static/high_freq_BCH.png">
+   {% endfor %}
+
+
+
+
+
 </body>
 </html>
 
