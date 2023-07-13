@@ -99,7 +99,7 @@ def pages(request):
             file_names = ["super_high_freq_BCH"]
 
             stock_data = [1]#{"high_freq_BCH":{},"super_high_freq_BCH":{}}
-            context['stock_data'] = stock_data
+            context['stocks'] = stock_data
 
             '''
             for file_name in file_names:
@@ -114,7 +114,7 @@ def pages(request):
             '''
 
 
-            context['stock_data'] = 1
+            context['stocks'] = stock_data
       
             #context = {'segment': 'index'}
             #print("in domains")
