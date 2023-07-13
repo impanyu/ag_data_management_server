@@ -3,17 +3,8 @@
 {% block title %} Tables {% endblock title %}
 
 {% block content %}
-<html>
-  <head>
-    <script>
-      setTimeout(function(){
-         location.reload();
-      }, 300000);
-      
-        </script>
-    
-    </head>
-    <body>{% if stocks %}
+
+{% if stocks %}
 {% for stock in stocks %}
        
     
@@ -33,9 +24,15 @@
   {% endfor %} 
   {% else %}
   <p>No stock data available</p>
-{% endif %}</body>
+{% endif %}
 
-</html>
+
   
 
 {% endblock content %}
+<script>
+  setTimeout(function(){
+     location.reload();
+  }, 300000);
+  
+    </script>
