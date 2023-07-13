@@ -3,7 +3,7 @@
 
 {% if stocks %}
 {% for stock in stocks %}
-   {% if "name" in stock %}
+   {% if stock.name %}
     
      <p>Title: {{ stock.name }}</p>
      <p>Step: {{ stock.step }}</p>
