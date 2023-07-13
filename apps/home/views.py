@@ -114,7 +114,7 @@ def pages(request):
             '''
 
 
-            context['stock_data'] = stock_data
+            context['stock_data'] = 1
       
             #context = {'segment': 'index'}
             #print("in domains")
