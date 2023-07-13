@@ -3,7 +3,7 @@
 
 {% if stocks %}
 {% for stock in stocks %}
-       
+   {% if "name" in stock %}
     
      <p>Title: {{ stock.name }}</p>
      <p>Step: {{ stock.step }}</p>
@@ -18,6 +18,7 @@
      <p>Profit: {{ stock.profit }}</p>
 
      <img src="/static/{{stock.name}}.png">
+     {% endif %}
   {% endfor %} 
   {% else %}
   <p>No stock data available</p>
