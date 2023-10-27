@@ -4,25 +4,18 @@
 
 {% block content %}
 
-.my-background {
-  
-  background-size: cover;  /* This will ensure the image covers the entire div */
-  background-repeat: no-repeat; /* This will prevent the image from repeating */
-}
-
-
 
   <!-- Page content -->
 
     <!--<div class="row">
       <div class="col">-->
-        <div class="card bg-unl" style="">
+        <div class="card bg-unl" >
           <!-- Card header -->
             <div style="padding:10px; background:#ddd" onclick="toggle_filter_condition_2()"><span id = "search_filter" ><h3 style="color:#666;margin-bottom:0px"><b>Search Filter</b></h3></span></div>
 
 
 
-          <div class="card-header border-0" id = "filter-condition" style="position:relative;height:1740px;background:#ddd;background-image: url('/static/assets/img/farm_land.png');padding-top:1.25rem; padding-bottom:1.25rem">
+          <div class="card-header border-0" id = "filter-condition" style="position:relative;height:1740px;background:#ddd;padding-top:1.25rem; padding-bottom:1.25rem">
                        <div class="row  py-4">
               <div class="col-lg-12 col-12">
               <div class="form-group mb-0">
@@ -219,13 +212,19 @@
 
 
               <div class="row align-items-center py-4" id="map_area" style="position:relative; ">
+
+
+
+
+          
+
+          </div>
+
           <div id="map_main" style="width:100%; height: 600px; margin: auto; margin-bottom: 1.5rem"> </div>
             <div id="files_plot" style="overflow:hidden;display:none;width:100%; height: 600px; margin: auto; margin-bottom: 1.5rem;background-color:white"></div>
                 <input class="btn btn-secondary" type="button" onclick="change_file_plot()" id="change_map" style = "position: absolute; top:40px; right:80px" value="Change Map">
                 <div id="tooltip" style="overflow:hidden"></div>
             </div>
-
-          </div>
 
 
 
