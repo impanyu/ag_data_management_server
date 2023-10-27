@@ -4,13 +4,21 @@
 
 {% block content %}
 
+.my-background {
+  background-image: url('path-to-your-image.jpg'); /* Change to the path of your image */
+  width: 300px;   /* You can adjust as per your requirement */
+  height: 300px;  /* You can adjust as per your requirement */
+  background-size: cover;  /* This will ensure the image covers the entire div */
+  background-repeat: no-repeat; /* This will prevent the image from repeating */
+}
+
 
 
   <!-- Page content -->
 
     <!--<div class="row">
       <div class="col">-->
-        <div class="card bg-unl">
+        <div class="card bg-unl" style="background-image: url('/static/assets/img/farm-land.png');">
           <!-- Card header -->
             <div style="padding:10px; background:#ddd" onclick="toggle_filter_condition_2()"><span id = "search_filter" ><h3 style="color:#666;margin-bottom:0px"><b>Search Filter</b></h3></span></div>
 
