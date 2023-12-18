@@ -1019,7 +1019,7 @@ def data(request):
                 field_id = abs_path.split("/")[-1]
 
                 # API Endpoint
-                url = "https://sandboxapi.deere.com/platform/organizations/4193081/fields/"+field_id
+                url = "https://sandboxapi.deere.com/platform/organizations/4193081/fields/"+field_id+"/fieldOperations"
 
                 # Headers
                 headers = {
