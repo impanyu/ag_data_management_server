@@ -2509,8 +2509,10 @@ function get_item_list(){
           //console.info(data_points)
           //draw_points(data_points);
 
-
-
+          //for each user's root folder, add enreec testbed
+          if(current_path.endsWith("ag_data")){
+            data.push({"name":"ENREEC TestBed", "running": "False",  "abs_path" :current_path+"/ENREEC_Testbed", "native":{"created_time":"01/01/2030 00:00:00","access_time":"01/01/2030 00:00:00","size":"0"}})
+          }
           //for(file of data.files){
           for(var i=0;i<data.length;i++){
 
