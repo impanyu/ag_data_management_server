@@ -960,6 +960,7 @@ def data(request):
         elif load_template == "file_system_virtual":
             current_path = request.POST['current_path']#f"{request.user.get_username()}/ag_data/collections"
             abs_path = f"/data/{current_path}"
+            items = []
 
 
             if abs_path == f"/data/{request.user.get_username()}/ag_data/ENREEC_Testbed":
@@ -1077,7 +1078,7 @@ def data(request):
 
             meta_data = get_meta_data(abs_path)
 
-            items = []
+            
 
             if not abs_path.split("/")[2] == request.user.get_username() and  meta_data["public"] == "False":
                 return HttpResponse(json.dumps(items))
