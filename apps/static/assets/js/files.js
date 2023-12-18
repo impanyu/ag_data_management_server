@@ -2558,43 +2558,6 @@ function get_item_list(){
                '<a class="dropdown-item" href="#" id="'+i+'_add_to_collection">Add to Collection</a>'
                '</div> </div></td></tr>';
 
-              document.querySelector("#enreec").addEventListener("click",function(){
-                  // API Endpoint
-                  const url = "https://sandboxapi.deere.com/platform/organizations/4193081";
-
-                  // Headers
-                  const headers = {
-                    "Authorization": "Bearer eyJraWQiOiI4M3k5QWZNV1p6enQ2SDJSVVNHeFAzUG5IN256SUlwUmN4MnZEdW9KRzJVIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULlZJMXp5VXpUU2pqbXZTSmVFMWZFN0h3MUE5VHdDVkxfaGViajFETXZ5SjAub2FyMWhzYmRsNzBja2p5dDI1ZDciLCJpc3MiOiJodHRwczovL3NpZ25pbi5qb2huZGVlcmUuY29tL29hdXRoMi9hdXM3OHRubGF5c01yYUZoQzF0NyIsImF1ZCI6ImNvbS5kZWVyZS5pc2cuYXhpb20iLCJpYXQiOjE3MDI4NjcwNTcsImV4cCI6MTcwMjkxMDI1NywiY2lkIjoiMG9hYnFpM2ljN1pGRVpFM3o1ZDciLCJ1aWQiOiIwMHVicWhqc2ozM2ZLd1ZvcTVkNyIsInNjcCI6WyJhZzIiLCJhZzEiLCJvZmZsaW5lX2FjY2VzcyIsImZpbGVzIiwiYWczIiwid29yazEiLCJvcmcxIiwid29yazIiLCJvcmcyIiwiZXEyIiwiZXExIl0sImF1dGhfdGltZSI6MTcwMTM4MTMxMSwic3ViIjoieXUucGFuQHVubC5lZHUiLCJpc2NzYyI6dHJ1ZSwidGllciI6IlNBTkRCT1giLCJjbmFtZSI6ImFnIGRhdGEgbWFuYWdlbWVudCIsInVzZXJUeXBlIjoiQ3VzdG9tZXIifQ.DiMGBT41XeseSOkHv-mBBKWLL95clDZjLXrmB6rDYd1YvkI3WPxGMO99WG4K453L02lbmoQ7df8eoFMtrn-9JNA74yK9CBvl-mr7bermRPwKS6JP-XyJ2fnJiJa5njQ7SHJP-o2bFG-GI0A89FAKKHGmsX-9i6qn1JqEs17MKPxuLrNmb-RqnXxnFWojv0N3W860fEbuF8sJjWhF687lKPTU8EwPoOGf0CLwq-EV0xdJHoFUQW7Z0dLTjboHUl3XvC4uj7itV7DW0bCwGS0QwITlfcjLPWvsAEgU3VKQhw5MCRLsj9v80qeELllPFiqXSUeP616pKGJ8JQ2h7hBaxw",
-                                      //Bearer eyJraWQiOiI4M3k5QWZNV1p6enQ2SDJSVVNHeFAzUG5IN256SUlwUmN4MnZEdW9KRzJVIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULlZJMXp5VXpUU2pqbXZTSmVFMWZFN0h3MUE5VHdDVkxfaGViajFETXZ5SjAub2FyMWhzYmRsNzBja2p5dDI1ZDciLCJpc3MiOiJodHRwczovL3NpZ25pbi5qb2huZGVlcmUuY29tL29hdXRoMi9hdXM3OHRubGF5c01yYUZoQzF0NyIsImF1ZCI6ImNvbS5kZWVyZS5pc2cuYXhpb20iLCJpYXQiOjE3MDI4NjcwNTcsImV4cCI6MTcwMjkxMDI1NywiY2lkIjoiMG9hYnFpM2ljN1pGRVpFM3o1ZDciLCJ1aWQiOiIwMHVicWhqc2ozM2ZLd1ZvcTVkNyIsInNjcCI6WyJhZzIiLCJhZzEiLCJvZmZsaW5lX2FjY2VzcyIsImZpbGVzIiwiYWczIiwid29yazEiLCJvcmcxIiwid29yazIiLCJvcmcyIiwiZXEyIiwiZXExIl0sImF1dGhfdGltZSI6MTcwMTM4MTMxMSwic3ViIjoieXUucGFuQHVubC5lZHUiLCJpc2NzYyI6dHJ1ZSwidGllciI6IlNBTkRCT1giLCJjbmFtZSI6ImFnIGRhdGEgbWFuYWdlbWVudCIsInVzZXJUeXBlIjoiQ3VzdG9tZXIifQ.DiMGBT41XeseSOkHv-mBBKWLL95clDZjLXrmB6rDYd1YvkI3WPxGMO99WG4K453L02lbmoQ7df8eoFMtrn-9JNA74yK9CBvl-mr7bermRPwKS6JP-XyJ2fnJiJa5njQ7SHJP-o2bFG-GI0A89FAKKHGmsX-9i6qn1JqEs17MKPxuLrNmb-RqnXxnFWojv0N3W860fEbuF8sJjWhF687lKPTU8EwPoOGf0CLwq-EV0xdJHoFUQW7Z0dLTjboHUl3XvC4uj7itV7DW0bCwGS0QwITlfcjLPWvsAEgU3VKQhw5MCRLsj9v80qeELllPFiqXSUeP616pKGJ8JQ2h7hBaxw
-                    "Host": "http://unlagdatamanagement.hopto.org/",
-                    "User-Agent": "ADMA",
-                    "Accept": "application/vnd.deere.axiom.v3+json",
-                    "Connection": "keep-alive",
-                    "Accept-Encoding": "gzip, deflate, br"
-                  };
-
-                  // Sending the GET request
-                  fetch(url, { method: "GET", headers: headers })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! Status: ${response.status}`);
-                        }
-                        return response.json(); // or response.text() if the response is not in JSON format
-                    })
-                    .then(data => {
-                        console.log("Success:", data);
-                        
-
-
-                    })
-                    .catch(error => {
-                        console.log("Failed to retrieve data:", error.message);
-                    });
-
-
-
-              }  );
-
             }
             else{
             item_html =  '<tr  class="file_and_dir_item" id="'+i+'_file_and_dir"><td scope="row"><div class="media align-items-center"><div class="media-body">'+icon+'<span class="name mb-0 text-sm"> &nbsp;<a href="/files.html?current_path='+file["abs_path"].substr(6)+
@@ -2610,6 +2573,48 @@ function get_item_list(){
             }
             item_node = htmlToElement(item_html);
             $("#file_list")[0].appendChild(item_node);
+            if (document.querySelector("#enreec"))
+                    document.querySelector("#enreec").addEventListener("click",function(){
+                      // API Endpoint
+                      const url = "https://sandboxapi.deere.com/platform/organizations/4193081";
+
+                      // Headers
+                      const headers = {
+                        "Authorization": "Bearer eyJraWQiOiI4M3k5QWZNV1p6enQ2SDJSVVNHeFAzUG5IN256SUlwUmN4MnZEdW9KRzJVIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULlZJMXp5VXpUU2pqbXZTSmVFMWZFN0h3MUE5VHdDVkxfaGViajFETXZ5SjAub2FyMWhzYmRsNzBja2p5dDI1ZDciLCJpc3MiOiJodHRwczovL3NpZ25pbi5qb2huZGVlcmUuY29tL29hdXRoMi9hdXM3OHRubGF5c01yYUZoQzF0NyIsImF1ZCI6ImNvbS5kZWVyZS5pc2cuYXhpb20iLCJpYXQiOjE3MDI4NjcwNTcsImV4cCI6MTcwMjkxMDI1NywiY2lkIjoiMG9hYnFpM2ljN1pGRVpFM3o1ZDciLCJ1aWQiOiIwMHVicWhqc2ozM2ZLd1ZvcTVkNyIsInNjcCI6WyJhZzIiLCJhZzEiLCJvZmZsaW5lX2FjY2VzcyIsImZpbGVzIiwiYWczIiwid29yazEiLCJvcmcxIiwid29yazIiLCJvcmcyIiwiZXEyIiwiZXExIl0sImF1dGhfdGltZSI6MTcwMTM4MTMxMSwic3ViIjoieXUucGFuQHVubC5lZHUiLCJpc2NzYyI6dHJ1ZSwidGllciI6IlNBTkRCT1giLCJjbmFtZSI6ImFnIGRhdGEgbWFuYWdlbWVudCIsInVzZXJUeXBlIjoiQ3VzdG9tZXIifQ.DiMGBT41XeseSOkHv-mBBKWLL95clDZjLXrmB6rDYd1YvkI3WPxGMO99WG4K453L02lbmoQ7df8eoFMtrn-9JNA74yK9CBvl-mr7bermRPwKS6JP-XyJ2fnJiJa5njQ7SHJP-o2bFG-GI0A89FAKKHGmsX-9i6qn1JqEs17MKPxuLrNmb-RqnXxnFWojv0N3W860fEbuF8sJjWhF687lKPTU8EwPoOGf0CLwq-EV0xdJHoFUQW7Z0dLTjboHUl3XvC4uj7itV7DW0bCwGS0QwITlfcjLPWvsAEgU3VKQhw5MCRLsj9v80qeELllPFiqXSUeP616pKGJ8JQ2h7hBaxw",
+                                          //Bearer eyJraWQiOiI4M3k5QWZNV1p6enQ2SDJSVVNHeFAzUG5IN256SUlwUmN4MnZEdW9KRzJVIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULlZJMXp5VXpUU2pqbXZTSmVFMWZFN0h3MUE5VHdDVkxfaGViajFETXZ5SjAub2FyMWhzYmRsNzBja2p5dDI1ZDciLCJpc3MiOiJodHRwczovL3NpZ25pbi5qb2huZGVlcmUuY29tL29hdXRoMi9hdXM3OHRubGF5c01yYUZoQzF0NyIsImF1ZCI6ImNvbS5kZWVyZS5pc2cuYXhpb20iLCJpYXQiOjE3MDI4NjcwNTcsImV4cCI6MTcwMjkxMDI1NywiY2lkIjoiMG9hYnFpM2ljN1pGRVpFM3o1ZDciLCJ1aWQiOiIwMHVicWhqc2ozM2ZLd1ZvcTVkNyIsInNjcCI6WyJhZzIiLCJhZzEiLCJvZmZsaW5lX2FjY2VzcyIsImZpbGVzIiwiYWczIiwid29yazEiLCJvcmcxIiwid29yazIiLCJvcmcyIiwiZXEyIiwiZXExIl0sImF1dGhfdGltZSI6MTcwMTM4MTMxMSwic3ViIjoieXUucGFuQHVubC5lZHUiLCJpc2NzYyI6dHJ1ZSwidGllciI6IlNBTkRCT1giLCJjbmFtZSI6ImFnIGRhdGEgbWFuYWdlbWVudCIsInVzZXJUeXBlIjoiQ3VzdG9tZXIifQ.DiMGBT41XeseSOkHv-mBBKWLL95clDZjLXrmB6rDYd1YvkI3WPxGMO99WG4K453L02lbmoQ7df8eoFMtrn-9JNA74yK9CBvl-mr7bermRPwKS6JP-XyJ2fnJiJa5njQ7SHJP-o2bFG-GI0A89FAKKHGmsX-9i6qn1JqEs17MKPxuLrNmb-RqnXxnFWojv0N3W860fEbuF8sJjWhF687lKPTU8EwPoOGf0CLwq-EV0xdJHoFUQW7Z0dLTjboHUl3XvC4uj7itV7DW0bCwGS0QwITlfcjLPWvsAEgU3VKQhw5MCRLsj9v80qeELllPFiqXSUeP616pKGJ8JQ2h7hBaxw
+                        "Host": "http://unlagdatamanagement.hopto.org/",
+                        "User-Agent": "ADMA",
+                        "Accept": "application/vnd.deere.axiom.v3+json",
+                        "Connection": "keep-alive",
+                        "Accept-Encoding": "gzip, deflate, br"
+                      };
+
+                      // Sending the GET request
+                      fetch(url, { method: "GET", headers: headers })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! Status: ${response.status}`);
+                            }
+                            return response.json(); // or response.text() if the response is not in JSON format
+                        })
+                        .then(data => {
+                            console.log("Success:", data);
+                            
+
+
+                        })
+                        .catch(error => {
+                            console.log("Failed to retrieve data:", error.message);
+                        });
+
+
+
+                  }  );
+
+
+
+
+
 
             $(".file_and_dir_item").click(function(){
                 //file_name = this.id.split("_")[this.id.split("_").length-1]
