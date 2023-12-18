@@ -988,7 +988,7 @@ def data(request):
                     fields = jd_response.json()
                     for field in fields["values"]:
                         #items.append({"name":"ENREEC TestBed", "running": "False",  "abs_path" :current_path+"/ENREEC_Testbed", "native":{"created_time":"01/01/2020 00:00:00","access_time":"01/01/2020 00:00:00","size":"0"}})
-                        item = {}
+                        item = {"native":{}}
                         item["name"] = field["name"]
                         item["running"] = "False"
                         item["abs_path"] = abs_path + "/" + field["id"]
@@ -1000,9 +1000,9 @@ def data(request):
                         date_obj = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%S.%fZ")
 
                         # Format the datetime object into the desired string format
-                        item["created_time"] = date_obj.strftime("%d/%m/%Y %H:%M:%S")
-                        item["access_time"] = date_obj.strftime("%d/%m/%Y %H:%M:%S")
-                        item["size"] = 0
+                        item["native"]["created_time"] = date_obj.strftime("%d/%m/%Y %H:%M:%S")
+                        item["native"]["access_time"] = date_obj.strftime("%d/%m/%Y %H:%M:%S")
+                        item["native"]["size"] = 0
                         items.append(item)
 
 
@@ -1039,7 +1039,7 @@ def data(request):
                     print("Success:")
                     field_ops = jd_response.json()
                     for field_op in field_ops["values"]:
-                        item = {}
+                        item = {"native":{}}
                         #items.append({"name":"ENREEC TestBed", "running": "False",  "abs_path" :current_path+"/ENREEC_Testbed", "native":{"created_time":"01/01/2020 00:00:00","access_time":"01/01/2020 00:00:00","size":"0"}})
                         item["name"] = field_op["id"]
                         item["running"] = "False"
@@ -1052,7 +1052,7 @@ def data(request):
                         date_obj = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%S.%fZ")
 
                         # Format the datetime object into the desired string format
-                        item["access_time"] = date_obj.strftime("%d/%m/%Y %H:%M:%S")
+                        item["native"]["access_time"] = date_obj.strftime("%d/%m/%Y %H:%M:%S")
 
                         # Original date string
                         date_str = field_op["startDate"] 
@@ -1061,10 +1061,10 @@ def data(request):
                         date_obj = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%S.%fZ")
 
                         # Format the datetime object into the desired string format
-                        item["created_time"] = date_obj.strftime("%d/%m/%Y %H:%M:%S")
+                        item["native"]["created_time"] = date_obj.strftime("%d/%m/%Y %H:%M:%S")
 
 
-                        item["size"] = 0
+                        item["native"]["size"] = 0
                         items.append(item)
 
 
