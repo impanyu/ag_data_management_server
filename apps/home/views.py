@@ -38,7 +38,7 @@ import copy
 
 from PIL import Image
 from PIL.TiffTags import TAGS
-import datetime
+from datetime import datetime
 from .forms import UploadFileForm
 
 
@@ -993,6 +993,121 @@ def data(request):
                 response = json.dumps(items)
 
                 return HttpResponse(response)
+            
+            if abs_path == f"/data/{request.user.get_username()}/ag_data/ENREEC_Testbed":
+                import requests
+
+                # API Endpoint
+                url = "https://sandboxapi.deere.com/platform/organizations/4193081/fields"
+
+                # Headers
+                headers = {
+                    "Authorization": "Bearer eyJraWQiOiI4M3k5QWZNV1p6enQ2SDJSVVNHeFAzUG5IN256SUlwUmN4MnZEdW9KRzJVIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULlZJMXp5VXpUU2pqbXZTSmVFMWZFN0h3MUE5VHdDVkxfaGViajFETXZ5SjAub2FyMWhzYmRsNzBja2p5dDI1ZDciLCJpc3MiOiJodHRwczovL3NpZ25pbi5qb2huZGVlcmUuY29tL29hdXRoMi9hdXM3OHRubGF5c01yYUZoQzF0NyIsImF1ZCI6ImNvbS5kZWVyZS5pc2cuYXhpb20iLCJpYXQiOjE3MDI4NjcwNTcsImV4cCI6MTcwMjkxMDI1NywiY2lkIjoiMG9hYnFpM2ljN1pGRVpFM3o1ZDciLCJ1aWQiOiIwMHVicWhqc2ozM2ZLd1ZvcTVkNyIsInNjcCI6WyJhZzIiLCJhZzEiLCJvZmZsaW5lX2FjY2VzcyIsImZpbGVzIiwiYWczIiwid29yazEiLCJvcmcxIiwid29yazIiLCJvcmcyIiwiZXEyIiwiZXExIl0sImF1dGhfdGltZSI6MTcwMTM4MTMxMSwic3ViIjoieXUucGFuQHVubC5lZHUiLCJpc2NzYyI6dHJ1ZSwidGllciI6IlNBTkRCT1giLCJjbmFtZSI6ImFnIGRhdGEgbWFuYWdlbWVudCIsInVzZXJUeXBlIjoiQ3VzdG9tZXIifQ.DiMGBT41XeseSOkHv-mBBKWLL95clDZjLXrmB6rDYd1YvkI3WPxGMO99WG4K453L02lbmoQ7df8eoFMtrn-9JNA74yK9CBvl-mr7bermRPwKS6JP-XyJ2fnJiJa5njQ7SHJP-o2bFG-GI0A89FAKKHGmsX-9i6qn1JqEs17MKPxuLrNmb-RqnXxnFWojv0N3W860fEbuF8sJjWhF687lKPTU8EwPoOGf0CLwq-EV0xdJHoFUQW7Z0dLTjboHUl3XvC4uj7itV7DW0bCwGS0QwITlfcjLPWvsAEgU3VKQhw5MCRLsj9v80qeELllPFiqXSUeP616pKGJ8JQ2h7hBaxw",
+                    "Host": "http://unlagdatamanagement.hopto.org/",
+                    "User-Agent": "ADMA",
+                    "Accept": "application/vnd.deere.axiom.v3+json",
+                    "Connection": "keep-alive",
+                    "Accept-Encoding": "gzip, deflate, br"
+                }
+
+                # Sending the GET request
+                jd_response = requests.get(url, headers=headers)
+
+                # Checking the response
+                if jd_response.status_code == 200:
+                    print("Success:")
+                    fields = jd_response.json()
+                    for field in fields["values"]:
+                        #items.append({"name":"ENREEC TestBed", "running": "False",  "abs_path" :current_path+"/ENREEC_Testbed", "native":{"created_time":"01/01/2020 00:00:00","access_time":"01/01/2020 00:00:00","size":"0"}})
+                        item["name"] = field["name"]
+                        item["running"] = "False"
+                        item["abs_path"] = abs_path + "/" + field["id"]
+
+                        # Original date string
+                        date_str = field["lastModifiedTime"] 
+
+                        # Parse the original string into a datetime object
+                        date_obj = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%S.%fZ")
+
+                        # Format the datetime object into the desired string format
+                        item["created_time"] = date_obj.strftime("%d/%m/%Y %H:%M:%S")
+                        item["access_time"] = date_obj.strftime("%d/%m/%Y %H:%M:%S")
+                        item["size"] = 0
+                        items.append(item)
+
+
+               
+                else:
+                    print("Failed to retrieve data:")
+                
+                response = json.dumps(items)
+
+                return HttpResponse(response)
+            
+            if abs_path.startswith(f"/data/{request.user.get_username()}/ag_data/ENREEC_Testbed") and len(abs_path.split("/"))==6: #a field is selected
+                import requests
+                field_id = abs_path.split("/")[-1]
+
+                # API Endpoint
+                url = "https://sandboxapi.deere.com/platform/organizations/4193081/fields/"+field_id
+
+                # Headers
+                headers = {
+                    "Authorization": "Bearer eyJraWQiOiI4M3k5QWZNV1p6enQ2SDJSVVNHeFAzUG5IN256SUlwUmN4MnZEdW9KRzJVIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULlZJMXp5VXpUU2pqbXZTSmVFMWZFN0h3MUE5VHdDVkxfaGViajFETXZ5SjAub2FyMWhzYmRsNzBja2p5dDI1ZDciLCJpc3MiOiJodHRwczovL3NpZ25pbi5qb2huZGVlcmUuY29tL29hdXRoMi9hdXM3OHRubGF5c01yYUZoQzF0NyIsImF1ZCI6ImNvbS5kZWVyZS5pc2cuYXhpb20iLCJpYXQiOjE3MDI4NjcwNTcsImV4cCI6MTcwMjkxMDI1NywiY2lkIjoiMG9hYnFpM2ljN1pGRVpFM3o1ZDciLCJ1aWQiOiIwMHVicWhqc2ozM2ZLd1ZvcTVkNyIsInNjcCI6WyJhZzIiLCJhZzEiLCJvZmZsaW5lX2FjY2VzcyIsImZpbGVzIiwiYWczIiwid29yazEiLCJvcmcxIiwid29yazIiLCJvcmcyIiwiZXEyIiwiZXExIl0sImF1dGhfdGltZSI6MTcwMTM4MTMxMSwic3ViIjoieXUucGFuQHVubC5lZHUiLCJpc2NzYyI6dHJ1ZSwidGllciI6IlNBTkRCT1giLCJjbmFtZSI6ImFnIGRhdGEgbWFuYWdlbWVudCIsInVzZXJUeXBlIjoiQ3VzdG9tZXIifQ.DiMGBT41XeseSOkHv-mBBKWLL95clDZjLXrmB6rDYd1YvkI3WPxGMO99WG4K453L02lbmoQ7df8eoFMtrn-9JNA74yK9CBvl-mr7bermRPwKS6JP-XyJ2fnJiJa5njQ7SHJP-o2bFG-GI0A89FAKKHGmsX-9i6qn1JqEs17MKPxuLrNmb-RqnXxnFWojv0N3W860fEbuF8sJjWhF687lKPTU8EwPoOGf0CLwq-EV0xdJHoFUQW7Z0dLTjboHUl3XvC4uj7itV7DW0bCwGS0QwITlfcjLPWvsAEgU3VKQhw5MCRLsj9v80qeELllPFiqXSUeP616pKGJ8JQ2h7hBaxw",
+                    "Host": "http://unlagdatamanagement.hopto.org/",
+                    "User-Agent": "ADMA",
+                    "Accept": "application/vnd.deere.axiom.v3+json",
+                    "Connection": "keep-alive",
+                    "Accept-Encoding": "gzip, deflate, br"
+                }
+
+                # Sending the GET request
+                jd_response = requests.get(url, headers=headers)
+
+                # Checking the response
+                if jd_response.status_code == 200:
+                    print("Success:")
+                    field_ops = jd_response.json()
+                    for field_op in field_ops["values"]:
+                        #items.append({"name":"ENREEC TestBed", "running": "False",  "abs_path" :current_path+"/ENREEC_Testbed", "native":{"created_time":"01/01/2020 00:00:00","access_time":"01/01/2020 00:00:00","size":"0"}})
+                        item["name"] = field_op["id"]
+                        item["running"] = "False"
+                        item["abs_path"] = abs_path + "/" + field_op["id"]
+
+                        # Original date string
+                        date_str = field_op["modifiedTime"] 
+
+                        # Parse the original string into a datetime object
+                        date_obj = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%S.%fZ")
+
+                        # Format the datetime object into the desired string format
+                        item["access_time"] = date_obj.strftime("%d/%m/%Y %H:%M:%S")
+
+                        # Original date string
+                        date_str = field_op["startDate"] 
+
+                        # Parse the original string into a datetime object
+                        date_obj = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%S.%fZ")
+
+                        # Format the datetime object into the desired string format
+                        item["created_time"] = date_obj.strftime("%d/%m/%Y %H:%M:%S")
+
+
+                        item["size"] = 0
+                        items.append(item)
+
+
+               
+                else:
+                    print("Failed to retrieve data:")
+                
+                response = json.dumps(items)
+
+                return HttpResponse(response)
+            
+
+
+
 
             if abs_path == f"/data/{request.user.get_username()}/ag_data":
                 sub_meta_data = get_meta_data("/data/public/ag_data")

@@ -2511,7 +2511,7 @@ function get_item_list(){
 
           //for each user's root folder, add enreec testbed
           if(current_path.endsWith("ag_data")){
-            data.push({"name":"ENREEC TestBed", "running": "False",  "abs_path" :current_path+"/ENREEC_Testbed", "native":{"created_time":"01/01/2030 00:00:00","access_time":"01/01/2030 00:00:00","size":"0"}})
+            data.push({"name":"ENREEC TestBed", "running": "False",  "abs_path" :current_path+"/ENREEC_Testbed", "native":{"created_time":"01/01/2020 00:00:00","access_time":"01/01/2020 00:00:00","size":"0"}})
           }
           //for(file of data.files){
           for(var i=0;i<data.length;i++){
@@ -2547,8 +2547,8 @@ function get_item_list(){
 
             if (file["abs_path"] == current_path+"/ENREEC_Testbed"){
 
-              item_html =  '<tr  class="file_and_dir_item" id="'+i+'_file_and_dir"><td scope="row"><div class="media align-items-center"><div class="media-body">'+icon+'<span class="name mb-0 text-sm"> &nbsp;<a'+
-              ' id = "enreec"> ' +file["name"]+ '</a></span> </div></div></td>" + "<td class="budget">'+file["native"]["created_time"]+'</td>"' +
+              item_html =  '<tr  class="file_and_dir_item" id="'+i+'_file_and_dir"><td scope="row"><div class="media align-items-center"><div class="media-body">'+icon+'<span class="name mb-0 text-sm"> &nbsp;<a href="/files.html?current_path='+file["abs_path"].substr(6)+
+              '&dir=false"> ' +file["name"]+ '</a></span> </div></div></td>" + "<td class="budget">'+file["native"]["created_time"]+'</td>"' +
                '<td> <span class="badge badge-dot mr-4">  <span class="status">'+file["native"]["access_time"]+'</span></span></td>' +
                '<td> <span class="badge badge-dot mr-4">  <span class="status">'+file["native"]["size"]+'</span></span></td>' +
                '<td> <div class="avatar-group"> <a href="#" data-toggle="tooltip" data-original-title='+user+'>'+file['owner']+'</a></div></td>' +
@@ -2573,6 +2573,7 @@ function get_item_list(){
             }
             item_node = htmlToElement(item_html);
             $("#file_list")[0].appendChild(item_node);
+            /*
             if (document.querySelector("#enreec"))
                     document.querySelector("#enreec").addEventListener("click",function(){
                       // API Endpoint
@@ -2611,7 +2612,7 @@ function get_item_list(){
 
                   }  );
 
-
+                */
 
 
 

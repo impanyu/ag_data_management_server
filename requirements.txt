@@ -25,4 +25,4 @@ pyinotify
 django-allauth
 psutil
 dockerspawner
-
+requests
