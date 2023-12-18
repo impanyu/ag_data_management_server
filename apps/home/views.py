@@ -962,38 +962,6 @@ def data(request):
             abs_path = f"/data/{current_path}"
 
 
-            meta_data = get_meta_data(abs_path)
-
-            items = []
-
-            if not abs_path.split("/")[2] == request.user.get_username() and  meta_data["public"] == "False":
-                return HttpResponse(json.dumps(items))
-
-            if f"/data/public" in abs_path or "Collection" in meta_data["mode"]:
-                for sub_path in meta_data["subdirs"]:
-
-
-
-                    # if collection_path == f"/data/{request.user.get_username()}/collections":
-                    #    continue
-                    sub_meta_data = get_meta_data(sub_path)
-
-                    if not sub_path.split("/")[2] == request.user.get_username() and sub_meta_data["public"] == "False":
-                        continue
-                    if "Tool" in sub_meta_data["mode"]:
-                        running_containers = get_running_containers(sub_path)
-                        if len(running_containers) == 0:
-                            sub_meta_data["running"] = "False"
-                        else:
-                            sub_meta_data["running"] = "True"
-
-                    items.append(sub_meta_data)
-                items = sorted(items, key=lambda item: item["name"])
-
-                response = json.dumps(items)
-
-                return HttpResponse(response)
-            
             if abs_path == f"/data/{request.user.get_username()}/ag_data/ENREEC_Testbed":
                 import requests
 
@@ -1104,6 +1072,42 @@ def data(request):
                 response = json.dumps(items)
 
                 return HttpResponse(response)
+
+
+
+            meta_data = get_meta_data(abs_path)
+
+            items = []
+
+            if not abs_path.split("/")[2] == request.user.get_username() and  meta_data["public"] == "False":
+                return HttpResponse(json.dumps(items))
+
+            if f"/data/public" in abs_path or "Collection" in meta_data["mode"]:
+                for sub_path in meta_data["subdirs"]:
+
+
+
+                    # if collection_path == f"/data/{request.user.get_username()}/collections":
+                    #    continue
+                    sub_meta_data = get_meta_data(sub_path)
+
+                    if not sub_path.split("/")[2] == request.user.get_username() and sub_meta_data["public"] == "False":
+                        continue
+                    if "Tool" in sub_meta_data["mode"]:
+                        running_containers = get_running_containers(sub_path)
+                        if len(running_containers) == 0:
+                            sub_meta_data["running"] = "False"
+                        else:
+                            sub_meta_data["running"] = "True"
+
+                    items.append(sub_meta_data)
+                items = sorted(items, key=lambda item: item["name"])
+
+                response = json.dumps(items)
+
+                return HttpResponse(response)
+            
+            
             
 
 
