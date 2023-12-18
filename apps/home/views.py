@@ -988,6 +988,7 @@ def data(request):
                     fields = jd_response.json()
                     for field in fields["values"]:
                         #items.append({"name":"ENREEC TestBed", "running": "False",  "abs_path" :current_path+"/ENREEC_Testbed", "native":{"created_time":"01/01/2020 00:00:00","access_time":"01/01/2020 00:00:00","size":"0"}})
+                        item = {}
                         item["name"] = field["name"]
                         item["running"] = "False"
                         item["abs_path"] = abs_path + "/" + field["id"]
@@ -1038,6 +1039,7 @@ def data(request):
                     print("Success:")
                     field_ops = jd_response.json()
                     for field_op in field_ops["values"]:
+                        item = {}
                         #items.append({"name":"ENREEC TestBed", "running": "False",  "abs_path" :current_path+"/ENREEC_Testbed", "native":{"created_time":"01/01/2020 00:00:00","access_time":"01/01/2020 00:00:00","size":"0"}})
                         item["name"] = field_op["id"]
                         item["running"] = "False"
