@@ -2545,7 +2545,7 @@ function get_item_list(){
                    '<a class="dropdown-item"  id="'+i+'_duplicate">Duplicate</a>'
 
 
-            if (file["abs_path"] == "Enreec_Testbed"){
+            if (file["abs_path"] == "Enreec Testbed"){
 
               item_html =  '<tr  class="file_and_dir_item" id="'+i+'_file_and_dir"><td scope="row"><div class="media align-items-center"><div class="media-body">'+icon+'<span class="name mb-0 text-sm"> &nbsp;<a'+
               '> ' +file["name"]+ '</a></span> </div></div></td>" + "<td class="budget">'+file["native"]["created_time"]+'</td>"' +
