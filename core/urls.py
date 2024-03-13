@@ -33,8 +33,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path("", include("apps.authentication.urls")), # Auth routes - login / register
     path("", include("apps.home.urls")),             # UI Kits Html files
-    path('api-test/', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    
 
 ]
 
