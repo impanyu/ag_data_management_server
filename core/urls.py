@@ -40,7 +40,7 @@ urlpatterns = [
 
 ]
 
-urlpatterns += router.urls
+#urlpatterns += router.urls
 
 # only in development
 if settings.DEBUG:
