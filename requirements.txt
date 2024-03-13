@@ -26,3 +26,6 @@ django-allauth
 psutil
 dockerspawner
 requests
+djangorestframework
+markdown
+django-filter

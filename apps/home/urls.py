@@ -3,11 +3,27 @@
 Copyright (c) 2019 - present AppSeed.us
 """
 
-from django.urls import path, re_path
+from django.urls import path, re_path, include
 from apps.home import views
 from apps.home import api
 from django.conf.urls.static import static
 from django.conf import settings
+from django.contrib.auth.models import User
+from rest_framework import routers, serializers, viewsets
+
+# Serializers define the API representation.
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ['url', 'username', 'email', 'is_staff']
+
+# ViewSets define the view behavior.
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+# Routers provide an easy way of automatically determining the URL conf.
+router = routers.DefaultRouter()
 
 
 urlpatterns = [
@@ -50,7 +66,10 @@ urlpatterns = [
     re_path(r'^upload_file',views.data,name='upload_file'),
     re_path(r'^delete_file',views.data,name='delete_file'),
     # Matches any html file
-    re_path(r'^.*\.*', views.pages, name='pages')
+    re_path(r'^.*\.*', views.pages, name='pages'),
+
+    path('api-test/', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 
 ]
 
