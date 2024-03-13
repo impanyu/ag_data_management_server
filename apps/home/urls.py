@@ -10,7 +10,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets
-from apis import *
+from .apis import *
 from rest_framework.authtoken.views import obtain_auth_token
 
 # Serializers define the API representation.
