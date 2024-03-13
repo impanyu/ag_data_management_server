@@ -2,9 +2,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import authentication, permissions
 from django.contrib.auth.models import User
-from django.views.decorators.csrf import csrf_exempt
 
-@csrf_exempt
+
 class API(APIView):
     """
     View to list all users in the system.
@@ -22,8 +21,7 @@ class API(APIView):
         """
         usernames = [user.username for user in User.objects.all()]
         return Response(usernames)
-    
-@csrf_exempt
+
 class FileUploadView(APIView):
     authentication_classes = [authentication.TokenAuthentication]
     #permission_classes = [permissions.IsAdminUser]
