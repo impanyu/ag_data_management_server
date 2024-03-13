@@ -30,7 +30,7 @@ router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 
 urlpatterns = [
-    path('api-test/', include(router.urls)),
+    path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('admin/', admin.site.urls),          # Django admin route
     path('accounts/', include('allauth.urls')),
