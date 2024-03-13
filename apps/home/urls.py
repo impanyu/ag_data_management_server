@@ -69,8 +69,6 @@ urlpatterns = [
     # Matches any html file
     re_path(r'^.*\.*', views.pages, name='pages'),
 
-    path('api-test/', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 
     
 
