@@ -32,10 +32,10 @@ router.register(r'users', UserViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))#,
-    #path('admin/', admin.site.urls),          # Django admin route
-    #path('accounts/', include('allauth.urls')),
-    #path("", include("apps.authentication.urls")), # Auth routes - login / register
-    #path("", include("apps.home.urls"))             # UI Kits Html files
+    path('admin/', admin.site.urls),          # Django admin route
+    path('accounts/', include('allauth.urls')),
+    path("", include("apps.authentication.urls")), # Auth routes - login / register
+    path("", include("apps.home.urls"))             # UI Kits Html files
     
 
 ]
