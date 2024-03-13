@@ -10,6 +10,8 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets
+from apis import *
+from rest_framework.authtoken.views import obtain_auth_token
 
 # Serializers define the API representation.
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -21,6 +23,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
@@ -30,6 +33,8 @@ router.register(r'users', UserViewSet)
 urlpatterns = [
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),#,
+    path('api/upload/', FileUploadView.as_view(), name='file-upload'),
+    path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
     # The home page
     path('', views.index, name='home'),
     path('api/authenticate/', views.authenticate_user, name='authenticate_user'),
