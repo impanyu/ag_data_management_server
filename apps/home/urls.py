@@ -28,7 +28,8 @@ router.register(r'users', UserViewSet)
 
 
 urlpatterns = [
-
+    path('', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),#,
     # The home page
     path('', views.index, name='home'),
     path('api/authenticate/', views.authenticate_user, name='authenticate_user'),
