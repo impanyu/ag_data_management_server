@@ -6,6 +6,7 @@ from rest_framework import serializers
 import os
 from rest_framework import status
 from django.conf import settings
+from django.http import HttpResponse
 
 class FileUploadSerializer(serializers.Serializer):
     # Define a file field in your serializer
@@ -28,14 +29,14 @@ class FileUploadSerializer(serializers.Serializer):
 
         # If you want to restrict file types, you can do so by examining `value.content_type`
         # Example: Allow only text files and images
-        allowed_types = [
-            'text/plain',
-            'image/jpeg',
-            'image/png',
+        #allowed_types = [
+        #    'text/plain',
+        #    'image/jpeg',
+        #    'image/png',
             # Add other MIME types as needed
-        ]
-        if value.content_type not in allowed_types:
-            raise serializers.ValidationError("Unsupported file type.")
+        #]
+        #if value.content_type not in allowed_types:
+        #    raise serializers.ValidationError("Unsupported file type.")
 
         return value
 
@@ -86,3 +87,30 @@ class FileUploadView(APIView):
             return Response({"message": "File uploaded successfully!"}, status=status.HTTP_201_CREATED)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class FileDownloadView(APIView):
+
+    def get(self, request, *args, **kwargs):
+        target_path = request.query_params.get('target_path')
+        #file_name = request.query_params.get('file_name')
+
+        # Sanitize and validate the target_path
+        safe_path = os.path.normpath(target_path).lstrip('/')
+        current_user = request.user.username
+
+        # Construct the full file path
+        full_path = os.path.join(settings.USER_DATA_DIR, current_user, "ag_data", safe_path)
+
+        # Validate path to prevent path traversal attacks
+        # Ensure full_path is within the allowed directory
+        if not os.path.commonprefix([full_path, os.path.join(settings.USER_DATA_DIR, current_user, "ag_data")]) == os.path.join(settings.USER_DATA_DIR, current_user, "ag_data"):
+            return Response({"message": "Invalid file path."}, status=status.HTTP_400_BAD_REQUEST)
+
+        if os.path.exists(full_path) and os.path.isfile(full_path):
+            with open(full_path, 'rb') as file:
+                file_name = os.path.basename(full_path)
+                response = HttpResponse(file, content_type='application/octet-stream')
+                response['Content-Disposition'] = f'attachment; filename="{file_name}"'
+                return response
+        else:
+            return Response({"message": "File not found."}, status=status.HTTP_404_NOT_FOUND)
