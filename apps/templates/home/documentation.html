@@ -488,41 +488,40 @@ curl -X POST -F "file=@&lt;local_path&gt;" -F "target_path=&lt;target_path&gt;" 
 
          <p style="font-size:1.25rem; font-weight:400">Or the API can be called through python code:</p>
               <pre class="doc_code"><code class="language-python">
-import requests
+            import requests
 
-# URL of the API endpoint for uploading
-upload_url = 'http://unladma.hopto.org/api/upload/'
+            # URL of the API endpoint for uploading
+            upload_url = 'http://unladma.hopto.org/api/upload/'
 
-# The path to the file you want to upload
-local_path = '&lt;local_path&gt;'
+            # The path to the file you want to upload
+            local_path = '&lt;local_path&gt;'
 
-# Target path where you want the file to be uploaded
-target_path = &lt;'target_path&gt;'
+            # Target path where you want the file to be uploaded
+            target_path = &lt;'target_path&gt;'
 
-# Assuming you have an authentication token
-auth_token = 'your_auth_token_here'
+            # Assuming you have an authentication token
+            auth_token = 'your_auth_token_here'
 
-# Headers including the Authorization token
-headers = {'Authorization': f'Token {auth_token}'}
+            # Headers including the Authorization token
+            headers = {'Authorization': f'Token {auth_token}'}
 
-# The file to be uploaded
-files = {'file': open(file_path, 'rb')}
+            # The file to be uploaded
+            files = {'file': open(file_path, 'rb')}
 
-# Additional data
-data = {'target_path': target_path}
+            # Additional data
+            data = {'target_path': target_path}
 
-# Sending the POST request to upload the file
-response = requests.post(upload_url, headers=headers, files=files, data=data)
+            # Sending the POST request to upload the file
+            response = requests.post(upload_url, headers=headers, files=files, data=data)
 
-# Closing the file to avoid resource leaks
-files['file'].close()
+            # Closing the file to avoid resource leaks
+            files['file'].close()
 
-# Checking the response from the server
-if response.status_code == 201:
-    print("File uploaded successfully.")
-else:
-    print("Failed to upload file:", response.text)
-                
+            # Checking the response from the server
+            if response.status_code == 201:
+                print("File uploaded successfully.")
+            else:
+                print("Failed to upload file:", response.text)
             </code>
          </pre>
      </li>
