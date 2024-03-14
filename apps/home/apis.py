@@ -76,7 +76,7 @@ class FileUploadView(APIView):
             current_user = request.user
 
 
-            full_path = os.path.join(settings.UPLOAD_ROOT, current_user,"ag_data",safe_path, file.name)
+            full_path = os.path.join(settings.USER_DATA_DIR, current_user,"ag_data",safe_path, file.name)
             os.makedirs(os.path.dirname(full_path), exist_ok=True)
 
             with open(full_path, 'wb+') as destination:
