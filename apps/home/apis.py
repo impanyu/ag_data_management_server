@@ -73,8 +73,10 @@ class FileUploadView(APIView):
             safe_path = os.path.normpath(target_path).lstrip('/')
             #if not is_valid_path(safe_path):
             #    return Response({"message": "Invalid upload path."}, status=status.HTTP_400_BAD_REQUEST)
+            current_user = request.user
 
-            full_path = os.path.join(settings.UPLOAD_ROOT, safe_path, file.name)
+
+            full_path = os.path.join(settings.UPLOAD_ROOT, current_user,"ag_data",safe_path, file.name)
             os.makedirs(os.path.dirname(full_path), exist_ok=True)
 
             with open(full_path, 'wb+') as destination:
