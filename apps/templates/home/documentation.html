@@ -323,7 +323,7 @@ Key features of the ADMA platform include:</p>
      <li><span style="background-color: #eee"><b>/api_meta_data?path=<span style="color:red">{path}</span>&key=<span style="color:red">{key}</span></b></span>
          <p style="font-size:1.25rem; font-weight:400">This API will retrieve the metadata for any {path} which are visible to the user when the a {key} is specified.</p>
          <p style="font-size:1.25rem; font-weight:400">For example, if the request url is <span style="background-color: #eee">unlagdatamanagement.hopto.org/api_meta_data?path=/ypan12/ag_data/green/21_E1801_AI03_index_green.shp&key=dwMmCIYP8ds</span>, we can retrieve the metadata for the file: /ypan12/ag_data/green/21_E1801_AI03_index_green.shp.
-         The returned metadata will be in JSON format as follows:
+         The returned metadata will be in JSON format as follows:</p>
               <pre class="doc_code"><code>
  {
  "mode": ["Data"],
@@ -361,7 +361,7 @@ Key features of the ADMA platform include:</p>
      <li><span style="background-color: #eee"><b>/api_list_sub_items?path=<span style="color:red">{path}</span>&key=<span style="color:red">{key}</span></b></span>
         <p style="font-size:1.25rem; font-weight:400">This API will list the files or directories within any {path} which are visible to the user when the a {key} is specified.</p>
         <p style="font-size:1.25rem; font-weight:400">For example, if the request url is <span style="background-color: #eee">/api_list_sub_items?path=/ypan12/ag_data/green&key=dwMmCIYP8ds</span>,
-            we can retrieve all the files and folders inside the directory: /ypan12/ag_data/green.
+            we can retrieve all the files and folders inside the directory: /ypan12/ag_data/green. </p>
          The returned metadata will be in JSON format as follows:
               <pre class="doc_code"><code>
  [
@@ -398,6 +398,138 @@ Key features of the ADMA platform include:</p>
          </code>
          </pre>
      </li>
+     <li><span style="background-color: #eee">/api/api-token-auth/</span></b></span>
+        <p style="font-size:1.25rem; font-weight:400">Calling this API will generate and return the auth token for authenticating the users' api usage</p>
+        <p style="font-size:1.25rem; font-weight:400"> The users can send HTTP POST request to this API in shell:</p>
+              <pre class="doc_code"><code>
+                curl -X POST http://unladma.hopto.org/api-token-auth/ -d "username=&lt;your_username&gt;&password=&lt;your_password&gt;"
+             </code>
+             </pre>
+        <p style="font-size:1.25rem; font-weight:400">Or the API endpoint can be called in python, as follows:</p>
+              <pre class="doc_code"><code>
+                import requests
+
+                url = http://unladma.hopto.org/api-token-auth/
+                username = "&lt;your_username&gt;"
+                password = "&lt;your_password&gt;"
+                
+                # The data you'll send in the POST request
+                payload = {
+                    "username": username,
+                    "password": password
+                }
+                
+                # Make the POST request to the token endpoint
+                response = requests.post(url, data=payload)
+                
+                # Check if the request was successful
+                if response.status_code == 200:
+                    # Parse the token from the response
+                    token = response.json().get('token')
+                    print("Token:", token)
+                else:
+                    # Handle error (e.g., bad credentials, server error)
+                    print("Error getting token:", response.text)
+                
+             </code>
+              </pre>
+     </li>
+
+
+     <li><span style="background-color: #eee">/api/download/</span></b></span>
+        <p style="font-size:1.25rem; font-weight:400">Calling this API will download file given the file path under user's home folder</p>
+        <p style="font-size:1.25rem; font-weight:400"> In shell, the users can send HTTP GET request to this API, where &lt;local_path&gt; is where you want to save the downloaded file in your local computer, 
+            &lt;auth_token&gt; is the token you get from the token generating API, and &lt;file_to_download&lt; is the path of the file you want to download. For instance, 
+            if the user "x" want to download the file: /x/ag_data/y/z.csv, file_to_download should be y/z.csv, essentially the path of the file relative to the user's home folder.   
+        </p>
+              <pre class="doc_code"><code>
+                curl -o &lt;local_path_to_save&gt; -H "Authorization: Token &lt;auth_token&gt;" http://unladma.hopto.org/api/download/?target_path=&lt;file_to_download&gt;
+         </code>
+         </pre>
+         <p style="font-size:1.25rem; font-weight:400"> The python code querying this API is as follows:</p>
+               <pre class="doc_code"><code>
+                import requests
+
+                # URL of the API endpoint for downloading 
+                file_to_download = '&lt;file_to_download &gt;'
+                download_url = f'http://unladma.hopto.org/api/download/{file_to_download}'
+
+                # Headers including the Authorization token (if needed)
+                headers = {'Authorization': f'Token {auth_token}'}
+
+                # Sending the GET request to download the file
+                response = requests.get(download_url, headers=headers)
+
+                # Checking the response from the server
+                if response.status_code == 200:
+                    
+                    local_path_to_save = '&lt;local_path_to_save&gt;'
+                    
+                    # Saving the file to disk
+                    with open(local_path_to_save, 'wb') as f:
+                        f.write(response.content)
+                    
+                    print(f"File downloaded successfully as {local_path_to_save}.")
+                else:
+                    print("Failed to download file:", response.text)
+
+          </code>
+          </pre>
+         
+     </li>
+
+     <li><span style="background-color: #eee">/api/upload</span></b></span>
+        <p style="font-size:1.25rem; font-weight:400">This API can be used to upload files to any place under the user's home directory</p>
+        <p style="font-size:1.25rem; font-weight:400">Shell command to make the API call is as follows:</p>
+              <pre class="doc_code"><code>
+                curl -X POST -F "file=@&lt;local_path&gt;" -F "target_path=&lt;target_path&gt;" -H "Authorization: Token &lt;auth_token&gt;" http://unladma.hopto.org/api/upload/
+              </code>
+         </pre>
+
+         <p style="font-size:1.25rem; font-weight:400">Or the API can be called through python code:</p>
+              <pre class="doc_code"><code>
+                import requests
+
+                # URL of the API endpoint for uploading
+                upload_url = 'http://unladma.hopto.org/api/upload/'
+                
+                # The path to the file you want to upload
+                local_path = '&lt;local_path&gt;'
+                
+                # Target path where you want the file to be uploaded
+                target_path = &lt;'target_path&gt;'
+                
+                # Assuming you have an authentication token
+                auth_token = 'your_auth_token_here'
+                
+                # Headers including the Authorization token
+                headers = {'Authorization': f'Token {auth_token}'}
+                
+                # The file to be uploaded
+                files = {'file': open(file_path, 'rb')}
+                
+                # Additional data
+                data = {'target_path': target_path}
+                
+                # Sending the POST request to upload the file
+                response = requests.post(upload_url, headers=headers, files=files, data=data)
+                
+                # Closing the file to avoid resource leaks
+                files['file'].close()
+                
+                # Checking the response from the server
+                if response.status_code == 201:
+                    print("File uploaded successfully.")
+                else:
+                    print("Failed to upload file:", response.text)
+                
+            </code>
+         </pre>
+     </li>
+
+
+
+
 </ul>
 
    </section>
