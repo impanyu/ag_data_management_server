@@ -401,35 +401,35 @@ Key features of the ADMA platform include:</p>
      <li><span style="background-color: #eee">/api/api-token-auth/</span></b></span>
         <p style="font-size:1.25rem; font-weight:400">Calling this API will generate and return the auth token for authenticating the users' api usage</p>
         <p style="font-size:1.25rem; font-weight:400"> The users can send HTTP POST request to this API in shell:</p>
-              <pre class="doc_code"><code>
-                curl -X POST http://unladma.hopto.org/api-token-auth/ -d "username=&lt;your_username&gt;&password=&lt;your_password&gt;"
+              <pre class="shell"><code>
+curl -X POST http://unladma.hopto.org/api-token-auth/ -d "username=&lt;your_username&gt;&password=&lt;your_password&gt;"
              </code>
              </pre>
         <p style="font-size:1.25rem; font-weight:400">Or the API endpoint can be called in python, as follows:</p>
-              <pre class="doc_code"><code>
-                import requests
+              <pre class="python"><code>
+import requests
 
-                url = http://unladma.hopto.org/api-token-auth/
-                username = "&lt;your_username&gt;"
-                password = "&lt;your_password&gt;"
-                
-                # The data you'll send in the POST request
-                payload = {
-                    "username": username,
-                    "password": password
-                }
-                
-                # Make the POST request to the token endpoint
-                response = requests.post(url, data=payload)
-                
-                # Check if the request was successful
-                if response.status_code == 200:
-                    # Parse the token from the response
-                    token = response.json().get('token')
-                    print("Token:", token)
-                else:
-                    # Handle error (e.g., bad credentials, server error)
-                    print("Error getting token:", response.text)
+url = http://unladma.hopto.org/api-token-auth/
+username = "&lt;your_username&gt;"
+password = "&lt;your_password&gt;"
+
+# The data you'll send in the POST request
+payload = {
+    "username": username,
+    "password": password
+}
+
+# Make the POST request to the token endpoint
+response = requests.post(url, data=payload)
+
+# Check if the request was successful
+if response.status_code == 200:
+    # Parse the token from the response
+    token = response.json().get('token')
+    print("Token:", token)
+else:
+    # Handle error (e.g., bad credentials, server error)
+    print("Error getting token:", response.text)
                 
              </code>
               </pre>
