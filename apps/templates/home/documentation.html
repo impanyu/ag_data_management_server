@@ -454,7 +454,7 @@ file_to_download = '&lt;file_to_download &gt;'
 download_url = f'http://unladma.hopto.org/api/download/{file_to_download}'
 
 # Headers including the Authorization token (if needed)
-headers = {'Authorization': f'Token {auth_token}'}
+headers = {'Authorization': f'Token &lt;auth_token&gt;'}
 
 # Sending the GET request to download the file
 response = requests.get(download_url, headers=headers)
@@ -501,7 +501,7 @@ target_path = &lt;'target_path&gt;'
 auth_token = 'your_auth_token_here'
 
 # Headers including the Authorization token
-headers = {'Authorization': f'Token {auth_token}'}
+headers = {'Authorization': f'Token &lt;auth_token&gt;'}
 
 # The file to be uploaded
 files = {'file': open(file_path, 'rb')}
