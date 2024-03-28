@@ -150,6 +150,7 @@ class ListFilesView(APIView):
         full_path = os.path.join(settings.USER_DATA_DIR, current_user, "ag_data", safe_path)
        
         meta_data = get_meta_data(full_path)
+        items = []
        
         for sub_path in meta_data["subdirs"]:
             items.append(sub_path[5:])
