@@ -37,7 +37,7 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),#,
     path('api/upload/', FileUploadView.as_view(), name='file-upload'),
     path('api/download/', FileDownloadView.as_view(), name='file-upload'),
-    path('api/metadata/', FileDownloadView.as_view(), name='file-upload'),
+    path('api/metadata/', GetMetaDataView.as_view(), name='file-upload'),
     path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
     # The home page
     path('', views.index, name='home'),
