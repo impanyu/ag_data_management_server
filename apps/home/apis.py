@@ -7,6 +7,8 @@ import os
 from rest_framework import status
 from django.conf import settings
 from django.http import HttpResponse
+from .data import *
+import json
 
 class FileUploadSerializer(serializers.Serializer):
     # Define a file field in your serializer
