@@ -398,6 +398,7 @@ Key features of the ADMA platform include:</p>
          </code>
          </pre>
      </li>
+
      <li><span style="background-color: #eee">/api/api-token-auth/</span></b></span>
         <p style="font-size:1.25rem; font-weight:400">Calling this API will generate and return the auth token for authenticating the users' api usage</p>
         <p style="font-size:1.25rem; font-weight:400"> The users can send HTTP POST request to this API in shell:</p>
@@ -435,9 +436,95 @@ else:
      </li>
 
 
+     <li><span style="background-color: #eee">/api/meta_data/</span></b></span>
+        <p style="font-size:1.25rem; font-weight:400">Calling this API will retrieve the meta data of any specified path under user's home folder</p>
+        <p style="font-size:1.25rem; font-weight:400"> In shell, the users can send HTTP GET request to this API, where &lt;local_path_to_save&gt; is where you want to save the retrieved meta data in your local computer, 
+            &lt;auth_token&gt; is the token you get from the token generating API, and &lt;file_path&lt; is the path of the file. For instance, 
+            if the user "x" want to retrieve the meta data of the file: /x/ag_data/y/z.csv, file_path should be y/z.csv, essentially the path of the file relative to the user's home folder.   
+        </p>
+              <pre class="doc_code"><code class="language-bash">
+curl -o &lt;local_path_to_save&gt; -H "Authorization: Token &lt;auth_token&gt;" http://unladma.hopto.org/api/meta_data/?target_path=&lt;file_path&gt;
+         </code>
+         </pre>
+         <p style="font-size:1.25rem; font-weight:400"> The python code querying this API is as follows:</p>
+               <pre class="doc_code"><code class="language-python">
+import requests
+
+# URL of the API endpoiont for retrieving metadata 
+file_path = '&lt;file_path &gt;'
+download_url = f'http://unladma.hopto.org/api/meta_data/?target_path={file_path}'
+
+# Headers including the Authorization token (if needed)
+headers = {'Authorization': f'Token &lt;auth_token&gt;'}
+
+# Sending the GET request to the meta data of the file
+response = requests.get(download_url, headers=headers)
+
+# Checking the response from the server
+if response.status_code == 200:
+    
+    local_path_to_save = '&lt;local_path_to_save&gt;'
+    
+    # Saving the file to disk
+    with open(local_path_to_save, 'wb') as f:
+        f.write(response.content)
+    
+    print(f"The meta data is downloaded successfully as {local_path_to_save}.")
+else:
+    print("Failed to download the meta data:", response.text)
+          </code>
+          </pre>
+         
+     </li>
+
+     <li><span style="background-color: #eee">/api/list/</span></b></span>
+        <p style="font-size:1.25rem; font-weight:400">Calling this API will retrieve the files or directories within any specified directory path under user's home folder</p>
+        <p style="font-size:1.25rem; font-weight:400"> In shell, the users can send HTTP GET request to this API, where &lt;local_path_to_save&gt; is where you want to save the retrieved directory structure in your local computer, 
+            &lt;auth_token&gt; is the token you get from the token generating API, and &lt;dir_path&lt; is the path of the directory you want to check. For instance, 
+            if the user "x" want to retrieve the structure of the directory: /x/ag_data/y, dir_path should be y, essentially the path of the file relative to the user's home folder.   
+        </p>
+              <pre class="doc_code"><code class="language-bash">
+curl -o &lt;local_path_to_save&gt; -H "Authorization: Token &lt;auth_token&gt;" http://unladma.hopto.org/api/list/?target_path=&lt;dir_path&gt;
+         </code>
+         </pre>
+         <p style="font-size:1.25rem; font-weight:400"> The python code querying this API is as follows:</p>
+               <pre class="doc_code"><code class="language-python">
+import requests
+
+# URL of the API endpoiont for listing dir structure
+dir_path = '&lt;dir_path &gt;'
+download_url = f'http://unladma.hopto.org/api/list/?target_path={dir_path}'
+
+# Headers including the Authorization token (if needed)
+headers = {'Authorization': f'Token &lt;auth_token&gt;'}
+
+# Sending the GET request to the structure of the directory
+response = requests.get(download_url, headers=headers)
+
+# Checking the response from the server
+if response.status_code == 200:
+    
+    local_path_to_save = '&lt;local_path_to_save&gt;'
+    
+    # Saving the file to disk
+    with open(local_path_to_save, 'wb') as f:
+        f.write(response.content)
+    
+    print(f"The folder structure is downloaded successfully as {local_path_to_save}.")
+else:
+    print("Failed to download the folder structure:", response.text)
+          </code>
+          </pre>
+         
+     </li>
+
+
+
+
+
      <li><span style="background-color: #eee">/api/download/</span></b></span>
         <p style="font-size:1.25rem; font-weight:400">Calling this API will download file given the file path under user's home folder</p>
-        <p style="font-size:1.25rem; font-weight:400"> In shell, the users can send HTTP GET request to this API, where &lt;local_path&gt; is where you want to save the downloaded file in your local computer, 
+        <p style="font-size:1.25rem; font-weight:400"> In shell, the users can send HTTP GET request to this API, where &lt;local_path_to_save&gt; is where you want to save the downloaded file in your local computer, 
             &lt;auth_token&gt; is the token you get from the token generating API, and &lt;file_to_download&lt; is the path of the file you want to download. For instance, 
             if the user "x" want to download the file: /x/ag_data/y/z.csv, file_to_download should be y/z.csv, essentially the path of the file relative to the user's home folder.   
         </p>
@@ -451,7 +538,7 @@ import requests
 
 # URL of the API endpoint for downloading 
 file_to_download = '&lt;file_to_download &gt;'
-download_url = f'http://unladma.hopto.org/api/download/{file_to_download}'
+download_url = f'http://unladma.hopto.org/api/download/?target_path={file_to_download}'
 
 # Headers including the Authorization token (if needed)
 headers = {'Authorization': f'Token &lt;auth_token&gt;'}
