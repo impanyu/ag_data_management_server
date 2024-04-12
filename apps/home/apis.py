@@ -158,3 +158,32 @@ class ListFilesView(APIView):
        
         response = json.dumps(items)
         return HttpResponse(response)
+    
+
+class RunToolView(APIView):
+
+    def get(self, request, *args, **kwargs):
+        entry_point = request.query_params.get('entry_point')
+        arg_values = request.query_params.get('arg_values')
+
+        request_data = json.loads(request.body)
+        entry_point = request_data["entry_point"]
+        arg_values = request_data["arg_values"]
+        arg_types = {}
+        exe_env = "Default"
+        current_user = request.user.username
+     
+        run_tool(entry_point,arg_values, arg_types,current_user,exe_env)
+
+        # Sanitize and validate the target_path
+        #safe_path = os.path.normpath(target_path).lstrip('/')
+        
+
+        # Construct the full file path
+        #full_path = os.path.join(settings.USER_DATA_DIR, current_user, "ag_data", safe_path)
+       
+       
+        response = "success"
+
+
+        return HttpResponse(response)

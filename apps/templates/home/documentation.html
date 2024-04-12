@@ -403,14 +403,14 @@ Key features of the ADMA platform include:</p>
         <p style="font-size:1.25rem; font-weight:400">Calling this API will generate and return the auth token for authenticating the users' api usage</p>
         <p style="font-size:1.25rem; font-weight:400"> The users can send HTTP POST request to this API in shell:</p>
               <pre class="doc_code"><code class="language-bash">
-curl -X POST http://unladma.hopto.org/api-token-auth/ -d "username=&lt;your_username&gt;&password=&lt;your_password&gt;"
+curl -X POST http://unladma.hopto.org/api/api-token-auth/ -d "username=&lt;your_username&gt;&password=&lt;your_password&gt;"
              </code>
              </pre>
         <p style="font-size:1.25rem; font-weight:400">Or the API endpoint can be called in python, as follows:</p>
               <pre class="doc_code"><code class="language-python">
 import requests
 
-url = http://unladma.hopto.org/api-token-auth/
+url = http://unladma.hopto.org/api/api-token-auth/
 username = "&lt;your_username&gt;"
 password = "&lt;your_password&gt;"
 

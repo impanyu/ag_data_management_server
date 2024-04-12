@@ -1889,6 +1889,23 @@ def run_tool(entry_point,arg_values, arg_types,user,exe_env):
             detach=True,
             auto_remove=True
         )
+    elif ".R" in entry_point.split("/")[-1]:
+        if image_name == "":
+            image_name = "rocker/rstudio"
+        main_cmd = "Rscript"
+        command = [main_cmd, script_path] + [arg_values[arg_name] for arg_name in arg_values]
+
+
+        container = client.containers.run(
+            image_name,
+            command=bash_script,#[main_cmd, script_path] + [arg_values[arg_name] for arg_name in arg_values],
+            # command=[main_cmd, script_path],
+            volumes=volumes,#{f"/data/{user}": {"bind": f"/{user}", "mode": "rw"}},
+            working_dir=working_dir,
+            # environment={"VAR1": "value1", "VAR2": "value2"},
+            detach=True,
+            auto_remove=True
+        )
     elif ".m" in entry_point.split("/")[-1]:
         if image_name == "":
             image_name = "matlab_image"

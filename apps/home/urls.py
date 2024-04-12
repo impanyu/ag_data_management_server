@@ -39,7 +39,8 @@ urlpatterns = [
     path('api/download/', FileDownloadView.as_view(), name='file-download'),
     path('api/meta_data/', GetMetaDataView.as_view(), name='meta-data'),
     path('api/list/', ListFilesView.as_view(), name='list-files'),
-    path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
+    path('api/run_tool/', RunToolView.as_view(), name='run-tool'),
+    path('api/api-token-auth/', obtain_auth_token, name='api_token_auth'),
     # The home page
     path('', views.index, name='home'),
     path('api/authenticate/', views.authenticate_user, name='authenticate_user'),
