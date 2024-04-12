@@ -184,7 +184,7 @@ class RunToolView(APIView):
         #entry_point = request_data["entry_point"]
         #arg_values = request_data["arg_values"]
         arg_types = {}
-        exe_env = "Default"
+        exe_env = "default"
         current_user = request.user.username
 
         safe_entry_point = os.path.normpath(entry_point).lstrip('/')
