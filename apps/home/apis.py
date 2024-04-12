@@ -15,7 +15,12 @@ class FileUploadSerializer(serializers.Serializer):
     # You can specify additional arguments for FileField to further customize its behavior
     # For example, you can set `allow_empty_file=False` to prevent empty files from being uploaded
     # `max_length` could be used to specify the maximum length of the file name
-    file = serializers.FileField(allow_empty_file=False, max_length=100)
+    #file = serializers.FileField(allow_empty_file=False, max_length=100)
+    # Use a ListField with a child FileField to accept multiple files
+    files = serializers.ListField(
+        child=serializers.FileField(allow_empty_file=False, max_length=100),
+        allow_empty=False  # Prevent empty list
+    )
     target_path = serializers.CharField(max_length=200)  # Adjust max_length as needed
 
     def validate_file(self, value):
@@ -26,8 +31,12 @@ class FileUploadSerializer(serializers.Serializer):
         # 10MB limit
         max_upload_size = 10 * 1024 * 1024
 
-        if value.size > max_upload_size:
-            raise serializers.ValidationError("File size exceeds the allowed limit of 10MB.")
+        #if value.size > max_upload_size:
+        #    raise serializers.ValidationError("File size exceeds the allowed limit of 10MB.")
+        for uploaded_file in value:
+            if uploaded_file.size > max_upload_size:
+                raise serializers.ValidationError("One or more files exceed the allowed limit of 10MB.")
+
 
         # If you want to restrict file types, you can do so by examining `value.content_type`
         # Example: Allow only text files and images
@@ -69,8 +78,9 @@ class FileUploadView(APIView):
         serializer = FileUploadSerializer(data=request.data)
         
         if serializer.is_valid():
-            file = serializer.validated_data['file']
+            files = serializer.validated_data['files']
             target_path = request.data.get('target_path')
+            relative_paths = request.data.getlist('relative_paths')
 
             # Sanitize and validate the target_path
             safe_path = os.path.normpath(target_path).lstrip('/')
@@ -78,17 +88,21 @@ class FileUploadView(APIView):
             #    return Response({"message": "Invalid upload path."}, status=status.HTTP_400_BAD_REQUEST)
             current_user = request.user.username
 
+            for file in files:
+                relative_path = relative_paths[files.index(file)]
+                safe_relative_path = os.path.normpath(relative_path).lstrip('/')
 
-            full_path = os.path.join(settings.USER_DATA_DIR, current_user,"ag_data",safe_path, file.name)
-            os.makedirs(os.path.dirname(full_path), exist_ok=True)
+                full_path = os.path.join(settings.USER_DATA_DIR, current_user,"ag_data",safe_path, safe_relative_path, file.name)
+                os.makedirs(os.path.dirname(full_path), exist_ok=True)
 
-            with open(full_path, 'wb+') as destination:
-                for chunk in file.chunks():
-                    destination.write(chunk)
+                with open(full_path, 'wb+') as destination:
+                    for chunk in file.chunks():
+                        destination.write(chunk)
 
             return Response({"message": "File uploaded successfully!"}, status=status.HTTP_201_CREATED)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
     
 class FileDownloadView(APIView):
 
@@ -161,19 +175,19 @@ class ListFilesView(APIView):
     
 
 class RunToolView(APIView):
+    def post(self, request, *args, **kwargs):
 
-    def get(self, request, *args, **kwargs):
-        entry_point = request.query_params.get('entry_point')
-        arg_values = request.query_params.get('arg_values')
+        entry_point = request.data.get('entry_point')
+        arg_values = request.data.get('arg_values')
 
-        request_data = json.loads(request.body)
-        entry_point = request_data["entry_point"]
-        arg_values = request_data["arg_values"]
+        #request_data = json.loads(request.body)
+        #entry_point = request_data["entry_point"]
+        #arg_values = request_data["arg_values"]
         arg_types = {}
         exe_env = "Default"
         current_user = request.user.username
      
-        run_tool(entry_point,arg_values, arg_types,current_user,exe_env)
+        container_id = run_tool(entry_point,arg_values, arg_types,current_user,exe_env)
 
         # Sanitize and validate the target_path
         #safe_path = os.path.normpath(target_path).lstrip('/')
@@ -183,7 +197,32 @@ class RunToolView(APIView):
         #full_path = os.path.join(settings.USER_DATA_DIR, current_user, "ag_data", safe_path)
        
        
-        response = "success"
-
-
+        response = json.dumps({"running_instance_id":container_id})
         return HttpResponse(response)
+    
+
+class CheckRunningInstance(APIView):
+
+    def get(self, request, *args, **kwargs):
+        container_id = request.query_params.get('running_instance_id')
+        container = get_container_by_id(container_id)
+        # Get the container status
+        status = container.status
+        # Get the container image name
+        image_name = container.image.tags[0] if container.image.tags else "No image tag"
+
+        # Get the container start timestamp
+        started_at = container.attrs['State']['StartedAt'][:-5]
+        #start_time = datetime.strptime(started_at, '%Y-%m-%dT%H:%M:%S.%fZs')
+
+        start_time = datetime.strptime(started_at, '%Y-%m-%dT%H:%M:%S.%f')
+
+        # Calculate the duration in seconds
+        duration = (datetime.utcnow() - start_time).total_seconds()
+
+        response={"container_id": container_id, "status": status, "image": image_name,"running_time": duration}
+
+        response = json.dumps({"container_id":container_id})
+        return HttpResponse(response)
+    
+

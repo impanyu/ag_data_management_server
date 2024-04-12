@@ -1989,7 +1989,7 @@ def run_tool(entry_point,arg_values, arg_types,user,exe_env):
     #time.sleep(3)
     #notifier_thread.join()
 
-    return
+    return container.id
 
 
 
@@ -2122,6 +2122,11 @@ def get_running_containers(abs_path):
             # response.append({"container_id": key})
     return response
 
+def get_container_by_id(container_id):
+    # Create a Docker client
+    client = docker.from_env()
+    container = client.containers.get(container_id)
+    return container
 
 def get_api_keys():
     api_keys = cache.get("api_keys","")
