@@ -40,6 +40,7 @@ urlpatterns = [
     path('api/meta_data/', GetMetaDataView.as_view(), name='meta-data'),
     path('api/list/', ListFilesView.as_view(), name='list-files'),
     path('api/run_tool/', RunToolView.as_view(), name='run-tool'),
+    path('api/check_running_instance/', CheckRunningInstance.as_view(), name='check-running-instance'),
     path('api/api-token-auth/', obtain_auth_token, name='api_token_auth'),
     # The home page
     path('', views.index, name='home'),
