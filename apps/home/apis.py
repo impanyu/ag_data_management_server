@@ -188,12 +188,12 @@ class RunToolView(APIView):
         current_user = request.user.username
 
         safe_entry_point = os.path.normpath(entry_point).lstrip('/')
-        safe_entry_point = f"/{current_user}/arg_data/{safe_entry_point}"
+        safe_entry_point = f"/{current_user}/ag_data/{safe_entry_point}"
 
         for arg in arg_values:
             if("/" in arg):
                 safe_arg = os.path.normpath(arg).lstrip('/')
-                safe_arg = f"/{current_user}/arg_data/{safe_arg}"
+                safe_arg = f"/{current_user}/ag_data/{safe_arg}"
                 arg_values[arg_values.index(arg)] = safe_arg
      
         container_id = run_tool(safe_entry_point,arg_values, arg_types,current_user,exe_env)
