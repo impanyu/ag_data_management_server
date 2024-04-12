@@ -1811,7 +1811,7 @@ def run_tool(entry_point,arg_values, arg_types,user,exe_env):
     # assuming that the uploaded script is saved to a file on disk
     script_path = f"{entry_point}"
 
-
+    
     entry_point_path = f"/data{entry_point}"
     entry_point_meta_data = get_meta_data(entry_point_path)
     tool = entry_point_path
