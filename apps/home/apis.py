@@ -186,8 +186,11 @@ class RunToolView(APIView):
         arg_types = {}
         exe_env = "Default"
         current_user = request.user.username
+
+        safe_entry_point = os.path.normpath(entry_point).lstrip('/')
+        safe_entry_point = f"/{current_user}/arg_data/{safe_entry_point}"
      
-        container_id = run_tool(entry_point,arg_values, arg_types,current_user,exe_env)
+        container_id = run_tool(safe_entry_point,arg_values, arg_types,current_user,exe_env)
 
         # Sanitize and validate the target_path
         #safe_path = os.path.normpath(target_path).lstrip('/')
