@@ -1802,6 +1802,9 @@ def run_tool(entry_point,arg_values, arg_types,user,exe_env):
     env_to_image_name_mapper={"default":"","python_regular":"python_test","matlab":"matlab_image","python_ag":"python_ag"}
     image_name = env_to_image_name_mapper[exe_env]
 
+    if(isinstance(arg_values,list)):
+        arg_values = {index: value for index, value in enumerate(arg_values)}
+
 
     root_dir = f"/data/{user}/ag_data"
 
@@ -1811,7 +1814,7 @@ def run_tool(entry_point,arg_values, arg_types,user,exe_env):
     # assuming that the uploaded script is saved to a file on disk
     script_path = f"{entry_point}"
 
-    
+
     entry_point_path = f"/data{entry_point}"
     entry_point_meta_data = get_meta_data(entry_point_path)
     tool = entry_point_path
