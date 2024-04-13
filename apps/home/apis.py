@@ -178,8 +178,11 @@ class RunToolView(APIView):
     def post(self, request, *args, **kwargs):
 
         entry_point = request.data.get('entry_point')
-        arg_values = request.data.get('arg_values')
-        arg_values = json.loads(arg_values)
+        if 'arg_values' not in request.data:
+            arg_values = request.data.getlist('arg_values[]')
+        else:
+            arg_values = request.data.getlist('arg_values')
+        
         print(arg_values)
 
         #request_data = json.loads(request.body)
