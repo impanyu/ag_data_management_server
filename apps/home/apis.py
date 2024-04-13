@@ -199,7 +199,7 @@ class RunToolView(APIView):
                 arg_values[arg_values.index(arg)] = safe_arg
         print(safe_entry_point)
         
-        #container_id = run_tool(safe_entry_point,arg_values, arg_types,current_user,exe_env)
+        container_id = run_tool(safe_entry_point,arg_values, arg_types,current_user,exe_env)
      
         
 
