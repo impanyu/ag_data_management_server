@@ -214,8 +214,8 @@ class RunToolView(APIView):
         #full_path = os.path.join(settings.USER_DATA_DIR, current_user, "ag_data", safe_path)
        
        
-        #response = json.dumps({"running_instance_id":container_id})
-        response = ""
+        response = json.dumps({"running_instance_id":container_id})
+        
         return HttpResponse(response)
     
 
