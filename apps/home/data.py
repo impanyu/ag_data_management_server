@@ -1803,7 +1803,7 @@ def run_tool(entry_point,arg_values, arg_types,user,exe_env):
     image_name = env_to_image_name_mapper[exe_env]
 
     if(isinstance(arg_values,list)):
-        arg_values = {index: value for index, value in enumerate(arg_values)}
+        arg_values = {str(index): value for index, value in enumerate(arg_values)}
     print(arg_values)
 
 
