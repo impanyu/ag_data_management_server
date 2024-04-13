@@ -179,6 +179,7 @@ class RunToolView(APIView):
 
         entry_point = request.data.get('entry_point')
         arg_values = request.data.get('arg_values')
+        arg_values = arg_values.split(" ")
         print(arg_values)
 
         #request_data = json.loads(request.body)
