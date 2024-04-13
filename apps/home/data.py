@@ -1804,6 +1804,7 @@ def run_tool(entry_point,arg_values, arg_types,user,exe_env):
 
     if(isinstance(arg_values,list)):
         arg_values = {index: value for index, value in enumerate(arg_values)}
+    print(arg_values)
 
 
     root_dir = f"/data/{user}/ag_data"
