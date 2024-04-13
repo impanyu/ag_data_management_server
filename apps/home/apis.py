@@ -204,7 +204,8 @@ class RunToolView(APIView):
         
         container_id = run_tool(safe_entry_point,arg_values, arg_types,current_user,exe_env)
      
-        print(container_id)
+        
+        #print(container_id)
 
         # Sanitize and validate the target_path
         #safe_path = os.path.normpath(target_path).lstrip('/')
