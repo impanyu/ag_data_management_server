@@ -177,11 +177,14 @@ class ListFilesView(APIView):
 class RunToolView(APIView):
     def get(self, request, *args, **kwargs):
 
+        if 'arg_values[]' not in request.query_params or 'entry_point' not in request.query_params:
+            return Response({"message": "No arguments provided."}, status=status.HTTP_400_BAD_REQUEST)
+
         entry_point = request.query_params.get('entry_point')
-        if 'arg_values' not in request.query_params:
-            arg_values = request.query_params.getlist('arg_values[]')
-        else:
-            arg_values = request.query_params.getlist('arg_values')
+        
+        arg_values = request.query_params.getlist('arg_values[]')
+       
+        #arg_values = request.query_params.getlist('arg_values')
         
 
         #request_data = json.loads(request.body)
@@ -225,6 +228,9 @@ class CheckRunningInstance(APIView):
     def get(self, request, *args, **kwargs):
         container_id = request.query_params.get('running_instance_id')
         container = get_container_by_id(container_id)
+        if container is None:
+            response = json.dumps({"container_id":container_id,"status":"not found"})
+            return HttpResponse(response)
         # Get the container status
         status = container.status
         # Get the container image name
