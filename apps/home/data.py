@@ -25,6 +25,7 @@ from matplotlib.colors import ListedColormap
 import pyinotify
 import docker
 import docker.errors
+from docker.errors import NotFound
 import threading
 import time
 
@@ -2126,10 +2127,19 @@ def get_running_containers(abs_path):
     return response
 
 def get_container_by_id(container_id):
+   
     # Create a Docker client
     client = docker.from_env()
-    container = client.containers.get(container_id)
-    return container
+    
+    try:
+        # Attempt to get the container
+        container = client.containers.get(container_id)
+        return container
+    except NotFound:
+        # Container not found, handle accordingly
+        print(f"Container with ID {container_id} not found.")
+        return None
+    
 
 def get_api_keys():
     api_keys = cache.get("api_keys","")
