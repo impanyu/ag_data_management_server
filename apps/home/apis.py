@@ -172,7 +172,7 @@ class ListFilesView(APIView):
        
         response = json.dumps(items)
         return HttpResponse(response)
-    
+
 
 class RunToolView(APIView):
     def get(self, request, *args, **kwargs):
@@ -183,7 +183,7 @@ class RunToolView(APIView):
         else:
             arg_values = request.query_params.getlist('arg_values')
         
-        arg_values = request.query_params.getlist('arg_values')
+        arg_values = request.query_params.get('arg_values')
 
         #request_data = json.loads(request.body)
         #entry_point = request_data["entry_point"]
