@@ -178,7 +178,7 @@ class RunToolView(APIView):
     def get(self, request, *args, **kwargs):
 
         entry_point = request.query_params.get('entry_point')
-        if 'arg_values' not in request.data:
+        if 'arg_values' not in request.query_params:
             arg_values = request.query_params.getlist('arg_values[]')
         else:
             arg_values = request.query_params.getlist('arg_values')
