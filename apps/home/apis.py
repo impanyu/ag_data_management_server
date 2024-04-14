@@ -183,7 +183,6 @@ class RunToolView(APIView):
         else:
             arg_values = request.query_params.getlist('arg_values')
         
-        arg_values = request.query_params.get('arg_values')
 
         #request_data = json.loads(request.body)
         #entry_point = request_data["entry_point"]
