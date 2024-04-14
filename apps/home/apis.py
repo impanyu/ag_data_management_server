@@ -175,15 +175,15 @@ class ListFilesView(APIView):
     
 
 class RunToolView(APIView):
-    def post(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
 
-        entry_point = request.data.get('entry_point')
+        entry_point = request.query_params.get('entry_point')
         if 'arg_values' not in request.data:
-            arg_values = request.data.getlist('arg_values[]')
+            arg_values = request.query_params.getlist('arg_values[]')
         else:
-            arg_values = request.data.getlist('arg_values')
+            arg_values = request.query_params.getlist('arg_values')
         
-        
+        arg_values = request.query_params.getlist('arg_values')
 
         #request_data = json.loads(request.body)
         #entry_point = request_data["entry_point"]
