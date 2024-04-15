@@ -611,6 +611,52 @@ else:
          </pre>
      </li>
 
+     <li><span style="background-color: #eee">/api/run_tool</span></b></span>
+        <p style="font-size:1.25rem; font-weight:400">This API can be used to execute user uploaded programs and scripts under the user's home directory</p>
+        <p style="font-size:1.25rem; font-weight:400">Shell command to make the API call is as follows. &lt;program_entry_point&gt; is the path of the program or script to ru. There can be variable numbers of arguments, which need to be encoded as url arguments by using the same name "arg_values" </p>
+              <pre class="doc_code"><code class="language-bash">
+curl  -H "Authorization: Token &lt;auth_token&gt;" http://unladma.hopto.org/api/run_tool/?entry_point=&lt;program_entry_point&gt;&arg_values=&lt;arg_value_1&gt;&arg_values=&lt;arg_value_2&gt;...&arg_values=&lt;arg_value_n&gt;
+              </code>
+         </pre>
+
+         <p style="font-size:1.25rem; font-weight:400">Or the API can be called through python code:</p>
+              <pre class="doc_code"><code class="language-python">
+import requests
+
+# URL of the API endpoint for uploading
+run_tool_url = 'http://unladma.hopto.org/api/run_tool/'
+
+# The path to the entry point of the program you want to execute
+entry_point = '&lt;program_entry_point&gt;'
+
+# Arguments for the program
+arguments = [&lt;arg_value_1&gt;,&lt;arg_value_2&gt;,...,&lt;arg_value_n&gt;]
+
+#compose the run_tool_url
+run_tool_url = run_tool_url+f"?entry_point={entry_point}"
+for arg in arguments:
+    run_tool_url += f"&arg_values={arg}"
+
+# Assuming you have an authentication token
+auth_token = 'your_auth_token_here'
+
+# Headers including the Authorization token
+headers = {'Authorization': f'Token &lt;auth_token&gt;'}
+
+# Sending the GET request to execute the program
+response = requests.get(run_tool_url, headers=headers)
+
+# Closing the file to avoid resource leaks
+files['file'].close()
+
+# Checking the response from the server
+if response.status_code == 201:
+    print("File uploaded successfully.")
+else:
+    print("Failed to upload file:", response.text)
+            </code>
+         </pre>
+     </li>
 
 
 
