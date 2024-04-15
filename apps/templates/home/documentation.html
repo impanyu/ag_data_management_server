@@ -646,14 +646,9 @@ headers = {'Authorization': f'Token &lt;auth_token&gt;'}
 # Sending the GET request to execute the program
 response = requests.get(run_tool_url, headers=headers)
 
-# Closing the file to avoid resource leaks
-files['file'].close()
-
 # Checking the response from the server
-if response.status_code == 201:
-    print("File uploaded successfully.")
-else:
-    print("Failed to upload file:", response.text)
+print(response.json())
+
             </code>
          </pre>
      </li>
