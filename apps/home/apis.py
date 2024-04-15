@@ -80,7 +80,10 @@ class FileUploadView(APIView):
         if serializer.is_valid():
             files = serializer.validated_data['files']
             target_path = request.data.get('target_path')
-            relative_paths = request.data.getlist('relative_paths')
+            if target_path not in request.data:
+                relative_paths = []
+            else:
+                relative_paths = request.data.getlist('relative_paths')
 
             # Sanitize and validate the target_path
             safe_path = os.path.normpath(target_path).lstrip('/')
@@ -89,7 +92,10 @@ class FileUploadView(APIView):
             current_user = request.user.username
 
             for file in files:
-                relative_path = relative_paths[files.index(file)]
+                if len(relative_paths) == 0:
+                    relative_path = ""
+                else:
+                    relative_path = relative_paths[files.index(file)]
                 safe_relative_path = os.path.normpath(relative_path).lstrip('/')
 
                 full_path = os.path.join(settings.USER_DATA_DIR, current_user,"ag_data",safe_path, safe_relative_path, file.name)
