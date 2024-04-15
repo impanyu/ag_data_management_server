@@ -177,12 +177,12 @@ class ListFilesView(APIView):
 class RunToolView(APIView):
     def get(self, request, *args, **kwargs):
 
-        if 'arg_values[]' not in request.query_params or 'entry_point' not in request.query_params:
+        if 'arg_values' not in request.query_params or 'entry_point' not in request.query_params:
             return Response({"message": "No arguments provided."}, status=status.HTTP_400_BAD_REQUEST)
 
         entry_point = request.query_params.get('entry_point')
         
-        arg_values = request.query_params.getlist('arg_values[]')
+        arg_values = request.query_params.getlist('arg_values')
        
         #arg_values = request.query_params.getlist('arg_values')
         
