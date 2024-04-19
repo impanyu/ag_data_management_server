@@ -111,7 +111,7 @@ class FileUploadView(APIView):
                     for chunk in file.chunks():
                         destination.write(chunk)
 
-            return Response({"message": f"File uploaded successfully as {full_path}!"}, status=status.HTTP_201_CREATED)
+            return Response({"message": f"File uploaded successfully as {full_path}"}, status=status.HTTP_201_CREATED)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
