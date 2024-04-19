@@ -1376,7 +1376,7 @@ def data(request):
                 response["items"] += search(root_dir, search_box, category, mode, format, label, realtime, time_range,spatial_range)
 
 
-            print(response)
+            #print(response)
             #remove duplicates
             item_set = set(json.dumps(d) for d in response["items"])
             response["items"] = [json.loads(s) for s in item_set]
@@ -1403,7 +1403,7 @@ def data(request):
 
             response["items"] += public_items
             '''
-           # response["2d_points"] = dim_reduction(response["items"]).tolist()
+            response["2d_points"] = dim_reduction(response["items"]).tolist()
 
 
 
