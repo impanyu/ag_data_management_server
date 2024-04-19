@@ -1364,17 +1364,17 @@ def data(request):
                 root_dir = os.path.join("/data",request.user.get_username(),"ag_data")
                 response["items"] = search(root_dir,search_box,category,mode,format,label,realtime,time_range,spatial_range)
 
-                #root_dir = os.path.join("/data", request.user.get_username(), "collections")
-                #response["items"] += search(root_dir, search_box, category, mode, format, label, realtime, time_range, spatial_range)
+                root_dir = os.path.join("/data", request.user.get_username(), "collections")
+                response["items"] += search(root_dir, search_box, category, mode, format, label, realtime, time_range, spatial_range)
 
-
+            '''
             if "All" in privilege or "Public Data" in privilege:
                 root_dir = os.path.join("/data", "public", "ag_data")
                 response["items"] += search(root_dir, search_box, category, mode, format, label, realtime, time_range,spatial_range)
 
                 root_dir = os.path.join("/data", "public", "collections")
                 response["items"] += search(root_dir, search_box, category, mode, format, label, realtime, time_range,spatial_range)
-
+            '''
 
             #print(response)
             #remove duplicates
