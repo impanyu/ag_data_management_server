@@ -1322,8 +1322,8 @@ def search(root_dir, search_box, category, mode, format, label,  realtime, time_
     meta_data = get_meta_data(root_dir)
     if filtering_condition(meta_data, search_box, category, mode, format, label, realtime, time_range, spatial_range):
         result.append(meta_data)
-    elif "Collection" in meta_data["mode"]:
-        return result
+        if "Collection" in meta_data["mode"]:
+            return result
     else:
         for subdir in meta_data["subdirs"]:
             if subdir ==  "/data/public/ag_data":
