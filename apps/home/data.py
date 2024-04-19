@@ -1321,25 +1321,27 @@ def search(root_dir, search_box, category, mode, format, label,  realtime, time_
     #with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
     meta_data = get_meta_data(root_dir)
     #print(meta_data)
-    if "Collection" in meta_data["mode"]  and meta_data["name"] == "collections":
-        for subdir in meta_data["subdirs"]:
-            sub_meta = get_meta_data(subdir)
-            if filtering_condition(sub_meta, search_box, category, mode, format, label, realtime, time_range, spatial_range):
+    if meta_data["name"] == "collections":
+        if "Collection" in meta_data["mode"]:
+            for subdir in meta_data["subdirs"]:
+                sub_meta = get_meta_data(subdir)
+                if filtering_condition(sub_meta, search_box, category, mode, format, label, realtime, time_range, spatial_range):
 
-                result.append(sub_meta)
+                    result.append(sub_meta)
+        else:
+            return result
 
     else:
         if filtering_condition(meta_data, search_box, category, mode, format, label, realtime, time_range, spatial_range):
             result.append(meta_data)
-            print(result)
         
         else:
             for subdir in meta_data["subdirs"]:
                 if subdir ==  "/data/public/ag_data":
                     continue
 
-                #sub_result = search(subdir, search_box, category, mode, format, label,  realtime, time_range, spatial_range)
-                #result += sub_result
+                sub_result = search(subdir, search_box, category, mode, format, label,  realtime, time_range, spatial_range)
+                result += sub_result
 
     return result
 
