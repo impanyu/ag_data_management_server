@@ -78,9 +78,9 @@ class FileUploadView(APIView):
         serializer = FileUploadSerializer(data=request.data)
         
         if serializer.is_valid():
-            file = serializer.validated_data['file']
+            files = serializer.validated_data['files']
             target_path = request.data.get('target_path')
-            files = [file]
+           
 
             
             if target_path not in request.data:
