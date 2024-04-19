@@ -1335,7 +1335,7 @@ def search(root_dir, search_box, category, mode, format, label,  realtime, time_
             for subdir in meta_data["subdirs"]:
                 if subdir ==  "/data/public/ag_data":
                     continue
-                print(subdir)
+                print(f"{subdir}, parent folder{meta_data['abs_path']}")
 
                 sub_result = search(subdir, search_box, category, mode, format, label,  realtime, time_range, spatial_range)
                 result += sub_result
