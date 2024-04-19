@@ -1336,8 +1336,8 @@ def search(root_dir, search_box, category, mode, format, label,  realtime, time_
                 if subdir ==  "/data/public/ag_data":
                     continue
 
-                #sub_result = search(subdir, search_box, category, mode, format, label,  realtime, time_range, spatial_range)
-                #result += sub_result
+                sub_result = search(subdir, search_box, category, mode, format, label,  realtime, time_range, spatial_range)
+                result += sub_result
         return result
 
 
