@@ -15,12 +15,13 @@ class FileUploadSerializer(serializers.Serializer):
     # You can specify additional arguments for FileField to further customize its behavior
     # For example, you can set `allow_empty_file=False` to prevent empty files from being uploaded
     # `max_length` could be used to specify the maximum length of the file name
-    #file = serializers.FileField(allow_empty_file=False, max_length=100)
+    file = serializers.FileField(allow_empty_file=False, max_length=100)
     # Use a ListField with a child FileField to accept multiple files
-    files = serializers.ListField(
-        child=serializers.FileField(allow_empty_file=False, max_length=100),
-        allow_empty=False  # Prevent empty list
-    )
+
+    #files = serializers.ListField(
+    #    child=serializers.FileField(allow_empty_file=False, max_length=100),
+    #    allow_empty=False  # Prevent empty list
+    #)
     target_path = serializers.CharField(max_length=200)  # Adjust max_length as needed
 
     def validate_file(self, value):
@@ -78,8 +79,9 @@ class FileUploadView(APIView):
         serializer = FileUploadSerializer(data=request.data)
         
         if serializer.is_valid():
-            files = serializer.validated_data['files']
+            file = serializer.validated_data['file']
             target_path = request.data.get('target_path')
+            files = [file]
            
 
             
