@@ -534,9 +534,10 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, re
         return False
 
     has_mode = False
-    print(mode)
+    
     for m in mode:
         if m == "All" or m in meta_data["mode"]:
+            print (meta_data)
             has_mode = True
             break
     if not has_mode:
@@ -1318,7 +1319,7 @@ def search(root_dir, search_box, category, mode, format, label,  realtime, time_
     #    return [root_dir,os.path.join(settings.CORE_DIR, 'data', meta_data_file_name)]
     #with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
     meta_data = get_meta_data(root_dir)
-    print(meta_data)
+    #print(meta_data)
     if "Collection" in meta_data["mode"]  and meta_data["name"] == "collections":
         for subdir in meta_data["subdirs"]:
             sub_meta = get_meta_data(subdir)
