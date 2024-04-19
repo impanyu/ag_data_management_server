@@ -85,7 +85,7 @@ class FileUploadView(APIView):
            
 
             
-            if relative_paths not in request.data:
+            if "relative_paths" not in request.data:
                 relative_paths = []
             else:
                 relative_paths = request.data.getlist('relative_paths')
