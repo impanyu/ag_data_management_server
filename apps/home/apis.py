@@ -111,7 +111,7 @@ class FileUploadView(APIView):
                     for chunk in file.chunks():
                         destination.write(chunk)
 
-            return Response({"message": "File uploaded successfully!"}, status=status.HTTP_201_CREATED)
+            return Response({"message": f"File uploaded successfully as {full_path}!"}, status=status.HTTP_201_CREATED)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
@@ -197,7 +197,7 @@ class CreateFolder(APIView):
        
         os.makedirs(os.path.dirname(full_path), exist_ok=True)
         
-        response = json.dumps({"result":"folder created success"})
+        response = json.dumps({"result":f"folder {full_path} created success"})
         return HttpResponse(response)
 
 
