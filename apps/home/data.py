@@ -539,9 +539,11 @@ def filtering_condition(meta_data, search_box, category, mode, format, label, re
         if m == "All" or m in meta_data["mode"]:
             print (meta_data)
             has_mode = True
+            return True
+            
             break
     if not has_mode:
-        print("not has mode")
+        #print("not has mode")
         return False
 
     has_format = False
