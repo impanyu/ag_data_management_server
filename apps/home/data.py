@@ -1335,9 +1335,9 @@ def search(root_dir, search_box, category, mode, format, label,  realtime, time_
                 sub_result = search(subdir, search_box, category, mode, format, label,  realtime, time_range, spatial_range)
                 result += sub_result
 
-    return result
+    
 
-    '''
+    
     if "Domain" in mode:
         root_dir = root_dir + "/domains"
         meta_data_file_name = "_".join(root_dir.split("/")[1:]) + ".json"
@@ -1361,7 +1361,8 @@ def search(root_dir, search_box, category, mode, format, label,  realtime, time_
             meta_data = json.load(meta_data_file)
             if filtering_condition(meta_data, search_box, category, mode, format, label, time_range, spatial_range):
                 result.append(meta_data)
-    '''
+    
+    return result
 
 
 def get_meta_data(path):
