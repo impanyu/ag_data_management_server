@@ -1376,6 +1376,7 @@ def data(request):
                 response["items"] += search(root_dir, search_box, category, mode, format, label, realtime, time_range,spatial_range)
 
 
+            print(response)
             #remove duplicates
             item_set = set(json.dumps(d) for d in response["items"])
             response["items"] = [json.loads(s) for s in item_set]
