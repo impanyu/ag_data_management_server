@@ -184,6 +184,22 @@ class ListFilesView(APIView):
        
         response = json.dumps(items)
         return HttpResponse(response)
+    
+class CreateFolder(APIView):
+
+    def get(self, request, *args, **kwargs):
+        target_path = request.query_params.get('target_path')
+        safe_path = os.path.normpath(target_path).lstrip('/')
+        current_user = request.user.username
+
+        # Construct the full file path
+        full_path = os.path.join(settings.USER_DATA_DIR, current_user, "ag_data", safe_path)
+       
+        os.makedirs(os.path.dirname(full_path), exist_ok=True)
+        
+        response = json.dumps({"result":"folder created success"})
+        return HttpResponse(response)
+
 
 
 class RunToolView(APIView):
