@@ -1,5 +1,5 @@
 {
-    "openapi": "3.1",
+    "openapi": "3.1.0",
     "info": {
       "title": "John Deere API",
       "version": "1.0.0",
@@ -130,8 +130,7 @@
           }
         }
       },
-
-    "/organizations/{orgId}": {
+      "/organizations/{orgId}": {
         "get": {
           "summary": "Retrieve Organization by ID",
           "description": "Fetches details of an organization by its unique identifier.",
@@ -196,13 +195,10 @@
           }
         }
       }
-
-
-
-
     },
     "components": {
-      "schemas": {}
+    "schemas": {}
     }
-  }
+    } 
+                     
   
