@@ -3,7 +3,7 @@
     "info": {
       "title": "John Deere API",
       "version": "1.0.0",
-      "description": "This API provides access to information about the ENREEC farm managed by John Deere."
+      "description": "Only use this API when the information about the ENREEC farm managed by John Deere is queried."
     },
     "servers": [
       {
