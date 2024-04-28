@@ -14,6 +14,7 @@
     "paths": {
       "/organizations": {
         "get": {
+         "name": "organizations",
           "summary": "Get organizations",
           "description": "Returns a list of organizations of which a particular user is a member or organizations matching specific criteria.",
           "parameters": [
