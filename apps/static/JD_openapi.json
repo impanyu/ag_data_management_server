@@ -1,9 +1,9 @@
 {
-    "openapi": "3.0.0",
+    "openapi": "3.1",
     "info": {
       "title": "John Deere API",
       "version": "1.0.0",
-      "description": "This API provides access to information about the farm managed by John Deere."
+      "description": "This API provides access to information about the ENREEC farm managed by John Deere."
     },
     "servers": [
       {
