@@ -12,48 +12,13 @@
       }
     ],
     "paths": {
-      "/organizations": {
+      "/organizations/4193081": {
         "get": {
          "name": "organizations",
           "summary": "Get organizations",
-          "description": "Returns a list of organizations of which a particular user is a member or organizations matching specific criteria.",
+          "description": "Returns the basic information of ENREEC.",
           "parameters": [
-            {
-              "name": "userName",
-              "in": "query",
-              "required": false,
-              "description": "Returns a list of organizations of which the specified user is a member.",
-              "schema": {
-                "type": "string"
-              }
-            },
-            {
-              "name": "orgId",
-              "in": "query",
-              "required": false,
-              "description": "Returns the description of the organization that corresponds with the given organization ID.",
-              "schema": {
-                "type": "string"
-              }
-            },
-            {
-              "name": "orgName",
-              "in": "query",
-              "required": false,
-              "description": "Returns a list of organizations that contain the given string in their name.",
-              "schema": {
-                "type": "string"
-              }
-            },
-            {
-              "name": "x-deere-signature",
-              "in": "header",
-              "required": false,
-              "description": "Managed by the client per user per API call. Blank on the first request for a new user/new API.",
-              "schema": {
-                "type": "string"
-              }
-            }
+        
           ],
           "responses": {
             "200": {
