@@ -15,7 +15,7 @@
       "/organizations/4193081": {
         "get": {
          "name": "organizations",
-          "summary": "Get organizations",
+          "summary": "Get organizations information of ENREEC",
           "description": "Returns the basic information of ENREEC.",
           "parameters": [
         
