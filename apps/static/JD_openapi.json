@@ -31,7 +31,7 @@
               "name": "orgId",
               "in": "query",
               "required": false,
-              "description": "Returns the name of the organization that corresponds with the given organization ID.",
+              "description": "Returns the description of the organization that corresponds with the given organization ID.",
               "schema": {
                 "type": "string"
               }
