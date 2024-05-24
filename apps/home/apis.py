@@ -75,7 +75,7 @@ class API(APIView):
         return Response(usernames)
 
 
-@csrf_exempt
+
 class FileUploadView(APIView):
     def post(self, request, *args, **kwargs):
         # Assuming the serializer handles file validation but not the target path
