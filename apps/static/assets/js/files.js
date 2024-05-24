@@ -2542,7 +2542,8 @@ function get_item_list(){
            else
                tabs = '<a class="dropdown-item"  id="'+i+'_file_delete">Delete</a>'+
                     '<a class="dropdown-item" id="'+i+'_move">Move</a>'+
-                   '<a class="dropdown-item"  id="'+i+'_duplicate">Duplicate</a>'
+                   '<a class="dropdown-item"  id="'+i+'_duplicate">Duplicate</a>'+
+                   '<a class="dropdown-item" id="'+i+'_connect+to_JD">Connect to JD</a>'
 
 
             if (file["abs_path"] == current_path+"/ENREEC_Testbed"){
@@ -2688,6 +2689,16 @@ function get_item_list(){
 
             });
 
+            $("#"+i+"_connect_to_JD").click(function(){
+              file_name= data[parseInt(this.id.split("_")[0])]["name"];
+              file_path = data[parseInt(this.id.split("_")[0])]["abs_path"]
+              //console.info(file_name);
+              //add_to_domain(current_path,file_name);
+              connect_to_JD(file_path);
+
+
+           });
+
 
           }
 
@@ -2713,6 +2724,32 @@ function duplicate(file_path){
             }
         });
 
+}
+
+function connect_to_JD(file_path){
+  $.ajax({
+         type: "GET",
+
+         url: "/api/connect_JD/",
+         data: {
+              file_path:file_path,
+
+         },
+         success: function(data, textStatus, jqXHR) {
+          // Check if the response indicates a redirect
+          if (jqXHR.status === 302 || jqXHR.status === 301) {
+              // If a redirect is indicated, manually redirect the client
+              const redirectUrl = jqXHR.getResponseHeader('Location');
+              if (redirectUrl) {
+                  window.location.href = redirectUrl;
+                  return;
+              }
+          }
+      },
+      error: function(xhr, status, error) {
+          console.error('There was a problem with the ajax operation:', error);
+      }
+  });
 }
 
 

@@ -9,6 +9,9 @@ from django.conf import settings
 from django.http import HttpResponse
 from .data import *
 import json
+from django.views.decorators.csrf import csrf_exempt
+from .native_tools import *
+from django.shortcuts import redirect
 
 class FileUploadSerializer(serializers.Serializer):
     # Define a file field in your serializer
@@ -72,7 +75,7 @@ class API(APIView):
         return Response(usernames)
 
 
-
+@csrf_exempt
 class FileUploadView(APIView):
     def post(self, request, *args, **kwargs):
         # Assuming the serializer handles file validation but not the target path
@@ -279,3 +282,22 @@ class CheckRunningInstance(APIView):
         return HttpResponse(response)
     
 
+
+
+class ConnectJD(APIView):
+
+    def get(self, request, *args, **kwargs):
+        target_path = request.query_params.get('target_path')
+        safe_path = os.path.normpath(target_path).lstrip('/')
+        current_user = request.user.username
+
+        # Construct the full file path
+        full_path = os.path.join(settings.USER_DATA_DIR, current_user, "ag_data", safe_path)
+       
+        #os.makedirs(os.path.dirname(full_path), exist_ok=True)
+        authorization_link = connect_JD(full_path)
+        # redirect the user to the authorization link
+        response = json.dumps({"authorization_link":authorization_link})
+        
+        #response = json.dumps({"result":f"folder {full_path} connected to JD"})
+        return redirect(authorization_link)

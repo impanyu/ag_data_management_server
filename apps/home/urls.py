@@ -41,6 +41,7 @@ urlpatterns = [
     path('api/list/', ListFilesView.as_view(), name='list-files'),
     path('api/run_tool/', RunToolView.as_view(), name='run-tool'),
     path('api/create_folder/', CreateFolder.as_view(), name='create-folder'),
+    path('api/connect_JD/', ConnectJD.as_view(), name='connect-JD'),
     path('api/check_running_instance/', CheckRunningInstance.as_view(), name='check-running-instance'),
     path('api/api-token-auth/', obtain_auth_token, name='api_token_auth'),
 

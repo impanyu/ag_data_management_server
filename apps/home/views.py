@@ -14,6 +14,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template import loader
 from django.urls import reverse
 from .data import *
+from .native_tools import *
 from django.views.decorators.csrf import csrf_exempt
 import stat
 from pwd import getpwnam
@@ -181,6 +182,10 @@ def pages(request):
         elif load_template == "files.html":
             context['current_path'] = request.GET['current_path']
             context['segment'] = load_template
+
+            JD_authorization_code = request.GET.get('code',"")
+            if not JD_authorization_code == "":
+                get_JD_token(JD_authorization_code)
 
 
 
