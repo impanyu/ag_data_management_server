@@ -287,7 +287,7 @@ class CheckRunningInstance(APIView):
 class ConnectJD(APIView):
 
     def get(self, request, *args, **kwargs):
-        target_path = request.query_params.get('target_path')
+        target_path = request.query_params.get('file_path')
         safe_path = os.path.normpath(target_path).lstrip('/')
         current_user = request.user.username
 
