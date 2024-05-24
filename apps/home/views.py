@@ -1086,13 +1086,20 @@ def data(request):
                 return HttpResponse(json.dumps(items))
 
             if f"/data/public" in abs_path or "Collection" in meta_data["mode"]:
-                for sub_path in meta_data["subdirs"]:
+                i = 0
+                while i < len(meta_data["subdirs"]):  
+                    sub_path = meta_data["subdirs"][i]
 
 
 
                     # if collection_path == f"/data/{request.user.get_username()}/collections":
                     #    continue
                     sub_meta_data = get_meta_data(sub_path)
+                    if sub_meta_data=={}:
+                        meta_data["subdirs"].remove(sub_path)
+                        continue
+                    else:
+                        i = i + 1
 
                     if not sub_path.split("/")[2] == request.user.get_username() and sub_meta_data["public"] == "False":
                         continue
