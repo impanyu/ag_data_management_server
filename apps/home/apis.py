@@ -297,7 +297,7 @@ class ConnectJD(APIView):
         #os.makedirs(os.path.dirname(full_path), exist_ok=True)
         authorization_link = connect_JD(full_path)
         # redirect the user to the authorization link
-        response = json.dumps({"authorization_link":authorization_link})
+        #response = json.dumps({"authorization_link":authorization_link})
         
         #response = json.dumps({"result":f"folder {full_path} connected to JD"})
         return redirect(authorization_link)
