@@ -183,9 +183,9 @@ def pages(request):
             context['current_path'] = request.GET['current_path']
             context['segment'] = load_template
 
-            JD_authorization_code = request.GET.get('code',"")
-            if not JD_authorization_code == "":
-                get_JD_token(JD_authorization_code)
+            #JD_authorization_code = request.GET.get('code',"")
+            #if not JD_authorization_code == "":
+            #    get_JD_token(JD_authorization_code)
 
 
 
