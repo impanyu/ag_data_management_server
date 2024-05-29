@@ -287,12 +287,12 @@ class CheckRunningInstance(APIView):
 class JD_authorization_code(APIView):
 
     def get(self, request, *args, **kwargs):
-        target_path = request.query_params.get('file_path')
-        safe_path = os.path.normpath(target_path).lstrip('/')
-        current_user = request.user.username
+        target_path = request.query_params.get('file_path') #this is already abs path
+        #safe_path = os.path.normpath(target_path).lstrip('/')
+        #current_user = request.user.username
 
         # Construct the full file path
-        full_path = os.path.join(settings.USER_DATA_DIR, current_user, "ag_data", safe_path)
+        full_path = target_path#os.path.join(settings.USER_DATA_DIR, current_user, "ag_data", safe_path)
         request.session['JD_tokens'] = {full_path:""}
        
         #os.makedirs(os.path.dirname(full_path), exist_ok=True)
