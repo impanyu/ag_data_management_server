@@ -309,7 +309,7 @@ class JD_access_token(APIView):
     def get(self, request, *args, **kwargs):
         authorization_code = request.query_params.get('code')
         token = get_JD_token(authorization_code)
-        url = get_JD_authorization_code()
+        url = get_JD_organizations()
         if not url == None:
             return redirect(url)
         #response = json.dumps(token)
