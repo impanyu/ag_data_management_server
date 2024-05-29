@@ -2740,10 +2740,10 @@ function connect_to_JD(file_path){
           if (jqXHR.status === 302 || jqXHR.status === 301) {
               // If a redirect is indicated, manually redirect the client
               const redirectUrl = jqXHR.getResponseHeader('Location');
-              if (redirectUrl) {
+              /*if (redirectUrl) {
                   window.location.href = redirectUrl;
                   return;
-              }
+              }*/
           }
       },
       error: function(xhr, status, error) {
