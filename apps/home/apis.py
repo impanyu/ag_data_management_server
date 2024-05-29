@@ -326,7 +326,7 @@ class JD_access_token(APIView):
             context = {
                 "result": "success"
             }
-            file_path = "/".join(file_path.split("/")[2])
+            file_path = "/".join(file_path.split("/")[2:])
 
             html_template = loader.get_template('home/files.html?current_path='+file_path)
             return HttpResponse(html_template.render(context, request))
