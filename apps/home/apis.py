@@ -315,8 +315,8 @@ class JD_access_token(APIView):
         #response = json.dumps(token)
         else:
             # get file path from the session
-            file_path = request.session.get('JD_tokens')
-            for path in file_path:
+            JD_tokens = request.session.get('JD_tokens')
+            for path in JD_tokens:
                 if file_path[path] == "":
                     file_path = path
                
