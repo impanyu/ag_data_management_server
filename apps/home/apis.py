@@ -319,7 +319,7 @@ class JD_access_token(APIView):
             for path in JD_tokens:
                 if JD_tokens[path] == "":
                     file_path = path
-                    print(file_path)
+                    
                
                     populate_JD_dir(file_path,token)
-            return HttpResponse("dir is populated")
+            return HttpResponse(f"dir is populated {file_path}")
