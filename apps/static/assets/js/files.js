@@ -2750,6 +2750,16 @@ function connect_to_JD(file_path){
       },
       error: function(xhr, status, error) {
           console.error('There was a problem with the ajax operation:', error);
+          if (jqXHR.status === 302 || jqXHR.status === 301) {
+            // If a redirect is indicated, manually redirect the client
+            const redirectUrl = jqXHR.getResponseHeader('Location');
+            /*if (redirectUrl) {
+                window.location.href = redirectUrl;
+                return;
+            }*/
+            //display a overlay with the redirect url in the middle of the screen
+            display_warning_overlay("Please click the link to connect to John Deere Operations Center: "+redirectUrl);
+        }
       }
   });
 }
