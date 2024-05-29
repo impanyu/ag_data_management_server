@@ -2761,20 +2761,20 @@ function connect_to_JD(file_path){
                 return;
             }*/
             //display a overlay with the redirect url in the middle of the screen
-            display_warning_overlay("Please click the link to connect to John Deere Operations Center: "+redirectUrl);
+            display_redirect_overlay("Please click the link to connect to John Deere Operations Center: "+redirectUrl);
         }
       }
   });
 }
 
-//implement display_warning_overlay
+//implement display_redirect_overlay
 function display_warning_overlay(warning){
     //create the DOM element for the overlay and append it to the div with id = data_panel 
     warning_overlay = document.createElement("div");
-    warning_overlay.id = "warning_overlay";
+    warning_overlay.id = "redirect_overlay";
     warning_overlay.style.display = "flex";
     warning_overlay.innerHTML = warning;
-    document.querySelector("#data_panel").appendChild(warning_overlay);
+    document.querySelector("#data_panel").appendChild(redirect_overlay);
     // place the overlay in the middle of the screen
     warning_overlay.style.top = "50%";
     warning_overlay.style.left = "50%";
