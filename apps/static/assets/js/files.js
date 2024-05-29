@@ -2752,7 +2752,7 @@ function connect_to_JD(file_path){
           console.error('There was a problem with the ajax operation:', error);
           console.info(xhr.status);
           console.info(status);
-          if (xhr.status === 302 || xhr.status === 301) {
+          if (xhr.status === 302 || xhr.status === 0) {
             // If a redirect is indicated, manually redirect the client
             const redirectUrl = xhr.getResponseHeader('Location');
             /*if (redirectUrl) {
