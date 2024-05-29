@@ -2543,7 +2543,7 @@ function get_item_list(){
                tabs = '<a class="dropdown-item"  id="'+i+'_file_delete">Delete</a>'+
                     '<a class="dropdown-item" id="'+i+'_move">Move</a>'+
                    '<a class="dropdown-item"  id="'+i+'_duplicate">Duplicate</a>'+
-                   '<a class="dropdown-item" id="'+i+'_connect_to_JD">Connect to JD</a>'
+                   '<a class="dropdown-item" id="'+i+'_connect_to_JD" href="/api/connect_JD/?file_path='+enncodeURIComponent(file["abs_path"])+'" >Connect to JD</a>'
 
 
             if (file["abs_path"] == current_path+"/ENREEC_Testbed"){
@@ -2689,15 +2689,7 @@ function get_item_list(){
 
             });
 
-            $("#"+i+"_connect_to_JD").click(function(){
-              file_name= data[parseInt(this.id.split("_")[0])]["name"];
-              file_path = data[parseInt(this.id.split("_")[0])]["abs_path"]
-              //console.info(file_name);
-              //add_to_domain(current_path,file_name);
-              connect_to_JD(file_path);
-
-
-           });
+      
 
 
           }
@@ -2752,17 +2744,6 @@ function connect_to_JD(file_path){
           console.error('There was a problem with the ajax operation:', error);
           console.info(xhr.status);
           console.info(status);
-          if (xhr.status === 302 || xhr.status == 0) {
-            // If a redirect is indicated, manually redirect the client
-            const redirectUrl = xhr.getResponseHeader('Location');
-            console.info("redirectUrl: "+redirectUrl);
-            /*if (redirectUrl) {
-                window.location.href = redirectUrl;
-                return;
-            }*/
-            //display a overlay with the redirect url in the middle of the screen
-            display_warning_overlay("Please click the link to connect to John Deere Operations Center: "+redirectUrl);
-        }
       }
   });
 }
