@@ -328,6 +328,7 @@ class JD_access_token(APIView):
             }
             file_path = "/".join(file_path.split("/")[2:])
 
-            html_template = loader.get_template('home/files.html?current_path='+file_path)
-            return HttpResponse(html_template.render(context, request))
+            html_template = loader.get_template('home/files.html')
+            # append the file path as url parameter to the template
+            return redirect(f"files.html?file_path={file_path}")
             #return HttpResponse(f"dir is populated {file_path}")
