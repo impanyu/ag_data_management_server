@@ -2755,6 +2755,7 @@ function connect_to_JD(file_path){
           if (xhr.status === 302 || xhr.status == 0) {
             // If a redirect is indicated, manually redirect the client
             const redirectUrl = xhr.getResponseHeader('Location');
+            console.info("redirectUrl: "+redirectUrl);
             /*if (redirectUrl) {
                 window.location.href = redirectUrl;
                 return;
