@@ -86,7 +86,7 @@ def get_JD_organizations():
         for links in link_object['links']:
             if(links['rel'] == 'connections'):
                 connections_link = links['uri']
-                break;
+                break
     
     if (not connections_link == None):
         
