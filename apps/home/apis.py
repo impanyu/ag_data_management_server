@@ -13,6 +13,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .native_tools import *
 from django.shortcuts import redirect
 from django.template import loader
+import urllib.parse
 
 class FileUploadSerializer(serializers.Serializer):
     # Define a file field in your serializer
@@ -327,7 +328,12 @@ class JD_access_token(APIView):
                 "result": "success"
             }
             file_path = "/".join(file_path.split("/")[2:])
+            #encode file_path as uri component
 
+            file_path = urllib.parse.quote(file_path)
+
+         
+            
             html_template = loader.get_template('home/files.html')
             # append the file path as url parameter to the template
             return redirect(f"/files.html?current_path={file_path}")
