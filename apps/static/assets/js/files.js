@@ -2543,7 +2543,7 @@ function get_item_list(){
                tabs = '<a class="dropdown-item"  id="'+i+'_file_delete">Delete</a>'+
                     '<a class="dropdown-item" id="'+i+'_move">Move</a>'+
                    '<a class="dropdown-item"  id="'+i+'_duplicate">Duplicate</a>'+
-                   '<a class="dropdown-item" id="'+i+'_connect+to_JD">Connect to JD</a>'
+                   '<a class="dropdown-item" id="'+i+'_connect_to_JD">Connect to JD</a>'
 
 
             if (file["abs_path"] == current_path+"/ENREEC_Testbed"){
