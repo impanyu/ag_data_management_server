@@ -330,5 +330,5 @@ class JD_access_token(APIView):
 
             html_template = loader.get_template('home/files.html')
             # append the file path as url parameter to the template
-            return redirect(f"/files.html?file_path={file_path}")
+            return redirect(f"/files.html?current_path={file_path}")
             #return HttpResponse(f"dir is populated {file_path}")
