@@ -107,7 +107,9 @@ def populate_JD_dir(file_path,token):
         org_name = org['name']
         org_id = org['id']
         org_path = file_path + "/" + org_name
-        os.makedirs(org_path)
+        # if file does not exist, create it
+        if not os.path.exists(org_path):
+            os.makedirs(org_path)
         #get the fields for the organization
         ORGANIZATION_FIELDS_URL = org['links']['fields']
         fields = get_myjohndeere_api_json_response(oauth_session=oauth2_session, myjohndeere_uri=ORGANIZATION_FIELDS_URL, headers=MYJOHNDEERE_V3_JSON_HEADERS, params=None)
@@ -116,7 +118,9 @@ def populate_JD_dir(file_path,token):
             field_name = field['name']
             field_id = field['id']
             field_path = org_path + "/" + field_name
-            os.makedirs(field_path)
+            # if file does not exist, create it
+            if not os.path.exists(field_path):
+                os.makedirs(field_path)
     return None
 
 
