@@ -2768,7 +2768,7 @@ function connect_to_JD(file_path){
 }
 
 //implement display_redirect_overlay
-function display_warning_overlay(warning){
+function display_redirect_overlay(warning){
     //create the DOM element for the overlay and append it to the div with id = data_panel 
     warning_overlay = document.createElement("div");
     warning_overlay.id = "redirect_overlay";
