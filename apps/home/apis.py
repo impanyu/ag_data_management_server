@@ -293,6 +293,7 @@ class JD_authorization_code(APIView):
 
         # Construct the full file path
         full_path = os.path.join(settings.USER_DATA_DIR, current_user, "ag_data", safe_path)
+        request.session['JD_tokens'] = {full_path:""}
        
         #os.makedirs(os.path.dirname(full_path), exist_ok=True)
         authorization_link = get_JD_authorization_code(full_path)
@@ -301,3 +302,24 @@ class JD_authorization_code(APIView):
         
         #response = json.dumps({"result":f"folder {full_path} connected to JD"})
         return redirect(authorization_link)
+    
+
+class JD_access_token(APIView):
+
+    def get(self, request, *args, **kwargs):
+        authorization_code = request.query_params.get('code')
+        token = get_JD_token(authorization_code)
+        url = get_JD_authorization_code()
+        if not url == None:
+            return redirect(url)
+        #response = json.dumps(token)
+        else:
+            # get file path from the session
+            file_path = request.session.get('JD_tokens')
+            for path in file_path:
+                if file_path[path] == "":
+                    file_path = path
+               
+                    populate_JD_dir(file_path,token)
+            return HttpResponse("dir is populated")
+        
