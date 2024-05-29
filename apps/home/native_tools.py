@@ -11,6 +11,7 @@ def connect_JD(path):
     CLIENT_ID = '0oabqi3ic7ZFEZE3z5d7'
     CLIENT_SECRET = 'eqkbTdRS9t2Eq1VWsqorB_PGKZdk4NiaO0u3bCucSaXVbIIlb9w9hn0Ysco9nYR2'
     CLIENT_REDIRECT_URI = f'http://unladma.hopto.org/files.html?current_path={parent_path}'
+    CLIENT_REDIRECT_URI ='http://unladma.hopto.org'
 
     # Leave the line below as-is. This line of code verifies that you've modified the CLIENT_ID, CLIENT_SECRET, CLIENT_REDIRECT_URI to the values above so that your application can complete OAuth"
     assert(CLIENT_ID != 'place_client_key_here' and CLIENT_SECRET != 'place_client_secret_here' and CLIENT_REDIRECT_URI != 'place_client_redirect_uri_here'), "You need to update your CLIENT_ID, CLIENT_SECRET, or CLIENT_REDIRECT_URI in this cell"
