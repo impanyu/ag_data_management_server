@@ -317,7 +317,7 @@ class JD_access_token(APIView):
             # get file path from the session
             JD_tokens = request.session.get('JD_tokens')
             for path in JD_tokens:
-                if file_path[path] == "":
+                if JD_tokens[path] == "":
                     file_path = path
                
                     populate_JD_dir(file_path,token)
