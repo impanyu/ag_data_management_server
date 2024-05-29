@@ -303,7 +303,6 @@ class JD_authorization_code(APIView):
         #response = json.dumps({"result":f"folder {full_path} connected to JD"})
         return redirect(authorization_link)
 
-'''
 
 class JD_access_token(APIView):
 
@@ -323,4 +322,3 @@ class JD_access_token(APIView):
                
                     populate_JD_dir(file_path,token)
             return HttpResponse("dir is populated")
-'''
