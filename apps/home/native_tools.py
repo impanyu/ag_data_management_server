@@ -5,6 +5,8 @@ import os
 
 
 
+
+
 def get_JD_authorization_code(path):
     global oauth2_session
     global TOKEN_GRANT_URL
@@ -133,11 +135,11 @@ def replace_links_as_object_array_with_links_as_dictionary(object_with_links_to_
   object_with_links_converted['links'] = convert_links_array_to_dictionary(object_with_links_to_convert['links'])
   return object_with_links_converted
 
-def get_myjohndeere_api_json_response(oauth_session, myjohndeere_uri, headers = MYJOHNDEERE_V3_JSON_HEADERS, params = None):
+def get_myjohndeere_api_json_response(oauth_session, myjohndeere_uri, headers , params = None):
   json_response = oauth2_session.get(myjohndeere_uri, headers = headers, params = params).json()
   return replace_links_as_object_array_with_links_as_dictionary(json_response)
 
-def get_myjohndeere_api_collection_json_response(oauth_session, myjohndeere_uri, headers = MYJOHNDEERE_V3_JSON_HEADERS, params = None):
+def get_myjohndeere_api_collection_json_response(oauth_session, myjohndeere_uri, headers, params = None):
   collection_json_response = get_myjohndeere_api_json_response(oauth_session, myjohndeere_uri, headers, params)
   values_from_collection = collection_json_response['values']
   values_to_add_back_to_collection = []
@@ -146,7 +148,7 @@ def get_myjohndeere_api_collection_json_response(oauth_session, myjohndeere_uri,
   collection_json_response['values'] = values_to_add_back_to_collection
   return collection_json_response
 
-def get_myjohndeere_api_collection_values_for_all_pages(oauth_session, myjohndeere_uri, headers = MYJOHNDEERE_V3_JSON_HEADERS, params = None):
+def get_myjohndeere_api_collection_values_for_all_pages(oauth_session, myjohndeere_uri, headers , params = None):
   collection_response = get_myjohndeere_api_collection_json_response(oauth_session, myjohndeere_uri, headers, params)
   collection_links = collection_response['links']
   while 'nextPage' in collection_links:
