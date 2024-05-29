@@ -29,7 +29,7 @@ def connect_JD(path):
     print('Well Known Token Grant URL - ' + TOKEN_GRANT_URL)
     print('Available Scopes - ' + AVAILABLE_SCOPES)
 
-    SCOPES_TO_REQUEST = {'org1','org2', 'files', 'offline_access', 'ag1' ,'ag2', 'ag3', 'eq1', 'eq2', 'work1', 'work2'}
+    SCOPES_TO_REQUEST = {'org2', 'files', 'offline_access','ag3','eq2', 'work2'}
     STATE = "1234"
     oauth2_session = OAuth2Session(CLIENT_ID,  redirect_uri=CLIENT_REDIRECT_URI, scope=SCOPES_TO_REQUEST)
 

@@ -2737,14 +2737,14 @@ function connect_to_JD(file_path){
          },
          success: function(data, textStatus, jqXHR) {
           // Check if the response indicates a redirect
-          /*if (jqXHR.status === 302 || jqXHR.status === 301) {
+          if (jqXHR.status === 302 || jqXHR.status === 301) {
               // If a redirect is indicated, manually redirect the client
               const redirectUrl = jqXHR.getResponseHeader('Location');
               if (redirectUrl) {
                   window.location.href = redirectUrl;
                   return;
               }
-          }*/
+          }
       },
       error: function(xhr, status, error) {
           console.error('There was a problem with the ajax operation:', error);
