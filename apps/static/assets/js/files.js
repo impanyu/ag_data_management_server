@@ -2543,7 +2543,7 @@ function get_item_list(){
                tabs = '<a class="dropdown-item"  id="'+i+'_file_delete">Delete</a>'+
                     '<a class="dropdown-item" id="'+i+'_move">Move</a>'+
                    '<a class="dropdown-item"  id="'+i+'_duplicate">Duplicate</a>'+
-                   '<a class="dropdown-item" id="'+i+'_connect_to_JD" href="/api/connect_JD/?file_path='+encodeURIComponent(file["abs_path"])+'" >Connect to JD</a>'
+                   '<a class="dropdown-item" id="'+i+'_get_JD_authorization_code" href="/api/get_JD_authorization_code/?file_path='+encodeURIComponent(file["abs_path"])+'" >Connect to JD</a>'
 
 
             if (file["abs_path"] == current_path+"/ENREEC_Testbed"){

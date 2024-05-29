@@ -4,7 +4,7 @@ import json
 import os
 
 
-def connect_JD(path):
+def get_JD_authorization_code(path):
     parent_path = os.path.dirname(path)
     #remove the first part before the first slash
     parent_path = parent_path.split('/',2)[2]

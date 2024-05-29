@@ -284,7 +284,7 @@ class CheckRunningInstance(APIView):
 
 
 
-class ConnectJD(APIView):
+class JD_authorization_code(APIView):
 
     def get(self, request, *args, **kwargs):
         target_path = request.query_params.get('file_path')
@@ -295,7 +295,7 @@ class ConnectJD(APIView):
         full_path = os.path.join(settings.USER_DATA_DIR, current_user, "ag_data", safe_path)
        
         #os.makedirs(os.path.dirname(full_path), exist_ok=True)
-        authorization_link = connect_JD(full_path)
+        authorization_link = get_JD_authorization_code(full_path)
         # redirect the user to the authorization link
         #response = json.dumps({"authorization_link":authorization_link})
         
