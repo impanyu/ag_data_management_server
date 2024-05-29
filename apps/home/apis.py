@@ -12,6 +12,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from .native_tools import *
 from django.shortcuts import redirect
+from django.template import loader
 
 class FileUploadSerializer(serializers.Serializer):
     # Define a file field in your serializer
@@ -322,4 +323,11 @@ class JD_access_token(APIView):
                     
                
                     populate_JD_dir(file_path,token)
-            return HttpResponse(f"dir is populated {file_path}")
+            context = {
+                "result": "success"
+            }
+            file_path = "/".join(file_path.split("/")[2])
+
+            html_template = loader.get_template('home/files.html?current_path='+file_path)
+            return HttpResponse(html_template.render(context, request))
+            #return HttpResponse(f"dir is populated {file_path}")
