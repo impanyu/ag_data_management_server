@@ -4,7 +4,7 @@ import json
 import os
 
 import zipfile
-
+from .data import *
 
 
 def get_JD_authorization_code(path):
