@@ -7,7 +7,7 @@ import zipfile
 
 
 
-def get_JD_authorization_code(path):
+def get_JD_authorization_code(path,request):
     global oauth2_session
     global TOKEN_GRANT_URL
     global CLIENT_SECRET
@@ -44,15 +44,16 @@ def get_JD_authorization_code(path):
     SCOPES_TO_REQUEST = {'org2', 'files', 'offline_access','ag3','eq2', 'work2'}
     STATE = "1234"
     oauth2_session = OAuth2Session(CLIENT_ID,  redirect_uri=CLIENT_REDIRECT_URI, scope=SCOPES_TO_REQUEST)
-
+    request.session['oauth2_session'] = oauth2_session
     authorization_request, state = oauth2_session.authorization_url(AUTHORIZATION_URL, STATE)
     print("Click on the following link to present the user with sign in form where they authenticate and approve access to your application.")
     print(authorization_request) 
     return authorization_request
 
-def get_JD_token(authorization_code):
+def get_JD_token(authorization_code,request):
     # Update the authorization code here
     AUTHORIZATION_CODE = authorization_code
+    oauth2_session = request.session['oauth2_session']  
 
     # Now that we have an authorization code, let's fetch an access and refresh token
     token_response = oauth2_session.fetch_token(TOKEN_GRANT_URL, code=AUTHORIZATION_CODE, client_secret=CLIENT_SECRET)
@@ -77,6 +78,7 @@ def get_JD_organizations():
                                 'Content-Type': 'application/vnd.deere.axiom.v3+json'}
     # Now that we have an access token, let's use it to get a list of organizations that the user has access to
     ORGANIZATIONS_URL = 'https://sandboxapi.deere.com/platform/organizations'
+    
     organizations_response = oauth2_session.get(ORGANIZATIONS_URL,headers=MYJOHNDEERE_V3_JSON_HEADERS)
 
 

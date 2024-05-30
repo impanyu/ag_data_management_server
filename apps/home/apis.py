@@ -298,7 +298,7 @@ class JD_authorization_code(APIView):
         request.session['JD_tokens'] = {full_path:""}
        
         #os.makedirs(os.path.dirname(full_path), exist_ok=True)
-        authorization_link = get_JD_authorization_code(full_path)
+        authorization_link = get_JD_authorization_code(full_path,request)
         # redirect the user to the authorization link
         #response = json.dumps({"authorization_link":authorization_link})
         
@@ -310,7 +310,7 @@ class JD_access_token(APIView):
 
     def get(self, request, *args, **kwargs):
         authorization_code = request.query_params.get('code')
-        token = get_JD_token(authorization_code)
+        token = get_JD_token(authorization_code,request)
         url = get_JD_organizations()
         if not url == None:
             return redirect(url)
