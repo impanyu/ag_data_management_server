@@ -7,7 +7,7 @@ import zipfile
 
 
 
-def get_JD_authorization_code(path,request):
+def get_JD_authorization_code(path):
     global oauth2_session
     global TOKEN_GRANT_URL
     global CLIENT_SECRET
@@ -44,16 +44,20 @@ def get_JD_authorization_code(path,request):
     SCOPES_TO_REQUEST = {'org2', 'files', 'offline_access','ag3','eq2', 'work2'}
     STATE = "1234"
     oauth2_session = OAuth2Session(CLIENT_ID,  redirect_uri=CLIENT_REDIRECT_URI, scope=SCOPES_TO_REQUEST)
-    request.session['oauth2_session'] = oauth2_session
+    
     authorization_request, state = oauth2_session.authorization_url(AUTHORIZATION_URL, STATE)
     print("Click on the following link to present the user with sign in form where they authenticate and approve access to your application.")
     print(authorization_request) 
     return authorization_request
 
-def get_JD_token(authorization_code,request):
+def get_JD_token(authorization_code):
     # Update the authorization code here
     AUTHORIZATION_CODE = authorization_code
-    oauth2_session = request.session['oauth2_session']  
+    CLIENT_ID = '0oabqi3ic7ZFEZE3z5d7'
+    SCOPES_TO_REQUEST = {'org2', 'files', 'offline_access','ag3','eq2', 'work2'}
+    CLIENT_SECRET = 'eqkbTdRS9t2Eq1VWsqorB_PGKZdk4NiaO0u3bCucSaXVbIIlb9w9hn0Ysco9nYR2'
+
+    oauth2_session = OAuth2Session(CLIENT_ID,  redirect_uri=CLIENT_REDIRECT_URI, scope=SCOPES_TO_REQUEST)
 
     # Now that we have an authorization code, let's fetch an access and refresh token
     token_response = oauth2_session.fetch_token(TOKEN_GRANT_URL, code=AUTHORIZATION_CODE, client_secret=CLIENT_SECRET)
