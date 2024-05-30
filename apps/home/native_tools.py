@@ -149,7 +149,7 @@ def populate_JD_dir(file_path,token):
 
                 #get the headers
                 headers = files_response.headers
-                print(files_response.status_code)
+                print("status code is"+files_response.status_code)
                 if files_response.status_code == 307:
                     file_location =  headers['Location']
                     #download the file
