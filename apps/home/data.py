@@ -1402,6 +1402,7 @@ def get_meta_data(path):
     if not os.path.exists(meta_data_file_path):
         if not os.path.exists(path):
             return {}
+        print(path,flush=True)
 
 
         if("." in os.path.basename(path)):
