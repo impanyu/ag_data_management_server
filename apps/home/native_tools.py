@@ -145,6 +145,12 @@ def populate_JD_dir(file_path,token):
                 current_folder = field_path + "/" + str(year) + "/" + operation_type
                 if not os.path.exists(current_folder):
                     os.makedirs(current_folder)
+
+                for operation in ["Aerial_Imagery","GHG","Planting","Soil_Sampling","Presciption_File","Treatment_Polygons","Tillage"]:
+                    if not os.path.exists(field_path + "/" + str(year) + "/" + operation):
+                        os.makedirs(field_path + "/" + str(year) + "/" + operation)
+
+                
                  
                 #get the files for each operation
                 FILES_URL = field_operation['links']['shapeFileAsync']
@@ -175,7 +181,7 @@ def populate_JD_dir(file_path,token):
                         zip_ref.extractall(current_folder)
                     #delete zip file
                     os.remove(current_folder + "/shapefile.zip")
-                    
+
                     
 
     return None
