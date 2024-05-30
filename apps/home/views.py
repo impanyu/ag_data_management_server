@@ -1148,10 +1148,13 @@ def data(request):
                 sub_meta_data = get_meta_data("/data/public/ag_data")
                 items.append(sub_meta_data)
 
-            #for sub_path in meta_data["subdirs"]:
             for sub_name in os.listdir(meta_data["abs_path"]):
                 print(meta_data["abs_path"],flush=True)
                 print(sub_name,flush=True)
+            #for sub_path in meta_data["subdirs"]:
+            for sub_name in os.listdir(meta_data["abs_path"]):
+                #print(meta_data["abs_path"],flush=True)
+                #print(sub_name,flush=True)
                 if sub_name[0] == ".":
                     continue
                 sub_path = meta_data["abs_path"] + "/" + sub_name
