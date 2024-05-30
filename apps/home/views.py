@@ -1150,7 +1150,7 @@ def data(request):
 
             #for sub_path in meta_data["subdirs"]:
             for sub_name in os.listdir(meta_data["abs_path"]):
-                print(sub_name,flush=True)
+                print(meta_data["abs_path"],flush=True)
                 if sub_name[0] == ".":
                     continue
                 sub_path = meta_data["abs_path"] + "/" + sub_name
