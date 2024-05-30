@@ -121,14 +121,14 @@ def populate_JD_dir(file_path,token):
             # if file does not exist, create it
             if not os.path.exists(field_path):
                 os.makedirs(field_path)
-
+            '''
             for year in range(2020,2025):
                if not os.path.exists(field_path + "/" + str(year)):
                    os.makedirs(field_path + "/" + str(year))
                for operation in ["Aerial_Imagery","GHG","Planting","Soil_Sampling","Presciption_File","Treatment_Polygons","Tillage"]:
                     if not os.path.exists(field_path + "/" + str(year) + "/" + operation):
                         os.makedirs(field_path + "/" + str(year) + "/" + operation)
-            
+            '''
             FIELD_OPERATIONS_URL = field['links']['fieldOperation']
             field_operations = get_myjohndeere_api_collection_json_response(oauth_session=oauth2_session, myjohndeere_uri=FIELD_OPERATIONS_URL, headers=MYJOHNDEERE_V3_JSON_HEADERS, params=None)
             
