@@ -2689,6 +2689,12 @@ function get_item_list(){
 
             });
 
+            $("#"+i+"_get_JD_authorization_code").click(function(){
+              document.getElementById('preloader4').style.display = 'flex';
+
+
+           });
+
       
 
 
