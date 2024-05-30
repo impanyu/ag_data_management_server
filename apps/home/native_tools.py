@@ -163,12 +163,12 @@ def populate_JD_dir(file_path,token):
                     with open(current_folder + "/shapefile.zip", 'wb') as f:
                         f.write(files_response.content)
                     #unzip the file
-                    
+                    ''''
                     with zipfile.ZipFile(current_folder + "/shapefile.zip", 'r') as zip_ref:
                         zip_ref.extractall(current_folder)
                     #delete zip file
                     os.remove(current_folder + "/shapefile.zip")
-              
+                    '''
 
     return None
 
