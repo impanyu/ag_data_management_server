@@ -149,8 +149,8 @@ def populate_JD_dir(file_path,token):
 
                 #get the headers
                 headers = files_response.headers
-                print("status code is"+ str(files_response.status_code),flush=True)
-                print(FILES_URL,flush=True)
+                #print("status code is"+ str(files_response.status_code),flush=True)
+                #print(FILES_URL,flush=True)
                 #print response body
                 #print(files_response.text,flush=True)
                 
