@@ -1150,10 +1150,11 @@ def data(request):
 
             #for sub_path in meta_data["subdirs"]:
             for sub_name in os.listdir(meta_data["abs_path"]):
-                print(sub_path,flush=True)
+                
                 if sub_name[0] == ".":
                     continue
                 sub_path = meta_data["abs_path"] + "/" + sub_name
+                print(sub_path,flush=True)
                 #if collection_path == f"/data/{request.user.get_username()}/collections":
                 #    continue
                 
