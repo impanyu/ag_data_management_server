@@ -3,7 +3,7 @@ import requests
 import json
 import os
 
-
+import zipfile
 
 
 
@@ -112,7 +112,7 @@ def populate_JD_dir(file_path,token):
             os.makedirs(org_path)
         #get the fields for the organization
         ORGANIZATION_FIELDS_URL = org['links']['fields']
-        fields = get_myjohndeere_api_json_response(oauth_session=oauth2_session, myjohndeere_uri=ORGANIZATION_FIELDS_URL, headers=MYJOHNDEERE_V3_JSON_HEADERS, params=None)
+        fields = get_myjohndeere_api_collection_json_response(oauth_session=oauth2_session, myjohndeere_uri=ORGANIZATION_FIELDS_URL, headers=MYJOHNDEERE_V3_JSON_HEADERS, params=None)
         #create a file for each field
         for field in fields['values']:
             field_name = field['name']
@@ -121,6 +121,46 @@ def populate_JD_dir(file_path,token):
             # if file does not exist, create it
             if not os.path.exists(field_path):
                 os.makedirs(field_path)
+
+            for year in range(2020,2025):
+               if not os.path.exists(field_path + "/" + str(year)):
+                   os.makedirs(field_path + "/" + str(year))
+               for operation in ["Aerial_Imagery","GHG","Planting","Soil_Sampling","Presciption_File","Treatment_Polygons","Tillage"]:
+                    if not os.path.exists(field_path + "/" + str(year) + "/" + operation):
+                        os.makedirs(field_path + "/" + str(year) + "/" + operation)
+            
+            FIELD_OPERATIONS_URL = field['links']['fieldOperation']
+            field_operations = get_myjohndeere_api_collection_json_response(oauth_session=oauth2_session, myjohndeere_uri=FIELD_OPERATIONS_URL, headers=MYJOHNDEERE_V3_JSON_HEADERS, params=None)
+            
+            for field_operation in field_operations['values']:
+                operation_type = field_operation['fieldOperationType']
+                year =  field_operation['cropSeason']
+                current_folder = field_path + "/" + str(year) + "/" + operation_type
+                if not os.path.exists(current_folder):
+                    os.makedirs(current_folder)
+                 
+                #get the files for each operation
+                FILES_URL = field_operation['links']['shapeFileAsync']
+                #query files url using python requests package
+                files_response = requests.get(FILES_URL, headers=MYJOHNDEERE_V3_JSON_HEADERS)
+                #get the status
+                while files_response.status_code == 202:
+                    files_response = requests.get(FILES_URL, headers=MYJOHNDEERE_V3_JSON_HEADERS)
+
+                #get the headers
+                headers = files_response.headers
+                file_location =  headers['Location']
+                #download the file
+                file_data = oauth2_session.get(file_location, headers=MYJOHNDEERE_V3_JSON_HEADERS)
+                with open(current_folder + "/shapefile.zip", 'wb') as f:
+                    f.write(file_data.content)
+                #unzip the file
+                
+                with zipfile.ZipFile(current_folder + "/shapefile.zip", 'r') as zip_ref:
+                    zip_ref.extractall(current_folder)
+                #delete zip file
+                os.remove(current_folder + "/shapefile.zip")
+
     return None
 
 
