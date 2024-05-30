@@ -1519,7 +1519,7 @@ def shp_to_image(shp_path,col): # plot a column of shape file as png image
     minx, miny, maxx, maxy = bounds
 
     aspect_ratio = (maxy - miny) / (maxx - minx)
-    ax = gdf.plot(column=col, cmap=cmap, figsize=(12, 12 * aspect_ratio))
+    ax = gdf.plot(column=col, cmap=cmap) #figsize=(12, 12 * aspect_ratio))
 
     # Set x and y limits based on the converted coordinates
     ax.set_xlim(minx, maxx)
