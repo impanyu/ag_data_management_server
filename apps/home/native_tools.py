@@ -151,8 +151,8 @@ def populate_JD_dir(file_path,token):
                 headers = files_response.headers
                 print("status code is"+ str(files_response.status_code),flush=True)
                 print(FILES_URL,flush=True)
-                '''
-                if files_response.status_code == 307:
+                
+                if files_response.status_code == 200:
                     
                     file_location =  headers['Location']
                     #download the file
@@ -165,7 +165,7 @@ def populate_JD_dir(file_path,token):
                         zip_ref.extractall(current_folder)
                     #delete zip file
                     os.remove(current_folder + "/shapefile.zip")
-                '''
+                
 
     return None
 
