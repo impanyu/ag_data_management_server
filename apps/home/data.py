@@ -907,7 +907,7 @@ def generate_meta_data_for_file(file_path, upstream):
         bounds = gdf.total_bounds if not gdf.empty else (-180, 0, -180, 0)
         minx, miny, maxx, maxy = bounds
         meta_data["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
-
+        meta_data["native"] = {"columns": columns, "spatial_rage": meta_data["spatial_range"]}
         #sf = shapefile.Reader(file_path)
 
         #meta_data["native"] = {"fields": sf.fields, "numRecords": sf.numRecords, "shapeType": sf.shapeType,
