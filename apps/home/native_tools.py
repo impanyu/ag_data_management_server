@@ -156,11 +156,12 @@ def populate_JD_dir(file_path,token):
                 
                 if files_response.status_code == 200:
                     
-                    file_location =  headers['Location']
+
+                    #file_location =  headers['Location']
                     #download the file
-                    file_data = oauth2_session.get(file_location, headers=MYJOHNDEERE_V3_JSON_HEADERS)
+                    #file_data = oauth2_session.get(file_location, headers=MYJOHNDEERE_V3_JSON_HEADERS)
                     with open(current_folder + "/shapefile.zip", 'wb') as f:
-                        f.write(file_data.content)
+                        f.write(files_response.content)
                     #unzip the file
                     
                     with zipfile.ZipFile(current_folder + "/shapefile.zip", 'r') as zip_ref:
