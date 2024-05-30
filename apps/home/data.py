@@ -942,6 +942,7 @@ def generate_meta_data_for_file(file_path, upstream):
 
     with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "w") as meta_data_file:
         json.dump(meta_data, meta_data_file)
+    print(file_path, flush=True)
 
     return meta_data
 
