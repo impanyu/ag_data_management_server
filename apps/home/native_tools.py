@@ -176,6 +176,7 @@ def populate_JD_dir(file_path,token):
                     #delete zip file
                     os.remove(current_folder + "/shapefile.zip")
                     
+                    
 
     return None
 

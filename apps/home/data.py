@@ -899,14 +899,14 @@ def generate_meta_data_for_file(file_path, upstream):
         meta_data["mode"]=["Data"]
 
         # Read shapefile using geopandas
-        gdf = gpd.read_file(file_path)
-        gdf = gdf.to_crs('EPSG:4326')
-        columns = [col for col in gdf.columns]
+        #gdf = gpd.read_file(file_path)
+        #gdf = gdf.to_crs('EPSG:4326')
+        #columns = [col for col in gdf.columns]
 
         # Get bounds of shapefile
-        bounds = gdf.total_bounds if not gdf.empty else (-180, 0, -180, 0)
-        minx, miny, maxx, maxy = bounds
-        meta_data["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
+        #bounds = gdf.total_bounds if not gdf.empty else (-180, 0, -180, 0)
+        #minx, miny, maxx, maxy = bounds
+        #meta_data["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
 
         #sf = shapefile.Reader(file_path)
 
