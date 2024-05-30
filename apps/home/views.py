@@ -1150,11 +1150,13 @@ def data(request):
 
             #for sub_path in meta_data["subdirs"]:
             for sub_name in os.listdir(meta_data["abs_path"]):
+                print(sub_path,flush=True)
                 if sub_name[0] == ".":
                     continue
                 sub_path = meta_data["abs_path"] + "/" + sub_name
                 #if collection_path == f"/data/{request.user.get_username()}/collections":
                 #    continue
+                
                 sub_meta_data = get_meta_data(sub_path)
 
                 if not sub_path.split("/")[2] == request.user.get_username() and sub_meta_data["public"] == "False":
