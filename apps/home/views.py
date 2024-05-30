@@ -1161,7 +1161,7 @@ def data(request):
                 #    continue
                 
                 sub_meta_data = get_meta_data(sub_path)
-                '''
+                
 
                 if not sub_path.split("/")[2] == request.user.get_username() and sub_meta_data["public"] == "False":
                     continue
@@ -1171,7 +1171,7 @@ def data(request):
                         sub_meta_data["running"] = "False"
                     else:
                         sub_meta_data["running"] = "True"
-                '''
+                
 
                 items.append(sub_meta_data)
             items = sorted(items, key= lambda item: item["name"])
