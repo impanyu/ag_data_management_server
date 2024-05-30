@@ -908,10 +908,10 @@ def generate_meta_data_for_file(file_path, upstream):
         minx, miny, maxx, maxy = bounds
         meta_data["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
 
-        sf = shapefile.Reader(file_path)
+        #sf = shapefile.Reader(file_path)
 
-        meta_data["native"] = {"fields": sf.fields, "numRecords": sf.numRecords, "shapeType": sf.shapeType,
-                               "shapeTypeName": sf.shapeTypeName, "type": sf.__geo_interface__['type'], "columns": columns,"spatial_range":meta_data["spatial_range"]}
+        #meta_data["native"] = {"fields": sf.fields, "numRecords": sf.numRecords, "shapeType": sf.shapeType,
+        #                      "shapeTypeName": sf.shapeTypeName, "type": sf.__geo_interface__['type'], "columns": columns,"spatial_range":meta_data["spatial_range"]}
 
 
     elif suffix == "m" or suffix == ".mlx":
