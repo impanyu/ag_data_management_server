@@ -174,7 +174,7 @@ def populate_JD_dir(file_path,token):
                     with zipfile.ZipFile(current_folder + "/shapefile.zip", 'r') as zip_ref:
                         zip_ref.extractall(current_folder)
                     #delete zip file
-                    #os.remove(current_folder + "/shapefile.zip")
+                    os.remove(current_folder + "/shapefile.zip")
                     
 
     return None
