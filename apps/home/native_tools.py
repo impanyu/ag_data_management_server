@@ -51,6 +51,7 @@ def get_JD_authorization_code(path):
     return authorization_request
 
 def get_JD_token(authorization_code):
+    global oauth2_session
     # Update the authorization code here
     AUTHORIZATION_CODE = authorization_code
     CLIENT_ID = '0oabqi3ic7ZFEZE3z5d7'
