@@ -150,7 +150,9 @@ def populate_JD_dir(file_path,token):
                 #get the headers
                 headers = files_response.headers
                 print("status code is"+files_response.status_code)
+                '''
                 if files_response.status_code == 307:
+                    
                     file_location =  headers['Location']
                     #download the file
                     file_data = oauth2_session.get(file_location, headers=MYJOHNDEERE_V3_JSON_HEADERS)
@@ -162,6 +164,7 @@ def populate_JD_dir(file_path,token):
                         zip_ref.extractall(current_folder)
                     #delete zip file
                     os.remove(current_folder + "/shapefile.zip")
+                '''
 
     return None
 
