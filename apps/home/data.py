@@ -1113,8 +1113,8 @@ def update_meta(file_path,new_meta_data):
             meta_data[key] = new_meta_data[key]
 
         elif key == "public":
-            #if meta_data[key] == new_meta_data[key]:
-            #    continue
+            if meta_data[key] == new_meta_data[key]:
+                continue
             meta_data[key] = new_meta_data[key]
 
             # recursively change the subdirs and files
