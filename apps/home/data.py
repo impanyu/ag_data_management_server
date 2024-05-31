@@ -1120,16 +1120,23 @@ def update_meta(file_path,new_meta_data):
             meta_data[key] = new_meta_data[key]
 
         elif key == "public":
-            if meta_data[key] == new_meta_data[key]:
-                continue
+            
             meta_data[key] = new_meta_data[key]
 
             # recursively change the subdirs and files
             if "Collection" not in meta_data["mode"]:
                 recursive_update_public(file_path,new_meta_data[key])
 
+            #if meta_data[key] == new_meta_data[key]:
+            #    continue
+
             if new_meta_data[key] == "True":
-                add_to_public(file_path)
+                #if parent is not public, then add to public
+                if os.path.exists(os.path.join(settings.CORE_DIR, 'data', "_".join(file_path.split("/")[1:-1]) + ".json")):
+                    with open(os.path.join(settings.CORE_DIR, 'data', "_".join(file_path.split("/")[1:-1]) + ".json"), "r") as parent_meta_data_file:
+                        parent_meta_data = json.load(parent_meta_data_file)
+                        if parent_meta_data["public"] == "False":
+                            add_to_public(file_path)
             else:
                 remove_from_public(file_path)
 
