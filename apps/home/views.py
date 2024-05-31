@@ -1128,8 +1128,8 @@ def data(request):
                     items.append(sub_meta_data)
                 items = sorted(items, key=lambda item: item["name"])
 
-                #parent_dir = "/".join(abs_path.split("/")[:4])
-                parent_dir = "/".join(abs_path.split("/")[:-1])
+                parent_dir = "/".join(abs_path.split("/")[:4])
+                #parent_dir = "/".join(abs_path.split("/"))
                 parent_meta_data_file_name = "_".join(parent_dir.split("/")[1:]) + ".json"
                 parent_meta_data_file_path = os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name)
                 with open(parent_meta_data_file_path,"r") as parent_meta_data_file:
