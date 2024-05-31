@@ -1398,12 +1398,12 @@ def search(root_dir, search_box, category, mode, format, label,  realtime, time_
 def get_meta_data(path):
     meta_data_file_name = "_".join(path.split("/")[1:]) + ".json"
     meta_data_file_path = os.path.join(settings.CORE_DIR, 'data', meta_data_file_name)
-    
+    print(path+"1",flush=True)
 
     if not os.path.exists(meta_data_file_path):
         if not os.path.exists(path):
             return {}
-        print(path,flush=True)
+        print(path+"2",flush=True)
 
 
         if("." in os.path.basename(path)):
@@ -1411,7 +1411,7 @@ def get_meta_data(path):
         else:
             generate_meta_data_for_dir(path,{"create":["null"]})
 
-        print(path+"again",flush=True)
+        print(path+"3",flush=True)
         parent_path = "/".join(path.split("/")[:-1])
         parent_meta_data_file_name = "_".join(parent_path.split("/")[1:]) + ".json"
 
