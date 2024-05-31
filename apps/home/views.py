@@ -444,6 +444,8 @@ def data(request):
         elif load_template == "create_folder":
             #current_path = request.POST['current_path']
             current_path = request.POST.get("current_path", "")
+            if current_path.split("/")[0] == "public":
+                return HttpResponse("can not create folder to public directory!")
             new_folder_name = request.POST['new_folder_name'].split(".")[0]
             abs_path = os.path.join("/data", current_path,new_folder_name)
 
@@ -461,6 +463,8 @@ def data(request):
         elif load_template == "create_file":
             #current_path = request.POST['current_path']
             current_path = request.POST.get("current_path", "")
+            if current_path.split("/")[0] == "public":
+                return HttpResponse("can not create files to public directory!")
             new_file_name = request.POST['new_file_name']
             abs_path = os.path.join("/data", current_path,new_file_name)
             suffix = abs_path.split(".")[-1]
@@ -481,6 +485,10 @@ def data(request):
 
         elif load_template == "upload_file":
             current_path = request.POST['current_path']
+            # if curren_path begins with public, then return
+            if current_path.split("/")[0] == "public":
+                return HttpResponse("can not upload files to public directory!")
+            
             print(current_path)
             upload_files = request.FILES.getlist("files")
             upload_file_paths = request.POST.getlist("paths")
@@ -760,6 +768,8 @@ def data(request):
 
         elif load_template == "delete_file":
             file_path = request.POST['file_path']
+            if file_path.split("/")[0] == "public":
+                return HttpResponse("can not delete files in public directory!")
             #file_name = request.POST['file_name']
 
 
