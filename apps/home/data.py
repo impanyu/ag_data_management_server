@@ -1519,7 +1519,8 @@ def shp_to_image(shp_path,col): # plot a column of shape file as png image
     minx, miny, maxx, maxy = bounds
 
     aspect_ratio = (maxy - miny) / (maxx - minx)
-    ax = gdf.plot(column=col, cmap=cmap) #figsize=(12, 12 * aspect_ratio))
+    fig, ax = plt.subplots(figsize=(30, 30 * aspect_ratio))
+    gdf.plot(column=col, cmap=cmap,ax=ax)#figsize=(12, 12 * aspect_ratio))
 
     # Set x and y limits based on the converted coordinates
     ax.set_xlim(minx, maxx)
@@ -1533,7 +1534,7 @@ def shp_to_image(shp_path,col): # plot a column of shape file as png image
     ax.margins(0)
 
     # Save figure to file
-    plt.savefig(img_path, dpi=300, bbox_inches='tight')
+    plt.savefig(img_path, dpi=300, bbox_inches='tight',bbox_inches='tight')
 
     img_meta_data = generate_meta_data_for_file(img_path,{"shp to image":[shp_path]})
     img_meta_data["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
