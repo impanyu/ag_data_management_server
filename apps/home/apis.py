@@ -338,3 +338,37 @@ class JD_access_token(APIView):
             # append the file path as url parameter to the template
             return redirect(f"/files.html?current_path={file_path}")
             #return HttpResponse(f"dir is populated {file_path}")
+
+
+
+class Realm5_Weather_Connect(APIView):
+    def get(self, request, *args, **kwargs):
+        current_path = request.query_params.get('current_path')
+        device_id = "0x019004F8"
+        occurred_after = "2024-1-1"
+        API_KEY = "U7nEMFir1hMKTucbRsqeC2joTYGXpJy2"
+        API_URL = "https://app.realmfive.com/api/v2/weather_stations/observations"
+
+        #response = requests.get(f"{API_URL}/{device_id}&occurred_after={occurred_after}", headers={"X-API-KEY":API_KEY})
+        #get today's date and interate from the occurred_after date to today's date
+        #for each date, get the weather data and save it to the file
+        start_date = datetime.strptime(occurred_after, "%Y-%m-%d")
+        current_date = start_date
+        end_date = datetime.now()
+        #iterate from start_date to today's date and get the weather data
+        while current_date <= end_date:
+            date = current_date.strftime("%Y-%m-%d")
+            response = requests.get(f"{API_URL}/{device_id}&occurred_after={date}&occured_before={date}", headers={"X-API-KEY":API_KEY})
+            data = response.json()
+            file_path = f"/{current_path}/weather_data_{date}.json"
+            with open(file_path, 'w') as file:
+                json.dump(data, file)
+            current_date += timedelta(days=1)
+
+        file_path = "/".join(file_path.split("/")[2:])
+        #encode file_path as uri component
+        file_path = urllib.parse.quote(file_path)
+
+
+        return redirect(f"files.html?current_path={file_path}")
+

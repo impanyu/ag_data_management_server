@@ -2548,7 +2548,8 @@ function get_item_list(){
                tabs = '<a class="dropdown-item"  id="'+i+'_file_delete">Delete</a>'+
                     '<a class="dropdown-item" id="'+i+'_move">Move</a>'+
                    '<a class="dropdown-item"  id="'+i+'_duplicate">Duplicate</a>'+
-                   '<a class="dropdown-item" id="'+i+'_get_JD_authorization_code" href="/api/get_JD_authorization_code/?file_path='+encodeURIComponent(file["abs_path"])+'" >Connect to JD</a>'
+                   '<a class="dropdown-item" id="'+i+'_get_JD_authorization_code" href="/api/get_JD_authorization_code/?file_path='+encodeURIComponent(file["abs_path"])+'" >Connect to JD</a>'+
+                   '<a class="dropdown-item" id="'+i+'_realm5_weather" href="/api/realm5_weather/?file_path='+encodeURIComponent(file["abs_path"])+'" >Connect to Realm5 Weather</a>'
 
 
             if (file["abs_path"] == current_path+"/ENREEC_Testbed"){
@@ -2728,39 +2729,6 @@ function duplicate(file_path){
         });
 
 }
-
-function connect_to_JD(file_path){
-  $.ajax({
-         type: "GET",
-
-         url: "/api/connect_JD/",
-         data: {
-              file_path:file_path,
-
-         },
-         success: function(data, textStatus, jqXHR) {
-          // Check if the response indicates a redirect
-          if (jqXHR.status === 302 || jqXHR.status === 301) {
-              // If a redirect is indicated, manually redirect the client
-              const redirectUrl = jqXHR.getResponseHeader('Location');
-              /*if (redirectUrl) {
-                  window.location.href = redirectUrl;
-                  return;
-              }*/
-              //display a overlay with the redirect url in the middle of the screen
-              display_warning_overlay("Please click the link to connect to John Deere Operations Center: "+redirectUrl);
-          }
-      },
-      error: function(xhr, status, error) {
-          console.error('There was a problem with the ajax operation:', error);
-          console.info(xhr.status);
-          console.info(status);
-      }
-  });
-}
-
-
-
 
 
 

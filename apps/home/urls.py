@@ -43,6 +43,7 @@ urlpatterns = [
     path('api/create_folder/', CreateFolder.as_view(), name='create-folder'),
     path('api/get_JD_authorization_code/', JD_authorization_code.as_view(), name='JD-authorization-code'),
     path('api/get_JD_access_token/', JD_access_token.as_view(), name='JD-access-token'),
+    path('api/realm5_weather/', Realm5_Weather_Connect.as_view(), name='realm5-weather'),
     path('api/check_running_instance/', CheckRunningInstance.as_view(), name='check-running-instance'),
     path('api/api-token-auth/', obtain_auth_token, name='api_token_auth'),
 
