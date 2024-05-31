@@ -1403,7 +1403,7 @@ def get_meta_data(path):
     if not os.path.exists(meta_data_file_path):
         if not os.path.exists(path):
             return {}
-        
+        print(path,flush=True)
 
 
         if("." in os.path.basename(path)):
@@ -1411,6 +1411,7 @@ def get_meta_data(path):
         else:
             generate_meta_data_for_dir(path,{"create":["null"]})
 
+        print(path+"again",flush=True)
         parent_path = "/".join(path.split("/")[:-1])
         parent_meta_data_file_name = "_".join(parent_path.split("/")[1:]) + ".json"
 
