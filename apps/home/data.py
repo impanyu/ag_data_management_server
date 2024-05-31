@@ -879,6 +879,14 @@ def generate_meta_data_for_file(file_path, upstream):
     meta_data["abs_path"] = file_path
     meta_data["subdirs"] = []
     meta_data["public"] = "False"
+
+    parent_meta_data_file_name = "_".join(file_path.split("/")[1:-1]) + ".json"
+    if os.path.exists(os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name)):
+        with open(os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name), "r") as parent_meta_data_file:
+            parent_meta_data = json.load(parent_meta_data_file)
+            meta_data["public"] = parent_meta_data["public"]
+
+   
     meta_data["name"] = file_path.split("/")[-1]
     meta_data["realtime"] = "Non-Realtime"
     meta_data["upstream"] = upstream
@@ -1398,12 +1406,12 @@ def search(root_dir, search_box, category, mode, format, label,  realtime, time_
 def get_meta_data(path):
     meta_data_file_name = "_".join(path.split("/")[1:]) + ".json"
     meta_data_file_path = os.path.join(settings.CORE_DIR, 'data', meta_data_file_name)
-    print(path+"1",flush=True)
+  
 
     if not os.path.exists(meta_data_file_path):
         if not os.path.exists(path):
             return {}
-        print(path+"2",flush=True)
+     
 
 
         if("." in os.path.basename(path)):
@@ -1411,7 +1419,7 @@ def get_meta_data(path):
         else:
             generate_meta_data_for_dir(path,{"create":["null"]})
 
-        print(path+"3",flush=True)
+        
         parent_path = "/".join(path.split("/")[:-1])
         parent_meta_data_file_name = "_".join(parent_path.split("/")[1:]) + ".json"
 
