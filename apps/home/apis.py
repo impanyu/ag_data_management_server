@@ -358,7 +358,7 @@ class Realm5_Weather_Connect(APIView):
         #iterate from start_date to today's date and get the weather data
         while current_date <= end_date:
             date = current_date.strftime("%Y-%m-%d")
-            response = requests.get(f"{API_URL}/{device_id}&occurred_after={date}&occured_before={date}", headers={"X-API-KEY":API_KEY})
+            response = requests.get(f"{API_URL}/{device_id}?occurred_after={date}&occured_before={date}", headers={"X-API-KEY":API_KEY})
             data = response.json()
             file_path = f"/{current_path}/weather_data_{date}.json"
             with open(file_path, 'w') as file:
