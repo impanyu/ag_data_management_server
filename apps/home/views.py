@@ -1161,7 +1161,7 @@ def data(request):
                 #    continue
                 
                 sub_meta_data = get_meta_data(sub_path)
-                
+                print(sub_name+"2",flush=True)
 
                 if not sub_path.split("/")[2] == request.user.get_username() and sub_meta_data["public"] == "False":
                     continue
