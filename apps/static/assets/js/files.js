@@ -2498,7 +2498,7 @@ function get_item_list(){
         },
         function(data, status){
           console.info(data);
-          document.querySelector("#data_panel").style.display="none";
+          document.querySelector("#preloader5").style.display="none";
           data=JSON.parse(data);
           console.info(data);
           subdomains=[];
