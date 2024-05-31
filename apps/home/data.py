@@ -897,7 +897,7 @@ def generate_meta_data_for_file(file_path, upstream):
     elif suffix == "shp":
         meta_data["format"]=["Shape"]
         meta_data["mode"]=["Data"]
-
+        print("begin to read shapefile")
         # Read shapefile using geopandas
         gdf = gpd.read_file(file_path)
         gdf = gdf.to_crs('EPSG:4326')
@@ -913,7 +913,7 @@ def generate_meta_data_for_file(file_path, upstream):
         #meta_data["native"] = {"fields": sf.fields, "numRecords": sf.numRecords, "shapeType": sf.shapeType,
         #                      "shapeTypeName": sf.shapeTypeName, "type": sf.__geo_interface__['type'], "columns": columns,"spatial_range":meta_data["spatial_range"]}
 
-
+        print("end to read shapefile")
     elif suffix == "m" or suffix == ".mlx":
         meta_data["format"] = ["Matlab"]
         meta_data["mode"] = ["Tool"]
