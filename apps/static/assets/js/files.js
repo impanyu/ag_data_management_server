@@ -2701,6 +2701,12 @@ function get_item_list(){
 
            });
 
+           $("#"+i+"_realm5_weather").click(function(){
+            document.getElementById('preloader4').style.display = 'flex';
+
+
+         });
+
       
 
 
