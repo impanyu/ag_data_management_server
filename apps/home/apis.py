@@ -343,7 +343,7 @@ class JD_access_token(APIView):
 
 class Realm5_Weather_Connect(APIView):
     def get(self, request, *args, **kwargs):
-        current_path = request.query_params.get('current_path')
+        current_path = request.query_params.get('file_path')
         device_id = "0x019004F8"
         occurred_after = "2024-1-1"
         API_KEY = "U7nEMFir1hMKTucbRsqeC2joTYGXpJy2"
