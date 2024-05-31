@@ -22,8 +22,10 @@ document.querySelector("#other_meta").value ="";
 document.querySelector("#file_content").style.display="none";
 if(current_path.indexOf(".")!=-1){
   document.querySelector("#preloader2").style.display="flex";
-  document.querySelector("#preloader5").style.display="flex";
 } 
+else{
+  document.querySelector("#preloader5").style.display="flex";
+}
 get_meta_and_content();
 current_col = "";
 current_band = "";
