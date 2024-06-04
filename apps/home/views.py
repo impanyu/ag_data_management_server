@@ -1164,9 +1164,9 @@ def data(request):
 
 
 
-            if abs_path == f"/data/{request.user.get_username()}/ag_data":
-                sub_meta_data = get_meta_data("/data/public/ag_data")
-                items.append(sub_meta_data)
+            #if abs_path == f"/data/{request.user.get_username()}/ag_data":
+            #    sub_meta_data = get_meta_data("/data/public/ag_data")
+            #    items.append(sub_meta_data)
 
         
             #for sub_path in meta_data["subdirs"]:
