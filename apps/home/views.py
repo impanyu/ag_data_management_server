@@ -775,9 +775,9 @@ def data(request):
 
         elif load_template == "delete_file":
             file_path = request.POST['file_path']
-            if file_path.split("/")[0] == "public":
+            if file_path.split("/")[2] == "public":
                 return HttpResponse("can not delete files in public directory!")
-            if not file_path.split("/")[0] == request.user.get_username():
+            if not file_path.split("/")[2] == request.user.get_username():
                 return HttpResponse("can not delete files to public directory!")
             #file_name = request.POST['file_name']
 
