@@ -446,6 +446,9 @@ def data(request):
             current_path = request.POST.get("current_path", "")
             if current_path.split("/")[0] == "public":
                 return HttpResponse("can not create folder to public directory!")
+            if not current_path.split("/")[0] == request.user.get_username():
+                return HttpResponse("can not create folder to public directory!")
+
             new_folder_name = request.POST['new_folder_name'].split(".")[0]
             abs_path = os.path.join("/data", current_path,new_folder_name)
 
@@ -464,7 +467,9 @@ def data(request):
             #current_path = request.POST['current_path']
             current_path = request.POST.get("current_path", "")
             if current_path.split("/")[0] == "public":
-                return HttpResponse("can not create files to public directory!")
+                return HttpResponse("can not create file to public directory!")
+            if not current_path.split("/")[0] == request.user.get_username():
+                return HttpResponse("can not create file to public directory!")
             new_file_name = request.POST['new_file_name']
             abs_path = os.path.join("/data", current_path,new_file_name)
             suffix = abs_path.split(".")[-1]
@@ -487,6 +492,8 @@ def data(request):
             current_path = request.POST['current_path']
             # if curren_path begins with public, then return
             if current_path.split("/")[0] == "public":
+                return HttpResponse("can not upload files to public directory!")
+            if not current_path.split("/")[0] == request.user.get_username():
                 return HttpResponse("can not upload files to public directory!")
             
             print(current_path)
@@ -770,6 +777,8 @@ def data(request):
             file_path = request.POST['file_path']
             if file_path.split("/")[0] == "public":
                 return HttpResponse("can not delete files in public directory!")
+            if not current_path.split("/")[0] == request.user.get_username():
+                return HttpResponse("can not delete files to public directory!")
             #file_name = request.POST['file_name']
 
 
