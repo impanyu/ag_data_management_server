@@ -273,6 +273,16 @@ function add_to_domain(path,file_name){
 }
 
 
+  // Add event listener to the search box
+  document.getElementById('search_box').addEventListener('keydown', function(event) {
+    // Check if the Enter key (key code 13) is pressed
+    if (event.key === 'Enter') {
+        event.preventDefault(); // Prevent the default form submission (if inside a form)
+        get_item_list(); // Call the function
+    }
+});
+
+
 function initMap(){
   map = new google.maps.Map(
     document.getElementById("map"),
@@ -355,7 +365,7 @@ function get_item_list(){
   }
 
 
-   mode = [];
+  mode = [];
   mode_options = document.querySelector("#mode").options;
   for (var i =0; i<mode_options.length; i++){
      if(mode_options[i].selected)
