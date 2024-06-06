@@ -1557,6 +1557,7 @@ def shp_to_image(shp_path,col): # plot a column of shape file as png image
     gdf = gpd.read_file(shp_path)
     gdf = gdf.to_crs('EPSG:4326')
 
+    print("here1",flush=True)
     # Get bounds of shapefile
     bounds = gdf.total_bounds if not gdf.empty else (-180, 0, -180, 0)
     minx, miny, maxx, maxy = bounds
@@ -1564,8 +1565,7 @@ def shp_to_image(shp_path,col): # plot a column of shape file as png image
     col = columns[0] if col not in columns else col
     shp_meta["native"]["columns"] = columns
     shp_meta["native"]["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
-
-
+    print("here2",flush=True)
    
 
     aspect_ratio = (maxy - miny) / (maxx - minx)
