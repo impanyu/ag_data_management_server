@@ -1532,9 +1532,11 @@ def get_file(path):
 def shp_to_image(shp_path,col): # plot a column of shape file as png image
     meta_data_file_name = "_".join(shp_path.split("/")[1:]) + ".json"
 
-    with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
+    #with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
         #read meta data
-        meta_data = json.load(meta_data_file)
+    #    meta_data = json.load(meta_data_file)
+
+    shp_meta = get_meta_data(shp_path)
 
     img_path = f"{shp_path}_col_{col}.png"
 
@@ -1560,12 +1562,11 @@ def shp_to_image(shp_path,col): # plot a column of shape file as png image
     minx, miny, maxx, maxy = bounds
     columns = [col for col in gdf.columns]
     col = columns[0] if col not in columns else col
-    meta_data["native"]["columns"] = columns
-    meta_data["native"]["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
+    shp_meta["native"]["columns"] = columns
+    shp_meta["native"]["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
 
 
-    with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "w") as meta_data_file:
-        json.dump(meta_data, meta_data_file)
+   
 
     aspect_ratio = (maxy - miny) / (maxx - minx)
     fig, ax = plt.subplots(figsize=(30, 30 * aspect_ratio))
@@ -1588,7 +1589,7 @@ def shp_to_image(shp_path,col): # plot a column of shape file as png image
     img_meta_data = generate_meta_data_for_file(img_path,{"shp to image":[shp_path]})
     img_meta_data["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
 
-    shp_meta = get_meta_data(shp_path)
+    
     if "downstream" not in shp_meta:
         shp_meta["downstream"] = {}
 
