@@ -1667,8 +1667,9 @@ else if (suffix == "shp"){
                 success: function(response,status,xhr) {
                   x=xhr;
                   document.querySelector("#file_content").style.display="block";
-                  console.info(response);
+                 
                   const contentType = xhr.getResponseHeader('Content-Type');
+                  console.info(contentType);
                    // Extract the filename from the Content-Disposition header
                    //const filename =xhr.getResponseHeader('Content-Disposition').split('filename=')[1];
                    const url = window.URL.createObjectURL(response);
