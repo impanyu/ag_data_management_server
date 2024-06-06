@@ -4,8 +4,8 @@
 
 ```bash
 $ # Get the code
-$ git clone https://github.com/app-generator/django-argon-dashboard.git
-$ cd django-argon-dashboard
+$ git clone https://github.com/impanyu/ag_data_management_server.git
+$ cd ag_data_management_server
 $
 $ # Virtualenv modules installation (Unix based systems)
 $ virtualenv env
