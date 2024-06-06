@@ -914,21 +914,32 @@ def generate_meta_data_for_file(file_path, upstream):
         meta_data["mode"]=["Data"]
         print("begin to read shapefile",flush=True)
         # Read shapefile using geopandas
-        gdf = gpd.read_file(file_path)
-        gdf = gdf.to_crs('EPSG:4326')
-        columns = [col for col in gdf.columns]
+        try:
+            gdf = gpd.read_file(file_path)
+            gdf = gdf.to_crs('EPSG:4326')
+            columns = [col for col in gdf.columns]
 
-        # Get bounds of shapefile
-        bounds = gdf.total_bounds if not gdf.empty else (-180, 0, -180, 0)
-        minx, miny, maxx, maxy = bounds
-        meta_data["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
-        meta_data["native"] = {"columns": columns, "spatial_rage": meta_data["spatial_range"]}
-        #sf = shapefile.Reader(file_path)
+            # Get bounds of shapefile
+            bounds = gdf.total_bounds if not gdf.empty else (-180, 0, -180, 0)
+            minx, miny, maxx, maxy = bounds
+            meta_data["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
+            meta_data["native"] = {"columns": columns, "spatial_rage": meta_data["spatial_range"]}
+            #sf = shapefile.Reader(file_path)
 
-        #meta_data["native"] = {"fields": sf.fields, "numRecords": sf.numRecords, "shapeType": sf.shapeType,
-        #                      "shapeTypeName": sf.shapeTypeName, "type": sf.__geo_interface__['type'], "columns": columns,"spatial_range":meta_data["spatial_range"]}
+            #meta_data["native"] = {"fields": sf.fields, "numRecords": sf.numRecords, "shapeType": sf.shapeType,
+            #                      "shapeTypeName": sf.shapeTypeName, "type": sf.__geo_interface__['type'], "columns": columns,"spatial_range":meta_data["spatial_range"]}
 
-        print("end to read shapefile",flush= True)
+            print("end to read shapefile",flush= True)
+        except Exception as e:
+            columns = []
+
+            # Get bounds of shapefile
+            bounds = (-180, 0, -180, 0)
+            minx, miny, maxx, maxy = bounds
+            meta_data["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
+            meta_data["native"] = {"columns": columns, "spatial_rage": meta_data["spatial_range"]}
+
+        
     elif suffix == "m" or suffix == ".mlx":
         meta_data["format"] = ["Matlab"]
         meta_data["mode"] = ["Tool"]
@@ -1540,6 +1551,8 @@ def shp_to_image(shp_path,col): # plot a column of shape file as png image
     # Get bounds of shapefile
     bounds = gdf.total_bounds if not gdf.empty else (-180, 0, -180, 0)
     minx, miny, maxx, maxy = bounds
+    columns = [col for col in gdf.columns]
+    col = columns[0] if col not in columns else col
 
     aspect_ratio = (maxy - miny) / (maxx - minx)
     fig, ax = plt.subplots(figsize=(30, 30 * aspect_ratio))
