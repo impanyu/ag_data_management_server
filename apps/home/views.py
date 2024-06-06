@@ -899,6 +899,7 @@ def data(request):
             if suffix == "shp":
                 col = request.POST['col']
                 img_path = shp_to_image(abs_path,col)
+                print(img_path,flush=True)
                 with open(img_path, 'rb') as file:
                     response = HttpResponse(file.read())
                 response['Content-Type'] = 'image/jpg'
