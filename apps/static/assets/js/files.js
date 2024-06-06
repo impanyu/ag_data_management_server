@@ -1669,7 +1669,7 @@ else if (suffix == "shp"){
                   document.querySelector("#file_content").style.display="block";
                   const contentType = xhr.getResponseHeader('Content-Type');
                    // Extract the filename from the Content-Disposition header
-                   const filename =xhr.getResponseHeader('Content-Disposition').split('filename=')[1];
+                   //const filename =xhr.getResponseHeader('Content-Disposition').split('filename=')[1];
                    const url = window.URL.createObjectURL(response);
 
                    if (meta_data["spatial_range"]["northeast"]["lat"] == "0" &&  meta_data["spatial_range"]["northeast"]["lng"] == "-180"){
