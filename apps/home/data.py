@@ -914,31 +914,32 @@ def generate_meta_data_for_file(file_path, upstream):
         meta_data["mode"]=["Data"]
         print("begin to read shapefile",flush=True)
         # Read shapefile using geopandas
-        try:
-            gdf = gpd.read_file(file_path)
-            gdf = gdf.to_crs('EPSG:4326')
-            columns = [col for col in gdf.columns]
+       
+        gdf = gpd.read_file(file_path)
+        gdf = gdf.to_crs('EPSG:4326')
+        columns = [col for col in gdf.columns]
 
-            # Get bounds of shapefile
-            bounds = gdf.total_bounds if not gdf.empty else (-180, 0, -180, 0)
-            minx, miny, maxx, maxy = bounds
-            meta_data["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
-            meta_data["native"] = {"columns": columns, "spatial_rage": meta_data["spatial_range"]}
-            #sf = shapefile.Reader(file_path)
+        '''
+        # Get bounds of shapefile
+        bounds = gdf.total_bounds if not gdf.empty else (-180, 0, -180, 0)
+        minx, miny, maxx, maxy = bounds
+        meta_data["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
+        meta_data["native"] = {"columns": columns, "spatial_rage": meta_data["spatial_range"]}
+        #sf = shapefile.Reader(file_path)
 
-            #meta_data["native"] = {"fields": sf.fields, "numRecords": sf.numRecords, "shapeType": sf.shapeType,
-            #                      "shapeTypeName": sf.shapeTypeName, "type": sf.__geo_interface__['type'], "columns": columns,"spatial_range":meta_data["spatial_range"]}
+        #meta_data["native"] = {"fields": sf.fields, "numRecords": sf.numRecords, "shapeType": sf.shapeType,
+        #                      "shapeTypeName": sf.shapeTypeName, "type": sf.__geo_interface__['type'], "columns": columns,"spatial_range":meta_data["spatial_range"]}
+        '''
+        
+        
+        columns = []
 
-            print("end to read shapefile",flush= True)
-        except Exception as e:
-            columns = []
-
-            # Get bounds of shapefile
-            bounds = (-180, 0, -180, 0)
-            minx, miny, maxx, maxy = bounds
-            meta_data["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
-            meta_data["native"] = {"columns": columns, "spatial_rage": meta_data["spatial_range"]}
-
+        # Get bounds of shapefile
+        bounds = (-180, 0, -180, 0)
+        minx, miny, maxx, maxy = bounds
+        meta_data["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
+        meta_data["native"] = {"columns": columns, "spatial_rage": meta_data["spatial_range"]}
+        print("end to read shapefile",flush= True)
         
     elif suffix == "m" or suffix == ".mlx":
         meta_data["format"] = ["Matlab"]
@@ -1531,14 +1532,20 @@ def get_file(path):
 def shp_to_image(shp_path,col): # plot a column of shape file as png image
     meta_data_file_name = "_".join(shp_path.split("/")[1:]) + ".json"
 
-    #with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
-    #    meta_data = json.dump(meta_data_file)
+    with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
+        #read meta data
+        meta_data = json.load(meta_data_file)
 
     img_path = f"{shp_path}_col_{col}.png"
 
     if os.path.exists(img_path):
         return img_path
         # Define colormap and plot the shapefile
+
+    #if os.path.exists(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name)):
+    #    return get_meta_data(file_path)
+
+    
 
     cmap = ListedColormap(
         ['#1a9850', '#91cf60', '#d9ef8b', '#fee08b', '#fc8d59', '#d73027', '#a50026', '#f46d43', '#fdae61',
@@ -1553,6 +1560,12 @@ def shp_to_image(shp_path,col): # plot a column of shape file as png image
     minx, miny, maxx, maxy = bounds
     columns = [col for col in gdf.columns]
     col = columns[0] if col not in columns else col
+    meta_data["native"]["columns"] = columns
+    meta_data["native"]["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
+
+
+    with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "w") as meta_data_file:
+        json.dump(meta_data, meta_data_file)
 
     aspect_ratio = (maxy - miny) / (maxx - minx)
     fig, ax = plt.subplots(figsize=(30, 30 * aspect_ratio))
