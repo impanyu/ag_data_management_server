@@ -915,9 +915,9 @@ def generate_meta_data_for_file(file_path, upstream):
         print("begin to read shapefile",flush=True)
         # Read shapefile using geopandas
        
-        gdf = gpd.read_file(file_path)
-        gdf = gdf.to_crs('EPSG:4326')
-        columns = [col for col in gdf.columns]
+        #gdf = gpd.read_file(file_path)
+        #gdf = gdf.to_crs('EPSG:4326')
+        #columns = [col for col in gdf.columns]
 
         '''
         # Get bounds of shapefile
