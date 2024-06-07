@@ -1590,7 +1590,8 @@ def shp_to_image(shp_path,col): # plot a column of shape file as png image
     ax.margins(0)
 
     # Save figure to file
-    plt.savefig(img_path, dpi=300, bbox_inches='tight')
+    plt.savefig(img_path, dpi=150, bbox_inches='tight')
+    plt.close()
     print("here3",flush=True)
     img_meta_data = generate_meta_data_for_file(img_path,{"shp to image":[shp_path]})
     img_meta_data["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
