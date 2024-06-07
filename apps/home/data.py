@@ -887,13 +887,13 @@ def generate_meta_data_for_file(file_path, upstream):
     meta_data["subdirs"] = []
     meta_data["public"] = "False"
 
-    '''
+   
     parent_meta_data_file_name = "_".join(file_path.split("/")[1:-1]) + ".json"
     if os.path.exists(os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name)):
         with open(os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name), "r") as parent_meta_data_file:
             parent_meta_data = json.load(parent_meta_data_file)
             meta_data["public"] = parent_meta_data["public"]
-    '''
+   
    
     meta_data["name"] = file_path.split("/")[-1]
     meta_data["realtime"] = "Non-Realtime"
@@ -1591,10 +1591,10 @@ def shp_to_image(shp_path,col): # plot a column of shape file as png image
 
     # Save figure to file
     plt.savefig(img_path, dpi=300, bbox_inches='tight')
-
+    print("here3",flush=True)
     img_meta_data = generate_meta_data_for_file(img_path,{"shp to image":[shp_path]})
     img_meta_data["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
-
+    print("here4",flush=True)
     
     if "downstream" not in shp_meta:
         shp_meta["downstream"] = {}
@@ -1610,7 +1610,7 @@ def shp_to_image(shp_path,col): # plot a column of shape file as png image
         json.dump(shp_meta, shp_meta_data_file)
 
     img_meta_data["public"] = shp_meta["public"]
-
+    print("here5",flush=True)
 
 
     img_meta_data_file_name = "_".join(img_path.split("/")[1:]) + ".json"
@@ -1627,7 +1627,7 @@ def shp_to_image(shp_path,col): # plot a column of shape file as png image
         img_parent_meta_data["subdirs"].append(img_path)
     with open(os.path.join(settings.CORE_DIR, 'data', img_parent_meta_data_file_name), "w") as img_parent_meta_data_file:
         json.dump(img_parent_meta_data,img_parent_meta_data_file)
-
+    print("img_path",flush=True)
     return img_path
 
 
