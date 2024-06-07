@@ -1628,7 +1628,7 @@ def shp_to_image(shp_path,col): # plot a column of shape file as png image
         img_parent_meta_data["subdirs"].append(img_path)
     with open(os.path.join(settings.CORE_DIR, 'data', img_parent_meta_data_file_name), "w") as img_parent_meta_data_file:
         json.dump(img_parent_meta_data,img_parent_meta_data_file)
-    print("img_path",flush=True)
+    print("here6",flush=True)
     return img_path
 
 
