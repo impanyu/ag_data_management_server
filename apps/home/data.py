@@ -1553,21 +1553,25 @@ def shp_to_image(shp_path,col): # plot a column of shape file as png image
         ['#1a9850', '#91cf60', '#d9ef8b', '#fee08b', '#fc8d59', '#d73027', '#a50026', '#f46d43', '#fdae61',
          '#f0f0f0'])
     
-    print("here1",flush=True)
+    
     # Read shapefile using geopandas
     gdf = gpd.read_file(shp_path)
     gdf = gdf.to_crs('EPSG:4326')
 
-    
+    print("here1",flush=True)
     # Get bounds of shapefile
     bounds = gdf.total_bounds if not gdf.empty else (-180, 0, -180, 0)
     minx, miny, maxx, maxy = bounds
     columns = [col for col in gdf.columns]
+    print(col,flush=True)
     col = columns[0] if col not in columns else col
+    
     shp_meta["native"]["columns"] = columns
     shp_meta["native"]["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
+    
+
+    shp_meta["spatial_range"] = {"southwest": {"lat": miny, "lng": minx}, "northeast": {"lat": maxy, "lng": maxx}}
     print("here2",flush=True)
-   
 
     aspect_ratio = (maxy - miny) / (maxx - minx)
     fig, ax = plt.subplots(figsize=(30, 30 * aspect_ratio))
