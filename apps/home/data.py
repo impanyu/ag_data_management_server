@@ -1565,6 +1565,7 @@ def shp_to_image(shp_path,col): # plot a column of shape file as png image
     minx, miny, maxx, maxy = bounds
     columns = [col for col in gdf.columns]
     print("col="+col,flush=True)
+    print(f"{minx},{miny},{maxx},{maxy}",flush=True)
     col = columns[0] if col not in columns else col
     
     shp_meta["native"]["columns"] = columns
