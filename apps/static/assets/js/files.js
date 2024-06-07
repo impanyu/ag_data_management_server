@@ -1666,7 +1666,8 @@ else if (suffix == "shp"){
                 },
                 success: function(response,status,xhr) {
                   x=xhr;
-                  document.querySelector("#file_content").style.display="block";
+                  
+                  //document.querySelector("#file_content").style.display="block";
                  
                   const contentType = xhr.getResponseHeader('Content-Type');
                   console.info(contentType);
