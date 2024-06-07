@@ -1553,7 +1553,7 @@ def shp_to_image(shp_path,col): # plot a column of shape file as png image
         ['#1a9850', '#91cf60', '#d9ef8b', '#fee08b', '#fc8d59', '#d73027', '#a50026', '#f46d43', '#fdae61',
          '#f0f0f0'])
     
-    
+    print("here0",flush=True)
     # Read shapefile using geopandas
     gdf = gpd.read_file(shp_path)
     gdf = gdf.to_crs('EPSG:4326')
