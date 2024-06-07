@@ -1590,7 +1590,7 @@ def shp_to_image(shp_path,col): # plot a column of shape file as png image
     ax.margins(0)
 
     # Save figure to file
-    plt.savefig(img_path, dpi=150, bbox_inches='tight')
+    plt.savefig(img_path, dpi=100, bbox_inches='tight')
     plt.close()
     print("here3",flush=True)
     img_meta_data = generate_meta_data_for_file(img_path,{"shp to image":[shp_path]})
