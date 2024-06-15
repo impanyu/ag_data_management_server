@@ -13,7 +13,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         channels = self.fetch_all_channels()
-        if len(channels)> 100:
+        if len(channels)< 100:
             return
         self.get_top_channels(channels)
 

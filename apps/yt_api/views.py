@@ -4,30 +4,80 @@ from .serializers import YouTubeChannelSerializer
 from django.utils.timezone import now, timedelta
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import OuterRef, Subquery, F
+import requests
+from django.utils import timezone
+from .management.commands.update_top_chinese_channels import fetch_channel_data
+from django.utils.dateparse import parse_date
+from rest_framework.exceptions import ValidationError
 
-class YouTubeChannelList(generics.ListAPIView):
+from .utils import *
+from rest_framework.permissions import AllowAny
+from django.utils.decorators import method_decorator
+
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class YouTubeTopChineseChannelListRealTime(generics.ListAPIView):
     serializer_class = YouTubeChannelSerializer
+    permission_classes = [AllowAny]  # Override global settings
 
     def get_queryset(self):
-        try:
-            # Get the latest timestamp from the YouTubeChannel table
-            latest_timestamp = YouTubeChannelSubscribers.objects.latest('last_updated').last_updated
-            # Filter the channels updated at the latest timestamp and order them by subscribers
-            #return YouTubeChannelSubscribers.objects.filter(last_updated=latest_timestamp)#.order_by('-subscribers')[:100]
+        # Retrieve channel IDs
+        channel_ids = get_channel_ids()
         
-             # Subquery to get the subscribers count from YouTubeChannelSubscribers
-            latest_subscribers = YouTubeChannelSubscribers.objects.filter(
-                channel=OuterRef('pk'),
-                last_updated=latest_timestamp
-            ).values('subscribers')[:1]
+        if not channel_ids:
+            return []
+        
+        channels_data = fetch_channel_data(channel_ids)
 
-            # Annotate the YouTubeChannel queryset with the subscribers count
-            queryset = YouTubeChannel.objects.annotate(
-                subscribers=Subquery(latest_subscribers)
-            ).order_by('-subscribers')
 
-            return queryset
-        except ObjectDoesNotExist:
-            # Return an empty queryset if no data is found
-            return YouTubeChannel.objects.none()
+        # Sort channels by subscribers and return top 100
+        sorted_channels = sorted(channels_data, key=lambda x: x['subscribers'], reverse=True)
+        current_timestamp = timezone.now()
+        # Convert to YouTubeChannel instances for serialization
+        queryset = [YouTubeChannel(
+            channel_id=channel['channel_id'],
+            title=channel['title'],
+            description=channel['description'],
+            subscribers=channel['subscribers'],
+            icon_url=channel['icon_url'],
+            last_updated=current_timestamp
+        ) for channel in sorted_channels]
+
+        return queryset
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class YouTubeTopChineseChannelListHistoric(generics.ListAPIView):
+    serializer_class = YouTubeChannelSerializer
+    permission_classes = [AllowAny]  # Override global settings
+    def get_queryset(self):
+        # Get query parameters for date filtering
+        start_date = self.request.query_params.get('start_date')
+        end_date = self.request.query_params.get('end_date')
+
+        # Parse the date strings into date objects
+        if start_date:
+            start_date = parse_date(start_date)
+        if end_date:
+            end_date = parse_date(end_date)
+
+        # Validate date range
+        if start_date and end_date and start_date > end_date:
+            raise ValidationError("Start date cannot be after end date.")
+
+        # Base queryset
+        queryset = YouTubeChannel.objects.all()
+
+        # Apply date filtering if both dates are provided
+        if start_date and end_date:
+            queryset = queryset.filter(last_updated__range=[start_date, end_date])
+        elif start_date:
+            queryset = queryset.filter(last_updated__gte=start_date)
+        elif end_date:
+            queryset = queryset.filter(last_updated__lte=end_date)
+
+
+        return queryset
+    
 
