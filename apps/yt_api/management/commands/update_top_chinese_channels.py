@@ -5,7 +5,7 @@ from apps.yt_api.models import YouTubeChannel
 from django.utils import timezone
 import time
 
-from .utils import *
+from apps.yt_api.utils import *
 
 
 
