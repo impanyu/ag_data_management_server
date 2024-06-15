@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.home',  # Enable the inner home (home)
+    'apps.yt_api',
     'django_pam',
     'allauth',
     'allauth.account',
@@ -142,6 +143,18 @@ DATABASES = {
         'NAME': 'db.sqlite3',
     }
 }
+
+CELERY_BEAT_SCHEDULE = {
+    'update-top-channels': {
+        'task': 'api.tasks.update_top_channels_task',
+        'schedule': 25920.0,  # every 5 days
+    },
+    'update-channels': {
+        'task': 'api.tasks.update_channels',
+        'schedule': 10.0,  # every 10 seconds
+    },
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators

@@ -18,6 +18,7 @@ from rest_framework import routers, serializers, viewsets
 urlpatterns = [
     path('admin/', admin.site.urls),          # Django admin route
     path('accounts/', include('allauth.urls')),
+    path('yt_api/', include('yt_api.urls')),
     path("", include("apps.authentication.urls")), # Auth routes - login / register
     path("", include("apps.home.urls"))             # UI Kits Html files
     
