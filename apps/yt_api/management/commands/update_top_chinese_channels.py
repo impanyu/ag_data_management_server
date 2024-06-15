@@ -1,7 +1,7 @@
 import os
 import requests
 from django.core.management.base import BaseCommand
-from yt_api.models import YouTubeChannel
+from apps.yt_api.models import YouTubeChannel
 from django.utils import timezone
 import time
 
