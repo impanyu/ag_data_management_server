@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import YouTubeChannelList
+from .views import *
 
 urlpatterns = [
     path('top-chinese-channels-historic/', YouTubeTopChineseChannelListHistoric.as_view(), name='top-chinese-channels-historic'),
