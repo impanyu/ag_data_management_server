@@ -151,11 +151,11 @@
 
         function formatNumber(num) {
             if (num >= 1_000_000_000) {
-                return (num / 1_000_000_000).toFixed(1) + 'B'; // Number >= 1 billion
+                return (num / 1_000_000_000).toFixed(0) + 'B'; // Number >= 1 billion
             } else if (num >= 1_000_000) {
-                return (num / 1_000_000).toFixed(1) + 'M'; // Number >= 1 million
+                return (num / 1_000_000).toFixed(0) + 'M'; // Number >= 1 million
             } else if (num >= 1_000) {
-                return (num / 1_000).toFixed(1) + 'K'; // Number >= 1 thousand
+                return (num / 1_000).toFixed(0) + 'K'; // Number >= 1 thousand
             } else {
                 return num.toString(); // Number < 1 thousand
             }
