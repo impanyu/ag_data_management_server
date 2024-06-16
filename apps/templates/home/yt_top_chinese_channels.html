@@ -11,13 +11,17 @@
         }
         .bar text {
             fill: black;
-            font: 10px sans-serif;
+            font: 20px sans-serif;
             text-anchor: start; /* Align text to the start (left) */
         }
+        .axis text {
+          font: 20px sans-serif; /* Increase font size for axis ticks */
+         }
+
     </style>
 </head>
 <body>
-    <svg width="1920" height="1080"></svg>
+    <svg width="960" height="540"></svg>
     <script>
         const svg = d3.select("svg");
             margin = {top: 20, right: 40, bottom: 30, left: 100};
@@ -80,10 +84,10 @@
                 .text(d => d.subscribers);
 
             barsEnter.append("image")
-                .attr("x", d => x(d.subscribers) - 35)  // Position to the right of the text
-                .attr("y", y.bandwidth() / 4)  // Center vertically in the bar
-                .attr("width", 16)
-                .attr("height", 16)
+                .attr("x", d => x(d.subscribers) - y.bandwidth() / 2-2)  // Position to the right of the text
+                .attr("y", y.bandwidth() / 2)  // Center vertically in the bar
+                .attr("width", y.bandwidth-2)
+                .attr("height", y.bandwidth-2)
                 .attr("xlink:href", d => d.icon_url);
 
             // Update selection: Update existing groups
@@ -105,7 +109,7 @@
             bars.select("image")
                 .transition()
                 .duration(1000)
-                .attr("x", d => x(d.subscribers) - 35);  // Position to the right of the text
+                .attr("x", d => x(d.subscribers) - y.bandwidth() / 2-2);  // Position to the right of the text
 
             // Exit selection: Remove groups that are no longer needed
             bars.exit().remove();
