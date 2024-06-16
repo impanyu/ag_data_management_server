@@ -45,7 +45,7 @@ class YouTubeTopChineseChannelList(generics.ListAPIView):
 
 
         # Sort channels by subscribers and return top 50
-        sorted_channels = sorted(channels_data, key=lambda x: x['subscribers'], reverse=True)[:50]
+        #sorted_channels = sorted(channels_data, key=lambda x: x['subscribers'], reverse=True)[:50]
         #current_timestamp = timezone.now()
         # Convert to YouTubeChannel instances for serialization
         queryset = [YouTubeChannel(
@@ -55,7 +55,7 @@ class YouTubeTopChineseChannelList(generics.ListAPIView):
             #subscribers=channel['subscribers'],
             icon_url=channel['icon_url']
             #last_updated=current_timestamp
-        ) for channel in sorted_channels]
+        ) for channel in channels_data]
         #print(f"queryset:{len(queryset)}",flush=True)
         return queryset
 
