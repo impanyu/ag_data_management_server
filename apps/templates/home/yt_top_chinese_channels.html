@@ -84,10 +84,10 @@
                 .text(d => d.subscribers);
 
             barsEnter.append("image")
-                .attr("x", d => x(d.subscribers) - y.bandwidth() -2)  // Position to the right of the text
-                .attr("y", 2)  // Center vertically in the bar
-                .attr("width", y.bandwidth()-4)
-                .attr("height", y.bandwidth()-4)
+                .attr("x", d => x(d.subscribers) - (y.bandwidth()-6) -3)  // Position to the right of the text
+                .attr("y", 3)  // Center vertically in the bar
+                .attr("width", y.bandwidth()-6)
+                .attr("height", y.bandwidth()-6)
                 .attr("xlink:href", d => d.icon_url);
 
             // Update selection: Update existing groups
