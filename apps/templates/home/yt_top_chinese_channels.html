@@ -27,7 +27,7 @@
 
         const x = d3.scaleLinear().range([0, width]);
         const y = d3.scaleBand().rangeRound([0, height]).padding(0.1);
-        y.domain(data.map(d => d.channel_id));
+        
 
         // Define a custom color palette with enough colors for your categories
         const customColors = [
@@ -55,7 +55,7 @@
 
             // Update scales
             x.domain([0, d3.max(data, d => d.subscribers)]);
-            
+            y.domain(data.map(d => d.channel_id));
 
             // Select bars
             const bars = g.selectAll(".bar")
