@@ -4,6 +4,7 @@ from django.core.management.base import BaseCommand
 from apps.yt_api.models import *
 from django.utils import timezone
 import time
+from datetime import datetime
 
 from apps.yt_api.utils import *
 
@@ -55,6 +56,7 @@ class Command(BaseCommand):
     '''
     def get_channel_updates(self, channel_ids):
         channels = fetch_channel_data(channel_ids)
+        
         current_timestamp = timezone.now()
         for channel in channels:
              YouTubeChannel.objects.update_or_create(
@@ -78,4 +80,30 @@ class Command(BaseCommand):
                     'last_updated': current_timestamp  # Add the same timestamp for all records
                     
                 })
-
+             
+    def get_channel_updates_initial(self, channel_ids):
+        channels = fetch_channel_data(channel_ids)
+        channel_subs = get_channel_subs_initial()
+        initial_timestamp = datetime(2024, 4, 8, 0, 0)  # 2024-04-08 00:00:00
+        for i,channel in enumerate(channels):
+             YouTubeChannel.objects.update_or_create(
+                channel_id=channel['channel_id'],
+                defaults={
+                    'title': channel['title'],
+                    'description': channel['description'],
+                    #'subscribers': int(channel['subscribers']),
+                    'icon_url': channel['icon_url']  # Fetch the icon URL
+                    #'last_updated': current_timestamp  # Add the same timestamp for all records
+                    
+                })
+    
+             YouTubeChannelSubscribers.objects.update_or_create(
+                channel_id=channel['channel_id'],
+                defaults={
+                    #'title': channel['title'],
+                    #'description': channel['description'],
+                    'subscribers': int(channel_subs[i]*10000),
+                    #'icon_url': channel['icon_url']  # Fetch the icon URL
+                    'last_updated': initial_timestamp  # Add the same timestamp for all records
+                    
+                })
