@@ -14,9 +14,7 @@
             font: 20px sans-serif;
             text-anchor: start; /* Align text to the start (left) */
         }
-        .tick text {
-          font: 20px sans-serif; /* Increase font size for axis ticks */
-         }
+      
 
     </style>
 </head>
@@ -116,8 +114,8 @@
 
             // Update axes
             g.select(".x-axis").call(d3.axisTop(x)).transition()
-                .duration(1000);
-            g.select(".y-axis").call(d3.axisLeft(y));
+                .duration(1000).style("font-size", "10px"); ;
+            g.select(".y-axis").call(d3.axisLeft(y)).style("font-size", "16px"); 
         }
 
         g.append("g")
