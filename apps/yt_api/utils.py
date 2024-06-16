@@ -8,7 +8,7 @@ SEARCH_URL = 'https://www.googleapis.com/youtube/v3/search'
 CHANNEL_URL = 'https://www.googleapis.com/youtube/v3/channels'
 
 
-def get_channel_ids(self):
+def get_channel_ids():
         try:
             with open(CHANNEL_IDS_FILE, 'r') as file:
                 data = json.load(file)
@@ -25,7 +25,7 @@ def get_channel_ids(self):
             return []
         
 
-def fetch_channel_data(self, channel_ids):
+def fetch_channel_data(channel_ids):
     if len(channel_ids) > 50:
         raise ValueError("The length of channel_ids should not exceed 50.")
 
