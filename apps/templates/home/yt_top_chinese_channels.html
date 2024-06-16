@@ -82,7 +82,7 @@
                 .text(d => d.subscribers);
 
             barsEnter.append("image")
-                .attr("x", d => x(d.subscribers) + 35)  // Position to the right of the text
+                .attr("x", d => x(d.subscribers) - 35)  // Position to the right of the text
                 .attr("y", y.bandwidth() / 4)  // Center vertically in the bar
                 .attr("width", 16)
                 .attr("height", 16)
@@ -107,7 +107,7 @@
             bars.select("image")
                 .transition()
                 .duration(1000)
-                .attr("x", d => x(d.subscribers) + 35);  // Position to the right of the text
+                .attr("x", d => x(d.subscribers) - 35);  // Position to the right of the text
 
             // Exit selection: Remove groups that are no longer needed
             bars.exit().remove();
