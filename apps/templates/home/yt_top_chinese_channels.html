@@ -9,13 +9,10 @@
         body {
             font-family: Arial, sans-serif;
         }
-        .bar rect {
-   
-        }
         .bar text {
-            fill: white;
+            fill: black;
             font: 10px sans-serif;
-            text-anchor: end;
+            text-anchor: start; /* Align text to the start (left) */
         }
     </style>
 </head>
@@ -49,12 +46,11 @@
             .domain(d3.range(customColors.length))
             .range(customColors);
 
-        let data = [
-            {channel: "Channel 1", subscribers: 100},
-            {channel: "Channel 2", subscribers: 90},
-            {channel: "Channel 3", subscribers: 80},
-            // Add more initial data as needed
-        ];
+        let data = Array.from({length: 50}, (v, k) => ({
+            channel: `Channel ${k + 1}`,
+            subscribers: Math.floor(Math.random() * 200),
+            icon_url: `https://dummyimage.com/16x16/000/fff&text=${k+1}`  // Example icon URL
+        }));
 
         function update(data) {
             // Sort data
@@ -68,7 +64,7 @@
             const bars = g.selectAll(".bar")
                 .data(data, d => d.channel);
 
-            // Enter
+            // Enter selection: Create new groups for new data
             const barsEnter = bars.enter().append("g")
                 .attr("class", "bar")
                 .attr("transform", d => `translate(0, ${y(d.channel)})`);
@@ -77,15 +73,22 @@
                 .attr("x", 0)
                 .attr("height", y.bandwidth())
                 .attr("width", d => x(d.subscribers))
-                .attr("fill", (d) => color(d.channel));  // Apply color based on index;
+                .style("fill", (d, i) => color(i));  // Apply color based on index
 
             barsEnter.append("text")
-                .attr("x", d => x(d.subscribers) - 3)
+                .attr("x", d => x(d.subscribers) + 5)  // Position to the right of the bar
                 .attr("y", y.bandwidth() / 2)
                 .attr("dy", ".35em")
                 .text(d => d.subscribers);
 
-            // Update
+            barsEnter.append("image")
+                .attr("x", d => x(d.subscribers) + 35)  // Position to the right of the text
+                .attr("y", y.bandwidth() / 4)  // Center vertically in the bar
+                .attr("width", 16)
+                .attr("height", 16)
+                .attr("xlink:href", d => d.icon_url);
+
+            // Update selection: Update existing groups
             bars.transition().duration(1000)
                 .attr("transform", d => `translate(0, ${y(d.channel)})`);
 
@@ -93,15 +96,20 @@
                 .transition()
                 .duration(1000)
                 .attr("width", d => x(d.subscribers))
-                .attr("fill", (d) => color(d.channel));  // Apply color based on index;
+                .style("fill", (d, i) => color(i));  // Apply color based on index
 
             bars.select("text")
                 .transition()
                 .duration(1000)
-                .attr("x", d => x(d.subscribers) - 3)
+                .attr("x", d => x(d.subscribers) + 5)  // Position to the right of the bar
                 .text(d => d.subscribers);
 
-            // Exit
+            bars.select("image")
+                .transition()
+                .duration(1000)
+                .attr("x", d => x(d.subscribers) + 35);  // Position to the right of the text
+
+            // Exit selection: Remove groups that are no longer needed
             bars.exit().remove();
 
             // Update axes
@@ -117,6 +125,9 @@
             .attr("class", "y-axis")
             .call(d3.axisLeft(y));
 
+        // Initial update
+        update(data);
+
         // Simulate data update
         setInterval(() => {
             // Simulate new data
@@ -124,7 +135,7 @@
                 d.subscribers = Math.floor(Math.random() * 200);
             });
             update(data);
-        }, 10000);
+        }, 2000);
     </script>
 </body>
 </html>
