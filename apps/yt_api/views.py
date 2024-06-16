@@ -15,9 +15,13 @@ from rest_framework.permissions import AllowAny
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http import HttpResponse
+
+from django import template
+from django.template import loader
 
 @method_decorator(csrf_exempt, name='dispatch')
 class YouTubeTopChineseChannelListRealTime(generics.ListAPIView):
@@ -91,3 +95,28 @@ class GetHello(APIView):
 
         response = "hello"
         return HttpResponse(response)
+
+@csrf_exempt
+def pages(request):
+    context = {}
+    # All resource paths end in .html.
+    # Pick out the html file name from the url. And load that template.
+    try:
+
+        load_template = request.path.split('/')[-1]
+
+        load_template = load_template.split('?')[0]
+
+
+        if load_template == "yt_top_chinese_channels.html":
+
+            html_template = loader.get_template('home/yt_top_chinese_channels.html')
+            return HttpResponse(html_template.render(context, request))
+    except template.TemplateDoesNotExist:
+
+        html_template = loader.get_template('home/page-404.html')
+        return HttpResponse(html_template.render(context, request))
+
+    except:
+        html_template = loader.get_template('home/page-500.html')
+        return HttpResponse(html_template.render(context, request))
