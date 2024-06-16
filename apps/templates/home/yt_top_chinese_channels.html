@@ -29,7 +29,7 @@
             height = +svg.attr("height") - margin.top - margin.bottom;
             g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
         let data = [];
-        const x = d3.scaleLinear().range([0, width]);
+        const x = d3.scaleLinear().range([40, width]);
         const y = d3.scaleBand().rangeRound([0, height]).padding(0.1);
         
 
