@@ -87,7 +87,7 @@
 
             // Update selection: Update existing groups
             bars.transition().duration(1000)
-                .attr("transform", d => `translate(0, ${y(d.channel)})`);
+                .attr("transform", d => `translate(0, ${y(d.channel_id)})`);
 
             bars.select("rect")
                 .transition()
