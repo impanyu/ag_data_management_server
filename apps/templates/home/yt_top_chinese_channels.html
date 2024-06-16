@@ -27,6 +27,7 @@
 
         const x = d3.scaleLinear().range([0, width]);
         const y = d3.scaleBand().rangeRound([0, height]).padding(0.1);
+        y.domain(data.map(d => d.channel_id));
 
         // Define a custom color palette with enough colors for your categories
         const customColors = [
@@ -54,7 +55,7 @@
 
             // Update scales
             x.domain([0, d3.max(data, d => d.subscribers)]);
-            y.domain(data.map(d => d.channel));
+            
 
             // Select bars
             const bars = g.selectAll(".bar")
@@ -63,13 +64,13 @@
             // Enter selection: Create new groups for new data
             const barsEnter = bars.enter().append("g")
                 .attr("class", "bar")
-                .attr("transform", d => `translate(0, ${y(d.channel)})`);
+                .attr("transform", d => `translate(0, ${y(d.channel_id)})`);
 
             barsEnter.append("rect")
                 .attr("x", 0)
                 .attr("height", y.bandwidth())
                 .attr("width", d => x(d.subscribers))
-                .style("fill", (d, i) => color(i));  // Apply color based on index
+                .style("fill", (d, i) => color(d.channel_id));  // Apply color based on index
 
             barsEnter.append("text")
                 .attr("x", d => x(d.subscribers) + 5)  // Position to the right of the bar
@@ -92,7 +93,7 @@
                 .transition()
                 .duration(1000)
                 .attr("width", d => x(d.subscribers))
-                .style("fill", (d, i) => color(i));  // Apply color based on index
+                .style("fill", (d, i) => color(d.channel_id));  // Apply color based on index
 
             bars.select("text")
                 .transition()
