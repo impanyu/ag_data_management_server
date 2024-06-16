@@ -25,10 +25,10 @@ class YouTubeTopChineseChannelListRealTime(generics.ListAPIView):
     permission_classes = [AllowAny]  # Override global settings
 
     def get_queryset(self):
-        print("queryset",flush=True)
+        #print("queryset",flush=True)
         # Retrieve channel IDs
         channel_ids = get_channel_ids()
-       
+        #print(channel_ids,flush=True)
         if not channel_ids:
             return []
         
