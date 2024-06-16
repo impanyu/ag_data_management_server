@@ -46,11 +46,7 @@
             .domain(d3.range(customColors.length))
             .range(customColors);
 
-        let data = Array.from({length: 50}, (v, k) => ({
-            channel: `Channel ${k + 1}`,
-            subscribers: Math.floor(Math.random() * 200),
-            icon_url: `https://dummyimage.com/16x16/000/fff&text=${k+1}`  // Example icon URL
-        }));
+        let data = [];
 
         function update(data) {
             // Sort data
@@ -125,17 +121,35 @@
             .attr("class", "y-axis")
             .call(d3.axisLeft(y));
 
+        get_data();
         // Initial update
         update(data);
 
+        
         // Simulate data update
         setInterval(() => {
             // Simulate new data
             data.forEach(d => {
                 d.subscribers = Math.floor(Math.random() * 200);
             });
+            get_data();
             update(data);
         }, 2000);
+
+
+        function get_data(){
+            fetch("http://unladma.hopto.org/yt/top-chinese-channels-realtime/")
+                .then(response => response.json())
+                .then(json => {
+                    data = json.results.map((d, i) => ({
+                        channel: d.name,
+                        subscribers: d.subscriber_count,
+                        icon_url: d.icon_url
+                    }));
+                    
+                });
+        }
+
     </script>
 </body>
 </html>
