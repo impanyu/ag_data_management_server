@@ -109,6 +109,8 @@
             bars.select("image")
                 .transition()
                 .duration(1000)
+                .attr("width", y.bandwidth-2)
+                .attr("height", y.bandwidth-2)
                 .attr("x", d => x(d.subscribers) - y.bandwidth() / 2-2);  // Position to the right of the text
 
             // Exit selection: Remove groups that are no longer needed
