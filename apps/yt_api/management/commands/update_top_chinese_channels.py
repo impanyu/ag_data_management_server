@@ -67,8 +67,8 @@ class Command(BaseCommand):
                     #'last_updated': current_timestamp  # Add the same timestamp for all records
                     
                 })
-             
-             YouTubeChannelSubcribers.objects.update_or_create(
+    
+             YouTubeChannelSubscribers.objects.update_or_create(
                 channel_id=channel['channel_id'],
                 defaults={
                     #'title': channel['title'],
