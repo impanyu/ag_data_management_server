@@ -131,9 +131,7 @@
         // Simulate data update
         setInterval(() => {
             // Simulate new data
-            data.forEach(d => {
-                d.subscribers = Math.floor(Math.random() * 200);
-            });
+           
             get_data();
             update(data);
         }, 10000);
