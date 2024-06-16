@@ -111,13 +111,16 @@
             bars.exit().remove();
 
             // Update axes
-            g.select(".x-axis").call(d3.axisTop(x));
+            g.select(".x-axis").call(d3.axisTop(x)).transition()
+                .duration(1000);
             g.select(".y-axis").call(d3.axisLeft(y));
         }
 
         g.append("g")
             .attr("class", "x-axis")
-            .call(d3.axisTop(x));
+            .call(d3.axisTop(x))
+            .selectAll(".tick text") // Select all tick labels
+            .text(d => d.title);         // Set text content to channel title;
 
         g.append("g")
             .attr("class", "y-axis")
@@ -131,7 +134,7 @@
         // Simulate data update
         setInterval(() => {
             // Simulate new data
-           
+    
             get_data();
             update(data);
         }, 10000);
