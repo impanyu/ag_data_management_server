@@ -11,7 +11,7 @@
         }
         .bar text {
             fill: black;
-            font: 20px sans-serif;
+            font: 18px sans-serif;
             text-anchor: start; /* Align text to the start (left) */
         }
       
@@ -117,7 +117,7 @@
             // Update axes
             g.select(".x-axis").call(d3.axisTop(x)).transition()
                 .duration(1000).style("font-size", "12px"); ;
-            g.select(".y-axis").call(d3.axisLeft(y)).style("font-size", "16px"); 
+            g.select(".y-axis").call(d3.axisLeft(y)).style("font-size", "14px"); 
         }
 
         g.append("g")
