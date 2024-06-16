@@ -77,7 +77,7 @@
                 .attr("x", 0)
                 .attr("height", y.bandwidth())
                 .attr("width", d => x(d.subscribers))
-                .attr("fill", (d, i) => color(i));  // Apply color based on index;
+                .attr("fill", (d) => color(d.channel));  // Apply color based on index;
 
             barsEnter.append("text")
                 .attr("x", d => x(d.subscribers) - 3)
@@ -93,7 +93,7 @@
                 .transition()
                 .duration(1000)
                 .attr("width", d => x(d.subscribers))
-                .attr("fill", (d, i) => color(i));  // Apply color based on index;
+                .attr("fill", (d) => color(d.channel));  // Apply color based on index;
 
             bars.select("text")
                 .transition()
