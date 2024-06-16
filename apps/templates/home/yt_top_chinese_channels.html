@@ -9,7 +9,7 @@
         body {
             font-family: Arial, sans-serif;
         }
-        .bar {
+        .bar rect {
             fill: steelblue;
         }
         .bar text {
@@ -52,7 +52,8 @@
 
             // Enter
             const barsEnter = bars.enter().append("g")
-                .attr("class", "bar");
+                .attr("class", "bar")
+                .attr("transform", d => `translate(0, ${y(d.channel)})`);
 
             barsEnter.append("rect")
                 .attr("x", 0)
@@ -66,6 +67,9 @@
                 .text(d => d.subscribers);
 
             // Update
+            bars.transition().duration(1000)
+                .attr("transform", d => `translate(0, ${y(d.channel)})`);
+
             bars.select("rect")
                 .transition()
                 .duration(1000)
