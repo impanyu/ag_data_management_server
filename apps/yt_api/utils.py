@@ -55,7 +55,7 @@ def fetch_channel_data(channel_ids):
                     'channel_id': item['id'],
                     'title': item['snippet']['title'],
                     'description': item['snippet']['description'],
-                    #'subscribers': int(item['statistics']['subscriberCount']),
+                    'subscribers': int(item['statistics']['subscriberCount']),
                     'icon_url': item['snippet']['thumbnails']['default']['url']  # Fetch the icon URL
                 })
 
