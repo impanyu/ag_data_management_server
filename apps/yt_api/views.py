@@ -15,6 +15,9 @@ from rest_framework.permissions import AllowAny
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from django.http import HttpResponse
 
 @method_decorator(csrf_exempt, name='dispatch')
 class YouTubeTopChineseChannelListRealTime(generics.ListAPIView):
@@ -25,7 +28,7 @@ class YouTubeTopChineseChannelListRealTime(generics.ListAPIView):
         print("queryset",flush=True)
         # Retrieve channel IDs
         channel_ids = get_channel_ids()
-
+       
         if not channel_ids:
             return []
         
@@ -82,3 +85,9 @@ class YouTubeTopChineseChannelListHistoric(generics.ListAPIView):
         return queryset
     
 
+class GetHello(APIView):
+
+    def get(self, request, *args, **kwargs):
+
+        response = "hello"
+        return HttpResponse(response)
