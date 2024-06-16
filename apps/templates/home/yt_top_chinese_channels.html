@@ -19,12 +19,12 @@
 <body>
     <svg width="960" height="500"></svg>
     <script>
-        const svg = d3.select("svg"),
-            margin = {top: 20, right: 40, bottom: 30, left: 100},
-            width = +svg.attr("width") - margin.left - margin.right,
-            height = +svg.attr("height") - margin.top - margin.bottom,
+        const svg = d3.select("svg");
+            margin = {top: 20, right: 40, bottom: 30, left: 100};
+            width = +svg.attr("width") - margin.left - margin.right;
+            height = +svg.attr("height") - margin.top - margin.bottom;
             g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
-
+        let data = [];
         const x = d3.scaleLinear().range([0, width]);
         const y = d3.scaleBand().rangeRound([0, height]).padding(0.1);
         
@@ -48,7 +48,7 @@
             .domain(data.map(d => d.channel_id))
             .range(customColors);
 
-        let data = [];
+        
 
         function update(data) {
             // Sort data
