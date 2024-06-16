@@ -115,8 +115,8 @@
 
             // Update axes
             g.select(".x-axis").call(d3.axisTop(x)).transition()
-                .duration(1000).style("font-size", "12px"); ;
-            g.select(".y-axis").call(d3.axisLeft(y)).style("bold","font-size", "14px"); 
+                .duration(1000).style("font",  "bold 12px sans-serif");
+            g.select(".y-axis").call(d3.axisLeft(y)).style("font", " bold 14px sans-serif"); 
         }
 
         g.append("g")
