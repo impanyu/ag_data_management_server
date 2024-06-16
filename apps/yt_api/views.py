@@ -52,7 +52,7 @@ class YouTubeTopChineseChannelListRealTime(generics.ListAPIView):
             icon_url=channel['icon_url'],
             last_updated=current_timestamp
         ) for channel in sorted_channels]
-
+        print(len(queryset),flush=True)
         return queryset
 
 
