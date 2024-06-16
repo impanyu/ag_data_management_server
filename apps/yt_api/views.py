@@ -37,6 +37,7 @@ class YouTubeTopChineseChannelListRealTime(generics.ListAPIView):
             return []
         
         channels_data = fetch_channel_data(channel_ids)
+        print(len(channels_data),flush=True)
 
 
         # Sort channels by subscribers and return top 100
