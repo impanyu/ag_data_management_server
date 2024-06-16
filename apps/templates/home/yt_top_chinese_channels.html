@@ -119,8 +119,6 @@
         g.append("g")
             .attr("class", "x-axis")
             .call(d3.axisTop(x))
-            .selectAll(".tick text") // Select all tick labels
-            .text(d => d.title);         // Set text content to channel title;
 
         g.append("g")
             .attr("class", "y-axis")
