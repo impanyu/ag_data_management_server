@@ -142,11 +142,7 @@
             fetch("http://unladma.hopto.org/yt/top-chinese-channels-realtime/")
                 .then(response => response.json())
                 .then(json => {
-                    data = json.results.map((d, i) => ({
-                        channel: d.name,
-                        subscribers: d.subscriber_count,
-                        icon_url: d.icon_url
-                    }));
+                    data = json["results"];
                     
                 });
         }
