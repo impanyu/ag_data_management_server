@@ -1,7 +1,7 @@
 import os
 import requests
 from django.core.management.base import BaseCommand
-from apps.yt_api.models import YouTubeChannel
+from apps.yt_api.models import *
 from django.utils import timezone
 import time
 
@@ -62,8 +62,19 @@ class Command(BaseCommand):
                 defaults={
                     'title': channel['title'],
                     'description': channel['description'],
+                    #'subscribers': int(channel['subscribers']),
+                    'icon_url': channel['icon_url']  # Fetch the icon URL
+                    #'last_updated': current_timestamp  # Add the same timestamp for all records
+                    
+                })
+             
+             YouTubeChannelSubcribers.objects.update_or_create(
+                channel_id=channel['channel_id'],
+                defaults={
+                    #'title': channel['title'],
+                    #'description': channel['description'],
                     'subscribers': int(channel['subscribers']),
-                    'icon_url': channel['icon_url'],  # Fetch the icon URL
+                    #'icon_url': channel['icon_url']  # Fetch the icon URL
                     'last_updated': current_timestamp  # Add the same timestamp for all records
                     
                 })
