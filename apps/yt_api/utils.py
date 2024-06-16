@@ -25,6 +25,7 @@ def get_channel_ids():
             return []
         
 
+
 def fetch_channel_data(channel_ids):
     if len(channel_ids) > 50:
         raise ValueError("The length of channel_ids should not exceed 50.")
@@ -32,16 +33,24 @@ def fetch_channel_data(channel_ids):
     params = {
         'part': 'snippet,statistics',
         'id': ','.join(channel_ids),
-        'key': API_KEY
+        'key': API_KEY,
+        'maxResults': 50
     }
+
+    channels = []
+    page_token = None
+
     while True:
         try:
+            if page_token:
+                params['pageToken'] = page_token
+
             response = requests.get(CHANNEL_URL, params=params)
             response.raise_for_status()
-            data = response.json().get('items', [])
-            
-            channels = []
-            for item in data:
+            data = response.json()
+
+            items = data.get('items', [])
+            for item in items:
                 channels.append({
                     'channel_id': item['id'],
                     'title': item['snippet']['title'],
@@ -49,7 +58,11 @@ def fetch_channel_data(channel_ids):
                     'subscribers': int(item['statistics']['subscriberCount']),
                     'icon_url': item['snippet']['thumbnails']['default']['url']  # Fetch the icon URL
                 })
-            return channels
+
+            page_token = data.get('nextPageToken')
+            if not page_token:
+                break
+
         except requests.exceptions.RequestException as e:
             if response.status_code == 403 and 'quota' in response.text.lower():
                 print('Quota exceeded, waiting for quota reset...')
@@ -57,3 +70,5 @@ def fetch_channel_data(channel_ids):
             else:
                 print(f'An error occurred: {e}')
                 return []
+
+    return channels

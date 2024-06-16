@@ -54,36 +54,17 @@ class Command(BaseCommand):
         return channels
     '''
     def get_channel_updates(self, channel_ids):
-        params = {
-            'part': 'snippet,statistics',
-            'id': ','.join(channel_ids),
-            'key': API_KEY
-        }
-        while True:
-            try:
-                response = requests.get(CHANNEL_URL, params=params)
-                response.raise_for_status()
-                data = response.json().get('items', [])
-                # Get the current timestamp once
-                current_timestamp = timezone.now()
-               
-                for item in data:
-                    YouTubeChannel.objects.update_or_create(
-                        channel_id=item['id'],
-                        defaults={
-                            'title': item['snippet']['title'],
-                            'description': item['snippet']['description'],
-                            'subscribers': int(item['statistics']['subscriberCount']),
-                            'icon_url': item['snippet']['thumbnails']['default']['url'],  # Fetch the icon URL
-                            'last_updated': current_timestamp  # Add the same timestamp for all records
-                            
-                        }
-                    )
-            except requests.exceptions.RequestException as e:
-                if response.status_code == 403 and 'quota' in response.text.lower():
-                    print('Quota exceeded, waiting for quota reset...')
-                    time.sleep(24 * 3600)  # Sleep for 24 hours
-                else:
-                    print(f'An error occurred: {e}')
-
+        channels = fetch_channel_data(channel_ids)
+        current_timestamp = timezone.now()
+        for channel in channels:
+             YouTubeChannel.objects.update_or_create(
+                channel_id=channel['channel_id'],
+                defaults={
+                    'title': channel['title'],
+                    'description': channel['description'],
+                    'subscribers': int(channel['subscribers']),
+                    'icon_url': channel['icon_url'],  # Fetch the icon URL
+                    'last_updated': current_timestamp  # Add the same timestamp for all records
+                    
+                })
 
