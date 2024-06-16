@@ -1,6 +1,6 @@
 from rest_framework import generics
 from .models import *
-from .serializers import YouTubeChannelSerializer
+from .serializers import *
 from django.utils.timezone import now, timedelta
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import OuterRef, Subquery, F
@@ -26,8 +26,9 @@ from django.template import loader
 from datetime import datetime, timedelta
 import numpy as np
 
+
 @method_decorator(csrf_exempt, name='dispatch')
-class YouTubeTopChineseChannelListRealTime(generics.ListAPIView):
+class YouTubeTopChineseChannelList(generics.ListAPIView):
     serializer_class = YouTubeChannelSerializer
     permission_classes = [AllowAny]  # Override global settings
 
@@ -45,28 +46,25 @@ class YouTubeTopChineseChannelListRealTime(generics.ListAPIView):
 
         # Sort channels by subscribers and return top 50
         sorted_channels = sorted(channels_data, key=lambda x: x['subscribers'], reverse=True)[:50]
-        current_timestamp = timezone.now()
+        #current_timestamp = timezone.now()
         # Convert to YouTubeChannel instances for serialization
         queryset = [YouTubeChannel(
             channel_id=channel['channel_id'],
             title=channel['title'],
             description=channel['description'],
-            subscribers=channel['subscribers'],
-            icon_url=channel['icon_url'],
-            last_updated=current_timestamp
+            #subscribers=channel['subscribers'],
+            icon_url=channel['icon_url']
+            #last_updated=current_timestamp
         ) for channel in sorted_channels]
         #print(f"queryset:{len(queryset)}",flush=True)
         return queryset
 
 
-from datetime import timedelta
-from django.utils.dateparse import parse_date
-from rest_framework.exceptions import ValidationError
-from django.db.models import Avg
+
 
 @method_decorator(csrf_exempt, name='dispatch')
-class YouTubeTopChineseChannelListHistoric(generics.ListAPIView):
-    serializer_class = YouTubeChannelSerializer
+class YouTubeTopChineseChannelSubscribers(generics.ListAPIView):
+    serializer_class = YouTubeChannelSubscribersSerializer
     permission_classes = [AllowAny]  # Override global settings
 
     def get_queryset(self):
@@ -132,8 +130,9 @@ class YouTubeTopChineseChannelListHistoric(generics.ListAPIView):
 
         # Create the response data
         response_data = [{"channel_id": channel_id, "subscribers": est} for channel_id, est in estimated_subscribers.items()]
+        sorted_channels = sorted(response_data, key=lambda x: x['subscribers'], reverse=True)[:50]
 
-        return Response(response_data)
+        return Response(sorted_channels)
 
     
 
