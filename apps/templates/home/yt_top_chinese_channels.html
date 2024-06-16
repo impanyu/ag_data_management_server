@@ -44,7 +44,8 @@
         ];
 
         const color = d3.scaleOrdinal()
-            .domain(d3.range(customColors.length))
+            //.domain(d3.range(customColors.length))
+            .domain(data.map(d => d.channel_id))
             .range(customColors);
 
         let data = [];
