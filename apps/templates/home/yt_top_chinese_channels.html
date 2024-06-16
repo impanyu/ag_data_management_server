@@ -17,7 +17,7 @@
     </style>
 </head>
 <body>
-    <svg width="960" height="500"></svg>
+    <svg width="1920" height="1080"></svg>
     <script>
         const svg = d3.select("svg");
             margin = {top: 20, right: 40, bottom: 30, left: 100};
@@ -56,7 +56,7 @@
 
             // Update scales
             x.domain([0, d3.max(data, d => d.subscribers)]);
-            y.domain(data.map(d => d.channel_id));
+            y.domain(data.map(d => d.title));
 
             // Select bars
             const bars = g.selectAll(".bar")
@@ -65,7 +65,7 @@
             // Enter selection: Create new groups for new data
             const barsEnter = bars.enter().append("g")
                 .attr("class", "bar")
-                .attr("transform", d => `translate(0, ${y(d.channel_id)})`);
+                .attr("transform", d => `translate(0, ${y(d.title)})`);
 
             barsEnter.append("rect")
                 .attr("x", 0)
@@ -88,7 +88,7 @@
 
             // Update selection: Update existing groups
             bars.transition().duration(1000)
-                .attr("transform", d => `translate(0, ${y(d.channel_id)})`);
+                .attr("transform", d => `translate(0, ${y(d.title)})`);
 
             bars.select("rect")
                 .transition()
@@ -127,8 +127,7 @@
             .call(d3.axisLeft(y));
 
         get_data();
-        // Initial update
-        update(data);
+
 
         
         // Simulate data update
@@ -136,7 +135,6 @@
             // Simulate new data
     
             get_data();
-            update(data);
         }, 10000);
 
 
@@ -145,7 +143,7 @@
                 .then(response => response.json())
                 .then(json => {
                     data = json["results"];
-                    
+                    update(data);
                 });
         }
 
