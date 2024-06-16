@@ -114,14 +114,14 @@
             bars.exit().remove();
 
             // Update axes
-            g.select(".x-axis").call(d3.axisTop(x)).transition()
+            g.select(".x-axis").call(d3.axisTop(x).tickFormat(formatNumber)).transition()
                 .duration(1000).style("font",  "bold 12px sans-serif");
             g.select(".y-axis").call(d3.axisLeft(y)).style("font", " 15px sans-serif"); 
         }
 
         g.append("g")
             .attr("class", "x-axis")
-            .call(d3.axisTop(x))
+            .call(d3.axisTop(x).tickFormat(formatNumber));
 
         g.append("g")
             .attr("class", "y-axis")
@@ -146,6 +146,19 @@
                     data = json["results"];
                     update(data);
                 });
+        }
+
+
+        function formatNumber(num) {
+            if (num >= 1_000_000_000) {
+                return (num / 1_000_000_000).toFixed(1) + 'B'; // Number >= 1 billion
+            } else if (num >= 1_000_000) {
+                return (num / 1_000_000).toFixed(1) + 'M'; // Number >= 1 million
+            } else if (num >= 1_000) {
+                return (num / 1_000).toFixed(1) + 'K'; // Number >= 1 thousand
+            } else {
+                return num.toString(); // Number < 1 thousand
+            }
         }
 
     </script>
