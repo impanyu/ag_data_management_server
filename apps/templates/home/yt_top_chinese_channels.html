@@ -58,10 +58,10 @@
 
         function update(data) {
             // Sort data
-            data.sort((a, b) => b.subscribers - a.subscribers);
+            data.sort((a, b) => channel_data_dict[b.channel_id].subscribers - channel_data_dict[a.channel_id].subscribers);
 
             // Update scales
-            x.domain([0, d3.max(data, d => d.subscribers)]);
+            x.domain([0, d3.max(data, d => channel_data_dict[b.channel_id].subscribers)]);
             y.domain(data.map(d => d.title));
 
             // Select bars
@@ -71,42 +71,42 @@
             // Enter selection: Create new groups for new data
             const barsEnter = bars.enter().append("g")
                 .attr("class", "bar")
-                .attr("transform", d => `translate(0, ${y(d.title)})`);
+                .attr("transform", d => `translate(0, ${y(channel_data_dict[d.channel_id].title)})`);
 
             barsEnter.append("rect")
                 .attr("x", 0)
                 .attr("height", y.bandwidth())
-                .attr("width", d => x(d.subscribers))
+                .attr("width", d => x(channel_data_dict[d.channel_id].subscribers))
                 .style("fill", (d, i) => color(d.channel_id));  // Apply color based on index
 
             barsEnter.append("text")
-                .attr("x", d => x(d.subscribers) + 5)  // Position to the right of the bar
+                .attr("x", d => x(channel_data_dict[d.channel_id].subscribers) + 5)  // Position to the right of the bar
                 .attr("y", y.bandwidth() / 2)
                 .attr("dy", ".35em")
-                .text(d => d.subscribers);
+                .text(d => channel_data_dict[d.channel_id].subscribers);
 
             barsEnter.append("image")
-                .attr("x", d => x(d.subscribers) - (y.bandwidth()-6) -3)  // Position to the right of the text
+                .attr("x", d => x(channel_data_dict[d.channel_id].subscribers) - (y.bandwidth()-6) -3)  // Position to the right of the text
                 .attr("y", 3)  // Center vertically in the bar
                 .attr("width", y.bandwidth()-6)
                 .attr("height", y.bandwidth()-6)
-                .attr("xlink:href", d => d.icon_url);
+                .attr("xlink:href", d => channel_data_dict[d.channel_id].icon_url);
 
             // Update selection: Update existing groups
             bars.transition().duration(1000)
-                .attr("transform", d => `translate(0, ${y(d.title)})`);
+                .attr("transform", d => `translate(0, ${y(channel_data_dict[d.channel_id].title)})`);
 
             bars.select("rect")
                 .transition()
                 .duration(1000)
-                .attr("width", d => x(d.subscribers))
+                .attr("width", d => x(channel_data_dict[d.channel_id].subscribers))
                 .style("fill", (d, i) => color(d.channel_id));  // Apply color based on index
 
             bars.select("text")
                 .transition()
                 .duration(1000)
-                .attr("x", d => x(d.subscribers) + 5)  // Position to the right of the bar
-                .text(d => d.subscribers);
+                .attr("x", d => x(channel_data_dict[d.channel_id].subscribers) + 5)  // Position to the right of the bar
+                .text(d => channel_data_dict[d.channel_id].subscribers);
 
             bars.select("image")
                 .transition()
@@ -156,7 +156,7 @@
                 .then(json => {
                     channel_data = json["results"];
                     for(i in channel_data){
-                        channel_data_dict[channel_data[i]["channel_id"]]={""};
+                        channel_data_dict[channel_data[i]["channel_id"]]={"title":channel_data[i]["title"],"description":channel_data[i]["description"],"icon_url":channel_data[i]["icon_url"],"join_date":channel_data[i]["join_date"],"location":channel_data[i]["location"]};
                     }
                 });
         }

@@ -65,9 +65,10 @@ class Command(BaseCommand):
                     'title': channel['title'],
                     'description': channel['description'],
                     #'subscribers': int(channel['subscribers']),
-                    'icon_url': channel['icon_url']  # Fetch the icon URL
+                    'icon_url': channel['icon_url'],  # Fetch the icon URL
                     #'last_updated': current_timestamp  # Add the same timestamp for all records
-                    
+                    'join_date': channel["join_date"],
+                    'location': channel["location"]
                 })
     
              YouTubeChannelSubscribers.objects.update_or_create(
@@ -78,7 +79,7 @@ class Command(BaseCommand):
                     'subscribers': int(channel['subscribers']),
                     #'icon_url': channel['icon_url']  # Fetch the icon URL
                     'last_updated': current_timestamp  # Add the same timestamp for all records
-                    
+                   
                 })
              
     def get_channel_updates_initial(self, channel_ids):
@@ -92,9 +93,10 @@ class Command(BaseCommand):
                     'title': channel['title'],
                     'description': channel['description'],
                     #'subscribers': int(channel['subscribers']),
-                    'icon_url': channel['icon_url']  # Fetch the icon URL
+                    'icon_url': channel['icon_url'],  # Fetch the icon URL
                     #'last_updated': current_timestamp  # Add the same timestamp for all records
-                    
+                    'join_date': channel["join_date"],
+                    'location': channel["location"]
                 })
     
              YouTubeChannelSubscribers.objects.update_or_create(

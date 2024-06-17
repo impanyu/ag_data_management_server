@@ -67,13 +67,18 @@ def fetch_channel_data(channel_ids):
 
                 items = data.get('items', [])
                 for item in items:
-                    channels.append({
+                    snippet = item['snippet']
+                    statistics = item['statistics']
+                    channel_data = {
                         'channel_id': item['id'],
-                        'title': item['snippet']['title'],
-                        'description': item['snippet']['description'],
-                        'subscribers': int(item['statistics']['subscriberCount']),
-                        'icon_url': item['snippet']['thumbnails']['default']['url']  # Fetch the icon URL
-                    })
+                        'title': snippet['title'],
+                        'description': snippet['description'],
+                        'subscribers': int(statistics['subscriberCount']),
+                        'icon_url': snippet['thumbnails']['default']['url'],
+                        'join_date': snippet.get('publishedAt'),  # Join date
+                        'location': snippet.get('country')  # Location
+                    }
+                    channels.append(channel_data)
 
                 page_token = data.get('nextPageToken')
                 if not page_token:
