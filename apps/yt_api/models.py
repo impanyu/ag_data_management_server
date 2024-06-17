@@ -17,7 +17,7 @@ class YouTubeChannel(models.Model):
 class YouTubeChannelSubscribers(models.Model):
     channel_id = models.CharField(max_length=255)   
     subscribers = models.BigIntegerField()
-    last_updated = models.DateTimeField(auto_now=True)
+    last_updated = models.DateTimeField()
 
     def __str__(self):
         return self.channel_id
