@@ -151,7 +151,7 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': 36000,  # every 1 day
     }
 }
-CELERY_WORKER_CONCURRENCY = 3
+
 # settings.py
 
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
@@ -160,7 +160,7 @@ CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'UTC'
-
+CELERY_WORKER_CONCURRENCY = 3
 
 LOGGING = {
     'version': 1,
