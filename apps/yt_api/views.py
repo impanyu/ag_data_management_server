@@ -36,7 +36,7 @@ class YouTubeTopChineseChannelList(generics.ListAPIView):
         #print("queryset",flush=True)
         # Retrieve channel IDs
         channel_ids = get_channel_ids()
-        #print(channel_ids,flush=True)
+        print(len(channel_ids),flush=True)
         if not channel_ids:
             return []
         
