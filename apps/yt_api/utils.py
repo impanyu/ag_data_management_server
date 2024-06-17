@@ -1,6 +1,7 @@
 import json
 import requests
 import time
+from itertools import islice
 
 CHANNEL_IDS_FILE = '/data/yt/chinese_channel_ids.json'
 CHANNEL_SUBS_FILE = '/data/yt/chinese_channel_subs.json'
@@ -40,52 +41,60 @@ def get_channel_subs_initial():
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
             return []
-        
 
 
 def fetch_channel_data(channel_ids):
-    #if len(channel_ids) > 50:
-    #    raise ValueError("The length of channel_ids should not exceed 50.")
-
     params = {
         'part': 'snippet,statistics',
-        'id': ','.join(channel_ids),
         'key': API_KEY,
         'maxResults': 50
     }
 
     channels = []
-    page_token = None
 
-    while True:
-        try:
-            if page_token:
-                params['pageToken'] = page_token
+    for chunk in chunked_iterable(channel_ids, 50):
+        params['id'] = ','.join(chunk)
+        page_token = None
 
-            response = requests.get(CHANNEL_URL, params=params)
-            response.raise_for_status()
-            data = response.json()
+        while True:
+            try:
+                if page_token:
+                    params['pageToken'] = page_token
 
-            items = data.get('items', [])
-            for item in items:
-                channels.append({
-                    'channel_id': item['id'],
-                    'title': item['snippet']['title'],
-                    'description': item['snippet']['description'],
-                    'subscribers': int(item['statistics']['subscriberCount']),
-                    'icon_url': item['snippet']['thumbnails']['default']['url']  # Fetch the icon URL
-                })
+                response = requests.get(CHANNEL_URL, params=params)
+                response.raise_for_status()
+                data = response.json()
 
-            page_token = data.get('nextPageToken')
-            if not page_token:
-                break
+                items = data.get('items', [])
+                for item in items:
+                    channels.append({
+                        'channel_id': item['id'],
+                        'title': item['snippet']['title'],
+                        'description': item['snippet']['description'],
+                        'subscribers': int(item['statistics']['subscriberCount']),
+                        'icon_url': item['snippet']['thumbnails']['default']['url']  # Fetch the icon URL
+                    })
 
-        except requests.exceptions.RequestException as e:
-            if response.status_code == 403 and 'quota' in response.text.lower():
-                print('Quota exceeded, waiting for quota reset...')
-                time.sleep(24 * 3600)  # Sleep for 24 hours
-            else:
-                print(f'An error occurred: {e}')
-                return []
+                page_token = data.get('nextPageToken')
+                if not page_token:
+                    break
+
+            except requests.exceptions.RequestException as e:
+                if response.status_code == 403 and 'quota' in response.text.lower():
+                    print('Quota exceeded, waiting for quota reset...')
+                    time.sleep(24 * 3600)  # Sleep for 24 hours
+                else:
+                    print(f'An error occurred: {e}')
+                    return []
 
     return channels
+
+
+def chunked_iterable(iterable, size):
+    """Utility function to split an iterable into chunks of specified size."""
+    it = iter(iterable)
+    while True:
+        chunk = list(islice(it, size))
+        if not chunk:
+            break
+        yield chunk
