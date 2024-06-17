@@ -25,13 +25,13 @@ print(f"CELERY_WORKER_CONCURRENCY: {os.environ.get('CELERY_WORKER_CONCURRENCY')}
 app = Celery('core')
 # Celery Configuration
 app.conf.update(
-    broker_url=os.environ['CELERY_BROKER_URL'],
-    result_backend=os.environ['CELERY_RESULT_BACKEND'],
+    broker_url='redis://localhost:6379/0',
+    result_backend='redis://localhost:6379/0',
     accept_content=['json'],
     task_serializer='json',
     result_serializer='json',
     timezone='UTC',
-    worker_concurrency=int(os.environ['CELERY_WORKER_CONCURRENCY']),
+    worker_concurrency=5,
     beat_schedule={
         'update-top-chinese-channels': {
             'task': 'apps.yt_api.tasks.update_top_chinese_channels_task',
