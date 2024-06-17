@@ -44,8 +44,8 @@ def get_channel_subs_initial():
 
 
 def fetch_channel_data(channel_ids):
-    if len(channel_ids) > 50:
-        raise ValueError("The length of channel_ids should not exceed 50.")
+    #if len(channel_ids) > 50:
+    #    raise ValueError("The length of channel_ids should not exceed 50.")
 
     params = {
         'part': 'snippet,statistics',

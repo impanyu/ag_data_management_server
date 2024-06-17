@@ -16,8 +16,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         channel_ids = get_channel_ids()
+        self.get_channel_updates_initial(channel_ids)
         self.get_channel_updates(channel_ids)
-
 
     '''   
     def get_channel_ids(self):
