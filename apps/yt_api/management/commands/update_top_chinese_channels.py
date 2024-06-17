@@ -16,6 +16,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         channel_ids = get_channel_ids()
+        print(f"in task: {len(channel_ids)}",flush=True)
         self.get_channel_updates_initial(channel_ids)
         self.get_channel_updates(channel_ids)
 
@@ -56,7 +57,7 @@ class Command(BaseCommand):
     '''
     def get_channel_updates(self, channel_ids):
         channels = fetch_channel_data(channel_ids)
-        
+        print(f"in get_channel_updates",flush=True)
         current_timestamp = timezone.now()
         for channel in channels:
              YouTubeChannel.objects.update_or_create(
@@ -67,7 +68,7 @@ class Command(BaseCommand):
                     #'subscribers': int(channel['subscribers']),
                     'icon_url': channel['icon_url'],  # Fetch the icon URL
                     #'last_updated': current_timestamp  # Add the same timestamp for all records
-                    #'join_date': channel["join_date"],
+                    'join_date': channel["join_date"],
                     'location': channel["location"]
                 })
     
@@ -85,6 +86,7 @@ class Command(BaseCommand):
     def get_channel_updates_initial(self, channel_ids):
         channels = fetch_channel_data(channel_ids)
         channel_subs = get_channel_subs_initial()
+        print(f"in get_channel_updates_initial",flush=True)
         initial_timestamp = datetime(2024, 4, 8, 0, 0)  # 2024-04-08 00:00:00
         for i,channel in enumerate(channels):
              YouTubeChannel.objects.update_or_create(
@@ -95,7 +97,7 @@ class Command(BaseCommand):
                     #'subscribers': int(channel['subscribers']),
                     'icon_url': channel['icon_url'],  # Fetch the icon URL
                     #'last_updated': current_timestamp  # Add the same timestamp for all records
-                    #'join_date': channel["join_date"],
+                    'join_date': channel["join_date"],
                     'location': channel["location"]
                 })
     
