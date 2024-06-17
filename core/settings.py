@@ -151,7 +151,7 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': 36000,  # every 1 day
     }
 }
-CELERY_WORKER_CONCURRENCY = 5
+CELERY_WORKER_CONCURRENCY = 3
 # settings.py
 
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
