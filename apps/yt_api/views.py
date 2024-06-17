@@ -55,7 +55,7 @@ class YouTubeTopChineseChannelList(generics.ListAPIView):
             #subscribers=channel['subscribers'],
             icon_url=channel['icon_url'],
             join_date=channel['join_date'],
-            location=channel['loation']
+            location=channel['location']
             #last_updated=current_timestamp
         ) for channel in channels_data]
         #print(f"queryset:{len(queryset)}",flush=True)
