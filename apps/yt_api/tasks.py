@@ -4,3 +4,7 @@ from django.core.management import call_command
 @shared_task
 def update_top_chinese_channels_task():
     call_command('update_top_chinese_channels')
+
+@shared_task
+def debug_task():
+    print("Task executed")
