@@ -67,7 +67,7 @@ class Command(BaseCommand):
                     #'subscribers': int(channel['subscribers']),
                     'icon_url': channel['icon_url'],  # Fetch the icon URL
                     #'last_updated': current_timestamp  # Add the same timestamp for all records
-                    'join_date': channel["join_date"],
+                    #'join_date': channel["join_date"],
                     'location': channel["location"]
                 })
     
@@ -95,7 +95,7 @@ class Command(BaseCommand):
                     #'subscribers': int(channel['subscribers']),
                     'icon_url': channel['icon_url'],  # Fetch the icon URL
                     #'last_updated': current_timestamp  # Add the same timestamp for all records
-                    'join_date': channel["join_date"],
+                    #'join_date': channel["join_date"],
                     'location': channel["location"]
                 })
     
