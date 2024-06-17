@@ -60,7 +60,7 @@ class Command(BaseCommand):
         print(f"in get_channel_updates",flush=True)
         current_timestamp = timezone.now()
         for channel in channels:
-             YouTubeChannel.objects.update_or_create(
+             Channel.objects.update_or_create(
                 channel_id=channel['channel_id'],
                 defaults={
                     'title': channel['title'],
@@ -72,7 +72,7 @@ class Command(BaseCommand):
                     'location': channel["location"]
                 })
     
-             YouTubeChannelSubscribers.objects.update_or_create(
+             ChannelSubscribers.objects.update_or_create(
                 channel_id=channel['channel_id'],
                 defaults={
                     #'title': channel['title'],
@@ -89,7 +89,7 @@ class Command(BaseCommand):
         print(f"in get_channel_updates_initial",flush=True)
         initial_timestamp = datetime(2024, 4, 8, 0, 0)  # 2024-04-08 00:00:00
         for i,channel in enumerate(channels):
-             YouTubeChannel.objects.update_or_create(
+             Channel.objects.update_or_create(
                 channel_id=channel['channel_id'],
                 defaults={
                     'title': channel['title'],
@@ -101,7 +101,7 @@ class Command(BaseCommand):
                     'location': channel["location"]
                 })
     
-             YouTubeChannelSubscribers.objects.update_or_create(
+             ChannelSubscribers.objects.update_or_create(
                 channel_id=channel['channel_id'],
                 defaults={
                     #'title': channel['title'],

@@ -1,6 +1,6 @@
 from django.db import models
 
-class YouTubeChannel(models.Model):
+class Channel(models.Model):
     channel_id = models.CharField(max_length=255, unique=True)
     title = models.CharField(max_length=255)
     description = models.TextField()
@@ -13,7 +13,7 @@ class YouTubeChannel(models.Model):
 
 
 
-class YouTubeChannelSubscribers(models.Model):
+class ChannelSubscribers(models.Model):
     channel_id = models.CharField(max_length=255)   
     subscribers = models.BigIntegerField()
     last_updated = models.DateTimeField()

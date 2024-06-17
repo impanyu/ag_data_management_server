@@ -48,7 +48,7 @@ class YouTubeTopChineseChannelList(generics.ListAPIView):
         #sorted_channels = sorted(channels_data, key=lambda x: x['subscribers'], reverse=True)[:50]
         #current_timestamp = timezone.now()
         # Convert to YouTubeChannel instances for serialization
-        queryset = [YouTubeChannel(
+        queryset = [Channel(
             channel_id=channel['channel_id'],
             title=channel['title'],
             description=channel['description'],
@@ -88,7 +88,7 @@ class YouTubeTopChineseChannelSubscribers(generics.ListAPIView):
         end_date = date + delta
 
         # Base queryset
-        queryset = YouTubeChannel.objects.filter(last_updated__range=[start_date, end_date])
+        queryset = Channel.objects.filter(last_updated__range=[start_date, end_date])
 
         return queryset
 
