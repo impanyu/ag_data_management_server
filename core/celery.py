@@ -11,7 +11,10 @@ sys.stderr = open('/var/log/ag_data_management/debug.log', 'a+')
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 
-
+# Explicitly set environment variables
+os.environ['CELERY_BROKER_URL'] = 'redis://localhost:6379/0'
+os.environ['CELERY_RESULT_BACKEND'] = 'redis://localhost:6379/0'
+os.environ['CELERY_WORKER_CONCURRENCY'] = '3'
 
 # Print to verify the concurrency setting
 print(f"CELERY_WORKER_CONCURRENCY: {settings.CELERY_WORKER_CONCURRENCY}")
@@ -41,5 +44,6 @@ app.conf.update(
 )
 
 
-app.config_from_object('core:settings', namespace='CELERY')
+app.config_from_object('django.conf:settings', namespace='CELERY')
+
 app.autodiscover_tasks()
