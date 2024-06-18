@@ -20,14 +20,40 @@
         }
 
         .blink {
-            animation: blink 1s ease-in-out 3;
+                animation: blink 1s ease-in-out 3;
         }
-      
+        .message-bar {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: #333;
+        color: white;
+        padding: 10px 0;
+        overflow: hidden;
+    }
+    .message-bar-content {
+        white-space: nowrap;
+        display: inline-block;
+        animation: scroll-left 20s linear infinite;
+    }
+    @keyframes scroll-left {
+        from {
+            transform: translateX(100%);
+        }
+        to {
+            transform: translateX(-100%);
+        }
+    }
+
 
     </style>
 </head>
 <body>
     <svg width="1920" height="1920"></svg>
+    <div class="message-bar">
+        <div class="message-bar-content" id="message-bar-content"></div>
+    </div>
+    
     <script>
         const svg = d3.select("svg");
            // margin = {top: 20, right: 40, bottom: 30, left: 100};
@@ -188,6 +214,7 @@
             g.select(".x-axis").call(d3.axisTop(x).tickFormat(formatNumber)).transition()
                 .duration(1000).style("font",  "bold 12px sans-serif");
             g.select(".y-axis").call(d3.axisLeft(y)).style("font", " 15px sans-serif"); 
+            updateMessageBar()
         }
 
         g.append("g")
@@ -322,6 +349,18 @@ function showDelta(element, delta, isPositive) {
         .remove();
 }
 
+function updateMessageBar() {
+    const messageBarContent = d3.select("#message-bar-content");
+
+    // Construct the scrolling message
+    let message = data.map(d => {
+        const channel = channel_data_dict[d.channel_id];
+        return `Title: ${channel.title}, Join Date: ${channel.join_date}, Description: ${channel.description}, Location: ${channel.location}`;
+    }).join("  |  ");
+
+    // Update the content of the message bar
+    messageBarContent.text(message);
+}
   
 
     </script>
