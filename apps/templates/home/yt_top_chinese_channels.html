@@ -323,19 +323,19 @@
 
 
         function blink(element) {
-        element
-        .transition()
-        .duration(500)
-        .style("opacity", 0)
-        .transition()
-        .duration(500)
-        .style("opacity", 1)
-        .transition()
-        .duration(500)
-        .style("opacity", 0)
-        .transition()
-        .duration(500)
-        .style("opacity", 1);
+    function blinkOnce() {
+        element.transition()
+            .duration(500)
+            .style("opacity", 0)
+            .on("end", () => {
+                element.transition()
+                    .duration(500)
+                    .style("opacity", 1)
+                    .on("end", blinkOnce); // Repeat the blink effect
+            });
+    }
+
+    blinkOnce();
 }
 
 function showDelta(element, delta, isPositive) {
