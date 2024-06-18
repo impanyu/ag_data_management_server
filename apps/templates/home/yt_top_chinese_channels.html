@@ -138,18 +138,12 @@
                     if (newSubscribers > currentSubscribers) {
                         textElement.style("fill", "green");
                          // Make the text blink
-                         // Remove and re-apply the blink class to restart the animation
-                        textElement.classed("blink", false);
-                        void textElement.node().offsetWidth; // Trigger reflow
-                        textElement.classed("blink", true);
+                         blink(textElement);
                       
                     } else if (newSubscribers < currentSubscribers) {
                         textElement.style("fill", "red");
                          // Make the text blink
-                         // Remove and re-apply the blink class to restart the animation
-                        textElement.classed("blink", false);
-                        void textElement.node().offsetWidth; // Trigger reflow
-                        textElement.classed("blink", true);
+                         blink(textElement);
            
 
                     }
@@ -172,16 +166,11 @@
                     if (d.subscribers > currentSubscribers) {
                         arrowElement.text('⬆').style("fill", "green");
                          // Make the text blink
-                      // Remove and re-apply the blink class to restart the animation
-                        arrowElement.classed("blink", false);
-                        void arrowElement.node().offsetWidth; // Trigger reflow
-                        arrowElement.classed("blink", true);
+                         blink(arrowElement);
                     } else if (d.subscribers < currentSubscribers) {
                         arrowElement.text('⬇').style("fill", "red");
-                        // Remove and re-apply the blink class to restart the animation
-                        arrowElement.classed("blink", false);
-                        void arrowElement.node().offsetWidth; // Trigger reflow
-                        arrowElement.classed("blink", true);
+                        blink(arrowElement);
+       
                     }
                 });
 
@@ -287,6 +276,22 @@
 
         scrollPage();
 
+
+        function blink(element) {
+        element
+        .transition()
+        .duration(500)
+        .style("opacity", 0)
+        .transition()
+        .duration(500)
+        .style("opacity", 1)
+        .transition()
+        .duration(500)
+        .style("opacity", 0)
+        .transition()
+        .duration(500)
+        .style("opacity", 1);
+}
   
 
     </script>
