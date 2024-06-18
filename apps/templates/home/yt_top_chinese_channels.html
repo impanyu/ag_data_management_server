@@ -354,7 +354,7 @@ function updateMessageBar() {
     const messageBarContent = d3.select("#message-bar-content");
 
     // Construct the scrolling message
-    let message = data.map(d => {
+    let message = channel_data.map(d => {
         const channel = channel_data_dict[d.channel_id];
         return `Title: ${channel.title}, Join Date: ${channel.join_date}, Description: ${channel.description}, Location: ${channel.location}`;
     }).join("  |  ");
