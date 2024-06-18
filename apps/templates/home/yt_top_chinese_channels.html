@@ -369,7 +369,7 @@ function updateMessageBar() {
         // Append a span element for each channel with a different background color
         messageBarContent.append("span")
             .attr("class", "message-span")
-            .style("background-color", customColors [i % backgroundColors.length])
+            .style("background-color", customColors [i % customColors.length])
             .text(message);
     });
   
