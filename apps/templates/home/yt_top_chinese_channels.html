@@ -300,10 +300,12 @@ function showDelta(element, delta, isPositive) {
     const deltaText = isPositive ? `+${delta.toLocaleString()}` : `${delta.toLocaleString()}`;
     const deltaColor = isPositive ? "green" : "red";
 
+    const parentNode = d3.select(element.node().parentNode); // Select the parent node
+
     const xPos = +element.attr("x") + 20; // Position to the right of the arrow
     const yPos = +element.attr("y");
 
-    const deltaElement = element.append("text")
+    const deltaElement = parentNode.append("text") // Append to the parent node
         .attr("x", xPos)
         .attr("y", yPos)
         .attr("dy", ".35em")
@@ -318,6 +320,7 @@ function showDelta(element, delta, isPositive) {
         .style("opacity", 0)
         .remove();
 }
+
   
 
     </script>
