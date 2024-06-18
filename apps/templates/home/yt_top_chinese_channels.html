@@ -107,7 +107,7 @@
                 .transition()
                 .duration(1000)
                 .attr("x", d => x(d.subscribers) + 5)  // Position to the right of the bar
-                //.text(d => d.subscribers.toLocaleString())
+                .text(d => d.subscribers.toLocaleString())
                 .each(function(d) {
                     const textElement = d3.select(this);
                     //const currentSubscribers = parseInt(textElement.text().replace(/[^0-9]/g, ''));
