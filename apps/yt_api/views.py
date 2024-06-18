@@ -83,12 +83,12 @@ class YouTubeTopChineseChannelSubscribers(generics.ListAPIView):
 
 
         # Define the delta period
-        delta = timedelta(days=70)
+        delta = timedelta(days=90)
         start_date = date - delta
         end_date = date + delta
 
         # Base queryset
-        queryset = Channel.objects.filter(last_updated__range=[start_date, end_date])
+        queryset = ChannelSubscribers.objects.filter(last_updated__range=[start_date, end_date])
 
         return queryset
 
