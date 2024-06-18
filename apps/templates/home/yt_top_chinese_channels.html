@@ -334,7 +334,6 @@
                 element.transition()
                     .duration(500)
                     .style("opacity", 1)
-                    .on("end", blinkOnce); // Repeat the blink effect
             });
     
 }
@@ -362,8 +361,10 @@ function showDelta(element, delta, isPositive) {
         .duration(2000)
         .attr("y", yPos - 20) // Move up by 20 pixels
         .style("opacity", 0)
-        .remove();
-}
+        .on("end", () => {
+                element.remove(); // Remove the delta text after the animation
+            });
+
 
 function updateMessageBar() {
     const messageBarContent = d3.select("#message-bar-content");
