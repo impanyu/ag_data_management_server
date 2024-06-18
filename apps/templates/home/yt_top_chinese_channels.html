@@ -121,8 +121,8 @@
                     } else if (newSubscribers < currentSubscribers) {
                         textElement.style("fill", "red");
                     }
-
-                    animateNumberTransition(textElement, currentSubscribers, newSubscribers);
+                    textElement.text(newSubscribers.toLocaleString());
+                    //animateNumberTransition(textElement, currentSubscribers, newSubscribers);
                 });
 
             bars.select("image")
