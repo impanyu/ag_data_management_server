@@ -34,7 +34,7 @@
     .message-bar-content {
         white-space: nowrap;
         display: inline-block;
-        animation: scroll-left 20 linear infinite;
+        animation: scroll-left 120s linear infinite;
     }
     @keyframes scroll-left {
         from {
@@ -214,7 +214,7 @@
             g.select(".x-axis").call(d3.axisTop(x).tickFormat(formatNumber)).transition()
                 .duration(1000).style("font",  "bold 12px sans-serif");
             g.select(".y-axis").call(d3.axisLeft(y)).style("font", " 15px sans-serif"); 
-            updateMessageBar();
+            //updateMessageBar();
         }
 
         g.append("g")
@@ -357,7 +357,7 @@ function updateMessageBar() {
     // Construct the scrolling message
     let message = channel_data.map(d => {
         const channel = channel_data_dict[d.channel_id];
-        return `Title: ${channel.title}, Join Date: ${channel.join_date}, Location: ${channel.location}`;
+        return `Title: ${channel.title}, Join Date: ${channel.join_date}, Description: ${channel.description}, Location: ${channel.location}`;
     }).join("  |  ");
 
     // Update the content of the message bar
