@@ -4,6 +4,7 @@ import os
 from celery import Celery
 import sys
 from django.conf import settings
+import logging
 
 # Redirect stdout and stderr to log files
 sys.stdout = open('/var/log/ag_data_management/debug.log', 'a+')
@@ -23,3 +24,8 @@ app = Celery('core')
 app.config_from_object('django.conf:settings', namespace='CELERY')
 
 app.autodiscover_tasks()
+
+# Configure logging
+logging.basicConfig(filename='/var/log/ag_data_management/celery.log',
+                    level=logging.INFO,
+                    format='%(asctime)s %(levelname)s %(message)s')
