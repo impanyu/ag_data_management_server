@@ -107,8 +107,8 @@ def chunked_iterable(iterable, size):
 
 def add_random_number(value):
     # Define the probabilities and corresponding values
-    choices = [0, .5, -.5]
-    probabilities = [0.9, 0.05, 0.05]
+    choices = [0, 1, -1]
+    probabilities = [0.98, 0.01, 0.01]
     
     # Choose a random value based on the probabilities
     random_value = random.choices(choices, probabilities)[0]
