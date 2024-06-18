@@ -18,7 +18,7 @@ class Command(BaseCommand):
         channel_ids = get_channel_ids()
         print(f"in task: {len(channel_ids)}",flush=True)
         self.get_channel_updates_initial(channel_ids)
-        #self.get_channel_updates(channel_ids)
+        self.get_channel_updates(channel_ids)
 
     '''   
     def get_channel_ids(self):
