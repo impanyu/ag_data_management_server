@@ -110,7 +110,7 @@ class YouTubeTopChineseChannelSubscribers(generics.ListAPIView):
                 channel_subscribers[channel.channel_id] = []
             channel_subscribers[channel.channel_id].append((channel.subscribers, channel.last_updated))
 
-        '''
+        
         # Calculate the estimated subscribers for each channel at the specified date
         estimated_subscribers = {}
         for channel_id, data in channel_subscribers.items():
@@ -134,8 +134,8 @@ class YouTubeTopChineseChannelSubscribers(generics.ListAPIView):
         response_data = [{"channel_id": channel_id, "subscribers": est} for channel_id, est in estimated_subscribers.items()]
         sorted_channels = sorted(response_data, key=lambda x: x['subscribers'], reverse=True)[:50]
 
-        '''
-        sorted_channels = []
+        
+        #sorted_channels = []
         return Response(sorted_channels)
 
     
