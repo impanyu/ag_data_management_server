@@ -14,6 +14,10 @@
             font: bold 18px sans-serif ;
             text-anchor: start; /* Align text to the start (left) */
         }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
       
 
     </style>
@@ -129,9 +133,13 @@
 
                     if (newSubscribers > currentSubscribers) {
                         textElement.style("fill", "green");
+                         // Make the text blink
+                        textElement.style("animation", "blink 1s ease-in-out 3");
                       
                     } else if (newSubscribers < currentSubscribers) {
                         textElement.style("fill", "red");
+                         // Make the text blink
+                       textElement.style("animation", "blink 1s ease-in-out 3");
            
 
                     }
@@ -152,8 +160,11 @@
                     
                     if (d.subscribers > currentSubscribers) {
                         arrowElement.text('⬆').style("fill", "green");
+                         // Make the text blink
+                      arrowElement.style("animation", "blink 1s ease-in-out 3");
                     } else if (d.subscribers < currentSubscribers) {
                         arrowElement.text('⬇').style("fill", "red");
+                        arrowElement.style("animation", "blink 1s ease-in-out 3");
                     }
                 });
 
