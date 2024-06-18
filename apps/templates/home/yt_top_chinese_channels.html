@@ -141,6 +141,10 @@
 
 
             bars.select(".arrow")
+               .attr("x", function(d) {
+                    const textWidth = this.previousElementSibling.getComputedTextLength();
+                    return x(d.subscribers) + textWidth + 15; // Position 10 pixels to the right end of the first text
+                })
                 .each(function(d) {
                     const arrowElement = d3.select(this);
                     const currentSubscribers = previous_subs[d.channel_id] || d.subscribers;
