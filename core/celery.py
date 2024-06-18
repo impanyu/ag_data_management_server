@@ -20,8 +20,24 @@ print(f"CELERY_WORKER_CONCURRENCY: {settings.CELERY_WORKER_CONCURRENCY}")
 
 app = Celery('core')
 
-
-app.config_from_object('django.conf:settings', namespace='CELERY')
+# Celery settings
+app.conf.update(
+    broker_url='redis://localhost:6379/0',
+    result_backend='redis://localhost:6379/0',
+    accept_content=['json'],
+    task_serializer='json',
+    result_serializer='json',
+    timezone='UTC',
+    enable_utc=True,
+    worker_concurrency=3,
+    beat_schedule={
+        'update-top-chinese-channels': {
+            'task': 'apps.yt_api.tasks.update_top_chinese_channels_task',
+            'schedule': 3600,  # every hour
+        }
+    }
+)
+#app.config_from_object('django.conf:settings', namespace='CELERY')
 
 app.autodiscover_tasks()
 
