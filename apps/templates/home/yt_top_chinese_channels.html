@@ -358,7 +358,7 @@ function updateMessageBar() {
     let message = channel_data.map(d => {
         const channel = channel_data_dict[d.channel_id];
         return `频道: ${channel.title}, 建立时间: ${channel.join_date}, 注册地: ${channel.location}`;
-    }).join("  |  ");
+    }).join("           |           ");
 
     // Update the content of the message bar
     messageBarContent.text(message);
