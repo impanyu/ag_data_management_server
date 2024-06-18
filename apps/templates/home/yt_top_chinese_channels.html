@@ -23,7 +23,7 @@
     <script>
         const svg = d3.select("svg");
            // margin = {top: 20, right: 40, bottom: 30, left: 100};
-            margin = { top: 20, right: 100, bottom: 30, left: 300 }; // Increase left margin
+            margin = { top: 20, right: 100, bottom: 30, left: 250 }; // Increase left margin
 
             width = +svg.attr("width") - margin.left - margin.right;
             height = +svg.attr("height") - margin.top - margin.bottom;
@@ -170,7 +170,11 @@
                 .then(json => {
                     channel_data = json["results"];
                     for(i in channel_data){
+                        if(channel_data[i]["title"].substr(0,6) == '妙見神與方臉')
+                            channel_data[i]["title"] = '妙見神與方臉';
                         channel_data_dict[channel_data[i]["channel_id"]]={"title":channel_data[i]["title"],"description":channel_data[i]["description"],"icon_url":channel_data[i]["icon_url"],"join_date":channel_data[i]["join_date"],"location":channel_data[i]["location"]};
+                    
+
                     }
                 });
         }
