@@ -118,8 +118,12 @@
 
                     if (newSubscribers > currentSubscribers) {
                         textElement.style("fill", "green");
+                        d3.select(this.nextSibling).text('↑').style("fill", "green");
                     } else if (newSubscribers < currentSubscribers) {
                         textElement.style("fill", "red");
+                        d3.select(this.nextSibling).text('↓').style("fill", "red");
+
+
                     }
                     textElement.text(newSubscribers.toLocaleString());
                     //animateNumberTransition(textElement, currentSubscribers, newSubscribers);
@@ -209,24 +213,7 @@
             }
         }
 
-        function animateNumberTransition(textElement, startValue, endValue) {
-            const duration = 1000; // Duration of the transition in milliseconds
-            const steps = Math.abs(endValue - startValue); // Number of steps for the transition
-
-            let currentValue = startValue;
-            const increment = (endValue > startValue) ? 1 : -1;
-            const stepDuration = duration / steps;
-
-            const interval = setInterval(() => {
-                currentValue += increment;
-                textElement.text(currentValue.toLocaleString());
-
-                if (currentValue === endValue) {
-                    clearInterval(interval);
-                }
-            }, stepDuration);
-        }
-
+  
 
     </script>
 </body>
