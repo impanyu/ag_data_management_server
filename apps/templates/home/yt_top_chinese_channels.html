@@ -45,6 +45,12 @@
         }
     }
 
+    .message-span {
+    padding: 5px 10px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
 
     </style>
 </head>
@@ -361,7 +367,12 @@ function updateMessageBar() {
     }).join("           |           ");
 
     // Update the content of the message bar
-    messageBarContent.text(message);
+   // messageBarContent.text(message);
+     // Append a span element for each channel with a different background color
+     messageBarContent.append("span")
+            .attr("class", "message-span")
+            .style("background-color", customColors[i % customColors.length])
+            .text(message);
 }
   
 
