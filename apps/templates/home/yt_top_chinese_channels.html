@@ -119,7 +119,7 @@
                     //const currentSubscribers = parseInt(textElement.text().replace(/[^0-9]/g, ''));
                     const newSubscribers = d.subscribers;
                     currentSubscribers = previous_subs[d.channel_id] || newSubscribers;
-                    previous_subs[d.channel_id] = newSubscribers;
+                    
                     
 
                     if (newSubscribers > currentSubscribers) {
@@ -139,6 +139,7 @@
                 .each(function(d) {
                     const arrowElement = d3.select(this);
                     const currentSubscribers = previous_subs[d.channel_id] || d.subscribers;
+                    previous_subs[d.channel_id] = d.subscribers;
                     if (d.subscribers > currentSubscribers) {
                         arrowElement.text('↑').style("fill", "green");
                     } else if (d.subscribers < currentSubscribers) {
