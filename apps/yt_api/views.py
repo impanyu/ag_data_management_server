@@ -128,7 +128,8 @@ class YouTubeTopChineseChannelSubscribers(generics.ListAPIView):
 
                 # Calculate the estimated subscribers at the specified date
                 target_date_timestamp = date.timestamp()
-                estimated_subscribers[channel_id] = int(m * target_date_timestamp + c)
+                estimated_subscribers[channel_id] = add_random_number(int(m * target_date_timestamp + c))
+     
 
         # Create the response data
         response_data = [{"channel_id": channel_id, "subscribers": est} for channel_id, est in estimated_subscribers.items()]

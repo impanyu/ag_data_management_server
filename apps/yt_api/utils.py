@@ -2,6 +2,7 @@ import json
 import requests
 import time
 from itertools import islice
+import random
 
 CHANNEL_IDS_FILE = '/data/yt/chinese_channel_ids.json'
 CHANNEL_SUBS_FILE = '/data/yt/chinese_channel_subs.json'
@@ -103,3 +104,12 @@ def chunked_iterable(iterable, size):
         if not chunk:
             break
         yield chunk
+
+def add_random_number(value):
+    # Define the probabilities and corresponding values
+    choices = [0, 1, -1]
+    probabilities = [0.6, 0.2, 0.2]
+    
+    # Choose a random value based on the probabilities
+    random_value = random.choices(choices, probabilities)[0]
+    return value + random_value
