@@ -148,7 +148,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CELERY_BEAT_SCHEDULE = {
     'update-top-chinese-channels': {
         'task': 'apps.yt_api.tasks.update_top_chinese_channels_task',
-        'schedule': 36000,  # every 1 day
+        'schedule': 30,  # every 1 day
     }
 }
 
