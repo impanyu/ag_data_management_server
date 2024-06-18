@@ -124,15 +124,28 @@
 
                     if (newSubscribers > currentSubscribers) {
                         textElement.style("fill", "green");
-                        d3.select(this.nextSibling).text('↑').style("fill", "green");
+                      
                     } else if (newSubscribers < currentSubscribers) {
                         textElement.style("fill", "red");
-                        d3.select(this.nextSibling).text('↓').style("fill", "red");
-
+           
 
                     }
                     textElement.text(newSubscribers.toLocaleString());
                     //animateNumberTransition(textElement, currentSubscribers, newSubscribers);
+                });
+
+
+            bars.select(".arrow")
+                .each(function(d) {
+                    const arrowElement = d3.select(this);
+                    const currentSubscribers = previous_subs[d.channel_id] || d.subscribers;
+                    if (d.subscribers > currentSubscribers) {
+                        arrowElement.text('↑').style("fill", "green");
+                    } else if (d.subscribers < currentSubscribers) {
+                        arrowElement.text('↓').style("fill", "red");
+                    } else {
+                        arrowElement.text('');
+                    }
                 });
 
             bars.select("image")
