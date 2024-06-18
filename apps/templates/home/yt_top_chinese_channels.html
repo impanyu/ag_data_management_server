@@ -106,7 +106,20 @@
                 .transition()
                 .duration(1000)
                 .attr("x", d => x(d.subscribers) + 5)  // Position to the right of the bar
-                .text(d => d.subscribers.toLocaleString());
+                .text(d => d.subscribers.toLocaleString())
+                .each(function(d) {
+                    const textElement = d3.select(this);
+                    const currentSubscribers = parseInt(textElement.text().replace(/[^0-9]/g, ''));
+                    const newSubscribers = d.subscribers;
+
+                    if (newSubscribers > currentSubscribers) {
+                        textElement.style("fill", "green");
+                    } else if (newSubscribers < currentSubscribers) {
+                        textElement.style("fill", "red");
+                    }
+
+                    animateNumberTransition(textElement, currentSubscribers, newSubscribers);
+                });
 
             bars.select("image")
                 .transition()
@@ -191,6 +204,25 @@
                 return num.toString(); // Number < 1 thousand
             }
         }
+
+        function animateNumberTransition(textElement, startValue, endValue) {
+            const duration = 1000; // Duration of the transition in milliseconds
+            const steps = Math.abs(endValue - startValue); // Number of steps for the transition
+
+            let currentValue = startValue;
+            const increment = (endValue > startValue) ? 1 : -1;
+            const stepDuration = duration / steps;
+
+            const interval = setInterval(() => {
+                currentValue += increment;
+                textElement.text(formatNumber(currentValue));
+
+                if (currentValue === endValue) {
+                    clearInterval(interval);
+                }
+            }, stepDuration);
+        }
+
 
     </script>
 </body>
