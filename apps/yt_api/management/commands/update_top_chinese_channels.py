@@ -72,16 +72,11 @@ class Command(BaseCommand):
                     'location': channel["location"]
                 })
     
-             ChannelSubscribers.objects.update_or_create(
+             ChannelSubscribers.objects.create(
                 channel_id=channel['channel_id'],
-                defaults={
-                    #'title': channel['title'],
-                    #'description': channel['description'],
-                    'subscribers': int(channel['subscribers']),
-                    #'icon_url': channel['icon_url']  # Fetch the icon URL
-                    'last_updated': current_timestamp  # Add the same timestamp for all records
-                   
-                })
+                subscribers=channel['subscribers'],
+                last_updated=current_timestamp  # Add the same timestamp for all records
+            )
              
     def get_channel_updates_initial(self, channel_ids):
         channels = fetch_channel_data(channel_ids)
@@ -105,4 +100,6 @@ class Command(BaseCommand):
                 channel_id=channel['channel_id'],
                 subscribers=int(channel_subs[i] * 10000),
                 last_updated=initial_timestamp  # Add the same timestamp for all records
+       
+                    
                 )
