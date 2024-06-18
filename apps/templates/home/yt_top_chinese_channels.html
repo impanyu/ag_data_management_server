@@ -34,7 +34,7 @@
     .message-bar-content {
         white-space: nowrap;
         display: inline-block;
-        animation: scroll-left 120s linear infinite;
+        animation: scroll-left 480s linear infinite;
     }
     @keyframes scroll-left {
         from {
@@ -357,7 +357,7 @@ function updateMessageBar() {
     // Construct the scrolling message
     let message = channel_data.map(d => {
         const channel = channel_data_dict[d.channel_id];
-        return `Title: ${channel.title}, Join Date: ${channel.join_date},  Location: ${channel.location}`;
+        return `频道: ${channel.title}, 建立时间: ${channel.join_date}, 注册地: ${channel.location}`;
     }).join("  |  ");
 
     // Update the content of the message bar
