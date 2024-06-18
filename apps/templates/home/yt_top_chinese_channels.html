@@ -214,7 +214,7 @@
             g.select(".x-axis").call(d3.axisTop(x).tickFormat(formatNumber)).transition()
                 .duration(1000).style("font",  "bold 12px sans-serif");
             g.select(".y-axis").call(d3.axisLeft(y)).style("font", " 15px sans-serif"); 
-            updateMessageBar()
+            updateMessageBar();
         }
 
         g.append("g")
@@ -256,7 +256,8 @@
                 .then(response => response.json())
                 .then(json => {
                     //data = json["results"];
-                    update(json);
+                    channel_data = json;
+                    update(channel_data);
                 });
         }
 
