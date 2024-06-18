@@ -98,8 +98,8 @@ class YouTubeTopChineseChannelSubscribers(generics.ListAPIView):
         try:
             date = datetime.strptime(date_str, '%Y-%m-%d-%H-%M-%S')
         except ValueError:
-            raise ValidationError("Invalid date format. Expected YYYY-MM-DD-HH-MM-SS.")
-
+            #raise ValidationError("Invalid date format. Expected YYYY-MM-DD-HH-MM-SS.")
+            return Response("Invalid date format. Expected YYYY-MM-DD-HH-MM-SS.")
         # Call the get_queryset method
         queryset = self.get_queryset()
 
