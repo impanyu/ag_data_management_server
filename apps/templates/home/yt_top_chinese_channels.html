@@ -159,8 +159,8 @@
             fetch(url)
                 .then(response => response.json())
                 .then(json => {
-                    data = json["results"];
-                    update(data);
+                    //data = json["results"];
+                    update(json);
                 });
         }
 
