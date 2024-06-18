@@ -132,6 +132,7 @@
                     //const currentSubscribers = parseInt(textElement.text().replace(/[^0-9]/g, ''));
                     const newSubscribers = d.subscribers;
                     currentSubscribers = previous_subs[d.channel_id] || newSubscribers;
+                    const delta = newSubscribers - currentSubscribers;
                     
                     
 
@@ -139,12 +140,12 @@
                         textElement.style("fill", "green");
                          // Make the text blink
                          blink(textElement);
-                      
+                         showDelta(textElement, delta, true); // Pass true for positive change
                     } else if (newSubscribers < currentSubscribers) {
                         textElement.style("fill", "red");
                          // Make the text blink
                          blink(textElement);
-           
+                         showDelta(textElement, delta, false); // Pass true for negative change
 
                     }
                     textElement.text(newSubscribers.toLocaleString());
@@ -291,6 +292,29 @@
         .transition()
         .duration(500)
         .style("opacity", 1);
+}
+
+function showDelta(element, delta, isPositive) {
+    const deltaText = isPositive ? `+${delta.toLocaleString()}` : `${delta.toLocaleString()}`;
+    const deltaColor = isPositive ? "green" : "red";
+
+    const xPos = +element.attr("x") + 20; // Position to the right of the arrow
+    const yPos = +element.attr("y");
+
+    const deltaElement = g.append("text")
+        .attr("x", xPos)
+        .attr("y", yPos)
+        .attr("dy", ".35em")
+        .attr("fill", deltaColor)
+        .attr("font-size", "12px")
+        .text(deltaText);
+
+    // Animate the delta text flying upward and fading out
+    deltaElement.transition()
+        .duration(2000)
+        .attr("y", yPos - 20) // Move up by 20 pixels
+        .style("opacity", 0)
+        .remove();
 }
   
 
