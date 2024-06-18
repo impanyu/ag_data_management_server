@@ -96,6 +96,7 @@ class Command(BaseCommand):
         print(f"in get_channel_updates_initial",flush=True)
         initial_timestamp = datetime(2024, 4, 8, 0, 0)  # 2024-04-08 00:00:00
         for i,channel in enumerate(channels):
+             index = channel_ids.index(channel['channel_id'])
              Channel.objects.update_or_create(
                 channel_id=channel['channel_id'],
                 defaults={
@@ -110,7 +111,7 @@ class Command(BaseCommand):
     
              ChannelSubscribers.objects.create(
                 channel_id=channel['channel_id'],
-                subscribers=int(channel_subs[i] * 10000),
+                subscribers=int(channel_subs[index] * 10000),
                 last_updated=initial_timestamp  # Add the same timestamp for all records
        
                     
