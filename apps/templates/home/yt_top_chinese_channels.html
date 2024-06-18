@@ -311,12 +311,17 @@
         let direction = 1; // 1 for down, -1 for up
         let scrollStep = 1; // pixels per step
         let scrollDelay = 40; // delay between steps in milliseconds
+        let pauseDuration = 2000; // pause between scrolls in milliseconds
 
         function scrollPage() {
             if (direction === 1 && (window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
                 direction = -1;
+                setTimeout(scrollPage, pauseDuration); // Pause for 2 seconds
+                return;
             } else if (direction === -1 && window.scrollY === 0) {
                 direction = 1;
+                setTimeout(scrollPage, pauseDuration); // Pause for 2 seconds
+                return;
             }
 
             window.scrollBy(0, scrollStep * direction);
