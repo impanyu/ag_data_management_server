@@ -215,7 +215,7 @@
 
             const interval = setInterval(() => {
                 currentValue += increment;
-                textElement.text(formatNumber(currentValue));
+                textElement.text(currentValue.toLocaleString());
 
                 if (currentValue === endValue) {
                     clearInterval(interval);
