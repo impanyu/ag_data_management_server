@@ -370,7 +370,20 @@ function updateMessageBar() {
         messageBarContent.append("span")
             .attr("class", "message-span")
             .style("background-color", customColors [i % customColors.length])
+           
+         // Append the icon image
+         span.append("img")
+            .attr("src", channel.icon_url)
+            .attr("alt", channel.title)
+            .style("height", "20px")
+            .style("vertical-align", "middle")
+            .style("margin-right", "5px");
+
+        // Append the text message
+        span.append("span")
             .text(message);
+
+
     });
   
 }
