@@ -302,15 +302,15 @@ function showDelta(element, delta, isPositive) {
 
     const parentNode = d3.select(element.node().parentNode); // Select the parent node
 
-    const xPos = +element.attr("x") + 20; // Position to the right of the arrow
+    const xPos = +element.attr("x") + 10; // Position to the right of the arrow
     const yPos = +element.attr("y");
 
     const deltaElement = parentNode.append("text") // Append to the parent node
         .attr("x", xPos)
         .attr("y", yPos)
         .attr("dy", ".35em")
-        .attr("fill", deltaColor)
-        .attr("font-size", "12px")
+        .style("fill", deltaColor)
+        .style("font-size", "12px")
         .text(deltaText);
 
     // Animate the delta text flying upward and fading out
