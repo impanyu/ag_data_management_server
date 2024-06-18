@@ -18,6 +18,10 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0; }
         }
+
+        .blink {
+            animation: blink 1s ease-in-out 3;
+        }
       
 
     </style>
@@ -134,16 +138,23 @@
                     if (newSubscribers > currentSubscribers) {
                         textElement.style("fill", "green");
                          // Make the text blink
-                        textElement.style("animation", "blink 1s ease-in-out 3");
+                         // Remove and re-apply the blink class to restart the animation
+                        textElement.classed("blink", false);
+                        void textElement.node().offsetWidth; // Trigger reflow
+                        textElement.classed("blink", true);
                       
                     } else if (newSubscribers < currentSubscribers) {
                         textElement.style("fill", "red");
                          // Make the text blink
-                       textElement.style("animation", "blink 1s ease-in-out 3");
+                         // Remove and re-apply the blink class to restart the animation
+                        textElement.classed("blink", false);
+                        void textElement.node().offsetWidth; // Trigger reflow
+                        textElement.classed("blink", true);
            
 
                     }
                     textElement.text(newSubscribers.toLocaleString());
+                    textElement.classed("blink", true);
                     //animateNumberTransition(textElement, currentSubscribers, newSubscribers);
                 });
 
@@ -161,10 +172,16 @@
                     if (d.subscribers > currentSubscribers) {
                         arrowElement.text('⬆').style("fill", "green");
                          // Make the text blink
-                      arrowElement.style("animation", "blink 1s ease-in-out 3");
+                      // Remove and re-apply the blink class to restart the animation
+                        arrowElement.classed("blink", false);
+                        void arrowElement.node().offsetWidth; // Trigger reflow
+                        arrowElement.classed("blink", true);
                     } else if (d.subscribers < currentSubscribers) {
                         arrowElement.text('⬇').style("fill", "red");
-                        arrowElement.style("animation", "blink 1s ease-in-out 3");
+                        // Remove and re-apply the blink class to restart the animation
+                        arrowElement.classed("blink", false);
+                        void arrowElement.node().offsetWidth; // Trigger reflow
+                        arrowElement.classed("blink", true);
                     }
                 });
 
