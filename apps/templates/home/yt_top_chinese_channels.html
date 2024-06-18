@@ -357,7 +357,7 @@ function updateMessageBar() {
     // Construct the scrolling message
     let message = channel_data.map(d => {
         const channel = channel_data_dict[d.channel_id];
-        return `Title: ${channel.title}, Join Date: ${channel.join_date}, Description: ${channel.description}, Location: ${channel.location}`;
+        return `Title: ${channel.title}, Join Date: ${channel.join_date},  Location: ${channel.location}`;
     }).join("  |  ");
 
     // Update the content of the message bar
