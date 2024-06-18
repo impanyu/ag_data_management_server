@@ -33,6 +33,7 @@
         let channel_data_dict = {};
         const x = d3.scaleLinear().range([40, width]);
         const y = d3.scaleBand().rangeRound([0, height]).padding(0.1);
+        previous_subs = {};
         
 
         // Define a custom color palette with enough colors for your categories
@@ -109,8 +110,11 @@
                 //.text(d => d.subscribers.toLocaleString())
                 .each(function(d) {
                     const textElement = d3.select(this);
-                    const currentSubscribers = parseInt(textElement.text().replace(/[^0-9]/g, ''));
+                    //const currentSubscribers = parseInt(textElement.text().replace(/[^0-9]/g, ''));
                     const newSubscribers = d.subscribers;
+                    currentSubscribers = previous_subs[d.channel_id] || newSubscribers;
+                    previous_subs[d.channel_id] = newSubscribers;
+                    
 
                     if (newSubscribers > currentSubscribers) {
                         textElement.style("fill", "green");
