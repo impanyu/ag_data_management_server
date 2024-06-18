@@ -323,19 +323,14 @@
 
 
         function blink(element) {
-    function blinkOnce() {
-        element.transition()
-            .duration(500)
-            .style("opacity", 0)
-            .on("end", () => {
-                element.transition()
-                    .duration(500)
-                    .style("opacity", 1)
-                    .on("end", blinkOnce); // Repeat the blink effect
-            });
-    }
-
-    blinkOnce();
+        element
+        .transition()
+        .duration(500)
+        .style("opacity", 0)
+        .transition()
+        .duration(500)
+        .style("opacity", 1)
+    
 }
 
 function showDelta(element, delta, isPositive) {
