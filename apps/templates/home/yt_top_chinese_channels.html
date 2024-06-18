@@ -364,7 +364,7 @@ function updateMessageBar() {
 
      channel_data.forEach((d, i) => {
         const channel = channel_data_dict[d.channel_id];
-        const message = `频道: ${channel.title},  建立时间: ${formatDate(channel.join_date)},  注册地: ${translateLocation(channel.location)}`;
+        const message = ` ${channel.title},  建立时间: ${formatDate(channel.join_date)},  注册地: ${translateLocation(channel.location)}`;
         
         // Append a span element for each channel with a different background color
         span=messageBarContent.append("span")
