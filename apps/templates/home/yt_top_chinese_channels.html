@@ -95,7 +95,7 @@
 
             barsEnter.append("text")
                 .attr("class", "arrow")
-                .attr("x", d => x(d.subscribers) + 25)  // Position to the right of the bar
+                .attr("x", d => x(d.subscribers) + 65)  // Position to the right of the bar
                 .attr("y", y.bandwidth() / 2)
                 .attr("dy", ".35em");
 
@@ -141,9 +141,9 @@
                     const currentSubscribers = previous_subs[d.channel_id] || d.subscribers;
                     previous_subs[d.channel_id] = d.subscribers;
                     if (d.subscribers > currentSubscribers) {
-                        arrowElement.text('↑').style("fill", "green");
+                        arrowElement.text('⬆').style("fill", "green");
                     } else if (d.subscribers < currentSubscribers) {
-                        arrowElement.text('↓').style("fill", "red");
+                        arrowElement.text('⬇').style("fill", "red");
                     } else {
                         arrowElement.text('');
                     }
