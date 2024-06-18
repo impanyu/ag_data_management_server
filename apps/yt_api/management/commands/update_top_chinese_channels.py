@@ -17,7 +17,11 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         channel_ids = get_channel_ids()
         print(f"in task: {len(channel_ids)}",flush=True)
-        self.get_channel_updates_initial(channel_ids)
+        initialize = kwargs.get('initialize', False)
+        if initialize:
+            self.get_channel_updates_initial(channel_ids)
+      
+        #self.get_channel_updates_initial(channel_ids)
         self.get_channel_updates(channel_ids)
 
     '''   
