@@ -34,11 +34,11 @@
     .message-bar-content {
         white-space: nowrap;
         display: inline-block;
-        animation: scroll-left 480s linear infinite;
+        animation: scroll-left 60s linear infinite;
     }
     @keyframes scroll-left {
         from {
-            transform: translateX(0);
+            transform: translateX(2%);
         }
         to {
             transform: translateX(-100%);
@@ -264,6 +264,7 @@
                     //data = json["results"];
                     channel_data = json;
                     update(channel_data);
+
                 });
         }
 
