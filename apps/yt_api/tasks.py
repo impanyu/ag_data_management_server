@@ -8,7 +8,7 @@ def update_top_chinese_channels_task():
 @shared_task
 def initialize_top_chinese_channels_task():
     call_command('update_top_chinese_channels', initialize=True)    
-
+    
 @shared_task
 def debug_task():
     print("Task executed")

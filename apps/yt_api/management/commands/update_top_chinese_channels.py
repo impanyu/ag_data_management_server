@@ -14,6 +14,14 @@ from apps.yt_api.utils import *
 class Command(BaseCommand):
     help = 'Update top YouTube channel list and subs'
 
+    def add_arguments(self, parser):
+        # Add custom command line arguments here
+        parser.add_argument(
+            '--initialize',
+            action='store_true',
+            help='Run the initial update',
+        )
+
     def handle(self, *args, **kwargs):
         channel_ids = get_channel_ids()
         print(f"in task: {len(channel_ids)}",flush=True)
