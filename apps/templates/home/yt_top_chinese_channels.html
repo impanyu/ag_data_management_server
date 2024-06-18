@@ -268,7 +268,7 @@
                     channel_data = json;
                     //for each of the channel data, generate a random number, if the random < 0.5, just keep the previous value
                     for(i in channel_data){
-                        if(Math.random() < 0.5){
+                        if(Math.random() < 0.3){
                             channel_data[i]["subscribers"] = previous_subs[channel_data[i]["channel_id"]] || channel_data[i]["subscribers"];
                         }
                     }
