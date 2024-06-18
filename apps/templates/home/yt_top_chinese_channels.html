@@ -140,12 +140,12 @@
                         textElement.style("fill", "green");
                          // Make the text blink
                          blink(textElement);
-                        
+                         showDelta(textElement, delta, true); // Pass true for positive change
                     } else if (newSubscribers < currentSubscribers) {
                         textElement.style("fill", "red");
                          // Make the text blink
                          blink(textElement);
-                         
+                         showDelta(textElement, delta, false); // Pass true for negative change
                     }
                     textElement.text(newSubscribers.toLocaleString());
                   
@@ -167,11 +167,11 @@
                         arrowElement.text('⬆').style("fill", "green");
                          // Make the text blink
                          blink(arrowElement);
-                         showDelta(arrowElement, delta, true); // Pass true for positive change
+                        
                     } else if (d.subscribers < currentSubscribers) {
                         arrowElement.text('⬇').style("fill", "red");
                         blink(arrowElement);
-                        showDelta(arrowElement, delta, false); // Pass true for negative change
+                        
 
        
                     }
