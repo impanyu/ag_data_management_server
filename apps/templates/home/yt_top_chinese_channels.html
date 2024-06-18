@@ -34,7 +34,7 @@
     .message-bar-content {
         white-space: nowrap;
         display: inline-block;
-        animation: scroll-left 20s linear infinite;
+        animation: scroll-left 120 linear infinite;
     }
     @keyframes scroll-left {
         from {
@@ -214,7 +214,7 @@
             g.select(".x-axis").call(d3.axisTop(x).tickFormat(formatNumber)).transition()
                 .duration(1000).style("font",  "bold 12px sans-serif");
             g.select(".y-axis").call(d3.axisLeft(y)).style("font", " 15px sans-serif"); 
-            updateMessageBar();
+           
         }
 
         g.append("g")
@@ -363,7 +363,7 @@ function updateMessageBar() {
     messageBarContent.text(message);
 }
   
-
+updateMessageBar();
     </script>
 </body>
 </html>
