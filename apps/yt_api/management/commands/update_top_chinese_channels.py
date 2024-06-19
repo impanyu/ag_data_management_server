@@ -4,10 +4,10 @@ from django.core.management.base import BaseCommand
 from apps.yt_api.models import *
 from django.utils import timezone
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from apps.yt_api.utils import *
-
+import random
 
 
 
@@ -111,12 +111,24 @@ class Command(BaseCommand):
                     'join_date': channel["join_date"],
                     'location': channel["location"]
                 })
-    
+            
+             # Generate a random timedelta
+             random_days = random.randint(0, 3)  # Random number of days between 0 and 30
+             random_hours = random.randint(0, 23)  # Random number of hours between 0 and 23
+             random_minutes = random.randint(0, 59)  # Random number of minutes between 0 and 59
+
+             # Create the timedelta
+             random_timedelta = timedelta(days=random_days, hours=random_hours, minutes=random_minutes)
+             last_updated = datetime.strptime(channel_subs[channel_id]["initial_date"],"%Y-%m-%d")
+
+             # Add the timedelta to the last_updated date
+             last_updated += random_timedelta
+
              ChannelSubscribers.objects.create(
                 channel_id=channel['channel_id'],
                 subscribers=int(channel_subs[channel_id]["subscribers"] * 10000),
                 video_count=channel['video_count'],
                 view_count=channel['view_count'],
-                last_updated=datetime.strptime(channel_subs[channel_id]["initial_date"],"%Y-%m-%d")  # Add the same timestamp for all records
+                last_updated= last_updated # Add the same timestamp for all records
             )
              

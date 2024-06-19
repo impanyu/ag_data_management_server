@@ -235,19 +235,19 @@
             .attr("class", "y-axis")
             .call(d3.axisLeft(y));
 
-        get_data();
-        get_channel_data();
+    
+        fetchDataAndUpdateMessageBar();
 
         
         // Simulate data update
         setInterval(() => {
             // Simulate new data
     
-            get_data();
+            get_realtime_data();
         }, 10000);
 
 
-        function get_data(){
+        function get_realtime_data(){
             // Get the current date
             let now = new Date();
 
@@ -267,18 +267,21 @@
                 .then(json => {
                     //data = json["results"];
                     channel_data = json;
+                    realtime_data_retrieved = true;
                     //for each of the channel data, generate a random number, if the random < 0.5, just keep the previous value
                     for(i in channel_data){
                         if(Math.random() < 0.3){
                             channel_data[i]["subscribers"] = previous_subs[channel_data[i]["channel_id"]] || channel_data[i]["subscribers"];
                         }
                     }
+                    
                     update(channel_data);
+                    
 
                 });
         }
 
-        function get_channel_data(){
+        function get_channel_meta_data(){
             fetch("http://unladma.hopto.org/yt/top-chinese-channels/")
                 .then(response => response.json())
                 .then(json => {
@@ -290,9 +293,23 @@
                     
 
                     }
+                    while(!realtime_data_retrieved){
+                    }
+                  
                     updateMessageBar();
+                      
                 });
         }
+
+        async function fetchDataAndUpdateMessageBar() {
+        try {
+            await get_channel_meta_data();
+            await get_realtime_data();
+            updateMessageBar();
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
 
 
         function formatNumber(num) {
