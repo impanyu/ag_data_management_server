@@ -11,7 +11,7 @@
         }
         .bar text {
             fill: black;
-            font: bold 18px sans-serif ;
+            font: bold 20px sans-serif ;
             text-anchor: start; /* Align text to the start (left) */
         }
         @keyframes blink {
@@ -49,7 +49,7 @@
     }
 
     .message-span {
-    padding: 25px 5px;
+    padding: 30px 5px;
     margin-right: 0px;
     border-radius: 0px;
 }
@@ -223,7 +223,7 @@
             // Update axes
             g.select(".x-axis").call(d3.axisTop(x).tickFormat(formatNumber)).transition()
                 .duration(1000).style("font",  "bold 15px sans-serif").style("font-weight",  "bold");;
-            g.select(".y-axis").call(d3.axisLeft(y)).style("font", "bold 15px sans-serif"); 
+            g.select(".y-axis").call(d3.axisLeft(y)).style("font", "bold 18px sans-serif"); 
             //updateMessageBar();
         }
 
@@ -358,7 +358,7 @@ function showDelta(element, delta, isPositive) {
         .attr("y", yPos)
         .attr("dy", ".35em")
         .style("fill", deltaColor)
-        .style("font-size", "15px")
+        .style("font-size", "18px")
         .style("font-weight", "bold")
         .text(deltaText);
 
@@ -391,7 +391,7 @@ function updateMessageBar() {
          span.append("img")
             .attr("src", channel.icon_url)
             .attr("alt", channel.title)
-            .style("height", "60px")
+            .style("height", "70px")
             .style("vertical-align", "middle")
             .style("margin-right", "5px");
 
@@ -399,7 +399,7 @@ function updateMessageBar() {
         span.append("span")
             .text(message)
             .style("vertical-align", "middle")
-            .style("font-size", "20px");
+            .style("font-size", "24px");
 
 
     });
