@@ -143,7 +143,7 @@ class YouTubeTopChineseChannelSubscribers(generics.ListAPIView):
      
 
         # Create the response data
-        response_data = [{"channel_id": channel_id, "subscribers": est, "view_count":video_views_and_counts["view_count"], "video_count":video_views_and_counts["video_count"]} for channel_id, est in estimated_subscribers.items()]
+        response_data = [{"channel_id": channel_id, "subscribers": est, "view_count":video_views_and_counts[channel_id]["view_count"], "video_count":video_views_and_counts[channel_id]["video_count"]} for channel_id, est in estimated_subscribers.items()]
         sorted_channels = sorted(response_data, key=lambda x: x['subscribers'], reverse=True)[:50]
 
         
