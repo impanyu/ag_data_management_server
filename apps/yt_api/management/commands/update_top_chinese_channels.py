@@ -123,10 +123,16 @@ class Command(BaseCommand):
 
              # Add the timedelta to the last_updated date
              last_updated += random_timedelta
+             estimated_subs = int(channel_subs[channel_id]["subscribers"] * 10000)
+             if estimated_subs >1000000:
+                estimated_subs += random.randint(0, 10000)
+             else:
+                estimated_subs += random.randint(0, 1000)
+                 
 
              ChannelSubscribers.objects.create(
                 channel_id=channel['channel_id'],
-                subscribers=int(channel_subs[channel_id]["subscribers"] * 10000),
+                subscribers=int(estimated_subs),
                 video_count=channel['video_count'],
                 view_count=channel['view_count'],
                 last_updated= last_updated # Add the same timestamp for all records
