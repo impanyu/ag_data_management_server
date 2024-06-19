@@ -27,14 +27,14 @@ def get_channel_ids():
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
             return []
-        
-def get_chanel_subs_initial():
+    
+def get_channel_subs_initial():
         try:
             with open(CHANNEL_IDS_FILE, 'r') as file:
                 data = json.load(file)
                 return data 
         except FileNotFoundError:
-            print(f"The file {CHANNEL_SUBS_FILE} was not found.")
+            print(f"The file {CHANNEL_IDS_FILE} was not found.")
             return []
         except json.JSONDecodeError:
             print("Error decoding the JSON file.")
