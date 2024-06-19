@@ -114,8 +114,7 @@ class Command(BaseCommand):
     
              ChannelSubscribers.objects.create(
                 channel_id=channel['channel_id'],
-                #channel_subs[channel_id]["subscribers"]
-                subscribers=int(1 * 10000),
+                subscribers=int(channel_subs[channel_id]["subscribers"] * 10000),
                 video_count=channel['video_count'],
                 view_count=channel['view_count'],
                 last_updated=datetime.strptime(channel_subs[channel_id]["initial_date"],"%Y-%m-%d")  # Add the same timestamp for all records
