@@ -51,11 +51,19 @@
     #message-bar-content2 {
         white-space: nowrap;
         display: inline-block;
-        animation: scroll-left 60s linear infinite;
+        animation: scroll-left2 60s linear infinite;
     }
     @keyframes scroll-left {
         from {
             transform: translateX(1.5%);
+        }
+        to {
+            transform: translateX(-100%);
+        }
+    }
+    @keyframes scroll-left2 {
+        from {
+            transform: translateX(20%);
         }
         to {
             transform: translateX(-100%);
