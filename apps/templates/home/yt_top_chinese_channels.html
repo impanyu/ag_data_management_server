@@ -302,8 +302,9 @@
 
         async function fetchDataAndUpdateMessageBar() {
         try {
-            await get_realtime_data();
             await get_channel_meta_data();
+            await get_realtime_data();
+            
             
             updateMessageBar();
         } catch (error) {
