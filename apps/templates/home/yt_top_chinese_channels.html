@@ -80,7 +80,7 @@
     </style>
 </head>
 <body>
-    <svg width="1280" height="6040"></svg>
+    <svg width="1480" height="6040"></svg>
     <div id="message-bar">
         <div id="message-bar-content"></div>
     </div>
@@ -91,7 +91,7 @@
     <script>
         const svg = d3.select("svg");
            // margin = {top: 20, right: 40, bottom: 30, left: 100};
-            margin = { top: 60, right: 150, bottom:70, left: 380 }; // Increase left margin
+            margin = { top: 60, right: 150, bottom:70, left: 400 }; // Increase left margin
 
             width = +svg.attr("width") - margin.left - margin.right;
             height = +svg.attr("height") - margin.top - margin.bottom;
@@ -100,7 +100,7 @@
         let channel_realtime_data = [];
         let channel_data = [];
         let channel_data_dict = {};
-        const x = d3.scaleLinear().range([40, width]);
+        const x = d3.scaleLinear().range([60, width]);
         const y = d3.scaleBand().rangeRound([0, height]).padding(0.1);
         previous_subs = {};
         
