@@ -96,7 +96,7 @@
 
         const color = d3.scaleOrdinal()
             //.domain(d3.range(customColors.length))
-            .domain(channel_data.map(d => d.channel_id))
+            .domain(channel_realtime_data.map(d => d.channel_id))
             .range(customColors);
 
         
@@ -287,6 +287,7 @@
                 .then(response => response.json())
                 .then(json => {
                     channel_data = json["results"];
+                    console.info(channel_data.length);
                     for(i in channel_data){
                         if(channel_data[i]["title"].substr(0,6) == '妙見神與方臉')
                             channel_data[i]["title"] = '妙見神與方臉';
