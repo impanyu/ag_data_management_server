@@ -171,30 +171,7 @@
                 .style("font-weight", "bold")
                 .text((d, i) => `${i + 1}`);
 */
-            // Add rank "stamp" on top of each bar
-            stamp=barsEnter.append("rect")
-                    .attr("class", "rank-stamp")
-                    .attr("x", 2)  // Position to the left of the bar
-                    .attr("y", y.bandwidth() / 2 - 15)
-                    .attr("width", 30)
-                    .attr("height", 30)
-                    .style("fill", "orange")
-                    .style("stroke", "grey")
-                    .style("stroke-width", 2)
-                    .style("rx", 5)  // Rounded corners
-                    .style("ry", 5)
-                    .style("filter", "url(#drop-shadow)");  // Add drop shadow
-            stamp.raise();
-                barsEnter.append("text")
-                    .attr("class", "rank")
-                    .attr("x", 16)  // Position to the left of the bar
-                    .attr("y", y.bandwidth() / 2)
-                    .attr("dy", ".35em")
-                    .style("text-anchor", "middle")
-                    .style("font-size", "14px")
-                    .style("fill", "white")
-                    .style("font-weight", "bold")
-                    .text((d, i) => `${i + 1}`);
+          
             barsEnter.append("text")
                 .attr("class", "subscribers-text")
                 .attr("x", d => x(d.subscribers) + 5)  // Position to the right of the bar
@@ -217,6 +194,31 @@
                 .attr("width", y.bandwidth()-6)
                 .attr("height", y.bandwidth()-6)
                 .attr("xlink:href", d => channel_data_dict[d.channel_id].icon_url);
+
+              // Add rank "stamp" on top of each bar
+              stamp=barsEnter.append("rect")
+                    .attr("class", "rank-stamp")
+                    .attr("x", 2)  // Position to the left of the bar
+                    .attr("y", y.bandwidth() / 2 - 15)
+                    .attr("width", 30)
+                    .attr("height", 30)
+                    .style("fill", "orange")
+                    .style("stroke", "grey")
+                    .style("stroke-width", 2)
+                    .style("rx", 5)  // Rounded corners
+                    .style("ry", 5)
+                    .style("filter", "url(#drop-shadow)");  // Add drop shadow
+            stamp.raise();
+                barsEnter.append("text")
+                    .attr("class", "rank")
+                    .attr("x", 16)  // Position to the left of the bar
+                    .attr("y", y.bandwidth() / 2)
+                    .attr("dy", ".35em")
+                    .style("text-anchor", "middle")
+                    .style("font-size", "14px")
+                    .style("fill", "white")
+                    .style("font-weight", "bold")
+                    .text((d, i) => `${i + 1}`);
 
           
 
