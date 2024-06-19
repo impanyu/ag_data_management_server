@@ -28,9 +28,9 @@ class Command(BaseCommand):
         initialize = kwargs.get('initialize', False)
         if initialize:
             self.get_channel_updates_initial(channel_ids)
-      
-        #self.get_channel_updates_initial(channel_ids)
-        self.get_channel_updates(channel_ids)
+        else:
+            #self.get_channel_updates_initial(channel_ids)
+            self.get_channel_updates(channel_ids)
 
     '''   
     def get_channel_ids(self):
@@ -97,6 +97,7 @@ class Command(BaseCommand):
         channel_subs = get_channel_subs_initial()
         print(f"in get_channel_updates_initial",flush=True)
         #initial_timestamp = datetime(2024, 4, 8, 0, 0)  # 2024-04-08 00:00:00
+        current_timestamp = timezone.now()
         for i,channel in enumerate(channels):
              #index = channel_ids.index(channel['channel_id'])
              channel_id = channel['channel_id']
@@ -123,8 +124,8 @@ class Command(BaseCommand):
 
              # Add the timedelta to the last_updated date
              #last_updated += random_timedelta
-             estimated_subs = int(channel_subs[channel_id]["subscribers"] * 10000)
-             estimated_subs -= random.randint(0, 1000)  # Subtract a random number between 0 and 2000
+             #estimated_subs = int(channel_subs[channel_id]["subscribers"] * 10000)
+             #estimated_subs -= random.randint(0, 1000)  # Subtract a random number between 0 and 2000
 
              ChannelSubscribers.objects.create(
                 channel_id=channel['channel_id'],
@@ -132,5 +133,18 @@ class Command(BaseCommand):
                 video_count=channel['video_count'],
                 view_count=channel['view_count'],
                 last_updated= last_updated # Add the same timestamp for all records
+            )
+             
+             if channel['subscribers'] > 1000000:
+                estimated_subs = channel['subscribers'] + random.randint(0, 8000)
+             else:
+                estimated_subs = channel['subscribers'] + random.randint(0, 800)  
+
+             ChannelSubscribers.objects.create(
+                channel_id=channel['channel_id'],
+                subscribers=estimated_subs,
+                video_count=channel['video_count'],
+                view_count=channel['view_count'],
+                last_updated=current_timestamp  # Add the same timestamp for all records
             )
              
