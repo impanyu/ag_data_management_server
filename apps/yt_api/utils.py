@@ -5,7 +5,7 @@ from itertools import islice
 import random
 
 CHANNEL_IDS_FILE = '/data/yt/chinese_channel_ids.json'
-CHANNEL_SUBS_FILE = '/data/yt/chinese_channel_subs.json'
+
 API_KEY = 'AIzaSyBbX7lUkM_AO4bD5wT-_znOLqvyQU8ezfA'
 SEARCH_URL = 'https://www.googleapis.com/youtube/v3/search'
 CHANNEL_URL = 'https://www.googleapis.com/youtube/v3/channels'
@@ -28,27 +28,11 @@ def get_channel_ids():
             print(f"An unexpected error occurred: {e}")
             return []
         
-def get_chanel_subs_initial_new():
+def get_chanel_subs_initial():
         try:
             with open(CHANNEL_IDS_FILE, 'r') as file:
                 data = json.load(file)
                 return data 
-        except FileNotFoundError:
-            print(f"The file {CHANNEL_SUBS_FILE} was not found.")
-            return []
-        except json.JSONDecodeError:
-            print("Error decoding the JSON file.")
-            return []
-        except Exception as e:
-            print(f"An unexpected error occurred: {e}")
-            return []
-        
-def get_channel_subs_initial():
-        try:
-            with open(CHANNEL_SUBS_FILE, 'r') as file:
-                data = json.load(file)
-                # Assuming the JSON structure is a list of channel subs
-                return data if isinstance(data, list) else []
         except FileNotFoundError:
             print(f"The file {CHANNEL_SUBS_FILE} was not found.")
             return []
