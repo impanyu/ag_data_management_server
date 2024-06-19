@@ -172,7 +172,7 @@
                 .text((d, i) => `${i + 1}`);
 */
             // Add rank "stamp" on top of each bar
-            barsEnter.append("rect")
+            stamp=barsEnter.append("rect")
                     .attr("class", "rank-stamp")
                     .attr("x", 2)  // Position to the left of the bar
                     .attr("y", y.bandwidth() / 2 - 15)
@@ -183,9 +183,8 @@
                     .style("stroke-width", 2)
                     .style("rx", 5)  // Rounded corners
                     .style("ry", 5)
-                    .raise()
                     .style("filter", "url(#drop-shadow)");  // Add drop shadow
-
+            stamp.raise();
                 barsEnter.append("text")
                     .attr("class", "rank")
                     .attr("x", 16)  // Position to the left of the bar
