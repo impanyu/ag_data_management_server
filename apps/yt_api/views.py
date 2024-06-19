@@ -80,10 +80,17 @@ class YouTubeTopChineseChannelSubscribers(generics.ListAPIView):
             date = datetime.strptime(date_str, '%Y-%m-%d-%H-%M-%S')
         except ValueError:
             raise ValidationError("Invalid date format. Expected YYYY-mm-DD-HH-MM-SS.")
+        
+        # if date before 2024-07-01, days = 1000
+        # else days = 60
 
-
+        if date < datetime(2024, 7, 1):
+            days = 365*5
+        else:
+            days = 60
+         
         # Define the delta period
-        delta = timedelta(days=90)
+        delta = timedelta(days=days)
         start_date = date - delta
         end_date = date + delta
 
@@ -132,13 +139,13 @@ class YouTubeTopChineseChannelSubscribers(generics.ListAPIView):
                 target_date_timestamp = date.timestamp()
                 estimated_subscribers[channel_id] = int(add_random_number(m * target_date_timestamp + c))
 
-                sorted_data = sorted(data, key=lambda x: x[0])
-                last_view_count = sorted_data[-1][2]
-                last_video_count = sorted_data[-1][3]
-                video_views_and_counts[channel_id] = {
-                    'view_count': last_view_count,
-                    'video_count': last_video_count
-                }
+            sorted_data = sorted(data, key=lambda x: x[0])
+            last_view_count = sorted_data[-1][2]
+            last_video_count = sorted_data[-1][3]
+            video_views_and_counts[channel_id] = {
+                'view_count': last_view_count,
+                'video_count': last_video_count
+            }
         
      
 
