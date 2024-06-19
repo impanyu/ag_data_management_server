@@ -148,8 +148,10 @@
                 .attr("height", y.bandwidth())
                 .attr("width", d => x(d.subscribers))
                 .style("fill", (d, i) => color(d.channel_id));  // Apply color based on index
+
+
               // Add rank number in a circle on top of each bar
-            barsEnter.append("circle")
+           /* barsEnter.append("circle")
                 .attr("cx", 17)  // Position to the left of the bar
                 .attr("cy", y.bandwidth() / 2)
                 .attr("r", 15)  // Circle radius
@@ -157,8 +159,6 @@
                 .style("fill", "#a70606");  // Circle color
             
         
-            
-          
 
             barsEnter.append("text")
                 .attr("class", "rank")
@@ -170,7 +170,31 @@
                 .style("fill", "white")
                 .style("font-weight", "bold")
                 .text((d, i) => `${i + 1}`);
+*/
+  // Add rank "stamp" on top of each bar
+  barsEnter.append("rect")
+        .attr("class", "rank-stamp")
+        .attr("x", -50)  // Position to the left of the bar
+        .attr("y", y.bandwidth() / 2 - 15)
+        .attr("width", 30)
+        .attr("height", 30)
+        .style("fill", "orange")
+        .style("stroke", "black")
+        .style("stroke-width", 2)
+        .style("rx", 5)  // Rounded corners
+        .style("ry", 5)
+        .style("filter", "url(#drop-shadow)");  // Add drop shadow
 
+    barsEnter.append("text")
+        .attr("class", "rank")
+        .attr("x", -35)  // Position to the left of the bar
+        .attr("y", y.bandwidth() / 2)
+        .attr("dy", ".35em")
+        .style("text-anchor", "middle")
+        .style("font-size", "14px")
+        .style("fill", "white")
+        .style("font-weight", "bold")
+        .text((d, i) => `${i + 1}`);
             barsEnter.append("text")
                 .attr("class", "subscribers-text")
                 .attr("x", d => x(d.subscribers) + 5)  // Position to the right of the bar
