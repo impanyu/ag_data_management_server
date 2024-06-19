@@ -150,11 +150,11 @@
                 .style("fill", (d, i) => color(d.channel_id));  // Apply color based on index
               // Add rank number in a circle on top of each bar
             barsEnter.append("circle")
-                .attr("cx", 18)  // Position to the left of the bar
+                .attr("cx", 17)  // Position to the left of the bar
                 .attr("cy", y.bandwidth() / 2)
                 .attr("r", 15)  // Circle radius
                  //fill transparent
-                .style("fill", "red");  // Circle color
+                .style("fill", "#970606");  // Circle color
             
         
             
@@ -162,7 +162,7 @@
 
             barsEnter.append("text")
                 .attr("class", "rank")
-                .attr("x", 18)  // Position to the left of the bar
+                .attr("x", 17)  // Position to the left of the bar
                 .attr("y", y.bandwidth() / 2)
                 .attr("dy", ".35em")
                 .style("text-anchor", "middle")
