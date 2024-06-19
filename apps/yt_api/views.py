@@ -108,19 +108,21 @@ class YouTubeTopChineseChannelSubscribers(generics.ListAPIView):
         for channel in queryset:
             if channel.channel_id not in channel_subscribers:
                 channel_subscribers[channel.channel_id] = []
-            channel_subscribers[channel.channel_id].append((channel.subscribers, channel.last_updated))
+            channel_subscribers[channel.channel_id].append(( channel.last_updated,channel.subscribers,channel.view_count,channel.video_count))
 
+             
         
         # Calculate the estimated subscribers for each channel at the specified date
         estimated_subscribers = {}
+        video_views_and_counts = {}
         for channel_id, data in channel_subscribers.items():
             if len(data) == 1:
                 # If there's only one data point, return that number
-                estimated_subscribers[channel_id] = 0
+                estimated_subscribers[channel_id] = data[0][1]
             else:
                 # Convert dates to numerical values (timestamps)
-                dates = np.array([d[1].timestamp() for d in data])
-                subscribers = np.array([d[0] for d in data])
+                dates = np.array([d[0].timestamp() for d in data])
+                subscribers = np.array([d[1] for d in data])
 
                 # Fit a linear regression model
                 A = np.vstack([dates, np.ones(len(dates))]).T
@@ -129,10 +131,19 @@ class YouTubeTopChineseChannelSubscribers(generics.ListAPIView):
                 # Calculate the estimated subscribers at the specified date
                 target_date_timestamp = date.timestamp()
                 estimated_subscribers[channel_id] = int(add_random_number(m * target_date_timestamp + c))
+
+                sorted_data = sorted(data, key=lambda x: x[0])
+                last_view_count = sorted_data[-1][2]
+                last_video_count = sorted_data[-1][3]
+                video_views_and_counts[channel_id] = {
+                    'view_count': last_view_count,
+                    'video_count': last_video_count
+                }
+        
      
 
         # Create the response data
-        response_data = [{"channel_id": channel_id, "subscribers": est} for channel_id, est in estimated_subscribers.items()]
+        response_data = [{"channel_id": channel_id, "subscribers": est, "view_count":video_views_and_counts["view_count"], "video_count":video_views_and_counts["video_count"]} for channel_id, est in estimated_subscribers.items()]
         sorted_channels = sorted(response_data, key=lambda x: x['subscribers'], reverse=True)[:50]
 
         

@@ -15,10 +15,26 @@ def get_channel_ids():
         try:
             with open(CHANNEL_IDS_FILE, 'r') as file:
                 data = json.load(file)
+                data = list(data.keys())
                 # Assuming the JSON structure is a list of channel IDs
                 return data if isinstance(data, list) else []
         except FileNotFoundError:
             print(f"The file {CHANNEL_IDS_FILE} was not found.")
+            return []
+        except json.JSONDecodeError:
+            print("Error decoding the JSON file.")
+            return []
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
+            return []
+        
+def get_chanel_subs_initial_new():
+        try:
+            with open(CHANNEL_IDS_FILE, 'r') as file:
+                data = json.load(file)
+                return data 
+        except FileNotFoundError:
+            print(f"The file {CHANNEL_SUBS_FILE} was not found.")
             return []
         except json.JSONDecodeError:
             print("Error decoding the JSON file.")
@@ -77,7 +93,10 @@ def fetch_channel_data(channel_ids):
                         'subscribers': int(statistics['subscriberCount']),
                         'icon_url': snippet['thumbnails']['default']['url'],
                         'join_date': snippet.get('publishedAt'),  # Join date
-                        'location': snippet.get('country')  # Location
+                        'location': snippet.get('country'),  # Location
+                        'video_count': int(statistics['videoCount']),  # Number of videos
+                        'view_count': int(statistics['viewCount'])  # Total number of views
+                  
                     }
                     channels.append(channel_data)
 
@@ -108,7 +127,7 @@ def chunked_iterable(iterable, size):
 def add_random_number(value):
     # Define the probabilities and corresponding values
     choices = [0, 1, -1]
-    probabilities = [0.98, 0.01, 0.01]
+    probabilities = [0.99, 0.005, 0.005]
     
     # Choose a random value based on the probabilities
     random_value = random.choices(choices, probabilities)[0]
