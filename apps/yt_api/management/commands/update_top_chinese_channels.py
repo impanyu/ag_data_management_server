@@ -96,7 +96,7 @@ class Command(BaseCommand):
         channels = fetch_channel_data(channel_ids)
         channel_subs = get_channel_subs_initial()
         print(f"in get_channel_updates_initial",flush=True)
-        initial_timestamp = datetime(2024, 4, 8, 0, 0)  # 2024-04-08 00:00:00
+        #initial_timestamp = datetime(2024, 4, 8, 0, 0)  # 2024-04-08 00:00:00
         for i,channel in enumerate(channels):
              #index = channel_ids.index(channel['channel_id'])
              channel_id = channel['channel_id']
@@ -114,10 +114,9 @@ class Command(BaseCommand):
     
              ChannelSubscribers.objects.create(
                 channel_id=channel['channel_id'],
-                subscribers=int(channel_subs[channel_id] * 10000),
+                subscribers=int(channel_subs[channel_id]["subscribers"] * 10000),
                 video_count=channel['video_count'],
                 view_count=channel['view_count'],
-                last_updated=initial_timestamp  # Add the same timestamp for all records
-       
-                    
-                )
+                last_updated=datetime.strptime(channel_subs[channel_id]["initial_date"],"%Y-%m-%d")  # Add the same timestamp for all records
+            )
+             
