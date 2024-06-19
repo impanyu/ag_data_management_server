@@ -148,6 +148,15 @@
                 .attr("height", y.bandwidth())
                 .attr("width", d => x(d.subscribers))
                 .style("fill", (d, i) => color(d.channel_id));  // Apply color based on index
+               // Add rank number on top of each bar
+            barsEnter.append("text")
+                .attr("class", "rank")
+                .attr("x", -20)  // Position to the left of the bar
+                .attr("y", y.bandwidth() / 2)
+                .attr("dy", ".35em")
+                .style("font-size", "24px")
+                .style("font-weight", "bold")
+                .text((d, i) => `#${i + 1}`);
 
             barsEnter.append("text")
                 .attr("x", d => x(d.subscribers) + 5)  // Position to the right of the bar
