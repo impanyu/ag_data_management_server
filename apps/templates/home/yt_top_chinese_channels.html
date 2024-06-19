@@ -179,10 +179,11 @@
                     .attr("width", 30)
                     .attr("height", 30)
                     .style("fill", "orange")
-                    .style("stroke", "black")
+                    .style("stroke", "grey")
                     .style("stroke-width", 2)
                     .style("rx", 5)  // Rounded corners
                     .style("ry", 5)
+                    .raise()
                     .style("filter", "url(#drop-shadow)");  // Add drop shadow
 
                 barsEnter.append("text")
