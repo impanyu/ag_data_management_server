@@ -262,7 +262,7 @@
             let formattedDate = `${year}-${month}-${day}-${hours}-${minutes}-${seconds}`;
             // Construct the URL with the date parameter
             let url = `http://unladma.hopto.org/yt/top-chinese-channels-subscribers/?date=${formattedDate}`;
-            fetch(url)
+            return fetch(url)
                 .then(response => response.json())
                 .then(json => {
                     //data = json["results"];
@@ -282,7 +282,7 @@
         }
 
         function get_channel_meta_data(){
-            fetch("http://unladma.hopto.org/yt/top-chinese-channels/")
+            return fetch("http://unladma.hopto.org/yt/top-chinese-channels/")
                 .then(response => response.json())
                 .then(json => {
                     channel_data = json["results"];
