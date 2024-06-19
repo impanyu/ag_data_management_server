@@ -148,17 +148,26 @@
                 .attr("height", y.bandwidth())
                 .attr("width", d => x(d.subscribers))
                 .style("fill", (d, i) => color(d.channel_id));  // Apply color based on index
-               // Add rank number on top of each bar
-            barsEnter.append("text")
-                .attr("class", "rank")
-                .attr("x", 5)  // Position at the left of the bar
-                .attr("y", y.bandwidth() / 2)
-                .attr("dy", ".35em")
-                .style("font-size", "24px")
-                .style("font-weight", "bold")
-                .text((d, i) => `#${i + 1}`);
+              // Add rank number in a circle on top of each bar
+            barsEnter.append("circle")
+                .attr("cx", 5)  // Position to the left of the bar
+                .attr("cy", y.bandwidth() / 2)
+                .attr("r", 15)  // Circle radius
+                .style("fill", "steelblue");  // Circle color
 
             barsEnter.append("text")
+                .attr("class", "rank")
+                .attr("x", -30)  // Position to the left of the bar
+                .attr("y", y.bandwidth() / 2)
+                .attr("dy", ".35em")
+                .style("text-anchor", "middle")
+                .style("font-size", "14px")
+                .style("fill", "white")
+                .style("font-weight", "bold")
+                .text((d, i) => `${i + 1}`);
+
+            barsEnter.append("text")
+                .attr("class", "subscribers-text")
                 .attr("x", d => x(d.subscribers) + 5)  // Position to the right of the bar
                 .attr("y", y.bandwidth() / 2)
                 .attr("dy", ".35em")
@@ -191,16 +200,9 @@
                 .duration(1000)
                 .attr("width", d => x(d.subscribers))
                 .style("fill", (d, i) => color(d.channel_id));  // Apply color based on index
-            bars.select("text")
-                .attr("class", "rank")
-                .attr("x", 5)  // Position at the left of the bar
-                .attr("y", y.bandwidth() / 2)
-                .attr("dy", ".35em")
-                .style("font-size", "24px")
-                .style("font-weight", "bold")
-                .text((d, i) => `#${i + 1}`);
 
-            bars.select("text")
+
+                bars.select(".subscribers-text")
                 .transition()
                 .duration(1000)
                 .style("opacity", 1)
