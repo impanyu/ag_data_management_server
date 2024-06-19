@@ -454,7 +454,10 @@ function updateMessageBar() {
 
 function updateMessageBar2(){
     const messageBarContent2 = d3.select("#message-bar-content2");
-    span=messageBarContent2.append("span").style("vertical-align", "middle").text("This is a test message");
+    span=messageBarContent2.append("span")
+    .style("vertical-align", "middle")
+    .style("font-size", "25px")
+    .text("This is a test message");
 
 
 }
