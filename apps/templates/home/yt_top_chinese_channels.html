@@ -25,7 +25,7 @@
         body {
          background-color: white; 
         }
-        .message-bar {
+        #message-bar {
         position: fixed;
         bottom: 0;
         width: 100%;
@@ -34,10 +34,24 @@
         padding: 2px 0;
         overflow: hidden;
     }
-    .message-bar-content {
+    #message-bar-content {
         white-space: nowrap;
         display: inline-block;
         animation: scroll-left 800s linear infinite;
+    }
+    #message-bar2 {
+        position: fixed;
+        bottom: 74;
+        width: 100%;
+        background-color:  #233de2;
+        color: white;
+        padding: 10px 0;
+        overflow: hidden;
+    }
+    #message-bar-content2 {
+        white-space: nowrap;
+        display: inline-block;
+        animation: scroll-left 60s linear infinite;
     }
     @keyframes scroll-left {
         from {
@@ -52,21 +66,24 @@
     padding: 30px 8px;
     margin-right: 0px;
     border-radius: 0px;
-}
+  }
 
 
     </style>
 </head>
 <body>
     <svg width="1280" height="6040"></svg>
-    <div class="message-bar">
-        <div class="message-bar-content" id="message-bar-content"></div>
+    <div id="message-bar">
+        <div id="message-bar-content"></div>
+    </div>
+    <div id="message-bar2">
+        <div id="message-bar-content2"></div>
     </div>
     
     <script>
         const svg = d3.select("svg");
            // margin = {top: 20, right: 40, bottom: 30, left: 100};
-            margin = { top: 60, right: 145, bottom:60, left: 360 }; // Increase left margin
+            margin = { top: 60, right: 150, bottom:80, left: 360 }; // Increase left margin
 
             width = +svg.attr("width") - margin.left - margin.right;
             height = +svg.attr("height") - margin.top - margin.bottom;
@@ -424,6 +441,13 @@ function updateMessageBar() {
 
     });
   
+}
+
+function updateMessageBar2(){
+    const messageBarContent2 = d3.select("#message-bar-content");
+    span=messageBarContent.append("span").style("vertical-align", "middle").text("This is a test message");
+
+
 }
 
 
