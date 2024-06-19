@@ -303,8 +303,9 @@
 
         async function fetchDataAndUpdateMessageBar() {
         try {
-            await get_channel_meta_data();
             await get_realtime_data();
+            await get_channel_meta_data();
+            
             updateMessageBar();
         } catch (error) {
             console.error('Error fetching data:', error);
