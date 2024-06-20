@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Bar Chart</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .bar text {
+            fill: black;
+            font: bold 26px sans-serif ;
+            text-anchor: start; /* Align text to the start (left) */
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .blink {
+                animation: blink 1s ease-in-out 3;
+        }
+        body {
+         background-color: white; 
+        }
+        #message-bar {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: #233de2;
+        color: white;
+        padding: 2px 0;
+        overflow: hidden;
+    }
+    #message-bar-content {
+        white-space: nowrap;
+        display: inline-block;
+        animation: scroll-left 800s linear infinite;
+    }
+    #message-bar2 {
+        position: fixed;
+        bottom: 74px;
+        width: 100%;
+        background-color:  #233de2;
+        color: white;
+        padding: 10px 0;
+        overflow: hidden;
+    }
+    #message-bar-content2 {
+        white-space: nowrap;
+        display: inline-block;
+        animation: scroll-left2 60s linear infinite;
+    }
+    @keyframes scroll-left {
+        from {
+            transform: translateX(1.5%);
+        }
+        to {
+            transform: translateX(-100%);
+        }
+    }
+    @keyframes scroll-left2 {
+        from {
+            transform: translateX(45%);
+        }
+        to {
+            transform: translateX(-100%);
+        }
+    }
+
+    .message-span {
+    padding: 30px 8px;
+    margin-right: 0px;
+    border-radius: 0px;
+  }
+
+
+    </style>
+</head>
+<body>
+    <svg width="1440" height="6440"></svg>
+    <div id="message-bar">
+        <div id="message-bar-content"></div>
+    </div>
+    <div id="message-bar2">
+        <div id="message-bar-content2"></div>
+    </div>
+    
+    <script>
+        const svg = d3.select("svg");
+           // margin = {top: 20, right: 40, bottom: 30, left: 100};
+            margin = { top: 60, right: 160, bottom:80, left: 440 }; // Increase left margin
+
+            width = +svg.attr("width") - margin.left - margin.right;
+            height = +svg.attr("height") - margin.top - margin.bottom;
+            g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+        //let data = [];
+        let channel_realtime_data = [];
+        let channel_data = [];
+        let channel_data_dict = {};
+        const x = d3.scaleLinear().range([80, width]);
+        const y = d3.scaleBand().rangeRound([0, height]).padding(0.1);
+        previous_subs = {};
+        
+
+        // Define a custom color palette with enough colors for your categories
+        const customColors = [
+            "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd",
+            "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf",
+            "#aec7e8", "#ffbb78", "#98df8a", "#ff9896", "#c5b0d5",
+            "#c49c94", "#f7b6d2", "#c7c7c7", "#dbdb8d", "#9edae5",
+            "#393b79", "#637939", "#8c6d31", "#843c39", "#7b4173",
+            "#5254a3", "#8ca252", "#bd9e39", "#ad494a", "#a55194",
+            "#6b6ecf", "#b5cf6b", "#e7ba52", "#d6616b", "#ce6dbd",
+            "#9c9ede", "#cedb9c", "#e7cb94", "#f7b6d2", "#de9ed6",
+            "#7f7f7f", "#bcbd22", "#17becf", "#393b79", "#637939",
+            "#8c6d31", "#843c39", "#7b4173"
+        ];
+
+        const color = d3.scaleOrdinal()
+            //.domain(d3.range(customColors.length))
+            .domain(channel_realtime_data.map(d => d.channel_id))
+            .range(customColors);
+
+        
+
+        function update(data) {
+            // Sort data
+            data.sort((a, b) => b.subscribers - a.subscribers);
+
+            // Update scales
+            x.domain([0, d3.max(data, d => d.subscribers)]);
+            y.domain(data.map(d => channel_data_dict[d.channel_id].title));
+
+            // Select bars
+            const bars = g.selectAll(".bar")
+                .data(data, d => d.channel_id);
+
+            // Enter selection: Create new groups for new data
+            const barsEnter = bars.enter().append("g")
+                .attr("class", "bar")
+                .attr("transform", d => `translate(0, ${y(channel_data_dict[d.channel_id].title)})`);
+
+            barsEnter.append("rect")
+                .attr("x", 0)
+                .attr("height", y.bandwidth())
+                .attr("width", d => x(d.subscribers))
+                .style("fill", (d, i) => color(d.channel_id));  // Apply color based on index
+
+
+              // Add rank number in a circle on top of each bar
+           /* barsEnter.append("circle")
+                .attr("cx", 17)  // Position to the left of the bar
+                .attr("cy", y.bandwidth() / 2)
+                .attr("r", 15)  // Circle radius
+                 //fill transparent
+                .style("fill", "#a70606");  // Circle color
+            
+        
+
+            barsEnter.append("text")
+                .attr("class", "rank")
+                .attr("x", 17)  // Position to the left of the bar
+                .attr("y", y.bandwidth() / 2)
+                .attr("dy", ".35em")
+                .style("text-anchor", "middle")
+                .style("font-size", "14px")
+                .style("fill", "white")
+                .style("font-weight", "bold")
+                .text((d, i) => `${i + 1}`);
+*/
+          
+            barsEnter.append("text")
+                .attr("class", "subscribers-text")
+                .attr("x", d => x(d.subscribers) + 5)  // Position to the right of the bar
+                .attr("y", y.bandwidth() / 2)
+                .attr("dy", ".35em")
+                //.text(d => d.subscribers.toLocaleString());
+
+            barsEnter.append("text")
+                .attr("class", "arrow")
+                .attr("x", function(d) {
+                    const textWidth = this.previousElementSibling.getComputedTextLength();
+                    return x(d.subscribers) + textWidth + 15; // Position 10 pixels to the right end of the first text
+                })
+                .attr("y", y.bandwidth() / 2)
+                .attr("dy", ".35em");
+
+            barsEnter.append("image")
+                .attr("x", d => x(d.subscribers) - (y.bandwidth()-6) -3)  // Position to the right of the text
+                .attr("y", 3)  // Center vertically in the bar
+                .attr("width", y.bandwidth()-6)
+                .attr("height", y.bandwidth()-6)
+                .attr("xlink:href", d => channel_data_dict[d.channel_id].icon_url);
+
+              // Add rank "stamp" on top of each bar
+              stamp=barsEnter.append("rect")
+                    .attr("class", "rank-stamp")
+                    .attr("x", 3)  // Position to the left of the bar
+                    .attr("y", y.bandwidth() / 2 -20)
+                    .attr("width", 40)
+                    .attr("height", 40)
+                    .style("fill", "orange")
+                    .style("stroke", "white")
+                    .style("stroke-width", 3)
+                    .style("rx", 5)  // Rounded corners
+                    .style("ry", 5);
+         
+           
+                barsEnter.append("text")
+                    .attr("class", "rank")
+                    .attr("x", 23)  // Position to the left of the bar
+                    .attr("y", y.bandwidth() / 2)
+                    .attr("dy", ".35em")
+                    .style("text-anchor", "middle")
+                    .style("font-size", "24px")
+                    .style("fill", "white")
+                    .style("font-weight", "bold")
+                    .text((d, i) => `${i + 1}`);
+
+          
+
+            // Update selection: Update existing groups
+            bars.transition().duration(1000)
+                .attr("transform", d => `translate(0, ${y(channel_data_dict[d.channel_id].title)})`);
+
+            bars.select("rect")
+                .transition()
+                .duration(1000)
+                .attr("width", d => x(d.subscribers))
+                .style("fill", (d, i) => color(d.channel_id));  // Apply color based on index
+
+
+                bars.select(".subscribers-text")
+                .transition()
+                .duration(1000)
+                .style("opacity", 1)
+                .attr("x", d => x(d.subscribers) + 5)  // Position to the right of the bar
+                .text(d => d.subscribers.toLocaleString())
+                .each(function(d) {
+                    const textElement = d3.select(this);
+                    //const currentSubscribers = parseInt(textElement.text().replace(/[^0-9]/g, ''));
+                    const newSubscribers = d.subscribers;
+                    currentSubscribers = previous_subs[d.channel_id] || newSubscribers;
+                    const delta = newSubscribers - currentSubscribers;
+                    
+                    
+
+                    if (newSubscribers > currentSubscribers) {
+                        textElement.style("fill", "green");
+                         // Make the text blink
+                         blink(textElement);
+                         showDelta(textElement, delta, true); // Pass true for positive change
+                    } else if (newSubscribers < currentSubscribers) {
+                        textElement.style("fill", "red");
+                         // Make the text blink
+                         blink(textElement);
+                         showDelta(textElement, delta, false); // Pass true for negative change
+                    }
+                    textElement.text(newSubscribers.toLocaleString());
+                  
+                    //animateNumberTransition(textElement, currentSubscribers, newSubscribers);
+                });
+
+
+            bars.select(".arrow")
+               .attr("x", function(d) {
+                    const textWidth = this.previousElementSibling.getComputedTextLength();
+                    return x(d.subscribers) + textWidth + 15; // Position 10 pixels to the right end of the first text
+                })
+                .each(function(d) {
+                    const arrowElement = d3.select(this);
+                    const currentSubscribers = previous_subs[d.channel_id] || d.subscribers;
+                    previous_subs[d.channel_id] = d.subscribers;
+                    
+                    if (d.subscribers > currentSubscribers) {
+                        arrowElement.text('⬆').style("fill", "green");
+                         // Make the text blink
+                         blink(arrowElement);
+                        
+                    } else if (d.subscribers < currentSubscribers) {
+                        arrowElement.text('⬇').style("fill", "red");
+                        blink(arrowElement);
+                        
+
+       
+                    }
+                });
+
+            bars.select("image")
+                .transition()
+                .duration(1000)
+               
+            // Exit selection: Remove groups that are no longer needed
+            bars.exit().remove();
+
+            // Update axes
+            g.select(".x-axis").call(d3.axisTop(x).tickFormat(formatNumber)).transition()
+                .duration(1000).style("font",  "bold 22px sans-serif").style("font-weight",  "bold");;
+            g.select(".y-axis").call(d3.axisLeft(y)).style("font", "bold 26px sans-serif"); 
+            //updateMessageBar();
+                // Add drop shadow filter for the rank stamp
+
+        }
+
+        g.append("g")
+            .attr("class", "x-axis")
+            .call(d3.axisTop(x).tickFormat(formatNumber));
+
+        g.append("g")
+            .attr("class", "y-axis")
+            .call(d3.axisLeft(y));
+
+    
+        fetchDataAndUpdateMessageBar();
+
+        
+        // Simulate data update
+        setInterval(() => {
+            // Simulate new data
+    
+            get_realtime_data();
+        }, 10000);
+
+
+        function get_realtime_data(){
+            // Get the current date
+            let now = new Date();
+
+            // Format the date as YYYY-MM-DD-HH-MM-SS
+            let year = now.getFullYear();
+            let month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based, so add 1
+            let day = String(now.getDate()).padStart(2, '0');
+            let hours = String(now.getHours()).padStart(2, '0');
+            let minutes = String(now.getMinutes()).padStart(2, '0');
+            let seconds = String(now.getSeconds()).padStart(2, '0');
+
+            let formattedDate = `${year}-${month}-${day}-${hours}-${minutes}-${seconds}`;
+            // Construct the URL with the date parameter
+            let url = `http://unladma.hopto.org/yt/top-chinese-channels-subscribers/?date=${formattedDate}`;
+            return fetch(url)
+                .then(response => response.json())
+                .then(json => {
+                    //data = json["results"];
+                    channel_realtime_data = json;
+            
+                    //for each of the channel data, generate a random number, if the random < 0.5, just keep the previous value
+                    for(i in channel_realtime_data){
+                        if(Math.random() < 0.3){
+                            channel_realtime_data[i]["subscribers"] = previous_subs[channel_realtime_data[i]["channel_id"]] || channel_realtime_data[i]["subscribers"];
+                        }
+                    }
+                    
+                    update(channel_realtime_data);
+                    
+
+                });
+        }
+
+        function get_channel_meta_data(){
+            return fetch("http://unladma.hopto.org/yt/top-chinese-channels/")
+                .then(response => response.json())
+                .then(json => {
+                    channel_data = json["results"];
+                    console.info(channel_data.length);
+                    for(i in channel_data){
+                        if(channel_data[i]["title"].substr(0,6) == '妙見神與方臉')
+                            channel_data[i]["title"] = '妙見神與方臉';
+                        channel_data_dict[channel_data[i]["channel_id"]]={"title":channel_data[i]["title"],"description":channel_data[i]["description"],"icon_url":channel_data[i]["icon_url"],"join_date":channel_data[i]["join_date"],"location":channel_data[i]["location"]};
+                    
+
+                    }
+  
+            
+                    
+                      
+                });
+        }
+
+        async function fetchDataAndUpdateMessageBar() {
+        try {
+            await get_channel_meta_data();
+            await get_realtime_data();
+            
+            
+            updateMessageBar();
+            updateMessageBar2();
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+
+        function formatNumber(num) {
+            if (num >= 1_000_000_000) {
+                return (num / 1_000_000_000).toFixed(0) + 'B'; // Number >= 1 billion
+            } else if (num >= 1_000_000) {
+                return (num / 1_000_000).toFixed(0) + 'M'; // Number >= 1 million
+            } else if (num >= 1_000) {
+                return (num / 1_000).toFixed(0) + 'K'; // Number >= 1 thousand
+            } else {
+                return num.toString(); // Number < 1 thousand
+            }
+        }
+
+
+        let direction = 1; // 1 for down, -1 for up
+        let scrollStep = 1; // pixels per step
+        let scrollDelay = 20; // delay between steps in milliseconds
+        let pauseDuration = 2000; // pause between scrolls in milliseconds
+
+        function scrollPage() {
+            if (direction === 1 && (window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+                direction = -1;
+                setTimeout(scrollPage, pauseDuration); // Pause for 2 seconds
+                return;
+            } else if (direction === -1 && window.scrollY === 0) {
+                direction = 1;
+                setTimeout(scrollPage, pauseDuration); // Pause for 2 seconds
+                return;
+            }
+
+            window.scrollBy(0, scrollStep * direction);
+            setTimeout(scrollPage, scrollDelay);
+        }
+
+        scrollPage();
+
+
+        function blink(element) {
+            element
+            .transition()
+            .duration(500)
+            .style("opacity", 0)
+            .on("end", () => {
+                    element.transition()
+                        .duration(500)
+                        .style("opacity", 1)
+                });
+    
+}
+
+function showDelta(element, delta, isPositive) {
+    const deltaText = isPositive ? `+${delta.toLocaleString()}` : `${delta.toLocaleString()}`;
+    const deltaColor = isPositive ? "green" : "red";
+
+    const parentNode = d3.select(element.node().parentNode); // Select the parent node
+
+    const xPos = +element.attr("x") + 10; // Position to the right of the arrow
+    const yPos = +element.attr("y");
+
+    const deltaElement = parentNode.append("text") // Append to the parent node
+        .attr("x", xPos)
+        .attr("y", yPos)
+        .attr("dy", ".35em")
+        .style("fill", deltaColor)
+        .style("font-size", "20px")
+        .style("font-weight", "bold")
+        .text(deltaText);
+
+    // Animate the delta text flying upward and fading out
+    deltaElement.transition()
+        .duration(2000)
+        .attr("y", yPos - 20) // Move up by 20 pixels
+        .style("opacity", 0)
+        .on("end", () => {
+            deltaElement.remove(); // Remove the delta text after the animation
+            });
+       
+}
+
+function updateMessageBar() {
+    const messageBarContent = d3.select("#message-bar-content");
+
+    // Construct the scrolling message
+
+     channel_realtime_data.forEach((d, i) => {
+        const channel = channel_data_dict[d.channel_id];
+        const message = ` ${channel.title},  建立时间: ${formatDate(channel.join_date)},  注册地: ${translateLocation(channel.location)}, 影片上传数量: ${d.video_count}, 影片浏览总次数: ${d.view_count.toLocaleString()}`;
+        
+        // Append a span element for each channel with a different background color
+        span=messageBarContent.append("span")
+            .attr("class", "message-span")
+            .style("background-color", customColors [i % customColors.length])
+           
+         // Append the icon image
+         span.append("img")
+            .attr("src", channel.icon_url)
+            .attr("alt", channel.title)
+            .style("height", "70px")
+            .style("vertical-align", "middle")
+            .style("margin-right", "5px");
+
+        // Append the text message
+        span.append("span")
+            .text(message)
+            .style("vertical-align", "middle")
+            .style("font-size", "25px");
+
+
+    });
+  
+}
+
+function updateMessageBar2(){
+    message = "中文Youtube频道订阅排行榜Top 100，数据每10秒更新一次，数据来源：Youtube API 以及 Wikipedia中国大陆、台湾、香港YouTube频道订阅人数排行榜，数据仅供参考，欢迎评论和建议。原则上只列出个人经营的Youtube Channel，不包括拥有实体电视台或广播电台等等的自营节目的媒体事业频道（即是以电视节目或新闻为主的频道）、唱片公司频道、歌手、音乐家、乐团、动漫、卡通、电影、品牌等非创作者类频道。";
+    const messageBarContent2 = d3.select("#message-bar-content2");
+    span=messageBarContent2.append("span")
+    .style("vertical-align", "middle")
+    .style("font-size", "20px")
+    .text(message);
+
+
+}
+
+
+function formatDate(inputDate) {
+    // Create a new Date object from the input date string
+    const date = new Date(inputDate);
+
+    // Extract the year, month, and day
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, '0');
+
+    // Format the date as yyyy-mm-dd
+    const formattedDate = `${year}-${month}-${day}`;
+
+    return formattedDate;
+}
+
+
+function translateLocation(location) {
+    const locationMap = {
+        "HK": "香港",
+        "JP": "日本",
+        "TW": "台湾",
+        "US": "美国",
+        "ZN": "中国",
+        "AU":"澳大利亚",
+        "null": "未知",
+        "SG": "新加坡",
+        "CA": "加拿大",
+        "PT": "葡萄牙",
+        "CN": "中国",
+
+    };
+
+    return locationMap[location] || location;
+}
+
+
+
+
+    </script>
+</body>
+</html>
