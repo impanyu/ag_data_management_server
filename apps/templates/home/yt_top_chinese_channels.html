@@ -11,7 +11,7 @@
         }
         .bar text {
             fill: black;
-            font: bold 24px sans-serif ;
+            font: bold 26px sans-serif ;
             text-anchor: start; /* Align text to the start (left) */
         }
         @keyframes blink {
@@ -298,8 +298,8 @@
 
             // Update axes
             g.select(".x-axis").call(d3.axisTop(x).tickFormat(formatNumber)).transition()
-                .duration(1000).style("font",  "bold 20px sans-serif").style("font-weight",  "bold");;
-            g.select(".y-axis").call(d3.axisLeft(y)).style("font", "bold 24px sans-serif"); 
+                .duration(1000).style("font",  "bold 22px sans-serif").style("font-weight",  "bold");;
+            g.select(".y-axis").call(d3.axisLeft(y)).style("font", "bold 25px sans-serif"); 
             //updateMessageBar();
                 // Add drop shadow filter for the rank stamp
 
@@ -456,7 +456,7 @@ function showDelta(element, delta, isPositive) {
         .attr("y", yPos)
         .attr("dy", ".35em")
         .style("fill", deltaColor)
-        .style("font-size", "18px")
+        .style("font-size", "20px")
         .style("font-weight", "bold")
         .text(deltaText);
 
