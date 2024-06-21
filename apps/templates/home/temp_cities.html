@@ -276,7 +276,7 @@
             barsEnter.append("image")
                 .attr("x", d => 50 ) // Position to the right of the text
                 .attr("y", 3)  // Center vertically in the bar
-                //.attr("width", y.bandwidth()-6)
+                .attr("width", y.bandwidth()*3)
                 .attr("height", y.bandwidth()-6)
                 .attr("xlink:href", d => d.wiki_icon);
 
