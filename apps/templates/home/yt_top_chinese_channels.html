@@ -501,7 +501,7 @@ function updateMessageBar() {
             .style("font-size", "25px");
 
     spans.select("span").text(d => ` ${channel_data_dict[d.channel_id].title},  建立时间: ${formatDate(channel_data_dict[d.channel_id].join_date)},  注册地: ${translateLocation(channel_data_dict[d.channel_id].location)}, 影片上传数量: ${d.video_count.toString().padStart(6)}, 影片浏览总次数: ${d.view_count.toLocaleString().padStart(15)}` )
-        
+
 
   
 }
