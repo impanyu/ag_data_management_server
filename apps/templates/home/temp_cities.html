@@ -63,7 +63,7 @@
     }
     @keyframes scroll-left2 {
         from {
-            transform: translateX(45%);
+            transform: translateX(55%);
         }
         to {
             transform: translateX(-100%);
@@ -275,7 +275,7 @@
                 .attr("class", "arrow")
                 .attr("x", function(d) {
                     const textWidth = this.previousElementSibling.getComputedTextLength();
-                    return x(d.temp) + textWidth + 15; // Position 10 pixels to the right end of the first text
+                    return x(d.temp) + textWidth + 35; // Position 10 pixels to the right end of the first text
                 })
                 .attr("y", y.bandwidth() / 2)
                 .attr("dy", ".35em");
@@ -360,7 +360,7 @@
             bars.select(".arrow")
                .attr("x", function(d) {
                     const textWidth = this.previousElementSibling.getComputedTextLength();
-                    return x(d.temp) + textWidth + 15; // Position 10 pixels to the right end of the first text
+                    return x(d.temp) + textWidth + 35; // Position 10 pixels to the right end of the first text
                 })
                 .each(function(d) {
                     const arrowElement = d3.select(this);
@@ -407,6 +407,8 @@
 
     
         get_realtime_data();
+        
+        updateMessageBar2();
 
         
         // Simulate data update
@@ -457,7 +459,6 @@
                     //
                     update(city_list);
                     updateMessageBar();
-                    updateMessageBar2();
 
                 });
 
@@ -531,36 +532,45 @@ function showDelta(element, delta, isPositive) {
        
 }
 
-function updateMessageBar() {
-    const messageBarContent = d3.select("#message-bar-content");
+    function updateMessageBar() {
+        const messageBarContent = d3.select("#message-bar-content");
 
-    // Construct the scrolling message
+        // Select spans
+        const spans = g.selectAll("span")
+                    .data(city_list, d => d.city);
 
-     city_list.forEach((d, i) => {
-        const message = ` ${d.city},  Precipitation: ${d.precipitation},  Relative Humidity: ${d.relative_humidity}, Wind Speed: ${d.wind_speed},  Surface Pressure: ${d.surface_pressure}, Cloud Cover: ${d.cloud_cover}`;
-        
-        // Append a span element for each channel with a different background color
-        span=messageBarContent.append("span")
-            .attr("class", "message-span")
-            .style("background-color", customColors [i % customColors.length])
-           
-         // Append the icon image
-         span.append("img")
-            .attr("src", d.wiki_icon)
-            .attr("alt", d.city)
-            .style("height", "70px")
-            .style("vertical-align", "middle")
-            .style("margin-right", "5px");
-
+        // Enter selection: Create new groups for new data
+        const spansEnter = spans.enter().append("span")
+                .attr("class", "message-span")
+                .style("background-color", (d, i) => color(d.city))
+        // Append the icon image
+        spansEnter.append("img")
+                .attr("src", d=>d.wiki_icon)
+                .attr("alt", d=>d.city)
+                .style("height", "70px")
+                .style("vertical-align", "middle")
+                .style("margin-right", "5px");
+         
         // Append the text message
-        span.append("span")
-            .text(message)
+        spanEnter.append("span")
+            .text(d=>` ${d.city},  Precipitation: ${d.precipitation},  Relative Humidity: ${d.relative_humidity}, Wind Speed: ${d.wind_speed},  Surface Pressure: ${d.surface_pressure}, Cloud Cover: ${d.cloud_cover}`)
             .style("vertical-align", "middle")
             .style("font-size", "25px");
 
+        
+        spans.select("img")
+                .attr("src", d=>d.wiki_icon)
+                .attr("alt", d=>d.city)
+                .style("height", "70px")
+                .style("vertical-align", "middle")
+                .style("margin-right", "5px");
+         
+        spans.select("span")
+            .text(d=>` ${d.city},  Precipitation: ${d.precipitation},  Relative Humidity: ${d.relative_humidity}, Wind Speed: ${d.wind_speed},  Surface Pressure: ${d.surface_pressure}, Cloud Cover: ${d.cloud_cover}`)
+            .style("vertical-align", "middle")
+            .style("font-size", "25px");
+        
 
-    });
-  
 }
 
 function updateMessageBar2(){
