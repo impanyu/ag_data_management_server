@@ -380,9 +380,9 @@
                
             // Exit selection: Remove groups that are no longer needed
             bars.exit().remove();
-
+            //.tickFormat(print_temp)
             // Update axes
-            g.select(".x-axis").call(d3.axisTop(x).tickFormat(print_temp)).transition()
+            g.select(".x-axis").call(d3.axisTop(x)).transition()
                 .duration(1000).style("font",  "bold 22px sans-serif").style("font-weight",  "bold");
             g.select(".y-axis").call(d3.axisLeft(y)).style("font", "bold 26px sans-serif"); 
             //updateMessageBar();
@@ -392,7 +392,7 @@
 
         g.append("g")
             .attr("class", "x-axis")
-            .call(d3.axisTop(x).tickFormat(print_temp));
+            .call(d3.axisTop(x));
 
         g.append("g")
             .attr("class", "y-axis")
