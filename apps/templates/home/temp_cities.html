@@ -416,17 +416,17 @@
             get_realtime_data();
         }, 60000);
 
-
         async function get_realtime_data(){
-            for(i in city_list){
-                await get_realtime_data_for_each_city(city_list[i],i);
-            }
-
+            const promises = city_list.map((city, index) => get_realtime_data_for_each_city(city, index));
+            
+            // Wait for all promises to resolve
+            await Promise.all(promises);
+            
+            // Now all real-time data is available
             update(city_list);
             updateMessageBar();
             updateMessageBar2();
-               
-        }
+       }
 
         function get_realtime_data_for_each_city(city,i){
             let url = `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lon}&current=temperature_2m,precipitation,relative_humidity_2m,wind_speed_10m,wind_direction_10m,surface_pressure,cloud_cover`;
