@@ -202,7 +202,7 @@
 ]
 
       last_city_list =  JSON.parse(JSON.stringify(city_list));
-      current_city_list =  JSON.parse(JSON.stringify(city_list));
+      
 
 
      previous_temps ={};
@@ -477,6 +477,7 @@
         function get_realtime_data(){
             keys =["temp","precipitation","relative_humidity","wind_speed","wind_direction","surface_pressure","cloud_cover"];
             now = new Date();
+            current_city_list =  JSON.parse(JSON.stringify(city_list));
             for(i in city_list){
                 for(j in keys){
                       key = keys[j];
