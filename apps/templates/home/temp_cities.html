@@ -195,7 +195,7 @@
     {"city": "Tirana, Albania", "lat": 41.3275, "lon": 19.8187, "chinese": "地拉那, 阿尔巴尼亚", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Tirana_Montage_2018.png/220px-Tirana_Montage_2018.png"}
 ]
 
-        previous_temp ={};
+        previous_temps ={};
 
 
         const x = d3.scaleLinear().range([80, width]);
@@ -328,7 +328,7 @@
                     const textElement = d3.select(this);
                     //const currentSubscribers = parseInt(textElement.text().replace(/[^0-9]/g, ''));
                     const newSubscribers = d.temp;
-                    currentSubscribers = previous_subs[d.city] || newSubscribers;
+                    currentSubscribers = previous_temps[d.city] || newSubscribers;
                     const delta = newSubscribers - currentSubscribers;
                     
                     
@@ -357,8 +357,8 @@
                 })
                 .each(function(d) {
                     const arrowElement = d3.select(this);
-                    const currentSubscribers = previous_subs[d.city] || d.temp;
-                    previous_subs[d.city] = d.temp;
+                    const currentSubscribers = previous_temps[d.city] || d.temp;
+                    previous_temps[d.city] = d.temp;
                     
                     if (d.temp > currentSubscribers) {
                         arrowElement.text('⬆').style("fill", "green");
@@ -526,8 +526,8 @@ function updateMessageBar() {
            
          // Append the icon image
          span.append("img")
-            .attr("src", channel.icon_url)
-            .attr("alt", channel.title)
+            .attr("src", d.wiki_icon)
+            .attr("alt", d.city)
             .style("height", "70px")
             .style("vertical-align", "middle")
             .style("margin-right", "5px");
