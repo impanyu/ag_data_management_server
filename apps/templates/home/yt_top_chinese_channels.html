@@ -489,8 +489,8 @@ function updateMessageBar() {
                 .style("background-color", (d, i) => color(channel_data_dict[d.channel_id].title));
     // Append the icon image
     spansEnter.append("img")
-            .attr("src", channel.icon_url)
-            .attr("alt", channel.title)
+            .attr("src", d=>channel_data_dict[d.channel_id].icon_url)
+            .attr("alt", d=>channel_data_dict[d.channel_id].title)
             .style("height", "70px")
             .style("vertical-align", "middle")
             .style("margin-right", "5px");
