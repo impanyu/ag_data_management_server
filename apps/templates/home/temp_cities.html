@@ -401,7 +401,7 @@
 
         get_supporting_data();
         
-        createMessageBar();
+    
         createMessageBar2();
 
         SUPPORTING_DATA_REFRESH_INTERVAL = 60000*20; //20 mins
@@ -560,7 +560,7 @@ function showDelta(element, delta, isPositive) {
        
 }
 
-    function createMessageBar() {
+    function updateMessageBar() {
         const messageBarContent = d3.select("#message-bar-content");
 
         // Select spans
@@ -596,13 +596,6 @@ function showDelta(element, delta, isPositive) {
 
 
 
-        
-        spans.select("img")
-                .attr("src", d=>d.wiki_icon)
-                .attr("alt", d=>d.city)
-                .style("height", "70px")
-                .style("vertical-align", "middle")
-                .style("margin-right", "5px");
          
         spans.select("span")
         .text(d => {
@@ -615,8 +608,7 @@ function showDelta(element, delta, isPositive) {
 
             return ` ${city} Precipitation: ${precipitation}mm,  Relative Humidity: ${relativeHumidity}%, Wind Speed: ${windSpeed}km/h,  Surface Pressure: ${surfacePressure}hPa, Cloud Cover: ${cloudCover}%`;
         })
-         .style("vertical-align", "middle")
-            .style("font-size", "25px");
+ 
         
 
 }
