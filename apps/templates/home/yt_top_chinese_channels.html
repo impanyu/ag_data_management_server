@@ -324,6 +324,13 @@
             get_realtime_data();
         }, 10000);
 
+        setInterval(() => {
+            // update message periodically
+    
+            updateMessageBar();
+        }, 60000*60);
+
+
 
         function get_realtime_data(){
             // Get the current date
@@ -478,7 +485,7 @@ function updateMessageBar() {
 
      channel_realtime_data.forEach((d, i) => {
         const channel = channel_data_dict[d.channel_id];
-        const message = ` ${channel.title},  建立时间: ${formatDate(channel.join_date)},  注册地: ${translateLocation(channel.location)}, 影片上传数量: ${d.video_count}, 影片浏览总次数: ${d.view_count.toLocaleString()}`;
+        const message = ` ${channel.title},  建立时间: ${formatDate(channel.join_date)},  注册地: ${translateLocation(channel.location)}, 影片上传数量: ${d.video_count.toString().padStart(6)}, 影片浏览总次数: ${d.view_count.toLocaleString().padStart(15)}`;
         
         // Append a span element for each channel with a different background color
         span=messageBarContent.append("span")
