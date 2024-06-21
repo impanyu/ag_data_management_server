@@ -401,8 +401,8 @@
 
         get_supporting_data();
         
-
-        updateMessageBar2();
+        createMessageBar();
+        createMessageBar2();
 
         SUPPORTING_DATA_REFRESH_INTERVAL = 60000*20; //20 mins
         last_time =new Date();
@@ -560,7 +560,7 @@ function showDelta(element, delta, isPositive) {
        
 }
 
-    function updateMessageBar() {
+    function createMessageBar() {
         const messageBarContent = d3.select("#message-bar-content");
 
         // Select spans
@@ -605,14 +605,23 @@ function showDelta(element, delta, isPositive) {
                 .style("margin-right", "5px");
          
         spans.select("span")
-            .text(d => ` ${d.city},  Precipitation: ${d.precipitation.toFixed(1)}mm,  Relative Humidity: ${d.relative_humidity.toFixed(1)}%, Wind Speed: ${d.wind_speed.toFixed(1)}km/h,  Surface Pressure: ${d.surface_pressure.toFixed(1)}hPa, Cloud Cover: ${d.cloud_cover.toFixed(1)}%`)
-            .style("vertical-align", "middle")
+        .text(d => {
+            const city = d.city;
+            const precipitation = d.precipitation.toFixed(1).padStart(5);
+            const relativeHumidity = d.relative_humidity.toFixed(1).padStart(5);
+            const windSpeed = d.wind_speed.toFixed(1).padStart(5);
+            const surfacePressure = d.surface_pressure.toFixed(1).padStart(5);
+            const cloudCover = d.cloud_cover.toFixed(1).padStart(5);
+
+            return ` ${city} Precipitation: ${precipitation}mm,  Relative Humidity: ${relativeHumidity}%, Wind Speed: ${windSpeed}km/h,  Surface Pressure: ${surfacePressure}hPa, Cloud Cover: ${cloudCover}%`;
+        })
+         .style("vertical-align", "middle")
             .style("font-size", "25px");
         
 
 }
 
-function updateMessageBar2(){
+function createMessageBar2(){
     message = "Global cities ranked by their real time temperatures. Data are updated every 1 minute.";
     const messageBarContent2 = d3.select("#message-bar-content2");
     span1=messageBarContent2.append("span").style("vertical-align","middle").style("font-size","20px").style("font-weight","bold").text("World Temperature Championship ").style("background-color","#9edae5").style("padding","11px");
