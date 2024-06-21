@@ -96,13 +96,110 @@
             width = +svg.attr("width") - margin.left - margin.right;
             height = +svg.attr("height") - margin.top - margin.bottom;
             g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
-        //let data = [];
-        let channel_realtime_data = [];
-        let channel_data = [];
-        let channel_data_dict = {};
+        city_list =[
+    {"city": "New York City, USA", "lat": 40.7128, "lon": -74.0060, "chinese": "纽约, 美国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/New_york_times_square-terabass.jpg/220px-New_york_times_square-terabass.jpg"},
+    {"city": "London, UK", "lat": 51.5074, "lon": -0.1278, "chinese": "伦敦, 英国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Palace_of_Westminster_from_the_dome_on_Methodist_Central_Hall.jpg/220px-Palace_of_Westminster_from_the_dome_on_Methodist_Central_Hall.jpg"},
+    {"city": "Tokyo, Japan", "lat": 35.6895, "lon": 139.6917, "chinese": "东京, 日本", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Skyscrapers_of_Shinjuku_2009_January.jpg/220px-Skyscrapers_of_Shinjuku_2009_January.jpg"},
+    {"city": "Paris, France", "lat": 48.8566, "lon": 2.3522, "chinese": "巴黎, 法国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Paris_Night.jpg/220px-Paris_Night.jpg"},
+    {"city": "Hong Kong, China", "lat": 22.3193, "lon": 114.1694, "chinese": "香港, 中国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/2009_Hong_Kong_Island_skyline.jpg/220px-2009_Hong_Kong_Island_skyline.jpg"},
+    {"city": "Singapore, Singapore", "lat": 1.3521, "lon": 103.8198, "chinese": "新加坡, 新加坡", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Singapore_skyline_at_night_-_20080226.jpg/220px-Singapore_skyline_at_night_-_20080226.jpg"},
+    {"city": "Sydney, Australia", "lat": -33.8688, "lon": 151.2093, "chinese": "悉尼, 澳大利亚", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Sydney_Opera_House_Sails.jpg/220px-Sydney_Opera_House_Sails.jpg"},
+    {"city": "Los Angeles, USA", "lat": 34.0522, "lon": -118.2437, "chinese": "洛杉矶, 美国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/LA_Skyline_Mountains2.jpg/220px-LA_Skyline_Mountains2.jpg"},
+    {"city": "Dubai, UAE", "lat": 25.276987, "lon": 55.296249, "chinese": "迪拜, 阿联酋", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Dubai_Downtown_skyline.jpg/220px-Dubai_Downtown_skyline.jpg"},
+    {"city": "Barcelona, Spain", "lat": 41.3851, "lon": 2.1734, "chinese": "巴塞罗那, 西班牙", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Barcelona_collage.JPG/220px-Barcelona_collage.JPG"},
+    {"city": "San Francisco, USA", "lat": 37.7749, "lon": -122.4194, "chinese": "旧金山, 美国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/San_Francisco_from_Twin_Peaks_January_2008_panorama_1.jpg/220px-San_Francisco_from_Twin_Peaks_January_2008_panorama_1.jpg"},
+    {"city": "Amsterdam, Netherlands", "lat": 52.3676, "lon": 4.9041, "chinese": "阿姆斯特丹, 荷兰", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Amsterdam_collage.jpg/220px-Amsterdam_collage.jpg"},
+    {"city": "Toronto, Canada", "lat": 43.651070, "lon": -79.347015, "chinese": "多伦多, 加拿大", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Toronto_skyline_2013.jpg/220px-Toronto_skyline_2013.jpg"},
+    {"city": "Berlin, Germany", "lat": 52.5200, "lon": 13.4050, "chinese": "柏林, 德国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Siegessaeule_Abends_%282%29.jpg/220px-Siegessaeule_Abends_%282%29.jpg"},
+    {"city": "Chicago, USA", "lat": 41.8781, "lon": -87.6298, "chinese": "芝加哥, 美国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Chicago_skyline%2C_viewed_from_John_Hancock_Center.jpg/220px-Chicago_skyline%2C_viewed_from_John_Hancock_Center.jpg"},
+    {"city": "Madrid, Spain", "lat": 40.4168, "lon": -3.7038, "chinese": "马德里, 西班牙", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Madrid_collage.jpg/220px-Madrid_collage.jpg"},
+    {"city": "Seoul, South Korea", "lat": 37.5665, "lon": 126.9780, "chinese": "首尔, 韩国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Seoul_City_Montage.jpg/220px-Seoul_City_Montage.jpg"},
+    {"city": "Shanghai, China", "lat": 31.2304, "lon": 121.4737, "chinese": "上海, 中国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/The_Bund%2C_Shanghai%2C_China.jpg/220px-The_Bund%2C_Shanghai%2C_China.jpg"},
+    {"city": "Melbourne, Australia", "lat": -37.8136, "lon": 144.9631, "chinese": "墨尔本, 澳大利亚", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Flinders_street_station_at_night.jpg/220px-Flinders_street_station_at_night.jpg"},
+    {"city": "Beijing, China", "lat": 39.9042, "lon": 116.4074, "chinese": "北京, 中国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Beijing_montage.png/220px-Beijing_montage.png"},
+    {"city": "Bangkok, Thailand", "lat": 13.7563, "lon": 100.5018, "chinese": "曼谷, 泰国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Bangkok_skytrain_sunset.jpg/220px-Bangkok_skytrain_sunset.jpg"},
+    {"city": "Istanbul, Turkey", "lat": 41.0082, "lon": 28.9784, "chinese": "伊斯坦布尔, 土耳其", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Istanbul_collage.jpg/220px-Istanbul_collage.jpg"},
+    {"city": "Rome, Italy", "lat": 41.9028, "lon": 12.4964, "chinese": "罗马, 意大利", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Rome_montage.jpg/220px-Rome_montage.jpg"},
+    {"city": "Moscow, Russia", "lat": 55.7558, "lon": 37.6173, "chinese": "莫斯科, 俄罗斯", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Collage_of_views_of_Moscow.jpg/220px-Collage_of_views_of_Moscow.jpg"},
+    {"city": "Vienna, Austria", "lat": 48.2082, "lon": 16.3738, "chinese": "维也纳, 奥地利", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Wien_Montage.jpg/220px-Wien_Montage.jpg"},
+    {"city": "Miami, USA", "lat": 25.7617, "lon": -80.1918, "chinese": "迈阿密, 美国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Miami_skyline.JPG/220px-Miami_skyline.JPG"},
+    {"city": "Zurich, Switzerland", "lat": 47.3769, "lon": 8.5417, "chinese": "苏黎世, 瑞士", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Z%C3%BCrich_-_Limmatquai.jpg/220px-Z%C3%BCrich_-_Limmatquai.jpg"},
+    {"city": "Munich, Germany", "lat": 48.1351, "lon": 11.5820, "chinese": "慕尼黑, 德国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Marienplatz_in_M%C3%BCnchen.jpg/220px-Marienplatz_in_M%C3%BCnchen.jpg"},
+    {"city": "Washington D.C., USA", "lat": 38.9072, "lon": -77.0369, "chinese": "华盛顿哥伦比亚特区, 美国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Washington_Monument_Dusk_Jan_2006.jpg/220px-Washington_Monument_Dusk_Jan_2006.jpg"},
+    {"city": "Boston, USA", "lat": 42.3601, "lon": -71.0589, "chinese": "波士顿, 美国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/USA_Boston_skyline.jpg/220px-USA_Boston_skyline.jpg"},
+    {"city": "Sao Paulo, Brazil", "lat": -23.5505, "lon": -46.6333, "chinese": "圣保罗, 巴西", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/S%C3%A3o_Paulo_city_%28115405883%29.jpg/220px-S%C3%A3o_Paulo_city_%28115405883%29.jpg"},
+    {"city": "Kuala Lumpur, Malaysia", "lat": 3.1390, "lon": 101.6869, "chinese": "吉隆坡, 马来西亚", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Kuala_Lumpur_skyline_2018.jpg/220px-Kuala_Lumpur_skyline_2018.jpg"},
+    {"city": "Vancouver, Canada", "lat": 49.2827, "lon": -123.1207, "chinese": "温哥华, 加拿大", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/City_of_Vancouver.jpg/220px-City_of_Vancouver.jpg"},
+    {"city": "Milan, Italy", "lat": 45.4642, "lon": 9.1900, "chinese": "米兰, 意大利", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Milan_Collage.jpg/220px-Milan_Collage.jpg"},
+    {"city": "Buenos Aires, Argentina", "lat": -34.6037, "lon": -58.3816, "chinese": "布宜诺斯艾利斯, 阿根廷", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Buenos_Aires_-_Congreso_de_la_Naci%C3%B3n_Argentina.jpg/220px-Buenos_Aires_-_Congreso_de_la_Naci%C3%B3n_Argentina.jpg"},
+    {"city": "Mexico City, Mexico", "lat": 19.4326, "lon": -99.1332, "chinese": "墨西哥城, 墨西哥", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Mexico_City_Skyline_2.jpg/220px-Mexico_City_Skyline_2.jpg"},
+    {"city": "Johannesburg, South Africa", "lat": -26.2041, "lon": 28.0473, "chinese": "约翰内斯堡, 南非", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Johannesburg_Skyline_North.jpg/220px-Johannesburg_Skyline_North.jpg"},
+    {"city": "Stockholm, Sweden", "lat": 59.3293, "lon": 18.0686, "chinese": "斯德哥尔摩, 瑞典", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Stockholm_-_Gamal_Stan.jpg/220px-Stockholm_-_Gamal_Stan.jpg"},
+    {"city": "Dublin, Ireland", "lat": 53.3498, "lon": -6.2603, "chinese": "都柏林, 爱尔兰", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Dublin_-_Ha%27penny_bridge_%2824263851722%29.jpg/220px-Dublin_-_Ha%27penny_bridge_%2824263851722%29.jpg"},
+    {"city": "Copenhagen, Denmark", "lat": 55.6761, "lon": 12.5683, "chinese": "哥本哈根, 丹麦", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Copenhagen_collage.png/220px-Copenhagen_collage.png"},
+    {"city": "Lisbon, Portugal", "lat": 38.7223, "lon": -9.1393, "chinese": "里斯本, 葡萄牙", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Lisbon%2C_Portugal.jpg/220px-Lisbon%2C_Portugal.jpg"},
+    {"city": "Tel Aviv, Israel", "lat": 32.0853, "lon": 34.7818, "chinese": "特拉维夫, 以色列", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Tel_Aviv_1.JPG/220px-Tel_Aviv_1.JPG"},
+    {"city": "Brussels, Belgium", "lat": 50.8503, "lon": 4.3517, "chinese": "布鲁塞尔, 比利时", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Brussels_Montage_01.png/220px-Brussels_Montage_01.png"},
+    {"city": "Frankfurt, Germany", "lat": 50.1109, "lon": 8.6821, "chinese": "法兰克福, 德国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Frankfurt_CBD_%282%29.jpg/220px-Frankfurt_CBD_%282%29.jpg"},
+    {"city": "Oslo, Norway", "lat": 59.9139, "lon": 10.7522, "chinese": "奥斯陆, 挪威", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Oslo_collage.png/220px-Oslo_collage.png"},
+    {"city": "Mumbai, India", "lat": 19.0760, "lon": 72.8777, "chinese": "孟买, 印度", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Mumbai_skyline.jpg/220px-Mumbai_skyline.jpg"},
+    {"city": "Rio de Janeiro, Brazil", "lat": -22.9068, "lon": -43.1729, "chinese": "里约热内卢, 巴西", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Christ_the_Redeemer_%28statue%29_viewed_from_base_in_Rio_de_Janeiro_Brazil.jpg/220px-Christ_the_Redeemer_%28statue%29_viewed_from_base_in_Rio_de_Janeiro_Brazil.jpg"},
+    {"city": "Santiago, Chile", "lat": -33.4489, "lon": -70.6693, "chinese": "圣地亚哥, 智利", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/SantiagoCity.jpg/220px-SantiagoCity.jpg"},
+    {"city": "Athens, Greece", "lat": 37.9838, "lon": 23.7275, "chinese": "雅典, 希腊", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Acropolis_of_Athens_16th-17th-century_restoration_view.jpg/220px-Acropolis_of_Athens_16th-17th-century_restoration_view.jpg"},
+    {"city": "Bangalore, India", "lat": 12.9716, "lon": 77.5946, "chinese": "班加罗尔, 印度", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Bangalore_montage.jpg/220px-Bangalore_montage.jpg"},
+    {"city": "Jakarta, Indonesia", "lat": -6.2088, "lon": 106.8456, "chinese": "雅加达, 印度尼西亚", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Jakarta_Skyline_Part_2.jpg/220px-Jakarta_Skyline_Part_2.jpg"},
+    {"city": "Lima, Peru", "lat": -12.0464, "lon": -77.0428, "chinese": "利马, 秘鲁", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Lima_collage.jpg/220px-Lima_collage.jpg"},
+    {"city": "Warsaw, Poland", "lat": 52.2297, "lon": 21.0122, "chinese": "华沙, 波兰", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Warsaw_collage.jpg/220px-Warsaw_collage.jpg"},
+    {"city": "Auckland, New Zealand", "lat": -36.8485, "lon": 174.7633, "chinese": "奥克兰, 新西兰", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Auckland_Harbour_Bridge_viewed_from_Auckland_Harbour.jpg/220px-Auckland_Harbour_Bridge_viewed_from_Auckland_Harbour.jpg"},
+    {"city": "Helsinki, Finland", "lat": 60.1695, "lon": 24.9354, "chinese": "赫尔辛基, 芬兰", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Helsinki_Montage_2015.png/220px-Helsinki_Montage_2015.png"},
+    {"city": "Manila, Philippines", "lat": 14.5995, "lon": 120.9842, "chinese": "马尼拉, 菲律宾", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Makati_skyline_day.jpg/220px-Makati_skyline_day.jpg"},
+    {"city": "Prague, Czech Republic", "lat": 50.0755, "lon": 14.4378, "chinese": "布拉格, 捷克", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Prague_montage_2019.jpg/220px-Prague_montage_2019.jpg"},
+    {"city": "Budapest, Hungary", "lat": 47.4979, "lon": 19.0402, "chinese": "布达佩斯, 匈牙利", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Budapest_montage.jpg/220px-Budapest_montage.jpg"},
+    {"city": "Cape Town, South Africa", "lat": -33.9249, "lon": 18.4241, "chinese": "开普敦, 南非", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Table_Mountain_seen_from_Bloubergstrand.jpg/220px-Table_Mountain_seen_from_Bloubergstrand.jpg"},
+    {"city": "Cairo, Egypt", "lat": 30.0444, "lon": 31.2357, "chinese": "开罗, 埃及", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Cairo_montage2.jpg/220px-Cairo_montage2.jpg"},
+    {"city": "Ho Chi Minh City, Vietnam", "lat": 10.8231, "lon": 106.6297, "chinese": "胡志明市, 越南", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Ho_Chi_Minh_City_skyline.jpg/220px-Ho_Chi_Minh_City_skyline.jpg"},
+    {"city": "Bogota, Colombia", "lat": 4.7110, "lon": -74.0721, "chinese": "波哥大, 哥伦比亚", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Bogota_montage.jpg/220px-Bogota_montage.jpg"},
+    {"city": "New Delhi, India", "lat": 28.6139, "lon": 77.2090, "chinese": "新德里, 印度", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/New_Delhi_Montage.png/220px-New_Delhi_Montage.png"},
+    {"city": "Casablanca, Morocco", "lat": 33.5731, "lon": -7.5898, "chinese": "卡萨布兰卡, 摩洛哥", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Casablanca_Collage.jpg/220px-Casablanca_Collage.jpg"},
+    {"city": "Nairobi, Kenya", "lat": -1.2921, "lon": 36.8219, "chinese": "内罗毕, 肯尼亚", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Nairobi_cityscape.jpg/220px-Nairobi_cityscape.jpg"},
+    {"city": "Taipei, Taiwan", "lat": 25.0330, "lon": 121.5654, "chinese": "台北, 台湾", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Taipei_101_Collage_2016.png/220px-Taipei_101_Collage_2016.png"},
+    {"city": "Hamburg, Germany", "lat": 53.5511, "lon": 9.9937, "chinese": "汉堡, 德国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Hamburg_Hafen_Panorama.jpg/220px-Hamburg_Hafen_Panorama.jpg"},
+    {"city": "Lagos, Nigeria", "lat": 6.5244, "lon": 3.3792, "chinese": "拉各斯, 尼日利亚", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Lagos_Montage.png/220px-Lagos_Montage.png"},
+    {"city": "Chennai, India", "lat": 13.0827, "lon": 80.2707, "chinese": "钦奈, 印度", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Chennai_collage.jpg/220px-Chennai_collage.jpg"},
+    {"city": "Colombo, Sri Lanka", "lat": 6.9271, "lon": 79.8612, "chinese": "科伦坡, 斯里兰卡", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Colombo_montage.png/220px-Colombo_montage.png"},
+    {"city": "Hyderabad, India", "lat": 17.3850, "lon": 78.4867, "chinese": "海得拉巴, 印度", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Charminar_Hyderabad.jpg/220px-Charminar_Hyderabad.jpg"},
+    {"city": "Lahore, Pakistan", "lat": 31.5497, "lon": 74.3436, "chinese": "拉合尔, 巴基斯坦", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Lahore_montage_2014.jpg/220px-Lahore_montage_2014.jpg"},
+    {"city": "Karachi, Pakistan", "lat": 24.8607, "lon": 67.0011, "chinese": "卡拉奇, 巴基斯坦", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Karachi_collage.png/220px-Karachi_collage.png"},
+    {"city": "Tehran, Iran", "lat": 35.6892, "lon": 51.3890, "chinese": "德黑兰, 伊朗", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Tehran%2C_Iran.jpg/220px-Tehran%2C_Iran.jpg"},
+    {"city": "Algiers, Algeria", "lat": 36.7372, "lon": 3.0865, "chinese": "阿尔及尔, 阿尔及利亚", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Algiers_Skyline.jpg/220px-Algiers_Skyline.jpg"},
+    {"city": "Doha, Qatar", "lat": 25.276987, "lon": 51.521000, "chinese": "多哈, 卡塔尔", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Doha_montage.jpg/220px-Doha_montage.jpg"},
+    {"city": "Kiev, Ukraine", "lat": 50.4501, "lon": 30.5234, "chinese": "基辅, 乌克兰", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Kyiv_Montage_2018.png/220px-Kyiv_Montage_2018.png"},
+    {"city": "Kathmandu, Nepal", "lat": 27.7172, "lon": 85.3240, "chinese": "加德满都, 尼泊尔", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Kathmandu_montage.png/220px-Kathmandu_montage.png"},
+    {"city": "Luanda, Angola", "lat": -8.8390, "lon": 13.2894, "chinese": "罗安达, 安哥拉", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Luanda_Montage.png/220px-Luanda_Montage.png"},
+    {"city": "Riga, Latvia", "lat": 56.9496, "lon": 24.1052, "chinese": "里加, 拉脱维亚", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Riga_Montage_2017.png/220px-Riga_Montage_2017.png"},
+    {"city": "Vilnius, Lithuania", "lat": 54.6872, "lon": 25.2797, "chinese": "维尔纽斯, 立陶宛", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Vilnius_Lithuania.jpg/220px-Vilnius_Lithuania.jpg"},
+    {"city": "Sofia, Bulgaria", "lat": 42.6977, "lon": 23.3219, "chinese": "索非亚, 保加利亚", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Sofia_montage.png/220px-Sofia_montage.png"},
+    {"city": "Bucharest, Romania", "lat": 44.4268, "lon": 26.1025, "chinese": "布加勒斯特, 罗马尼亚", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Bucharest_Montage.png/220px-Bucharest_Montage.png"},
+    {"city": "Tbilisi, Georgia", "lat": 41.7151, "lon": 44.8271, "chinese": "第比利斯, 格鲁吉亚", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Tbilisi_Montage_2019.png/220px-Tbilisi_Montage_2019.png"},
+    {"city": "Yerevan, Armenia", "lat": 40.1792, "lon": 44.4991, "chinese": "埃里温, 亚美尼亚", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Yerevan_Montage_2018.png/220px-Yerevan_Montage_2018.png"},
+    {"city": "Belgrade, Serbia", "lat": 44.7866, "lon": 20.4489, "chinese": "贝尔格莱德, 塞尔维亚", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Belgrade_Collage.png/220px-Belgrade_Collage.png"},
+    {"city": "Ljubljana, Slovenia", "lat": 46.0569, "lon": 14.5058, "chinese": "卢布尔雅那, 斯洛文尼亚", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Ljubljana_Montage_2019.png/220px-Ljubljana_Montage_2019.png"},
+    {"city": "Bratislava, Slovakia", "lat": 48.1486, "lon": 17.1077, "chinese": "布拉迪斯拉发, 斯洛伐克", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Bratislava_Montage_2018.png/220px-Bratislava_Montage_2018.png"},
+    {"city": "Tallinn, Estonia", "lat": 59.4370, "lon": 24.7535, "chinese": "塔林, 爱沙尼亚", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Tallinn_Montage_2018.png/220px-Tallinn_Montage_2018.png"},
+    {"city": "Reykjavik, Iceland", "lat": 64.1355, "lon": -21.8954, "chinese": "雷克雅未克, 冰岛", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Reykjavik_montage.png/220px-Reykjavik_montage.png"},
+    {"city": "Tashkent, Uzbekistan", "lat": 41.2995, "lon": 69.2401, "chinese": "塔什干, 乌兹别克斯坦", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Tashkent_Montage_2017.png/220px-Tashkent_Montage_2017.png"},
+    {"city": "Bishkek, Kyrgyzstan", "lat": 42.8746, "lon": 74.5698, "chinese": "比什凯克, 吉尔吉斯斯坦", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Bishkek_montage.jpg/220px-Bishkek_montage.jpg"},
+    {"city": "Skopje, North Macedonia", "lat": 41.9973, "lon": 21.4280, "chinese": "斯科普里, 北马其顿", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Skopje_Montage_2017.png/220px-Skopje_Montage_2017.png"},
+    {"city": "Podgorica, Montenegro", "lat": 42.4416, "lon": 19.2662, "chinese": "波德戈里察, 黑山", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Podgorica_Montage_2018.png/220px-Podgorica_Montage_2018.png"},
+    {"city": "Sarajevo, Bosnia and Herzegovina", "lat": 43.8563, "lon": 18.4131, "chinese": "萨拉热窝, 波斯尼亚和黑塞哥维那", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Sarajevo_Montage_2018.png/220px-Sarajevo_Montage_2018.png"},
+    {"city": "Tirana, Albania", "lat": 41.3275, "lon": 19.8187, "chinese": "地拉那, 阿尔巴尼亚", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Tirana_Montage_2018.png/220px-Tirana_Montage_2018.png"}
+]
+
+        previous_temp ={};
+
+
         const x = d3.scaleLinear().range([80, width]);
         const y = d3.scaleBand().rangeRound([0, height]).padding(0.1);
-        previous_subs = {};
         
 
         // Define a custom color palette with enough colors for your categories
@@ -116,65 +213,53 @@
             "#6b6ecf", "#b5cf6b", "#e7ba52", "#d6616b", "#ce6dbd",
             "#9c9ede", "#cedb9c", "#e7cb94", "#f7b6d2", "#de9ed6",
             "#7f7f7f", "#bcbd22", "#17becf", "#393b79", "#637939",
-            "#8c6d31", "#843c39", "#7b4173"
+            "#8c6d31", "#843c39", "#7b4173", "#1f77b4", "#ff7f0e",
+            "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2",
+            "#7f7f7f", "#bcbd22", "#17becf", "#aec7e8", "#ffbb78",
+            "#98df8a", "#ff9896", "#c5b0d5", "#c49c94", "#f7b6d2",
+            "#c7c7c7", "#dbdb8d", "#9edae5", "#393b79", "#637939",
+            "#8c6d31", "#843c39", "#7b4173", "#5254a3", "#8ca252",
+            "#bd9e39", "#ad494a", "#a55194", "#6b6ecf", "#b5cf6b",
+            "#e7ba52", "#d6616b", "#ce6dbd", "#9c9ede", "#cedb9c",
+            "#e7cb94", "#f7b6d2", "#de9ed6", "#7f7f7f", "#bcbd22",
+            "#17becf", "#393b79", "#637939", "#8c6d31", "#843c39",
+            "#7b4173", "#5254a3", "#8ca252", "#bd9e39", "#ad494a"
         ];
-
         const color = d3.scaleOrdinal()
             //.domain(d3.range(customColors.length))
-            .domain(channel_realtime_data.map(d => d.channel_id))
+            .domain(city_list.map(d => d.city))
             .range(customColors);
 
         
 
         function update(data) {
             // Sort data
-            data.sort((a, b) => b.subscribers - a.subscribers);
+            data.sort((a, b) => b.temp - a.temp);
 
             // Update scales
-            x.domain([0, d3.max(data, d => d.subscribers)]);
-            y.domain(data.map(d => channel_data_dict[d.channel_id].title));
+            x.domain([-50, 50]);
+            y.domain(data.map(d => d.city));
 
             // Select bars
             const bars = g.selectAll(".bar")
-                .data(data, d => d.channel_id);
+                .data(data, d => d.city);
 
             // Enter selection: Create new groups for new data
             const barsEnter = bars.enter().append("g")
                 .attr("class", "bar")
-                .attr("transform", d => `translate(0, ${y(channel_data_dict[d.channel_id].title)})`);
+                .attr("transform", d => `translate(0, ${y(d.city)})`);
 
             barsEnter.append("rect")
                 .attr("x", 0)
                 .attr("height", y.bandwidth())
-                .attr("width", d => x(d.subscribers))
-                .style("fill", (d, i) => color(d.channel_id));  // Apply color based on index
+                .attr("width", d => x(d.temp))
+                .style("fill", (d, i) => color(d.city));  // Apply color based on index
 
 
-              // Add rank number in a circle on top of each bar
-           /* barsEnter.append("circle")
-                .attr("cx", 17)  // Position to the left of the bar
-                .attr("cy", y.bandwidth() / 2)
-                .attr("r", 15)  // Circle radius
-                 //fill transparent
-                .style("fill", "#a70606");  // Circle color
-            
-        
-
-            barsEnter.append("text")
-                .attr("class", "rank")
-                .attr("x", 17)  // Position to the left of the bar
-                .attr("y", y.bandwidth() / 2)
-                .attr("dy", ".35em")
-                .style("text-anchor", "middle")
-                .style("font-size", "14px")
-                .style("fill", "white")
-                .style("font-weight", "bold")
-                .text((d, i) => `${i + 1}`);
-*/
           
             barsEnter.append("text")
                 .attr("class", "subscribers-text")
-                .attr("x", d => x(d.subscribers) + 5)  // Position to the right of the bar
+                .attr("x", d => x(d.temp) + 5)  // Position to the right of the bar
                 .attr("y", y.bandwidth() / 2)
                 .attr("dy", ".35em")
                 //.text(d => d.subscribers.toLocaleString());
@@ -183,17 +268,17 @@
                 .attr("class", "arrow")
                 .attr("x", function(d) {
                     const textWidth = this.previousElementSibling.getComputedTextLength();
-                    return x(d.subscribers) + textWidth + 15; // Position 10 pixels to the right end of the first text
+                    return x(d.temp) + textWidth + 15; // Position 10 pixels to the right end of the first text
                 })
                 .attr("y", y.bandwidth() / 2)
                 .attr("dy", ".35em");
 
             barsEnter.append("image")
-                .attr("x", d => x(d.subscribers) - (y.bandwidth()-6) -3)  // Position to the right of the text
+                .attr("x", d => x(d.temp) - (y.bandwidth()-6) -3)  // Position to the right of the text
                 .attr("y", 3)  // Center vertically in the bar
                 .attr("width", y.bandwidth()-6)
                 .attr("height", y.bandwidth()-6)
-                .attr("xlink:href", d => channel_data_dict[d.channel_id].icon_url);
+                .attr("xlink:href", d => d.wiki_icon);
 
               // Add rank "stamp" on top of each bar
               stamp=barsEnter.append("rect")
@@ -224,26 +309,26 @@
 
             // Update selection: Update existing groups
             bars.transition().duration(1000)
-                .attr("transform", d => `translate(0, ${y(channel_data_dict[d.channel_id].title)})`);
+                .attr("transform", d => `translate(0, ${y(d.city)})`);
 
             bars.select("rect")
                 .transition()
                 .duration(1000)
-                .attr("width", d => x(d.subscribers))
-                .style("fill", (d, i) => color(d.channel_id));  // Apply color based on index
+                .attr("width", d => x(d.temp))
+                .style("fill", (d, i) => color(d.city));  // Apply color based on index
 
 
                 bars.select(".subscribers-text")
                 .transition()
                 .duration(1000)
                 .style("opacity", 1)
-                .attr("x", d => x(d.subscribers) + 5)  // Position to the right of the bar
-                .text(d => d.subscribers.toLocaleString())
+                .attr("x", d => x(d.temp) + 5)  // Position to the right of the bar
+                .text(d => print_temp(d.temp))
                 .each(function(d) {
                     const textElement = d3.select(this);
                     //const currentSubscribers = parseInt(textElement.text().replace(/[^0-9]/g, ''));
-                    const newSubscribers = d.subscribers;
-                    currentSubscribers = previous_subs[d.channel_id] || newSubscribers;
+                    const newSubscribers = d.temp;
+                    currentSubscribers = previous_subs[d.city] || newSubscribers;
                     const delta = newSubscribers - currentSubscribers;
                     
                     
@@ -268,19 +353,19 @@
             bars.select(".arrow")
                .attr("x", function(d) {
                     const textWidth = this.previousElementSibling.getComputedTextLength();
-                    return x(d.subscribers) + textWidth + 15; // Position 10 pixels to the right end of the first text
+                    return x(d.temp) + textWidth + 15; // Position 10 pixels to the right end of the first text
                 })
                 .each(function(d) {
                     const arrowElement = d3.select(this);
-                    const currentSubscribers = previous_subs[d.channel_id] || d.subscribers;
-                    previous_subs[d.channel_id] = d.subscribers;
+                    const currentSubscribers = previous_subs[d.city] || d.temp;
+                    previous_subs[d.city] = d.temp;
                     
-                    if (d.subscribers > currentSubscribers) {
+                    if (d.temp > currentSubscribers) {
                         arrowElement.text('⬆').style("fill", "green");
                          // Make the text blink
                          blink(arrowElement);
                         
-                    } else if (d.subscribers < currentSubscribers) {
+                    } else if (d.temp < currentSubscribers) {
                         arrowElement.text('⬇').style("fill", "red");
                         blink(arrowElement);
                         
@@ -297,8 +382,8 @@
             bars.exit().remove();
 
             // Update axes
-            g.select(".x-axis").call(d3.axisTop(x).tickFormat(formatNumber)).transition()
-                .duration(1000).style("font",  "bold 22px sans-serif").style("font-weight",  "bold");;
+            g.select(".x-axis").call(d3.axisTop(x).tickFormat(print_temp)).transition()
+                .duration(1000).style("font",  "bold 22px sans-serif").style("font-weight",  "bold");
             g.select(".y-axis").call(d3.axisLeft(y)).style("font", "bold 26px sans-serif"); 
             //updateMessageBar();
                 // Add drop shadow filter for the rank stamp
@@ -307,14 +392,14 @@
 
         g.append("g")
             .attr("class", "x-axis")
-            .call(d3.axisTop(x).tickFormat(formatNumber));
+            .call(d3.axisTop(x).tickFormat(print_temp));
 
         g.append("g")
             .attr("class", "y-axis")
             .call(d3.axisLeft(y));
 
     
-        fetchDataAndUpdateMessageBar();
+        get_realtime_data()
 
         
         // Simulate data update
@@ -322,89 +407,44 @@
             // Simulate new data
     
             get_realtime_data();
-        }, 10000);
+        }, 15000);
 
 
-        function get_realtime_data(){
-            // Get the current date
-            let now = new Date();
+        async function get_realtime_data(){
+            for(i in city_list){
+                await get_realtime_data_for_each_city(city_list[i],i);
+            }
 
-            // Format the date as YYYY-MM-DD-HH-MM-SS
-            let year = now.getFullYear();
-            let month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based, so add 1
-            let day = String(now.getDate()).padStart(2, '0');
-            let hours = String(now.getHours()).padStart(2, '0');
-            let minutes = String(now.getMinutes()).padStart(2, '0');
-            let seconds = String(now.getSeconds()).padStart(2, '0');
+            update(city_list);
+            updateMessageBar();
+            updateMessageBar2();
+               
+        }
 
-            let formattedDate = `${year}-${month}-${day}-${hours}-${minutes}-${seconds}`;
-            // Construct the URL with the date parameter
-            let url = `http://unladma.hopto.org/yt/top-chinese-channels-subscribers/?date=${formattedDate}`;
+        function get_realtime_data_for_each_city(city,i){
+            let url = `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lon}&current=temperature_2m,precipitation,relative_humidity_2m,wind_speed_10m,wind_direction_10m,surface_pressure,cloud_cover`;
             return fetch(url)
                 .then(response => response.json())
                 .then(json => {
-                    //data = json["results"];
-                    channel_realtime_data = json;
-            
-                    //for each of the channel data, generate a random number, if the random < 0.5, just keep the previous value
-                    for(i in channel_realtime_data){
-                        if(Math.random() < 0.3){
-                            channel_realtime_data[i]["subscribers"] = previous_subs[channel_realtime_data[i]["channel_id"]] || channel_realtime_data[i]["subscribers"];
-                        }
-                    }
-                    
-                    update(channel_realtime_data);
+                    data = json["current"];
+ 
+                    city_list[i]["temp"] = data["temperature_2m"];
+                    city_list[i]["precipitation"] = data["precipitation"];
+                    city_list[i]["relative_humidity"] = data["relative_humidity_2m"];
+                    city_list[i]["wind_speed"] = data["wind_speed_10m"];
+                    city_list[i]["wind_direction"] = data["wind_direction_10m"];
+                    city_list[i]["surface_pressure"] = data["surface_pressure"];
+                    city_list[i]["cloud_cover"] = data["cloud_cover"];
+        
+                    //
                     
 
                 });
+
+
         }
 
-        function get_channel_meta_data(){
-            return fetch("http://unladma.hopto.org/yt/top-chinese-channels/")
-                .then(response => response.json())
-                .then(json => {
-                    channel_data = json["results"];
-                    console.info(channel_data.length);
-                    for(i in channel_data){
-                        if(channel_data[i]["title"].substr(0,6) == '妙見神與方臉')
-                            channel_data[i]["title"] = '妙見神與方臉';
-                        channel_data_dict[channel_data[i]["channel_id"]]={"title":channel_data[i]["title"],"description":channel_data[i]["description"],"icon_url":channel_data[i]["icon_url"],"join_date":channel_data[i]["join_date"],"location":channel_data[i]["location"]};
-                    
-
-                    }
   
-            
-                    
-                      
-                });
-        }
-
-        async function fetchDataAndUpdateMessageBar() {
-        try {
-            await get_channel_meta_data();
-            await get_realtime_data();
-            
-            
-            updateMessageBar();
-            updateMessageBar2();
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    }
-
-
-        function formatNumber(num) {
-            if (num >= 1_000_000_000) {
-                return (num / 1_000_000_000).toFixed(0) + 'B'; // Number >= 1 billion
-            } else if (num >= 1_000_000) {
-                return (num / 1_000_000).toFixed(0) + 'M'; // Number >= 1 million
-            } else if (num >= 1_000) {
-                return (num / 1_000).toFixed(0) + 'K'; // Number >= 1 thousand
-            } else {
-                return num.toString(); // Number < 1 thousand
-            }
-        }
-
 
         let direction = 1; // 1 for down, -1 for up
         let scrollStep = 1; // pixels per step
@@ -476,9 +516,8 @@ function updateMessageBar() {
 
     // Construct the scrolling message
 
-     channel_realtime_data.forEach((d, i) => {
-        const channel = channel_data_dict[d.channel_id];
-        const message = ` ${channel.title},  建立时间: ${formatDate(channel.join_date)},  注册地: ${translateLocation(channel.location)}, 影片上传数量: ${d.video_count}, 影片浏览总次数: ${d.view_count.toLocaleString()}`;
+     city_list.forEach((d, i) => {
+        const message = ` ${d.city},  Precipitation: ${d.precipitation},  Relative Humidity: ${d.relative_humidity}, Wind Speed: ${d.wind_speed}, Wind Direction: ${d.wind_direction}, Surface Pressure: ${d.surface_pressure}, Cloud Cover: ${d.cloud_cover}`;
         
         // Append a span element for each channel with a different background color
         span=messageBarContent.append("span")
@@ -505,7 +544,7 @@ function updateMessageBar() {
 }
 
 function updateMessageBar2(){
-    message = "中文Youtube频道订阅排行榜Top 100，数据每10秒更新一次，数据来源：Youtube API 以及 Wikipedia中国大陆、台湾、香港YouTube频道订阅人数排行榜，数据仅供参考，欢迎评论和建议。原则上只列出个人经营的Youtube Channel，不包括拥有实体电视台或广播电台等等的自营节目的媒体事业频道（即是以电视节目或新闻为主的频道）、唱片公司频道、歌手、音乐家、乐团、动漫、卡通、电影、品牌等非创作者类频道。";
+    message = "Global cities ranked by their real time temperatures. Data are collected every 15 seconds.";
     const messageBarContent2 = d3.select("#message-bar-content2");
     span=messageBarContent2.append("span")
     .style("vertical-align", "middle")
@@ -515,42 +554,13 @@ function updateMessageBar2(){
 
 }
 
-
-function formatDate(inputDate) {
-    // Create a new Date object from the input date string
-    const date = new Date(inputDate);
-
-    // Extract the year, month, and day
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-    const day = String(date.getDate()).padStart(2, '0');
-
-    // Format the date as yyyy-mm-dd
-    const formattedDate = `${year}-${month}-${day}`;
-
-    return formattedDate;
+function print_temp(celsius) {
+    // Convert Celsius to Fahrenheit
+    const fahrenheit = (celsius * 9/5) + 32;
+    
+    // Return the formatted string
+    return `${celsius}°C (${fahrenheit.toFixed(2)}°F)`;
 }
-
-
-function translateLocation(location) {
-    const locationMap = {
-        "HK": "香港",
-        "JP": "日本",
-        "TW": "台湾",
-        "US": "美国",
-        "ZN": "中国",
-        "AU":"澳大利亚",
-        "null": "未知",
-        "SG": "新加坡",
-        "CA": "加拿大",
-        "PT": "葡萄牙",
-        "CN": "中国",
-
-    };
-
-    return locationMap[location] || location;
-}
-
 
 
 
