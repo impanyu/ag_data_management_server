@@ -142,12 +142,11 @@
     {"city": "Tel Aviv, Israel", "lat": 32.0853, "lon": 34.7818, "chinese": "特拉维夫, 以色列", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/PikiWiki_Israel_68164_port_of_jaffa.jpg/320px-PikiWiki_Israel_68164_port_of_jaffa.jpg"},
     {"city": "Brussels, Belgium", "lat": 50.8503, "lon": 4.3517, "chinese": "布鲁塞尔, 比利时", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Arcade_du_Cinquantenaire_%28DSCF7405%29.jpg/320px-Arcade_du_Cinquantenaire_%28DSCF7405%29.jpg"},
     {"city": "Frankfurt, Germany", "lat": 50.1109, "lon": 8.6821, "chinese": "法兰克福, 德国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Frankfurter_Altstadt_mit_Skyline_2019_%28100MP%29.jpg/320px-Frankfurter_Altstadt_mit_Skyline_2019_%28100MP%29.jpg"},
-    {"city": "Oslo, Norway", "lat": 59.9139, "lon": 10.7522, "chinese": "奥斯陆, 挪威", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Oslo_collage.png/220px-Oslo_collage.png"},
-    {"city": "Mumbai, India", "lat": 19.0760, "lon": 72.8777, "chinese": "孟买, 印度", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Mumbai_skyline.jpg/220px-Mumbai_skyline.jpg"},
-    {"city": "Rio de Janeiro, Brazil", "lat": -22.9068, "lon": -43.1729, "chinese": "里约热内卢, 巴西", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Christ_the_Redeemer_%28statue%29_viewed_from_base_in_Rio_de_Janeiro_Brazil.jpg/220px-Christ_the_Redeemer_%28statue%29_viewed_from_base_in_Rio_de_Janeiro_Brazil.jpg"},
-    {"city": "Santiago, Chile", "lat": -33.4489, "lon": -70.6693, "chinese": "圣地亚哥, 智利", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/SantiagoCity.jpg/220px-SantiagoCity.jpg"},
-    {"city": "Athens, Greece", "lat": 37.9838, "lon": 23.7275, "chinese": "雅典, 希腊", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Acropolis_of_Athens_16th-17th-century_restoration_view.jpg/220px-Acropolis_of_Athens_16th-17th-century_restoration_view.jpg"},
-    {"city": "Bangalore, India", "lat": 12.9716, "lon": 77.5946, "chinese": "班加罗尔, 印度", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Bangalore_montage.jpg/220px-Bangalore_montage.jpg"},
+    {"city": "Oslo, Norway", "lat": 59.9139, "lon": 10.7522, "chinese": "奥斯陆, 挪威", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Bj%C3%B8rvika_-_Oslo%2C_Norway_2020-12-23.jpg/320px-Bj%C3%B8rvika_-_Oslo%2C_Norway_2020-12-23.jpg"},
+    {"city": "Mumbai, India", "lat": 19.0760, "lon": 72.8777, "chinese": "孟买, 印度", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/BackBay_skyline.jpg/320px-BackBay_skyline.jpg"},
+    {"city": "Santiago, Chile", "lat": -33.4489, "lon": -70.6693, "chinese": "圣地亚哥, 智利", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Santiago_de_Chile%2C_Desde_Cerro_San_Crist%C3%B3bal_%28cropped_panorama%29.jpg/320px-Santiago_de_Chile%2C_Desde_Cerro_San_Crist%C3%B3bal_%28cropped_panorama%29.jpg"},
+    {"city": "Athens, Greece", "lat": 37.9838, "lon": 23.7275, "chinese": "雅典, 希腊", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/The_Acropolis_from_Mount_Lycabettus_on_October_5%2C_2019_%28cropped%29.jpg/320px-The_Acropolis_from_Mount_Lycabettus_on_October_5%2C_2019_%28cropped%29.jpg"},
+    {"city": "Bangalore, India", "lat": 12.9716, "lon": 77.5946, "chinese": "班加罗尔, 印度", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Vidhana_Soudha_2012.jpg/320px-Vidhana_Soudha_2012.jpg"},
     {"city": "Jakarta, Indonesia", "lat": -6.2088, "lon": 106.8456, "chinese": "雅加达, 印度尼西亚", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Jakarta_Skyline_Part_2.jpg/220px-Jakarta_Skyline_Part_2.jpg"},
     {"city": "Lima, Peru", "lat": -12.0464, "lon": -77.0428, "chinese": "利马, 秘鲁", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Lima_collage.jpg/220px-Lima_collage.jpg"},
     {"city": "Warsaw, Poland", "lat": 52.2297, "lon": 21.0122, "chinese": "华沙, 波兰", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Warsaw_collage.jpg/220px-Warsaw_collage.jpg"},
@@ -259,7 +258,7 @@
           
             barsEnter.append("text")
                 .attr("class", "subscribers-text")
-                .attr("x", d => x(d.temp) + 5)  // Position to the right of the bar
+                .attr("x", d => x(d.temp) + 10)  // Position to the right of the bar
                 .attr("y", y.bandwidth() / 2)
                 .attr("dy", ".35em")
                 //.text(d => d.subscribers.toLocaleString());
@@ -276,7 +275,7 @@
             barsEnter.append("image")
                 .attr("x", d => 50 ) // Position to the right of the text
                 .attr("y", 3)  // Center vertically in the bar
-                .attr("width", y.bandwidth()*3)
+                //.attr("width", y.bandwidth()*3)
                 .attr("height", y.bandwidth()-6)
                 .attr("xlink:href", d => d.wiki_icon);
 
@@ -322,7 +321,7 @@
                 .transition()
                 .duration(1000)
                 .style("opacity", 1)
-                .attr("x", d => x(d.temp) + 5)  // Position to the right of the bar
+                .attr("x", d => x(d.temp) + 10)  // Position to the right of the bar
                 .text(d => print_temp(d.temp))
                 .each(function(d) {
                     const textElement = d3.select(this);
