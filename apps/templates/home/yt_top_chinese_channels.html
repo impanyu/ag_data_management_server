@@ -418,7 +418,7 @@
         let scrollDelay = 20; // delay between steps in milliseconds
         let pauseDuration = 3000; // pause between scrolls in milliseconds
 
-        function scrollPage() {
+        /*function scrollPage() {
             if (direction === 1 && (window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
                 direction = -1;
                 setTimeout(scrollPage, pauseDuration); // Pause for 2 seconds
@@ -430,6 +430,18 @@
             }
 
             window.scrollBy(0, scrollStep * direction);
+            setTimeout(scrollPage, scrollDelay);
+        }*/
+
+
+        function scrollPage() {
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+                window.scrollTo(0, 0); // Reset to the top
+                setTimeout(scrollPage, pauseDuration); // Pause before continuing to scroll
+                return;
+            }
+
+            window.scrollBy(0, scrollStep);
             setTimeout(scrollPage, scrollDelay);
         }
 
