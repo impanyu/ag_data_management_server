@@ -96,6 +96,7 @@
             width = +svg.attr("width") - margin.left - margin.right;
             height = +svg.attr("height") - margin.top - margin.bottom;
             g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+            
         city_list =[
     {"city": "New York City, USA", "lat": 40.7128, "lon": -74.0060, "chinese": "纽约, 美国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/New_york_times_square-terabass.jpg/220px-New_york_times_square-terabass.jpg"},
     {"city": "London, UK", "lat": 51.5074, "lon": -0.1278, "chinese": "伦敦, 英国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Palace_of_Westminster_from_the_dome_on_Methodist_Central_Hall.jpg/220px-Palace_of_Westminster_from_the_dome_on_Methodist_Central_Hall.jpg"},
@@ -198,11 +199,13 @@
     {"city": "Chengdu, China", "lat": 30.5728, "lon": 104.0668, "chinese": "成都, 中国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Chengdu_skyline.jpg/220px-Chengdu_skyline.jpg"},
     {"city": "Shenzhen, China", "lat": 22.5431, "lon": 114.0579, "chinese": "深圳, 中国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Shenzhen_skyline_view_from_Lianhuashan_Park.jpg/220px-Shenzhen_skyline_view_from_Lianhuashan_Park.jpg"}
 
-
-
 ]
 
-        previous_temps ={};
+      last_city_list =  JSON.parse(JSON.stringify(city_list));
+      curret_city_list =  JSON.parse(JSON.stringify(city_list));
+
+
+     previous_temps ={};
 
 
         const x = d3.scaleLinear().range([0, width]);
@@ -395,19 +398,27 @@
             .attr("class", "y-axis")
             .call(d3.axisLeft(y));
 
-    
-        get_realtime_data();
-    
+
+        get_supporting_data();
         
+
         updateMessageBar2();
 
+        SUPPORTING_DATA_REFRESH_INTERVAL = 60000*20; //20 mins
+        last_time =new Date();
+        this_time =new Date();
+        // get supporting data
+        setInterval(() => {
+    
+            get_supporting_data();
+        }, SUPPORTING_DATA_REFRESH_INTERVAL);
         
         // Simulate data update
         setInterval(() => {
             // Simulate new data
     
             get_realtime_data();
-        }, 60000);
+        }, 10000);
 
 
        /* async function get_realtime_data(){
@@ -421,7 +432,7 @@
                
         }*/
 
-        function get_realtime_data(){
+        function get_supporting_data(){
             lats=""
             lons=""
             for(i in city_list){
@@ -436,9 +447,20 @@
             return fetch(url)
                 .then(response => response.json())
                 .then(json => {
+                    now = new Date();
+                    last_time = new Date(now.getTime() - SUPPORTING_DATA_REFRESH_INTERVAL);
+                    this_time = now;
                     for(i in json){
                         data = json[i]["current"];
-    
+
+                        last_city_list[i]["temp"] = city_list[i]["temp"] || data["temperature_2m"];
+                        last_city_list[i]["precipitation"] = city_list[i]["precipitation"]  || data["precipitation"];
+                        last_city_list[i]["relative_humidity"] = city_list[i]["relative_humidity"] || data["relative_humidity_2m"];
+                        last_city_list[i]["wind_speed"] = city_list[i]["wind_speed"]  || data["wind_speed_10m"];
+                        last_city_list[i]["wind_direction"] = city_list[i]["wind_direction"] || data["wind_direction_10m"];
+                        last_city_list[i]["surface_pressure"] = city_list[i]["surface_pressure"] || data["surface_pressure"];
+                        last_city_list[i]["cloud_cover"] = city_list[i]["cloud_cover"] || data["cloud_cover"];
+                     
                         city_list[i]["temp"] = data["temperature_2m"];
                         city_list[i]["precipitation"] = data["precipitation"];
                         city_list[i]["relative_humidity"] = data["relative_humidity_2m"];
@@ -447,11 +469,25 @@
                         city_list[i]["surface_pressure"] = data["surface_pressure"];
                         city_list[i]["cloud_cover"] = data["cloud_cover"];
                     }
-                    //
-                    update(city_list);
-                    updateMessageBar();
 
                 });
+
+        }
+
+        function get_realtime_data(){
+            keys =["temp","precipitation","relative_humidity","wind_speed","wind_direction","surface_pressure","cloud_cover"];
+            now = new Date();
+            for(i in city_list){
+                for(j in keys){
+                      key = keys[j];
+                      current_city_list[i][key] = (last_city_list[i][key] - city_list[i][key])/(SUPPORTING_DATA_REFRESH_INTERVAL) * (now-this_time)+ city_list[i][key];
+                    
+                }
+            }
+       
+
+                update(current_city_list);
+                updateMessageBar();
 
 
         }
@@ -528,7 +564,7 @@ function showDelta(element, delta, isPositive) {
 
         // Select spans
         const spans = messageBarContent.selectAll("span")
-                    .data(city_list, d => d.city);
+                    .data(current_city_list, d => d.city);
 
         // Enter selection: Create new groups for new data
         const spansEnter = spans.enter().append("span")
@@ -544,8 +580,17 @@ function showDelta(element, delta, isPositive) {
         
         // Append the text message
         spansEnter.append("span")
-            .text(d => ` ${d.city},  Precipitation: ${d.precipitation.toFixed(1)}mm,  Relative Humidity: ${d.relative_humidity.toFixed(1)}%, Wind Speed: ${d.wind_speed.toFixed(1)}km/h,  Surface Pressure: ${d.surface_pressure.toFixed(1)}hPa, Cloud Cover: ${d.cloud_cover.toFixed(1)}%`)
-             .style("vertical-align", "middle")
+        .text(d => {
+            const city = d.city;
+            const precipitation = d.precipitation.toFixed(1).padStart(5);
+            const relativeHumidity = d.relative_humidity.toFixed(1).padStart(5);
+            const windSpeed = d.wind_speed.toFixed(1).padStart(5);
+            const surfacePressure = d.surface_pressure.toFixed(1).padStart(5);
+            const cloudCover = d.cloud_cover.toFixed(1).padStart(5);
+
+            return ` ${city} Precipitation: ${precipitation}mm,  Relative Humidity: ${relativeHumidity}%, Wind Speed: ${windSpeed}km/h,  Surface Pressure: ${surfacePressure}hPa, Cloud Cover: ${cloudCover}%`;
+        })
+            .style("vertical-align", "middle")
             .style("font-size", "25px");
 
 
