@@ -536,7 +536,7 @@ function showDelta(element, delta, isPositive) {
         const messageBarContent = d3.select("#message-bar-content");
 
         // Select spans
-        const spans = g.selectAll("span")
+        const spans = messageBarContent.selectAll("span")
                     .data(city_list, d => d.city);
 
         // Enter selection: Create new groups for new data
