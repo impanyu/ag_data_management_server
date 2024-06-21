@@ -98,30 +98,30 @@
             g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
             
         city_list =[
-    {"city": "New York City, USA", "lat": 40.7128, "lon": -74.0060, "chinese": "纽约, 美国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Liberty02.jpg/192px-Liberty02.jpg"},
-    {"city": "London, UK", "lat": 51.5074, "lon": -0.1278, "chinese": "伦敦, 英国", "wiki_icon": "https://uphttpsload.wikimedia.org/wikipedia/commons/thumb/e/ec/Palace_of_Westminster_from_the_dome_on_Methodist_Central_Hall.jpg/220px-Palace_of_Westminster_from_the_dome_on_Methodist_Central_Hall.jpg"},
-    {"city": "Tokyo, Japan", "lat": 35.6895, "lon": 139.6917, "chinese": "东京, 日本", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Skyscrapers_of_Shinjuku_2009_January.jpg/220px-Skyscrapers_of_Shinjuku_2009_January.jpg"},
-    {"city": "Paris, France", "lat": 48.8566, "lon": 2.3522, "chinese": "巴黎, 法国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Paris_Night.jpg/220px-Paris_Night.jpg"},
-    {"city": "Hong Kong, China", "lat": 22.3193, "lon": 114.1694, "chinese": "香港, 中国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/2009_Hong_Kong_Island_skyline.jpg/220px-2009_Hong_Kong_Island_skyline.jpg"},
-    {"city": "Singapore, Singapore", "lat": 1.3521, "lon": 103.8198, "chinese": "新加坡, 新加坡", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Singapore_skyline_at_night_-_20080226.jpg/220px-Singapore_skyline_at_night_-_20080226.jpg"},
-    {"city": "Sydney, Australia", "lat": -33.8688, "lon": 151.2093, "chinese": "悉尼, 澳大利亚", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Sydney_Opera_House_Sails.jpg/220px-Sydney_Opera_House_Sails.jpg"},
-    {"city": "Los Angeles, USA", "lat": 34.0522, "lon": -118.2437, "chinese": "洛杉矶, 美国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/LA_Skyline_Mountains2.jpg/220px-LA_Skyline_Mountains2.jpg"},
-    {"city": "Dubai, UAE", "lat": 25.276987, "lon": 55.296249, "chinese": "迪拜, 阿联酋", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Dubai_Downtown_skyline.jpg/220px-Dubai_Downtown_skyline.jpg"},
-    {"city": "Barcelona, Spain", "lat": 41.3851, "lon": 2.1734, "chinese": "巴塞罗那, 西班牙", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Barcelona_collage.JPG/220px-Barcelona_collage.JPG"},
-    {"city": "San Francisco, USA", "lat": 37.7749, "lon": -122.4194, "chinese": "旧金山, 美国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/San_Francisco_from_Twin_Peaks_January_2008_panorama_1.jpg/220px-San_Francisco_from_Twin_Peaks_January_2008_panorama_1.jpg"},
-    {"city": "Amsterdam, Netherlands", "lat": 52.3676, "lon": 4.9041, "chinese": "阿姆斯特丹, 荷兰", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Amsterdam_collage.jpg/220px-Amsterdam_collage.jpg"},
-    {"city": "Toronto, Canada", "lat": 43.651070, "lon": -79.347015, "chinese": "多伦多, 加拿大", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Toronto_skyline_2013.jpg/220px-Toronto_skyline_2013.jpg"},
-    {"city": "Berlin, Germany", "lat": 52.5200, "lon": 13.4050, "chinese": "柏林, 德国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Siegessaeule_Abends_%282%29.jpg/220px-Siegessaeule_Abends_%282%29.jpg"},
-    {"city": "Chicago, USA", "lat": 41.8781, "lon": -87.6298, "chinese": "芝加哥, 美国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Chicago_skyline%2C_viewed_from_John_Hancock_Center.jpg/220px-Chicago_skyline%2C_viewed_from_John_Hancock_Center.jpg"},
-    {"city": "Madrid, Spain", "lat": 40.4168, "lon": -3.7038, "chinese": "马德里, 西班牙", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Madrid_collage.jpg/220px-Madrid_collage.jpg"},
-    {"city": "Seoul, South Korea", "lat": 37.5665, "lon": 126.9780, "chinese": "首尔, 韩国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Seoul_City_Montage.jpg/220px-Seoul_City_Montage.jpg"},
-    {"city": "Shanghai, China", "lat": 31.2304, "lon": 121.4737, "chinese": "上海, 中国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/The_Bund%2C_Shanghai%2C_China.jpg/220px-The_Bund%2C_Shanghai%2C_China.jpg"},
-    {"city": "Melbourne, Australia", "lat": -37.8136, "lon": 144.9631, "chinese": "墨尔本, 澳大利亚", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Flinders_street_station_at_night.jpg/220px-Flinders_street_station_at_night.jpg"},
-    {"city": "Beijing, China", "lat": 39.9042, "lon": 116.4074, "chinese": "北京, 中国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Beijing_montage.png/220px-Beijing_montage.png"},
-    {"city": "Bangkok, Thailand", "lat": 13.7563, "lon": 100.5018, "chinese": "曼谷, 泰国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Bangkok_skytrain_sunset.jpg/220px-Bangkok_skytrain_sunset.jpg"},
-    {"city": "Istanbul, Turkey", "lat": 41.0082, "lon": 28.9784, "chinese": "伊斯坦布尔, 土耳其", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Istanbul_collage.jpg/220px-Istanbul_collage.jpg"},
-    {"city": "Rome, Italy", "lat": 41.9028, "lon": 12.4964, "chinese": "罗马, 意大利", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Rome_montage.jpg/220px-Rome_montage.jpg"},
-    {"city": "Moscow, Russia", "lat": 55.7558, "lon": 37.6173, "chinese": "莫斯科, 俄罗斯", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Collage_of_views_of_Moscow.jpg/220px-Collage_of_views_of_Moscow.jpg"},
+    {"city": "New York City, USA", "lat": 40.7128, "lon": -74.0060, "chinese": "纽约, 美国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu_%28cropped%29.jpg/320px-View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu_%28cropped%29.jpg"},
+    {"city": "London, UK", "lat": 51.5074, "lon": -0.1278, "chinese": "伦敦, 英国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Palace_of_Westminster%2C_London_-_Feb_2007.jpg/320px-Palace_of_Westminster%2C_London_-_Feb_2007.jpg"},
+    {"city": "Tokyo, Japan", "lat": 35.6895, "lon": 139.6917, "chinese": "东京, 日本", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Skyscrapers_of_Shinjuku_2009_January.jpg/320px-Skyscrapers_of_Shinjuku_2009_January.jpg"},
+    {"city": "Paris, France", "lat": 48.8566, "lon": 2.3522, "chinese": "巴黎, 法国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/La_Tour_Eiffel_vue_de_la_Tour_Saint-Jacques%2C_Paris_ao%C3%BBt_2014_%282%29.jpg/320px-La_Tour_Eiffel_vue_de_la_Tour_Saint-Jacques%2C_Paris_ao%C3%BBt_2014_%282%29.jpg"},
+    {"city": "Hong Kong, China", "lat": 22.3193, "lon": 114.1694, "chinese": "香港, 中国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Hong_Kong_Skyline_view_from_the_peak_2017.jpg/320px-Hong_Kong_Skyline_view_from_the_peak_2017.jpg"},
+    {"city": "Singapore, Singapore", "lat": 1.3521, "lon": 103.8198, "chinese": "新加坡, 新加坡", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Marina_Bay%2C_Financial_District_and_Singapore_River_%2835622190292%29.jpg/320px-Marina_Bay%2C_Financial_District_and_Singapore_River_%2835622190292%29.jpg"},
+    {"city": "Sydney, Australia", "lat": -33.8688, "lon": 151.2093, "chinese": "悉尼, 澳大利亚", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Sydney_City_Panorama_%2820155327722%29.jpg/320px-Sydney_City_Panorama_%2820155327722%29.jpg"},
+    {"city": "Los Angeles, USA", "lat": 34.0522, "lon": -118.2437, "chinese": "洛杉矶, 美国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Los_Angeles_with_Mount_Baldy.jpg/320px-Los_Angeles_with_Mount_Baldy.jpg"},
+    {"city": "Dubai, UAE", "lat": 25.276987, "lon": 55.296249, "chinese": "迪拜, 阿联酋", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Dubai_Skyline_mit_Burj_Khalifa_%28cropped%29.jpg/320px-Dubai_Skyline_mit_Burj_Khalifa_%28cropped%29.jpg"},
+    {"city": "Barcelona, Spain", "lat": 41.3851, "lon": 2.1734, "chinese": "巴塞罗那, 西班牙", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Aerial_view_of_Barcelona%2C_Spain_%2851227309370%29_%28cropped%29.jpg/320px-Aerial_view_of_Barcelona%2C_Spain_%2851227309370%29_%28cropped%29.jpg"},
+    {"city": "San Francisco, USA", "lat": 37.7749, "lon": -122.4194, "chinese": "旧金山, 美国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/San_Francisco_from_the_Marin_Headlands_in_August_2022.jpg/320px-San_Francisco_from_the_Marin_Headlands_in_August_2022.jpg"},
+    {"city": "Amsterdam, Netherlands", "lat": 52.3676, "lon": 4.9041, "chinese": "阿姆斯特丹, 荷兰", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Imagen_de_los_canales_conc%C3%A9ntricos_en_%C3%81msterdam.png/320px-Imagen_de_los_canales_conc%C3%A9ntricos_en_%C3%81msterdam.png"},
+    {"city": "Toronto, Canada", "lat": 43.651070, "lon": -79.347015, "chinese": "多伦多, 加拿大", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/CC_2022-06-18_193-Pano_%28cropped%29_01.jpg/320px-CC_2022-06-18_193-Pano_%28cropped%29_01.jpg"},
+    {"city": "Berlin, Germany", "lat": 52.5200, "lon": 13.4050, "chinese": "柏林, 德国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Museumsinsel_Berlin_Juli_2021_1_%28cropped%29.jpg/320px-Museumsinsel_Berlin_Juli_2021_1_%28cropped%29.jpg"},
+    {"city": "Chicago, USA", "lat": 41.8781, "lon": -87.6298, "chinese": "芝加哥, 美国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Chicago_Skyline_in_September_2023_%28cropped%29.jpg/320px-Chicago_Skyline_in_September_2023_%28cropped%29.jpg"},
+    {"city": "Madrid, Spain", "lat": 40.4168, "lon": -3.7038, "chinese": "马德里, 西班牙", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Madrid_-_Sky_Bar_360%C2%BA_%28Hotel_Riu_Plaza_Espa%C3%B1a%29%2C_vistas_19.jpg/320px-Madrid_-_Sky_Bar_360%C2%BA_%28Hotel_Riu_Plaza_Espa%C3%B1a%29%2C_vistas_19.jpg"},
+    {"city": "Seoul, South Korea", "lat": 37.5665, "lon": 126.9780, "chinese": "首尔, 韩国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Seoul_%28175734251%29_%28cropped%29.jpg/320px-Seoul_%28175734251%29_%28cropped%29.jpg"},
+    {"city": "Shanghai, China", "lat": 31.2304, "lon": 121.4737, "chinese": "上海, 中国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Huangpu_Park_20124-Shanghai_%2832208802494%29.jpg/320px-Huangpu_Park_20124-Shanghai_%2832208802494%29.jpg"},
+    {"city": "Melbourne, Australia", "lat": -37.8136, "lon": 144.9631, "chinese": "墨尔本, 澳大利亚", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Melburnian_Skyline.jpg/320px-Melburnian_Skyline.jpg"},
+    {"city": "Beijing, China", "lat": 39.9042, "lon": 116.4074, "chinese": "北京, 中国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Skyline_of_Beijing_CBD_from_the_southeast_%2820210907094201%29.jpg/320px-Skyline_of_Beijing_CBD_from_the_southeast_%2820210907094201%29.jpg"},
+    {"city": "Bangkok, Thailand", "lat": 13.7563, "lon": 100.5018, "chinese": "曼谷, 泰国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Bangkok_Night_Wikimedia_Commons.jpg/320px-Bangkok_Night_Wikimedia_Commons.jpg"},
+    {"city": "Istanbul, Turkey", "lat": 41.0082, "lon": 28.9784, "chinese": "伊斯坦布尔, 土耳其", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Historical_peninsula_and_modern_skyline_of_Istanbul.jpg/320px-Historical_peninsula_and_modern_skyline_of_Istanbul.jpg"},
+    {"city": "Rome, Italy", "lat": 41.9028, "lon": 12.4964, "chinese": "罗马, 意大利", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Rome_skyline_panorama.jpg/320px-Rome_skyline_panorama.jpg"},
+    {"city": "Moscow, Russia", "lat": 55.7558, "lon": 37.6173, "chinese": "莫斯科, 俄罗斯", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Saint_Basil%27s_Cathedral_and_the_Red_Square.jpg/320px-Saint_Basil%27s_Cathedral_and_the_Red_Square.jpg"},
     {"city": "Vienna, Austria", "lat": 48.2082, "lon": 16.3738, "chinese": "维也纳, 奥地利", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Wien_Montage.jpg/220px-Wien_Montage.jpg"},
     {"city": "Miami, USA", "lat": 25.7617, "lon": -80.1918, "chinese": "迈阿密, 美国", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Miami_skyline.JPG/220px-Miami_skyline.JPG"},
     {"city": "Zurich, Switzerland", "lat": 47.3769, "lon": 8.5417, "chinese": "苏黎世, 瑞士", "wiki_icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Z%C3%BCrich_-_Limmatquai.jpg/220px-Z%C3%BCrich_-_Limmatquai.jpg"},
@@ -277,7 +277,7 @@
                 .attr("x", d => x(d.temp) - (y.bandwidth()-6) -3)  // Position to the right of the text
                 .attr("y", 3)  // Center vertically in the bar
                 .attr("width", y.bandwidth()-6)
-                .attr("height", y.bandwidth()-6)
+                //.attr("height", y.bandwidth()-6)
                 .attr("xlink:href", d => d.wiki_icon);
 
               // Add rank "stamp" on top of each bar
@@ -339,7 +339,7 @@
                          blink(textElement);
                          showDelta(textElement, delta, true); // Pass true for positive change
                     } else if (newSubscribers < currentSubscribers-0.1) {
-                        textElement.style("fill", "blue");
+                        textElement.style("fill", "#0257f5");
                          // Make the text blink
                          blink(textElement);
                          showDelta(textElement, delta, false); // Pass true for negative change
@@ -360,13 +360,13 @@
                     const currentSubscribers = previous_temps[d.city] || d.temp;
                     previous_temps[d.city] = d.temp;
                     
-                    if (d.temp > currentSubscribers) {
+                    if (d.temp > currentSubscribers+0.1) {
                         arrowElement.text('⬆').style("fill", "red");
                          // Make the text blink
                          blink(arrowElement);
                         
-                    } else if (d.temp < currentSubscribers) {
-                        arrowElement.text('⬇').style("fill", "blue");
+                    } else if (d.temp < currentSubscribers-0.1) {
+                        arrowElement.text('⬇').style("fill", "#0257f5");
                         blink(arrowElement);
                         
 
