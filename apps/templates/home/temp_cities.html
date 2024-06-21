@@ -397,6 +397,7 @@
 
     
         get_realtime_data();
+        createMessageBar();
         
         updateMessageBar2();
 
@@ -521,8 +522,7 @@ function showDelta(element, delta, isPositive) {
             });
        
 }
-
-    function updateMessageBar() {
+   function createMessageBar(){
         const messageBarContent = d3.select("#message-bar-content");
 
         // Select spans
@@ -540,12 +540,21 @@ function showDelta(element, delta, isPositive) {
                 .style("height", "70px")
                 .style("vertical-align", "middle")
                 .style("margin-right", "5px");
-         
+        
         // Append the text message
         spansEnter.append("span")
             .text(d=>` ${d.city},  Precipitation: ${d.precipitation}mm,  Relative Humidity: ${d.relative_humidity}%, Wind Speed: ${d.wind_speed}km/h,  Surface Pressure: ${d.surface_pressure}hPa, Cloud Cover: ${d.cloud_cover}%`)
             .style("vertical-align", "middle")
             .style("font-size", "25px");
+
+   }
+    function updateMessageBar() {
+        const messageBarContent = d3.select("#message-bar-content");
+
+        // Select spans
+        const spans = messageBarContent.selectAll("span")
+                    .data(city_list, d => d.city);
+
 
         
         spans.select("img")
