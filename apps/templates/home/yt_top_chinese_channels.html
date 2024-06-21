@@ -233,7 +233,7 @@
                 .style("fill", (d, i) => color(d.channel_id));  // Apply color based on index
 
 
-                bars.select(".subscribers-text")
+            bars.select(".subscribers-text")
                 .transition()
                 .duration(1000)
                 .style("opacity", 1)
@@ -292,6 +292,8 @@
             bars.select("image")
                 .transition()
                 .duration(1000)
+            bars.select(".rank")
+                .text((d, i) => `${i + 1}`);
                
             // Exit selection: Remove groups that are no longer needed
             bars.exit().remove();
