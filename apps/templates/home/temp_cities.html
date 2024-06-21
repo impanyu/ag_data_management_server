@@ -524,7 +524,7 @@ function updateMessageBar() {
     // Construct the scrolling message
 
      city_list.forEach((d, i) => {
-        const message = ` ${d.city},  Precipitation: ${d.precipitation},  Relative Humidity: ${d.relative_humidity}, Wind Speed: ${d.wind_speed}, Wind Direction: ${d.wind_direction}, Surface Pressure: ${d.surface_pressure}, Cloud Cover: ${d.cloud_cover}`;
+        const message = ` ${d.city},  Precipitation: ${d.precipitation},  Relative Humidity: ${d.relative_humidity}, Wind Speed: ${d.wind_speed},  Surface Pressure: ${d.surface_pressure}, Cloud Cover: ${d.cloud_cover}`;
         
         // Append a span element for each channel with a different background color
         span=messageBarContent.append("span")
