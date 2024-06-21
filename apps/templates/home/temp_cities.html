@@ -552,7 +552,7 @@ function showDelta(element, delta, isPositive) {
                 .style("margin-right", "5px");
          
         // Append the text message
-        spanEnter.append("span")
+        spansEnter.append("span")
             .text(d=>` ${d.city},  Precipitation: ${d.precipitation},  Relative Humidity: ${d.relative_humidity}, Wind Speed: ${d.wind_speed},  Surface Pressure: ${d.surface_pressure}, Cloud Cover: ${d.cloud_cover}`)
             .style("vertical-align", "middle")
             .style("font-size", "25px");
