@@ -397,7 +397,7 @@
 
     
         get_realtime_data();
-        createMessageBar();
+    
         
         updateMessageBar2();
 
@@ -522,7 +522,8 @@ function showDelta(element, delta, isPositive) {
             });
        
 }
-   function createMessageBar(){
+
+    function updateMessageBar() {
         const messageBarContent = d3.select("#message-bar-content");
 
         // Select spans
@@ -543,17 +544,10 @@ function showDelta(element, delta, isPositive) {
         
         // Append the text message
         spansEnter.append("span")
-            .text(d=>` ${d.city},  Precipitation: ${d.precipitation}mm,  Relative Humidity: ${d.relative_humidity}%, Wind Speed: ${d.wind_speed}km/h,  Surface Pressure: ${d.surface_pressure}hPa, Cloud Cover: ${d.cloud_cover}%`)
-            .style("vertical-align", "middle")
+            .text(d => ` ${d.city},  Precipitation: ${d.precipitation.toFixed(1)}mm,  Relative Humidity: ${d.relative_humidity.toFixed(1)}%, Wind Speed: ${d.wind_speed.toFixed(1)}km/h,  Surface Pressure: ${d.surface_pressure.toFixed(1)}hPa, Cloud Cover: ${d.cloud_cover.toFixed(1)}%`)
+             .style("vertical-align", "middle")
             .style("font-size", "25px");
 
-   }
-    function updateMessageBar() {
-        const messageBarContent = d3.select("#message-bar-content");
-
-        // Select spans
-        const spans = messageBarContent.selectAll("span")
-                    .data(city_list, d => d.city);
 
 
         
@@ -565,7 +559,7 @@ function showDelta(element, delta, isPositive) {
                 .style("margin-right", "5px");
          
         spans.select("span")
-            .text(d=>` ${d.city},  Precipitation: ${d.precipitation}mm,  Relative Humidity: ${d.relative_humidity}%, Wind Speed: ${d.wind_speed}km/h,  Surface Pressure: ${d.surface_pressure}hPa, Cloud Cover: ${d.cloud_cover}%`)
+            .text(d => ` ${d.city},  Precipitation: ${d.precipitation.toFixed(1)}mm,  Relative Humidity: ${d.relative_humidity.toFixed(1)}%, Wind Speed: ${d.wind_speed.toFixed(1)}km/h,  Surface Pressure: ${d.surface_pressure.toFixed(1)}hPa, Cloud Cover: ${d.cloud_cover.toFixed(1)}%`)
             .style("vertical-align", "middle")
             .style("font-size", "25px");
         
