@@ -537,7 +537,7 @@
 }
 
 function showDelta(element, delta, isPositive) {
-    const deltaText = isPositive ? `+${delta.toFixed(2)}` : `${delta.toFixed(2)}`;
+    const deltaText = isPositive ? `+${delta.toFixed(3)}` : `${delta.toFixed(3)}`;
     const deltaColor = isPositive ? "red" : "#0257f5";
 
     const parentNode = d3.select(element.node().parentNode); // Select the parent node
