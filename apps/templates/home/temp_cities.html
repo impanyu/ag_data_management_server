@@ -406,7 +406,7 @@
             .call(d3.axisLeft(y));
 
     
-        get_realtime_data()
+        get_realtime_data();
 
         
         // Simulate data update
@@ -417,7 +417,7 @@
         }, 60000);
 
 
-        async function get_realtime_data(){
+       /* async function get_realtime_data(){
             for(i in city_list){
                 await get_realtime_data_for_each_city(city_list[i],i);
             }
@@ -426,25 +426,38 @@
             updateMessageBar();
             updateMessageBar2();
                
-        }
+        }*/
 
-        function get_realtime_data_for_each_city(city,i){
-            let url = `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lon}&current=temperature_2m,precipitation,relative_humidity_2m,wind_speed_10m,wind_direction_10m,surface_pressure,cloud_cover`;
+        function get_realtime_data(){
+            lats=""
+            lons=""
+            for(i in city_list){
+                lats += city_list[i].lat;
+                lons += city_list[i].lon;
+                if (i<city_list.length){
+                  lats += ",";
+                  lons += ",";
+                }
+            }
+            let url = `https://api.open-meteo.com/v1/forecast?latitude=${lats}&longitude=${lons}&current=temperature_2m,precipitation,relative_humidity_2m,wind_speed_10m,wind_direction_10m,surface_pressure,cloud_cover`;
             return fetch(url)
                 .then(response => response.json())
                 .then(json => {
-                    data = json["current"];
- 
-                    city_list[i]["temp"] = data["temperature_2m"];
-                    city_list[i]["precipitation"] = data["precipitation"];
-                    city_list[i]["relative_humidity"] = data["relative_humidity_2m"];
-                    city_list[i]["wind_speed"] = data["wind_speed_10m"];
-                    city_list[i]["wind_direction"] = data["wind_direction_10m"];
-                    city_list[i]["surface_pressure"] = data["surface_pressure"];
-                    city_list[i]["cloud_cover"] = data["cloud_cover"];
-        
+                    for(i in json){
+                        data = json[i]["current"];
+    
+                        city_list[i]["temp"] = data["temperature_2m"];
+                        city_list[i]["precipitation"] = data["precipitation"];
+                        city_list[i]["relative_humidity"] = data["relative_humidity_2m"];
+                        city_list[i]["wind_speed"] = data["wind_speed_10m"];
+                        city_list[i]["wind_direction"] = data["wind_direction_10m"];
+                        city_list[i]["surface_pressure"] = data["surface_pressure"];
+                        city_list[i]["cloud_cover"] = data["cloud_cover"];
+                    }
                     //
-                    
+                    update(city_list);
+                    updateMessageBar();
+                    updateMessageBar2();
 
                 });
 
