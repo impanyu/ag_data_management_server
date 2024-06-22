@@ -327,7 +327,7 @@
                     console.log(`Updating x for ${d.city} to ${x(d.aqi) + 10}`);
                     return x(d.aqi) + 10;
                  })  // Position to the right of the bar
-                .text(d => print_temp(d.aqi))
+                .text(d => d.aqi)
                 .each(function(d) {
                     const textElement = d3.select(this);
                     //const currentSubscribers = parseInt(textElement.text().replace(/[^0-9]/g, ''));
