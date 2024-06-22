@@ -206,7 +206,7 @@
       
 
 
-     previous_temps ={};
+     previous_aqis ={};
 
 
         const x = d3.scaleLinear().range([40, width]);
@@ -235,10 +235,10 @@
 
         function update(data) {
             // Sort data
-            data.sort((a, b) => b.temp - a.temp);
+            data.sort((a, b) => a.aqi - b.aqi);
 
             // Update scales
-            x.domain([-40, 50]);
+            x.domain([0, 400]);
             y.domain(data.map(d => d.city));
 
             // Select bars
@@ -253,7 +253,7 @@
             barsEnter.append("rect")
                 .attr("x", 0)
                 .attr("height", y.bandwidth())
-                .attr("width", d => x(d.temp))
+                .attr("width", d => x(d.aqi))
                 .style("fill", (d, i) => color(d.city));  // Apply color based on index
 
 
@@ -269,7 +269,7 @@
                 .attr("class", "arrow")
                 .attr("x", function(d) {
                     const textWidth = this.previousElementSibling.getComputedTextLength();
-                    return x(d.temp) + textWidth + 35; // Position 10 pixels to the right end of the first text
+                    return x(d.aqi) + textWidth + 35; // Position 10 pixels to the right end of the first text
                 })
                 .attr("y", y.bandwidth() / 2)
                 .attr("dy", ".35em");
@@ -315,7 +315,7 @@
             bars.select("rect")
                 .transition()
                 .duration(1000)
-                .attr("width", d => x(d.temp))
+                .attr("width", d => x(d.aqi))
                 .style("fill", (d, i) => color(d.city));  // Apply color based on index
 
 
@@ -324,25 +324,25 @@
                 .duration(1000)
                 .style("opacity", 1)
                 .attr("x", d => {
-                    console.log(`Updating x for ${d.city} to ${x(d.temp) + 10}`);
-                    return x(d.temp) + 10;
+                    console.log(`Updating x for ${d.city} to ${x(d.aqi) + 10}`);
+                    return x(d.aqi) + 10;
                  })  // Position to the right of the bar
-                .text(d => print_temp(d.temp))
+                .text(d => print_temp(d.aqi))
                 .each(function(d) {
                     const textElement = d3.select(this);
                     //const currentSubscribers = parseInt(textElement.text().replace(/[^0-9]/g, ''));
-                    const newSubscribers = d.temp;
-                    currentSubscribers = previous_temps[d.city] || newSubscribers;
-                    const delta = newSubscribers - currentSubscribers;
+                    const current_aqi = d.aqi;
+                    prev_aqi = previous_tmps[d.city] || current_aqi;
+                    const delta = current_aqi - prev_aqi;
                     
                     
 
-                    if (newSubscribers > currentSubscribers) {
+                    if (current_aqi > prev_aqi) {
                         textElement.style("fill", "red");
                          // Make the text blink
                          blink(textElement);
                          showDelta(textElement, delta, true); // Pass true for positive change
-                    } else if (newSubscribers < currentSubscribers) {
+                    } else if (current_aqi < prev_aqi) {
                         textElement.style("fill", "green");
                          // Make the text blink
                          blink(textElement);
@@ -357,19 +357,19 @@
             bars.select(".arrow")
                .attr("x", function(d) {
                     const textWidth = this.previousElementSibling.getComputedTextLength();
-                    return x(d.temp) + textWidth + 35; // Position 10 pixels to the right end of the first text
+                    return x(d.aqi) + textWidth + 35; // Position 10 pixels to the right end of the first text
                 })
                 .each(function(d) {
                     const arrowElement = d3.select(this);
-                    const currentSubscribers = previous_temps[d.city] || d.temp;
-                    previous_temps[d.city] = d.temp;
+                    const prev_aqi = previous_aqis[d.city] || d.aqi;
+                    previous_aqis[d.city] = d.aqi;
                     
-                    if (d.temp > currentSubscribers) {
+                    if (d.aqi > prev_aqi) {
                         arrowElement.text('⬆').style("fill", "red");
                          // Make the text blink
                          blink(arrowElement);
                         
-                    } else if (d.temp < currentSubscribers) {
+                    } else if (d.aqi < prev_aqi) {
                         arrowElement.text('⬇').style("fill", "green");
                         blink(arrowElement);
                         
