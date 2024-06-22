@@ -91,7 +91,7 @@
     <script>
         const svg = d3.select("svg");
            // margin = {top: 20, right: 40, bottom: 30, left: 100};
-            margin = { top: 60, right: 160, bottom:80, left: 440 }; // Increase left margin
+            margin = { top: 60, right: 180, bottom:80, left: 440 }; // Increase left margin
 
             width = +svg.attr("width") - margin.left - margin.right;
             height = +svg.attr("height") - margin.top - margin.bottom;
@@ -261,7 +261,7 @@
           
             barsEnter.append("text")
                 .attr("class", "subscribers-text")
-                .attr("x", d => x(d.temp) + 10)  // Position to the right of the bar
+                //.attr("x", d => x(d.temp) + 10)  // Position to the right of the bar
                 .attr("y", y.bandwidth() / 2)
                 .attr("dy", ".35em")
                 //.text(d => d.subscribers.toLocaleString());
