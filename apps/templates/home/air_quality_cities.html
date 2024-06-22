@@ -230,7 +230,7 @@
         ];
         const color = d3.scaleLinear()
             //.domain(d3.range(customColors.length))
-            .domain(city_list.map(d => d.aqi))
+            .domain([0,400])
             .range(customColors);
 
 
