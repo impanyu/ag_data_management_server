@@ -328,7 +328,7 @@
                     return x(d.aqi) + 10;
                  })  // Position to the right of the bar
                 .text(d => `Air Quality Index: ${d.aqi}`)
-                .style("fill",d=>color(d.aqi))
+               // .style("fill",d=>color(d.aqi))
                 .each(function(d) {
                     const textElement = d3.select(this);
                     //const currentSubscribers = parseInt(textElement.text().replace(/[^0-9]/g, ''));
@@ -366,12 +366,12 @@
                     previous_aqis[d.city] = d.aqi;
                     
                     if (d.aqi > prev_aqi) {
-                        arrowElement.text('⬆').style("fill", "red");
+                        arrowElement.text('⬇').style("fill", "#7e0023");
                          // Make the text blink
                          blink(arrowElement);
                         
                     } else if (d.aqi < prev_aqi) {
-                        arrowElement.text('⬇').style("fill", "green");
+                        arrowElement.text('⬆').style("fill", "#009966");
                         blink(arrowElement);
                         
 
