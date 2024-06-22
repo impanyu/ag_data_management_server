@@ -324,7 +324,10 @@
                 .transition()
                 .duration(1000)
                 .style("opacity", 1)
-                .attr("x", d => x(d.temp) + 10)  // Position to the right of the bar
+                .attr("x", d => {
+                    console.log(`Updating x for ${d.city} to ${x(d.temp) + 10}`);
+                    return x(d.temp) + 10;
+                 })  // Position to the right of the bar
                 .text(d => print_temp(d.temp))
                 .each(function(d) {
                     const textElement = d3.select(this);
