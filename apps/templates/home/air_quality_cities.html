@@ -494,7 +494,7 @@
             await Promise.all(fetchPromises);
 
             // Call update function with updated city list
-            update(current_city_list);
+            update(city_list);
        }
 
   
@@ -569,7 +569,7 @@ function showDelta(element, delta, isPositive) {
 
         // Select spans
         const spans = messageBarContent.selectAll("span")
-                    .data(current_city_list, d => d.city);
+                    .data(city_list, d => d.city);
 
         // Enter selection: Create new groups for new data
         const spansEnter = spans.enter().append("span")
