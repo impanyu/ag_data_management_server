@@ -231,9 +231,10 @@
         // Define the thresholds for the AQI ranges
         const thresholds = [50, 100, 150, 200, 300];
 
-        const color = d3.scaleThreshold()
+        const color = d3.scaleLinear()
             .domain(thresholds)
-            .range(customColors);
+            .range(customColors)
+            .interpolate(d3.interpolateRgb);
 
 
 
