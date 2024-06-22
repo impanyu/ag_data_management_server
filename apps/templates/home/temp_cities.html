@@ -486,7 +486,7 @@
             for(i in city_list){
                 for(j in keys){
                       key = keys[j];
-                      current_city_list[i][key] = (last_city_list[i][key] - city_list[i][key])/(SUPPORTING_DATA_REFRESH_INTERVAL) * (now-this_time)+ city_list[i][key];
+                      current_city_list[i][key] = ( city_list[i][key]-last_city_list[i][key] )/(SUPPORTING_DATA_REFRESH_INTERVAL) * (now-this_time)+ city_list[i][key];
                     
                 }
             }
