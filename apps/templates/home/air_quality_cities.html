@@ -228,7 +228,7 @@
             "#7f7f7f", "#bcbd22", "#17becf", "#393b79", "#637939",
             "#8c6d31", "#843c39", "#7b4173"
         ];
-        const color = d3.scaleOrdinal()
+        const color = d3.scaleLinear()
             //.domain(d3.range(customColors.length))
             .domain(city_list.map(d => d.aqi))
             .range(customColors);
@@ -325,6 +325,7 @@
                     return x(d.aqi) + 10;
                  })  // Position to the right of the bar
                 .text(d => `Air Quality Index: ${d.aqi}`)
+                .style("fill",d=>color(d.aqi))
                 .each(function(d) {
                     const textElement = d3.select(this);
                     //const currentSubscribers = parseInt(textElement.text().replace(/[^0-9]/g, ''));
@@ -335,12 +336,12 @@
                     
 
                     if (current_aqi > prev_aqi) {
-                        textElement.style("fill", "red");
+                       // textElement.style("fill", "red");
                          // Make the text blink
                          blink(textElement);
                          showDelta(textElement, delta, true); // Pass true for positive change
                     } else if (current_aqi < prev_aqi) {
-                        textElement.style("fill", "green");
+                       // textElement.style("fill", "green");
                          // Make the text blink
                          blink(textElement);
                          showDelta(textElement, delta, false); // Pass true for negative change
