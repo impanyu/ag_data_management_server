@@ -209,7 +209,7 @@
      previous_aqis ={};
 
 
-        const x = d3.scaleLinear().range([200, width]);
+        const x = d3.scaleLinear().range([100, width]);
         const y = d3.scaleBand().rangeRound([0, height]).padding(0.1);
         
 
@@ -274,12 +274,6 @@
                 .attr("y", y.bandwidth() / 2)
                 .attr("dy", ".35em");
 
-            barsEnter.append("image")
-                .attr("x", d => 50 ) // Position to the right of the text
-                .attr("y", 2)  // Center vertically in the bar
-                //.attr("width", y.bandwidth()*3)
-                .attr("height", y.bandwidth()-4)
-                .attr("xlink:href", d => d.wiki_icon);
 
               // Add rank "stamp" on top of each bar
               stamp=barsEnter.append("rect")
@@ -378,9 +372,7 @@
                     }
                 });
 
-            bars.select("image")
-                .transition()
-                .duration(1000)
+    
 
             bars.select(".rank")
                 .text((d, i) => `${i + 1}`);
