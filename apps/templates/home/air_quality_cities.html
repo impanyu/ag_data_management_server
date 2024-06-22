@@ -411,7 +411,7 @@
     
         createMessageBar2();
 
-        WEATHER_DATA_REFRESH_INTERVAL = 60000*30; //30 mins
+        WEATHER_DATA_REFRESH_INTERVAL = 60000*120; //60 mins
 
         // get supporting data
         setInterval(() => {
@@ -618,14 +618,16 @@ function showDelta(element, delta, isPositive) {
 }
 
 function createMessageBar2(){
-    message = "100 Global cities ranked by their real time air quality. Data is updated every 30 seconds.";
+    message = "100 Global cities ranked by their real time air quality. Data is updated every 60 seconds.";
     const messageBarContent2 = d3.select("#message-bar-content2");
-    span1=messageBarContent2.append("span").style("vertical-align","middle").style("font-size","20px").style("font-weight","bold").text("Global Weather Report ").style("background-color","#9edae5").style("padding","11px");
+    span1=messageBarContent2.append("span").style("vertical-align","middle").style("font-size","20px").style("font-weight","bold").text("Global Air Quality Report ").style("background-color","#9edae5").style("padding","11px");
     span2=messageBarContent2.append("span")
     .style("vertical-align", "middle")
     .style("font-size", "20px")
     .text(message)
     .style("padding","11px");
+    span3=messageBarContent2.append("span").style("vertical-align","middle").style("font-size","20px").style("font-weight","bold").text("AQI 0-50: Good. Air quality is considered satisfactory, and air pollution poses little or no risk  ").style("background-color","#9edae5").style("padding","11px");
+ 
 
 
 }
