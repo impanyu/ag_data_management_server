@@ -214,20 +214,11 @@
 
         // Define a custom color palette with enough colors for your categories
         const customColors = [
-            "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd",
-            "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf",
-            "#aec7e8", "#ffbb78", "#98df8a", "#ff9896", "#c5b0d5",
-            "#c49c94", "#f7b6d2", "#c7c7c7", "#dbdb8d", "#9edae5",
-            "#393b79", "#637939", "#8c6d31", "#843c39", "#7b4173",
-            "#5254a3", "#8ca252", "#bd9e39", "#ad494a", "#a55194",
-            "#6b6ecf", "#b5cf6b", "#e7ba52", "#d6616b", "#ce6dbd",
-            "#9c9ede", "#cedb9c", "#e7cb94", "#f7b6d2", "#de9ed6",
-            "#7f7f7f", "#bcbd22", "#17becf", "#393b79", "#637939",
-            "#8c6d31", "#843c39", "#7b4173"
+           "#009966","#ffde33","#ff9933","#cc0033","#660099","#7e0023"
         ];
         const color = d3.scaleOrdinal()
             //.domain(d3.range(customColors.length))
-            .domain(city_list.map(d => d.city))
+            .domain(city_list.map(d => d.aqi))
             .range(customColors);
 
         
@@ -320,7 +311,7 @@
                     console.log(`Updating x for ${d.city} to ${x(d.aqi) + 10}`);
                     return x(d.aqi) + 10;
                  })  // Position to the right of the bar
-                .text(d => d.aqi)
+                .text(d => `Air Quality Index: ${d.aqi}`)
                 .each(function(d) {
                     const textElement = d3.select(this);
                     //const currentSubscribers = parseInt(textElement.text().replace(/[^0-9]/g, ''));
