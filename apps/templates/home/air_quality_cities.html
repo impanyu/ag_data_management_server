@@ -332,7 +332,7 @@
                     const textElement = d3.select(this);
                     //const currentSubscribers = parseInt(textElement.text().replace(/[^0-9]/g, ''));
                     const current_aqi = d.aqi;
-                    prev_aqi = previous_tmps[d.city] || current_aqi;
+                    prev_aqi = previous_aqis[d.city] || current_aqi;
                     const delta = current_aqi - prev_aqi;
                     
                     
