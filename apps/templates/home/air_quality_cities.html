@@ -51,7 +51,7 @@
     #message-bar-content2 {
         white-space: nowrap;
         display: inline-block;
-        animation: scroll-left2 40s linear infinite;
+        animation: scroll-left2 1000s linear infinite;
     }
     @keyframes scroll-left {
         from {
@@ -411,7 +411,7 @@
     
         createMessageBar2();
 
-        WEATHER_DATA_REFRESH_INTERVAL = 60000*120; //60 mins
+        WEATHER_DATA_REFRESH_INTERVAL = 60000*60; //60 mins
 
         // get supporting data
         setInterval(() => {
@@ -626,8 +626,14 @@ function createMessageBar2(){
     .style("font-size", "20px")
     .text(message)
     .style("padding","11px");
-    span3=messageBarContent2.append("span").style("vertical-align","middle").style("font-size","20px").style("font-weight","bold").text("AQI 0-50: Good. Air quality is considered satisfactory, and air pollution poses little or no risk  ").style("background-color","#9edae5").style("padding","11px");
- 
+    span3=messageBarContent2.append("span").style("vertical-align","middle").style("font-size","20px").style("font-weight","bold").text("AQI 0-50: Good. Air quality is considered satisfactory, and air pollution poses little or no risk.").style("background-color", "#009966").style("padding","11px");
+    span4=messageBarContent2.append("span").style("vertical-align","middle").style("font-size","20px").style("font-weight","bold").text("AQI 51-100: Moderate. Air quality is acceptable; however, for some pollutants there may be a moderate health concern for a very small number of people who are unusually sensitive to air pollution. Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor exertion.").style("background-color", "#ffde33").style("padding","11px");
+    span5=messageBarContent2.append("span").style("vertical-align","middle").style("font-size","20px").style("font-weight","bold").text("AQI 101-150: Unhealthy for Sensitive Groups. Members of sensitive groups may experience health effects. The general public is not likely to be affected. Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor exertion.").style("background-color", "#ff9933").style("padding","11px");
+    span6=messageBarContent2.append("span").style("vertical-align","middle").style("font-size","20px").style("font-weight","bold").text("AQI 151-200: Unhealthy. Everyone may begin to experience health effects; members of sensitive groups may experience more serious health effects. Active children and adults, and people with respiratory disease, such as asthma, should avoid prolonged outdoor exertion; everyone else, especially children, should limit prolonged outdoor exertion.").style("background-color", "#cc0033").style("padding","11px");
+    span7=messageBarContent2.append("span").style("vertical-align","middle").style("font-size","20px").style("font-weight","bold").text("AQI 201-300: Very Unhealthy. Health warnings of emergency conditions. The entire population is more likely to be affected. Active children and adults, and people with respiratory disease, such as asthma, should avoid all outdoor exertion; everyone else, especially children, should limit outdoor exertion.").style("background-color", "#660099").style("padding","11px");
+    span8=messageBarContent2.append("span").style("vertical-align","middle").style("font-size","20px").style("font-weight","bold").text("AQI 300+: Hazardous. 	Health alert: everyone may experience more serious health effects. Everyone should avoid all outdoor exertion").style("background-color", " #7e0023").style("padding","11px");
+
+  
 
 
 }
