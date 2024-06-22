@@ -203,7 +203,6 @@
 
 ]
 
-      last_city_list =  JSON.parse(JSON.stringify(city_list));
       
 
 
@@ -344,7 +343,7 @@
                          blink(textElement);
                          showDelta(textElement, delta, true); // Pass true for positive change
                     } else if (newSubscribers < currentSubscribers) {
-                        textElement.style("fill", "#0257f5");
+                        textElement.style("fill", "green");
                          // Make the text blink
                          blink(textElement);
                          showDelta(textElement, delta, false); // Pass true for negative change
@@ -371,7 +370,7 @@
                          blink(arrowElement);
                         
                     } else if (d.temp < currentSubscribers) {
-                        arrowElement.text('⬇').style("fill", "#0257f5");
+                        arrowElement.text('⬇').style("fill", "green");
                         blink(arrowElement);
                         
 
@@ -407,26 +406,25 @@
             .call(d3.axisLeft(y));
 
 
-        get_supporting_data();
+    
         
     
         createMessageBar2();
 
-        SUPPORTING_DATA_REFRESH_INTERVAL = 60000*30; //30 mins
-        last_time =new Date();
-        this_time =new Date();
+        WEATHER_DATA_REFRESH_INTERVAL = 60000*30; //30 mins
+
         // get supporting data
         setInterval(() => {
     
-            get_supporting_data();
-        }, SUPPORTING_DATA_REFRESH_INTERVAL);
+            get_weather_data();
+        },  WEATHER_DATA_REFRESH_INTERVAL);
         
         // Simulate data update
         setInterval(() => {
             // Simulate new data
     
-            get_realtime_data();
-        }, 30000);
+            get_air_data();
+        }, 60000);
 
 
        /* async function get_realtime_data(){
@@ -440,7 +438,7 @@
                
         }*/
 
-        function get_supporting_data(){
+        function get_weather_data(){
             lats=""
             lons=""
             for(i in city_list){
@@ -456,18 +454,8 @@
                 .then(response => response.json())
                 .then(json => {
                     now = new Date();
-                    last_time = new Date(now.getTime() - SUPPORTING_DATA_REFRESH_INTERVAL);
-                    this_time = now;
                     for(i in json){
                         data = json[i]["current"];
-
-                        last_city_list[i]["temp"] = city_list[i]["temp"] || data["temperature_2m"];
-                        last_city_list[i]["precipitation"] = city_list[i]["precipitation"]  || data["precipitation"];
-                        last_city_list[i]["relative_humidity"] = city_list[i]["relative_humidity"] || data["relative_humidity_2m"];
-                        last_city_list[i]["wind_speed"] = city_list[i]["wind_speed"]  || data["wind_speed_10m"];
-                        last_city_list[i]["wind_direction"] = city_list[i]["wind_direction"] || data["wind_direction_10m"];
-                        last_city_list[i]["surface_pressure"] = city_list[i]["surface_pressure"] || data["surface_pressure"];
-                        last_city_list[i]["cloud_cover"] = city_list[i]["cloud_cover"] || data["cloud_cover"];
                      
                         city_list[i]["temp"] = data["temperature_2m"];
                         city_list[i]["precipitation"] = data["precipitation"];
@@ -477,29 +465,36 @@
                         city_list[i]["surface_pressure"] = data["surface_pressure"];
                         city_list[i]["cloud_cover"] = data["cloud_cover"];
                     }
+                    updateMessageBar();
 
                 });
 
         }
 
-        function get_realtime_data(){
-            keys =["temp","precipitation","relative_humidity","wind_speed","wind_direction","surface_pressure","cloud_cover"];
-            now = new Date();
-            current_city_list =  JSON.parse(JSON.stringify(city_list));
-            for(i in city_list){
-                for(j in keys){
-                      key = keys[j];
-                      current_city_list[i][key] = ( city_list[i][key]-last_city_list[i][key] )/(SUPPORTING_DATA_REFRESH_INTERVAL) * (now-this_time)+ city_list[i][key];
-                    
-                }
-            }
-       
+        async function get_air_data() {
+            const fetchPromises = city_list.map(city => {
+                const lat = city.lat;
+                const lon = city.lon;
+                const url = `https://api.waqi.info/feed/geo:${lat};${lon}/?token=d0ae955e488c80611e513e6438e265a87c894824`;
 
-                update(current_city_list);
-                updateMessageBar();
+                return fetch(url)
+                    .then(response => response.json())
+                    .then(json => {
+                        const data = json["data"];
+                        city.aqi = data["aqi"];
+                    })
+                    .catch(error => {
+                        console.error(`Failed to fetch AQI for ${city.name}:`, error);
+                        city.aqi = null; // Handle error by setting a default value
+                    });
+            });
 
+            // Wait for all fetch promises to complete
+            await Promise.all(fetchPromises);
 
-        }
+            // Call update function with updated city list
+            update(current_city_list);
+       }
 
   
 
@@ -541,7 +536,7 @@
 
 function showDelta(element, delta, isPositive) {
     const deltaText = isPositive ? `+${delta.toFixed(3)}` : `${delta.toFixed(3)}`;
-    const deltaColor = isPositive ? "red" : "#0257f5";
+    const deltaColor = isPositive ? "red" : "green";
 
     const parentNode = d3.select(element.node().parentNode); // Select the parent node
 
@@ -591,13 +586,14 @@ function showDelta(element, delta, isPositive) {
         spansEnter.append("span")
         .text(d => {
             const city = d.city;
+            const temperature = d.temp;
             const precipitation = d.precipitation.toFixed(1).padStart(5);
             const relativeHumidity = d.relative_humidity.toFixed(1).padStart(5);
             const windSpeed = d.wind_speed.toFixed(1).padStart(5);
             const surfacePressure = d.surface_pressure.toFixed(1).padStart(5);
             const cloudCover = d.cloud_cover.toFixed(1).padStart(5);
 
-            return ` ${city} Precipitation: ${precipitation}mm,  Relative Humidity: ${relativeHumidity}%, Wind Speed: ${windSpeed}km/h,  Surface Pressure: ${surfacePressure}hPa, Cloud Cover: ${cloudCover}%`;
+            return ` ${city} Temperature: ${print_temp(temperature)}, Precipitation: ${precipitation}mm,  Relative Humidity: ${relativeHumidity}%, Wind Speed: ${windSpeed}km/h,  Surface Pressure: ${surfacePressure}hPa, Cloud Cover: ${cloudCover}%`;
         })
             .style("vertical-align", "middle")
             .style("font-size", "25px");
@@ -614,7 +610,7 @@ function showDelta(element, delta, isPositive) {
             const surfacePressure = d.surface_pressure.toFixed(1).padStart(5);
             const cloudCover = d.cloud_cover.toFixed(1).padStart(5);
 
-            return ` ${city} Precipitation: ${precipitation}mm,  Relative Humidity: ${relativeHumidity}%, Wind Speed: ${windSpeed}km/h,  Surface Pressure: ${surfacePressure}hPa, Cloud Cover: ${cloudCover}%`;
+            return ` ${city} Temperature: ${print_temp(temperature)}, Precipitation: ${precipitation}mm,  Relative Humidity: ${relativeHumidity}%, Wind Speed: ${windSpeed}km/h,  Surface Pressure: ${surfacePressure}hPa, Cloud Cover: ${cloudCover}%`;
         })
  
         
@@ -622,7 +618,7 @@ function showDelta(element, delta, isPositive) {
 }
 
 function createMessageBar2(){
-    message = "100 Global cities ranked by their real time temperature. Data is updated every 30 seconds.";
+    message = "100 Global cities ranked by their real time air quality. Data is updated every 30 seconds.";
     const messageBarContent2 = d3.select("#message-bar-content2");
     span1=messageBarContent2.append("span").style("vertical-align","middle").style("font-size","20px").style("font-weight","bold").text("Global Weather Report ").style("background-color","#9edae5").style("padding","11px");
     span2=messageBarContent2.append("span")
