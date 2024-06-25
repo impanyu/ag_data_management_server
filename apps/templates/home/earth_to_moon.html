@@ -81,6 +81,8 @@
 </head>
 <body>
     <svg width="1440" height="7000"></svg>
+
+    
     <div id="message-bar">
         <div id="message-bar-content"></div>
     </div>
@@ -377,9 +379,6 @@
                     }
                 });
 
-            bars.select("image")
-                .transition()
-                .duration(1000)
 
             bars.select(".rank")
                 .text((d, i) => `${i + 1}`);

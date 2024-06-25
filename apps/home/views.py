@@ -534,13 +534,13 @@ def data(request):
 
                     position = os.path.join("/data",current_path,
                                             '/'.join(upload_file_paths[upload_files.index(file)].split('/')[:-1]))
-                    print(position)
-                    print(file.name)
+                    #print(position)
+                    #print(file.name)
 
                     if not os.path.exists(position):
                         os.makedirs(position)
                     abs_file_path = os.path.join(position, file.name)
-                    print(abs_file_path)
+                    #print(abs_file_path)
                     copy_id = 1
 
                     if os.path.exists(abs_file_path):
@@ -576,6 +576,7 @@ def data(request):
                 else:
                     root_abs_path = os.path.join("/data" ,current_path,upload_file_paths[0].split('/')[0])
 
+                print("uploading files to: ", root_abs_path,flush=True)
                 aggregate_meta_data(root_abs_path,{"upload":["external resources"]})
 
                 # adjust meta data of its parent dir
