@@ -766,6 +766,7 @@ def data(request):
                 json.dump(meta_data, new_meta_data_file)
             '''
             print("starting duplicating",flush=True)
+            print("file_path",file_path,flush=True)
             print("new_path",new_path,flush=True)
             
             #generate_meta_data_for_file(new_path, {"duplicate": [file_path]})
