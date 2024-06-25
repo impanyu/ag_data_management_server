@@ -723,7 +723,7 @@ def data(request):
                 # return HttpResponse("upload complete!")
 
         elif load_template == "duplicate":
-            print("starting duplicating",flush=True)
+            
             file_path = request.POST['file_path']
             file_name = os.path.basename(file_path)
             parent_path = os.path.dirname(file_path)
@@ -759,7 +759,7 @@ def data(request):
             with open(os.path.join(settings.CORE_DIR, 'data', new_meta_data_file_name), "w") as new_meta_data_file:
                 json.dump(meta_data, new_meta_data_file)
             '''
-
+            print("starting duplicating",flush=True)
             #generate_meta_data_for_file(new_path, {"duplicate": [file_path]})
             update_parent_meta(new_path)
             
