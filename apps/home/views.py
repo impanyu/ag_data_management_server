@@ -744,7 +744,7 @@ def data(request):
                 new_path = initial_path[0:-(len(suffix) + 1)] + "_" + str(i) + "." + suffix
                 i = i + 1
 
-            open(new_path, "w")
+            #open(new_path, "w")
 
 
             '''
