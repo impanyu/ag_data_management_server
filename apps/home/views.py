@@ -736,6 +736,7 @@ def data(request):
                 new_path = file_path
                 initial_path = file_path
             else:
+                print("original_user",original_user,flush=True)
                 initial_path = os.path.join("/data",request.user.get_username(),"ag_data",file_name)
                 new_path = os.path.join("/data",request.user.get_username(),"ag_data",file_name)
 
@@ -765,7 +766,7 @@ def data(request):
                 json.dump(meta_data, new_meta_data_file)
             '''
             print("starting duplicating",flush=True)
-            print("file_path",new_path,flush=True)
+            print("new_path",new_path,flush=True)
             
             #generate_meta_data_for_file(new_path, {"duplicate": [file_path]})
             update_parent_meta(new_path)
