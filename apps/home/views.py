@@ -741,6 +741,7 @@ def data(request):
 
             i = 1
             print("starting duplicating1",flush=True)
+            print("is dir:",os.path.isdir(file_path),flush=True)
             while (os.path.exists(new_path)):
                 if os.path.isdir(file_path):
                     new_path = initial_path+"_"+i
