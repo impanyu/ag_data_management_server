@@ -762,10 +762,13 @@ def data(request):
             #generate_meta_data_for_file(new_path, {"duplicate": [file_path]})
             update_parent_meta(new_path)
 
-            if "." in file_name:
+            # if file_name is not a path
+            if not os.path.isdir(file_path):
+            #if "." in file_name:
                 shutil.copy2(file_path,new_path)
                 meta_data = generate_meta_data_for_file(new_path, {"duplicate": [file_path]})
             else:
+                print("duplicating dir",flush=True)
                 shutil.copytree(file_path,new_path)
                 meta_data = generate_meta_data_for_dir(new_path, {"duplicate": [file_path]})
 
@@ -1102,9 +1105,9 @@ def data(request):
 
                 return HttpResponse(response)
 
-
-
+            print("Start to get meta data",abs_path,flush=True)
             meta_data = get_meta_data(abs_path)
+            print("Meta data retrieved",abs_path,flush=True)
 
             
 
@@ -1120,7 +1123,9 @@ def data(request):
 
                     # if collection_path == f"/data/{request.user.get_username()}/collections":
                     #    continue
+                    
                     sub_meta_data = get_meta_data(sub_path)
+                    
                     if sub_meta_data=={}:
                         meta_data["subdirs"].remove(sub_path)
                         continue
@@ -1181,9 +1186,9 @@ def data(request):
                 
                 #if collection_path == f"/data/{request.user.get_username()}/collections":
                 #    continue
-                
+                print("start to get meta data",sub_path,flush=True)
                 sub_meta_data = get_meta_data(sub_path)
-                print(sub_name+"2",flush=True)
+                print("meta data retrieved",sub_path,flush=True)
 
                 if not sub_path.split("/")[2] == request.user.get_username() and sub_meta_data["public"] == "False":
                     continue
