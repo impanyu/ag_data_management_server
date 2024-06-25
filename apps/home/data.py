@@ -1505,6 +1505,7 @@ def get_meta_data(path):
     file_name = path.split("/")[-1]
     print("path!!!!!!!: is ",path)
     if os.path.isdir(path):
+        print(os.path.isdir(path))
     #if "." not in file_name:
         return meta_data
     suffix = file_name.split(".")[1]
