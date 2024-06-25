@@ -1439,7 +1439,7 @@ def get_meta_data(path):
         if not os.path.exists(path):
             return {}
 
-        if (not os.path.isdir(path)
+        if not os.path.isdir(path):
         #if("." in os.path.basename(path)):
             generate_meta_data_for_file(path,{"create":["null"]})
         else:
