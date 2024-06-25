@@ -534,7 +534,7 @@ def data(request):
 
                     position = os.path.join("/data",current_path,
                                             '/'.join(upload_file_paths[upload_files.index(file)].split('/')[:-1]))
-                    #print(position)
+                    print("uploading file:", position,flush=True)
                     #print(file.name)
 
                     if not os.path.exists(position):
