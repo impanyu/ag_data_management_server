@@ -736,6 +736,7 @@ def data(request):
                 new_path = file_path
                 initial_path = file_path
             else:
+                print(request.user.get_username())
                 print("original_user",original_user,flush=True)
                 initial_path = os.path.join("/data",request.user.get_username(),"ag_data",file_name)
                 new_path = os.path.join("/data",request.user.get_username(),"ag_data",file_name)
