@@ -740,7 +740,7 @@ def data(request):
                 new_path = os.path.join("/data",request.user.get_username(),"ag_data",file_name)
 
             i = 1
-
+            print("starting duplicating1",flush=True)
             while (os.path.exists(new_path)):
                 if os.path.isdir(file_path):
                     new_path = initial_path+"_"+i
