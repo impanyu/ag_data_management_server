@@ -1506,10 +1506,10 @@ def get_meta_data(path):
     print("path!!!!!!!: is ",path)
     #if os.path.isdir(path):
         
-    if "." not in file_name:
-        print(os.path.isdir(path))
-        return meta_data
-    suffix = file_name.split(".")[1]
+    #if "." not in file_name:
+    #    print(os.path.isdir(path))
+    #    return meta_data
+    #suffix = file_name.split(".")[1]
     '''
     if suffix == "":
         sf = shapefile.Reader(path)
