@@ -728,6 +728,7 @@ def data(request):
             file_name = os.path.basename(file_path)
             parent_path = os.path.dirname(file_path)
 
+          
             suffix = file_path.split(".")[-1]
             original_user = file_path.split("/")[2]
 
@@ -741,7 +742,11 @@ def data(request):
             i = 1
 
             while (os.path.exists(new_path)):
-                new_path = initial_path[0:-(len(suffix) + 1)] + "_" + str(i) + "." + suffix
+                if os.path.isdir(file_path):
+                    new_path = initial_path+"_"+i
+                else:
+
+                    new_path = initial_path[0:-(len(suffix) + 1)] + "_" + str(i) + "." + suffix
                 i = i + 1
 
             #open(new_path, "w")
@@ -767,8 +772,8 @@ def data(request):
             
 
             # if file_name is not a path
-            #if not os.path.isdir(file_path):
-            if "." in file_name:
+            if not os.path.isdir(file_path):
+            #if "." in file_name:
                 print("duplicating file",flush=True)
 
                 shutil.copy2(file_path,new_path)
