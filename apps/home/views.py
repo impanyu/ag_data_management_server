@@ -736,8 +736,8 @@ def data(request):
                 new_path = file_path
                 initial_path = file_path
             else:
-                print(request.user.get_username())
-                print("original_user",original_user,flush=True)
+                #print(request.user.get_username())
+                #print("original_user",original_user,flush=True)
                 initial_path = os.path.join("/data",request.user.get_username(),"ag_data",file_name)
                 new_path = os.path.join("/data",request.user.get_username(),"ag_data",file_name)
 
@@ -766,9 +766,9 @@ def data(request):
             with open(os.path.join(settings.CORE_DIR, 'data', new_meta_data_file_name), "w") as new_meta_data_file:
                 json.dump(meta_data, new_meta_data_file)
             '''
-            print("starting duplicating",flush=True)
-            print("file_path",file_path,flush=True)
-            print("new_path",new_path,flush=True)
+            #print("starting duplicating",flush=True)
+            #print("file_path",file_path,flush=True)
+            #print("new_path",new_path,flush=True)
             
             #generate_meta_data_for_file(new_path, {"duplicate": [file_path]})
             update_parent_meta(new_path)
@@ -782,7 +782,7 @@ def data(request):
                 shutil.copy2(file_path,new_path)
                 meta_data = generate_meta_data_for_file(new_path, {"duplicate": [file_path]})
             else:
-                print("duplicating dir",flush=True)
+                #print("duplicating dir",flush=True)
                 shutil.copytree(file_path,new_path)
                 meta_data = generate_meta_data_for_dir(new_path, {"duplicate": [file_path]})
 

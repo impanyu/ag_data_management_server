@@ -1070,6 +1070,7 @@ function select_file(arg_name,path){
 
 }
 
+function is_dir()
 
 async function get_meta_and_content(){
   /*await get_meta_data();
