@@ -578,7 +578,7 @@ def data(request):
 
                 print("uploading files to: ", root_abs_path,flush=True)
                 aggregate_meta_data(root_abs_path,{"upload":["external resources"]})
-
+                print("agreregate meta data complete",flush=True)
                 # adjust meta data of its parent dir
 
                 if not root_abs_path.split("/")[-2] == "home":
