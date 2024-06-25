@@ -732,7 +732,7 @@ def data(request):
             suffix = file_path.split(".")[-1]
             original_user = file_path.split("/")[2]
 
-            if request.user.get_username() is original_user:
+            if request.user.get_username() == original_user:
                 new_path = file_path
                 initial_path = file_path
             else:
