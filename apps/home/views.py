@@ -759,10 +759,12 @@ def data(request):
             with open(os.path.join(settings.CORE_DIR, 'data', new_meta_data_file_name), "w") as new_meta_data_file:
                 json.dump(meta_data, new_meta_data_file)
             '''
+            print("starting duplicating",flush=True)
+            print("file_path",new_path,flush=True)
             
             #generate_meta_data_for_file(new_path, {"duplicate": [file_path]})
             update_parent_meta(new_path)
-            print("starting duplicating",flush=True)
+            
 
             # if file_name is not a path
             #if not os.path.isdir(file_path):
