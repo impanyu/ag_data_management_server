@@ -763,8 +763,8 @@ def data(request):
             update_parent_meta(new_path)
 
             # if file_name is not a path
-            if not os.path.isdir(file_path):
-            #if "." in file_name:
+            #if not os.path.isdir(file_path):
+            if "." in file_name:
                 shutil.copy2(file_path,new_path)
                 meta_data = generate_meta_data_for_file(new_path, {"duplicate": [file_path]})
             else:
