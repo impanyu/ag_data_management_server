@@ -1070,7 +1070,10 @@ function select_file(arg_name,path){
 
 }
 
-function is_dir()
+function is_dir(path){
+  path.split("/")[path.split("/").length-1].indexOf(".") == -1;
+
+}
 
 async function get_meta_and_content(){
   /*await get_meta_data();
@@ -1085,7 +1088,7 @@ async function get_meta_and_content(){
    }
    */
 
-   if(current_path.indexOf(".")==-1){ //folder
+   if(is_dir(current_path)){ //folder
     document.querySelector("#file_content").style.display="none";
      await get_meta_data();
      set_pipeline_panel();
