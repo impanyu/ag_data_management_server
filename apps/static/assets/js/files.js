@@ -20,7 +20,8 @@ current_labels = new Set();
 document.querySelector("#other_meta").value ="";
 
 document.querySelector("#file_content").style.display="none";
-if(current_path.indexOf(".")!=-1){
+if(!is_dir(current_path)){
+//if(current_path.indexOf(".")!=-1){
   document.querySelector("#preloader2").style.display="flex";
 } 
 else{
@@ -743,7 +744,8 @@ function toggle_tool_panel(){
 function set_tool_panel(){
   document.querySelector("#tool_panel_tab").style.display = "block";
   document.querySelector("#tool_panel_container").innerHTML = "";
-  if(current_path.indexOf(".")==-1){ //folder
+  if(is_dir(current_path)){
+  //if(current_path.indexOf(".")==-1){ //folder
            document.querySelector("#tool_panel_container").innerHTML +='<div class="row align-items-center py-4" >'+
 
                             '<div class="col-lg-3 col-12">'+
