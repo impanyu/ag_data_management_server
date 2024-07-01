@@ -1073,7 +1073,7 @@ function select_file(arg_name,path){
 }
 
 function is_dir(path){
-  path.split("/")[path.split("/").length-1].indexOf(".") == -1;
+  return path.split("/")[path.split("/").length-1].indexOf(".") == -1;
 
 }
 
