@@ -884,7 +884,7 @@ def data(request):
 
             else:
                 # If the path is a folder, create a ZIP archive of the folder and return it as a response
-                zip_filename = f"{os.path.basename(file_path)}.zip.json"
+                zip_filename = f"{os.path.basename(file_path)}.zip"
                 zip_file_path = os.path.join(settings.CORE_DIR, 'data', zip_filename)
                 with zipfile.ZipFile(zip_file_path, 'w') as zip:
                     for root, dirs, files in os.walk(abs_path):
