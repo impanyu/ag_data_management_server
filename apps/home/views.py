@@ -894,7 +894,8 @@ def data(request):
                             zip.write(abs_file_path, rel_file_path)
                 with open(zip_file_path, 'rb') as zip_file:
                     response = HttpResponse(zip_file.read())
-                response['Content-Type'] = 'application/zip'
+                #response['Content-Type'] = 'application/zip'
+                response['Content-Type'] = 'application/octet-stream'
                 response['Content-Disposition'] = f'attachment; filename="{zip_filename}"'
                 os.remove(zip_file_path)
 
