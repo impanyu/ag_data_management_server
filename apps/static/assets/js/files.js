@@ -1105,6 +1105,7 @@ async function get_meta_and_content(){
         get_running_containers();
         document.querySelector("#running_containers_panel").style.display = "block";
      }
+     document.querySelector("#map_nav").style.display="block";
 
      get_file_list();
 
