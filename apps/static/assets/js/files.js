@@ -1073,7 +1073,12 @@ function select_file(arg_name,path){
 }
 
 function is_dir(path){
-  return path.split("/")[path.split("/").length-1].indexOf(".") == -1;
+  if(path.split("/")[path.split("/").length-1].indexOf(".") == -1)
+    return true;
+  else if(path.split(".")[path.split(".").length-1] =="edu" || path.split(".")[path.split(".").length-1] =="com")
+    return true;
+  else
+    return false;
 
 }
 
