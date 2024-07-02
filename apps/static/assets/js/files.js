@@ -2473,6 +2473,69 @@ function init_map_main(){
 
 }
 
+function init_map_nav(){
+  map_nav = new google.maps.Map(
+    document.getElementById("map_nav"),
+    {
+      center: { lat: 40.897, lng: -96.644 },
+      zoom: 11,
+      mapTypeId: google.maps.MapTypeId.SATELLITE  // Set the map type to satellite
+
+    }
+  );
+
+
+      drawingManager = new google.maps.drawing.DrawingManager({
+    drawingMode: google.maps.drawing.OverlayType.RECTANGLE,
+    drawingControl: true,
+    drawingControlOptions: {
+      position: google.maps.ControlPosition.TOP_CENTER,
+      drawingModes: [
+        google.maps.drawing.OverlayType.RECTANGLE,
+      ],
+    },
+    markerOptions: {
+      icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
+    },
+    rectangleOptions: {
+      fillColor: "#0000ff",
+      fillOpacity: .6,
+      strokeWeight: 3,
+      clickable: false,
+      editable: true,
+      zIndex: 1,
+    },
+  });
+
+ // drawingManager.setMap(map_main);
+
+  google.maps.event.addListener(drawingManager, "overlaycomplete", function(event){
+       if(lastOverlay)
+           lastOverlay.setMap(null);
+
+        event.overlay.overlayType = event.type;
+        lastOverlay = event.overlay; // Save it
+
+        var bounds = lastOverlay.getBounds();
+        end = bounds.getNorthEast();
+        start = bounds.getSouthWest();
+
+        document.getElementById("southwest").setAttribute("value",start) ;
+        document.getElementById("northeast").setAttribute("value",end);
+
+
+        //map.drawingManager.setDrawingMode(null); // Return to 'hand' mode
+});
+
+
+}
+
+function init_map(){
+  init_map_main();
+  init_map_nav();
+}
+
+
 
 function toggle_meta_data_panel(){
    if(meta_data["mode"].indexOf("Tool") !=-1)
