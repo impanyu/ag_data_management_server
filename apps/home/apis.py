@@ -148,6 +148,35 @@ class FileDownloadView(APIView):
         else:
             return Response({"message": "File not found."}, status=status.HTTP_404_NOT_FOUND)
         
+class FileUploadNewLineView(APIView):
+
+    def get(self, request, *args, **kwargs):
+        target_path = request.query_params.get('target_path')
+        new_line = request.query_params.get('new_line')
+        #file_name = request.query_params.get('file_name')
+
+        # Sanitize and validate the target_path
+        safe_path = os.path.normpath(target_path).lstrip('/')
+        current_user = request.user.username
+
+        # Construct the full file path
+        full_path = os.path.join(settings.USER_DATA_DIR, current_user, "ag_data", safe_path)
+
+        # Validate path to prevent path traversal attacks
+        # Ensure full_path is within the allowed directory
+        if not os.path.commonprefix([full_path, os.path.join(settings.USER_DATA_DIR, current_user, "ag_data")]) == os.path.join(settings.USER_DATA_DIR, current_user, "ag_data"):
+            return Response({"message": "Invalid file path."}, status=status.HTTP_400_BAD_REQUEST)
+
+        if os.path.exists(full_path) and os.path.isfile(full_path):
+            with open(full_path, 'a') as file:
+                file.write(new_line)
+                #file_name = os.path.basename(full_path)
+                #response = HttpResponse(file, content_type='application/octet-stream')
+                #response['Content-Disposition'] = f'attachment; filename="{file_name}"'
+                return Response({"message": f"New line uploaded successfully to {full_path}"}, status=status.HTTP_201_CREATED)
+        else:
+            return Response({"message": "File not found."}, status=status.HTTP_404_NOT_FOUND)
+        
 
 class GetMetaDataView(APIView):
 

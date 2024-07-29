@@ -36,6 +36,7 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),#,
     path('api/upload/', FileUploadView.as_view(), name='file-upload'),
+    path('api/upload_new_line/', FileUploadNewLineView.as_view(), name='new-line-upload'),
     path('api/download/', FileDownloadView.as_view(), name='file-download'),
     path('api/meta_data/', GetMetaDataView.as_view(), name='meta-data'),
     path('api/list/', ListFilesView.as_view(), name='list-files'),
