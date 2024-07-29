@@ -2393,9 +2393,10 @@ function get_current_container_status(tool_output_box){
         if (!response.ok) {
           console.error('Network response was not ok ' + response.statusText);
         }
+        current_container_status = response.json();
         if (current_container_status["status"] != "not found")
           tool_output_box.innerHTML = current_container_status["logs"];
-        return response.json();
+        
       })
       .then(data => {
         console.log(data);
