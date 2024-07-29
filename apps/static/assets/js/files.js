@@ -12,6 +12,7 @@ var map;
 var lastOverlay;
 var drawingManager;
 var container_id ="";
+var current_container_status={};
 
 meta_data={};
 suffix = current_path.split(".")[current_path.split(".").length-1];
