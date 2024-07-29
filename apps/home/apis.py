@@ -308,7 +308,7 @@ class CheckRunningInstance(APIView):
         started_at = container.attrs['State']['StartedAt'][:-5]
         #start_time = datetime.strptime(started_at, '%Y-%m-%dT%H:%M:%S.%fZs')
 
-        start_time = datetime.strptime(started_at, '%Y-%m-%dT%H:%M:%S.%f')S
+        start_time = datetime.strptime(started_at, '%Y-%m-%dT%H:%M:%S.%f')
 
         # Calculate the duration in seconds
         duration = (datetime.utcnow() - start_time).total_seconds()
