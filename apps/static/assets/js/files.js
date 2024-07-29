@@ -924,6 +924,7 @@ function run_tool(){
           display_warning_overlay("Program starts running.");
           document.querySelector("#run_tool").onclick = run_tool;
           container_id = data["container_id"];
+          console.info(container_id);
 
   }});
 
