@@ -923,7 +923,7 @@ function run_tool(){
           console.info("Program starts running.")
           display_warning_overlay("Program starts running.");
           document.querySelector("#run_tool").onclick = run_tool;
-          data= JSON.parse(data)
+          data= JSON.parse(data);
           container_id = data["container_id"];
 
 
