@@ -1349,10 +1349,10 @@ def data(request):
             print(request.user.get_username())
 
 
-            run_tool(entry_point,arg_values, arg_types,request.user.get_username(),exe_env)
+            container_id = run_tool(entry_point,arg_values, arg_types,request.user.get_username(),exe_env)
 
-            response = "success"
-            return HttpResponse(response)
+            response = {"status":"success","container_id":container_id}
+            return HttpResponse(json.dumps(response))
 
         elif load_template == 'update_meta':
             request_data = json.loads(request.body)

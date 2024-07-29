@@ -11,7 +11,7 @@ var end;
 var map;
 var lastOverlay;
 var drawingManager;
-
+var container_id ="";
 
 meta_data={};
 suffix = current_path.split(".")[current_path.split(".").length-1];
@@ -741,7 +741,20 @@ function toggle_tool_panel(){
 
 
 
+
+
 function set_tool_panel(){
+
+  const tool_output_box = document.createElement('div');
+  document.querySelector("#file_content").appendChild(tool_output_box);
+  tool_output_box.setAttribute('id', 'tool_output_box');
+  tool_output_box.style.height = "200px";
+
+  update_tool_output_box(tool_output_box);
+
+
+
+
   document.querySelector("#tool_panel_tab").style.display = "block";
   document.querySelector("#tool_panel_container").innerHTML = "";
   if(is_dir(current_path)){
@@ -909,6 +922,7 @@ function run_tool(){
           console.info("Program starts running.")
           display_warning_overlay("Program starts running.");
           document.querySelector("#run_tool").onclick = run_tool;
+          container_id = data["container_id"];
 
   }});
 
@@ -1463,7 +1477,7 @@ if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suff
 
                             }
 
-                       },15000);
+                       },5000);
 
 
                      /*
@@ -2340,6 +2354,50 @@ function get_running_containers(){
 
                   },5000);
 }
+
+function update_tool_output_box(tool_output_box){
+  if(container_id =="")
+    return;
+
+  current_container_status = get_current_container_status();
+  if (current_container_status["status"] != "not found")
+    tool_output_box.innerHTML = current_container_status["logs"];
+
+  setTimeout(() => {
+    update_tool_output_box(tool_output_box);
+  },1000);
+
+}
+
+function get_current_container_status(){
+   //call /api/check_running_instance/ with parameters of container_id
+    // Construct the API URL
+    const apiUrl = `/api/check_running_instance/?running_instance_id=${container_id}`;
+
+    // Define headers (if any)
+    /*const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer your_access_token_here' // Include other headers as needed
+    };*/
+
+    // Send the GET request to the API
+    fetch(apiUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+      })
+      .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+      });
+
+
+}
+
+
+
+
 
 // Get the toggle switch element
 var privilege_toggle_switch = document.getElementById("privilege-toggle-switch");
