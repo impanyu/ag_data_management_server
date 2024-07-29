@@ -925,6 +925,8 @@ function run_tool(){
           document.querySelector("#run_tool").onclick = run_tool;
           container_id = data["container_id"];
           console.info(container_id);
+          console.info(data["status"]);
+          
 
   }});
 
