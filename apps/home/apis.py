@@ -298,7 +298,7 @@ class CheckRunningInstance(APIView):
         if container is None:
             response = json.dumps({"container_id":container_id,"status":"not found"})
             return HttpResponse(response)
-        logs = container.logs().decode('utf-8')
+        #logs = container.logs().decode('utf-8')
         # Get the container status
         status = container.status
         # Get the container image name
@@ -308,12 +308,12 @@ class CheckRunningInstance(APIView):
         started_at = container.attrs['State']['StartedAt'][:-5]
         #start_time = datetime.strptime(started_at, '%Y-%m-%dT%H:%M:%S.%fZs')
 
-        start_time = datetime.strptime(started_at, '%Y-%m-%dT%H:%M:%S.%f')
+        start_time = datetime.strptime(started_at, '%Y-%m-%dT%H:%M:%S.%f')S
 
         # Calculate the duration in seconds
         duration = (datetime.utcnow() - start_time).total_seconds()
 
-        response={"container_id": container_id, "status": status, "image": image_name,"running_time": duration,"logs":logs}
+        response={"container_id": container_id, "status": status, "image": image_name,"running_time": duration,"logs":"logs"}
 
         response = json.dumps(response)
         return HttpResponse(response)
