@@ -2362,13 +2362,12 @@ function get_running_containers(){
 }
 
 function update_tool_output_box(tool_output_box){
-  if(container_id =="")
-    return;
+  if(container_id !=""){
 
-  current_container_status = get_current_container_status();
-  if (current_container_status["status"] != "not found")
-    tool_output_box.innerHTML = current_container_status["logs"];
-
+    current_container_status = get_current_container_status();
+    if (current_container_status["status"] != "not found")
+      tool_output_box.innerHTML = current_container_status["logs"];
+  }
   setTimeout(() => {
     update_tool_output_box(tool_output_box);
   },1000);
