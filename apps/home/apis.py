@@ -153,6 +153,10 @@ class FileUploadNewLineView(APIView):
     def get(self, request, *args, **kwargs):
         target_path = request.query_params.get('target_path')
         new_line = request.query_params.get('new_line')
+        if new_line is None:
+            new_line = ""
+        else:
+            new_line += "\n"
         #file_name = request.query_params.get('file_name')
 
         # Sanitize and validate the target_path
