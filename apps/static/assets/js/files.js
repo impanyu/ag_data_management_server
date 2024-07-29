@@ -2367,9 +2367,8 @@ function get_running_containers(){
 function update_tool_output_box(tool_output_box){
   if(container_id !=""){
 
-    current_container_status = get_current_container_status();
-    if (current_container_status["status"] != "not found")
-      tool_output_box.innerHTML = current_container_status["logs"];
+    current_container_status = get_current_container_status( tool_output_box);
+
   }
   setTimeout(() => {
     update_tool_output_box(tool_output_box);
@@ -2377,7 +2376,7 @@ function update_tool_output_box(tool_output_box){
 
 }
 
-function get_current_container_status(){
+function get_current_container_status(tool_output_box){
    //call /api/check_running_instance/ with parameters of container_id
     // Construct the API URL
     const apiUrl = `/api/check_running_instance/?running_instance_id=${container_id}`;
@@ -2394,6 +2393,8 @@ function get_current_container_status(){
         if (!response.ok) {
           console.error('Network response was not ok ' + response.statusText);
         }
+        if (current_container_status["status"] != "not found")
+          tool_output_box.innerHTML = current_container_status["logs"];
         return response.json();
       })
       .then(data => {
