@@ -1114,14 +1114,15 @@ async function get_meta_and_content(){
      await get_meta_data();
      set_pipeline_panel();
 
-     if(meta_data["mode"] == "Tool"){
-        set_tool_panel();
-        get_running_containers();
-        document.querySelector("#running_containers_panel").style.display = "block";
-     }
+     
      document.querySelector("#map_nav").style.display="block";
 
      get_file_list();
+     if(meta_data["mode"] == "Tool"){
+      set_tool_panel();
+      get_running_containers();
+      document.querySelector("#running_containers_panel").style.display = "block";
+   }
 
    }
    else{//file
@@ -1141,13 +1142,15 @@ async function get_meta_and_content(){
         current_band =  1;
      }
 
-     if(meta_data["mode"] == "Tool"){
-       set_tool_panel();
-       get_running_containers();
-        document.querySelector("#running_containers_panel").style.display = "block";
-
-     }
       get_file_content();
+      
+
+     if(meta_data["mode"] == "Tool"){
+      set_tool_panel();
+      get_running_containers();
+       document.querySelector("#running_containers_panel").style.display = "block";
+
+    }
 
    }
 
