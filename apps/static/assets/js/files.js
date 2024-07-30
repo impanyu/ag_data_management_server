@@ -2372,7 +2372,7 @@ function update_tool_output_box(tool_output_box){
   }
   setTimeout(() => {
     update_tool_output_box(tool_output_box);
-  },1000);
+  },100);
 
 }
 
