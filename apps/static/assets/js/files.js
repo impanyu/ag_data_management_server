@@ -749,7 +749,7 @@ function set_tool_panel(){
   const tool_output_box = document.createElement('div');
   document.querySelector("#file_content").appendChild(tool_output_box);
   tool_output_box.setAttribute('id', 'tool_output_box');
-  tool_output_box.style.height = "500px";
+  tool_output_box.style.height = "0px";
 
   update_tool_output_box(tool_output_box);
 
