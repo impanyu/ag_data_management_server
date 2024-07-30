@@ -2367,7 +2367,7 @@ function get_running_containers(){
 function update_tool_output_box(tool_output_box){
   if(container_id !=""){
 
-    current_container_status = get_current_container_status( tool_output_box);
+     get_current_container_status( tool_output_box);
 
   }
   setTimeout(() => {
