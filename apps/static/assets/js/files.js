@@ -2376,37 +2376,33 @@ function update_tool_output_box(tool_output_box){
 
 }
 
-function get_current_container_status(tool_output_box){
-   //call /api/check_running_instance/ with parameters of container_id
-    // Construct the API URL
-    const apiUrl = `/api/check_running_instance/?running_instance_id=${container_id}`;
 
-    // Define headers (if any)
-    /*const headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer your_access_token_here' // Include other headers as needed
-    };*/
+function get_current_container_status(container_id, tool_output_box) {
+  // Construct the API URL
+  const apiUrl = `/api/check_running_instance/?running_instance_id=${container_id}`;
 
-    // Send the GET request to the API
-    fetch(apiUrl)
-      .then(response => {
-        if (!response.ok) {
-          console.error('Network response was not ok ' + response.statusText);
-        }
-        current_container_status = response.json();
-        if (current_container_status["status"] != "not found")
-          tool_output_box.innerHTML = current_container_status["logs"];
-        
-      })
-      .then(data => {
-        console.log(data);
-      })
-      .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
-      });
-
-
+  // Send the GET request to the API
+  fetch(apiUrl)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok ' + response.statusText);
+      }
+      return response.json(); // This returns a promise
+    })
+    .then(current_container_status => {
+      if (current_container_status["status"] !== "not found") {
+        tool_output_box.innerHTML = current_container_status["logs"];
+      } else {
+        //tool_output_box.innerHTML = "Container not found";
+      }
+      // No explicit return here, so it implicitly returns undefined
+    })
+    .catch(error => {
+      console.error('There was a problem with the fetch operation:', error);
+      tool_output_box.innerHTML = "Error fetching container status";
+    });
 }
+
 
 
 
