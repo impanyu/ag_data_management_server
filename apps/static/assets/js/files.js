@@ -2392,6 +2392,7 @@ function get_current_container_status(container_id, tool_output_box) {
     .then(current_container_status => {
       if (current_container_status["status"] !== "not found") {
         tool_output_box.innerHTML = current_container_status["logs"];
+        console.info( current_container_status["logs"]);
       } else {
         //tool_output_box.innerHTML = "Container not found";
       }
