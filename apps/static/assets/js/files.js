@@ -2399,7 +2399,7 @@ function get_current_container_status(container_id, tool_output_box) {
     })
     .catch(error => {
       console.error('There was a problem with the fetch operation:', error);
-      tool_output_box.innerHTML = "Error fetching container status";
+      //tool_output_box.innerHTML = "Error fetching container status";
     });
 }
 
