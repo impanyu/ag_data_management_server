@@ -1788,7 +1788,7 @@ def wait_for_container(container,notifier,handler,command,tool,hash_value):
     notifier_thread.start()
 
     time.sleep(1)
-
+    command = ' '.join(command) + " > /proc/1/fd/1 2>/proc/1/fd/2"
 
     container.exec_run(command,shell=True)
     container.exec_run(f"touch /tmp/{hash_value}")
@@ -2069,7 +2069,7 @@ def run_tool(entry_point,arg_values, arg_types,user,exe_env):
 
     notifier = pyinotify.Notifier(wm, handler)
 
-    command += [">/proc/1/fd/1","2>/proc/1/fd/2"]
+    #command += [">/proc/1/fd/1","2>/proc/1/fd/2"]
 
     # Start a separate thread to wait for the container to stop
     waiting_thread = threading.Thread(target=wait_for_container, args=(container,notifier,handler,command,tool,hash_value))
