@@ -1790,10 +1790,11 @@ def wait_for_container(container,notifier,handler,command,tool,hash_value):
     time.sleep(1)
 
 
-    container.exec_run(command)
+    container.exec_run(command,shell=True)
     container.exec_run(f"touch /tmp/{hash_value}")
   
     container.wait()
+    
     notifier.stop()
 
     #if container.id in tool_meta_data["running_containers"]:
