@@ -2377,7 +2377,7 @@ function update_tool_output_box(tool_output_box){
 }
 
 
-function get_current_container_status(container_id, tool_output_box) {
+function get_current_container_status( tool_output_box) {
   // Construct the API URL
   const apiUrl = `/api/check_running_instance/?running_instance_id=${container_id}`;
 
