@@ -338,7 +338,7 @@ class StopRunningInstance(APIView):
             container.stop()
             # Ensure the container is stopped before continuing
             container.reload()
-            if container.status == 'exited':
+            if container.status == 'Exited':
                 logs = container.logs().decode('utf-8')
                 # Get the container image name
                 image_name = container.image.tags[0] if container.image.tags else "No image tag"
