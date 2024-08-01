@@ -359,7 +359,7 @@ class StopRunningInstance(APIView):
             else:
                 response = {
                     "container_id": container_id,
-                    "status": "failed to stop"
+                    "status": container.status
                 }
         except docker.errors.APIError as e:
             response = {
