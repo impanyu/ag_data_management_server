@@ -325,6 +325,52 @@ class CheckRunningInstance(APIView):
     
 
 
+class StopRunningInstance(APIView):
+
+    def get(self, request, *args, **kwargs):
+        container_id = request.query_params.get('running_instance_id')
+        container = get_container_by_id(container_id)
+        if container is None:
+            response = json.dumps({"container_id": container_id, "status": "not found"})
+            return HttpResponse(response)
+
+        try:
+            container.stop()
+            # Ensure the container is stopped before continuing
+            container.reload()
+            if container.status == 'exited':
+                logs = container.logs().decode('utf-8')
+                # Get the container image name
+                image_name = container.image.tags[0] if container.image.tags else "No image tag"
+                # Get the container start timestamp
+                started_at = container.attrs['State']['StartedAt'][:-5]
+                start_time = datetime.strptime(started_at, '%Y-%m-%dT%H:%M:%S.%f')
+                # Calculate the duration in seconds
+                duration = (datetime.utcnow() - start_time).total_seconds()
+                response = {
+                    "container_id": container_id,
+                    "status": "stopped",
+                    "image": image_name,
+                    "running_time": duration,
+                    "logs": logs
+                }
+                # Remove the container
+                container.remove()
+            else:
+                response = {
+                    "container_id": container_id,
+                    "status": "failed to stop"
+                }
+        except docker.errors.APIError as e:
+            response = {
+                "container_id": container_id,
+                "status": "error",
+                "error": str(e)
+            }
+
+        response = json.dumps(response)
+        return HttpResponse(response)
+
 
 
 class JD_authorization_code(APIView):

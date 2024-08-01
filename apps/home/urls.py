@@ -46,6 +46,7 @@ urlpatterns = [
     path('api/get_JD_access_token/', JD_access_token.as_view(), name='JD-access-token'),
     path('api/realm5_weather/', Realm5_Weather_Connect.as_view(), name='realm5-weather'),
     path('api/check_running_instance/', CheckRunningInstance.as_view(), name='check-running-instance'),
+    path('api/stop_running_instance/', StopRunningInstance.as_view(), name='stop_running_instance'),
     path('api/api-token-auth/', obtain_auth_token, name='api_token_auth'),
 
     # The home page
