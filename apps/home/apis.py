@@ -340,10 +340,10 @@ class StopRunningInstance(APIView):
             counter = 0
 
             # Wait for the container to fully stop
-            while container.status != 'exited' and counter<20:
-                time.sleep(1)
-                container.reload()
-                counter += 1
+            #while container.status != 'exited' and counter<20:
+            #    time.sleep(1)
+            #    container.reload()
+            #    counter += 1
 
             container.reload()
             if container.status == 'exited':
