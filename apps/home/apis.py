@@ -355,6 +355,7 @@ class GetContainersFromTool(APIView):
 
 def wait_for_container_to_stop(container_id):
     api_client = docker.APIClient()
+
     while True:
         try:
             container_info = api_client.inspect_container(container_id)
@@ -384,11 +385,12 @@ class StopRunningInstance(APIView):
             #    time.sleep(1)
             #    container.reload()
             #    counter += 1
-            wait_for_container_to_stop(container)
+            #wait_for_container_to_stop(container)
             time.sleep(5)
             container.reload()
 
             api_client = docker.APIClient()
+            container_info = api_client.inspect_container(container_id)
             container_info = api_client.inspect_container(container_id)
             status = container_info['State']['Status']
             #if container_info['State']['Status'] == 'exited':
