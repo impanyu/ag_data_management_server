@@ -315,23 +315,55 @@ class CheckRunningInstance(APIView):
 
         start_time = datetime.strptime(started_at, '%Y-%m-%dT%H:%M:%S.%f')
 
-        # Calculate the duration in seconds
-        duration = (datetime.utcnow() - start_time).total_seconds()
+        finished_at = container_info['State']['FinishedAt'][:-5]
+        stop_time = datetime.strptime(finished_at, '%Y-%m-%dT%H:%M:%S.%f')
 
-        response={"container_id": container_id, "status": status, "image": image_name,"running_time": duration,"logs":logs}
+        if status == "running":
+        # Calculate the duration in seconds
+            duration = (datetime.utcnow() - start_time).total_seconds()
+        else:
+            duration = (stop_time - start_time).total_seconds()
+
+        response={"container_id": container_id, "status": status, "image": image_name,"running_time": duration,"logs":logs,"start_time":start_time, "finished_time":stop_time}
 
         response = json.dumps(response)
         return HttpResponse(response)
+
+
+class GetContainersFromTool(APIView):
+
+    def get(self, request, *args, **kwargs):
+        target_path = request.query_params.get('target_path')
+        #file_name = request.query_params.get('file_name')
+
+        # Sanitize and validate the target_path
+        safe_path = os.path.normpath(target_path).lstrip('/')
+        current_user = request.user.username
+
+        # Construct the full file path
+        full_path = os.path.join(settings.USER_DATA_DIR, current_user, "ag_data", safe_path)
+       
+        meta_data = get_meta_data(full_path)
+        containers = []
+
+        if "containers" in meta_data:
+            containers = json.dumps(meta_data["containers"])
+        return HttpResponse(containers)
+
     
-    
+
+
 def wait_for_container_to_stop(container_id):
     api_client = docker.APIClient()
     while True:
-        container_info = api_client.inspect_container(container_id)
-        if container_info['State']['Status'] == 'exited':
-            break
+        try:
+            container_info = api_client.inspect_container(container_id)
+            if container_info['State']['Status'] == 'exited':
+                return container_info
+        except docker.errors.APIError as e:
+            print(f"Error inspecting container: {e}")
+            return None
         time.sleep(1)
-
 
 class StopRunningInstance(APIView):
 
@@ -356,8 +388,9 @@ class StopRunningInstance(APIView):
             time.sleep(5)
             container.reload()
 
-            #api_client = docker.APIClient()
-            #container_info = api_client.inspect_container(container_id)
+            api_client = docker.APIClient()
+            container_info = api_client.inspect_container(container_id)
+            status = container_info['State']['Status']
             #if container_info['State']['Status'] == 'exited':
         
 
