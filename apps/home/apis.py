@@ -324,11 +324,10 @@ class CheckRunningInstance(APIView):
         return HttpResponse(response)
     
 
-def wait_for_container_to_stop(container_id):
-    api_client = docker.APIClient()
+def wait_for_container_to_stop(container):
+   
     while True:
-        container_info = api_client.inspect_container(container_id)
-        if container_info['State']['Status'] == 'exited':
+        if container.attrs['State']['Status'] == 'exited':
             break
         time.sleep(1) 
 
@@ -352,7 +351,7 @@ class StopRunningInstance(APIView):
             #    time.sleep(1)
             #    container.reload()
             #    counter += 1
-            wait_for_container_to_stop(container_id)
+            wait_for_container_to_stop(container)
             container.reload()
           
             if container.status == 'exited':
