@@ -1800,10 +1800,10 @@ def wait_for_container(container,notifier,handler,command,tool,hash_value):
     #if container.id in tool_meta_data["running_containers"]:
     #   tool_meta_data["running_containers"].remove(container.id)
 
-    running_containers = cache.get(tool)
-    if running_containers is not None and container.id in running_containers:
-        running_containers.remove(container.id)
-        cache.set(tool,running_containers)
+    #running_containers = cache.get(tool)
+    #if running_containers is not None and container.id in running_containers:
+    #    running_containers.remove(container.id)
+    #    cache.set(tool,running_containers)
 
 
 
@@ -2094,6 +2094,8 @@ def run_tool(entry_point,arg_values, arg_types,user,exe_env):
     #notifier_thread.join()
 
     return container.id
+
+#def add_container(container_id,user,path):
 
 
 
