@@ -14,6 +14,7 @@ from .native_tools import *
 from django.shortcuts import redirect
 from django.template import loader
 import urllib.parse
+import time
 
 class FileUploadSerializer(serializers.Serializer):
     # Define a file field in your serializer
@@ -353,18 +354,6 @@ class GetContainersFromTool(APIView):
     
 
 
-def wait_for_container_to_stop(container_id):
-    api_client = docker.APIClient()
-
-    while True:
-        try:
-            container_info = api_client.inspect_container(container_id)
-            if container_info['State']['Status'] == 'exited':
-                return container_info
-        except docker.errors.APIError as e:
-            print(f"Error inspecting container: {e}")
-            return None
-        time.sleep(1)
 
 class StopRunningInstance(APIView):
 
@@ -396,6 +385,7 @@ class StopRunningInstance(APIView):
                 container_info = api_client.inspect_container(container_id)
                 if container_info['State']['Status'] == 'exited':
                     break
+                time.sleep(1)
             #container_info = api_client.inspect_container(container_id)
             status = container_info['State']['Status']
             #if container_info['State']['Status'] == 'exited':
