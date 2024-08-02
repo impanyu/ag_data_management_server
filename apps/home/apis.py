@@ -324,7 +324,7 @@ class CheckRunningInstance(APIView):
 
         duration = (stop_time - start_time).total_seconds()
 
-        response={"container_id": container_id, "status": status, "image": image_name,"running_time": duration,"logs":logs}#,"start_time":started_at, "finished_time":finished_at}
+        response={"container_id": container_id, "status": status, "image": image_name,"running_time": duration,"logs":logs,"start_time":started_at, "finished_time":finished_at}
 
         response = json.dumps(response)
         return HttpResponse(response)
