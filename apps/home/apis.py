@@ -316,6 +316,7 @@ class CheckRunningInstance(APIView):
         start_time = datetime.strptime(started_at, '%Y-%m-%dT%H:%M:%S.%f')
 
         stop_time = datetime.utcnow()#datetime.strptime(finished_at, '%Y-%m-%dT%H:%M:%S.%f')
+        finished_at =  stop_time.strftime('%Y-%m-%dT%H:%M:%S.%f')
 
         if status == "exited":
             finished_at = container.attrs['State']['FinishedAt'][:-5]
