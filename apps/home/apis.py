@@ -387,7 +387,7 @@ class StopRunningInstance(APIView):
             #    counter += 1
             #wait_for_container_to_stop(container)
             time.sleep(5)
-            container.reload()
+            
 
             api_client = docker.APIClient()
             container_info = api_client.inspect_container(container_id)
@@ -399,6 +399,7 @@ class StopRunningInstance(APIView):
             #container_info = api_client.inspect_container(container_id)
             status = container_info['State']['Status']
             #if container_info['State']['Status'] == 'exited':
+            container.reload()
         
 
             if container.status == 'exited':
