@@ -323,7 +323,14 @@ class CheckRunningInstance(APIView):
         response = json.dumps(response)
         return HttpResponse(response)
     
-
+    
+def wait_for_container_to_stop(container_id):
+    api_client = docker.APIClient()
+    while True:
+        container_info = api_client.inspect_container(container_id)
+        if container_info['State']['Status'] == 'exited':
+            break
+        time.sleep(1)
 
 
 class StopRunningInstance(APIView):
@@ -345,11 +352,16 @@ class StopRunningInstance(APIView):
             #    time.sleep(1)
             #    container.reload()
             #    counter += 1
-            #wait_for_container_to_stop(container)
-            time.sleep(5)
-            container.reload()
-          
-            if container.status == 'exited' or container.status == 'removing':
+            wait_for_container_to_stop(container)
+            #time.sleep(5)
+            #container.reload()
+
+            api_client = docker.APIClient()
+            container_info = api_client.inspect_container(container_id)
+            if container_info['State']['Status'] == 'exited':
+        
+
+            #if container.status == 'exited':
                 logs = container.logs().decode('utf-8')
                 # Get the container image name
                 image_name = container.image.tags[0] if container.image.tags else "No image tag"
@@ -360,10 +372,10 @@ class StopRunningInstance(APIView):
                 duration = (datetime.utcnow() - start_time).total_seconds()
                 response = {
                     "container_id": container_id,
-                    "status": "stopped"
-                    #"image": image_name,
-                    #"running_time": duration,
-                    #"logs": logs
+                    "status": "stopped",
+                    "image": image_name,
+                    "running_time": duration,
+                    "logs": logs
                 }
                 # Remove the container
                 container.remove()
