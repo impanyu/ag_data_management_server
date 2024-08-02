@@ -324,12 +324,6 @@ class CheckRunningInstance(APIView):
         return HttpResponse(response)
     
 
-def wait_for_container_to_stop(container):
-   
-    while True:
-        if container.attrs['State']['Status'] == 'exited':
-            break
-        time.sleep(1) 
 
 
 class StopRunningInstance(APIView):
@@ -351,10 +345,11 @@ class StopRunningInstance(APIView):
             #    time.sleep(1)
             #    container.reload()
             #    counter += 1
-            wait_for_container_to_stop(container)
+            #wait_for_container_to_stop(container)
+            time.sleep(5)
             container.reload()
           
-            if container.status == 'exited':
+            if container.status == 'exited' or container.status == 'removing':
                 logs = container.logs().decode('utf-8')
                 # Get the container image name
                 image_name = container.image.tags[0] if container.image.tags else "No image tag"
