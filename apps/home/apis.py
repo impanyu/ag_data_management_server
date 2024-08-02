@@ -352,8 +352,8 @@ class StopRunningInstance(APIView):
             #    time.sleep(1)
             #    container.reload()
             #    counter += 1
-            wait_for_container_to_stop(container)
-            #time.sleep(5)
+            #wait_for_container_to_stop(container)
+            time.sleep(5)
             container.reload()
 
             #api_client = docker.APIClient()
