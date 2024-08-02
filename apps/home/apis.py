@@ -391,7 +391,12 @@ class StopRunningInstance(APIView):
 
             api_client = docker.APIClient()
             container_info = api_client.inspect_container(container_id)
-            container_info = api_client.inspect_container(container_id)
+            while True:
+       
+                container_info = api_client.inspect_container(container_id)
+                if container_info['State']['Status'] == 'exited':
+                    break
+            #container_info = api_client.inspect_container(container_id)
             status = container_info['State']['Status']
             #if container_info['State']['Status'] == 'exited':
         
