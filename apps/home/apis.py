@@ -352,7 +352,7 @@ class StopRunningInstance(APIView):
             #    time.sleep(1)
             #    container.reload()
             #    counter += 1
-            #wait_for_container_to_stop(container)
+            wait_for_container_to_stop(container)
             #time.sleep(5)
             #container.reload()
 
@@ -378,7 +378,7 @@ class StopRunningInstance(APIView):
                     "logs": logs
                 }
                 # Remove the container
-                container.remove()
+                #container.remove()
             else:
                 response = {
                     "container_id": container_id,
