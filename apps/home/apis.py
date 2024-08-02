@@ -378,7 +378,7 @@ class StopRunningInstance(APIView):
                     "logs": logs
                 }
                 # Remove the container
-                container.remove()
+                #container.remove()
             else:
                 response = {
                     "container_id": container_id,
