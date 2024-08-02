@@ -354,14 +354,14 @@ class StopRunningInstance(APIView):
             #    counter += 1
             wait_for_container_to_stop(container)
             #time.sleep(5)
-            #container.reload()
+            container.reload()
 
-            api_client = docker.APIClient()
-            container_info = api_client.inspect_container(container_id)
-            if container_info['State']['Status'] == 'exited':
+            #api_client = docker.APIClient()
+            #container_info = api_client.inspect_container(container_id)
+            #if container_info['State']['Status'] == 'exited':
         
 
-            #if container.status == 'exited':
+            if container.status == 'exited':
                 logs = container.logs().decode('utf-8')
                 # Get the container image name
                 image_name = container.image.tags[0] if container.image.tags else "No image tag"
