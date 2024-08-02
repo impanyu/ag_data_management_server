@@ -313,14 +313,14 @@ class CheckRunningInstance(APIView):
         started_at = container.attrs['State']['StartedAt'][:-5]
         #start_time = datetime.strptime(started_at, '%Y-%m-%dT%H:%M:%S.%fZs')
 
-        start_time = datetime.strptime(started_at, '%Y-%m-%dT%H:%M:%S')
+        start_time = datetime.strptime(started_at, '%Y-%m-%dT%H:%M:%S.%f')
 
         stop_time = datetime.utcnow()#datetime.strptime(finished_at, '%Y-%m-%dT%H:%M:%S.%f')
-        finished_at =  stop_time.strftime('%Y-%m-%dT%H:%M:%S')
+        finished_at =  stop_time.strftime('%Y-%m-%dT%H:%M:%S.%f')
 
         if status == "exited":
             finished_at = container.attrs['State']['FinishedAt'][:-5]
-            stop_time = datetime.strptime(finished_at, '%Y-%m-%dT%H:%M:%S')
+            stop_time = datetime.strptime(finished_at, '%Y-%m-%dT%H:%M:%S.%f')
 
         duration = (stop_time - start_time).total_seconds()
 
