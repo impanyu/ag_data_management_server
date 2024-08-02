@@ -372,7 +372,7 @@ class StopRunningInstance(APIView):
                 duration = (datetime.utcnow() - start_time).total_seconds()
                 response = {
                     "container_id": container_id,
-                    "status": "stopped",
+                    "status": container.status,
                     "image": image_name,
                     "running_time": duration,
                     "logs": logs
