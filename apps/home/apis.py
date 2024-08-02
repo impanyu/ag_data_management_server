@@ -324,6 +324,14 @@ class CheckRunningInstance(APIView):
         return HttpResponse(response)
     
 
+def wait_for_container_to_stop(container_id):
+    api_client = docker.APIClient()
+    while True:
+        container_info = api_client.inspect_container(container_id)
+        if container_info['State']['Status'] == 'exited':
+            break
+        time.sleep(1) 
+
 
 class StopRunningInstance(APIView):
 
@@ -344,9 +352,9 @@ class StopRunningInstance(APIView):
             #    time.sleep(1)
             #    container.reload()
             #    counter += 1
-
+            wait_for_container_to_stop(container_id)
             container.reload()
-            container.reload()
+          
             if container.status == 'exited':
                 logs = container.logs().decode('utf-8')
                 # Get the container image name
