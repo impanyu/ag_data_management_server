@@ -1799,7 +1799,7 @@ def wait_for_container(container,notifier,handler,command,tool,hash_value):
         for stdout in exec_result.output:
             file.write(stdout)
   
-    container.wait()
+    #container.wait()
     
     notifier.stop()
     stop_container(container.id)
