@@ -345,7 +345,8 @@ class GetRunningInstance(APIView):
         #full_path = os.path.join(settings.USER_DATA_DIR, current_user, "ag_data", safe_path)
        
         #meta_data = get_meta_data(full_path)
-        container_ids = []#get_running_containers(current_user,safe_path)
+        target_path = os.path.join(settings.USER_DATA_DIR, safe_path)
+        container_ids = get_running_containers(current_user,safe_path)
 
         return HttpResponse(json.dumps(container_ids))
 
