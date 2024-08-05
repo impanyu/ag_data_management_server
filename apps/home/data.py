@@ -1781,7 +1781,7 @@ def update_parent_meta(abs_path):
 
 
 
-def wait_for_container(container,notifier,handler,command,tool,hash_value):
+def wait_for_container(container,notifier,handler,command,tool,hash_value,user,entry_point):
 
     #tool_meta_data = get_meta_data(tool)
     notifier_thread = threading.Thread(target=notifier.loop, daemon=False)
@@ -1797,6 +1797,7 @@ def wait_for_container(container,notifier,handler,command,tool,hash_value):
     
     notifier.stop()
     stop_container(container.id)
+    remove_running_container(user,entry_point,container.id)
 
     #if container.id in tool_meta_data["running_containers"]:
     #   tool_meta_data["running_containers"].remove(container.id)
@@ -2126,6 +2127,9 @@ def run_tool(entry_point,arg_values, arg_types,user,exe_env):
     running_containers.append(container.id)
     cache.set(tool, running_containers)
 
+    set_running_container(user,entry_point,container.id)
+
+
 
 
 
@@ -2137,7 +2141,7 @@ def run_tool(entry_point,arg_values, arg_types,user,exe_env):
     #command += [">/proc/1/fd/1","2>/proc/1/fd/2"]
 
     # Start a separate thread to wait for the container to stop
-    waiting_thread = threading.Thread(target=wait_for_container, args=(container,notifier,handler,command,tool,hash_value))
+    waiting_thread = threading.Thread(target=wait_for_container, args=(container,notifier,handler,command,tool,hash_value,user,entry_point), daemon=True)
     waiting_thread.start()
 
 
@@ -2161,6 +2165,34 @@ def run_tool(entry_point,arg_values, arg_types,user,exe_env):
     return container.id
 
 #def add_container(container_id,user,path):
+
+def set_running_container(user,entry_point,container_id):
+    entry_point_path = f"/data{entry_point}"
+    entry_point_meta_data = get_meta_data(entry_point_path)
+ 
+
+    if "containers" in entry_point_meta_data:
+        if not user in entry_point_meta_data["containers"]:
+            entry_point_meta_data["containers"][user] = []
+    else:
+        entry_point_meta_data["containers"] = {user:[]}
+    entry_point_meta_data["containers"][user].append(container_id)
+
+    entry_point_meta_data_file_name = "_".join(entry_point_path.split("/")[1:]) + ".json"
+    with open(os.path.join(settings.CORE_DIR, 'data', entry_point_meta_data_file_name), "w") as entry_point_meta_data_file:
+        json.dump(entry_point_meta_data, entry_point_meta_data_file)
+
+def remove_running_container(user,entry_point,container_id):
+    entry_point_path = f"/data{entry_point}"
+    entry_point_meta_data = get_meta_data(entry_point_path)
+
+    if "containers" in entry_point_meta_data:
+        if user in entry_point_meta_data["containers"]:
+            entry_point_meta_data["containers"][user].remove(container_id)
+
+    entry_point_meta_data_file_name = "_".join(entry_point_path.split("/")[1:]) + ".json"
+    with open(os.path.join(settings.CORE_DIR, 'data', entry_point_meta_data_file_name), "w") as entry_point_meta_data_file:
+        json.dump(entry_point_meta_data, entry_point_meta_data_file)
 
 
 

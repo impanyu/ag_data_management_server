@@ -345,11 +345,11 @@ class GetContainersFromTool(APIView):
         full_path = os.path.join(settings.USER_DATA_DIR, current_user, "ag_data", safe_path)
        
         meta_data = get_meta_data(full_path)
-        containers = []
+        container_ids = []
 
         if "containers" in meta_data:
-            containers = json.dumps(meta_data["containers"])
-        return HttpResponse(containers)
+            container_ids = json.dumps(meta_data["containers"][current_user])
+        return HttpResponse(container_ids)
 
     
 
