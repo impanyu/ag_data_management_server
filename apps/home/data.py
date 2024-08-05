@@ -1801,8 +1801,8 @@ def wait_for_container(container,notifier,handler,command,tool,hash_value):
     stdout = exec_result.output
 
     # Write the output to a file located in the same folder of "tool"
-    tool_dir = os.path.dirname(tool)
-    with open(f'{tool_dir}/output.txt', 'wb') as file:
+    tool_output= tool+"_output.txt"
+    with open(f'{tool_output}', 'wb') as file:
         file.write(stdout)
 
     #remove_running_container(container.id)
