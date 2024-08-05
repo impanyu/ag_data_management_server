@@ -2367,7 +2367,7 @@ function get_running_containers(){
                                                 document.querySelector("#container_list").removeChild(document.getElementById(this.id.split("_")[1]));
                                             }
                                           });
-                                      }
+                                      });
 
 
                                  }
