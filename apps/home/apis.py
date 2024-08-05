@@ -300,33 +300,7 @@ class CheckRunningInstance(APIView):
 
     def get(self, request, *args, **kwargs):
         container_id = request.query_params.get('running_instance_id')
-        container = get_container_by_id(container_id)
-        if container is None:
-            response = json.dumps({"container_id":container_id,"status":"not found"})
-            return HttpResponse(response)
-        logs = container.logs().decode('utf-8')
-        # Get the container status
-        status = container.status
-        # Get the container image name
-        image_name = container.image.tags[0] if container.image.tags else "No image tag"
-
-        # Get the container start timestamp
-        started_at = container.attrs['State']['StartedAt'][:-5]
-        #start_time = datetime.strptime(started_at, '%Y-%m-%dT%H:%M:%S.%fZs')
-
-        start_time = datetime.strptime(started_at, '%Y-%m-%dT%H:%M:%S.%f')
-
-        stop_time = datetime.utcnow()#datetime.strptime(finished_at, '%Y-%m-%dT%H:%M:%S.%f')
-        finished_at =  stop_time.strftime('%Y-%m-%dT%H:%M:%S.%f')
-
-        if status == "exited":
-            finished_at = container.attrs['State']['FinishedAt'][:-5]
-            stop_time = datetime.strptime(finished_at, '%Y-%m-%dT%H:%M:%S.%f')
-
-        duration = (stop_time - start_time).total_seconds()
-
-        response={"container_id": container_id, "status": status, "image": image_name,"running_time": duration,"logs":logs,"start_time":started_at, "finished_time":finished_at}
-
+        response = check_running_instance(container_id)
         response = json.dumps(response)
         return HttpResponse(response)
 
@@ -347,8 +321,13 @@ class GetRunningInstance(APIView):
         #meta_data = get_meta_data(full_path)
         target_path = os.path.join(settings.USER_DATA_DIR, safe_path)
         containers = get_running_containers_by_path(current_user,target_path)
+        results= []
+        for container in containers:
+            response = check_running_instance(container["container_id"])
+            results.append(response)
+            
 
-        return HttpResponse(json.dumps(containers))
+        return HttpResponse(json.dumps(results))
 
     
 

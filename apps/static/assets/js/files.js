@@ -2336,23 +2336,38 @@ function get_meta_data(){
 function get_running_containers(){
  setInterval(function(){
                          $.ajax({
-                            type: "POST",
-                            url: "/get_running_containers",
+                            type: "GET",
+                            url: "/get_running_instance",
                             data:{
-                                    current_path: current_path
+                                    target_path: current_path,
                             },
                             success: function (data) {
+                      
                             document.querySelector("#container_list").innerHTML = "";
                                 console.info(data);
                                 containers = JSON.parse(data);
                                  for(container of containers){
 
-                                      document.querySelector("#container_list").innerHTML += '<tr>'+
+                                      document.querySelector("#container_list").innerHTML += '<tr id="'+container["container_id"]+'">'+
                                          '<td scope="row" ><b>'+container["container_id"].substr(0,12)+'</b></td>'+
                                          '<td scope="row" ><b>'+container["image"]+'</b></td>'+
                                          '<td scope="row" ><b>'+container["status"]+'</b></td>'+
                                          '<td scope="row" ><b>'+container["running_time"]+'s</b></td>'+
+                                         '<td scope="row" >'+'<button type="submit" class="btn btn-lg btn-info" id="stop_'+container["container_id"]+'">Stop</button>'+'</td>'
                                           '</tr>';
+                                      document.querySelector("#stop_"+container["container_id"]).addEventListener("click",function(){
+                                          $.ajax({
+                                            type: "GET",
+                                            url: "/stop_running_instance",
+                                            data:{
+                                                    container_id: this.id.split("_")[1],
+                                            },
+                                            success: function (data) {
+                                                //remove the container from the list
+                                                document.querySelector("#container_list").removeChild(document.getElementById(this.id.split("_")[1]));
+                                            }
+                                          });
+                                      }
 
 
                                  }
