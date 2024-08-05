@@ -2195,7 +2195,7 @@ def remove_running_container(user,entry_point,container_id):
         json.dump(entry_point_meta_data, entry_point_meta_data_file)
 
 def get_running_containers(user,target_path):
-    target_path = f"/data{target_path}"
+    target_path = os.path.join(settings.USER_DATA_DIR, target_path)
     target_path_meta_data = get_meta_data(target_path)
     if "entry_point" in target_path_meta_data:
         entry_point_path = target_path_meta_data["entry_point"]
