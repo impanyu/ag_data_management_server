@@ -2344,6 +2344,14 @@ function get_running_containers(){
                             //document.querySelector("#container_list").innerHTML = "";
                                 console.info(data);
                                 containers = JSON.parse(data);
+                                //iterate through all the children of the container_list and remove the ones that are not in the containers
+                                for (child of document.querySelector("#container_list").children){
+                                    if (containers.indexOf(child.id) == -1)
+                                        document.querySelector("#container_list").removeChild(child);
+                                }
+                                
+
+
                                  for(container of containers){
                                      if(document.getElementById(container["container_id"]) == null){
 
