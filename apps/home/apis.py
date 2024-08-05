@@ -359,69 +359,8 @@ class StopRunningInstance(APIView):
 
     def get(self, request, *args, **kwargs):
         container_id = request.query_params.get('running_instance_id')
-        container = get_container_by_id(container_id)
-        if container is None:
-            response = json.dumps({"container_id": container_id, "status": "not found"})
-            return HttpResponse(response)
-
-        try:
-            container.stop()
-            # Ensure the container is stopped before continuing
-            counter = 0
-
-            # Wait for the container to fully stop
-            #while container.status != 'exited' and counter<20:
-            #    time.sleep(1)
-            #    container.reload()
-            #    counter += 1
-            #wait_for_container_to_stop(container)
-            time.sleep(5)
-            
-
-            api_client = docker.APIClient()
-            container_info = api_client.inspect_container(container_id)
-            while True:
-       
-                container_info = api_client.inspect_container(container_id)
-                if container_info['State']['Status'] == 'exited':
-                    break
-                time.sleep(1)
-            #container_info = api_client.inspect_container(container_id)
-            status = container_info['State']['Status']
-            #if container_info['State']['Status'] == 'exited':
-            container.reload()
+        response = stop_container(container_id)
         
-
-            if container.status == 'exited':
-                logs = container.logs().decode('utf-8')
-                # Get the container image name
-                image_name = container.image.tags[0] if container.image.tags else "No image tag"
-                # Get the container start timestamp
-                started_at = container.attrs['State']['StartedAt'][:-5]
-                start_time = datetime.strptime(started_at, '%Y-%m-%dT%H:%M:%S.%f')
-                # Calculate the duration in seconds
-                duration = (datetime.utcnow() - start_time).total_seconds()
-                response = {
-                    "container_id": container_id,
-                    "status": container.status,
-                    "image": image_name,
-                    "running_time": duration,
-                    "logs": logs
-                }
-                # Remove the container
-                #container.remove()
-            else:
-                response = {
-                    "container_id": container_id,
-                    "status": container.status
-                }
-        except docker.errors.APIError as e:
-            response = {
-                "container_id": container_id,
-                "status": "error",
-                "error": str(e)
-            }
-
         response = json.dumps(response)
         return HttpResponse(response)
 
