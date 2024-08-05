@@ -2354,6 +2354,7 @@ function get_running_containers(){
                                          '<td scope="row" >'+'<button type="submit" class="btn btn-lg btn-info" id="stop_'+container["container_id"]+'">Stop</button>'+'</td>'
                                           '</tr>';
                                       document.querySelector("#stop_"+container["container_id"]).addEventListener("click",function(){
+                                          document.getElementById("stop_"+this.id.split("_")[1]).textContent = "Stopping";
                                           $.ajax({
                                             type: "GET",
                                             url: "/api/stop_running_instance/?container_id="+this.id.split("_")[1],
