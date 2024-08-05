@@ -2194,7 +2194,20 @@ def remove_running_container(user,entry_point,container_id):
     with open(os.path.join(settings.CORE_DIR, 'data', entry_point_meta_data_file_name), "w") as entry_point_meta_data_file:
         json.dump(entry_point_meta_data, entry_point_meta_data_file)
 
-
+def get_running_containers(user,target_path):
+    target_path = f"/data{target_path}"
+    target_path_meta_data = get_meta_data(target_path)
+    if "entry_point" in target_path_meta_data:
+        entry_point_path = target_path_meta_data["entry_point"]
+        entry_point_meta_data = get_meta_data(entry_point_path)
+        if "containers" in entry_point_meta_data:
+            if user in entry_point_meta_data["containers"]:
+                return entry_point_meta_data["containers"][user]
+    else:
+        if "containers" in target_path_meta_data:
+            if user in target_path_meta_data["containers"]:
+                return target_path_meta_data["containers"][user]
+    return []
 
 
 def trim_path_header(path):
