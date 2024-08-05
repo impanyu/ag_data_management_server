@@ -2378,10 +2378,10 @@ function get_running_containers(){
                                           this.textContent = "Stopping";
                                           $.ajax({
                                             type: "GET",
-                                            url: "/api/stop_running_instance/?container_id="+this.id.split("_")[1],
+                                            url: "/api/stop_running_instance/?running_instance_id="+this.id.split("_")[1],
                                             success: function (data) {
                                                 //remove the container from the list
-                                                document.querySelector("#container_list").removeChild(document.getElementById(this.id.split("_")[1]));
+                                                document.querySelector("#container_list").removeChild(container["container_id"].substr(0, 12));
                                             }
                                           });
                                       });
