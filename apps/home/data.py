@@ -1788,15 +1788,23 @@ def wait_for_container(container,notifier,handler,command,tool,hash_value):
     notifier_thread.start()
 
     time.sleep(1)
-    command = ' '.join(command) + " > /proc/1/fd/1 2>/proc/1/fd/2"
+    #command = ' '.join(command) + " > /proc/1/fd/1 2>/proc/1/fd/2"
 
-    container.exec_run(command)
+    exec_result = container.exec_run(command)
     container.exec_run(f"touch /tmp/{hash_value}")
   
     container.wait()
     
     notifier.stop()
     stop_container(container.id)
+    # Get the output
+    stdout = exec_result.output
+
+    # Write the output to a file located in the same folder of "tool"
+    tool_dir = os.path.dirname(tool)
+    with open(f'{tool_dir}/output.txt', 'wb') as file:
+        file.write(stdout)
+
     #remove_running_container(container.id)
 
     #if container.id in tool_meta_data["running_containers"]:
