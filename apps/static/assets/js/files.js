@@ -2356,10 +2356,7 @@ function get_running_containers(){
                                       document.querySelector("#stop_"+container["container_id"]).addEventListener("click",function(){
                                           $.ajax({
                                             type: "GET",
-                                            url: "/stop_running_instance",
-                                            data:{
-                                                    container_id: this.id.split("_")[1],
-                                            },
+                                            url: "/api/stop_running_instance/?container_id="+this.id.split("_")[1],
                                             success: function (data) {
                                                 //remove the container from the list
                                                 document.querySelector("#container_list").removeChild(document.getElementById(this.id.split("_")[1]));
