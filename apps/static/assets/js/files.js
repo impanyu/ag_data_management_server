@@ -2375,7 +2375,7 @@ function get_running_containers(){
 
 
                                       document.querySelector("#stop_"+container["container_id"]).addEventListener("click",function(){
-                                          this.textContent = "Stopping";
+                                          this.textContent = "Stopping..";
                                           $.ajax({
                                             type: "GET",
                                             url: "/api/stop_running_instance/?running_instance_id="+this.id.split("_")[1],
