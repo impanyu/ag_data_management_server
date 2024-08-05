@@ -2381,7 +2381,7 @@ function get_running_containers(){
                                             url: "/api/stop_running_instance/?running_instance_id="+this.id.split("_")[1],
                                             success: function (data) {
                                                 //remove the container from the list
-                                                document.querySelector("#container_list").removeChild(container["container_id"].substr(0, 12));
+                                                document.querySelector("#container_list").removeChild(container["container_id"]);
                                             }
                                           });
                                       });
