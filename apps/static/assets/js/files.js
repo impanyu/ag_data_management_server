@@ -2398,7 +2398,7 @@ function get_running_containers(){
                             }
                         });
 
-                  },5000);
+                  },2000);
 }
 
 function update_tool_output_box(tool_output_box){
