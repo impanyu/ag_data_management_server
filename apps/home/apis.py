@@ -331,7 +331,7 @@ class CheckRunningInstance(APIView):
         return HttpResponse(response)
 
 
-class GetContainersFromTool(APIView):
+class GetRunningInstance(APIView):
 
     def get(self, request, *args, **kwargs):
         target_path = request.query_params.get('target_path')
