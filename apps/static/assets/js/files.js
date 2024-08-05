@@ -2341,18 +2341,39 @@ function get_running_containers(){
                     
                             success: function (data) {
                       
-                            document.querySelector("#container_list").innerHTML = "";
+                            //document.querySelector("#container_list").innerHTML = "";
                                 console.info(data);
                                 containers = JSON.parse(data);
                                  for(container of containers){
+                                     if(document.getElementById(container["container_id"]) == null){
 
-                                      document.querySelector("#container_list").innerHTML += '<tr id="'+container["container_id"]+'">'+
+                                      /*document.querySelector("#container_list").innerHTML += '<tr id="'+container["container_id"]+'">'+
                                          '<td scope="row" ><b>'+container["container_id"].substr(0,12)+'</b></td>'+
                                          '<td scope="row" ><b>'+container["image"]+'</b></td>'+
                                          '<td scope="row" ><b>'+container["status"]+'</b></td>'+
                                          '<td scope="row" ><b>'+container["running_time"]+'s</b></td>'+
                                          '<td scope="row" >'+'<button type="submit" class="btn btn-lg btn-info" id="stop_'+container["container_id"]+'">Stop</button>'+'</td>'
                                           '</tr>';
+                                        */
+                                           // Create a new row element
+                                            var row = document.createElement('tr');
+                                            row.id = container["container_id"];
+
+                                            // Set the inner HTML of the row
+                                            row.innerHTML = `
+                                                <td scope="row"><b>${container["container_id"].substr(0, 12)}</b></td>
+                                                <td scope="row"><b>${container["image"]}</b></td>
+                                                <td scope="row"><b>${container["status"]}</b></td>
+                                                <td id="runnining_time_${container["container_id"]}" scope="row"><b>${container["running_time"]}s</b></td>
+                                                <td scope="row">
+                                                    <button type="submit" class="btn btn-lg btn-info" id="stop_${container["container_id"]}">Stop</button>
+                                                </td>
+                                            `;
+
+                                            // Append the row to the table
+                                            document.getElementById('container_list').appendChild(row);
+
+
                                       document.querySelector("#stop_"+container["container_id"]).addEventListener("click",function(){
                                           this.textContent = "Stopping";
                                           $.ajax({
@@ -2364,6 +2385,11 @@ function get_running_containers(){
                                             }
                                           });
                                       });
+                                    }
+
+                                    else{
+                                           document.getElementById("runnining_time_"+container["container_id"]).innerHTML = '<b>'+container["running_time"]+'s</b>';
+                                    }
 
 
                                  }
