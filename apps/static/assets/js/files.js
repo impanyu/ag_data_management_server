@@ -2337,7 +2337,7 @@ function get_running_containers(){
  setInterval(function(){
                          $.ajax({
                             type: "GET",
-                            url: "/get_running_instance?target_path="+current_path,
+                            url: "/api/get_running_instance/?target_path="+current_path,
                     
                             success: function (data) {
                       
