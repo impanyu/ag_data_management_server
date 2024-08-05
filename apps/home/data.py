@@ -2191,12 +2191,13 @@ def get_running_containers(user,target_path):
         entry_point_path = target_path
     containers_file_path = os.path.join(settings.CORE_DIR, 'data', 'containers.json')
     containers = []
+    '''
     with open(containers_file_path, "r") as containers_file:
         all_containers = json.load(containers_file)
         for container in all_containers:
             if container["user"]==user and container["entry_point"]==entry_point_path:
                 containers.append(container)
-
+    '''
     return containers
 
 
