@@ -2185,7 +2185,7 @@ def add_running_container(user,entry_point_path,container_id):
     containers_file_path = os.path.join(settings.CORE_DIR, 'data', 'containers.json')
     with open(containers_file_path, "r") as containers_file:
         containers = json.load(containers_file)
-        containers.append({"user":user,"entry_point":entry_point_path,"container_id":container_id})
+        containers[container_id]={"user":user,"entry_point":entry_point_path,"container_id":container_id}
     with open(containers_file_path, "w") as containers_file:
         json.dump(containers, containers_file)
 
@@ -2193,7 +2193,8 @@ def remove_running_container(container_id):
     containers_file_path = os.path.join(settings.CORE_DIR, 'data', 'containers.json')
     with open(containers_file_path, "r") as containers_file:
         containers = json.load(containers_file)
-        containers = [container for container in containers if not (container["container_id"]==container_id)]
+        del containers[container_id]
+        #containers = [container for container in containers if not (container["container_id"]==container_id)]
     with open(containers_file_path, "w") as containers_file:
         json.dump(containers, containers_file)
 
@@ -2209,7 +2210,7 @@ def get_running_containers_by_path(user,target_path):
     with open(containers_file_path, "r") as containers_file:
         all_containers = json.load(containers_file)
         for container in all_containers:
-            if container["user"]==user and container["entry_point"]==entry_point_path:
+            if all_containers[container]["user"]==user and all_containers[container]["entry_point"]==entry_point_path:
                 containers.append(container)
     
     return containers

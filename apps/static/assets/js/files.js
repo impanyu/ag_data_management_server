@@ -2345,15 +2345,8 @@ function get_running_containers(){
                                 console.info(data);
                                 containers = JSON.parse(data);
                                 //iterate through all the children of the container_list and remove the ones that are not in the containers
-                                for (child of document.querySelector("#container_list").children){
-                                    child_found = false;
-                                    for (container of containers){
-                                        if (child.id == container["container_id"]){
-                                            child_found = true;
-                                            break;
-                                      }
-                                     
-                                    if (!child_found)
+                                for (child of document.querySelector("#container_list").children){              
+                                    if (containers[child.id] == undefined)
                                         document.querySelector("#container_list").removeChild(child);
                                 }
 

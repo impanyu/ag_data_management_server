@@ -323,7 +323,7 @@ class GetRunningInstance(APIView):
         containers = get_running_containers_by_path(current_user,target_path)
         results= []
         for container in containers:
-            response = check_running_instance(container["container_id"])
+            response = check_running_instance(container)
             results.append(response)
             
 
