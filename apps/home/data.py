@@ -1790,7 +1790,7 @@ def wait_for_container(container,notifier,handler,command,tool,hash_value):
     time.sleep(1)
     #command = ' '.join(command) + " > /proc/1/fd/1 2>/proc/1/fd/2"
 
-    exec_result = container.exec_run(command,stream=True)
+    exec_result = container.exec_run(command)
     container.exec_run(f"touch /tmp/{hash_value}")
 
     
