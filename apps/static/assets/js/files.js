@@ -2352,7 +2352,8 @@ function get_running_containers(){
 
 
 
-                                 for(container of containers){
+                                 for(container_id in containers){
+                                     container = containers[container_id];
                                      if(document.getElementById(container["container_id"]) == null){
                                       console.info("new node");
                                       /*document.querySelector("#container_list").innerHTML += '<tr id="'+container["container_id"]+'">'+
