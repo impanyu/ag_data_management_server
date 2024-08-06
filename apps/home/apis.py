@@ -324,7 +324,7 @@ class GetRunningInstance(APIView):
         results= {}
         for container in containers:
             response = check_running_instance(container)
-            results[container["container_id"]]=response
+            results[container]=response
             
 
         return HttpResponse(json.dumps(results))
