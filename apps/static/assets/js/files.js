@@ -2349,7 +2349,7 @@ function get_running_containers(){
                                     if (containers.indexOf(child.id) == -1)
                                         document.querySelector("#container_list").removeChild(child);
                                 }
-                                
+
 
 
                                  for(container of containers){
@@ -2406,7 +2406,7 @@ function get_running_containers(){
                             }
                         });
 
-                  },2000);
+                  },1000);
 }
 
 function update_tool_output_box(tool_output_box){
