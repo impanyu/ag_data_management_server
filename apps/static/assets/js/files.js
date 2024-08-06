@@ -2354,7 +2354,7 @@ function get_running_containers(){
 
                                  for(container of containers){
                                      if(document.getElementById(container["container_id"]) == null){
-
+                                      console.info("new node");
                                       /*document.querySelector("#container_list").innerHTML += '<tr id="'+container["container_id"]+'">'+
                                          '<td scope="row" ><b>'+container["container_id"].substr(0,12)+'</b></td>'+
                                          '<td scope="row" ><b>'+container["image"]+'</b></td>'+
