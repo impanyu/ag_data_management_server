@@ -411,6 +411,9 @@ sub_files = filesArray.slice(k, k + 200); // Now you can use slice
 
 var form_data = new FormData();
 form_data.append("current_path",current_path);
+form_data.append("k",k);
+form_data.append("files_length",files.length);  
+
 if (k==0){
   if(sub_files.length == 0) {//should create a new folder, but currently do not allow
       //actually if folder is empty, onchange will never be called, so the control flow will not reach here

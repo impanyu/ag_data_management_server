@@ -491,6 +491,8 @@ def data(request):
         elif load_template == "upload_file":
             
             current_path = request.POST['current_path']
+            k = int(request.POST['k'])
+            files_length = request.POST['files_length']
             print(f"uploading to: {current_path}",flush=True)
             # if curren_path begins with public, then return
             if current_path.split("/")[0] == "public":
@@ -528,7 +530,7 @@ def data(request):
 
                 if not upload_file_paths[0] == "":
                     root_abs_path = os.path.join("/data", current_path, upload_file_paths[0].split("/")[0])
-                    if os.path.exists(root_abs_path):
+                    if os.path.exists(root_abs_path) and k == 0:
                         return HttpResponse("Folder exists!")
 
                 #upload each file
