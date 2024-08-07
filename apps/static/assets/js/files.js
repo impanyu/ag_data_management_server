@@ -374,7 +374,7 @@ for(var i = 0; i < current_path_components.length; i++){
   $("#pwd")[0].appendChild(item_node);
 }
 
-const file_upload_chunk_size = 20;
+const file_upload_chunk_size = 100;
 total_files_uploaded = 0;
 
 document.querySelector("#upload_dir").onchange=async function(){
@@ -388,7 +388,7 @@ filesArray = Array.from(files); // Convert FileList to Array
 let intervalId = setInterval(function(){
   console.info(total_files_uploaded);
   $('#preloader3')[0].style.width = Math.round(total_files_uploaded/files.length*100) + '%';
-  if(total_files_uploaded == files.length){
+  if(total_files_uploaded > files.length*0.999){
     alert("All files uploaded!!!");
     //console.info("total_file_uploaded:"+total_files_uploaded);
     //console.info("file length:"+files.length);
@@ -450,7 +450,17 @@ function upload2(sub_files){
   
   
    $.ajax({
-  
+            xhr: function() {
+              var xhr = new window.XMLHttpRequest();
+              xhr.upload.addEventListener("progress", function(evt) {
+                  if (evt.lengthComputable) {
+                      var percentComplete = evt.loaded / evt.total;
+                       total_files_uploaded += percentComplete* sub_files.length*0.8;
+                  }
+              }, false);
+              return xhr;
+            },
+
               method: "post",
               processData: false,
               contentType: false,
@@ -461,7 +471,7 @@ function upload2(sub_files){
               success: function (data) {
                 //alert(data);
                
-                total_files_uploaded += sub_files.length;
+                total_files_uploaded += sub_files.length*0.2;
               }
           });
       
