@@ -390,14 +390,15 @@ let intervalId = setInterval(function(){
   $('#preloader3')[0].style.width = Math.round(total_files_uploaded/files.length*100) + '%';
   if(total_files_uploaded == files.length){
     alert("All files uploaded!!!");
-    console.info("total_file_uploaded:"+total_files_uploaded);
-    console.info("file length:"+files.length);
+    //console.info("total_file_uploaded:"+total_files_uploaded);
+    //console.info("file length:"+files.length);
     $("#file_list")[0].innerHTML="";
     get_file_list();
     $('#preloader3')[0].style.display = "none";
     total_files_uploaded = 0;
     //cancel this interval
     clearInterval(intervalId);
+    document.querySelector("#upload_dir").value="";
 
   }
 
@@ -407,7 +408,7 @@ sub_files = filesArray.slice(k, k + file_upload_chunk_size); // Now you can use 
 //await upload(sub_files,k);
 upload2(sub_files);
 }
-this.value="";
+//this.value="";
 
 
 };
