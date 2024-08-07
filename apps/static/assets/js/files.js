@@ -1546,7 +1546,8 @@ function change_channel_dropdown(self){
 
 x={};
 u = "";
-file_format_names = {"txt":"plain_text","py":"python","m":"matlab","mlx":"matlab","r":"r","csv":"text","json":"json","xml":"xml","html":"html","prf":"plain_text","tfw":"plain_text"};
+file_format_names = {"txt":"plain_text","py":"python","m":"matlab","mlx":"matlab","r":"r","csv":"text","json":"json","xml":"xml","html":"html","prf":"plain_text",
+  "tfw":"plain_text","js":"js","css":"css","c++":"c_cpp","h":"c_cpp"};
 
 function get_file_content(){
 
