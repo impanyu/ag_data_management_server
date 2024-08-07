@@ -407,7 +407,7 @@ filesArray = Array.from(files); // Convert FileList to Array
 
 
 for(var k=0;k<files.length;k=k+100){
-subFiles = filesArray.slice(k, k + 100); // Now you can use slice
+sub_files = filesArray.slice(k, k + 100); // Now you can use slice
 
 var form_data = new FormData();
 form_data.append("current_path",current_path);
