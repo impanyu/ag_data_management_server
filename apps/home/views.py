@@ -1366,7 +1366,7 @@ def data(request):
             abs_path = "/data/"+file_path
             response = "success"
 
-            if not abs_path.split("/")[2] == request.user.get_username() and  meta_data["public"] == "False":
+            if not abs_path.split("/")[2] == request.user.get_username() and meta_data["public"] == "False":
                 pass
             elif abs_path.split("/")[2] == "public":
                 pass
