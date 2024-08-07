@@ -469,10 +469,8 @@ $('#preloader3')[0].style.display = "block";
                                 //console.info(percentComplete);
                                 //$('#preloader3').text('Uploading: ' + Math.round(percentComplete * 100) + '%');
                                 //if (percentComplete < 0.7)
-                                console.info(percentComplete * 100);
-                                console.info(k);
-                                console.info(files.length);
-                                    $('#preloader3')[0].style.width = Math.round(percentComplete * 100*k/files.length) + '%';
+                            
+                                    $('#preloader3')[0].style.width = Math.round((percentComplete * file_upload_chunk_size+file_upload_chunk_size*k)/files.length*100) + '%';
                                 //else
                                      //$('#preloader3')[0].style.width = Math.round(((percentComplete-0.7)*0.8+0.7) * 100) + '%';
                             }
