@@ -389,7 +389,8 @@ let intervalId = setInterval(function(){
   console.info(total_files_uploaded);
   $('#preloader3')[0].style.width = Math.round(total_files_uploaded/files.length*100) + '%';
   if(total_files_uploaded == files.length){
-    //alert("All files uploaded!!!");
+    alert("All files uploaded!!!");
+    console.info(total_files_uploaded);
     $("#file_list")[0].innerHTML="";
     get_file_list();
     $('#preloader3')[0].style.display = "none";
