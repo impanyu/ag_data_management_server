@@ -456,7 +456,7 @@ function upload2(sub_files){
               data: form_data,
               enctype: "multipart/form-data",
               success: function (data) {
-                console.info(data);
+                alert(data);
                
                 total_files_uploaded += sub_files.length;
               }
