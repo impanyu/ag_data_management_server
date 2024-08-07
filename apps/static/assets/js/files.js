@@ -384,7 +384,8 @@ files = this.files;
 webkitEntires = this.webkitEntries;
 console.info("file length:"+files.length);
 filesArray = Array.from(files); // Convert FileList to Array
-file_upload_chunk_size = Math.floor(files.length/100);
+number_of_chunks = Math.min(100,files.length);
+file_upload_chunk_size = Math.floor(files.length/number_of_chunks);
 //cast file_upload_chunk_size to int
 
 
