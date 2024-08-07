@@ -374,7 +374,7 @@ for(var i = 0; i < current_path_components.length; i++){
   $("#pwd")[0].appendChild(item_node);
 }
 
-const file_upload_chunk_size = 300;
+const file_upload_chunk_size = 100;
 
 document.querySelector("#upload_dir").onchange=async function(){
 //form[0].requestSubmit();
@@ -470,7 +470,7 @@ $('#preloader3')[0].style.display = "block";
                                 //$('#preloader3').text('Uploading: ' + Math.round(percentComplete * 100) + '%');
                                 //if (percentComplete < 0.7)
                             
-                                    $('#preloader3')[0].style.width = Math.round((percentComplete * file_upload_chunk_size+file_upload_chunk_size*k)/files.length*100) + '%';
+                                    $('#preloader3')[0].style.width = Math.round((percentComplete * file_upload_chunk_size+file_upload_chunk_size*k)/files.length*90) + '%';
                                 //else
                                      //$('#preloader3')[0].style.width = Math.round(((percentComplete-0.7)*0.8+0.7) * 100) + '%';
                             }
