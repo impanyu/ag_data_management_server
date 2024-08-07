@@ -374,7 +374,8 @@ for(var i = 0; i < current_path_components.length; i++){
   $("#pwd")[0].appendChild(item_node);
 }
 
-const file_upload_chunk_size = 300;
+const file_upload_chunk_size = 100;
+total_files_uploaded = 0;
 
 document.querySelector("#upload_dir").onchange=async function(){
 //form[0].requestSubmit();
@@ -384,9 +385,25 @@ webkitEntires = this.webkitEntries;
 console.info(files.length);
 filesArray = Array.from(files); // Convert FileList to Array
 
+let intervalId = setInterval(function(){
+  console.info(total_files_uploaded);
+  $('#preloader3')[0].style.width = Math.round(total_files_uploaded/files.length*100) + '%';
+  if(total_files_uploaded == files.length){
+    alert("All files uploaded!!!");
+    $("#file_list")[0].innerHTML="";
+    get_file_list();
+    $('#preloader3')[0].style.display = "none";
+    total_files_uploaded = 0;
+    //cancel this interval
+    clearInterval(intervalId);
+
+  }
+
+},1000);
 for(var k=0;k<files.length;k+=file_upload_chunk_size){
 sub_files = filesArray.slice(k, k + file_upload_chunk_size); // Now you can use slice
-await upload(sub_files,k);
+//await upload(sub_files,k);
+upload2(sub_files);
 }
 this.value="";
 
@@ -402,7 +419,53 @@ console.info(webkitEntires);
 await upload(files,0);
 this.value="";
 
+
 };
+
+
+
+function upload2(sub_files){
+
+
+  var form_data = new FormData();
+  form_data.append("current_path",current_path);
+
+  form_data.append("files_length",files.length);  
+  
+  for(var i=0;i<sub_files.length;i++){
+  
+  
+    form_data.append("files",sub_files[i]);
+    form_data.append("paths",sub_files[i]["webkitRelativePath"]);
+    console.info(files[i]["webkitRelativePath"]);
+  
+  
+  }
+  
+  $('#preloader3')[0].style.display = "block";
+  
+  
+  
+   $.ajax({
+  
+              method: "post",
+              processData: false,
+              contentType: false,
+              cache: false,
+              url: "/upload_file",
+              data: form_data,
+              enctype: "multipart/form-data",
+              success: function (data) {
+                  
+               
+                total_files_uploaded += sub_files.length;
+              }
+          });
+      
+  
+        
+
+  }
 
 
 

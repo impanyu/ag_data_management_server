@@ -491,7 +491,7 @@ def data(request):
         elif load_template == "upload_file":
             
             current_path = request.POST['current_path']
-            k = int(request.POST['k'])
+            #k = int(request.POST['k'])
             files_length = request.POST['files_length']
             print(f"uploading to: {current_path}",flush=True)
             # if curren_path begins with public, then return
@@ -528,10 +528,10 @@ def data(request):
                 #print("abs")
                 #print(upload_file_paths)
 
-                if not upload_file_paths[0] == "":
-                    root_abs_path = os.path.join("/data", current_path, upload_file_paths[0].split("/")[0])
-                    if os.path.exists(root_abs_path) and k == 0:
-                        return HttpResponse("Folder exists!")
+                #if not upload_file_paths[0] == "":
+                #    root_abs_path = os.path.join("/data", current_path, upload_file_paths[0].split("/")[0])
+                #    if os.path.exists(root_abs_path) and k == 0:
+                #        return HttpResponse("Folder exists!")
 
                 #upload each file
                 for file in upload_files:
@@ -547,10 +547,10 @@ def data(request):
                     #print(abs_file_path)
                     copy_id = 1
 
-                    if os.path.exists(abs_file_path):
+                    #if os.path.exists(abs_file_path):
                         #while os.path.exists(abs_file_path + "_" + str(copy_id)):
                             #copy_id += 1
-                        return HttpResponse("File exists!")
+                    #    return HttpResponse("File exists!")
 
                         #abs_file_path += "_" + str(copy_id)
 
