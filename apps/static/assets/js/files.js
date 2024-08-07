@@ -404,18 +404,21 @@ this.value="";
 function upload(){
 return new Promise(function(resolve,reject){
 
+for(var k=0;k<files.length;k=k+100){
+sub_files = files.slice(k,k+100);
+
 var form_data = new FormData();
 form_data.append("current_path",current_path);
 
-if(files.length == 0) {//should create a new folder, but currently do not allow
+if(sub_files.length == 0) {//should create a new folder, but currently do not allow
      //actually if folder is empty, onchange will never be called, so the control flow will not reach here
      //still need to find ways to upload empty folders
       alert("Empty Folder!!!");
       resolve();
        return;
 }
-if(files[0]["webkitRelativePath"]== ""){//upload a file
-    if(current_files_names.indexOf(files[0]["name"])!=-1){
+if(sub_files[0]["webkitRelativePath"]== ""){//upload a file
+    if(current_files_names.indexOf(sub_files[0]["name"])!=-1){
        alert("File Exists!!!");
        resolve();
        return;
@@ -423,7 +426,7 @@ if(files[0]["webkitRelativePath"]== ""){//upload a file
 }
 
 else{//upload a folder
-    if(current_folders_names.indexOf(files[0]["webkitRelativePath"].split("/")[0])!=-1){
+    if(current_folders_names.indexOf(sub_files[0]["webkitRelativePath"].split("/")[0])!=-1){
       alert("Folder Exists!!!");
       resolve();
       return;
@@ -432,17 +435,20 @@ else{//upload a folder
 }
 
 
-for(var i=0;i<files.length;i++){
+for(var i=0;i<sub_files.length;i++){
 
 
-  form_data.append("files",files[i]);
-  form_data.append("paths",files[i]["webkitRelativePath"]);
+  form_data.append("files",sub_files[i]);
+  form_data.append("paths",sub_files[i]["webkitRelativePath"]);
   console.info(files[i]["webkitRelativePath"]);
 
 
 }
 
 $('#preloader3')[0].style.display = "block";
+
+
+
  $.ajax({
 
                  xhr: function() {
@@ -468,7 +474,9 @@ $('#preloader3')[0].style.display = "block";
             data: form_data,
             enctype: "multipart/form-data",
             success: function (data) {
-                alert(data);
+                
+                if (k+100>=files.length)
+                  alert(data);
                 $("#file_list")[0].innerHTML="";
                 $('#preloader3')[0].style.width =  '100%';
 
@@ -477,9 +485,10 @@ $('#preloader3')[0].style.display = "block";
                 $('#preloader3')[0].style.display = "none";
             }
         });
+      }
 
       resolve();
-
+      
     });
 }
 
