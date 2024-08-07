@@ -415,6 +415,7 @@ let intervalId = setInterval(function(){
     get_file_list();
     $('#preloader3')[0].style.display = "none";
     $('#preloader3_5')[0].style.display = "none";
+    $('#preloader3_5')[0].innerHTML = "";
     total_files_uploaded = 0;
     //cancel this interval
     clearInterval(intervalId);
