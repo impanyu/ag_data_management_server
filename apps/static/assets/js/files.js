@@ -1552,7 +1552,7 @@ function get_file_content(){
 
 
 
-if(suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suffix == "r" || suffix == "csv" || suffix == "json" || suffix == "xml" || suffix=="html" || suffix == "prj" || suffix == "tfw"){
+if(suffix == "js" || suffix == "html" || suffix == "css" || suffix=="c++" || suffix == "txt" || suffix == "py" || suffix == "m" || suffix == "mlx" || suffix == "r" || suffix == "csv" || suffix == "json" || suffix == "xml" || suffix=="html" || suffix == "prj" || suffix == "tfw"){
        $.ajax({
                 url: '/get_file',
                 type: 'POST',
