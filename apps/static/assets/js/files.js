@@ -463,7 +463,7 @@ $('#preloader3')[0].style.display = "block";
             method: "post",
             processData: false,
             contentType: false,
-            cache: true,
+            cache: false,
             url: "/upload_file",
             data: form_data,
             enctype: "multipart/form-data",
