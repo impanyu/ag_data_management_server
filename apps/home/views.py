@@ -496,7 +496,7 @@ def data(request):
             if not current_path.split("/")[0] == request.user.get_username():
                 return HttpResponse("can not upload files to public directory!")
             
-            print(current_path)
+            print(current_path,flush=True)
             upload_files = request.FILES.getlist("files")
             upload_file_paths = request.POST.getlist("paths")
 
