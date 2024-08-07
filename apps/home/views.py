@@ -1368,6 +1368,8 @@ def data(request):
 
             if not abs_path.split("/")[2] == request.user.get_username() and  meta_data["public"] == "False":
                 pass
+            elif abs_path.split("/")[2] == "public":
+                pass
             else:
                 update_meta("/data/"+file_path,meta_data)
 
