@@ -374,6 +374,7 @@ for(var i = 0; i < current_path_components.length; i++){
   $("#pwd")[0].appendChild(item_node);
 }
 
+const file_upload_chunk_size = 300;
 
 document.querySelector("#upload_dir").onchange=async function(){
 //form[0].requestSubmit();
@@ -383,8 +384,8 @@ webkitEntires = this.webkitEntries;
 console.info(files.length);
 filesArray = Array.from(files); // Convert FileList to Array
 
-for(var k=0;k<files.length;k+=200){
-sub_files = filesArray.slice(k, k + 200); // Now you can use slice
+for(var k=0;k<files.length;k+=file_upload_chunk_size){
+sub_files = filesArray.slice(k, k + file_upload_chunk_size); // Now you can use slice
 await upload(sub_files,k);
 }
 this.value="";
@@ -467,10 +468,10 @@ $('#preloader3')[0].style.display = "block";
                                 var percentComplete = evt.loaded / evt.total;
                                 //console.info(percentComplete);
                                 //$('#preloader3').text('Uploading: ' + Math.round(percentComplete * 100) + '%');
-                                if (percentComplete < 0.7)
-                                    $('#preloader3')[0].style.width = Math.round(percentComplete * 100) + '%';
-                                else
-                                     $('#preloader3')[0].style.width = Math.round(((percentComplete-0.7)*0.8+0.7) * 100) + '%';
+                                //if (percentComplete < 0.7)
+                                    $('#preloader3')[0].style.width = Math.round(percentComplete * 100*k/files.length) + '%';
+                                //else
+                                     //$('#preloader3')[0].style.width = Math.round(((percentComplete-0.7)*0.8+0.7) * 100) + '%';
                             }
                         }, false);
                         return xhr;
@@ -484,7 +485,7 @@ $('#preloader3')[0].style.display = "block";
             enctype: "multipart/form-data",
             success: function (data) {
                 
-                if (k+100>=files.length){
+                if (k+file_upload_chunk_size>=files.length){
                   alert(data);
                   $("#file_list")[0].innerHTML="";
                   $('#preloader3')[0].style.width =  '100%';
