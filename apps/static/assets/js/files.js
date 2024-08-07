@@ -403,9 +403,11 @@ this.value="";
 
 function upload(){
 return new Promise(function(resolve,reject){
+filesArray = Array.from(files); // Convert FileList to Array
+
 
 for(var k=0;k<files.length;k=k+100){
-sub_files = files.slice(k,k+100);
+subFiles = filesArray.slice(k, k + 100); // Now you can use slice
 
 var form_data = new FormData();
 form_data.append("current_path",current_path);
