@@ -374,7 +374,7 @@ for(var i = 0; i < current_path_components.length; i++){
   $("#pwd")[0].appendChild(item_node);
 }
 
-const file_upload_chunk_size = 100;
+const file_upload_chunk_size = 20;
 total_files_uploaded = 0;
 
 document.querySelector("#upload_dir").onchange=async function(){
