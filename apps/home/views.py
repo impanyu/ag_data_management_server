@@ -489,8 +489,9 @@ def data(request):
 
 
         elif load_template == "upload_file":
-            #print(f"uploading to: {current_path}",flush=True)
+            
             current_path = request.POST['current_path']
+            print(f"uploading to: {current_path}",flush=True)
             # if curren_path begins with public, then return
             if current_path.split("/")[0] == "public":
                 return HttpResponse("can not upload files to public directory!")
