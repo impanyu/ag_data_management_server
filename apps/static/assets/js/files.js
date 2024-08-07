@@ -470,7 +470,7 @@ $('#preloader3')[0].style.display = "block";
                                 //$('#preloader3').text('Uploading: ' + Math.round(percentComplete * 100) + '%');
                                 //if (percentComplete < 0.7)
                             
-                                    $('#preloader3')[0].style.width = Math.round((percentComplete * file_upload_chunk_size+file_upload_chunk_size*k)/files.length*90) + '%';
+                                    $('#preloader3')[0].style.width = Math.round((percentComplete * Math.min(file_upload_chunk_size,files.length)+file_upload_chunk_size*k)/files.length*90) + '%';
                                 //else
                                      //$('#preloader3')[0].style.width = Math.round(((percentComplete-0.7)*0.8+0.7) * 100) + '%';
                             }
