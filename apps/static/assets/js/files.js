@@ -394,7 +394,7 @@ file_upload_chunk_size = Math.floor(files.length/number_of_chunks);
 let intervalId = setInterval(function(){
   console.info(total_files_uploaded);
   $('#preloader3')[0].style.width = Math.round(total_files_uploaded/files.length*100) + '%';
-  $('#preloader3_5')[0].innerHTML = "<h3>Uploaded Files: "+ total_files_uploaded+ " / Total Files: "+ files.length+"<h3>";
+  $('#preloader3_5')[0].innerHTML = "<h4>Uploaded Files: "+ total_files_uploaded+ " / Total Files: "+ files.length+"<h4>";
   if(total_files_uploaded == files.length){
     alert("All files uploaded!!!");
     //console.info("total_file_uploaded:"+total_files_uploaded);
