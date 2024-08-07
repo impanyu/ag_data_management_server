@@ -396,11 +396,11 @@ let intervalId = setInterval(function(){
   $('#preloader3')[0].style.width = Math.round(total_files_uploaded/files.length*100) + '%';
 
   if (dots == 0)
-    dots_string = " ";
+    dots_string = "    ";
   else if(dots == 1)
-    dots_string = ". ";
+    dots_string = ".   ";
   else if(dots == 2)
-    dots_string = ".. ";
+    dots_string = "..  ";
   else
     dots_string = "... ";
   $('#preloader3_5')[0].innerHTML = "<h4>Uploading Files"+ dots_string +total_files_uploaded+ " / "+ files.length+"<h4>";
