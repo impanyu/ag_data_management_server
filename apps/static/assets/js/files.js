@@ -382,7 +382,7 @@ document.querySelector("#upload_dir").onchange=async function(){
 //form[0].submit();
 files = this.files;
 webkitEntires = this.webkitEntries;
-console.info(files.length);
+console.info("file length:"+files.length);
 filesArray = Array.from(files); // Convert FileList to Array
 
 let intervalId = setInterval(function(){
@@ -390,7 +390,8 @@ let intervalId = setInterval(function(){
   $('#preloader3')[0].style.width = Math.round(total_files_uploaded/files.length*100) + '%';
   if(total_files_uploaded == files.length){
     alert("All files uploaded!!!");
-    console.info(total_files_uploaded);
+    console.info("total_file_uploaded:"+total_files_uploaded);
+    console.info("file length:"+files.length);
     $("#file_list")[0].innerHTML="";
     get_file_list();
     $('#preloader3')[0].style.display = "none";
