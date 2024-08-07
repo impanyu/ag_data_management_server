@@ -394,7 +394,7 @@ file_upload_chunk_size = Math.floor(files.length/number_of_chunks);
 let intervalId = setInterval(function(){
   console.info(total_files_uploaded);
   $('#preloader3')[0].style.width = Math.round(total_files_uploaded/files.length*100) + '%';
-  $('#preloader3.5')[0].innerHTML = "Uploaded File: "+ total_files_uploaded+ " / Total File: "+ files.length;
+  $('#preloader3_5')[0].innerHTML = "Uploaded File: "+ total_files_uploaded+ " / Total File: "+ files.length;
   if(total_files_uploaded == files.length){
     alert("All files uploaded!!!");
     //console.info("total_file_uploaded:"+total_files_uploaded);
@@ -402,7 +402,7 @@ let intervalId = setInterval(function(){
     $("#file_list")[0].innerHTML="";
     get_file_list();
     $('#preloader3')[0].style.display = "none";
-    $('#preloader3.5')[0].style.display = "none";
+    $('#preloader3_5')[0].style.display = "none";
     total_files_uploaded = 0;
     //cancel this interval
     clearInterval(intervalId);
@@ -454,7 +454,7 @@ function upload2(sub_files){
   }
   
   $('#preloader3')[0].style.display = "block";
-  $('#preloader3.5')[0].style.display = "block";
+  $('#preloader3_5')[0].style.display = "block";
   
   
   
