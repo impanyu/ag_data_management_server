@@ -406,36 +406,36 @@ return new Promise(function(resolve,reject){
 filesArray = Array.from(files); // Convert FileList to Array
 
 
-for(var k=0;k<files.length;k=k+100){
-sub_files = filesArray.slice(k, k + 100); // Now you can use slice
+for(var k=0;k<files.length;k=k+200){
+sub_files = filesArray.slice(k, k + 200); // Now you can use slice
 
 var form_data = new FormData();
 form_data.append("current_path",current_path);
+if (k==0){
+  if(sub_files.length == 0) {//should create a new folder, but currently do not allow
+      //actually if folder is empty, onchange will never be called, so the control flow will not reach here
+      //still need to find ways to upload empty folders
+        alert("Empty Folder!!!");
+        resolve();
+        return;
+  }
+  if(sub_files[0]["webkitRelativePath"]== ""){//upload a file
+      if(current_files_names.indexOf(sub_files[0]["name"])!=-1){
+        alert("File Exists!!!");
+        resolve();
+        return;
+      }
+  }
 
-if(sub_files.length == 0) {//should create a new folder, but currently do not allow
-     //actually if folder is empty, onchange will never be called, so the control flow will not reach here
-     //still need to find ways to upload empty folders
-      alert("Empty Folder!!!");
-      resolve();
-       return;
-}
-if(sub_files[0]["webkitRelativePath"]== ""){//upload a file
-    if(current_files_names.indexOf(sub_files[0]["name"])!=-1){
-       alert("File Exists!!!");
-       resolve();
-       return;
+  else{//upload a folder
+      if(current_folders_names.indexOf(sub_files[0]["webkitRelativePath"].split("/")[0])!=-1){
+        alert("Folder Exists!!!");
+        resolve();
+        return;
+
     }
-}
-
-else{//upload a folder
-    if(current_folders_names.indexOf(sub_files[0]["webkitRelativePath"].split("/")[0])!=-1){
-      alert("Folder Exists!!!");
-      resolve();
-      return;
-
   }
 }
-
 
 for(var i=0;i<sub_files.length;i++){
 
@@ -477,14 +477,15 @@ $('#preloader3')[0].style.display = "block";
             enctype: "multipart/form-data",
             success: function (data) {
                 
-                if (k+100>=files.length)
+                if (k+100>=files.length){
                   alert(data);
-                $("#file_list")[0].innerHTML="";
-                $('#preloader3')[0].style.width =  '100%';
+                  $("#file_list")[0].innerHTML="";
+                  $('#preloader3')[0].style.width =  '100%';
 
 
-                get_file_list();
-                $('#preloader3')[0].style.display = "none";
+                  get_file_list();
+                  $('#preloader3')[0].style.display = "none";
+              }
             }
         });
       }
