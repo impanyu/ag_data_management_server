@@ -489,7 +489,7 @@ def data(request):
 
 
         elif load_template == "upload_file":
-            print(f"uploading to: {current_path}",flush=True)
+            #print(f"uploading to: {current_path}",flush=True)
             current_path = request.POST['current_path']
             # if curren_path begins with public, then return
             if current_path.split("/")[0] == "public":
