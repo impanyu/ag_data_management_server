@@ -381,7 +381,12 @@ document.querySelector("#upload_dir").onchange=async function(){
 files = this.files;
 webkitEntires = this.webkitEntries;
 console.info(files.length);
-await upload();
+filesArray = Array.from(files); // Convert FileList to Array
+
+for(var k=0;k<files.length;k+=200){
+sub_files = filesArray.slice(k, k + 200); // Now you can use slice
+await upload(sub_files,k);
+}
 this.value="";
 
 
@@ -392,7 +397,8 @@ document.querySelector("#upload_file").onchange=async function(){
 files = this.files;
 webkitEntires = this.webkitEntries;
 console.info(webkitEntires);
-await upload();
+
+await upload(files,0);
 this.value="";
 
 };
@@ -401,13 +407,11 @@ this.value="";
 
 
 
-function upload(){
+function upload(sub_files,k){
 return new Promise(function(resolve,reject){
-filesArray = Array.from(files); // Convert FileList to Array
 
 
-for(var k=0;k<files.length;k=k+200){
-sub_files = filesArray.slice(k, k + 200); // Now you can use slice
+
 
 var form_data = new FormData();
 form_data.append("current_path",current_path);
@@ -489,11 +493,12 @@ $('#preloader3')[0].style.display = "block";
                   get_file_list();
                   $('#preloader3')[0].style.display = "none";
               }
+              resolve();
             }
         });
-      }
+    
 
-      resolve();
+      
       
     });
 }
