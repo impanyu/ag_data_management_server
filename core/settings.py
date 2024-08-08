@@ -153,6 +153,7 @@ CELERY_BEAT_SCHEDULE = {
     }
 }
 
+
 # settings.py
 
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
