@@ -22,7 +22,7 @@ geopandas
 matplotlib
 numpy
 pyinotify
-django-allauth
+django-allauth == 0.54.0
 psutil
 dockerspawner
 requests
