@@ -2072,7 +2072,7 @@ def run_tool(entry_point,arg_values, arg_types,user,exe_env):
             detach=True,
             auto_remove=False
         )
-    elif ".R" in entry_point.split("/")[-1]:
+    elif ".R" in entry_point.split("/")[-1] or ".r" in entry_point.split("/")[-1]:
         if image_name == "":
             image_name = "rocker/rstudio"
         main_cmd = "Rscript"
