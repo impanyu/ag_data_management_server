@@ -6,7 +6,7 @@ import os
 import zipfile
 from .data import *
 
-from django.core.cache import cache
+
 
 
 def get_JD_authorization_code(path):
