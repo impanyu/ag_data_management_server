@@ -68,6 +68,7 @@ def get_JD_token(authorization_code):
 
     #TOKEN_GRANT_URL = cache.get('TOKEN_GRANT_URL')
     print("in get JD token",flush=True)
+    
 
 
     oauth2_session = OAuth2Session(CLIENT_ID,  redirect_uri=CLIENT_REDIRECT_URI, scope=SCOPES_TO_REQUEST)
