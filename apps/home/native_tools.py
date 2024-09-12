@@ -25,7 +25,9 @@ def get_JD_authorization_code(path):
     CLIENT_SECRET = os.getenv('JD_CLIENT_SECRET')
     CLIENT_REDIRECT_URI = f'https://adma.hopto.org/files.html?current_path={parent_path}'
     CLIENT_REDIRECT_URI = f'https://adma.hopto.org/api/get_JD_access_token/'
-    
+
+    print("in get JD authorization code1",flush=True)
+
 
     # Leave the line below as-is. This line of code verifies that you've modified the CLIENT_ID, CLIENT_SECRET, CLIENT_REDIRECT_URI to the values above so that your application can complete OAuth"
     assert(CLIENT_ID != 'place_client_key_here' and CLIENT_SECRET != 'place_client_secret_here' and CLIENT_REDIRECT_URI != 'place_client_redirect_uri_here'), "You need to update your CLIENT_ID, CLIENT_SECRET, or CLIENT_REDIRECT_URI in this cell"
@@ -48,6 +50,9 @@ def get_JD_authorization_code(path):
     SCOPES_TO_REQUEST = {'org2', 'files', 'offline_access','ag3','eq2', 'work2'}
     STATE = "1234"
     oauth2_session = OAuth2Session(CLIENT_ID,  redirect_uri=CLIENT_REDIRECT_URI, scope=SCOPES_TO_REQUEST)
+
+    print("in get JD authorization code2",flush=True)
+
     
     authorization_request, state = oauth2_session.authorization_url(AUTHORIZATION_URL, STATE)
     print("Click on the following link to present the user with sign in form where they authenticate and approve access to your application.")
