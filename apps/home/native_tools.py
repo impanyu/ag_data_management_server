@@ -55,6 +55,9 @@ def get_JD_authorization_code(path):
 
     
     authorization_request, state = oauth2_session.authorization_url(AUTHORIZATION_URL, STATE)
+
+    print("in get JD authorization code3",flush=True)
+
     print("Click on the following link to present the user with sign in form where they authenticate and approve access to your application.")
     print(authorization_request) 
     return authorization_request
