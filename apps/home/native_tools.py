@@ -21,8 +21,8 @@ def get_JD_authorization_code(path):
 
     CLIENT_ID = os.getenv('JD_CLIENT_ID')
     CLIENT_SECRET = os.getenv('JD_CLIENT_SECRET')
-    CLIENT_REDIRECT_URI = f'http://adma.hopto.org/files.html?current_path={parent_path}'
-    CLIENT_REDIRECT_URI = f'http://adma.hopto.org/api/get_JD_access_token/'
+    CLIENT_REDIRECT_URI = f'https://adma.hopto.org/files.html?current_path={parent_path}'
+    CLIENT_REDIRECT_URI = f'https://adma.hopto.org/api/get_JD_access_token/'
     
 
     # Leave the line below as-is. This line of code verifies that you've modified the CLIENT_ID, CLIENT_SECRET, CLIENT_REDIRECT_URI to the values above so that your application can complete OAuth"
