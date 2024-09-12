@@ -18,10 +18,11 @@ def get_JD_authorization_code(path):
     parent_path = os.path.dirname(path)
     #remove the first part before the first slash
     parent_path = parent_path.split('/',2)[2]
-    CLIENT_ID = '0oabqi3ic7ZFEZE3z5d7'
-    CLIENT_SECRET = 'eqkbTdRS9t2Eq1VWsqorB_PGKZdk4NiaO0u3bCucSaXVbIIlb9w9hn0Ysco9nYR2'
-    CLIENT_REDIRECT_URI = f'http://unladma.hopto.org/files.html?current_path={parent_path}'
-    CLIENT_REDIRECT_URI = f'http://unladma.hopto.org/api/get_JD_access_token/'
+
+    CLIENT_ID = os.getenv('JD_CLIENT_ID')
+    CLIENT_SECRET = os.getenv('JD_CLIENT_SECRET')
+    CLIENT_REDIRECT_URI = f'http://adma.hopto.org/files.html?current_path={parent_path}'
+    CLIENT_REDIRECT_URI = f'http://adma.hopto.org/api/get_JD_access_token/'
     
 
     # Leave the line below as-is. This line of code verifies that you've modified the CLIENT_ID, CLIENT_SECRET, CLIENT_REDIRECT_URI to the values above so that your application can complete OAuth"
@@ -54,9 +55,11 @@ def get_JD_token(authorization_code):
     global oauth2_session
     # Update the authorization code here
     AUTHORIZATION_CODE = authorization_code
-    CLIENT_ID = '0oabqi3ic7ZFEZE3z5d7'
+
     SCOPES_TO_REQUEST = {'org2', 'files', 'offline_access','ag3','eq2', 'work2'}
-    CLIENT_SECRET = 'eqkbTdRS9t2Eq1VWsqorB_PGKZdk4NiaO0u3bCucSaXVbIIlb9w9hn0Ysco9nYR2'
+
+    CLIENT_ID = os.getenv('JD_CLIENT_ID')
+    CLIENT_SECRET = os.getenv('JD_CLIENT_SECRET')
 
     oauth2_session = OAuth2Session(CLIENT_ID,  redirect_uri=CLIENT_REDIRECT_URI, scope=SCOPES_TO_REQUEST)
 

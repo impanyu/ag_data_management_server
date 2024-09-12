@@ -15,6 +15,7 @@ from django.shortcuts import redirect
 from django.template import loader
 import urllib.parse
 import time
+from dotenv import load_dotenv
 
 class FileUploadSerializer(serializers.Serializer):
     # Define a file field in your serializer
@@ -348,6 +349,7 @@ class JD_authorization_code(APIView):
 
     def get(self, request, *args, **kwargs):
         target_path = request.query_params.get('file_path') #this is already abs path
+        load_dotenv()
         #safe_path = os.path.normpath(target_path).lstrip('/')
         #current_user = request.user.username
 
