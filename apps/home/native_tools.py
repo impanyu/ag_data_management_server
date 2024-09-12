@@ -6,6 +6,8 @@ import os
 import zipfile
 from .data import *
 
+from django.core.cache import cache
+
 
 def get_JD_authorization_code(path):
     global oauth2_session
@@ -36,6 +38,7 @@ def get_JD_authorization_code(path):
 
     AUTHORIZATION_URL = well_known_info['authorization_endpoint']
     TOKEN_GRANT_URL = well_known_info['token_endpoint']
+    cache.set('TOKEN_GRANT_URL',TOKEN_GRANT_URL,timeout=60*15) #15 minutes
     AVAILABLE_SCOPES = str(' ').join(well_known_info['scopes_supported'])
 
     print('Well Known Authorization URL - ' + AUTHORIZATION_URL)
@@ -57,9 +60,14 @@ def get_JD_token(authorization_code):
     AUTHORIZATION_CODE = authorization_code
 
     SCOPES_TO_REQUEST = {'org2', 'files', 'offline_access','ag3','eq2', 'work2'}
+    CLIENT_REDIRECT_URI = f'https://adma.hopto.org/api/get_JD_access_token/'
+    
 
     CLIENT_ID = os.getenv('JD_CLIENT_ID')
     CLIENT_SECRET = os.getenv('JD_CLIENT_SECRET')
+
+    TOKEN_GRANT_URL = cache.get('TOKEN_GRANT_URL')
+
 
     oauth2_session = OAuth2Session(CLIENT_ID,  redirect_uri=CLIENT_REDIRECT_URI, scope=SCOPES_TO_REQUEST)
 
