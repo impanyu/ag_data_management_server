@@ -95,6 +95,7 @@ def pages(request):
 
             html_template = loader.get_template('home/domain_main_page.html')
             return HttpResponse(html_template.render(context, request))
+        
         elif load_template == 'api.html':
             # Get the user object
             user = User.objects.get(username=request.user.get_username())
@@ -102,6 +103,7 @@ def pages(request):
             # Get or create a token for the user
             token, created = Token.objects.get_or_create(user=user)
             context['token'] = token.key
+            print(f"{request.user.get_username()} is authenticated, token is {token.key}",flush=True)
             html_template = loader.get_template('home/api.html')
             return HttpResponse(html_template.render(context, request))
 
