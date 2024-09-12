@@ -97,7 +97,7 @@ def pages(request):
             return HttpResponse(html_template.render(context, request))
         
         elif load_template == 'api.html':
-            print("in api",flush=True)  
+            print("in api.html",flush=True)  
             # Get the user object
             user = User.objects.get(username=request.user.get_username())
 
