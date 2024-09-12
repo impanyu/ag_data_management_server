@@ -38,7 +38,7 @@ def get_JD_authorization_code(path):
 
     AUTHORIZATION_URL = well_known_info['authorization_endpoint']
     TOKEN_GRANT_URL = well_known_info['token_endpoint']
-    cache.set('TOKEN_GRANT_URL',TOKEN_GRANT_URL,timeout=60*15) #15 minutes
+    #cache.set('TOKEN_GRANT_URL',TOKEN_GRANT_URL,timeout=60*15) #15 minutes
     AVAILABLE_SCOPES = str(' ').join(well_known_info['scopes_supported'])
 
     print('Well Known Authorization URL - ' + AUTHORIZATION_URL)
@@ -66,7 +66,7 @@ def get_JD_token(authorization_code):
     CLIENT_ID = os.getenv('JD_CLIENT_ID')
     CLIENT_SECRET = os.getenv('JD_CLIENT_SECRET')
 
-    TOKEN_GRANT_URL = cache.get('TOKEN_GRANT_URL')
+    #TOKEN_GRANT_URL = cache.get('TOKEN_GRANT_URL')
 
 
     oauth2_session = OAuth2Session(CLIENT_ID,  redirect_uri=CLIENT_REDIRECT_URI, scope=SCOPES_TO_REQUEST)
