@@ -83,7 +83,7 @@ def get_JD_token(authorization_code):
     well_known_response = requests.get(WELL_KNOWN_URL)
     well_known_info = json.loads(well_known_response.text)
 
-    TOKEN_GRANT_URL = well_known_info['token_endpoint']
+    TOKEN_GRANT_URL = "https://signin.johndeere.com/oauth2/aus78tnlaysMraFhC1t7/v1/token" #well_known_info['token_endpoint']
 
     oauth2_session = OAuth2Session(CLIENT_ID,  redirect_uri=CLIENT_REDIRECT_URI, scope=SCOPES_TO_REQUEST)
 
