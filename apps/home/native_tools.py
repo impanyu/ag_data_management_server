@@ -74,6 +74,8 @@ def get_JD_token(authorization_code):
     CLIENT_ID = os.getenv('JD_CLIENT_ID')
     CLIENT_SECRET = os.getenv('JD_CLIENT_SECRET')
 
+
+
     #TOKEN_GRANT_URL = cache.get('TOKEN_GRANT_URL')
     print("in get JD token",flush=True)
 

@@ -370,6 +370,8 @@ class JD_access_token(APIView):
 
     def get(self, request, *args, **kwargs):
         authorization_code = request.query_params.get('code')
+        load_dotenv()
+
         token = get_JD_token(authorization_code)
         url = get_JD_organizations()
         if not url == None:
