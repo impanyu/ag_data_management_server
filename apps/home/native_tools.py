@@ -77,6 +77,14 @@ def get_JD_token(authorization_code):
     #TOKEN_GRANT_URL = cache.get('TOKEN_GRANT_URL')
     print("in get JD token",flush=True)
 
+    WELL_KNOWN_URL = 'https://signin.johndeere.com/oauth2/aus78tnlaysMraFhC1t7/.well-known/oauth-authorization-server'
+
+    # Query the ./well-known OAuth URL and parse out the authorization URL, the token grant URL, and the available scopes
+    well_known_response = requests.get(WELL_KNOWN_URL)
+    well_known_info = json.loads(well_known_response.text)
+
+    TOKEN_GRANT_URL = well_known_info['token_endpoint']
+
     oauth2_session = OAuth2Session(CLIENT_ID,  redirect_uri=CLIENT_REDIRECT_URI, scope=SCOPES_TO_REQUEST)
 
     # Now that we have an authorization code, let's fetch an access and refresh token
