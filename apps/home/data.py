@@ -1358,6 +1358,7 @@ def search(root_dir, search_box, category, mode, format, label,  realtime, time_
     print(root_dir,flush=True)
     if root_dir[-1] == "/":
         root_dir = root_dir[:-1]
+    print(root_dir,flush=True)
     meta_data = get_meta_data(root_dir)
     if "Collection" in meta_data["mode"]:
         if filtering_condition(meta_data, search_box, category, mode, format, label, realtime, time_range, spatial_range):
