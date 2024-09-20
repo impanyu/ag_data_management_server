@@ -1,8 +1,7 @@
-# Start from a stable R base image
-FROM r-base:4.1.0
+# Start from a stable Debian version (bullseye)
+FROM debian:bullseye
 
-# Install usrmerge to resolve /bin vs /usr/bin issue
-RUN apt-get update && apt-get install -y usrmerge
+
 
 # Install system dependencies required by R packages
 RUN apt-get update && apt-get install -y \
