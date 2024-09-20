@@ -342,7 +342,6 @@ class StopRunningInstance(APIView):
     
 
 class Search(APIView):
-
     def get(self, request, *args, **kwargs):
         search_box = request.query_params.get('search_box')
         category = request.query_params.get('category')
@@ -355,7 +354,7 @@ class Search(APIView):
 
         username = request.user.username
         root_dir = os.path.join(settings.USER_DATA_DIR, username, "ag_data")
-               
+
         result = search(root_dir, search_box, category, mode, format, label,  realtime, time_range, spatial_range)
 
         response = json.dumps(result)
