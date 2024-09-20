@@ -351,8 +351,8 @@ class Search(APIView):
         format = request.query_params.getlist('format',["All"])
         label = request.query_params.getlist('label',["All"])
         realtime = request.query_params.getlist('realtime',["All"])
-        time_range = request.query_params.get('time_range',["start","end"])
-        spatial_range = request.query_params.get('spatial_range',["southwest","northeast"])
+        time_range = request.query_params.getlist('time_range',["start","end"])
+        spatial_range = request.query_params.getlist('spatial_range',["southwest","northeast"])
 
         username = request.user.username
         root_dir = os.path.join(settings.USER_DATA_DIR, username, "ag_data")
