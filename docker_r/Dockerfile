@@ -1,10 +1,9 @@
-# Start from a stable Debian version (bullseye)
-FROM debian:bullseye
+# Use a stable Ubuntu image
+FROM ubuntu:20.04
 
-
-
-# Install system dependencies required by R packages
+# Install system dependencies required by R and R packages
 RUN apt-get update && apt-get install -y \
+    r-base \
     libudunits2-dev \
     libgdal-dev \
     libgeos-dev \
