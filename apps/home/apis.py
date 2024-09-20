@@ -356,10 +356,10 @@ class Search(APIView):
       
         root_dir = os.path.join(settings.USER_DATA_DIR, request.user.username, "ag_data", root_dir)
 
-        result = search(root_dir, search_box, category, mode, format, label,  realtime, time_range, spatial_range)
+        #result = search(root_dir, search_box, category, mode, format, label,  realtime, time_range, spatial_range)
 
-        response = json.dumps(result)
-
+        #response = json.dumps(result)
+        response = json.dumps({"result":"success"})
         return HttpResponse(response)
 
 
