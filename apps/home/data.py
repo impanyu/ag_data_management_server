@@ -1355,6 +1355,8 @@ def search(root_dir, search_box, category, mode, format, label,  realtime, time_
     #if not os.path.exists(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name)):
     #    return [root_dir,os.path.join(settings.CORE_DIR, 'data', meta_data_file_name)]
     #with open(os.path.join(settings.CORE_DIR, 'data', meta_data_file_name), "r") as meta_data_file:
+    if root_dir[-1] == "/":
+        root_dir = root_dir[:-1]
     meta_data = get_meta_data(root_dir)
     if "Collection" in meta_data["mode"]:
         if filtering_condition(meta_data, search_box, category, mode, format, label, realtime, time_range, spatial_range):
