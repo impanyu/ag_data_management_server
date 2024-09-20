@@ -2074,7 +2074,7 @@ def run_tool(entry_point,arg_values, arg_types,user,exe_env):
         )
     elif ".R" in entry_point.split("/")[-1] or ".r" in entry_point.split("/")[-1]:
         if image_name == "":
-            image_name = "r_new" #"rocker/rstudio"
+            image_name = "new_r" #"rocker/rstudio"
         main_cmd = "Rscript"
         command = [main_cmd, script_path] + [arg_values[arg_name] for arg_name in arg_values]
 
