@@ -331,9 +331,6 @@ class GetRunningInstance(APIView):
         return HttpResponse(json.dumps(results))
 
     
-
-
-
 class StopRunningInstance(APIView):
 
     def get(self, request, *args, **kwargs):
@@ -341,6 +338,28 @@ class StopRunningInstance(APIView):
         response = stop_container(container_id)
         
         response = json.dumps(response)
+        return HttpResponse(response)
+    
+
+class Search(APIView):
+
+    def get(self, request, *args, **kwargs):
+        search_box = request.query_params.get('search_box')
+        category = request.query_params.get('category')
+        mode = request.query_params.get('mode')
+        format = request.query_params.get('format')
+        label = request.query_params.get('label')
+        realtime = request.query_params.get('realtime')
+        time_range = request.query_params.get('time_range')
+        spatial_range = request.query_params.get('spatial_range')
+
+        username = request.user.username
+        root_dir = os.path.join(settings.USER_DATA_DIR, username, "ag_data")
+               
+        result = search(root_dir, search_box, category, mode, format, label,  realtime, time_range, spatial_range)
+
+        response = json.dumps(result)
+
         return HttpResponse(response)
 
 

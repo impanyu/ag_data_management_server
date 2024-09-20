@@ -49,6 +49,7 @@ urlpatterns = [
     path('api/stop_running_instance/', StopRunningInstance.as_view(), name='stop_running_instance'),
     path('api/get_running_instance/', GetRunningInstance.as_view(), name='get_running_instance'),
     path('api/api-token-auth/', obtain_auth_token, name='api_token_auth'),
+    path('api/search/', Search.as_view(), name='api_search'),
 
     # The home page
     path('', views.index, name='home'),
