@@ -343,6 +343,8 @@ class StopRunningInstance(APIView):
 
 class Search(APIView):
     def get(self, request, *args, **kwargs):
+        default_root_dir = os.path.join(settings.USER_DATA_DIR, request.user.username, "ag_data")
+        root_dir = request.query_params.get('root_dir',default_root_dir)
         search_box = request.query_params.get('search_box',"")
         category = request.query_params.getlist('category',["All"])
         mode = request.query_params.getlist('mode',["All"])
