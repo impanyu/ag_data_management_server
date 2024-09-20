@@ -343,8 +343,8 @@ class StopRunningInstance(APIView):
 
 class Search(APIView):
     def get(self, request, *args, **kwargs):
-        root_dir = request.query_params.get('root_dir')
-        search_box = request.query_params.get('search_box')
+        root_dir = request.query_params.get('root_dir',"")
+        search_box = request.query_params.get('search_box',"")
         #category = request.query_params.getlist('category',["All"])
         #mode = request.query_params.getlist('mode',["All"])
         #format = request.query_params.getlist('format',["All"])
