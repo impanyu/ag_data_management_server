@@ -1,5 +1,5 @@
-# Use rocker/rstudio as the base image
-FROM rocker/rstudio:latest
+# Use the R base image
+FROM r-base:latest
 
 # Install system dependencies for sf and raster
 RUN apt-get update && apt-get install -y \
@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
 RUN R -e "install.packages(c('sf', 'dplyr', 'data.table', 'raster'), repos='https://cran.rstudio.com/')"
 
 # Set the working directory
-WORKDIR /home/rstudio
+WORKDIR /root
 
-# The CMD is already set in the rocker/rstudio base image, so we don't need to specify it again
+# Start R when the container launches
+CMD ["R"]
