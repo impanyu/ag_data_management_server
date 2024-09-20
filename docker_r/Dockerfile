@@ -1,8 +1,13 @@
 # Use a stable Ubuntu image
 FROM ubuntu:20.04
 
+# Set environment variables to avoid timezone interaction
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Etc/UTC
+
 # Install system dependencies required by R and R packages
 RUN apt-get update && apt-get install -y \
+    tzdata \
     r-base \
     libudunits2-dev \
     libgdal-dev \
