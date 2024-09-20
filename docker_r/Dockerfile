@@ -1,25 +1,21 @@
-# Use the Debian-specific R base image
+# Start from the official R image
 FROM r-base:latest
 
-# Update GPG keys and package lists
-RUN apt-get update && \
-    apt-get install -y wget gnupg && \
-    wget -qO- https://ftp-master.debian.org/keys/archive-key-11.asc | apt-key add - && \
-    wget -qO- https://ftp-master.debian.org/keys/archive-key-11-security.asc | apt-key add - && \
-    apt-get update
-
-# Install system dependencies
-RUN apt-get install -y \
-    libgdal-dev \
+# Install system dependencies required by R packages
+# - libudunits2-dev: Required for 'sf'
+# - libgdal-dev, libgeos-dev, libproj-dev: Required for 'sf' to work with spatial data
+RUN apt-get update && apt-get install -y \
     libudunits2-dev \
+    libgdal-dev \
     libgeos-dev \
-    libproj-dev
+    libproj-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install R packages
-RUN R -e "install.packages(c('sf', 'dplyr', 'data.table', 'raster'), repos='https://cloud.r-project.org/', dependencies=TRUE)"
+RUN R -e "install.packages(c('sf', 'dplyr', 'data.table', 'raster'), repos='https://cloud.r-project.org/')"
 
 # Set the working directory
-WORKDIR /root
+WORKDIR /home/rstudio
 
-# Start R when the container launches
+# Set the default command to run R when the container starts
 CMD ["R"]
