@@ -503,7 +503,7 @@ def retrieve_sub_domain_data(subdomain_path, layer, time, session):
         return json.dumps({"soilwaters": soilwaters, "times": times})
 
 
-def filtering_condition(meta_data, search_box="", category=[], mode=[], format=[], label=[], realtime=[], time_range=["start","end"], bounding_box=["southwest","northeast"]):
+def filtering_condition(meta_data, search_box="", category=["All"], mode=["All"], format=["All"], label=["All"], realtime=["All"], time_range=["start","end"], bounding_box=["southwest","northeast"]):
     # return True
 
     if meta_data["name"] == "ag_data":

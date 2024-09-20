@@ -343,14 +343,14 @@ class StopRunningInstance(APIView):
 
 class Search(APIView):
     def get(self, request, *args, **kwargs):
-        search_box = request.query_params.get('search_box')
-        category = request.query_params.get('category')
-        mode = request.query_params.get('mode')
-        format = request.query_params.get('format')
-        label = request.query_params.get('label')
-        realtime = request.query_params.get('realtime')
-        time_range = request.query_params.get('time_range')
-        spatial_range = request.query_params.get('spatial_range')
+        search_box = request.query_params.get('search_box',"")
+        category = request.query_params.getlist('category',["All"])
+        mode = request.query_params.getlist('mode',["All"])
+        format = request.query_params.getlist('format',["All"])
+        label = request.query_params.getlist('label',["All"])
+        realtime = request.query_params.getlist('realtime',["All"])
+        time_range = request.query_params.get('time_range',["start","end"])
+        spatial_range = request.query_params.get('spatial_range',["southwest","northeast"])
 
         username = request.user.username
         root_dir = os.path.join(settings.USER_DATA_DIR, username, "ag_data")
