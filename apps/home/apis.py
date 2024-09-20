@@ -358,8 +358,8 @@ class Search(APIView):
 
         result = search(root_dir, search_box, category, mode, format, label,  realtime, time_range, spatial_range)
 
-        #response = json.dumps(result)
-        response = json.dumps({"result":"success"})
+        response = json.dumps(result)
+        #response = json.dumps({"result":"success"})
         return HttpResponse(response)
 
 
