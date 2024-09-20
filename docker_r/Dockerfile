@@ -1,9 +1,7 @@
-# Start from the official R image
-FROM r-base:latest
+# Start from a stable R base image
+FROM r-base:4.1.0
 
 # Install system dependencies required by R packages
-# - libudunits2-dev: Required for 'sf'
-# - libgdal-dev, libgeos-dev, libproj-dev: Required for 'sf' to work with spatial data
 RUN apt-get update && apt-get install -y \
     libudunits2-dev \
     libgdal-dev \
