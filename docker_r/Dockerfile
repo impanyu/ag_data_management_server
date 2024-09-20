@@ -1,8 +1,15 @@
 # Use the Debian-specific R base image
 FROM r-base:latest
 
-# Update package lists and install system dependencies
-RUN apt-get update && apt-get install -y \
+# Update GPG keys and package lists
+RUN apt-get update && \
+    apt-get install -y wget gnupg && \
+    wget -qO- https://ftp-master.debian.org/keys/archive-key-11.asc | apt-key add - && \
+    wget -qO- https://ftp-master.debian.org/keys/archive-key-11-security.asc | apt-key add - && \
+    apt-get update
+
+# Install system dependencies
+RUN apt-get install -y \
     libgdal-dev \
     libudunits2-dev \
     libgeos-dev \
