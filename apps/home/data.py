@@ -1373,7 +1373,7 @@ def search(root_dir, search_box, category, mode, format, label,  realtime, time_
             for subdir in meta_data["subdirs"]:
                 if subdir ==  "/data/public/ag_data":
                     continue
-                #print(f"{subdir}, parent folder{meta_data['abs_path']}")
+                print(f"{subdir}, parent folder{meta_data['abs_path']}")
 
                 sub_result = search(subdir, search_box, category, mode, format, label,  realtime, time_range, spatial_range)
                 result += sub_result
@@ -1433,7 +1433,7 @@ def search(root_dir, search_box, category, mode, format, label,  realtime, time_
 
 
 def get_meta_data(path):
-    print(path,flush=True)  
+    #print(path,flush=True)  
     meta_data_file_name = "_".join(path.split("/")[1:]) + ".json"
     meta_data_file_path = os.path.join(settings.CORE_DIR, 'data', meta_data_file_name)
   
