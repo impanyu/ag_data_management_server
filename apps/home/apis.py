@@ -347,7 +347,7 @@ class Search(APIView):
         search_box = request.query_params.get('search_box',"")
         category = request.query_params.getlist('category',["All"])
         mode = request.query_params.getlist('mode',["All"])
-        format = request.query_params.getlist('format',["All"])
+        format = request.query_params.getlist('format',["Python"])
         label = request.query_params.getlist('label',["All"])
         realtime = request.query_params.getlist('realtime',["All"])
         time_range = request.query_params.getlist('time_range',["start","end"])
