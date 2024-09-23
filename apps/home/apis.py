@@ -218,10 +218,11 @@ class ListFilesView(APIView):
        
         meta_data = get_meta_data(full_path)
         items = []
-       
-        for sub_path in meta_data["subdirs"]:
-            items.append(sub_path[5:])
-        items = sorted(items, key=lambda item: item)
+        if  "subdirs" in meta_data:
+
+            for sub_path in meta_data["subdirs"]:
+                items.append(sub_path[5:])
+            items = sorted(items, key=lambda item: item)
        
         response = json.dumps(items)
         return HttpResponse(response)
