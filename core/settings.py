@@ -92,6 +92,14 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+# settings.py
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://localhost',
+    'http://localhost:8080',
+
+]
+
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
