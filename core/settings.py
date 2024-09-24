@@ -94,11 +94,7 @@ SOCIALACCOUNT_PROVIDERS = {
 
 # settings.py
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://localhost',
-    'http://localhost:8080',
 
-]
 CSRF_COOKIE_SAMESITE = 'None'
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SAMESITE = 'None'

@@ -105,7 +105,6 @@ class FileUploadView(APIView):
             current_user = request.user.username
 
             for file in files:
-                print(f"{file.name} uploaded to {safe_path}",flush=True)
                 if len(relative_paths) == 0:
                     relative_path = ""
                 else:
