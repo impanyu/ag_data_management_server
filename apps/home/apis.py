@@ -464,7 +464,7 @@ class Google_drive_callback(APIView):
 
         
         flow = Flow.from_client_secrets_file(
-            'client_secret.json',
+            '/tmp/google_drive_client_secret.json',
             scopes=SCOPES,
             redirect_uri='https://adma.hopto.org/callback'
         )
