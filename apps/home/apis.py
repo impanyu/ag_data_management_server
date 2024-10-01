@@ -461,7 +461,9 @@ class Google_drive_callback(APIView):
 
     def get(self, request, *args, **kwargs):
         SCOPES = ['https://www.googleapis.com/auth/drive']
-        username = request.query_params.get('username')
+        state = request.query_params.get('state')
+        params = dict(x.split('=') for x in state.split('&'))
+        username = params['username']
 
         
         flow = Flow.from_client_secrets_file(
