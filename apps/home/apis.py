@@ -461,6 +461,7 @@ class Google_drive_callback(APIView):
 
     def get(self, request, *args, **kwargs):
         SCOPES = ['https://www.googleapis.com/auth/drive']
+        username = request.query_params.get('username')
 
         
         flow = Flow.from_client_secrets_file(
@@ -475,7 +476,7 @@ class Google_drive_callback(APIView):
         creds = flow.credentials
         # Save the credentials as needed (e.g., store them in the session or database).
         # Save the credentials for the next run
-        with open('/tmp/google_drive_credential.json', 'w') as token:
+        with open(f'/tmp/google_drive_credential_{username}.json', 'w') as token:
             token.write(creds.to_json())
 
         response = json.dumps({"result":"google drive token acquired"})
