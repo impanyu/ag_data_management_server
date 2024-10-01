@@ -17,6 +17,8 @@ import urllib.parse
 import time
 from dotenv import load_dotenv
 
+from google_auth_oauthlib.flow import Flow
+
 class FileUploadSerializer(serializers.Serializer):
     # Define a file field in your serializer
     # You can specify additional arguments for FileField to further customize its behavior
@@ -453,4 +455,30 @@ class Realm5_Weather_Connect(APIView):
 
 
         return redirect(f"files.html?current_path={current_path}")
+    
+
+class Google_drive_callback(APIView):
+
+    def get(self, request, *args, **kwargs):
+        SCOPES = ['https://www.googleapis.com/auth/drive']
+
+        
+        flow = Flow.from_client_secrets_file(
+            'client_secret.json',
+            scopes=SCOPES,
+            redirect_uri='https://adma.hopto.org/callback'
+        )
+        
+        flow.fetch_token(authorization_response=request.build_absolute_uri())
+
+        # Now, use the credentials to interact with Google Drive.
+        creds = flow.credentials
+        # Save the credentials as needed (e.g., store them in the session or database).
+        # Save the credentials for the next run
+        with open('/tmp/google_drive_credential.json', 'w') as token:
+            token.write(creds.to_json())
+
+        response = json.dumps({"result":"google drive token acquired"})
+
+        return HttpResponse(response)
 

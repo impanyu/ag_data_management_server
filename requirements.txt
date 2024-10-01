@@ -33,3 +33,6 @@ django-cors-headers
 celery
 redis
 python-dotenv
+google-api-python-client 
+google-auth-httplib2 
+google-auth-oauthlib
