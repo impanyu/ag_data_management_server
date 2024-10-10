@@ -467,7 +467,7 @@ class Google_drive_callback(APIView):
 
         
         flow = Flow.from_client_secrets_file(
-            '/tmp/google_drive_client_secret.json',
+            'tmp/google_drive_client_secret.json',
             scopes=SCOPES,
             redirect_uri='https://adma.hopto.org/api/google_drive_auth_callback/'
         )
@@ -478,7 +478,7 @@ class Google_drive_callback(APIView):
         creds = flow.credentials
         # Save the credentials as needed (e.g., store them in the session or database).
         # Save the credentials for the next run
-        with open(f'/tmp/google_drive_credential_{username}.json', 'w') as token:
+        with open(f'tmp/google_drive_credential_{username}.json', 'w') as token:
             token.write(creds.to_json())
 
         response = json.dumps({"result":"google drive token acquired"})
