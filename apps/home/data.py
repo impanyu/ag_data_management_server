@@ -2090,7 +2090,9 @@ def run_tool(entry_point,arg_values, arg_types,user,exe_env):
             working_dir=working_dir,
             # environment={"VAR1": "value1", "VAR2": "value2"},
             detach=True,
-            auto_remove=False
+            auto_remove=False,
+            cpus=1,  # Limit to 2 CPU cores
+            mem_limit="512m"  # Limit memory usage to 512MB
         )
     elif ".m" in entry_point.split("/")[-1]:
         if image_name == "":
