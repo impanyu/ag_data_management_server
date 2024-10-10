@@ -2091,8 +2091,7 @@ def run_tool(entry_point,arg_values, arg_types,user,exe_env):
             # environment={"VAR1": "value1", "VAR2": "value2"},
             detach=True,
             auto_remove=False,
-            cpus=1,  # Limit to 2 CPU cores
-            mem_limit="512m"  # Limit memory usage to 512MB
+            cpu_quota=50000,  # CPU quota in microseconds (50% CPU time in this case)
         )
     elif ".m" in entry_point.split("/")[-1]:
         if image_name == "":
