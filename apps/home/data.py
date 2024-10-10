@@ -2075,7 +2075,7 @@ def run_tool(entry_point,arg_values, arg_types,user,exe_env):
             detach=True,
             auto_remove=False,
             cpu_quota=50000,  # CPU quota in microseconds (50% CPU time in this case)
-            mem_limit="1000m"
+            mem_limit="2000m"
         )
     elif ".R" in entry_point.split("/")[-1] or ".r" in entry_point.split("/")[-1]:
         if image_name == "":
@@ -2094,7 +2094,7 @@ def run_tool(entry_point,arg_values, arg_types,user,exe_env):
             detach=True,
             auto_remove=False,
             cpu_quota=50000,  # CPU quota in microseconds (50% CPU time in this case),
-            mem_limit="1000m"
+            mem_limit="2000m"
 
         )
     elif ".m" in entry_point.split("/")[-1]:
