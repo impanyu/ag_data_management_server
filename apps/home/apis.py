@@ -502,5 +502,5 @@ class ConvertToStatic(APIView):
 
   
         response = json.dumps({"result":"success"})
-        return HttpResponse("/static/"+safe_path)
+        return HttpResponse("/static_files/"+safe_path)
 
