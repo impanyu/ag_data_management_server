@@ -51,6 +51,7 @@ urlpatterns = [
     path('api/api-token-auth/', obtain_auth_token, name='api_token_auth'),
     path('api/search/', Search.as_view(), name='api_search'),
     path('api/google_drive_auth_callback/', Google_drive_callback.as_view(), name='google_drive_auth_callback'),
+    path('api/convert_to_static/', ConvertToStatic.as_view(), name='convert_to_static'),
 
     # The home page
     path('', views.index, name='home'),

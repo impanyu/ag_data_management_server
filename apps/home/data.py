@@ -2412,3 +2412,10 @@ def get_api_keys():
 
     #api_keys = {"AIzaSyBU1RvtD5YF8" : ""}
     return api_keys
+
+def copy_to_static(full_path,static_path):
+    if os.path.isfile(full_path):
+        shutil.copy(full_path,static_path)
+    else:
+        shutil.copytree(full_path,static_path,dirs_exist_ok=True)
+    
