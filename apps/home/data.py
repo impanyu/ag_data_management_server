@@ -30,8 +30,10 @@ import threading
 import time
 
 
+
 from .file_monitor import EventHandler
 from django.core.cache import cache
+import stat
 
 
 
@@ -2418,4 +2420,16 @@ def copy_to_static(full_path,static_path):
         shutil.copy(full_path,static_path)
     else:
         shutil.copytree(full_path,static_path,dirs_exist_ok=True)
+    add_write_exe_permission(static_path)
+
+
+def add_write_exe_permission(abs_path): 
+    current_permissions = os.stat(abs_path).st_mode
+    new_permissions = current_permissions | (stat.S_IRUSR | stat.S_IRGRP | stat.S_IROTH) | (stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
+    os.chmod(abs_path, new_permissions)
+    if os.path.isdir(abs_path):
+        for file in os.listdir(abs_path):
+            file_path = os.path.join(abs_path,file)    
+            add_write_exe_permission(file_path)
+        
     
