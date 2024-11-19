@@ -2421,6 +2421,7 @@ def copy_to_static(full_path,static_path):
     else:
         shutil.copytree(full_path,static_path,dirs_exist_ok=True)
     add_write_exe_permission(static_path)
+    
 
 
 def add_write_exe_permission(abs_path): 
