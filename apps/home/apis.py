@@ -503,4 +503,24 @@ class ConvertToStatic(APIView):
   
         response = json.dumps({"result":"success"})
         return HttpResponse("/static_files/"+safe_path)
+    
+class RemoveStatic(APIView):
+ 
+    def get(self, request, *args, **kwargs):
+        target_path = request.query_params.get('file_path')
+        current_user = request.user.username
+
+        safe_path = os.path.normpath(target_path).lstrip('/')
+    
+
+        static_path = os.path.join(settings.CORE_DIR, 'converted_static_files', safe_path)
+        # remove static_path
+        if os.path.isdir(static_path):
+            shutil.rmtree(static_path)
+        else:
+            os.remove(static_path)
+  
+  
+        response = json.dumps({"result":"success"})
+        return HttpResponse(response)
 
