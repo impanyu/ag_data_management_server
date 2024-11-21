@@ -2784,7 +2784,7 @@ function toggle_meta_data_panel(){
    if(meta_data["mode"].indexOf("Tool") !=-1)
        meta_data_panel_height = "2000px";
    else
-       meta_data_panel_height = "1800px";
+       meta_data_panel_height = "2000px";
 
 
    if(document.querySelector("#meta_data_panel").style.height == "0px"){
