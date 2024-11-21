@@ -516,11 +516,12 @@ class RemoveStatic(APIView):
     
 
         static_path = os.path.join(settings.CORE_DIR, 'converted_static_files',current_user, "ag_data",  safe_path)
-        # remove static_path
-        if os.path.isdir(static_path):
-            shutil.rmtree(static_path)
-        else:
-            os.remove(static_path)
+        if os.path.exists(static_path):
+            # remove static_path
+            if os.path.isdir(static_path):
+                shutil.rmtree(static_path)
+            else:
+                os.remove(static_path)
   
   
         response = json.dumps({"result":"success"})
@@ -564,11 +565,12 @@ class RemoveStaticLink(APIView):
     
 
         static_path = os.path.join(settings.CORE_DIR, 'converted_static_files',current_user, "ag_data",  safe_path)
-        # remove static_path
-        if os.path.isdir(static_path):
-            shutil.rmtree(static_path)
-        else:
-            os.remove(static_path)
+        if os.path.exists(static_path):
+            # remove static_path
+            if os.path.isdir(static_path):
+                shutil.rmtree(static_path)
+            else:
+                os.remove(static_path)
   
   
         response = json.dumps({"result":"success"})
