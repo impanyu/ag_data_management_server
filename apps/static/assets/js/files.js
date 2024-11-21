@@ -2895,7 +2895,7 @@ function get_item_list(){
                    '<td> <span class="badge badge-dot mr-4">  <span class="status">'+file["native"]["size"]+'</span></span></td>' +
                    '<td> <div class="avatar-group"> <a href="#" data-toggle="tooltip" data-original-title='+user+'>'+file['owner']+'</a></div></td>' +
                    '<td ><div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>'+
-                   '<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">'+
+                   '<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow" style="z-index: 9999;">'+
                    tabs+
                    '<a class="dropdown-item" href="#" id="'+i+'_add_to_collection">Add to Collection</a>'
                    '</div> </div></td></tr>';
