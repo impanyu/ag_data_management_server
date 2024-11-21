@@ -536,7 +536,7 @@ class GenerateStaticLink(APIView):
         root_static_path = os.path.join(settings.CORE_DIR, 'converted_static_files', current_user, "ag_data")   
         os.makedirs(root_static_path, exist_ok=True)
         # copy full path to static folder
-        safe_path = "/".join(abs_path.split("/")[:4])
+        safe_path = "/".join(abs_path.split("/")[4:])
         static_path = os.path.join(settings.CORE_DIR, 'converted_static_files', current_user, "ag_data", safe_path)
         #os.makedirs(os.path.dirname(static_path), exist_ok=True)
         #shutil.copytree(full_path, static_path)
@@ -559,7 +559,8 @@ class RemoveStaticLink(APIView):
         abs_path = request.query_params.get('file_path')
         current_user = request.user.username
 
-        safe_path = "/".join(abs_path.split("/")[:4])
+        safe_path = "/".join(abs_path.split("/")[4:])
+        print("/".join(abs_path.split("/")[:4]))
     
 
         static_path = os.path.join(settings.CORE_DIR, 'converted_static_files',current_user, "ag_data",  safe_path)
