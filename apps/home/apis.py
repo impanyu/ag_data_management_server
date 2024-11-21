@@ -526,3 +526,54 @@ class RemoveStatic(APIView):
         response = json.dumps({"result":"success"})
         return HttpResponse(response)
 
+
+# used for web portal
+class GenerateStaticLink(APIView):
+ 
+    def get(self, request, *args, **kwargs):
+        abs_path = request.query_params.get('file_path') 
+        current_user = request.user.username
+        root_static_path = os.path.join(settings.CORE_DIR, 'converted_static_files', current_user, "ag_data")   
+        os.makedirs(root_static_path, exist_ok=True)
+        # copy full path to static folder
+        safe_path = "/".join(abs_path.split("/")[:4])
+        static_path = os.path.join(settings.CORE_DIR, 'converted_static_files', current_user, "ag_data", safe_path)
+        #os.makedirs(os.path.dirname(static_path), exist_ok=True)
+        #shutil.copytree(full_path, static_path)
+        copy_to_static(abs_path, static_path)
+
+  
+        response = json.dumps({"result":"success"})
+        
+        current_path = "/".join(abs_path.split("/")[2:])
+        #encode file_path as uri component
+        current_path = urllib.parse.quote(current_path)
+
+
+        return redirect(f"files.html?current_path={current_path}")
+
+# used for web portal
+class RemoveStaticLink(APIView):
+ 
+    def get(self, request, *args, **kwargs):
+        abs_path = request.query_params.get('file_path')
+        current_user = request.user.username
+
+        safe_path = "/".join(abs_path.split("/")[:4])
+    
+
+        static_path = os.path.join(settings.CORE_DIR, 'converted_static_files',current_user, "ag_data",  safe_path)
+        # remove static_path
+        if os.path.isdir(static_path):
+            shutil.rmtree(static_path)
+        else:
+            os.remove(static_path)
+  
+  
+        response = json.dumps({"result":"success"})
+        current_path = "/".join(abs_path.split("/")[2:])
+        #encode file_path as uri component
+        current_path = urllib.parse.quote(current_path)
+
+
+        return redirect(f"files.html?current_path={current_path}")

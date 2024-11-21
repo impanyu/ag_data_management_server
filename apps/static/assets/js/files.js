@@ -2869,7 +2869,9 @@ function get_item_list(){
                     '<a class="dropdown-item" id="'+i+'_move">Move</a>'+
                    '<a class="dropdown-item"  id="'+i+'_duplicate">Duplicate</a>'+
                    '<a class="dropdown-item" id="'+i+'_get_JD_authorization_code" href="/api/get_JD_authorization_code/?file_path='+encodeURIComponent(file["abs_path"])+'" >Connect to JD</a>'+
-                   '<a class="dropdown-item" id="'+i+'_realm5_weather" href="/api/realm5_weather/?file_path='+encodeURIComponent(file["abs_path"])+'" >Connect to Realm5 Weather</a>'
+                   '<a class="dropdown-item" id="'+i+'_realm5_weather" href="/api/realm5_weather/?file_path='+encodeURIComponent(file["abs_path"])+'" >Connect to Realm5 Weather</a>'+
+                   '<a class="dropdown-item" id="'+i+'_realm5_weather" href="/api/generate_static_link/?file_path='+encodeURIComponent(file["abs_path"])+'" >Generate Static Link</a>'+
+                   '<a class="dropdown-item" id="'+i+'_realm5_weather" href="/api/remove_static_link/?file_path='+encodeURIComponent(file["abs_path"])+'" >Remove Static Link</a>'
 
 
             if (file["abs_path"] == current_path+"/ENREEC_Testbed"){

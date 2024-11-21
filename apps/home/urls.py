@@ -53,6 +53,8 @@ urlpatterns = [
     path('api/google_drive_auth_callback/', Google_drive_callback.as_view(), name='google_drive_auth_callback'),
     path('api/convert_to_static/', ConvertToStatic.as_view(), name='convert_to_static'),
     path('api/remove_static/', RemoveStatic.as_view(), name='remove_static'),
+    path('api/generate_static_link/', GenerateStaticLink.as_view(), name= 'generate_static_link'),
+    path('api/remove_static_link/', RemoveStaticLink.as_view(), name='remove_static_link'),
 
     # The home page
     path('', views.index, name='home'),
