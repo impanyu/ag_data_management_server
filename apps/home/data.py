@@ -1527,6 +1527,13 @@ def get_meta_data(path):
         minx, miny, maxx, maxy = bounds
         meta_data["native"]["spatial_range"]={"southwest":{"lat":miny,"lng":minx},"northeast":{"lat":maxy,"lng":maxx}}
     '''
+    
+    relative_path = "/".join(path.split("/")[4:])
+    static_path = os.path.join(settings.CORE_DIR, 'converted_static_files', relative_path)
+    # if static_path exists
+    if os.path.exists(static_path):
+        meta_data["static_link"] = f"https://adma.hopto.org/static_files/{relative_path}"
+
     return meta_data
 
 
