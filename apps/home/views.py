@@ -1151,6 +1151,7 @@ def data(request):
 
             if f"/data/public" in abs_path or "Collection" in meta_data["mode"]:
                 i = 0
+                print(meta_data["subdirs"],flush=True)
                 while i < len(meta_data["subdirs"]):  
                     sub_path = meta_data["subdirs"][i]
 
