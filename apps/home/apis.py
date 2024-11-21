@@ -513,7 +513,7 @@ class RemoveStatic(APIView):
         safe_path = os.path.normpath(target_path).lstrip('/')
     
 
-        static_path = os.path.join(settings.CORE_DIR, 'converted_static_files', safe_path)
+        static_path = os.path.join(settings.CORE_DIR, 'converted_static_files',current_user, "ag_data",  safe_path)
         # remove static_path
         if os.path.isdir(static_path):
             shutil.rmtree(static_path)
