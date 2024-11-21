@@ -560,7 +560,7 @@ class RemoveStaticLink(APIView):
         current_user = request.user.username
 
         safe_path = "/".join(abs_path.split("/")[4:])
-        print("/".join(abs_path.split("/")[:4]))
+        print("/".join(abs_path.split("/")[:4]),flush=True)
     
 
         static_path = os.path.join(settings.CORE_DIR, 'converted_static_files',current_user, "ag_data",  safe_path)
