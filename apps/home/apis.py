@@ -494,6 +494,8 @@ class ConvertToStatic(APIView):
 
         safe_path = os.path.normpath(target_path).lstrip('/')
         full_path = os.path.join(settings.USER_DATA_DIR, current_user, "ag_data", safe_path)
+        root_static_path = os.path.join(settings.CORE_DIR, 'converted_static_files', current_user, "ag_data")
+        os.makedirs(root_static_path, exist_ok=True)
         # copy full path to static folder
         static_path = os.path.join(settings.CORE_DIR, 'converted_static_files', current_user, "ag_data", safe_path)
         #os.makedirs(os.path.dirname(static_path), exist_ok=True)
