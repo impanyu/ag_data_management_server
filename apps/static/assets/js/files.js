@@ -2348,7 +2348,9 @@ function get_meta_data(){
           for(meta_key in meta_data){
              meta_value = meta_data[meta_key];
              if (meta_key == "static_link"){
-                document.querySelector("#static_link").innerHTML = meta_value;
+                
+                document.querySelector("#static_link").innerHTML ='<a href="'+ meta_value + '">' + meta_value +'</a>';
+
              }
 
              else if (meta_key == "subdirs" || meta_key =="abs_path" )
