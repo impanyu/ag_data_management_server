@@ -2870,8 +2870,8 @@ function get_item_list(){
                    '<a class="dropdown-item"  id="'+i+'_duplicate">Duplicate</a>'+
                    '<a class="dropdown-item" id="'+i+'_get_JD_authorization_code" href="/api/get_JD_authorization_code/?file_path='+encodeURIComponent(file["abs_path"])+'" >Connect to JD</a>'+
                    '<a class="dropdown-item" id="'+i+'_realm5_weather" href="/api/realm5_weather/?file_path='+encodeURIComponent(file["abs_path"])+'" >Connect to Realm5 Weather</a>'+
-                   '<a class="dropdown-item" id="'+i+'_realm5_weather" href="/api/generate_static_link/?file_path='+encodeURIComponent(file["abs_path"])+'" >Generate Static Link</a>'+
-                   '<a class="dropdown-item" id="'+i+'_realm5_weather" href="/api/remove_static_link/?file_path='+encodeURIComponent(file["abs_path"])+'" >Remove Static Link</a>'
+                   '<a class="dropdown-item" id="'+i+'_generate_static_link" href="/api/generate_static_link/?file_path='+encodeURIComponent(file["abs_path"])+'" >Generate Static Link</a>'+
+                   '<a class="dropdown-item" id="'+i+'_remove_static_link" href="/api/remove_static_link/?file_path='+encodeURIComponent(file["abs_path"])+'" >Remove Static Link</a>'
 
 
             if (file["abs_path"] == current_path+"/ENREEC_Testbed"){
@@ -2894,7 +2894,7 @@ function get_item_list(){
                    '<td> <span class="badge badge-dot mr-4">  <span class="status">'+file["native"]["access_time"]+'</span></span></td>' +
                    '<td> <span class="badge badge-dot mr-4">  <span class="status">'+file["native"]["size"]+'</span></span></td>' +
                    '<td> <div class="avatar-group"> <a href="#" data-toggle="tooltip" data-original-title='+user+'>'+file['owner']+'</a></div></td>' +
-                   '<td ><div class="dropdown" style="z-index: 9999;><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>'+
+                   '<td ><div class="dropdown" ><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>'+
                    '<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow" ">'+
                    tabs+
                    '<a class="dropdown-item" href="#" id="'+i+'_add_to_collection">Add to Collection</a>'
