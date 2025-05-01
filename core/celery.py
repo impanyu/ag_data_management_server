@@ -7,8 +7,8 @@ from django.conf import settings
 import logging
 
 # Redirect stdout and stderr to log files
-sys.stdout = open('/var/log/ag_data_management/debug.log', 'a+')
-sys.stderr = open('/var/log/ag_data_management/debug.log', 'a+')
+#sys.stdout = open('/var/log/ag_data_management/debug.log', 'a+')
+#sys.stderr = open('/var/log/ag_data_management/debug.log', 'a+')
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 
