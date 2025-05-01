@@ -895,7 +895,8 @@ def generate_meta_data_for_file(file_path, upstream):
     if os.path.exists(os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name)):
         with open(os.path.join(settings.CORE_DIR, 'data', parent_meta_data_file_name), "r") as parent_meta_data_file:
             parent_meta_data = json.load(parent_meta_data_file)
-            meta_data["public"] = parent_meta_data["public"]
+            if "public" in parent_meta_data:
+                meta_data["public"] = parent_meta_data["public"]
    
    
     meta_data["name"] = file_path.split("/")[-1]
