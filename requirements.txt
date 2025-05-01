@@ -20,7 +20,7 @@ docker
 pyshp
 geopandas
 matplotlib
-numpy
+numpy==1.26.4
 pyinotify
 django-allauth == 0.54.0
 psutil
