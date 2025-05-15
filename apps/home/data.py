@@ -2073,7 +2073,15 @@ def run_tool(entry_point,arg_values, arg_types,user,exe_env):
         if image_name == "":
             image_name = "python_test"
         main_cmd = "python"
-        command = [main_cmd, script_path] + [arg_values[arg_name] for arg_name in arg_values]
+        
+        command = [main_cmd, script_path] 
+       
+        for arg_name in args:
+            if arg_name[0] == "-":
+                command.append(arg_name)
+                command.append(args[arg_name])
+            else:
+                command.append(args[arg_value])
 
 
         container = client.containers.run(
