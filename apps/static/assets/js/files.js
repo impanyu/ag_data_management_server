@@ -1058,6 +1058,7 @@ function remove_tool_arg(self){
   for(var i =2; i< arg_names.length;i++){
     arg_name += arg_names[i];
   }
+  console.info(arg_name);
   arg_container_name = "#arg_container_"+arg_name;
   arg_container = document.querySelector(arg_container_name);
   document.querySelector("#tool_panel_container").removeChild(arg_container);
