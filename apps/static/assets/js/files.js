@@ -1053,7 +1053,11 @@ function run_tool(){
 }
 
 function remove_tool_arg(self){
-  arg_name = self.id.split("_")[2];
+  arg_names = self.id.split("_");
+  arg_name = "";
+  for(var i =0; i< arg_names.length;i++){
+    arg_name += arg_names[i];
+  }
   arg_container_name = "#arg_container_"+arg_name;
   arg_container = document.querySelector(arg_container_name);
   document.querySelector("#tool_panel_container").removeChild(arg_container);
