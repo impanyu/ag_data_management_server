@@ -2081,7 +2081,7 @@ def run_tool(entry_point,arg_values, arg_types,user,exe_env):
                 command.append(arg_name)
                 command.append(args[arg_name])
             else:
-                command.append(args[arg_value])
+                command.append(args[arg_name])
 
 
         container = client.containers.run(
