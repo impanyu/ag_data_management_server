@@ -1056,7 +1056,10 @@ function remove_tool_arg(self){
   arg_names = self.id.split("_");
   arg_name = "";
   for(var i =2; i< arg_names.length;i++){
-    arg_name += arg_names[i];
+    if(i == arg_names.length-1)
+      arg_name += arg_names[i];
+    else
+      arg_name += arg_names[i] + "_";
   }
   console.info(arg_name);
   arg_container_name = "#arg_container_"+arg_name;
