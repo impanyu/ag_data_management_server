@@ -2076,12 +2076,12 @@ def run_tool(entry_point,arg_values, arg_types,user,exe_env):
         
         command = [main_cmd, script_path] 
        
-        for arg_name in args:
+        for arg_name in arg_values:
             if arg_name[0] == "-":
                 command.append(arg_name)
-                command.append(args[arg_name])
+                command.append(arg_values[arg_name])
             else:
-                command.append(args[arg_name])
+                command.append(arg_values[arg_name])
 
 
         container = client.containers.run(
