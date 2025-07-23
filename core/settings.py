@@ -199,7 +199,7 @@ LOGGING = {
         'file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': '/var/log/ag_data_management/debug.log',
+            'filename': '/home/ypan12/ag_data_management_server/log/debug.log',
             'formatter': 'verbose',
         },
     },
