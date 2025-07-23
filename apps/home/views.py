@@ -331,7 +331,7 @@ def data(request):
             #current_path = request.POST['current_path']
             current_path = request.user.get_username()+"/collections"
             new_collection_name = request.POST['new_collection_name']
-            abs_path = os.path.join("/data", current_path,new_collection_name)
+            abs_path = os.path.join(settings.USER_DATA_DIR, current_path,new_collection_name)
             suffix = abs_path.split(".")[-1]
 
             new_path = abs_path
@@ -466,7 +466,7 @@ def data(request):
                 return HttpResponse("can not create folder to public directory!")
 
             new_folder_name = request.POST['new_folder_name'].split(".")[0]
-            abs_path = os.path.join("/data", current_path,new_folder_name)
+            abs_path = os.path.join(settings.USER_DATA_DIR, current_path,new_folder_name)
 
             new_path = abs_path
             i = 1
@@ -487,7 +487,7 @@ def data(request):
             if not current_path.split("/")[0] == request.user.get_username():
                 return HttpResponse("can not create file to public directory!")
             new_file_name = request.POST['new_file_name']
-            abs_path = os.path.join("/data", current_path,new_file_name)
+            abs_path = os.path.join(settings.USER_DATA_DIR, current_path,new_file_name)
             suffix = abs_path.split(".")[-1]
 
             new_path = abs_path
@@ -552,7 +552,7 @@ def data(request):
                 #upload each file
                 for file in upload_files:
 
-                    position = os.path.join("/data",current_path,
+                    position = os.path.join(settings.USER_DATA_DIR,current_path,
                                             '/'.join(upload_file_paths[upload_files.index(file)].split('/')[:-1]))
                     print("uploading file:", position,flush=True)
                     #print(file.name)
@@ -583,7 +583,7 @@ def data(request):
                 '''
                 cur = ""
                 meta_data = {}
-                current_abs_path = os.path.join("/data/" + request.user.get_username() + "/ag_data", current_path)
+                current_abs_path = os.path.join(settings.USER_DATA_DIR + request.user.get_username() + "/ag_data", current_path)
                 for i,dir in enumerate(current_abs_path.split("/")):
                     cur = cur + "/"+ dir
                     if cur in data_points:
@@ -591,10 +591,10 @@ def data(request):
                 '''
                 #upload single file, not relative path
                 if(upload_file_paths[0] == ""):
-                    root_abs_path = os.path.join("/data",current_path,upload_files[0].name)
+                    root_abs_path = os.path.join(settings.USER_DATA_DIR,current_path,upload_files[0].name)
 
                 else:
-                    root_abs_path = os.path.join("/data" ,current_path,upload_file_paths[0].split('/')[0])
+                    root_abs_path = os.path.join(settings.USER_DATA_DIR,current_path,upload_file_paths[0].split('/')[0])
 
                 print("uploading files to: ", root_abs_path,flush=True)
                 aggregate_meta_data(root_abs_path,{"upload":["external resources"]})
@@ -661,7 +661,7 @@ def data(request):
 
 
 
-                    #dir_root = os.path.join("/data/" + request.user.get_username() + "/ag_data", current_path,'/'.join(upload_file_paths[0].split('/')[0]))
+                    #dir_root = os.path.join(settings.USER_DATA_DIR + request.user.get_username() + "/ag_data", current_path,'/'.join(upload_file_paths[0].split('/')[0]))
 
 
 
@@ -758,8 +758,8 @@ def data(request):
             else:
                 #print(request.user.get_username())
                 #print("original_user",original_user,flush=True)
-                initial_path = os.path.join("/data",request.user.get_username(),"ag_data",file_name)
-                new_path = os.path.join("/data",request.user.get_username(),"ag_data",file_name)
+                initial_path = os.path.join(settings.USER_DATA_DIR,request.user.get_username(),"ag_data",file_name)
+                new_path = os.path.join(settings.USER_DATA_DIR,request.user.get_username(),"ag_data",file_name)
 
             i = 1
 
@@ -889,7 +889,7 @@ def data(request):
 
         elif load_template == 'download_file': #directly download file or folder
             file_path = request.POST['current_path']
-            abs_path = os.path.join("/data", file_path)
+            abs_path = os.path.join(settings.USER_DATA_DIR, file_path)
 
             # Check if the path exists
             if not os.path.exists(abs_path):
@@ -924,7 +924,7 @@ def data(request):
 
         elif load_template == 'get_file': # try to display file in front end
             file_path = request.POST['current_path']
-            abs_path = os.path.join("/data", file_path)
+            abs_path = os.path.join(settings.USER_DATA_DIR, file_path)
             
 
 
@@ -980,7 +980,7 @@ def data(request):
 
         elif load_template == "get_running_containers":
             current_path = request.POST['current_path']
-            abs_path = f"/data/{current_path}"
+            abs_path = f"{settings.USER_DATA_DIR}/{current_path}"
             running_containers = get_running_containers(abs_path)
 
 
@@ -990,7 +990,7 @@ def data(request):
 
         elif load_template == "get_collections":
 
-            abs_path = f"/data/{request.user.get_username()}/collections"
+            abs_path = f"{settings.USER_DATA_DIR}/{request.user.get_username()}/collections"
 
             meta_data = get_meta_data(abs_path)
 
@@ -1003,7 +1003,7 @@ def data(request):
 
                 collections.append(collection_meta_data)
 
-            public_abs_path = "/data/public/collections"
+            public_abs_path = f"{settings.USER_DATA_DIR}/public/collections"
 
             public_collections = get_meta_data(public_abs_path)
 
@@ -1023,11 +1023,11 @@ def data(request):
 
         elif load_template == "file_system_virtual":
             current_path = request.POST['current_path']#f"{request.user.get_username()}/ag_data/collections"
-            abs_path = f"/data/{current_path}"
+            abs_path = f"{settings.USER_DATA_DIR}/{current_path}"
             items = []
 
 
-            if abs_path == f"/data/{request.user.get_username()}/ag_data/ENREEC_Testbed":
+            if abs_path == f"{settings.USER_DATA_DIR}/{request.user.get_username()}/ag_data/ENREEC_Testbed":
                 import requests
 
                 # API Endpoint
@@ -1078,7 +1078,7 @@ def data(request):
 
                 return HttpResponse(response)
             
-            if abs_path.startswith(f"/data/{request.user.get_username()}/ag_data/ENREEC_Testbed") and len(abs_path.split("/"))==6: #a field is selected
+            if abs_path.startswith(f"{settings.USER_DATA_DIR}/{request.user.get_username()}/ag_data/ENREEC_Testbed") and len(abs_path.split("/"))==6: #a field is selected
                 import requests
                 field_id = abs_path.split("/")[-1]
 
@@ -1149,7 +1149,7 @@ def data(request):
             if not abs_path.split("/")[2] == request.user.get_username() and  meta_data["public"] == "False":
                 return HttpResponse(json.dumps(items))
 
-            if f"/data/public" in abs_path or "Collection" in meta_data["mode"]:
+            if f"{settings.USER_DATA_DIR}/public" in abs_path or "Collection" in meta_data["mode"]:
                 i = 0
                 print(meta_data["subdirs"],flush=True)
                 while i < len(meta_data["subdirs"]):  
@@ -1260,7 +1260,7 @@ def data(request):
 
             #fs = FileSystemStorage(location=os.path.join(settings.CORE_DIR, 'data') + "/users")
             #fs = FileSystemStorage(location="/data/" + request.user.get_username() + "/ag_data")
-            fs = FileSystemStorage(location="/data/" + file_path)
+            fs = FileSystemStorage(location=settings.USER_DATA_DIR +"/"+ file_path)
 
 
             #print(request.user.get_username())
@@ -1350,14 +1350,14 @@ def data(request):
             current_path = request.POST['current_path']
 
 
-            graph = get_pipeline("/data/" + current_path)
+            graph = get_pipeline(settings.USER_DATA_DIR + "/" + current_path)
             response = json.dumps(graph)
             return HttpResponse(response)
 
         elif load_template == 'meta_data':
             current_path = request.GET['current_path']
             meta_data={}
-            meta_data = get_meta_data("/data/"+current_path)
+            meta_data = get_meta_data(settings.USER_DATA_DIR + "/" + current_path)
             response = json.dumps(meta_data)
             return HttpResponse(response)
 
@@ -1380,7 +1380,7 @@ def data(request):
             file_path = request_data['current_path']
             meta_data = request_data["meta_data"]
 
-            abs_path = "/data/"+file_path
+            abs_path = settings.USER_DATA_DIR + "/" + file_path
             response = "success"
 
             if not abs_path.split("/")[2] == request.user.get_username() and meta_data["public"] == "False":
@@ -1388,7 +1388,7 @@ def data(request):
             elif abs_path.split("/")[2] == "public":
                 pass
             else:
-                update_meta("/data/"+file_path,meta_data)
+                update_meta(settings.USER_DATA_DIR + "/" + file_path,meta_data)
 
             return HttpResponse(response)
 
@@ -1401,7 +1401,7 @@ def data(request):
 
             print(new_content)
 
-            update_file("/data/"+current_path,new_content)
+            update_file(settings.USER_DATA_DIR + "/" + current_path,new_content)
             response = "success";
             return HttpResponse(response)
 
@@ -1461,10 +1461,10 @@ def data(request):
 
             # search the user's own items
             if "All" in privilege or "My Own Data" in privilege:
-                root_dir = os.path.join("/data",request.user.get_username(),"ag_data")
+                root_dir = os.path.join(settings.USER_DATA_DIR,request.user.get_username(),"ag_data")
                 response["items"] = search(root_dir,search_box,category,mode,format,label,realtime,time_range,spatial_range)
 
-                root_dir = os.path.join("/data", request.user.get_username(), "collections")
+                root_dir = os.path.join(settings.USER_DATA_DIR, request.user.get_username(), "collections")
                 response["items"] += search(root_dir, search_box, category, mode, format, label, realtime, time_range, spatial_range)
 
             '''
@@ -1498,7 +1498,7 @@ def data(request):
             # search public items
             # still need to differentiate between own and public items
             '''
-            root_dir = "/data/public/ag_data"
+            root_dir = f"{settings.USER_DATA_DIR}/public/ag_data"
             public_items = search(root_dir, search_box, category, mode, format, label, time_range, spatial_range)
 
             response["items"] += public_items

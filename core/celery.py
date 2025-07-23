@@ -26,6 +26,6 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
 
 # Configure logging
-logging.basicConfig(filename='/var/log/ag_data_management/celery.log',
+logging.basicConfig(filename='/home/ypan12/ag_data_management_server/log/celery.log',
                     level=logging.INFO,
                     format='%(asctime)s %(levelname)s %(message)s')

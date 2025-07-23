@@ -160,7 +160,7 @@ def map_file_path(logic_path, username):
     else:
         real_path = real_path[1:]
 
-    real_path = os.path.join("/data/" + username + "/ag_data/", real_path)
+    real_path = os.path.join(settings.USER_DATA_DIR + username + "/ag_data/", real_path)
     return real_path
 
 
@@ -1001,15 +1001,15 @@ def update_file(file_path, new_content):
 
 
 def register_public():
-    root_file_name = "/data"
+    root_file_name = settings.USER_DATA_DIR
     root_meta_file_name = "data.json"
 
 
 
 
-    public_user_file_name = f"/data/public"
+    public_user_file_name = f"{settings.USER_DATA_DIR}/public"
     public_user_meta_file_name = "_".join(public_user_file_name.split("/")[1:]) + ".json"
-    public_data_file_name = f"/data/public/ag_data"
+    public_data_file_name = f"{settings.USER_DATA_DIR}/public/ag_data"
     public_meta_data_file_name = "_".join(public_data_file_name.split("/")[1:]) + ".json"
     public_collection_file_name = f"{public_user_file_name}/collections"
     public_collection_meta_file_name = "_".join(public_collection_file_name.split("/")[1:]) + ".json"
@@ -1021,7 +1021,7 @@ def register_public():
 
 
 
-        root_meta_data = {"subdirs" :[], "name":"data","abs_path":"/data"}
+        root_meta_data = {"subdirs" :[], "name":"data","abs_path":settings.USER_DATA_DIR}
         if public_user_file_name not in root_meta_data["subdirs"]:
              root_meta_data["subdirs"].append(public_user_file_name)
 
@@ -1057,9 +1057,9 @@ def register_public():
 
 
 def add_to_public(file_path):
-    public_user_file_name = f"/data/public"
+    public_user_file_name = f"{settings.USER_DATA_DIR}/public"
     public_user_meta_file_name = "_".join(public_user_file_name.split("/")[1:]) + ".json"
-    public_data_file_name = f"/data/public/ag_data"
+    public_data_file_name = f"{settings.USER_DATA_DIR}/public/ag_data"
     public_meta_data_file_name = "_".join(public_data_file_name.split("/")[1:]) + ".json"
     public_collection_file_name = f"{public_user_file_name}/collections"
     public_collection_meta_file_name = "_".join(public_collection_file_name.split("/")[1:]) + ".json"
@@ -1086,9 +1086,9 @@ def add_to_public(file_path):
 def remove_from_public(file_path):
 
 
-    public_user_file_name = f"/data/public"
+    public_user_file_name = f"{settings.USER_DATA_DIR}/public"
     public_user_meta_file_name = "_".join(public_user_file_name.split("/")[1:]) + ".json"
-    public_data_file_name = f"/data/public/ag_data"
+    public_data_file_name = f"{settings.USER_DATA_DIR}/public/ag_data"
     public_meta_data_file_name = "_".join(public_data_file_name.split("/")[1:]) + ".json"
     public_collection_file_name = f"{public_user_file_name}/collections"
     public_collection_meta_file_name = "_".join(public_collection_file_name.split("/")[1:]) + ".json"
@@ -1177,7 +1177,7 @@ def update_meta(file_path,new_meta_data):
             meta_data["spatial_range"]["northeast"]["lng"] = right_ln
 
         elif key == "entry_point":
-            meta_data["entry_point"] = "/data"+new_meta_data["entry_point"]
+            meta_data["entry_point"] = settings.USER_DATA_DIR+new_meta_data["entry_point"]
 
         elif key == "args":
             meta_data["args"] = new_meta_data["args"]
@@ -1375,7 +1375,7 @@ def search(root_dir, search_box, category, mode, format, label,  realtime, time_
             
         else:
             for subdir in meta_data["subdirs"]:
-                if subdir ==  "/data/public/ag_data":
+                if subdir ==  f"{settings.USER_DATA_DIR}/public/ag_data":
                     continue
                 print(f"{subdir}, parent folder{meta_data['abs_path']}")
 
@@ -1401,7 +1401,7 @@ def search(root_dir, search_box, category, mode, format, label,  realtime, time_
         
         else:
             for subdir in meta_data["subdirs"]:
-                if subdir ==  "/data/public/ag_data":
+                if subdir ==  f"{settings.USER_DATA_DIR}/public/ag_data":
                     continue
 
                 sub_result = search(subdir, search_box, category, mode, format, label,  realtime, time_range, spatial_range)
@@ -2000,7 +2000,7 @@ def run_tool(entry_point,arg_values, arg_types,user,exe_env):
 
 
 
-    root_dir = f"/data/{user}/ag_data"
+    root_dir = f"{settings.USER_DATA_DIR}/{user}/ag_data"
 
 
     client = docker.from_env()
@@ -2009,7 +2009,7 @@ def run_tool(entry_point,arg_values, arg_types,user,exe_env):
     script_path = f"{entry_point}"
 
 
-    entry_point_path = f"/data{entry_point}"
+    entry_point_path = f"{settings.USER_DATA_DIR}{entry_point}"
     entry_point_meta_data = get_meta_data(entry_point_path)
     tool = entry_point_path
     tool_meta_data = entry_point_meta_data
@@ -2037,9 +2037,9 @@ def run_tool(entry_point,arg_values, arg_types,user,exe_env):
     wm = pyinotify.WatchManager()
 
     dirs_to_watch=[]
-    volumes = {f"/data/{user}": {"bind": f"/{user}", "mode": "rw"}}
+    volumes = {f"{settings.USER_DATA_DIR}/{user}": {"bind": f"/{user}", "mode": "rw"}}
     for arg_name in arg_values:
-        path = f"/data{arg_values[arg_name]}"
+        path = f"{settings.USER_DATA_DIR}{arg_values[arg_name]}"
         if os.path.exists(path):
             if os.path.isfile(path):
                 dirs_to_watch.append(os.path.dirname(path))
@@ -2276,7 +2276,7 @@ def check_running_instance(container_id):
 
 
 def trim_path_header(path):
-    if path[:5] == "/data":
+    if path[:5] == settings.USER_DATA_DIR:
         return path[5:]
     else:
         return path
@@ -2344,7 +2344,7 @@ def get_downstream(path,graph):
 
 def add_to_collection(selected_collection,selected_file_path,username):
 
-    selected_collection_path = f"/data/{username}/collections/{selected_collection}"
+    selected_collection_path = f"{settings.USER_DATA_DIR}/{username}/collections/{selected_collection}"
 
     selected_collection_meta_data = get_meta_data(selected_collection_path)
 
@@ -2361,7 +2361,7 @@ def add_to_collection(selected_collection,selected_file_path,username):
 
 
 def remove_from_collection(collection_name, file_path, username):
-    collection_path = f"/data/{username}/collections/{collection_name}"
+    collection_path = f"{settings.USER_DATA_DIR}/{username}/collections/{collection_name}"
     collection_meta_data = get_meta_data(collection_path)
 
     collection_meta_data["subdirs"].remove(file_path)

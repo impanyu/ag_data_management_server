@@ -267,7 +267,8 @@ STATICFILES_DIRS = (
 
 )
 
-USER_DATA_DIR = "/data"
+USER_DATA_DIR = "/home/ypan12/ag_data_management_server/real_data"
+USER_DATA_META_DIR = "/home/ypan12/ag_data_management_server/data"
 
 #############################################################
 #############################################################
