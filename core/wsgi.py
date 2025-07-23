@@ -13,8 +13,8 @@ import logging
 
 
 # Redirect stdout and stderr to log files
-sys.stdout = open('/var/log/ag_data_management/debug.log', 'a+')
-sys.stderr = open('/var/log/ag_data_management/debug.log', 'a+')
+sys.stdout = open('/home/ypan12/ag_data_management_server/log/debug.log', 'a+')
+sys.stderr = open('/home/ypan12/ag_data_management_server/log/debug.log', 'a+')
 
 
 
