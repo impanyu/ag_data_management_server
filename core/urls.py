@@ -19,8 +19,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),          # Django admin route
     path('accounts/', include('allauth.urls')),
     path('yt/', include('apps.yt_api.urls')),
-    path("", include("apps.home.urls")),      # UI Kits Html files - MOVED TO FIRST
-    path("", include("apps.authentication.urls"))  # Auth routes - login / register - MOVED TO SECOND
+    path("", include("apps.authentication.urls")),  # Auth routes - login / register - FIRST
+    path("", include("apps.home.urls"))      # UI Kits Html files - SECOND
 ]
 
 #urlpatterns += router.urls
