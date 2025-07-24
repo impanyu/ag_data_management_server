@@ -52,6 +52,10 @@ username = ""
 @login_required(login_url="/login/")
 def index(request):
     print("=== DEBUG: index view called ===", flush=True)
+    print(f"=== DEBUG: request.path = '{request.path}' ===", flush=True)
+    print(f"=== DEBUG: request.get_full_path() = '{request.get_full_path()}' ===", flush=True)
+    print(f"=== DEBUG: request.META.get('PATH_INFO') = '{request.META.get('PATH_INFO')}' ===", flush=True)
+    print(f"=== DEBUG: request.META.get('HTTP_HOST') = '{request.META.get('HTTP_HOST')}' ===", flush=True)
     context = {'segment': 'index'}
 
     #print("in domains")
@@ -80,12 +84,16 @@ def authenticate_user(request):
 
 @login_required(login_url="/login/")
 def pages(request):
+    print("=== DEBUG: pages view called ===", flush=True)
+    print(f"=== DEBUG: pages view - request.path = '{request.path}' ===", flush=True)
+    print(f"=== DEBUG: pages view - request.get_full_path() = '{request.get_full_path()}' ===", flush=True)
     context = {}
     # All resource paths end in .html.
     # Pick out the html file name from the url. And load that template.
     try:
 
         load_template = request.path.split('/')[-1]
+        print(f"=== DEBUG: pages view - load_template = '{load_template}' ===", flush=True)
 
         load_template = load_template.split('?')[0]
 

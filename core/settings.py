@@ -17,6 +17,11 @@ SECRET_KEY = config('SECRET_KEY', default='S#perS3crEt_1122')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True#config('DEBUG', default=True, cast=bool)
 
+# Reverse proxy settings
+USE_X_FORWARDED_HOST = True
+USE_X_FORWARDED_PORT = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 MEDIA_ROOT = '/home/yu/ag_data_management_server/data/'  # os.path.join(CORE_DIR, 'data') # media directory in the root
 # directory
 MEDIA_URL = '/data/'
