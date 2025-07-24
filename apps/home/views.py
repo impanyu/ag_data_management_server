@@ -51,6 +51,7 @@ username = ""
 
 @login_required(login_url="/login/")
 def index(request):
+    print("=== DEBUG: index view called ===", flush=True)
     context = {'segment': 'index'}
 
     #print("in domains")
@@ -59,8 +60,10 @@ def index(request):
     #context["domains"] = domains
     global username
     username = request.user.get_username()
+    print(f"=== DEBUG: Loading template 'home/search.html' for user {username} ===", flush=True)
 
     html_template = loader.get_template('home/search.html')
+    print("=== DEBUG: Template loaded successfully ===", flush=True)
     return HttpResponse(html_template.render(context, request))
 
 @csrf_exempt
