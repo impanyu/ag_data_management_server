@@ -54,9 +54,9 @@ def register_user(request):
             #create the home folder /data/username
 
 
-            user_file_name = f"/data/{username}"
+            user_file_name = f"{settings.USER_DATA_DIR}/{username}"
             user_meta_file_name = "_".join(user_file_name.split("/")[1:]) + ".json"
-            data_file_name = f"/data/{username}/ag_data"
+            data_file_name = f"{settings.USER_DATA_DIR}/{username}/ag_data"
             meta_data_file_name = "_".join(data_file_name.split("/")[1:]) + ".json"
             collection_file_name = f"{user_file_name}/collections"
             collection_meta_file_name = "_".join(collection_file_name.split("/")[1:]) + ".json"
