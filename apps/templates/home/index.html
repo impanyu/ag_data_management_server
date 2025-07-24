@@ -1,415 +1,324 @@
 {% extends 'layouts/base.html' %}
 
-{% block title %} Dashboard {% endblock title %}
-
-<!-- Specific CSS goes HERE -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block title %} Search {% endblock title %}
 
 {% block content %}
 
-    <!-- Header -->
-    <div class="header bg-unl pb-6">
-      <div class="container-fluid">
-        <div class="header-body">
-          <div class="row align-items-center py-4">
-            <!--<div class="col-lg-6 col-7">
-              <h6 class="h2 text-white d-inline-block mb-0">Default</h6>
-              <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                  <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                  <li class="breadcrumb-item"><a href="#">Dashboards</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Default</li>
-                </ol>
-              </nav>
+<!-- DEBUG: THIS IS THE SEARCH.HTML TEMPLATE -->
+<div style="background: red; color: white; padding: 10px; margin: 10px; text-align: center; font-weight: bold;">
+    DEBUG: SEARCH.HTML TEMPLATE IS LOADED
+</div>
+
+  <!-- Page content -->
+
+    <!--<div class="row">
+      <div class="col">-->
+        <div class="card bg-unl" >
+          <!-- Card header -->
+            <div style="padding:10px; background:#ddd" onclick="toggle_filter_condition_2()"><span id = "search_filter" ><h3 style="color:#666;margin-bottom:0px"><b>Search Filter</b></h3></span></div>
+
+
+
+          <div class="card-header border-0" id = "filter-condition" style="position:relative;height:0px;background:#ddd;padding-top:0rem; padding-bottom:0rem">
+               
+
+
+
+
+
+            <div class="row  py-4">
+              <div class="col-lg-6 col-6">
+                  <label class="form-check-label" for="category" style="width:100%;margin: 15px"><b>Category</b></label>
+                  <select  class="form-control" multiple size = "4" aria-label="catetory" id="category" style="display: inline-block; width:80%">
+                  <!--<option  value="UAV">UAV</option>-->
+                      <option selected value = "All"> All </option>
+                  <option value="Genotype">Genotype</option>
+                  <option  value="Phenotype">Phenotype</option>
+                      <option value = "Soil"> Soil </option>
+                      <option value = "Atmosphere"> Atmosphere </option>
+
+
+                </select>
+                  </div>
+
+
+                   <div class="col-lg-6 col-6">
+                  <label class="form-check-label" for="mode" style="width:100%;margin: 15px"><b>Mode</b></label>
+                  <select  class="form-control" multiple size = "4" aria-label="mode" id="mode" style="display: inline-block; width:80%; ">
+                      <option selected value="All">All</option>
+                      <option  value="Data">Data</option>
+                  <option  value="Collection">Collection</option>
+                  <option value="Tool">Tool</option>
+                      <option value="Model">Model</option>
+                </select>
+
+              </div>
+              </div>
+
+
+              <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-6">
+                    <label class="form-check-label" for="format" style="width:100%; margin:15px"><b>Format</b></label>
+                <select class="custom-select" multiple size = "4" aria-label="format" id="format" style="display: inline-block; width:80%; ">
+                    <option selected value="All">All</option>
+                     <option   value="Folder">Folder</option>
+                  <option   value="Image">Image</option>
+                    <option  value="Shape">Shape</option>
+                  <option value="CSV">CSV</option>
+                  <option value="Spreadsheet">Spreadsheet</option>
+                  <option value="Python">Python</option>
+                    <option value="R">R</option>
+                    <option value="Matlab">Matlab</option>
+
+
+
+                </select>
+                </div>
+                  <div class="col-lg-6 col-6">
+                <label class="form-check-label" for="label" style="width:100%;margin:15px"><b>Label</b></label>
+                <select class="custom-select" multiple size = "4" aria-label="label" id="label" style="display: inline-block; width:80%;">
+                    <option selected value="All">All</option>
+                  <option value="Spidercam">Spidercam</option>
+                  <option value="ENREC">ENREC</option>
+                    <option value="Wheat">Wheat</option>
+                    <option value="Crop">Crop</option>
+                    <option value="Weather">Wheather</option>
+                    <option value="GIS">GIS</option>
+                    <option value="Application">Application</option>
+                    <option value="UAV">UAV</option>
+                     <option value="IoT">IoT</option>
+                    <option value="Farm">Farm</option>
+                    <option value="Machinery">Machinery</option>
+                    <option value="Disease">Disease</option>
+                    <option value="Pest">Pest</option>
+                    <option value="Fertilizer">Fertilizer</option>
+                    <option value="Water">Water</option>
+                    <option value="Nitrogen">Nitrogen</option>
+                    <option value="Cattle">Cattle</option>
+
+                </select>
+                </div>
+
+              </div>
+
+
+                <div class="row align-items-center py-4">
+                    <div class="col-lg-6 col-6">
+                        <label class="form-check-label" for="privilege" style="width:100%; margin:15px"><b>Privilege</b></label>
+                    <select class="custom-select" multiple size = "2" aria-label="privilege" id="privilege" style="display: inline-block; width:80%; ">
+                        <option  selected value="All">All</option>
+                      <option value="My Own Data">My Own Data</option>
+                        <option  value="Public Data">Public Data</option>
+
+
+                    </select>
+                    </div>
+
+
+                     <div class="col-lg-6 col-6">
+                        <label class="form-check-label" for="realtime" style="width:100%; margin:15px"><b>Realtime</b></label>
+                    <select class="custom-select" multiple size = "2" aria-label="realtime" id="realtime" style="display: inline-block; width:80%; ">
+                        <option  selected value="All">All</option>
+                      <option   value="Non-Realtime">Non-Realtime</option>
+                        <option  value="Realtime">Realtime</option>
+
+
+                    </select>
+                    </div>
+
+              </div>
+
+
+
+            <div class="row align-items-center py-4 input-daterange datepicker">
+                 <div class="col col-lg-12">
+                <label class="form-check-label" style="margin-bottom:20px"><b>Time Range</b></label>
+                     </div>
+                <div class="col-6 col-lg-6 ">
+                <div class="form-group">
+                   <div class="input-group input-group-alternative">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                        </div>
+                        <input class="form-control"  placeholder="Start date" type="text" value="start" id="start_date">
+                    </div>
+                </div>
             </div>
-            <div class="col-lg-6 col-5 text-right">
-              <a href="#" class="btn btn-sm btn-neutral">New</a>
-              <a href="#" class="btn btn-sm btn-neutral">Filters</a>
+
+            <div class="col-6 col-lg-6">
+                <div class="form-group">
+                   <div class="input-group input-group-alternative">
+                       <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                        </div>
+                        <input class="form-control" placeholder="End date" type="text" value="end" id="end_date">
+                    </div>
+                </div>
             </div>
-          -->
+
+            </div>
+
+            <div class="row align-items-center py-4">
+                 <div class="col col-lg-12">
+                <label class="form-check-label" style="margin-bottom:20px"><b>Spatial Range</b></label>
+                     </div>
+
+              <div class="col-6 col-lg-6 ">
+                  <div class="form-group">
+                     <div class="input-group input-group-alternative">
+
+                          <input type="text" placeholder="Southwest Corner" class="form-control" id = "southwest" value="southwest"/>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-6 col-lg-6">
+                  <div class="form-group">
+                      <div class="input-group input-group-alternative">
+                          <input type="text" placeholder="Northeast Corner" class="form-control" id="northeast" value="northeast"/>
+
+                      </div>
+                  </div>
+              </div>
+
+
+
+            </div>
+              <div class="row align-items-center">
+                  <div class="col-12 col-lg-12 text-right">
+                      <a class="btn btn-lg btn-primary" onclick="get_item_list()" id = "filter_submit" style="color: white">Search</a>
+                 </div>
+              </div>
+
+            <form id="upload_form"  action="" method="post" enctype="multipart/form-data" style="position: absolute; top:15px; right:0px;">
+                {% csrf_token %}
+              <input type="file" name="file" class="upload" id="upload_dir" multiple="" webkitdirectory style="display:none;">
+              <input type="file" name="file"  class="upload" id="upload_file" multiple=""  style="display:none;">
+
+              <!--<input type="submit" style="display:none" id="submit">-->
+
+            </form>
+
+              <hr class="d-block" style="margin-bottom:1rem;border:1px solid rgba(0,0,0,.1)">
+
+
+              
+    
+
+
           </div>
-          <!-- Card stats -->
-          <div class="row">
-            <div class="col-xl-3 col-md-6">
-              <div class="card card-stats">
-                <!-- Card body -->
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">Total traffic</h5>
-                      <span class="h2 font-weight-bold mb-0">350,897</span>
-                    </div>
-                    <div class="col-auto">
-                      <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
-                        <i class="ni ni-active-40"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="mt-3 mb-0 text-sm">
-                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                    <span class="text-nowrap">Since last month</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-md-6">
-              <div class="card card-stats">
-                <!-- Card body -->
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">New users</h5>
-                      <span class="h2 font-weight-bold mb-0">2,356</span>
-                    </div>
-                    <div class="col-auto">
-                      <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
-                        <i class="ni ni-chart-pie-35"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="mt-3 mb-0 text-sm">
-                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                    <span class="text-nowrap">Since last month</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-md-6">
-              <div class="card card-stats">
-                <!-- Card body -->
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">Sales</h5>
-                      <span class="h2 font-weight-bold mb-0">924</span>
-                    </div>
-                    <div class="col-auto">
-                      <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
-                        <i class="ni ni-money-coins"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="mt-3 mb-0 text-sm">
-                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                    <span class="text-nowrap">Since last month</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-md-6">
-              <div class="card card-stats">
-                <!-- Card body -->
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">Performance</h5>
-                      <span class="h2 font-weight-bold mb-0">49,65%</span>
-                    </div>
-                    <div class="col-auto">
-                      <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
-                        <i class="ni ni-chart-bar-32"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="mt-3 mb-0 text-sm">
-                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                    <span class="text-nowrap">Since last month</span>
-                  </p>
-                </div>
-              </div>
-            </div>
+
+          <div class="row  py-4 align-items-center" style="background-image: url('/static/assets/img/farm_land.png');height:1000px;">
+            <div class="col-lg-1 col-1"></div>
+            <div class="col-lg-10 col-10" style="opacity:0.85">
+            <div class="form-group mb-0">
+        <div class="input-group input-group-alternative input-group-merge">
+          <div class="input-group-prepend">
+            <span class="input-group-text " id="search"><i class="fas fa-search"></i></span>
           </div>
+          <!--<div class="input-group-prepend">
+            <span class="input-group-text " id="search-filter" onclick="toggle_filter_condition_2()"><i class="ni ni-bullet-list-67"></i></span>
+          </div>-->
+          <input class="form-control" placeholder="Search" type="text" id="search_box">
         </div>
       </div>
-    </div>
+            </div>
+            <div class="col-lg-1 col-1"></div>
+                     </div>
+        
 
-    <!-- Page content -->
-    <div class="container-fluid mt--6">
-      <div class="row">
-        <div class="col-xl-8">
-          <div class="card bg-default">
-            <div class="card-header bg-transparent">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h6 class="text-light text-uppercase ls-1 mb-1">Overview</h6>
-                  <h5 class="h3 text-white mb-0">Sales value</h5>
-                </div>
-                <div class="col">
-                  <ul class="nav nav-pills justify-content-end">
-                    <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales-dark" data-update='{"data":{"datasets":[{"data":[0, 20, 10, 30, 15, 40, 20, 60, 60]}]}}' data-prefix="$" data-suffix="k">
-                      <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
-                        <span class="d-none d-md-block">Month</span>
-                        <span class="d-md-none">M</span>
-                      </a>
-                    </li>
-                    <li class="nav-item" data-toggle="chart" data-target="#chart-sales-dark" data-update='{"data":{"datasets":[{"data":[0, 20, 5, 25, 10, 30, 15, 40, 40]}]}}' data-prefix="$" data-suffix="k">
-                      <a href="#" class="nav-link py-2 px-3" data-toggle="tab">
-                        <span class="d-none d-md-block">Week</span>
-                        <span class="d-md-none">W</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="card-body">
-              <!-- Chart -->
-              <div class="chart">
-                <!-- Chart wrapper -->
-                <canvas id="chart-sales-dark" class="chart-canvas"></canvas>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-4">
-          <div class="card">
-            <div class="card-header bg-transparent">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>
-                  <h5 class="h3 mb-0">Total orders</h5>
-                </div>
-              </div>
-            </div>
-            <div class="card-body">
-              <!-- Chart -->
-              <div class="chart">
-                <canvas id="chart-bars" class="chart-canvas"></canvas>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xl-8">
-          <div class="card">
-            <div class="card-header border-0">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h3 class="mb-0">Page visits</h3>
-                </div>
-                <div class="col text-right">
-                  <a href="#!" class="btn btn-sm btn-primary">See all</a>
-                </div>
-              </div>
-            </div>
-            <div class="table-responsive">
-              <!-- Projects table -->
-              <table class="table align-items-center table-flush">
-                <thead class="thead-light">
-                  <tr>
-                    <th scope="col">Page name</th>
-                    <th scope="col">Visitors</th>
-                    <th scope="col">Unique users</th>
-                    <th scope="col">Bounce rate</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">
-                      /argon/
-                    </th>
-                    <td>
-                      4,569
-                    </td>
-                    <td>
-                      340
-                    </td>
-                    <td>
-                      <i class="fas fa-arrow-up text-success mr-3"></i> 46,53%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      /argon/index.html
-                    </th>
-                    <td>
-                      3,985
-                    </td>
-                    <td>
-                      319
-                    </td>
-                    <td>
-                      <i class="fas fa-arrow-down text-warning mr-3"></i> 46,53%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      /argon/charts.html
-                    </th>
-                    <td>
-                      3,513
-                    </td>
-                    <td>
-                      294
-                    </td>
-                    <td>
-                      <i class="fas fa-arrow-down text-warning mr-3"></i> 36,49%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      /argon/tables.html
-                    </th>
-                    <td>
-                      2,050
-                    </td>
-                    <td>
-                      147
-                    </td>
-                    <td>
-                      <i class="fas fa-arrow-up text-success mr-3"></i> 50,87%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      /argon/profile.html
-                    </th>
-                    <td>
-                      1,795
-                    </td>
-                    <td>
-                      190
-                    </td>
-                    <td>
-                      <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-4">
-          <div class="card">
-            <div class="card-header border-0">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h3 class="mb-0">Social traffic</h3>
-                </div>
-                <div class="col text-right">
-                  <a href="#!" class="btn btn-sm btn-primary">See all</a>
-                </div>
-              </div>
-            </div>
-            <div class="table-responsive">
-              <!-- Projects table -->
-              <table class="table align-items-center table-flush">
-                <thead class="thead-light">
-                  <tr>
-                    <th scope="col">Referral</th>
-                    <th scope="col">Visitors</th>
-                    <th scope="col"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">
-                      Facebook
-                    </th>
-                    <td>
-                      1,480
-                    </td>
-                    <td>
-                      <div class="d-flex align-items-center">
-                        <span class="mr-2">60%</span>
-                        <div>
-                          <div class="progress">
-                            <div class="progress-bar bg-gradient-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Facebook
-                    </th>
-                    <td>
-                      5,480
-                    </td>
-                    <td>
-                      <div class="d-flex align-items-center">
-                        <span class="mr-2">70%</span>
-                        <div>
-                          <div class="progress">
-                            <div class="progress-bar bg-gradient-success" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%;"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Google
-                    </th>
-                    <td>
-                      4,807
-                    </td>
-                    <td>
-                      <div class="d-flex align-items-center">
-                        <span class="mr-2">80%</span>
-                        <div>
-                          <div class="progress">
-                            <div class="progress-bar bg-gradient-primary" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Instagram
-                    </th>
-                    <td>
-                      3,678
-                    </td>
-                    <td>
-                      <div class="d-flex align-items-center">
-                        <span class="mr-2">75%</span>
-                        <div>
-                          <div class="progress">
-                            <div class="progress-bar bg-gradient-info" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      twitter
-                    </th>
-                    <td>
-                      2,645
-                    </td>
-                    <td>
-                      <div class="d-flex align-items-center">
-                        <span class="mr-2">30%</span>
-                        <div>
-                          <div class="progress">
-                            <div class="progress-bar bg-gradient-warning" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 30%;"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      {% include "includes/footer.html" %}
 
-    </div>
+        <div style="padding:10px; background:white"><span id = "result_number"><h3 style="color:#666;margin-bottom:0px"><b>Search Results</b></h3></span></div>
+        <div class="row align-items-center " id="map_area" style="position:relative; ">
+          <div id="map_main" style="width:100%; height: 600px; margin: auto;"> </div>
+            <div id="files_plot" style="overflow:hidden;display:none;width:100%; height: 600px; margin: auto; background-color:white"></div>
+                <input class="btn btn-secondary" type="button" onclick="change_file_plot()" id="change_map" style = "position: absolute; top:40px; right:80px" value="Change Map">
+                <div id="tooltip" style="overflow:hidden"></div>
+        </div>
+
+
+          <!-- Light table -->
+          <div class="table-responsive" style="background:white;min-Height: 200px">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col" class="sort" data-sort="name">Name</th>
+                    <th scope="col" class="sort" data-sort="name">Mode</th>
+                  <th scope="col" class="sort" data-sort="budget">Format</th>
+                    <th scope="col">Category</th>
+                  <th scope="col" class="sort" data-sort="status">Owner</th>
+                  <!--<th scope="col" class="sort" data-sort="status">Size (Bytes)</th>-->
+
+                  <!--<th scope="col" class="sort" data-sort="completion">Completion</th>-->
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="list" id="file_list">
+              
+
+              </tbody>
+            </table>
+          </div>
+
+            <div style="height:1200px; background-color:white"></div>
+
+          <!-- Card footer -->
+         <!-- <div class="card-footer py-4">
+            <nav aria-label="...">
+              <ul class="pagination justify-content-end mb-0">
+                <li class="page-item disabled">
+                  <a class="page-link" href="#" tabindex="-1">
+                    <i class="fas fa-angle-left"></i>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                </li>
+                <li class="page-item active">
+                  <a class="page-link" href="#">1</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                  <a class="page-link" href="#">
+                    <i class="fas fa-angle-right"></i>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>-->
+      <!--</div>
+    </div>-->
+
+        </div>
+   
+
+    {% include "includes/footer.html" %}
+
 
 {% endblock content %}
 
 <!-- Specific JS goes HERE --> 
 {% block javascripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<!--<script src="/static/assets/js/create_domain.js"></script>-->
 
-  <script src="/static/assets/vendor/chart.js/dist/Chart.min.js"></script>
-  <script src="/static/assets/vendor/chart.js/dist/Chart.extension.js"></script>
+
+<!--<script src="https://d3js.org/d3.v6.js"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.4/d3.min.js"></script>
+<script src="/static/assets/js/scatterplot2.js"></script>
+<script src="/static/assets/js/filter_condition_display.js"></script>
+<script>
+//original in files.html
+current_path = "{{current_path}}";
+user = "{{user}}";
+current_path_components = current_path.split("/");
+path ="";
+
+</script>
+<script src="/static/assets/js/search.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU1RvtD5YF8-dwMmCIYP8ds-6Np5QVHFY&libraries=drawing&v=weekly&callback=init_map_main"></script>
 
 {% endblock javascripts %}
