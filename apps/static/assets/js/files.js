@@ -3075,21 +3075,13 @@ function createArcGISOnlineEmbed(fileUrl, fileType) {
   
   // PRODUCTION MODE: Use ArcGIS Online (HTTPS)
   if (fileType.toLowerCase().includes('tif') || fileType.toLowerCase().includes('tiff')) {
-    // For TIFF files - try multiple ArcGIS Online approaches
-    console.log('🗺️ TIFF FILE: Attempting ArcGIS Online integration for TIFF');
+    // For TIFF files - ArcGIS Online cannot load raw TIFF files from external URLs
+    // We need to convert them first and then create a proper visualization
+    console.log('🗺️ TIFF FILE: ArcGIS Online cannot load raw TIFF files - using converted approach');
     
-    // Approach 1: Try as an image service
-    arcgisUrl = `https://www.arcgis.com/apps/mapviewer/index.html?layers=${encodeURIComponent(fileUrl)}`;
-    console.log('🔗 TIFF: Using image service approach');
-    
-    // Alternative approaches if first one fails (we'll implement fallback detection)
-    window.tiffFallbackUrls = [
-      `https://www.arcgis.com/apps/mapviewer/index.html?url=${encodeURIComponent(fileUrl)}`,
-      `https://www.arcgis.com/home/webmap/viewer.html?url=${encodeURIComponent(fileUrl)}`,
-      `https://www.arcgis.com/apps/mapviewer/index.html?webmap=new&addLayer=${encodeURIComponent(fileUrl)}`,
-      // Try as image service with explicit parameters
-      `https://www.arcgis.com/apps/mapviewer/index.html?layers=[{"id":"custom_tiff","title":"TIFF Layer","url":"${fileUrl}","type":"ImageServer"}]`
-    ];
+    // Skip ArcGIS Online iframe and go directly to converted image with geospatial context
+    createTiffVisualizationWithGeospatialContext(fileUrl, current_path);
+    return; // Exit early - don't create the standard iframe
     
   } else if (fileType.toLowerCase().includes('shp')) {
     // For SHP files - use ArcGIS Online feature service
@@ -3166,6 +3158,205 @@ function createArcGISOnlineEmbed(fileUrl, fileType) {
   
   console.log('✅ ARCGIS ONLINE: ArcGIS Online embed created successfully');
   console.log('🌐 ARCGIS ONLINE: URL =', arcgisUrl);
+}
+
+// TIFF Visualization with Geospatial Context
+async function createTiffVisualizationWithGeospatialContext(fileUrl, currentPath) {
+  console.log('🗺️ TIFF GEOSPATIAL: Creating enhanced TIFF visualization with geospatial context');
+  console.log('📁 TIFF GEOSPATIAL: File path:', currentPath);
+  
+  // Clear any existing displays
+  const existingDisplay = document.getElementById('arcgis-online-embed') || document.getElementById('fallback-image-display');
+  if (existingDisplay) existingDisplay.remove();
+  
+  // Create main container
+  const mainContainer = document.createElement('div');
+  mainContainer.id = 'tiff-geospatial-container';
+  mainContainer.style.cssText = `
+    width: 100%;
+    margin: 20px auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+  `;
+  
+  // Add title section
+  const titleSection = document.createElement('div');
+  titleSection.innerHTML = `
+    <div style="text-align: center; padding: 15px; background: linear-gradient(135deg, #007cba, #0056b3); color: white;">
+      <h3 style="margin: 0; font-size: 18px;">🗺️ Geospatial TIFF Visualization</h3>
+      <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">Interactive map with converted raster data</p>
+    </div>
+  `;
+  
+  // Create dual view container
+  const dualViewContainer = document.createElement('div');
+  dualViewContainer.style.cssText = `
+    display: flex;
+    height: 70vh;
+    background: #f8f9fa;
+  `;
+  
+  // Left panel: ArcGIS Online base map
+  const leftPanel = document.createElement('div');
+  leftPanel.style.cssText = `
+    flex: 1;
+    border-right: 2px solid #dee2e6;
+    position: relative;
+  `;
+  
+  // Right panel: Converted TIFF image
+  const rightPanel = document.createElement('div');
+  rightPanel.style.cssText = `
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: white;
+  `;
+  
+  // Add labels
+  leftPanel.innerHTML = `
+    <div style="position: absolute; top: 10px; left: 10px; z-index: 1000; background: rgba(0,124,186,0.9); color: white; padding: 8px 12px; border-radius: 4px; font-weight: bold; font-size: 12px;">
+      🌍 Interactive Base Map
+    </div>
+  `;
+  
+  rightPanel.innerHTML = `
+    <div style="background: #e9ecef; padding: 10px; text-align: center; border-bottom: 1px solid #dee2e6;">
+      <strong style="color: #495057; font-size: 14px;">📊 Converted TIFF Data</strong>
+    </div>
+    <div id="tiff-image-container" style="flex: 1; padding: 20px; display: flex; align-items: center; justify-content: center;">
+      <div style="text-align: center; color: #6c757d;">
+        🔄 Loading converted TIFF image...
+      </div>
+    </div>
+  `;
+  
+  // Create ArcGIS Online iframe for base map (empty map centered on data)
+  const iframe = document.createElement('iframe');
+  
+  // Use spatial range from metadata to center the map
+  const spatial = meta_data?.spatial_range;
+  let centerLat = 39.8283; // Default to Nebraska center
+  let centerLon = -98.5795;
+  let zoom = 6;
+  
+  if (spatial && spatial.northeast && spatial.southwest) {
+    const northLat = parseFloat(spatial.northeast.lat);
+    const southLat = parseFloat(spatial.southwest.lat);
+    const eastLon = parseFloat(spatial.northeast.lng);
+    const westLon = parseFloat(spatial.southwest.lng);
+    
+    if (!isNaN(northLat) && !isNaN(southLat) && !isNaN(eastLon) && !isNaN(westLon)) {
+      centerLat = (northLat + southLat) / 2;
+      centerLon = (eastLon + westLon) / 2;
+      
+      // Calculate appropriate zoom level based on extent
+      const latRange = Math.abs(northLat - southLat);
+      const lonRange = Math.abs(eastLon - westLon);
+      const maxRange = Math.max(latRange, lonRange);
+      
+      if (maxRange < 0.01) zoom = 14;
+      else if (maxRange < 0.1) zoom = 11;
+      else if (maxRange < 1) zoom = 8;
+      else zoom = 6;
+      
+      console.log(`🌍 TIFF GEOSPATIAL: Centering map at ${centerLat}, ${centerLon} with zoom ${zoom}`);
+    }
+  }
+  
+  iframe.src = `https://www.arcgis.com/apps/mapviewer/index.html?center=${centerLon},${centerLat}&level=${zoom}`;
+  iframe.style.cssText = `
+    width: 100%;
+    height: 100%;
+    border: none;
+  `;
+  iframe.title = 'ArcGIS Online Base Map';
+  
+  leftPanel.appendChild(iframe);
+  
+  // Assemble the layout
+  dualViewContainer.appendChild(leftPanel);
+  dualViewContainer.appendChild(rightPanel);
+  mainContainer.appendChild(titleSection);
+  mainContainer.appendChild(dualViewContainer);
+  
+  // Add to page
+  const mapContainer = document.getElementById('map_main') || document.querySelector('.map-container') || document.body;
+  mapContainer.appendChild(mainContainer);
+  
+  // Load converted TIFF image
+  loadConvertedTiffImage(currentPath);
+  
+  console.log('✅ TIFF GEOSPATIAL: Enhanced visualization created successfully');
+}
+
+// Load converted TIFF image using existing conversion system
+async function loadConvertedTiffImage(currentPath) {
+  console.log('🔄 TIFF CONVERSION: Loading converted TIFF image for:', currentPath);
+  
+  const imageContainer = document.getElementById('tiff-image-container');
+  if (!imageContainer) return;
+  
+  try {
+    // Use the existing get_file endpoint to convert TIFF to PNG
+    const response = await fetch('/data', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        'load_template': 'get_file',
+        'current_path': currentPath,
+        'band': current_col || '1',
+        'csrfmiddlewaretoken': document.querySelector('[name=csrfmiddlewaretoken]')?.value || ''
+      })
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Conversion failed: ${response.status}`);
+    }
+    
+    const blob = await response.blob();
+    const imageUrl = URL.createObjectURL(blob);
+    
+    // Create image element
+    const img = document.createElement('img');
+    img.src = imageUrl;
+    img.style.cssText = `
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    `;
+    
+    img.onload = () => {
+      console.log('✅ TIFF CONVERSION: Image loaded successfully');
+      imageContainer.innerHTML = '';
+      imageContainer.appendChild(img);
+    };
+    
+    img.onerror = () => {
+      console.error('❌ TIFF CONVERSION: Image failed to load');
+      imageContainer.innerHTML = `
+        <div style="text-align: center; color: #dc3545; padding: 20px;">
+          ❌ Failed to load converted TIFF image<br>
+          <small>The file may be too large or in an unsupported format</small>
+        </div>
+      `;
+    };
+    
+  } catch (error) {
+    console.error('❌ TIFF CONVERSION: Error:', error);
+    imageContainer.innerHTML = `
+      <div style="text-align: center; color: #dc3545; padding: 20px;">
+        ❌ Error converting TIFF file<br>
+        <small>${error.message}</small>
+      </div>
+    `;
+  }
 }
 
 // DEVELOPMENT MODE: Create ArcGIS Online map using external URL reference for HTTP development
