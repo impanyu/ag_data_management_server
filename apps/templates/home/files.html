@@ -671,11 +671,14 @@ path ="";
 console.log('🚨 EMERGENCY DEBUG: files.html template is loading - timestamp:', new Date().toISOString());
 // alert('🚨 EMERGENCY: If you see this alert, the template is loading fresh!'); // REMOVED - popup cancelled
 </script>
-<script src="/static/assets/js/files.js?cache_bust=DELAYED_INITIALIZATION_FINAL"></script>
+<script src="/static/assets/js/files.js?cache_bust=FIXED_INIT_MAP_CONFLICT_777"></script>
 
 
 <link rel="stylesheet" href="https://js.arcgis.com/4.28/esri/themes/light/main.css?force_reload=12345">
-<script src="https://js.arcgis.com/4.28/?force_reload=12345"></script>
+<script src="https://js.arcgis.com/4.28/?force_reload=12345" 
+        onload="console.log('✅ ArcGIS 4.28 script loaded successfully')"
+        onerror="console.error('❌ ArcGIS 4.28 script FAILED to load')">
+</script>
 <script>
 console.log('=== DEBUG: ArcGIS 4.28 script loaded ===');
 console.log('=== DEBUG: Current URL:', window.location.href);
@@ -697,16 +700,17 @@ document.addEventListener('DOMContentLoaded', function() {
 <script>
 console.log('=== DEBUG: About to call ArcGIS require() ===');
 
-require([
-  "esri/Map",
-  "esri/views/MapView", 
-  "esri/layers/ImageryLayer",
-  "esri/layers/FeatureLayer",
-  "esri/Graphic",
-  "esri/geometry/Extent",
-  "esri/widgets/Sketch",
-  "esri/layers/GraphicsLayer"
-], function(Map, MapView, ImageryLayer, FeatureLayer, Graphic, Extent, Sketch, GraphicsLayer) {
+try {
+  require([
+    "esri/Map",
+    "esri/views/MapView", 
+    "esri/layers/ImageryLayer",
+    "esri/layers/FeatureLayer",
+    "esri/Graphic",
+    "esri/geometry/Extent",
+    "esri/widgets/Sketch",
+    "esri/layers/GraphicsLayer"
+  ], function(Map, MapView, ImageryLayer, FeatureLayer, Graphic, Extent, Sketch, GraphicsLayer) {
   console.log('🎉 SUCCESS: ArcGIS modules loaded ===', {Map, MapView, ImageryLayer});
   console.log('🎉 ImageryLayer type:', typeof ImageryLayer);
   console.log('🎉 ImageryLayer object:', ImageryLayer);
@@ -751,7 +755,14 @@ require([
   if (typeof window.init_map_nav === 'function') {
     window.init_map_nav();
   }
-});
+  }, function(error) {
+    console.error('❌ ArcGIS require() FAILED:', error);
+    alert('ArcGIS failed to load: ' + error.message);
+  });
+} catch(error) {
+  console.error('❌ ArcGIS require() EXCEPTION:', error);
+  alert('ArcGIS require exception: ' + error.message);
+}
 </script>
 
 

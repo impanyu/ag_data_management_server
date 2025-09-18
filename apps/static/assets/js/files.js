@@ -2935,10 +2935,8 @@ function init_map_nav(){
   console.log('Navigation map initialized with ArcGIS');
 }
 
-function init_map(){
-  init_map_main();
-  init_map_nav();
-}
+// REMOVED: function init_map() - was causing Google Maps conflicts
+// Now using ArcGIS only - init_map_main() called directly from template
 
 
 
