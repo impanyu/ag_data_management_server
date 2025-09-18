@@ -3313,41 +3313,88 @@ function createArcGISOnlineIframe(arcgisUrl, fileType) {
 function createSimpleImageDisplay(imageUrl) {
   console.log('🔄 FALLBACK: Creating simple image display for:', imageUrl);
   
-  // Clear any existing image
-  const existingImg = document.getElementById('fallback-image-display') || document.getElementById('arcgis-online-embed');
-  if (existingImg) existingImg.remove();
+  // Clear any existing fallback image (but keep the ArcGIS iframe)
+  const existingFallback = document.getElementById('fallback-image-display');
+  if (existingFallback) existingFallback.remove();
   
-  // Create a simple image element
-  const imgElement = document.createElement('img');
-  imgElement.id = 'fallback-image-display';
-  imgElement.src = imageUrl;
-  imgElement.style.cssText = `
-    max-width: 100%;
-    max-height: 70vh;
-    border: 2px solid #007cba;
+  // Create container for the fallback image
+  const fallbackContainer = document.createElement('div');
+  fallbackContainer.id = 'fallback-image-display';
+  fallbackContainer.style.cssText = `
+    width: 100%;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f8f9fa;
+    border: 2px solid #28a745;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    display: block;
-    margin: 20px auto;
-    background: white;
-    padding: 10px;
   `;
-  
-  // Find the map container and add the image
-  const mapContainer = document.getElementById('map_main') || document.querySelector('.map-container') || document.body;
   
   // Add a title
   const titleElement = document.createElement('div');
   titleElement.innerHTML = `
-    <div style="text-align: center; margin: 10px 0; font-weight: bold; color: #007cba;">
+    <div style="text-align: center; margin-bottom: 15px; font-weight: bold; color: #28a745; font-size: 18px;">
       📁 File Preview (Simple Image Display)
     </div>
   `;
   
-  mapContainer.appendChild(titleElement);
-  mapContainer.appendChild(imgElement);
+  // Create a simple image element
+  const imgElement = document.createElement('img');
+  imgElement.src = imageUrl;
+  imgElement.style.cssText = `
+    max-width: 100%;
+    max-height: 60vh;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    display: block;
+    margin: 0 auto;
+    background: white;
+  `;
+  
+  // Add error handling for image loading
+  imgElement.onerror = function() {
+    console.error('❌ FALLBACK: Image failed to load from:', imageUrl);
+    imgElement.style.display = 'none';
+    
+    // Create error message
+    const errorDiv = document.createElement('div');
+    errorDiv.innerHTML = `
+      <div style="text-align: center; padding: 20px; color: #dc3545; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 4px;">
+        ❌ Could not load image from: <br>
+        <code style="font-size: 12px; word-break: break-all;">${imageUrl}</code><br>
+        <small>This may be due to file format or server access issues.</small>
+      </div>
+    `;
+    fallbackContainer.appendChild(errorDiv);
+  };
+  
+  imgElement.onload = function() {
+    console.log('✅ FALLBACK: Image loaded successfully from:', imageUrl);
+  };
+  
+  // Test the URL accessibility first
+  console.log('🧪 FALLBACK: Testing image URL accessibility...');
+  fetch(imageUrl, { method: 'HEAD' })
+    .then(response => {
+      console.log('🧪 FALLBACK: URL test response:', response.status, response.statusText);
+      if (!response.ok) {
+        console.warn('⚠️ FALLBACK: URL returned non-OK status:', response.status);
+      }
+    })
+    .catch(error => {
+      console.error('❌ FALLBACK: URL test failed:', error.message);
+    });
+  
+  // Assemble the container
+  fallbackContainer.appendChild(titleElement);
+  fallbackContainer.appendChild(imgElement);
+  
+  // Find the map container and add the fallback below the ArcGIS iframe
+  const mapContainer = document.getElementById('map_main') || document.querySelector('.map-container') || document.body;
+  mapContainer.appendChild(fallbackContainer);
   
   console.log('✅ FALLBACK: Simple image display created successfully');
+  console.log('🔗 FALLBACK: Image URL being used:', imageUrl);
 }
 
 
