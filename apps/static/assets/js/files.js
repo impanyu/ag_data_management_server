@@ -3310,8 +3310,8 @@ function createArcGISOnlineIframe(arcgisUrl, fileType) {
 }
 
 // FALLBACK: Simple image display when ArcGIS Online fails
-function createSimpleImageDisplay(imageUrl) {
-  console.log('🔄 FALLBACK: Creating simple image display for:', imageUrl);
+function createSimpleImageDisplay(originalFileUrl) {
+  console.log('🔄 FALLBACK: Creating simple image display for:', originalFileUrl);
   
   // Clear any existing fallback image (but keep the ArcGIS iframe)
   const existingFallback = document.getElementById('fallback-image-display');
@@ -3334,11 +3334,94 @@ function createSimpleImageDisplay(imageUrl) {
   const titleElement = document.createElement('div');
   titleElement.innerHTML = `
     <div style="text-align: center; margin-bottom: 15px; font-weight: bold; color: #28a745; font-size: 18px;">
-      📁 File Preview (Simple Image Display)
+      📁 File Preview (Converted Image)
     </div>
   `;
   
-  // Create a simple image element
+  // Determine the correct image URL based on file type
+  let imageUrl = originalFileUrl;
+  let isConvertedImage = false;
+  
+  // Check if this is a TIFF file that needs conversion
+  if (originalFileUrl.toLowerCase().includes('.tif') || originalFileUrl.toLowerCase().includes('.tiff')) {
+    console.log('🔄 FALLBACK: TIFF file detected, using converted image via get_file endpoint');
+    
+    // Use the existing get_file endpoint that converts TIFF to PNG/JPG
+    // This uses the same blob-based approach that's already working in the main application
+    const filePathFromUrl = originalFileUrl.split('/static_files/')[1] || current_path;
+    console.log('🔄 FALLBACK: Extracted file path for conversion:', filePathFromUrl);
+    
+    // Create a loading message
+    const loadingDiv = document.createElement('div');
+    loadingDiv.innerHTML = `
+      <div style="text-align: center; padding: 20px; color: #007cba; background: #e3f2fd; border: 1px solid #90caf9; border-radius: 4px;">
+        🔄 Converting TIFF file to viewable format...<br>
+        <small>This may take a moment for large files</small>
+      </div>
+    `;
+    
+    // Show loading message first
+    fallbackContainer.appendChild(titleElement);
+    fallbackContainer.appendChild(loadingDiv);
+    
+    const mapContainer = document.getElementById('map_main') || document.querySelector('.map-container') || document.body;
+    mapContainer.appendChild(fallbackContainer);
+    
+    // Use AJAX to get the converted image (same as main application logic)
+    $.ajax({
+      url: "/data",
+      type: "POST",
+      data: {
+        'load_template': 'get_file',
+        'current_path': current_path,
+        'band': current_col || '1', // Use current_col if available, otherwise default to band 1
+        'csrfmiddlewaretoken': $('[name=csrfmiddlewaretoken]').val()
+      },
+      success: function(response) {
+        console.log('✅ FALLBACK: TIFF conversion successful');
+        
+        // Remove loading message
+        loadingDiv.remove();
+        
+        // Create blob URL from response
+        const blob = new Blob([response], { type: 'image/png' });
+        const convertedImageUrl = URL.createObjectURL(blob);
+        
+        // Create image element with converted data
+        const imgElement = document.createElement('img');
+        imgElement.src = convertedImageUrl;
+        imgElement.style.cssText = `
+          max-width: 100%;
+          max-height: 60vh;
+          border: 1px solid #dee2e6;
+          border-radius: 4px;
+          display: block;
+          margin: 0 auto;
+          background: white;
+        `;
+        
+        imgElement.onload = function() {
+          console.log('✅ FALLBACK: Converted TIFF image loaded successfully');
+        };
+        
+        imgElement.onerror = function() {
+          console.error('❌ FALLBACK: Converted TIFF image failed to load');
+          showErrorMessage('Failed to load converted TIFF image');
+        };
+        
+        fallbackContainer.appendChild(imgElement);
+      },
+      error: function(xhr, status, error) {
+        console.error('❌ FALLBACK: TIFF conversion failed:', error);
+        loadingDiv.remove();
+        showErrorMessage(`TIFF conversion failed: ${error}`);
+      }
+    });
+    
+    return; // Exit early for TIFF files
+  }
+  
+  // For non-TIFF files, use direct image display
   const imgElement = document.createElement('img');
   imgElement.src = imageUrl;
   imgElement.style.cssText = `
@@ -3354,36 +3437,12 @@ function createSimpleImageDisplay(imageUrl) {
   // Add error handling for image loading
   imgElement.onerror = function() {
     console.error('❌ FALLBACK: Image failed to load from:', imageUrl);
-    imgElement.style.display = 'none';
-    
-    // Create error message
-    const errorDiv = document.createElement('div');
-    errorDiv.innerHTML = `
-      <div style="text-align: center; padding: 20px; color: #dc3545; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 4px;">
-        ❌ Could not load image from: <br>
-        <code style="font-size: 12px; word-break: break-all;">${imageUrl}</code><br>
-        <small>This may be due to file format or server access issues.</small>
-      </div>
-    `;
-    fallbackContainer.appendChild(errorDiv);
+    showErrorMessage(`Could not load image from: ${imageUrl}`);
   };
   
   imgElement.onload = function() {
     console.log('✅ FALLBACK: Image loaded successfully from:', imageUrl);
   };
-  
-  // Test the URL accessibility first
-  console.log('🧪 FALLBACK: Testing image URL accessibility...');
-  fetch(imageUrl, { method: 'HEAD' })
-    .then(response => {
-      console.log('🧪 FALLBACK: URL test response:', response.status, response.statusText);
-      if (!response.ok) {
-        console.warn('⚠️ FALLBACK: URL returned non-OK status:', response.status);
-      }
-    })
-    .catch(error => {
-      console.error('❌ FALLBACK: URL test failed:', error.message);
-    });
   
   // Assemble the container
   fallbackContainer.appendChild(titleElement);
@@ -3395,6 +3454,18 @@ function createSimpleImageDisplay(imageUrl) {
   
   console.log('✅ FALLBACK: Simple image display created successfully');
   console.log('🔗 FALLBACK: Image URL being used:', imageUrl);
+  
+  // Helper function for error messages
+  function showErrorMessage(message) {
+    const errorDiv = document.createElement('div');
+    errorDiv.innerHTML = `
+      <div style="text-align: center; padding: 20px; color: #dc3545; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 4px;">
+        ❌ ${message}<br>
+        <small>File format may not be supported for direct browser display.</small>
+      </div>
+    `;
+    fallbackContainer.appendChild(errorDiv);
+  }
 }
 
 
