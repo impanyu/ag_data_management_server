@@ -1856,45 +1856,21 @@ else if(suffix == "tif" || suffix == "tiff" ){
                           window.graphicsLayer.removeAll();
                         }
 
-                        // Create image overlay using ArcGIS
-                        console.log('=== DEBUG: Attempting to create image overlay ===');
-                        console.log('ImageryLayer available:', !!window.ImageryLayer);
-                        console.log('map_main available:', !!window.map_main);
-                        console.log('URL:', url);
+                        // Use ArcGIS Online embed directly for all geospatial files
+                        console.log('🗺️ USING ARCGIS ONLINE: Creating ArcGIS Online embed for geospatial file');
+                        console.log('🌐 File URL:', url);
+                        console.log('📁 Current path:', current_path);
                         
-                        if (window.ImageryLayer && window.map_main) {
-                          console.log('=== DEBUG: Creating ArcGIS ImageryLayer ===');
-                          const imageLayer = new window.ImageryLayer({
-                            url: url,
-                            extent: {
-                              xmin: west,
-                              ymin: south,
-                              xmax: east,
-                              ymax: north,
-                              spatialReference: { wkid: 4326 }
-                            }
-                          });
-
-                          window.map_main.map.add(imageLayer);
-                          window.currentImageLayer = imageLayer;
-                          console.log('=== DEBUG: ArcGIS ImageryLayer added to map ===');
-                        } else {
-                          console.error('=== DEBUG: ArcGIS API not ready for image overlay ===');
-                          console.error('ImageryLayer:', !!window.ImageryLayer, 'map_main:', !!window.map_main);
-                          
-                          // FALLBACK: Use ArcGIS Online embed for geospatial files
-                          console.log('🔄 FALLBACK: Using ArcGIS Online embed instead of ArcGIS API overlay');
-                          
-                          // Determine file type from current path or URL
-                          let fileType = 'unknown';
-                          if (current_path.toLowerCase().includes('.tif') || current_path.toLowerCase().includes('.tiff')) {
-                            fileType = 'TIFF';
-                          } else if (current_path.toLowerCase().includes('.shp')) {
-                            fileType = 'SHP';
-                          }
-                          
-                          createArcGISOnlineEmbed(url, fileType);
+                        // Determine file type from current path or URL
+                        let fileType = 'unknown';
+                        if (current_path.toLowerCase().includes('.tif') || current_path.toLowerCase().includes('.tiff')) {
+                          fileType = 'TIFF';
+                        } else if (current_path.toLowerCase().includes('.shp')) {
+                          fileType = 'SHP';
                         }
+                        
+                        console.log('🎯 Detected file type:', fileType);
+                        createArcGISOnlineEmbed(url, fileType);
 
                        // Create opacity slider
                         const slider = document.getElementById('opacity-slider');
@@ -1991,45 +1967,21 @@ else if (suffix == "png" || suffix == "jpg" || suffix == "jpeg"){
                           window.graphicsLayer.removeAll();
                         }
 
-                        // Create image overlay using ArcGIS
-                        console.log('=== DEBUG: Attempting to create image overlay ===');
-                        console.log('ImageryLayer available:', !!window.ImageryLayer);
-                        console.log('map_main available:', !!window.map_main);
-                        console.log('URL:', url);
+                        // Use ArcGIS Online embed directly for all geospatial files
+                        console.log('🗺️ USING ARCGIS ONLINE: Creating ArcGIS Online embed for geospatial file');
+                        console.log('🌐 File URL:', url);
+                        console.log('📁 Current path:', current_path);
                         
-                        if (window.ImageryLayer && window.map_main) {
-                          console.log('=== DEBUG: Creating ArcGIS ImageryLayer ===');
-                          const imageLayer = new window.ImageryLayer({
-                            url: url,
-                            extent: {
-                              xmin: west,
-                              ymin: south,
-                              xmax: east,
-                              ymax: north,
-                              spatialReference: { wkid: 4326 }
-                            }
-                          });
-
-                          window.map_main.map.add(imageLayer);
-                          window.currentImageLayer = imageLayer;
-                          console.log('=== DEBUG: ArcGIS ImageryLayer added to map ===');
-                        } else {
-                          console.error('=== DEBUG: ArcGIS API not ready for image overlay ===');
-                          console.error('ImageryLayer:', !!window.ImageryLayer, 'map_main:', !!window.map_main);
-                          
-                          // FALLBACK: Use ArcGIS Online embed for geospatial files
-                          console.log('🔄 FALLBACK: Using ArcGIS Online embed instead of ArcGIS API overlay');
-                          
-                          // Determine file type from current path or URL
-                          let fileType = 'unknown';
-                          if (current_path.toLowerCase().includes('.tif') || current_path.toLowerCase().includes('.tiff')) {
-                            fileType = 'TIFF';
-                          } else if (current_path.toLowerCase().includes('.shp')) {
-                            fileType = 'SHP';
-                          }
-                          
-                          createArcGISOnlineEmbed(url, fileType);
+                        // Determine file type from current path or URL
+                        let fileType = 'unknown';
+                        if (current_path.toLowerCase().includes('.tif') || current_path.toLowerCase().includes('.tiff')) {
+                          fileType = 'TIFF';
+                        } else if (current_path.toLowerCase().includes('.shp')) {
+                          fileType = 'SHP';
                         }
+                        
+                        console.log('🎯 Detected file type:', fileType);
+                        createArcGISOnlineEmbed(url, fileType);
 
                        // Create opacity slider
                         const slider = document.getElementById('opacity-slider');
@@ -2127,45 +2079,21 @@ else if (suffix == "shp"){
                           window.graphicsLayer.removeAll();
                         }
 
-                        // Create image overlay using ArcGIS
-                        console.log('=== DEBUG: Attempting to create image overlay ===');
-                        console.log('ImageryLayer available:', !!window.ImageryLayer);
-                        console.log('map_main available:', !!window.map_main);
-                        console.log('URL:', url);
+                        // Use ArcGIS Online embed directly for all geospatial files
+                        console.log('🗺️ USING ARCGIS ONLINE: Creating ArcGIS Online embed for geospatial file');
+                        console.log('🌐 File URL:', url);
+                        console.log('📁 Current path:', current_path);
                         
-                        if (window.ImageryLayer && window.map_main) {
-                          console.log('=== DEBUG: Creating ArcGIS ImageryLayer ===');
-                          const imageLayer = new window.ImageryLayer({
-                            url: url,
-                            extent: {
-                              xmin: west,
-                              ymin: south,
-                              xmax: east,
-                              ymax: north,
-                              spatialReference: { wkid: 4326 }
-                            }
-                          });
-
-                          window.map_main.map.add(imageLayer);
-                          window.currentImageLayer = imageLayer;
-                          console.log('=== DEBUG: ArcGIS ImageryLayer added to map ===');
-                        } else {
-                          console.error('=== DEBUG: ArcGIS API not ready for image overlay ===');
-                          console.error('ImageryLayer:', !!window.ImageryLayer, 'map_main:', !!window.map_main);
-                          
-                          // FALLBACK: Use ArcGIS Online embed for geospatial files
-                          console.log('🔄 FALLBACK: Using ArcGIS Online embed instead of ArcGIS API overlay');
-                          
-                          // Determine file type from current path or URL
-                          let fileType = 'unknown';
-                          if (current_path.toLowerCase().includes('.tif') || current_path.toLowerCase().includes('.tiff')) {
-                            fileType = 'TIFF';
-                          } else if (current_path.toLowerCase().includes('.shp')) {
-                            fileType = 'SHP';
-                          }
-                          
-                          createArcGISOnlineEmbed(url, fileType);
+                        // Determine file type from current path or URL
+                        let fileType = 'unknown';
+                        if (current_path.toLowerCase().includes('.tif') || current_path.toLowerCase().includes('.tiff')) {
+                          fileType = 'TIFF';
+                        } else if (current_path.toLowerCase().includes('.shp')) {
+                          fileType = 'SHP';
                         }
+                        
+                        console.log('🎯 Detected file type:', fileType);
+                        createArcGISOnlineEmbed(url, fileType);
 
                        // Create opacity slider
                         const slider = document.getElementById('opacity-slider');
