@@ -44,6 +44,29 @@ function waitForMapAndLoadContent() {
   console.log('=== DEBUG: map_main available:', !!window.map_main);
   console.log('=== DEBUG: mapViewReady:', !!window.mapViewReady);
   
+  // FORCE LOAD ImageryLayer if Map is available but ImageryLayer is not
+  if (typeof window.Map !== 'undefined' && typeof window.ImageryLayer === 'undefined' && !window.arcgisForceLoadAttempted) {
+    console.log('🔄 FORCE LOADING: Attempting to manually load ArcGIS ImageryLayer...');
+    window.arcgisForceLoadAttempted = true;
+    
+    if (typeof require !== 'undefined') {
+      require(['esri/layers/ImageryLayer'], function(ImageryLayer) {
+        console.log('✅ FORCE LOAD SUCCESS: ImageryLayer loaded manually:', ImageryLayer);
+        window.ImageryLayer = ImageryLayer;
+        
+        // Also try to initialize map if we haven't yet
+        if (!window.map_main && typeof window.init_map_main === 'function') {
+          console.log('🔄 FORCE INIT: Calling init_map_main after manual ImageryLayer load');
+          window.init_map_main();
+        }
+      }, function(error) {
+        console.error('❌ FORCE LOAD FAILED: Could not manually load ImageryLayer:', error);
+      });
+    } else {
+      console.error('❌ FORCE LOAD FAILED: require() not available for manual load');
+    }
+  }
+  
   // Count how many times we've tried
   if (!window.arcgisLoadAttempts) window.arcgisLoadAttempts = 0;
   window.arcgisLoadAttempts++;
