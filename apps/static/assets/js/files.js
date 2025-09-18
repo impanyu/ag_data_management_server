@@ -1882,9 +1882,18 @@ else if(suffix == "tif" || suffix == "tiff" ){
                           console.error('=== DEBUG: ArcGIS API not ready for image overlay ===');
                           console.error('ImageryLayer:', !!window.ImageryLayer, 'map_main:', !!window.map_main);
                           
-                          // FALLBACK: Use simple image display
-                          console.log('🔄 FALLBACK: Using simple image display instead of ArcGIS overlay');
-                          createSimpleImageDisplay(url);
+                          // FALLBACK: Use ArcGIS Online embed for geospatial files
+                          console.log('🔄 FALLBACK: Using ArcGIS Online embed instead of ArcGIS API overlay');
+                          
+                          // Determine file type from current path or URL
+                          let fileType = 'unknown';
+                          if (current_path.toLowerCase().includes('.tif') || current_path.toLowerCase().includes('.tiff')) {
+                            fileType = 'TIFF';
+                          } else if (current_path.toLowerCase().includes('.shp')) {
+                            fileType = 'SHP';
+                          }
+                          
+                          createArcGISOnlineEmbed(url, fileType);
                         }
 
                        // Create opacity slider
@@ -2008,9 +2017,18 @@ else if (suffix == "png" || suffix == "jpg" || suffix == "jpeg"){
                           console.error('=== DEBUG: ArcGIS API not ready for image overlay ===');
                           console.error('ImageryLayer:', !!window.ImageryLayer, 'map_main:', !!window.map_main);
                           
-                          // FALLBACK: Use simple image display
-                          console.log('🔄 FALLBACK: Using simple image display instead of ArcGIS overlay');
-                          createSimpleImageDisplay(url);
+                          // FALLBACK: Use ArcGIS Online embed for geospatial files
+                          console.log('🔄 FALLBACK: Using ArcGIS Online embed instead of ArcGIS API overlay');
+                          
+                          // Determine file type from current path or URL
+                          let fileType = 'unknown';
+                          if (current_path.toLowerCase().includes('.tif') || current_path.toLowerCase().includes('.tiff')) {
+                            fileType = 'TIFF';
+                          } else if (current_path.toLowerCase().includes('.shp')) {
+                            fileType = 'SHP';
+                          }
+                          
+                          createArcGISOnlineEmbed(url, fileType);
                         }
 
                        // Create opacity slider
@@ -2135,9 +2153,18 @@ else if (suffix == "shp"){
                           console.error('=== DEBUG: ArcGIS API not ready for image overlay ===');
                           console.error('ImageryLayer:', !!window.ImageryLayer, 'map_main:', !!window.map_main);
                           
-                          // FALLBACK: Use simple image display
-                          console.log('🔄 FALLBACK: Using simple image display instead of ArcGIS overlay');
-                          createSimpleImageDisplay(url);
+                          // FALLBACK: Use ArcGIS Online embed for geospatial files
+                          console.log('🔄 FALLBACK: Using ArcGIS Online embed instead of ArcGIS API overlay');
+                          
+                          // Determine file type from current path or URL
+                          let fileType = 'unknown';
+                          if (current_path.toLowerCase().includes('.tif') || current_path.toLowerCase().includes('.tiff')) {
+                            fileType = 'TIFF';
+                          } else if (current_path.toLowerCase().includes('.shp')) {
+                            fileType = 'SHP';
+                          }
+                          
+                          createArcGISOnlineEmbed(url, fileType);
                         }
 
                        // Create opacity slider
@@ -3018,12 +3045,84 @@ function init_map() {
   console.log('🚫 Google Maps should NOT be loading for files.html - using ArcGIS instead');
 }
 
-// FALLBACK: Simple image display when ArcGIS fails
+// ARCGIS ONLINE: Embed ArcGIS Online web map for TIFF/SHP files
+function createArcGISOnlineEmbed(fileUrl, fileType) {
+  console.log('🗺️ ARCGIS ONLINE: Creating ArcGIS Online embed for:', fileType, fileUrl);
+  
+  // Clear any existing displays
+  const existingDisplay = document.getElementById('arcgis-online-embed') || document.getElementById('fallback-image-display');
+  if (existingDisplay) existingDisplay.remove();
+  
+  // Create container for ArcGIS Online embed
+  const containerElement = document.createElement('div');
+  containerElement.id = 'arcgis-online-embed';
+  containerElement.style.cssText = `
+    width: 100%;
+    height: 70vh;
+    border: 2px solid #007cba;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin: 20px auto;
+    background: white;
+    overflow: hidden;
+  `;
+  
+  // Add title
+  const titleElement = document.createElement('div');
+  titleElement.innerHTML = `
+    <div style="text-align: center; margin: 10px 0; font-weight: bold; color: #007cba; font-size: 16px;">
+      🗺️ Interactive Map - ${fileType.toUpperCase()} File on ArcGIS Online
+    </div>
+  `;
+  
+  // Create iframe for ArcGIS Online
+  const iframeElement = document.createElement('iframe');
+  
+  // Generate ArcGIS Online URL based on file type
+  let arcgisUrl;
+  if (fileType.toLowerCase().includes('tif') || fileType.toLowerCase().includes('tiff')) {
+    // For TIFF files - use ArcGIS Online Map Viewer with custom basemap
+    arcgisUrl = `https://www.arcgis.com/apps/mapviewer/index.html?url=${encodeURIComponent(fileUrl)}`;
+  } else if (fileType.toLowerCase().includes('shp')) {
+    // For SHP files - use ArcGIS Online feature service
+    arcgisUrl = `https://www.arcgis.com/apps/mapviewer/index.html?url=${encodeURIComponent(fileUrl)}`;
+  } else {
+    // Generic map viewer
+    arcgisUrl = `https://www.arcgis.com/home/webmap/viewer.html?url=${encodeURIComponent(fileUrl)}`;
+  }
+  
+  iframeElement.src = arcgisUrl;
+  iframeElement.style.cssText = `
+    width: 100%;
+    height: calc(100% - 20px);
+    border: none;
+    margin: 10px;
+  `;
+  iframeElement.title = `ArcGIS Online Map - ${fileType} file`;
+  
+  // Add fallback content
+  iframeElement.onerror = function() {
+    console.log('🔄 IFRAME ERROR: Falling back to simple image display');
+    createSimpleImageDisplay(fileUrl);
+  };
+  
+  // Find the map container
+  const mapContainer = document.getElementById('map_main') || document.querySelector('.map-container') || document.body;
+  
+  containerElement.appendChild(iframeElement);
+  mapContainer.appendChild(titleElement);
+  mapContainer.appendChild(containerElement);
+  
+  console.log('✅ ARCGIS ONLINE: ArcGIS Online embed created successfully');
+  console.log('🌐 ARCGIS ONLINE: URL =', arcgisUrl);
+}
+
+// FALLBACK: Simple image display when ArcGIS Online fails
 function createSimpleImageDisplay(imageUrl) {
   console.log('🔄 FALLBACK: Creating simple image display for:', imageUrl);
   
   // Clear any existing image
-  const existingImg = document.getElementById('fallback-image-display');
+  const existingImg = document.getElementById('fallback-image-display') || document.getElementById('arcgis-online-embed');
   if (existingImg) existingImg.remove();
   
   // Create a simple image element
@@ -3049,7 +3148,7 @@ function createSimpleImageDisplay(imageUrl) {
   const titleElement = document.createElement('div');
   titleElement.innerHTML = `
     <div style="text-align: center; margin: 10px 0; font-weight: bold; color: #007cba;">
-      📁 File Preview (ArcGIS unavailable - showing simple image display)
+      📁 File Preview (Simple Image Display)
     </div>
   `;
   
