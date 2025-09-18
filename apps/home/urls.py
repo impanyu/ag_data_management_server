@@ -6,6 +6,7 @@ Copyright (c) 2019 - present AppSeed.us
 from django.urls import path, re_path, include
 from apps.home import views
 from apps.home import api
+from apps.home import tile_views
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -53,9 +54,12 @@ urlpatterns = [
     path('api/google_drive_auth_callback/', Google_drive_callback.as_view(), name='google_drive_auth_callback'),
     path('api/convert_to_static/', ConvertToStatic.as_view(), name='convert_to_static'),
     path('api/remove_static/', RemoveStatic.as_view(), name='remove_static'),
+    path('api/generate_tiles/', GenerateTiles.as_view(), name='generate_tiles'),
     path('test_cors/', views.serve_static_file_with_cors, {'file_path': 'test'}, name='test_cors'),
     path('api/generate_static_link/', GenerateStaticLink.as_view(), name= 'generate_static_link'),
     path('api/remove_static_link/', RemoveStaticLink.as_view(), name='remove_static_link'),
+    # XYZ Tile serving for TIFF files
+    re_path(r'^tiles/(?P<file_id>[^/]+)/(?P<z>\d+)/(?P<x>\d+)/(?P<y>\d+)\.png$', tile_views.serve_tiles, name='serve_tiles'),
 
     # The home page
     path('', views.index, name='home'),

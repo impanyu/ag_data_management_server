@@ -3075,12 +3075,11 @@ function createArcGISOnlineEmbed(fileUrl, fileType) {
   
   // PRODUCTION MODE: Use ArcGIS Online (HTTPS)
   if (fileType.toLowerCase().includes('tif') || fileType.toLowerCase().includes('tiff')) {
-    // For TIFF files - ArcGIS Online cannot load raw TIFF files from external URLs
-    // We need to convert them first and then create a proper visualization
-    console.log('🗺️ TIFF FILE: ArcGIS Online cannot load raw TIFF files - using converted approach');
+    // For TIFF files - Convert to XYZ tiles and display in ArcGIS Online
+    console.log('🗺️ TIFF FILE: Converting to XYZ tiles for ArcGIS Online');
     
-    // Skip ArcGIS Online iframe and go directly to converted image with geospatial context
-    createTiffVisualizationWithGeospatialContext(fileUrl, current_path);
+    // Generate tiles and display in ArcGIS Online
+    createTiffTileVisualization(current_path);
     return; // Exit early - don't create the standard iframe
     
   } else if (fileType.toLowerCase().includes('shp')) {
@@ -3160,7 +3159,262 @@ function createArcGISOnlineEmbed(fileUrl, fileType) {
   console.log('🌐 ARCGIS ONLINE: URL =', arcgisUrl);
 }
 
-// TIFF Visualization with Geospatial Context
+// TIFF Tile Visualization for ArcGIS Online
+async function createTiffTileVisualization(currentPath) {
+  console.log('🔄 TIFF TILES: Starting tile generation for:', currentPath);
+  
+  // Clear any existing displays
+  const existingDisplay = document.getElementById('arcgis-online-embed') || 
+                         document.getElementById('fallback-image-display') ||
+                         document.getElementById('tiff-geospatial-container');
+  if (existingDisplay) existingDisplay.remove();
+  
+  // Create loading container
+  const loadingContainer = document.createElement('div');
+  loadingContainer.id = 'tile-generation-loading';
+  loadingContainer.style.cssText = `
+    width: 100%;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin: 20px 0;
+  `;
+  
+  loadingContainer.innerHTML = `
+    <div style="text-align: center;">
+      <div style="font-size: 48px; margin-bottom: 20px;">🗺️</div>
+      <h3 style="color: #007cba; margin: 0 0 10px 0;">Generating XYZ Tiles</h3>
+      <p style="color: #6c757d; margin: 0 0 20px 0;">Converting TIFF to web map tiles...</p>
+      <div id="tile-progress" style="background: #e9ecef; border-radius: 10px; padding: 4px; width: 300px;">
+        <div id="tile-progress-bar" style="background: linear-gradient(90deg, #007cba, #0056b3); height: 8px; border-radius: 6px; width: 0%; transition: width 0.3s ease;"></div>
+      </div>
+      <p id="tile-status" style="color: #007cba; margin: 10px 0 0 0; font-size: 14px;">Initializing...</p>
+    </div>
+  `;
+  
+  // Add to page
+  const mapContainer = document.getElementById('map_main') || document.querySelector('.map-container') || document.body;
+  mapContainer.appendChild(loadingContainer);
+  
+  try {
+    // Animate progress bar during generation
+    animateTileProgress();
+    
+    // Call tile generation API
+    console.log('📡 TIFF TILES: Calling GenerateTiles API...');
+    const filePath = currentPath.split('/ag_data/')[1] || currentPath;
+    const apiUrl = `/api/generate_tiles/?file_path=${encodeURIComponent(filePath)}`;
+    
+    console.log('📡 TIFF TILES: API URL:', apiUrl);
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Tile generation failed: ${response.status}`);
+    }
+    
+    const responseText = await response.text();
+    console.log('📡 TIFF TILES: API Response:', responseText);
+    
+    let tileData;
+    try {
+      tileData = JSON.parse(responseText);
+    } catch (e) {
+      throw new Error(`Invalid JSON response: ${responseText}`);
+    }
+    
+    if (tileData.success) {
+      console.log('✅ TIFF TILES: Tile generation successful!');
+      console.log('🔗 TILE URL TEMPLATE:', tileData.tile_url_template);
+      
+      // Remove loading container
+      loadingContainer.remove();
+      
+      // Create ArcGIS Online embed with tile layer
+      createArcGISOnlineWithTileLayer(tileData.tile_url_template, tileData.bounds, tileData.file_id);
+      
+    } else {
+      throw new Error(tileData.error || 'Tile generation failed');
+    }
+    
+  } catch (error) {
+    console.error('❌ TIFF TILES: Error generating tiles:', error);
+    
+    // Show error and fallback
+    loadingContainer.innerHTML = `
+      <div style="text-align: center;">
+        <div style="font-size: 48px; margin-bottom: 20px;">❌</div>
+        <h3 style="color: #dc3545; margin: 0 0 10px 0;">Tile Generation Failed</h3>
+        <p style="color: #6c757d; margin: 0 0 20px 0;">${error.message}</p>
+        <button onclick="createTiffVisualizationWithGeospatialContext('', '${currentPath}')" 
+                style="background: #007cba; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+          📊 Use Fallback Visualization
+        </button>
+      </div>
+    `;
+  }
+}
+
+// Animate tile progress bar
+function animateTileProgress() {
+  const progressBar = document.getElementById('tile-progress-bar');
+  const statusText = document.getElementById('tile-status');
+  
+  if (!progressBar || !statusText) return;
+  
+  const steps = [
+    { width: 20, text: 'Analyzing TIFF file...' },
+    { width: 40, text: 'Reprojecting to Web Mercator...' },
+    { width: 60, text: 'Generating zoom levels...' },
+    { width: 80, text: 'Creating tile pyramid...' },
+    { width: 95, text: 'Finalizing tiles...' },
+    { width: 100, text: 'Complete!' }
+  ];
+  
+  let currentStep = 0;
+  
+  const updateProgress = () => {
+    if (currentStep < steps.length) {
+      const step = steps[currentStep];
+      progressBar.style.width = step.width + '%';
+      statusText.textContent = step.text;
+      currentStep++;
+      setTimeout(updateProgress, 1000);
+    }
+  };
+  
+  updateProgress();
+}
+
+// Create ArcGIS Online embed with XYZ tile layer
+function createArcGISOnlineWithTileLayer(tileUrlTemplate, bounds, fileId) {
+  console.log('🗺️ ARCGIS TILES: Creating ArcGIS Online embed with tile layer');
+  console.log('🔗 TILE TEMPLATE:', tileUrlTemplate);
+  
+  // Create main container
+  const container = document.createElement('div');
+  container.id = 'arcgis-tile-embed';
+  container.style.cssText = `
+    width: 100%;
+    margin: 20px auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+  `;
+  
+  // Add title
+  const title = document.createElement('div');
+  title.innerHTML = `
+    <div style="text-align: center; padding: 15px; background: linear-gradient(135deg, #007cba, #0056b3); color: white;">
+      <h3 style="margin: 0; font-size: 18px;">🗺️ TIFF Data as XYZ Tile Layer</h3>
+      <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">Interactive map with custom tile service</p>
+    </div>
+  `;
+  
+  // Get server URL for tile template
+  const serverUrl = window.location.origin;
+  const fullTileUrl = serverUrl + tileUrlTemplate;
+  
+  console.log('🌐 FULL TILE URL:', fullTileUrl);
+  
+  // Create ArcGIS Online iframe with tile layer
+  // Use ArcGIS Online's ability to add custom tile services via URL parameters
+  const iframe = document.createElement('iframe');
+  
+  // Method 1: Try ArcGIS Online Map Viewer with custom basemap
+  // We'll encode our tile service as a custom basemap layer
+  const tileServiceConfig = {
+    id: `tiff_tiles_${fileId}`,
+    title: 'TIFF Tile Layer',
+    url: fullTileUrl.replace('{z}', '{level}').replace('{x}', '{col}').replace('{y}', '{row}'),
+    type: 'WebTiledLayer'
+  };
+  
+  // Center map on data bounds if available
+  let centerLat = 39.8283;
+  let centerLon = -98.5795;
+  let zoom = 6;
+  
+  if (bounds && bounds.north && bounds.south && bounds.east && bounds.west) {
+    centerLat = (bounds.north + bounds.south) / 2;
+    centerLon = (bounds.east + bounds.west) / 2;
+    
+    // Calculate zoom based on bounds
+    const latRange = Math.abs(bounds.north - bounds.south);
+    const lonRange = Math.abs(bounds.east - bounds.west);
+    const maxRange = Math.max(latRange, lonRange);
+    
+    if (maxRange < 0.01) zoom = 14;
+    else if (maxRange < 0.1) zoom = 11;
+    else if (maxRange < 1) zoom = 8;
+    else zoom = 6;
+  }
+  
+  // Encode the tile service configuration for ArcGIS Online
+  const encodedConfig = encodeURIComponent(JSON.stringify(tileServiceConfig));
+  
+  // Try multiple ArcGIS Online approaches for custom tile layers
+  const arcgisApproaches = [
+    // Approach 1: Map Viewer with custom layer
+    `https://www.arcgis.com/apps/mapviewer/index.html?webmap=new&center=${centerLon},${centerLat}&level=${zoom}&addLayer=${encodedConfig}`,
+    
+    // Approach 2: Web Map Viewer with layer parameter
+    `https://www.arcgis.com/home/webmap/viewer.html?center=${centerLon},${centerLat}&level=${zoom}&customLayer=${encodedConfig}`,
+    
+    // Approach 3: Simple Map Viewer (we'll add instructions)
+    `https://www.arcgis.com/apps/mapviewer/index.html?center=${centerLon},${centerLat}&level=${zoom}`
+  ];
+  
+  iframe.src = arcgisApproaches[0];
+  iframe.style.cssText = `
+    width: 100%;
+    height: 600px;
+    border: none;
+  `;
+  iframe.title = `ArcGIS Online - TIFF Tiles (${fileId})`;
+  
+  // Add fallback instructions
+  const instructions = document.createElement('div');
+  instructions.style.cssText = `
+    background: #f8f9fa;
+    padding: 15px;
+    border-top: 1px solid #dee2e6;
+    font-size: 14px;
+    color: #495057;
+  `;
+  
+  instructions.innerHTML = `
+    <strong>📋 Manual Tile Service Integration:</strong><br>
+    <span style="font-family: monospace; background: #e9ecef; padding: 2px 6px; border-radius: 3px;">${fullTileUrl}</span><br>
+    <small style="color: #6c757d;">
+      If the automatic integration doesn't work, copy the URL above and add it as a custom tile layer in ArcGIS Online.
+      <br><strong>Format:</strong> XYZ Tile Service • <strong>Template:</strong> {z}/{x}/{y}.png
+    </small>
+  `;
+  
+  // Assemble container
+  container.appendChild(title);
+  container.appendChild(iframe);
+  container.appendChild(instructions);
+  
+  // Add to page
+  const mapContainer = document.getElementById('map_main') || document.querySelector('.map-container') || document.body;
+  mapContainer.appendChild(container);
+  
+  console.log('✅ ARCGIS TILES: Tile layer embed created successfully');
+}
+
+// TIFF Visualization with Geospatial Context (fallback)
 async function createTiffVisualizationWithGeospatialContext(fileUrl, currentPath) {
   console.log('🗺️ TIFF GEOSPATIAL: Creating enhanced TIFF visualization with geospatial context');
   console.log('📁 TIFF GEOSPATIAL: File path:', currentPath);

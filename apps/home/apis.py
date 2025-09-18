@@ -486,6 +486,97 @@ class Google_drive_callback(APIView):
         return HttpResponse(response)
     
 
+class GenerateTiles(APIView):
+    permission_classes = []  # Allow access without authentication
+    
+    def get(self, request, *args, **kwargs):
+        """
+        Generate XYZ tiles for a TIFF file
+        Parameters: file_path (path after ag_data/)
+        Returns: {success: bool, tile_url_template: str, bounds: dict}
+        """
+        try:
+            import hashlib
+            import logging
+            from .tile_generator import generate_tiff_tiles
+            
+            logger = logging.getLogger(__name__)
+            
+            file_path = request.query_params.get('file_path')
+            if not file_path:
+                return HttpResponse('{"error": "file_path parameter required"}', 
+                                  content_type='application/json', status=400)
+            
+            # Handle both authenticated and anonymous users
+            if hasattr(request, 'user') and hasattr(request.user, 'username') and request.user.username:
+                current_user = request.user.username
+            else:
+                current_user = 'ypan12'  # Default user for development/testing
+            
+            logger.info(f"🔄 TILE GENERATION API: Generating tiles for {file_path} (user: {current_user})")
+            
+            # Construct full path to TIFF file
+            safe_path = os.path.normpath(file_path).lstrip('/')
+            full_tiff_path = os.path.join(settings.USER_DATA_DIR, current_user, "ag_data", safe_path)
+            
+            # Check if TIFF file exists
+            if not os.path.exists(full_tiff_path):
+                return HttpResponse(f'{{"error": "TIFF file not found: {full_tiff_path}"}}', 
+                                  content_type='application/json', status=404)
+            
+            # Generate unique file ID based on path and modification time
+            file_stat = os.stat(full_tiff_path)
+            unique_string = f"{current_user}_{safe_path}_{file_stat.st_mtime}"
+            file_id = hashlib.md5(unique_string.encode()).hexdigest()[:12]
+            
+            logger.info(f"🆔 TILE GENERATION: File ID = {file_id}")
+            
+            # Set up tile output directory
+            tile_base_dir = os.path.join(settings.CONVERTED_STATIC_FILES_ROOT, 'tiles')
+            os.makedirs(tile_base_dir, exist_ok=True)
+            
+            # Check if tiles already exist
+            tile_dir = os.path.join(tile_base_dir, file_id)
+            if os.path.exists(tile_dir) and os.listdir(tile_dir):
+                logger.info(f"✅ TILES EXIST: Using existing tiles for {file_id}")
+                tile_url_template = f"/tiles/{file_id}/{{z}}/{{x}}/{{y}}.png"
+                bounds = {
+                    'north': 85.0511, 'south': -85.0511, 
+                    'east': 180.0, 'west': -180.0
+                }
+                return HttpResponse(
+                    f'{{"success": true, "tile_url_template": "{tile_url_template}", "bounds": {json.dumps(bounds)}}}',
+                    content_type='application/json'
+                )
+            
+            # Generate tiles
+            logger.info(f"🔄 TILE GENERATION: Starting tile generation...")
+            success, tile_url_template, bounds = generate_tiff_tiles(
+                full_tiff_path, tile_base_dir, file_id
+            )
+            
+            if success:
+                logger.info(f"✅ TILE GENERATION: Success! Template = {tile_url_template}")
+                response_data = {
+                    "success": True,
+                    "tile_url_template": tile_url_template,
+                    "bounds": bounds,
+                    "file_id": file_id
+                }
+                return HttpResponse(json.dumps(response_data), content_type='application/json')
+            else:
+                logger.error(f"❌ TILE GENERATION: Failed for {file_path}")
+                return HttpResponse('{"error": "Tile generation failed"}', 
+                                  content_type='application/json', status=500)
+                
+        except Exception as e:
+            import traceback
+            logger = logging.getLogger(__name__)
+            error_msg = f'GenerateTiles Error: {str(e)}\nTraceback: {traceback.format_exc()}'
+            logger.error(error_msg)
+            return HttpResponse(f'{{"error": "{str(e)}"}}', 
+                              content_type='application/json', status=500)
+
 class ConvertToStatic(APIView):
     permission_classes = []  # Allow access without authentication
  
