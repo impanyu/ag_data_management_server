@@ -15,9 +15,12 @@ from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets
 
 
-# Add static files serving for converted_static_files (for ArcGIS Online access)
+# Add CORS-enabled static files serving for converted_static_files (for ArcGIS Online access)
 # IMPORTANT: This must be BEFORE the home.urls include to avoid being caught by the catch-all pattern
-static_files_patterns = static('/static_files/', document_root = settings.CONVERTED_STATIC_FILES_ROOT)
+from apps.home.views import serve_static_file_with_cors
+static_files_patterns = [
+    re_path(r'^static_files/(?P<file_path>.*)$', serve_static_file_with_cors, name='serve_static_with_cors'),
+]
 
 urlpatterns = [
     path('admin/', admin.site.urls),          # Django admin route

@@ -487,6 +487,7 @@ class Google_drive_callback(APIView):
     
 
 class ConvertToStatic(APIView):
+    permission_classes = []  # Allow access without authentication
  
     def get(self, request, *args, **kwargs):
         target_path = request.query_params.get('file_path')

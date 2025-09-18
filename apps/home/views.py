@@ -253,6 +253,53 @@ def pages(request):
         return HttpResponse(html_template.render(context, request))
 
 
+# CORS-enabled static file serving for ArcGIS Online
+@csrf_exempt
+def serve_static_file_with_cors(request, file_path):
+    """
+    Serve static files with CORS headers for ArcGIS Online access
+    """
+    import os
+    import mimetypes
+    from django.conf import settings
+    from django.http import FileResponse, Http404
+    
+    try:
+        # Construct the full path to the static file
+        full_path = os.path.join(settings.CONVERTED_STATIC_FILES_ROOT, file_path)
+        
+        # Security check - ensure path is within the static files directory
+        if not os.path.commonpath([full_path, settings.CONVERTED_STATIC_FILES_ROOT]) == settings.CONVERTED_STATIC_FILES_ROOT:
+            raise Http404("Invalid file path")
+        
+        # Check if file exists
+        if not os.path.exists(full_path):
+            raise Http404("File not found")
+        
+        # Get content type
+        content_type, _ = mimetypes.guess_type(full_path)
+        if content_type is None:
+            content_type = 'application/octet-stream'
+        
+        # Create response with CORS headers
+        response = FileResponse(
+            open(full_path, 'rb'),
+            content_type=content_type,
+            filename=os.path.basename(full_path)
+        )
+        
+        # Add CORS headers for ArcGIS Online
+        response['Access-Control-Allow-Origin'] = '*'
+        response['Access-Control-Allow-Methods'] = 'GET, HEAD, OPTIONS'
+        response['Access-Control-Allow-Headers'] = 'Accept, Accept-Language, Content-Language, Content-Type'
+        response['Access-Control-Max-Age'] = '86400'
+        
+        return response
+        
+    except Exception as e:
+        raise Http404(f"Error serving file: {str(e)}")
+
+
 @login_required(login_url="/login/")
 @csrf_exempt
 def data(request):
@@ -1536,3 +1583,50 @@ def data(request):
     except:
         html_template = loader.get_template('home/page-500.html')
         return HttpResponse(html_template.render(context, request))
+
+
+# CORS-enabled static file serving for ArcGIS Online
+@csrf_exempt
+def serve_static_file_with_cors(request, file_path):
+    """
+    Serve static files with CORS headers for ArcGIS Online access
+    """
+    import os
+    import mimetypes
+    from django.conf import settings
+    from django.http import FileResponse, Http404
+    
+    try:
+        # Construct the full path to the static file
+        full_path = os.path.join(settings.CONVERTED_STATIC_FILES_ROOT, file_path)
+        
+        # Security check - ensure path is within the static files directory
+        if not os.path.commonpath([full_path, settings.CONVERTED_STATIC_FILES_ROOT]) == settings.CONVERTED_STATIC_FILES_ROOT:
+            raise Http404("Invalid file path")
+        
+        # Check if file exists
+        if not os.path.exists(full_path):
+            raise Http404("File not found")
+        
+        # Get content type
+        content_type, _ = mimetypes.guess_type(full_path)
+        if content_type is None:
+            content_type = 'application/octet-stream'
+        
+        # Create response with CORS headers
+        response = FileResponse(
+            open(full_path, 'rb'),
+            content_type=content_type,
+            filename=os.path.basename(full_path)
+        )
+        
+        # Add CORS headers for ArcGIS Online
+        response['Access-Control-Allow-Origin'] = '*'
+        response['Access-Control-Allow-Methods'] = 'GET, HEAD, OPTIONS'
+        response['Access-Control-Allow-Headers'] = 'Accept, Accept-Language, Content-Language, Content-Type'
+        response['Access-Control-Max-Age'] = '86400'
+        
+        return response
+        
+    except Exception as e:
+        raise Http404(f"Error serving file: {str(e)}")
