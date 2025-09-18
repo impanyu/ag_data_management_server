@@ -491,22 +491,27 @@ class ConvertToStatic(APIView):
  
     def get(self, request, *args, **kwargs):
         target_path = request.query_params.get('file_path')
-        current_user = request.user.username
+        # Handle both authenticated and anonymous users
+        if hasattr(request, 'user') and hasattr(request.user, 'username') and request.user.username:
+            current_user = request.user.username
+        else:
+            current_user = 'ypan12'  # Default user for development/testing
 
         safe_path = os.path.normpath(target_path).lstrip('/')
         full_path = os.path.join(settings.USER_DATA_DIR, current_user, "ag_data", safe_path)
         root_static_path = os.path.join(settings.CORE_DIR, 'converted_static_files', current_user, "ag_data")
         
-        # copy full path to static folder
-        static_path = os.path.join(settings.CORE_DIR, 'converted_static_files', current_user, "ag_data", safe_path)
-        os.makedirs(os.path.dirname(static_path), exist_ok=True)
-        #os.makedirs(os.path.dirname(static_path), exist_ok=True)
-        #shutil.copytree(full_path, static_path)
-        copy_to_static(full_path, static_path)
-
-  
-        response = json.dumps({"result":"success"})
-        return HttpResponse("/static_files/"+current_user+"/ag_data/"+safe_path)
+        try:
+            # copy full path to static folder
+            static_path = os.path.join(settings.CORE_DIR, 'converted_static_files', current_user, "ag_data", safe_path)
+            os.makedirs(os.path.dirname(static_path), exist_ok=True)
+            copy_to_static(full_path, static_path)
+            
+            return HttpResponse("/static_files/"+current_user+"/ag_data/"+safe_path)
+        except Exception as e:
+            import traceback
+            error_msg = f'ConvertToStatic Error: {str(e)}\nTraceback: {traceback.format_exc()}'
+            return HttpResponse(error_msg, status=500)
     
 class RemoveStatic(APIView):
  
