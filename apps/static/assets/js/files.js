@@ -1,3 +1,7 @@
+// 🚨 EMERGENCY DEBUG - This should ALWAYS show up if files.js loads
+console.log('🚨 EMERGENCY DEBUG: files.js is loading! Timestamp:', new Date().toISOString());
+alert('🚨 EMERGENCY: files.js loaded successfully!');
+
 var domain_names=[];
   $.get("/get_domains",
         {
