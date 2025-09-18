@@ -1826,6 +1826,10 @@ else if(suffix == "tif" || suffix == "tiff" ){
                         } else {
                           console.error('=== DEBUG: ArcGIS API not ready for image overlay ===');
                           console.error('ImageryLayer:', !!window.ImageryLayer, 'map_main:', !!window.map_main);
+                          
+                          // FALLBACK: Use simple image display
+                          console.log('🔄 FALLBACK: Using simple image display instead of ArcGIS overlay');
+                          createSimpleImageDisplay(url);
                         }
 
                        // Create opacity slider
@@ -1948,6 +1952,10 @@ else if (suffix == "png" || suffix == "jpg" || suffix == "jpeg"){
                         } else {
                           console.error('=== DEBUG: ArcGIS API not ready for image overlay ===');
                           console.error('ImageryLayer:', !!window.ImageryLayer, 'map_main:', !!window.map_main);
+                          
+                          // FALLBACK: Use simple image display
+                          console.log('🔄 FALLBACK: Using simple image display instead of ArcGIS overlay');
+                          createSimpleImageDisplay(url);
                         }
 
                        // Create opacity slider
@@ -2071,6 +2079,10 @@ else if (suffix == "shp"){
                         } else {
                           console.error('=== DEBUG: ArcGIS API not ready for image overlay ===');
                           console.error('ImageryLayer:', !!window.ImageryLayer, 'map_main:', !!window.map_main);
+                          
+                          // FALLBACK: Use simple image display
+                          console.log('🔄 FALLBACK: Using simple image display instead of ArcGIS overlay');
+                          createSimpleImageDisplay(url);
                         }
 
                        // Create opacity slider
@@ -2949,6 +2961,47 @@ function init_map_nav(){
 function init_map() {
   console.log('🚫 init_map() called - this is a dummy function to prevent Google Maps errors');
   console.log('🚫 Google Maps should NOT be loading for files.html - using ArcGIS instead');
+}
+
+// FALLBACK: Simple image display when ArcGIS fails
+function createSimpleImageDisplay(imageUrl) {
+  console.log('🔄 FALLBACK: Creating simple image display for:', imageUrl);
+  
+  // Clear any existing image
+  const existingImg = document.getElementById('fallback-image-display');
+  if (existingImg) existingImg.remove();
+  
+  // Create a simple image element
+  const imgElement = document.createElement('img');
+  imgElement.id = 'fallback-image-display';
+  imgElement.src = imageUrl;
+  imgElement.style.cssText = `
+    max-width: 100%;
+    max-height: 70vh;
+    border: 2px solid #007cba;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: block;
+    margin: 20px auto;
+    background: white;
+    padding: 10px;
+  `;
+  
+  // Find the map container and add the image
+  const mapContainer = document.getElementById('map_main') || document.querySelector('.map-container') || document.body;
+  
+  // Add a title
+  const titleElement = document.createElement('div');
+  titleElement.innerHTML = `
+    <div style="text-align: center; margin: 10px 0; font-weight: bold; color: #007cba;">
+      📁 File Preview (ArcGIS unavailable - showing simple image display)
+    </div>
+  `;
+  
+  mapContainer.appendChild(titleElement);
+  mapContainer.appendChild(imgElement);
+  
+  console.log('✅ FALLBACK: Simple image display created successfully');
 }
 
 
