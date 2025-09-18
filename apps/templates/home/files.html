@@ -775,7 +775,8 @@ try {
   }
   
   // Store ArcGIS classes globally first
-  window.Map = Map;
+  // Use ArcGISMap to avoid conflict with native JS Map
+  window.ArcGISMap = Map;
   window.MapView = MapView;
   window.ImageryLayer = ImageryLayer;
   window.FeatureLayer = FeatureLayer;

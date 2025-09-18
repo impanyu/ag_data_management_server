@@ -39,7 +39,7 @@ console.log('=== DEBUG: User Agent:', navigator.userAgent);
 // Wait for ArcGIS API and map to be ready before loading content
 function waitForMapAndLoadContent() {
   console.log('=== DEBUG: waitForMapAndLoadContent called ===');
-  console.log('=== DEBUG: ArcGIS Map available:', typeof window.Map !== 'undefined');
+  console.log('=== DEBUG: ArcGIS Map available:', typeof window.ArcGISMap !== 'undefined');
   console.log('=== DEBUG: ArcGIS ImageryLayer available:', typeof window.ImageryLayer !== 'undefined');
   console.log('=== DEBUG: map_main available:', !!window.map_main);
   console.log('=== DEBUG: mapViewReady:', !!window.mapViewReady);
@@ -103,7 +103,7 @@ function waitForMapAndLoadContent() {
   if (!window.arcgisLoadAttempts) window.arcgisLoadAttempts = 0;
   window.arcgisLoadAttempts++;
   
-  if (typeof window.Map !== 'undefined' && 
+  if (typeof window.ArcGISMap !== 'undefined' && 
       typeof window.ImageryLayer !== 'undefined' && 
       window.map_main && 
       window.mapViewReady) {
@@ -1363,7 +1363,7 @@ function is_dir(path){
 
 async function get_meta_and_content(){
   console.log('=== DEBUG: get_meta_and_content called ===');
-  console.log('ArcGIS API available:', typeof window.Map !== 'undefined');
+  console.log('ArcGIS API available:', typeof window.ArcGISMap !== 'undefined');
   console.log('map_main available:', !!window.map_main);
   /*await get_meta_data();
 
@@ -1372,7 +1372,7 @@ async function get_meta_and_content(){
 
     }
   else{
-    get_file_content();
+    await get_file_content();
     document.querySelector("#file_table").style.display="none";
    }
    */
@@ -1410,7 +1410,7 @@ async function get_meta_and_content(){
         current_band =  1;
      }
 
-      get_file_content();
+      await get_file_content();
       
 
      if(meta_data["mode"] == "Tool"){
@@ -1674,7 +1674,7 @@ function copy_file_or_folder(){
 }
 
 
-function change_channel_dropdown(self){
+async function change_channel_dropdown(self){
  document.querySelector("#preloader2").style.display = "flex";
  document.querySelector("#file_content").style.display = "none";
  if(suffix == "shp"){
@@ -1686,7 +1686,7 @@ function change_channel_dropdown(self){
   current_band = self.innerHTML;
   }
 
-  get_file_content();
+  await get_file_content();
 }
 
 x={};
@@ -1694,7 +1694,7 @@ u = "";
 file_format_names = {"txt":"plain_text","py":"python","m":"matlab","mlx":"matlab","r":"r","csv":"text","json":"json","xml":"xml","html":"html","prf":"plain_text",
   "tfw":"plain_text","js":"javascript","css":"css","c++":"c_cpp","h":"c_cpp"};
 
-function get_file_content(){
+async function get_file_content(){
 
 
 
@@ -1706,7 +1706,7 @@ if(suffix == "js" || suffix == "html" || suffix == "css" || suffix=="c++" || suf
                 xhrFields: {
                     responseType: 'text'
                 },
-                success: function(response,status,xhr) {
+                success: async function(response,status,xhr) {
                   x=xhr;
 
                   document.querySelector("#channel_dropdown").style.display="none";
@@ -1798,7 +1798,7 @@ else if(suffix == "tif" || suffix == "tiff" ){
                 xhrFields: {
                     responseType: 'blob'
                 },
-                success: function(response,status,xhr) {
+                success: async function(response,status,xhr) {
                   x=xhr;
                   document.querySelector("#file_content").style.display="block";
                   const contentType = xhr.getResponseHeader('Content-Type');
@@ -1874,7 +1874,7 @@ else if(suffix == "tif" || suffix == "tiff" ){
                         }
                         
                         console.log('🎯 Detected file type:', fileType);
-                        createArcGISOnlineEmbed(staticUrl, fileType);
+                        await createArcGISOnlineEmbedWithStatic(current_path, fileType);
 
                        // Create opacity slider
                         const slider = document.getElementById('opacity-slider');
@@ -1908,7 +1908,7 @@ else if (suffix == "png" || suffix == "jpg" || suffix == "jpeg"){
                 xhrFields: {
                     responseType: 'blob'
                 },
-                success: function(response,status,xhr) {
+                success: async function(response,status,xhr) {
                   x=xhr;
                   document.querySelector("#file_content").style.display="block";
                   const contentType = xhr.getResponseHeader('Content-Type');
@@ -1989,7 +1989,7 @@ else if (suffix == "png" || suffix == "jpg" || suffix == "jpeg"){
                         }
                         
                         console.log('🎯 Detected file type:', fileType);
-                        createArcGISOnlineEmbed(staticUrl, fileType);
+                        await createArcGISOnlineEmbedWithStatic(current_path, fileType);
 
                        // Create opacity slider
                         const slider = document.getElementById('opacity-slider');
@@ -2017,7 +2017,13 @@ else if (suffix == "shp"){
                           col = meta_data["native"]["columns"][i];
                           document.querySelector("#channel_list").innerHTML +=  '<span class="dropdown-item"  onclick="change_channel_dropdown(this)" id="channel_dropdown_item_'+col+'">'+col+'</span>';
                   }
-            document.querySelector("#channel_dropdown_item_"+current_col).style.backgroundColor = "#87CEEB";
+            // Fix: Add null check to prevent error when element doesn't exist
+            const channelElement = document.querySelector("#channel_dropdown_item_"+current_col);
+            if (channelElement) {
+                channelElement.style.backgroundColor = "#87CEEB";
+            } else {
+                console.warn("Channel dropdown element not found for:", current_col);
+            }
 
             $.ajax({
                 url: '/get_file',
@@ -2026,7 +2032,7 @@ else if (suffix == "shp"){
                 xhrFields: {
                     responseType: 'blob'
                 },
-                success: function(response,status,xhr) {
+                success: async function(response,status,xhr) {
                   x=xhr;
                   
                   //document.querySelector("#file_content").style.display="block";
@@ -2105,7 +2111,7 @@ else if (suffix == "shp"){
                         }
                         
                         console.log('🎯 Detected file type:', fileType);
-                        createArcGISOnlineEmbed(staticUrl, fileType);
+                        await createArcGISOnlineEmbedWithStatic(current_path, fileType);
 
                        // Create opacity slider
                         const slider = document.getElementById('opacity-slider');
@@ -2897,7 +2903,9 @@ $('body').on('focus',".datepicker input", function(){
 
 function init_map_main(){
   console.log('=== DEBUG: init_map_main called ===');
-  if (typeof window.Map === 'undefined') {
+  
+  // Check if ArcGIS classes are available
+  if (typeof window.ArcGISMap === 'undefined') {
     console.error('ArcGIS API not loaded yet for init_map_main');
     setTimeout(init_map_main, 100);
     return;
@@ -2909,7 +2917,8 @@ function init_map_main(){
   }
   console.log('=== DEBUG: Creating ArcGIS map with all components available ===');
   
-  const map = new window.Map({
+  // Use ArcGISMap instead of Map to avoid conflicts with native JS Map
+  const map = new window.ArcGISMap({
     basemap: "satellite"
   });
 
@@ -2983,6 +2992,71 @@ function init_map_nav(){
 function init_map() {
   console.log('🚫 init_map() called - this is a dummy function to prevent Google Maps errors');
   console.log('🚫 Google Maps should NOT be loading for files.html - using ArcGIS instead');
+}
+
+// NEW: Get static URL from ConvertToStatic API, then embed in ArcGIS Online
+async function createArcGISOnlineEmbedWithStatic(currentPath, fileType) {
+  console.log('🔗 CONVERT TO STATIC: Starting process for:', currentPath, fileType);
+  
+  try {
+    // Extract the part after ag_data/ for the API call
+    const filePathAfterAgData = currentPath.includes('ag_data/') 
+      ? currentPath.split('ag_data/')[1] 
+      : currentPath;
+    
+    console.log('🔗 CONVERT TO STATIC: API file path:', filePathAfterAgData);
+    
+    // Call ConvertToStatic API
+    const staticResponse = await fetch(`/api/convert_to_static_core/?file_path=${encodeURIComponent(filePathAfterAgData)}`, {
+      credentials: 'same-origin',
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+      }
+    });
+    
+    if (!staticResponse.ok) {
+      throw new Error(`ConvertToStatic API failed: ${staticResponse.status} ${staticResponse.statusText}`);
+    }
+    
+    const staticResult = await staticResponse.text();
+    console.log('🔗 CONVERT TO STATIC: API response:', staticResult);
+    
+    // Check if response is an error or HTML page
+    if (staticResult.includes('<html') || staticResult.includes('<!DOCTYPE') || staticResult.includes('Error:')) {
+      throw new Error('ConvertToStatic API returned an error page');
+    }
+    
+    // The API should return a static URL
+    let staticUrl = staticResult.trim();
+    
+    // If the response doesn't look like a URL, construct one
+    if (!staticUrl.startsWith('http') && !staticUrl.includes('SUCCESS')) {
+      staticUrl = window.location.origin + '/static/' + filePathAfterAgData;
+      console.log('🔗 CONVERT TO STATIC: Constructed fallback static URL:', staticUrl);
+    } else if (staticResult.includes('SUCCESS')) {
+      // If it's a debug message, extract any URL from it or use fallback
+      staticUrl = window.location.origin + '/static/' + filePathAfterAgData;
+      console.log('🔗 CONVERT TO STATIC: Using fallback URL after success message:', staticUrl);
+    }
+    
+    console.log('✅ CONVERT TO STATIC: Final static URL:', staticUrl);
+    
+    // Now use the existing ArcGIS Online embed function
+    createArcGISOnlineEmbed(staticUrl, fileType);
+    
+  } catch (error) {
+    console.error('❌ CONVERT TO STATIC: Error:', error.message);
+    console.log('🔄 CONVERT TO STATIC: Falling back to direct static URL...');
+    
+    // Fallback: construct direct static URL
+    const filePathAfterAgData = currentPath.includes('ag_data/') 
+      ? currentPath.split('ag_data/')[1] 
+      : currentPath;
+    const fallbackUrl = window.location.origin + '/static/' + filePathAfterAgData;
+    
+    console.log('🔄 CONVERT TO STATIC: Fallback URL:', fallbackUrl);
+    createArcGISOnlineEmbed(fallbackUrl, fileType);
+  }
 }
 
 // ARCGIS ONLINE: Embed ArcGIS Online web map for TIFF/SHP files
