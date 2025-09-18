@@ -671,7 +671,7 @@ path ="";
 console.log('🚨 EMERGENCY DEBUG: files.html template is loading - timestamp:', new Date().toISOString());
 // alert('🚨 EMERGENCY: If you see this alert, the template is loading fresh!'); // REMOVED - popup cancelled
 </script>
-<script src="/static/assets/js/files.js?cache_bust=ADDED_IMAGE_FALLBACK_888"></script>
+<script src="/static/assets/js/files.js?cache_bust=ARCGIS_DIAGNOSTIC_ENHANCED_111"></script>
 
 
 <link rel="stylesheet" href="https://js.arcgis.com/4.28/esri/themes/light/main.css?force_reload=12345">
@@ -686,6 +686,17 @@ console.log('=== DEBUG: Document ready state:', document.readyState);
 console.log('=== DEBUG: User agent:', navigator.userAgent);
 console.log('=== DEBUG: Testing if ArcGIS is available:', typeof require);
 
+// Test network connectivity to ArcGIS CDN
+fetch('https://js.arcgis.com/4.28/')
+  .then(response => {
+    console.log('🌐 ArcGIS CDN connectivity test:', response.ok ? '✅ SUCCESS' : '❌ FAILED');
+    console.log('🌐 Response status:', response.status, response.statusText);
+  })
+  .catch(error => {
+    console.error('🌐 ArcGIS CDN connectivity FAILED:', error);
+    console.error('🌐 This may indicate network blocking or CORS issues');
+  });
+
 // Test if ArcGIS script loaded
 setTimeout(() => {
   console.log('=== DEBUG: 5 second check - require available:', typeof require);
@@ -694,6 +705,12 @@ setTimeout(() => {
     console.log('✅ ArcGIS require() is available!');
   } else {
     console.log('❌ ArcGIS require() is NOT available - script failed to load');
+    
+    // Check if there's any global ArcGIS object
+    console.log('=== DEBUG: Checking for any ArcGIS globals...');
+    console.log('=== DEBUG: window.esri:', typeof window.esri);
+    console.log('=== DEBUG: window.__esri:', typeof window.__esri);
+    console.log('=== DEBUG: All window keys containing "esri":', Object.keys(window).filter(k => k.toLowerCase().includes('esri')));
   }
 }, 5000);
 
@@ -711,6 +728,24 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 <script>
 console.log('=== DEBUG: About to call ArcGIS require() ===');
+console.log('=== DEBUG: require function type:', typeof require);
+
+// First test if require exists
+if (typeof require === 'undefined') {
+  console.error('❌ CRITICAL: require() function not available - ArcGIS script failed to load');
+  console.error('❌ This means the ArcGIS CDN script at https://js.arcgis.com/4.28/ did not load properly');
+  
+  // Try manual script injection as fallback
+  console.log('🔄 ATTEMPTING: Manual ArcGIS script reload...');
+  const script = document.createElement('script');
+  script.src = 'https://js.arcgis.com/4.28/';
+  script.onload = () => console.log('✅ Manual script load success');
+  script.onerror = () => console.error('❌ Manual script load failed');
+  document.head.appendChild(script);
+  
+} else {
+  console.log('✅ require() function is available, proceeding with ArcGIS module loading...');
+}
 
 try {
   require([
