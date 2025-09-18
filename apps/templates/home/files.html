@@ -666,12 +666,29 @@ path ="";
 
 </script>
 <script src="https://unpkg.com/shapefile@0.6"></script>
-<script src="/static/assets/js/files.js"></script>
+<script src="/static/assets/js/files.js?v=2024"></script>
 
 
-<link rel="stylesheet" href="https://js.arcgis.com/4.28/esri/themes/light/main.css">
-<script src="https://js.arcgis.com/4.28/"></script>
-<script>console.log('=== DEBUG: ArcGIS 4.28 script loaded ===');</script>
+<link rel="stylesheet" href="https://js.arcgis.com/4.28/esri/themes/light/main.css?v=2024">
+<script src="https://js.arcgis.com/4.28/?v=2024"></script>
+<script>
+console.log('=== DEBUG: ArcGIS 4.28 script loaded ===');
+console.log('=== DEBUG: Current URL:', window.location.href);
+console.log('=== DEBUG: Document ready state:', document.readyState);
+console.log('=== DEBUG: User agent:', navigator.userAgent);
+
+// Add a very visible indicator
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('=== DEBUG: DOM Content Loaded - ArcGIS version should load ===');
+  
+  // Create a visible indicator
+  const indicator = document.createElement('div');
+  indicator.innerHTML = '🗺️ ARCGIS LOADING...';
+  indicator.style.cssText = 'position:fixed;top:10px;right:10px;background:red;color:white;padding:10px;z-index:99999;font-weight:bold;';
+  indicator.id = 'arcgis-indicator';
+  document.body.appendChild(indicator);
+});
+</script>
 <script>
 require([
   "esri/Map",
@@ -684,6 +701,13 @@ require([
   "esri/layers/GraphicsLayer"
 ], function(Map, MapView, ImageryLayer, FeatureLayer, Graphic, Extent, Sketch, GraphicsLayer) {
   console.log('=== DEBUG: ArcGIS modules loaded ===', {Map, MapView, ImageryLayer});
+  
+  // Update the visual indicator
+  const indicator = document.getElementById('arcgis-indicator');
+  if (indicator) {
+    indicator.innerHTML = '🗺️ ARCGIS MODULES LOADED!';
+    indicator.style.background = 'green';
+  }
   
   // Store ArcGIS classes globally first
   window.Map = Map;

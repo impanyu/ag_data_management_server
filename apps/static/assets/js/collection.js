@@ -320,57 +320,62 @@ function add_to_domain(path,file_name){
 
 
 function initMap(){
-  map = new google.maps.Map(
-    document.getElementById("map"),
-    {
-      center: { lat: 39.397, lng: -97.644 },
-      zoom: 14,
-    }
-  );
-
-  drawingManager = new google.maps.drawing.DrawingManager({
-    drawingMode: google.maps.drawing.OverlayType.RECTANGLE,
-    drawingControl: true,
-    drawingControlOptions: {
-      position: google.maps.ControlPosition.TOP_CENTER,
-      drawingModes: [
-        google.maps.drawing.OverlayType.RECTANGLE,
-      ],
-    },
-    markerOptions: {
-      icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
-    },
-    circleOptions: {
-      fillColor: "#ffff00",
-      fillOpacity: .8,
-      strokeWeight: 5,
-      clickable: false,
-      editable: true,
-      zIndex: 1,
-    },
+  console.log('=== DEBUG: Collection initMap called - using ArcGIS instead of Google Maps ===');
+  
+  if (typeof window.Map === 'undefined') {
+    console.error('ArcGIS API not ready for collection initMap');
+    setTimeout(initMap, 100);
+    return;
+  }
+  
+  // Create ArcGIS map
+  const arcgisMap = new window.Map({
+    basemap: "satellite"
   });
 
-  drawingManager.setMap(map);
+  // Create map view
+  const mapView = new window.MapView({
+    container: "map",
+    map: arcgisMap,
+    center: [-97.644, 39.397],
+    zoom: 14
+  });
 
-  google.maps.event.addListener(drawingManager, "overlaycomplete", function(event){
-       if(lastOverlay)
-           lastOverlay.setMap(null);
+  // Create graphics layer for drawing
+  const graphicsLayer = new window.GraphicsLayer();
+  arcgisMap.add(graphicsLayer);
+  
+  // Store globally for access from other functions
+  window.map = mapView;
+  window.graphicsLayer = graphicsLayer;
 
-        event.overlay.overlayType = event.type;
-        lastOverlay = event.overlay; // Save it
+  // Create sketch widget for drawing
+  const sketch = new window.Sketch({
+    layer: graphicsLayer,
+    view: mapView,
+    creationMode: "update"
+  });
 
-        var bounds = lastOverlay.getBounds();
-        end = bounds.getNorthEast();
-        start = bounds.getSouthWest();
+  mapView.ui.add(sketch, "top-right");
 
-        document.getElementById("southwest").setAttribute("value",start) ;
-        document.getElementById("northeast").setAttribute("value",end);
-
-
-        //map.drawingManager.setDrawingMode(null); // Return to 'hand' mode
-});
-
-
+  // Listen for sketch events
+  sketch.on("create", function(event) {
+    if (event.state === "complete") {
+      const geometry = event.graphic.geometry;
+      if (geometry.type === "extent") {
+        const extent = geometry;
+        const southwest = extent.ymin + "," + extent.xmin;
+        const northeast = extent.ymax + "," + extent.xmax;
+        
+        document.getElementById("southwest").setAttribute("value", southwest);
+        document.getElementById("northeast").setAttribute("value", northeast);
+        
+        console.log('Collection ArcGIS sketch created:', southwest, northeast);
+      }
+    }
+  });
+  
+  console.log('=== DEBUG: Collection initMap() converted to ArcGIS ===');
 }
 
 
@@ -1569,9 +1574,24 @@ else if (suffix == "png" || suffix == "jpg" || suffix == "jpeg"){
                         }
                         console.info(url);
 
-                        const overlay = new google.maps.GroundOverlay(url, imageBounds);
+                        // Create image overlay using ArcGIS
+                        if (window.ImageryLayer && window.map_main) {
+                          const imageLayer = new window.ImageryLayer({
+                            url: url,
+                            extent: {
+                              xmin: west,
+                              ymin: south,
+                              xmax: east,
+                              ymax: north,
+                              spatialReference: { wkid: 4326 }
+                            }
+                          });
 
-                        overlay.setMap(map_main);
+                          window.map_main.map.add(imageLayer);
+                          window.currentImageLayer = imageLayer;
+                        } else {
+                          console.error('ArcGIS API not ready for image overlay in collection.js');
+                        }
 
                        // Create opacity slider
                         const slider = document.getElementById('opacity-slider');
@@ -2331,59 +2351,73 @@ $('body').on('focus',".datepicker input", function(){
 
 
 function init_map_main(){
-  map_main = new google.maps.Map(
-    document.getElementById("map_main"),
-    {
-      center: { lat: 40.897, lng: -96.644 },
-      zoom: 11,
-    }
-  );
+  console.log('=== DEBUG: Collection init_map_main called ===');
+  if (typeof window.Map === 'undefined') {
+    console.error('ArcGIS API not loaded yet for collection init_map_main');
+    setTimeout(init_map_main, 100);
+    return;
+  }
+  console.log('=== DEBUG: Creating ArcGIS map for collection ===');
 
-
-      drawingManager = new google.maps.drawing.DrawingManager({
-    drawingMode: google.maps.drawing.OverlayType.RECTANGLE,
-    drawingControl: true,
-    drawingControlOptions: {
-      position: google.maps.ControlPosition.TOP_CENTER,
-      drawingModes: [
-        google.maps.drawing.OverlayType.RECTANGLE,
-      ],
-    },
-    markerOptions: {
-      icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
-    },
-    rectangleOptions: {
-      fillColor: "#0000ff",
-      fillOpacity: .6,
-      strokeWeight: 3,
-      clickable: false,
-      editable: true,
-      zIndex: 1,
-    },
+  // Create ArcGIS map
+  const map = new window.Map({
+    basemap: "satellite"
   });
 
- // drawingManager.setMap(map_main);
+  // Create map view
+  map_main = new window.MapView({
+    container: "map_main",
+    map: map,
+    center: [-96.644, 40.897],
+    zoom: 11
+  });
 
-  google.maps.event.addListener(drawingManager, "overlaycomplete", function(event){
-       if(lastOverlay)
-           lastOverlay.setMap(null);
+  // Store reference globally
+  window.map_main = map_main;
 
-        event.overlay.overlayType = event.type;
-        lastOverlay = event.overlay; // Save it
+  // Create graphics layer for drawing
+  const graphicsLayer = new window.GraphicsLayer();
+  map.add(graphicsLayer);
+  
+  // Store globally for access from other functions
+  window.graphicsLayer = graphicsLayer;
 
-        var bounds = lastOverlay.getBounds();
-        end = bounds.getNorthEast();
-        start = bounds.getSouthWest();
+  // Create sketch widget for drawing rectangles
+  const sketch = new window.Sketch({
+    layer: graphicsLayer,
+    view: map_main,
+    creationMode: "update",
+    defaultCreateOptions: {
+      mode: "freehand-polygon"
+    }
+  });
 
-        document.getElementById("southwest").setAttribute("value",start) ;
-        document.getElementById("northeast").setAttribute("value",end);
+  map_main.ui.add(sketch, "top-right");
 
-
-        //map.drawingManager.setDrawingMode(null); // Return to 'hand' mode
-});
-
-
-
+  // Listen for sketch events
+  sketch.on("create", function(event) {
+    if (event.state === "complete") {
+      const geometry = event.graphic.geometry;
+      if (geometry.type === "extent" || geometry.type === "polygon") {
+        let bounds;
+        if (geometry.type === "extent") {
+          bounds = geometry;
+        } else {
+          bounds = geometry.extent;
+        }
+        
+        const start = bounds.ymin + "," + bounds.xmin;
+        const end = bounds.ymax + "," + bounds.xmax;
+        
+        document.getElementById("southwest").setAttribute("value", start);
+        document.getElementById("northeast").setAttribute("value", end);
+        
+        console.log('Collection ArcGIS drawing completed:', start, end);
+      }
+    }
+  });
+  
+  console.log('=== DEBUG: Collection init_map_main ArcGIS setup complete ===');
 }
 
 
