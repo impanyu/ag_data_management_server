@@ -1,6 +1,6 @@
 // 🚨 EMERGENCY DEBUG - This should ALWAYS show up if files.js loads
 console.log('🚨 EMERGENCY DEBUG: files.js is loading! Timestamp:', new Date().toISOString());
-alert('🚨 EMERGENCY: files.js loaded successfully!');
+// alert('🚨 EMERGENCY: files.js loaded successfully!'); // REMOVED - popup cancelled
 
 var domain_names=[];
   $.get("/get_domains",
@@ -56,8 +56,19 @@ function waitForMapAndLoadContent() {
   }
 }
 
-// Start checking for map readiness
-waitForMapAndLoadContent();
+// Start checking for map readiness - but wait a bit for ArcGIS to load
+console.log('=== DEBUG: Delaying initial check to allow ArcGIS to load ===');
+setTimeout(() => {
+  console.log('=== DEBUG: Starting waitForMapAndLoadContent after delay ===');
+  
+  // Backup: Try to initialize map if it hasn't been done yet
+  if (!window.map_main && typeof window.Map !== 'undefined') {
+    console.log('=== DEBUG: map_main not found, trying backup initialization ===');
+    init_map_main();
+  }
+  
+  waitForMapAndLoadContent();
+}, 2000); // Wait 2 seconds for ArcGIS to initialize
 current_col = "";
 current_band = "";
 file_content ="";
@@ -2846,11 +2857,16 @@ $('body').on('focus',".datepicker input", function(){
 function init_map_main(){
   console.log('=== DEBUG: init_map_main called ===');
   if (typeof window.Map === 'undefined') {
-    console.error('ArcGIS API not loaded yet');
+    console.error('ArcGIS API not loaded yet for init_map_main');
     setTimeout(init_map_main, 100);
     return;
   }
-  console.log('=== DEBUG: Creating ArcGIS map ===');
+  if (typeof window.ImageryLayer === 'undefined') {
+    console.error('ArcGIS ImageryLayer not loaded yet for init_map_main');
+    setTimeout(init_map_main, 100);
+    return;
+  }
+  console.log('=== DEBUG: Creating ArcGIS map with all components available ===');
   
   const map = new window.Map({
     basemap: "satellite"

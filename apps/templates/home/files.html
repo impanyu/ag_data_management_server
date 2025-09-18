@@ -669,9 +669,9 @@ path ="";
 <script>
 // EMERGENCY DEBUG - This should ALWAYS show up
 console.log('🚨 EMERGENCY DEBUG: files.html template is loading - timestamp:', new Date().toISOString());
-alert('🚨 EMERGENCY: If you see this alert, the template is loading fresh!');
+// alert('🚨 EMERGENCY: If you see this alert, the template is loading fresh!'); // REMOVED - popup cancelled
 </script>
-<script src="/static/assets/js/files.js?cache_bust=IMPROVED_INIT_SEQUENCE_99999"></script>
+<script src="/static/assets/js/files.js?cache_bust=DELAYED_INITIALIZATION_FINAL"></script>
 
 
 <link rel="stylesheet" href="https://js.arcgis.com/4.28/esri/themes/light/main.css?force_reload=12345">
@@ -695,9 +695,11 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 <script>
+console.log('=== DEBUG: About to call ArcGIS require() ===');
+
 require([
   "esri/Map",
-  "esri/views/MapView",
+  "esri/views/MapView", 
   "esri/layers/ImageryLayer",
   "esri/layers/FeatureLayer",
   "esri/Graphic",
@@ -705,7 +707,9 @@ require([
   "esri/widgets/Sketch",
   "esri/layers/GraphicsLayer"
 ], function(Map, MapView, ImageryLayer, FeatureLayer, Graphic, Extent, Sketch, GraphicsLayer) {
-  console.log('=== DEBUG: ArcGIS modules loaded ===', {Map, MapView, ImageryLayer});
+  console.log('🎉 SUCCESS: ArcGIS modules loaded ===', {Map, MapView, ImageryLayer});
+  console.log('🎉 ImageryLayer type:', typeof ImageryLayer);
+  console.log('🎉 ImageryLayer object:', ImageryLayer);
   
   // Update the visual indicator
   const indicator = document.getElementById('arcgis-indicator');
