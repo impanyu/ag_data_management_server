@@ -7,6 +7,7 @@ from django.urls import path, re_path, include
 from apps.home import views
 from apps.home import api
 from apps.home import tile_views
+from apps.home import api_functions
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -34,6 +35,11 @@ router.register(r'users', UserViewSet)
 
 
 urlpatterns = [
+    # Function-based APIs that bypass authentication issues - MUST BE FIRST
+    path('api/generate_tiles_func/', api_functions.generate_tiles_api, name='generate_tiles_func'),
+    path('api/convert_to_static_func/', api_functions.convert_to_static_api, name='convert_to_static_func'), 
+    path('api/debug_simple/', api_functions.debug_api_simple, name='debug_simple'),
+    
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),#,
     path('api/upload/', FileUploadView.as_view(), name='file-upload'),
@@ -98,7 +104,7 @@ urlpatterns = [
     re_path(r'^canopy_coverage_and_temperature',views.data,name='canopy_coverage_and_temperature'),
     re_path(r'^upload_file',views.data,name='upload_file'),
     re_path(r'^delete_file',views.data,name='delete_file'),
-    
+ 
     # IMPORTANT: ALL API patterns must be BEFORE the catch-all pattern below
     # The catch-all pattern intercepts everything and requires login
     

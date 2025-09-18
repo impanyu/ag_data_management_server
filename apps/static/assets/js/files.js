@@ -2965,12 +2965,21 @@ async function createArcGISOnlineEmbedWithStatic(currentPath, fileType) {
     console.log('🔗 CONVERT TO STATIC: API file path:', filePathAfterAgData);
     
     // Call ConvertToStatic API
-    const staticResponse = await fetch(`/api/convert_to_static/?file_path=${encodeURIComponent(filePathAfterAgData)}`, {
-      credentials: 'same-origin',
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest',
-      }
+    // Try function-based API first (bypasses auth issues)
+    let staticResponse = await fetch(`/api/convert_to_static_func/?file_path=${encodeURIComponent(filePathAfterAgData)}`, {
+      method: 'GET'
     });
+    
+    // If function-based API fails, try class-based API
+    if (!staticResponse.ok) {
+      console.log('📡 CONVERT TO STATIC: Function-based API failed, trying class-based...');
+      staticResponse = await fetch(`/api/convert_to_static/?file_path=${encodeURIComponent(filePathAfterAgData)}`, {
+        credentials: 'same-origin',
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+        }
+      });
+    }
     
     if (!staticResponse.ok) {
       throw new Error(`ConvertToStatic API failed: ${staticResponse.status} ${staticResponse.statusText}`);
@@ -3205,18 +3214,34 @@ async function createTiffTileVisualization(currentPath) {
     // Animate progress bar during generation
     animateTileProgress();
     
-    // Call tile generation API
+    // Call tile generation API (try function-based first, then class-based)
     console.log('📡 TIFF TILES: Calling GenerateTiles API...');
     const filePath = currentPath.split('/ag_data/')[1] || currentPath;
-    const apiUrl = `/api/generate_tiles/?file_path=${encodeURIComponent(filePath)}`;
     
-    console.log('📡 TIFF TILES: API URL:', apiUrl);
-    const response = await fetch(apiUrl, {
+    // Try function-based API first (bypasses auth issues)
+    let apiUrl = `/api/generate_tiles_func/?file_path=${encodeURIComponent(filePath)}`;
+    console.log('📡 TIFF TILES: Trying function-based API:', apiUrl);
+    
+    let response = await fetch(apiUrl, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       }
     });
+    
+    // If function-based API fails, try class-based API
+    if (!response.ok) {
+      console.log('📡 TIFF TILES: Function-based API failed, trying class-based API...');
+      apiUrl = `/api/generate_tiles/?file_path=${encodeURIComponent(filePath)}`;
+      console.log('📡 TIFF TILES: Trying class-based API:', apiUrl);
+      
+      response = await fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+    }
     
     if (!response.ok) {
       throw new Error(`Tile generation failed: ${response.status}`);
