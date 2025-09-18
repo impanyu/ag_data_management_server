@@ -671,6 +671,7 @@ path ="";
 
 <link rel="stylesheet" href="https://js.arcgis.com/4.28/esri/themes/light/main.css">
 <script src="https://js.arcgis.com/4.28/"></script>
+<script>console.log('=== DEBUG: ArcGIS 4.28 script loaded ===');</script>
 <script>
 require([
   "esri/Map",
@@ -682,6 +683,8 @@ require([
   "esri/widgets/Sketch",
   "esri/layers/GraphicsLayer"
 ], function(Map, MapView, ImageryLayer, FeatureLayer, Graphic, Extent, Sketch, GraphicsLayer) {
+  console.log('=== DEBUG: ArcGIS modules loaded ===', {Map, MapView, ImageryLayer});
+  
   // Store ArcGIS classes globally first
   window.Map = Map;
   window.MapView = MapView;
@@ -691,6 +694,8 @@ require([
   window.Extent = Extent;
   window.Sketch = Sketch;
   window.GraphicsLayer = GraphicsLayer;
+  
+  console.log('=== DEBUG: ArcGIS classes stored globally ===');
   
   // Initialize map when DOM is ready
   if (document.readyState === 'loading') {

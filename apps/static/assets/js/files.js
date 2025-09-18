@@ -28,9 +28,18 @@ if(!is_dir(current_path)){
 else{
   document.querySelector("#preloader5").style.display="flex";
 }
+console.log('=== DEBUG: files.js loaded ===');
+console.log('=== DEBUG: Current URL:', window.location.href);
+console.log('=== DEBUG: User Agent:', navigator.userAgent);
+
 // Wait for ArcGIS API and map to be ready before loading content
 function waitForMapAndLoadContent() {
+  console.log('=== DEBUG: waitForMapAndLoadContent called ===');
+  console.log('=== DEBUG: ArcGIS Map available:', typeof window.Map !== 'undefined');
+  console.log('=== DEBUG: map_main available:', !!window.map_main);
+  
   if (typeof window.Map !== 'undefined' && window.map_main) {
+    console.log('=== DEBUG: Both ArcGIS and map_main ready, calling get_meta_and_content ===');
     get_meta_and_content();
   } else {
     setTimeout(waitForMapAndLoadContent, 100);
@@ -335,57 +344,63 @@ function add_to_domain(path,file_name){
 
 
 function initMap(){
-  map = new google.maps.Map(
-    document.getElementById("map"),
-    {
-      center: { lat: 39.397, lng: -97.644 },
-      zoom: 14,
-    }
-  );
-
-  drawingManager = new google.maps.drawing.DrawingManager({
-    drawingMode: google.maps.drawing.OverlayType.RECTANGLE,
-    drawingControl: true,
-    drawingControlOptions: {
-      position: google.maps.ControlPosition.TOP_CENTER,
-      drawingModes: [
-        google.maps.drawing.OverlayType.RECTANGLE,
-      ],
-    },
-    markerOptions: {
-      icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
-    },
-    circleOptions: {
-      fillColor: "#ffff00",
-      fillOpacity: .8,
-      strokeWeight: 5,
-      clickable: false,
-      editable: true,
-      zIndex: 1,
-    },
+  console.log('=== DEBUG: Legacy initMap() called - replacing with ArcGIS ===');
+  
+  if (typeof window.Map === 'undefined') {
+    console.error('ArcGIS API not loaded yet for legacy initMap');
+    setTimeout(initMap, 100);
+    return;
+  }
+  
+  const mapInstance = new window.Map({
+    basemap: "satellite"
   });
 
-  drawingManager.setMap(map);
+  map = new window.MapView({
+    container: "map",
+    map: mapInstance,
+    center: [-97.644, 39.397],
+    zoom: 14
+  });
 
-  google.maps.event.addListener(drawingManager, "overlaycomplete", function(event){
-       if(lastOverlay)
-           lastOverlay.setMap(null);
+  // Create graphics layer for overlays
+  if (!window.graphicsLayer) {
+    window.graphicsLayer = new window.GraphicsLayer();
+    mapInstance.add(window.graphicsLayer);
+  }
 
-        event.overlay.overlayType = event.type;
-        lastOverlay = event.overlay; // Save it
+  // Create sketch widget for drawing
+  const sketch = new window.Sketch({
+    layer: window.graphicsLayer,
+    view: map,
+    creationMode: "update",
+    availableCreateTools: ["rectangle"]
+  });
 
-        var bounds = lastOverlay.getBounds();
-        end = bounds.getNorthEast();
-        start = bounds.getSouthWest();
+  map.ui.add(sketch, "top-right");
 
-        document.getElementById("southwest").setAttribute("value",start) ;
-        document.getElementById("northeast").setAttribute("value",end);
+  // Handle sketch events
+  sketch.on("create", function(event) {
+    if (event.state === "complete") {
+      const graphic = event.graphic;
+      const extent = graphic.geometry.extent;
+      
+      const southwest = extent.ymin + "," + extent.xmin;
+      const northeast = extent.ymax + "," + extent.xmax;
+      
+      if (document.getElementById("southwest")) {
+        document.getElementById("southwest").setAttribute("value", southwest);
+      }
+      if (document.getElementById("northeast")) {
+        document.getElementById("northeast").setAttribute("value", northeast);
+      }
+      
+      console.log('Legacy initMap sketch created:', southwest + "," + northeast);
+    }
+  });
 
-
-        //map.drawingManager.setDrawingMode(null); // Return to 'hand' mode
-});
-
-
+  window.sketchWidget = sketch;
+  console.log('=== DEBUG: Legacy initMap() converted to ArcGIS ===');
 }
 
 
@@ -1255,6 +1270,9 @@ function is_dir(path){
 }
 
 async function get_meta_and_content(){
+  console.log('=== DEBUG: get_meta_and_content called ===');
+  console.log('ArcGIS API available:', typeof window.Map !== 'undefined');
+  console.log('map_main available:', !!window.map_main);
   /*await get_meta_data();
 
   if(meta_data["format"][0] == "Folder"){
@@ -1738,7 +1756,13 @@ else if(suffix == "tif" || suffix == "tiff" ){
                         }
 
                         // Create image overlay using ArcGIS
+                        console.log('=== DEBUG: Attempting to create image overlay ===');
+                        console.log('ImageryLayer available:', !!window.ImageryLayer);
+                        console.log('map_main available:', !!window.map_main);
+                        console.log('URL:', url);
+                        
                         if (window.ImageryLayer && window.map_main) {
+                          console.log('=== DEBUG: Creating ArcGIS ImageryLayer ===');
                           const imageLayer = new window.ImageryLayer({
                             url: url,
                             extent: {
@@ -1752,8 +1776,10 @@ else if(suffix == "tif" || suffix == "tiff" ){
 
                           window.map_main.map.add(imageLayer);
                           window.currentImageLayer = imageLayer;
+                          console.log('=== DEBUG: ArcGIS ImageryLayer added to map ===');
                         } else {
-                          console.error('ArcGIS API not ready for image overlay');
+                          console.error('=== DEBUG: ArcGIS API not ready for image overlay ===');
+                          console.error('ImageryLayer:', !!window.ImageryLayer, 'map_main:', !!window.map_main);
                         }
 
                        // Create opacity slider
@@ -1843,7 +1869,13 @@ else if (suffix == "png" || suffix == "jpg" || suffix == "jpeg"){
                         }
 
                         // Create image overlay using ArcGIS
+                        console.log('=== DEBUG: Attempting to create image overlay ===');
+                        console.log('ImageryLayer available:', !!window.ImageryLayer);
+                        console.log('map_main available:', !!window.map_main);
+                        console.log('URL:', url);
+                        
                         if (window.ImageryLayer && window.map_main) {
+                          console.log('=== DEBUG: Creating ArcGIS ImageryLayer ===');
                           const imageLayer = new window.ImageryLayer({
                             url: url,
                             extent: {
@@ -1857,8 +1889,10 @@ else if (suffix == "png" || suffix == "jpg" || suffix == "jpeg"){
 
                           window.map_main.map.add(imageLayer);
                           window.currentImageLayer = imageLayer;
+                          console.log('=== DEBUG: ArcGIS ImageryLayer added to map ===');
                         } else {
-                          console.error('ArcGIS API not ready for image overlay');
+                          console.error('=== DEBUG: ArcGIS API not ready for image overlay ===');
+                          console.error('ImageryLayer:', !!window.ImageryLayer, 'map_main:', !!window.map_main);
                         }
 
                        // Create opacity slider
@@ -1949,7 +1983,13 @@ else if (suffix == "shp"){
                         }
 
                         // Create image overlay using ArcGIS
+                        console.log('=== DEBUG: Attempting to create image overlay ===');
+                        console.log('ImageryLayer available:', !!window.ImageryLayer);
+                        console.log('map_main available:', !!window.map_main);
+                        console.log('URL:', url);
+                        
                         if (window.ImageryLayer && window.map_main) {
+                          console.log('=== DEBUG: Creating ArcGIS ImageryLayer ===');
                           const imageLayer = new window.ImageryLayer({
                             url: url,
                             extent: {
@@ -1963,8 +2003,10 @@ else if (suffix == "shp"){
 
                           window.map_main.map.add(imageLayer);
                           window.currentImageLayer = imageLayer;
+                          console.log('=== DEBUG: ArcGIS ImageryLayer added to map ===');
                         } else {
-                          console.error('ArcGIS API not ready for image overlay');
+                          console.error('=== DEBUG: ArcGIS API not ready for image overlay ===');
+                          console.error('ImageryLayer:', !!window.ImageryLayer, 'map_main:', !!window.map_main);
                         }
 
                        // Create opacity slider
@@ -2756,11 +2798,13 @@ $('body').on('focus',".datepicker input", function(){
 
 
 function init_map_main(){
+  console.log('=== DEBUG: init_map_main called ===');
   if (typeof window.Map === 'undefined') {
     console.error('ArcGIS API not loaded yet');
     setTimeout(init_map_main, 100);
     return;
   }
+  console.log('=== DEBUG: Creating ArcGIS map ===');
   
   const map = new window.Map({
     basemap: "satellite"
