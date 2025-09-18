@@ -671,13 +671,13 @@ path ="";
 console.log('🚨 EMERGENCY DEBUG: files.html template is loading - timestamp:', new Date().toISOString());
 // alert('🚨 EMERGENCY: If you see this alert, the template is loading fresh!'); // REMOVED - popup cancelled
 </script>
-<script src="/static/assets/js/files.js?cache_bust=FIXED_INIT_MAP_CONFLICT_777"></script>
+<script src="/static/assets/js/files.js?cache_bust=ADDED_DUMMY_INIT_MAP_999"></script>
 
 
 <link rel="stylesheet" href="https://js.arcgis.com/4.28/esri/themes/light/main.css?force_reload=12345">
 <script src="https://js.arcgis.com/4.28/?force_reload=12345" 
-        onload="console.log('✅ ArcGIS 4.28 script loaded successfully')"
-        onerror="console.error('❌ ArcGIS 4.28 script FAILED to load')">
+        onload="console.log('✅ ArcGIS 4.28 script loaded successfully'); window.arcgisScriptLoaded = true;"
+        onerror="console.error('❌ ArcGIS 4.28 script FAILED to load'); window.arcgisScriptFailed = true;">
 </script>
 <script>
 console.log('=== DEBUG: ArcGIS 4.28 script loaded ===');

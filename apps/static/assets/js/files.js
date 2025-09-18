@@ -44,14 +44,21 @@ function waitForMapAndLoadContent() {
   console.log('=== DEBUG: map_main available:', !!window.map_main);
   console.log('=== DEBUG: mapViewReady:', !!window.mapViewReady);
   
+  // Count how many times we've tried
+  if (!window.arcgisLoadAttempts) window.arcgisLoadAttempts = 0;
+  window.arcgisLoadAttempts++;
+  
   if (typeof window.Map !== 'undefined' && 
       typeof window.ImageryLayer !== 'undefined' && 
       window.map_main && 
       window.mapViewReady) {
     console.log('=== DEBUG: All ArcGIS components ready, loading content ===');
     get_meta_and_content();
+  } else if (window.arcgisLoadAttempts > 100) { // After 20 seconds, give up on ArcGIS
+    console.log('⚠️ WARNING: ArcGIS failed to load after 20 seconds, loading content anyway for folder browsing');
+    get_meta_and_content();
   } else {
-    console.log('=== DEBUG: Still waiting for ArcGIS components, retrying in 200ms ===');
+    console.log('=== DEBUG: Still waiting for ArcGIS components, retrying in 200ms (attempt ' + window.arcgisLoadAttempts + '/100) ===');
     setTimeout(waitForMapAndLoadContent, 200);
   }
 }
@@ -2257,7 +2264,7 @@ return;
           subdomains=[];
           times=[];
 
-          //draw all the data & files in current_path on google map based
+          //draw all the data & files in current_path on  map based
           data_points = data["data_points"];
           current_files_names = [];
           current_folders_names = [];
@@ -2937,6 +2944,12 @@ function init_map_nav(){
 
 // REMOVED: function init_map() - was causing Google Maps conflicts
 // Now using ArcGIS only - init_map_main() called directly from template
+
+// Add dummy function to prevent Google Maps callback errors
+function init_map() {
+  console.log('🚫 init_map() called - this is a dummy function to prevent Google Maps errors');
+  console.log('🚫 Google Maps should NOT be loading for files.html - using ArcGIS instead');
+}
 
 
 
