@@ -1861,9 +1861,9 @@ else if(suffix == "tif" || suffix == "tiff" ){
                         console.log('🌐 Blob URL (not usable by ArcGIS):', url);
                         console.log('📁 Current path:', current_path);
                         
-                        // Create a proper server URL that ArcGIS Online can access
-                        const serverUrl = window.location.origin + '/get_file?current_path=' + encodeURIComponent(current_path) + '&col=' + encodeURIComponent(current_col || '');
-                        console.log('🌐 Server URL for ArcGIS Online:', serverUrl);
+                        // Create a static file URL that ArcGIS Online can access
+                        const staticUrl = window.location.origin + '/data/' + current_path;
+                        console.log('🌐 Static file URL for ArcGIS Online:', staticUrl);
                         
                         // Determine file type from current path
                         let fileType = 'unknown';
@@ -1874,7 +1874,7 @@ else if(suffix == "tif" || suffix == "tiff" ){
                         }
                         
                         console.log('🎯 Detected file type:', fileType);
-                        createArcGISOnlineEmbed(serverUrl, fileType);
+                        createArcGISOnlineEmbed(staticUrl, fileType);
 
                        // Create opacity slider
                         const slider = document.getElementById('opacity-slider');
@@ -1976,9 +1976,9 @@ else if (suffix == "png" || suffix == "jpg" || suffix == "jpeg"){
                         console.log('🌐 Blob URL (not usable by ArcGIS):', url);
                         console.log('📁 Current path:', current_path);
                         
-                        // Create a proper server URL that ArcGIS Online can access
-                        const serverUrl = window.location.origin + '/get_file?current_path=' + encodeURIComponent(current_path) + '&col=' + encodeURIComponent(current_col || '');
-                        console.log('🌐 Server URL for ArcGIS Online:', serverUrl);
+                        // Create a static file URL that ArcGIS Online can access
+                        const staticUrl = window.location.origin + '/data/' + current_path;
+                        console.log('🌐 Static file URL for ArcGIS Online:', staticUrl);
                         
                         // Determine file type from current path
                         let fileType = 'unknown';
@@ -1989,7 +1989,7 @@ else if (suffix == "png" || suffix == "jpg" || suffix == "jpeg"){
                         }
                         
                         console.log('🎯 Detected file type:', fileType);
-                        createArcGISOnlineEmbed(serverUrl, fileType);
+                        createArcGISOnlineEmbed(staticUrl, fileType);
 
                        // Create opacity slider
                         const slider = document.getElementById('opacity-slider');
@@ -2092,9 +2092,9 @@ else if (suffix == "shp"){
                         console.log('🌐 Blob URL (not usable by ArcGIS):', url);
                         console.log('📁 Current path:', current_path);
                         
-                        // Create a proper server URL that ArcGIS Online can access
-                        const serverUrl = window.location.origin + '/get_file?current_path=' + encodeURIComponent(current_path) + '&col=' + encodeURIComponent(current_col || '');
-                        console.log('🌐 Server URL for ArcGIS Online:', serverUrl);
+                        // Create a static file URL that ArcGIS Online can access
+                        const staticUrl = window.location.origin + '/data/' + current_path;
+                        console.log('🌐 Static file URL for ArcGIS Online:', staticUrl);
                         
                         // Determine file type from current path
                         let fileType = 'unknown';
@@ -2105,7 +2105,7 @@ else if (suffix == "shp"){
                         }
                         
                         console.log('🎯 Detected file type:', fileType);
-                        createArcGISOnlineEmbed(serverUrl, fileType);
+                        createArcGISOnlineEmbed(staticUrl, fileType);
 
                        // Create opacity slider
                         const slider = document.getElementById('opacity-slider');
