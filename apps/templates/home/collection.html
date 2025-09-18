@@ -575,6 +575,7 @@ require([
   "esri/widgets/Sketch",
   "esri/layers/GraphicsLayer"
 ], function(Map, MapView, ImageryLayer, FeatureLayer, Graphic, Extent, Sketch, GraphicsLayer) {
+  // Store ArcGIS classes globally first
   window.Map = Map;
   window.MapView = MapView;
   window.ImageryLayer = ImageryLayer;
@@ -583,6 +584,9 @@ require([
   window.Extent = Extent;
   window.Sketch = Sketch;
   window.GraphicsLayer = GraphicsLayer;
+  
+  // Initialize map when ready (collection.js will handle its own initialization)
+  console.log('ArcGIS API loaded for collection');
 });
 </script>
 

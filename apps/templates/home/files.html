@@ -682,6 +682,16 @@ require([
   "esri/widgets/Sketch",
   "esri/layers/GraphicsLayer"
 ], function(Map, MapView, ImageryLayer, FeatureLayer, Graphic, Extent, Sketch, GraphicsLayer) {
+  // Store ArcGIS classes globally first
+  window.Map = Map;
+  window.MapView = MapView;
+  window.ImageryLayer = ImageryLayer;
+  window.FeatureLayer = FeatureLayer;
+  window.Graphic = Graphic;
+  window.Extent = Extent;
+  window.Sketch = Sketch;
+  window.GraphicsLayer = GraphicsLayer;
+  
   // Initialize map when DOM is ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init_map);
@@ -696,14 +706,6 @@ require([
   
   window.init_map_main = init_map_main;
   window.init_map_nav = init_map_nav;
-  window.Map = Map;
-  window.MapView = MapView;
-  window.ImageryLayer = ImageryLayer;
-  window.FeatureLayer = FeatureLayer;
-  window.Graphic = Graphic;
-  window.Extent = Extent;
-  window.Sketch = Sketch;
-  window.GraphicsLayer = GraphicsLayer;
 });
 </script>
 

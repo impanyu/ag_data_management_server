@@ -22,7 +22,17 @@ document.querySelector("#other_meta").value ="";
 document.querySelector("#file_content").style.display="none";
 if(current_path.indexOf(".")!=-1)
   document.querySelector("#preloader2").style.display="flex";
-get_meta_and_content();
+// Wait for ArcGIS API to be ready before loading content
+function waitForArcGISAndLoadContent() {
+  if (typeof window.Map !== 'undefined') {
+    get_meta_and_content();
+  } else {
+    setTimeout(waitForArcGISAndLoadContent, 100);
+  }
+}
+
+// Start checking for ArcGIS API readiness
+waitForArcGISAndLoadContent();
 current_col = "";
 current_band = "";
 file_content ="";
@@ -69,21 +79,23 @@ function add_to_domain(path,file_name){
                      }
                    };
 
-                   const rectangle = new window.Graphic({
-                     geometry: rectangleGeometry,
-                     symbol: rectangleSymbol
-                   });
-
-                   if (window.graphicsLayer) {
-                     window.graphicsLayer.add(rectangle);
-                   }
-                   lastOverlay = rectangle;
-
-                   if (map_main) {
-                     map_main.goTo({
-                       center: [(start[1] + end[1]) / 2, (start[0] + end[0]) / 2],
-                       zoom: 15
+                   if (window.Graphic && window.graphicsLayer) {
+                     const rectangle = new window.Graphic({
+                       geometry: rectangleGeometry,
+                       symbol: rectangleSymbol
                      });
+
+                     window.graphicsLayer.add(rectangle);
+                     lastOverlay = rectangle;
+
+                     if (window.map_main) {
+                       window.map_main.goTo({
+                         center: [(start[1] + end[1]) / 2, (start[0] + end[0]) / 2],
+                         zoom: 15
+                       });
+                     }
+                   } else {
+                     console.error('ArcGIS API not ready for rectangle overlay');
                    }
                       document.getElementById("southwest").setAttribute("value",start) ;
                       document.getElementById("northeast").setAttribute("value",end);
@@ -1443,10 +1455,12 @@ else if(suffix == "tif" || suffix == "tiff" ){
                           };
 
                         // Center the map on the image
-                        map_main.goTo({
-                          center: [(east + west) / 2, (north + south) / 2],
-                          zoom: 15
-                        });
+                        if (window.map_main) {
+                          window.map_main.goTo({
+                            center: [(east + west) / 2, (north + south) / 2],
+                            zoom: 15
+                          });
+                        }
                         console.info(url);
 
                         // Clear existing overlays
@@ -1456,19 +1470,23 @@ else if(suffix == "tif" || suffix == "tiff" ){
 
 
                         // Create image overlay using ArcGIS
-                        const imageLayer = new window.ImageryLayer({
-                          url: url,
-                          extent: {
-                            xmin: west,
-                            ymin: south,
-                            xmax: east,
-                            ymax: north,
-                            spatialReference: { wkid: 4326 }
-                          }
-                        });
+                        if (window.ImageryLayer && window.map_main) {
+                          const imageLayer = new window.ImageryLayer({
+                            url: url,
+                            extent: {
+                              xmin: west,
+                              ymin: south,
+                              xmax: east,
+                              ymax: north,
+                              spatialReference: { wkid: 4326 }
+                            }
+                          });
 
-                        map_main.map.add(imageLayer);
-                        window.currentImageLayer = imageLayer;
+                          window.map_main.map.add(imageLayer);
+                          window.currentImageLayer = imageLayer;
+                        } else {
+                          console.error('ArcGIS API not ready for image overlay');
+                        }
 
                        // Create opacity slider
                         const slider = document.getElementById('opacity-slider');
@@ -1543,10 +1561,12 @@ else if (suffix == "png" || suffix == "jpg" || suffix == "jpeg"){
                           };
 
                         // Center the map on the image
-                        map_main.goTo({
-                          center: [(east + west) / 2, (north + south) / 2],
-                          zoom: 15
-                        });
+                        if (window.map_main) {
+                          window.map_main.goTo({
+                            center: [(east + west) / 2, (north + south) / 2],
+                            zoom: 15
+                          });
+                        }
                         console.info(url);
 
                         const overlay = new google.maps.GroundOverlay(url, imageBounds);
@@ -1624,10 +1644,12 @@ else if (suffix == "shp"){
                           };
 
                         // Center the map on the image
-                        map_main.goTo({
-                          center: [(east + west) / 2, (north + south) / 2],
-                          zoom: 15
-                        });
+                        if (window.map_main) {
+                          window.map_main.goTo({
+                            center: [(east + west) / 2, (north + south) / 2],
+                            zoom: 15
+                          });
+                        }
                         console.info(url);
 
                         // Clear existing overlays
@@ -1639,19 +1661,23 @@ else if (suffix == "shp"){
 
 
                         // Create image overlay using ArcGIS
-                        const imageLayer = new window.ImageryLayer({
-                          url: url,
-                          extent: {
-                            xmin: west,
-                            ymin: south,
-                            xmax: east,
-                            ymax: north,
-                            spatialReference: { wkid: 4326 }
-                          }
-                        });
+                        if (window.ImageryLayer && window.map_main) {
+                          const imageLayer = new window.ImageryLayer({
+                            url: url,
+                            extent: {
+                              xmin: west,
+                              ymin: south,
+                              xmax: east,
+                              ymax: north,
+                              spatialReference: { wkid: 4326 }
+                            }
+                          });
 
-                        map_main.map.add(imageLayer);
-                        window.currentImageLayer = imageLayer;
+                          window.map_main.map.add(imageLayer);
+                          window.currentImageLayer = imageLayer;
+                        } else {
+                          console.error('ArcGIS API not ready for image overlay');
+                        }
 
                        // Create opacity slider
                         const slider = document.getElementById('opacity-slider');

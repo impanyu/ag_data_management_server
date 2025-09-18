@@ -49,21 +49,23 @@ function add_to_domain(path,file_name){
                      }
                    };
 
-                   const rectangle = new window.Graphic({
-                     geometry: rectangleGeometry,
-                     symbol: rectangleSymbol
-                   });
-
-                   if (window.graphicsLayer) {
-                     window.graphicsLayer.add(rectangle);
-                   }
-                   lastOverlay = rectangle;
-
-                   if (map_main) {
-                     map_main.goTo({
-                       center: [(start[1] + end[1]) / 2, (start[0] + end[0]) / 2],
-                       zoom: 15
+                   if (window.Graphic && window.graphicsLayer) {
+                     const rectangle = new window.Graphic({
+                       geometry: rectangleGeometry,
+                       symbol: rectangleSymbol
                      });
+
+                     window.graphicsLayer.add(rectangle);
+                     lastOverlay = rectangle;
+
+                     if (window.map_main) {
+                       window.map_main.goTo({
+                         center: [(start[1] + end[1]) / 2, (start[0] + end[0]) / 2],
+                         zoom: 15
+                       });
+                     }
+                   } else {
+                     console.error('ArcGIS API not ready for rectangle overlay');
                    }
                       document.getElementById("southwest").setAttribute("value",start) ;
                       document.getElementById("northeast").setAttribute("value",end);
@@ -611,6 +613,9 @@ function init_map_main(){
     center: [-96.644, 40.897],
     zoom: 11
   });
+
+  // Store reference globally
+  window.map_main = map_main;
 
   // Create graphics layer for overlays
   window.graphicsLayer = new window.GraphicsLayer();

@@ -28,7 +28,17 @@ if(!is_dir(current_path)){
 else{
   document.querySelector("#preloader5").style.display="flex";
 }
-get_meta_and_content();
+// Wait for ArcGIS API and map to be ready before loading content
+function waitForMapAndLoadContent() {
+  if (typeof window.Map !== 'undefined' && window.map_main) {
+    get_meta_and_content();
+  } else {
+    setTimeout(waitForMapAndLoadContent, 100);
+  }
+}
+
+// Start checking for map readiness
+waitForMapAndLoadContent();
 current_col = "";
 current_band = "";
 file_content ="";
@@ -86,20 +96,22 @@ function add_to_domain(path,file_name){
                      }
                    };
 
-                   const rectangle = new window.Graphic({
-                     geometry: rectangleGeometry,
-                     symbol: rectangleSymbol
-                   });
+                   if (window.Graphic && window.graphicsLayer && window.map_main) {
+                     const rectangle = new window.Graphic({
+                       geometry: rectangleGeometry,
+                       symbol: rectangleSymbol
+                     });
 
-                   if (window.graphicsLayer) {
                      window.graphicsLayer.add(rectangle);
-                   }
-                   lastOverlay = rectangle;
+                     lastOverlay = rectangle;
 
-                   map_main.goTo({
-                     center: [(start[1] + end[1]) / 2, (start[0] + end[0]) / 2],
-                     zoom: 15
-                   });
+                     window.map_main.goTo({
+                       center: [(start[1] + end[1]) / 2, (start[0] + end[0]) / 2],
+                       zoom: 15
+                     });
+                   } else {
+                     console.error('ArcGIS API not ready for rectangle overlay');
+                   }
                       document.getElementById("southwest").setAttribute("value",start) ;
                       document.getElementById("northeast").setAttribute("value",end);
 
@@ -1712,10 +1724,12 @@ else if(suffix == "tif" || suffix == "tiff" ){
                           };
 
                         // Center the map on the image
-                        map_main.goTo({
-                          center: [(east + west) / 2, (north + south) / 2],
-                          zoom: 15
-                        });
+                        if (window.map_main) {
+                          window.map_main.goTo({
+                            center: [(east + west) / 2, (north + south) / 2],
+                            zoom: 15
+                          });
+                        }
                         console.info(url);
 
                         // Clear existing overlays
@@ -1724,19 +1738,23 @@ else if(suffix == "tif" || suffix == "tiff" ){
                         }
 
                         // Create image overlay using ArcGIS
-                        const imageLayer = new window.ImageryLayer({
-                          url: url,
-                          extent: {
-                            xmin: west,
-                            ymin: south,
-                            xmax: east,
-                            ymax: north,
-                            spatialReference: { wkid: 4326 }
-                          }
-                        });
+                        if (window.ImageryLayer && window.map_main) {
+                          const imageLayer = new window.ImageryLayer({
+                            url: url,
+                            extent: {
+                              xmin: west,
+                              ymin: south,
+                              xmax: east,
+                              ymax: north,
+                              spatialReference: { wkid: 4326 }
+                            }
+                          });
 
-                        map_main.map.add(imageLayer);
-                        window.currentImageLayer = imageLayer;
+                          window.map_main.map.add(imageLayer);
+                          window.currentImageLayer = imageLayer;
+                        } else {
+                          console.error('ArcGIS API not ready for image overlay');
+                        }
 
                        // Create opacity slider
                         const slider = document.getElementById('opacity-slider');
@@ -1811,10 +1829,12 @@ else if (suffix == "png" || suffix == "jpg" || suffix == "jpeg"){
                           };
 
                         // Center the map on the image
-                        map_main.goTo({
-                          center: [(east + west) / 2, (north + south) / 2],
-                          zoom: 15
-                        });
+                        if (window.map_main) {
+                          window.map_main.goTo({
+                            center: [(east + west) / 2, (north + south) / 2],
+                            zoom: 15
+                          });
+                        }
                         console.info(url);
 
                         // Clear existing overlays
@@ -1823,19 +1843,23 @@ else if (suffix == "png" || suffix == "jpg" || suffix == "jpeg"){
                         }
 
                         // Create image overlay using ArcGIS
-                        const imageLayer = new window.ImageryLayer({
-                          url: url,
-                          extent: {
-                            xmin: west,
-                            ymin: south,
-                            xmax: east,
-                            ymax: north,
-                            spatialReference: { wkid: 4326 }
-                          }
-                        });
+                        if (window.ImageryLayer && window.map_main) {
+                          const imageLayer = new window.ImageryLayer({
+                            url: url,
+                            extent: {
+                              xmin: west,
+                              ymin: south,
+                              xmax: east,
+                              ymax: north,
+                              spatialReference: { wkid: 4326 }
+                            }
+                          });
 
-                        map_main.map.add(imageLayer);
-                        window.currentImageLayer = imageLayer;
+                          window.map_main.map.add(imageLayer);
+                          window.currentImageLayer = imageLayer;
+                        } else {
+                          console.error('ArcGIS API not ready for image overlay');
+                        }
 
                        // Create opacity slider
                         const slider = document.getElementById('opacity-slider');
@@ -1911,10 +1935,12 @@ else if (suffix == "shp"){
                           };
 
                         // Center the map on the image
-                        map_main.goTo({
-                          center: [(east + west) / 2, (north + south) / 2],
-                          zoom: 15
-                        });
+                        if (window.map_main) {
+                          window.map_main.goTo({
+                            center: [(east + west) / 2, (north + south) / 2],
+                            zoom: 15
+                          });
+                        }
                         console.info(url);
 
                         // Clear existing overlays
@@ -1923,19 +1949,23 @@ else if (suffix == "shp"){
                         }
 
                         // Create image overlay using ArcGIS
-                        const imageLayer = new window.ImageryLayer({
-                          url: url,
-                          extent: {
-                            xmin: west,
-                            ymin: south,
-                            xmax: east,
-                            ymax: north,
-                            spatialReference: { wkid: 4326 }
-                          }
-                        });
+                        if (window.ImageryLayer && window.map_main) {
+                          const imageLayer = new window.ImageryLayer({
+                            url: url,
+                            extent: {
+                              xmin: west,
+                              ymin: south,
+                              xmax: east,
+                              ymax: north,
+                              spatialReference: { wkid: 4326 }
+                            }
+                          });
 
-                        map_main.map.add(imageLayer);
-                        window.currentImageLayer = imageLayer;
+                          window.map_main.map.add(imageLayer);
+                          window.currentImageLayer = imageLayer;
+                        } else {
+                          console.error('ArcGIS API not ready for image overlay');
+                        }
 
                        // Create opacity slider
                         const slider = document.getElementById('opacity-slider');
@@ -2742,6 +2772,9 @@ function init_map_main(){
     center: [-96.644, 40.897],
     zoom: 11
   });
+
+  // Store reference globally for content loading
+  window.map_main = map_main;
 
   // Create graphics layer for overlays
   window.graphicsLayer = new window.GraphicsLayer();
