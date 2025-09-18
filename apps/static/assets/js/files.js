@@ -118,10 +118,19 @@ function add_to_domain(path,file_name){
                      window.graphicsLayer.add(rectangle);
                      lastOverlay = rectangle;
 
-                     window.map_main.goTo({
-                       center: [(start[1] + end[1]) / 2, (start[0] + end[0]) / 2],
-                       zoom: 15
-                     });
+                     if (window.mapViewReady && window.map_main && typeof window.map_main.goTo === 'function') {
+                       console.log('=== DEBUG: Using ArcGIS goTo for rectangle centering ===');
+                       window.map_main.goTo({
+                         center: [(start[1] + end[1]) / 2, (start[0] + end[0]) / 2],
+                         zoom: 15
+                       });
+                     } else {
+                       console.error('=== DEBUG: MapView not ready for rectangle centering ===', {
+                         mapViewReady: window.mapViewReady,
+                         map_main: !!window.map_main,
+                         goTo: window.map_main && typeof window.map_main.goTo
+                       });
+                     }
                    } else {
                      console.error('ArcGIS API not ready for rectangle overlay');
                    }
@@ -1747,10 +1756,19 @@ else if(suffix == "tif" || suffix == "tiff" ){
 
                         // Center the map on the image
                         if (window.map_main) {
-                          window.map_main.goTo({
-                            center: [(east + west) / 2, (north + south) / 2],
-                            zoom: 15
-                          });
+                          if (window.mapViewReady && typeof window.map_main.goTo === 'function') {
+                            console.log('=== DEBUG: Using ArcGIS goTo for image centering ===');
+                            window.map_main.goTo({
+                              center: [(east + west) / 2, (north + south) / 2],
+                              zoom: 15
+                            });
+                          } else {
+                            console.error('=== DEBUG: MapView not ready or goTo not available ===', {
+                              mapViewReady: window.mapViewReady,
+                              map_main: !!window.map_main,
+                              goTo: window.map_main && typeof window.map_main.goTo
+                            });
+                          }
                         }
                         console.info(url);
 
@@ -1860,10 +1878,19 @@ else if (suffix == "png" || suffix == "jpg" || suffix == "jpeg"){
 
                         // Center the map on the image
                         if (window.map_main) {
-                          window.map_main.goTo({
-                            center: [(east + west) / 2, (north + south) / 2],
-                            zoom: 15
-                          });
+                          if (window.mapViewReady && typeof window.map_main.goTo === 'function') {
+                            console.log('=== DEBUG: Using ArcGIS goTo for image centering ===');
+                            window.map_main.goTo({
+                              center: [(east + west) / 2, (north + south) / 2],
+                              zoom: 15
+                            });
+                          } else {
+                            console.error('=== DEBUG: MapView not ready or goTo not available ===', {
+                              mapViewReady: window.mapViewReady,
+                              map_main: !!window.map_main,
+                              goTo: window.map_main && typeof window.map_main.goTo
+                            });
+                          }
                         }
                         console.info(url);
 
@@ -1974,10 +2001,19 @@ else if (suffix == "shp"){
 
                         // Center the map on the image
                         if (window.map_main) {
-                          window.map_main.goTo({
-                            center: [(east + west) / 2, (north + south) / 2],
-                            zoom: 15
-                          });
+                          if (window.mapViewReady && typeof window.map_main.goTo === 'function') {
+                            console.log('=== DEBUG: Using ArcGIS goTo for image centering ===');
+                            window.map_main.goTo({
+                              center: [(east + west) / 2, (north + south) / 2],
+                              zoom: 15
+                            });
+                          } else {
+                            console.error('=== DEBUG: MapView not ready or goTo not available ===', {
+                              mapViewReady: window.mapViewReady,
+                              map_main: !!window.map_main,
+                              goTo: window.map_main && typeof window.map_main.goTo
+                            });
+                          }
                         }
                         console.info(url);
 
@@ -2823,6 +2859,14 @@ function init_map_main(){
 
   // Store reference globally for content loading
   window.map_main = map_main;
+  
+  // Wait for map to be ready before allowing other operations
+  map_main.when(() => {
+    console.log('=== DEBUG: ArcGIS MapView is ready! ===');
+    window.mapViewReady = true;
+  }).catch((error) => {
+    console.error('=== DEBUG: ArcGIS MapView failed to load ===', error);
+  });
 
   // Create graphics layer for overlays
   window.graphicsLayer = new window.GraphicsLayer();
