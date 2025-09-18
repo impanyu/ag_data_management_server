@@ -98,7 +98,11 @@ urlpatterns = [
     re_path(r'^canopy_coverage_and_temperature',views.data,name='canopy_coverage_and_temperature'),
     re_path(r'^upload_file',views.data,name='upload_file'),
     re_path(r'^delete_file',views.data,name='delete_file'),
-    # Matches any html file
+    
+    # IMPORTANT: ALL API patterns must be BEFORE the catch-all pattern below
+    # The catch-all pattern intercepts everything and requires login
+    
+    # Matches any html file - THIS MUST BE LAST
     re_path(r'^.*\.*', views.pages, name='pages'),
 
 

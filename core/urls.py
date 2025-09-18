@@ -18,8 +18,20 @@ from rest_framework import routers, serializers, viewsets
 # Add CORS-enabled static files serving for converted_static_files (for ArcGIS Online access)
 # IMPORTANT: This must be BEFORE the home.urls include to avoid being caught by the catch-all pattern
 from apps.home.views import serve_static_file_with_cors
+from django.http import JsonResponse
+
+# Simple debug endpoint to test API routing
+def debug_api_test(request):
+    return JsonResponse({
+        "success": True,
+        "message": "API routing works!",
+        "path": request.path,
+        "user_authenticated": request.user.is_authenticated if hasattr(request, 'user') else False
+    })
+
 static_files_patterns = [
     re_path(r'^static_files/(?P<file_path>.*)$', serve_static_file_with_cors, name='serve_static_with_cors'),
+    path('debug-api-test/', debug_api_test, name='debug_api_test'),
 ]
 
 urlpatterns = [
