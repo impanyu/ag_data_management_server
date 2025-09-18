@@ -3213,8 +3213,8 @@ function createArcGISOnlineIframeWithErrorHandling(arcgisUrl, fileType, original
   // Create fallback button
   const fallbackButton = document.createElement('div');
   fallbackButton.innerHTML = `
-    <div style="text-align: center; margin: 10px; padding: 10px; background: #f0f8ff; border: 1px solid #007cba; border-radius: 4px; cursor: pointer;" onclick="showFallbackImage()">
-      🔄 Click here if map doesn't load → Show Image Preview
+    <div style="text-align: center; margin: 10px; padding: 15px; background: #e3f2fd; border: 2px solid #007cba; border-radius: 8px; cursor: pointer; font-weight: bold; color: #007cba;" onclick="showFallbackImage()">
+      🔄 ArcGIS Online may not load HTTP files → Click here to show Image Preview
     </div>
   `;
   
@@ -3227,24 +3227,24 @@ function createArcGISOnlineIframeWithErrorHandling(arcgisUrl, fileType, original
     }
   };
   
-  // Set timeout to automatically show fallback after 10 seconds
+  // Set timeout to automatically show fallback after 5 seconds (reduced for better UX)
   iframeLoadTimeout = setTimeout(() => {
     if (!fallbackShown) {
-      console.log('⏰ ENHANCED IFRAME: 10 second timeout - auto-showing fallback');
+      console.log('⏰ ENHANCED IFRAME: 5 second timeout - auto-showing fallback (iframe loaded but content failed)');
       fallbackButton.innerHTML = `
         <div style="text-align: center; margin: 10px; padding: 10px; background: #fff3cd; border: 1px solid #ffc107; border-radius: 4px;">
-          ⚠️ ArcGIS Online didn't load (HTTP limitation) - Showing image preview below
+          ⚠️ ArcGIS Online couldn't load HTTP file - Showing image preview below
         </div>
       `;
       createSimpleImageDisplay(originalFileUrl);
       fallbackShown = true;
     }
-  }, 10000);
+  }, 5000);
   
-  // Clear timeout if iframe loads successfully
+  // Note: We don't clear the timeout when iframe loads since the iframe can load but the content can still fail
   iframeElement.onload = function() {
-    console.log('✅ ENHANCED IFRAME: ArcGIS Online iframe loaded successfully');
-    clearTimeout(iframeLoadTimeout);
+    console.log('✅ ENHANCED IFRAME: ArcGIS Online iframe loaded (but content may still fail due to HTTP limitation)');
+    // Don't clear timeout - let it trigger fallback since HTTP content will likely fail
   };
   
   // Find the map container
