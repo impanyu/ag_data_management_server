@@ -2035,8 +2035,20 @@ else if (suffix == "shp"){
             console.log('📊 Current column:', current_col || 'undefined - will use default');
             
             // Show the visual content area
-            document.querySelector("#file_content").style.display="none";
-            document.querySelector("#visual_content").style.display="block";
+            const fileContentEl = document.querySelector("#file_content");
+            const visualContentEl = document.querySelector("#visual_content");
+            
+            if (fileContentEl) {
+                fileContentEl.style.display="none";
+            } else {
+                console.warn("Element #file_content not found");
+            }
+            
+            if (visualContentEl) {
+                visualContentEl.style.display="block";
+            } else {
+                console.warn("Element #visual_content not found");
+            }
 
             // Check if SHP has geospatial info or not
             if (meta_data["spatial_range"]["northeast"]["lat"] == "0" &&  meta_data["spatial_range"]["northeast"]["lng"] == "-180"){
