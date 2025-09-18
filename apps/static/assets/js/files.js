@@ -54,11 +54,11 @@ function waitForMapAndLoadContent() {
       window.mapViewReady) {
     console.log('=== DEBUG: All ArcGIS components ready, loading content ===');
     get_meta_and_content();
-  } else if (window.arcgisLoadAttempts > 100) { // After 20 seconds, give up on ArcGIS
-    console.log('⚠️ WARNING: ArcGIS failed to load after 20 seconds, loading content anyway for folder browsing');
+  } else if (window.arcgisLoadAttempts > 10) { // After 2 seconds, give up on ArcGIS
+    console.log('⚠️ WARNING: ArcGIS failed to load after 2 seconds, loading content anyway for folder browsing');
     get_meta_and_content();
   } else {
-    console.log('=== DEBUG: Still waiting for ArcGIS components, retrying in 200ms (attempt ' + window.arcgisLoadAttempts + '/100) ===');
+    console.log('=== DEBUG: Still waiting for ArcGIS components, retrying in 200ms (attempt ' + window.arcgisLoadAttempts + '/10) ===');
     setTimeout(waitForMapAndLoadContent, 200);
   }
 }
