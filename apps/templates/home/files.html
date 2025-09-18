@@ -672,12 +672,16 @@ console.log('🚨 EMERGENCY DEBUG: files.html template is loading - timestamp:',
 console.log('🚨 TEMPLATE VERSION: 2025-09-18-04:05 - Enhanced ArcGIS Diagnostics');
 // alert('🚨 EMERGENCY: If you see this alert, the template is loading fresh!'); // REMOVED - popup cancelled
 </script>
-<script src="/static/assets/js/files.js?cache_bust=FORCE_LOAD_IMAGERYLAYER_222"></script>
+<script src="/static/assets/js/files.js?cache_bust=ENHANCED_RELOAD_APPROACH_333"></script>
 
 
-<link rel="stylesheet" href="https://js.arcgis.com/4.28/esri/themes/light/main.css?force_reload=12345">
-<script src="https://js.arcgis.com/4.28/?force_reload=12345" 
-        onload="console.log('✅ ArcGIS 4.28 script loaded successfully'); window.arcgisScriptLoaded = true;"
+<link rel="stylesheet" href="https://js.arcgis.com/4.28/esri/themes/light/main.css">
+<script>
+console.log('🔄 LOADING: Attempting ArcGIS 4.28 with enhanced loading...');
+window.arcgisLoadStartTime = Date.now();
+</script>
+<script src="https://js.arcgis.com/4.28/" 
+        onload="console.log('✅ ArcGIS 4.28 script loaded successfully in', Date.now() - window.arcgisLoadStartTime, 'ms'); window.arcgisScriptLoaded = true; console.log('🔍 IMMEDIATE CHECK: require available:', typeof require);"
         onerror="console.error('❌ ArcGIS 4.28 script FAILED to load'); window.arcgisScriptFailed = true;">
 </script>
 <script>

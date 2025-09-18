@@ -64,6 +64,38 @@ function waitForMapAndLoadContent() {
       });
     } else {
       console.error('❌ FORCE LOAD FAILED: require() not available for manual load');
+      
+      // Try alternative: Direct script injection for ArcGIS 4.28
+      console.log('🔄 ALTERNATIVE: Attempting direct script injection for full ArcGIS reload...');
+      const arcgisScript = document.createElement('script');
+      arcgisScript.src = 'https://js.arcgis.com/4.28/';
+      arcgisScript.onload = function() {
+        console.log('✅ ALTERNATIVE: ArcGIS script reloaded successfully');
+        
+        // Wait a moment then try require again
+        setTimeout(() => {
+          if (typeof require !== 'undefined') {
+            console.log('✅ ALTERNATIVE: require() now available after reload');
+            require(['esri/layers/ImageryLayer', 'esri/views/MapView'], function(ImageryLayer, MapView) {
+              console.log('✅ ALTERNATIVE SUCCESS: ImageryLayer and MapView loaded:', {ImageryLayer, MapView});
+              window.ImageryLayer = ImageryLayer;
+              window.MapView = MapView;
+              
+              // Initialize map if we haven't yet
+              if (!window.map_main && typeof window.init_map_main === 'function') {
+                console.log('🔄 ALTERNATIVE INIT: Calling init_map_main after successful reload');
+                window.init_map_main();
+              }
+            });
+          } else {
+            console.error('❌ ALTERNATIVE FAILED: require() still not available after script reload');
+          }
+        }, 1000);
+      };
+      arcgisScript.onerror = function() {
+        console.error('❌ ALTERNATIVE FAILED: Could not reload ArcGIS script');
+      };
+      document.head.appendChild(arcgisScript);
     }
   }
   
