@@ -108,7 +108,7 @@ function waitForMapAndLoadContent() {
   if (typeof window.ArcGISMap !== 'undefined' && 
       typeof window.ImageryLayer !== 'undefined') {
     console.log('=== DEBUG: ArcGIS components available, loading content ===');
-    get_meta_and_content();
+get_meta_and_content();
   } else if (window.arcgisLoadAttempts > 10) { // After 2 seconds, give up on ArcGIS
     console.log('⚠️ WARNING: ArcGIS failed to load after 2 seconds, loading content anyway for folder browsing');
     get_meta_and_content();
@@ -2051,7 +2051,7 @@ else if (suffix == "shp"){
             }
 
             // Check if SHP has geospatial info or not
-            if (meta_data["spatial_range"]["northeast"]["lat"] == "0" &&  meta_data["spatial_range"]["northeast"]["lng"] == "-180"){
+                   if (meta_data["spatial_range"]["northeast"]["lat"] == "0" &&  meta_data["spatial_range"]["northeast"]["lng"] == "-180"){
                 console.log('🚫 SHP FILE: No geospatial info, using simple image fallback');
                 
                 // For SHP files without geospatial info, show a message
@@ -2086,8 +2086,8 @@ else if (suffix == "shp"){
             }
             
             // Finalize display
-            document.querySelector("#file_content").style.display="block";
-            document.querySelector("#preloader2").style.display="none";
+                   document.querySelector("#file_content").style.display="block";
+                      document.querySelector("#preloader2").style.display="none";
 
 }
 /*
@@ -3064,13 +3064,13 @@ function createArcGISOnlineEmbed(fileUrl, fileType) {
   console.log('🔧 PROTOCOL CHECK: isHttpDevelopment =', isHttpDevelopment);
   
   if (isHttpDevelopment) {
-    console.log('🔧 DEVELOPMENT MODE: Using fallback display for HTTP development server');
+    console.log('🔧 DEVELOPMENT MODE: Uploading file to ArcGIS Online for HTTP development server');
     console.log('🔧 DEVELOPMENT MODE: File URL =', fileUrl);
-    // For development, fall back to simple image display since ArcGIS Online requires HTTPS
-    createSimpleImageDisplay(fileUrl);
-    return; // Exit early, don't create iframe
+    // For development, upload the file to ArcGIS Online directly
+    uploadFileToArcGISOnline(fileUrl, fileType);
+    return; // Exit early, don't create iframe with local URL
   } else {
-    console.log('🌐 PRODUCTION MODE: Using ArcGIS Online iframe');
+    console.log('🌐 PRODUCTION MODE: Using ArcGIS Online iframe with HTTPS URL');
   }
   
   // PRODUCTION MODE: Use ArcGIS Online (HTTPS)
@@ -3109,6 +3109,119 @@ function createArcGISOnlineEmbed(fileUrl, fileType) {
   
   console.log('✅ ARCGIS ONLINE: ArcGIS Online embed created successfully');
   console.log('🌐 ARCGIS ONLINE: URL =', arcgisUrl);
+}
+
+// DEVELOPMENT MODE: Upload file to ArcGIS Online for HTTP development
+async function uploadFileToArcGISOnline(fileUrl, fileType) {
+  console.log('📤 UPLOAD TO ARCGIS: Starting upload process for:', fileType, fileUrl);
+  
+  try {
+    // First, download the file from our HTTP server
+    console.log('📥 UPLOAD TO ARCGIS: Downloading file from local server...');
+    const response = await fetch(fileUrl);
+    
+    if (!response.ok) {
+      throw new Error(`Failed to download file: ${response.status} ${response.statusText}`);
+    }
+    
+    const fileBlob = await response.blob();
+    console.log('📥 UPLOAD TO ARCGIS: File downloaded, size:', fileBlob.size, 'bytes');
+    
+    // Create a FormData object for ArcGIS Online upload
+    const formData = new FormData();
+    
+    // Extract filename from URL
+    const urlParts = fileUrl.split('/');
+    const filename = urlParts[urlParts.length - 1];
+    
+    formData.append('file', fileBlob, filename);
+    formData.append('f', 'json');
+    formData.append('overwrite', 'true');
+    
+    // Use ArcGIS Online's addItem API (this requires authentication, but we'll try anonymous first)
+    console.log('📤 UPLOAD TO ARCGIS: Uploading to ArcGIS Online...');
+    
+    // For development, we'll create a simple hosted service approach
+    // This is a simplified approach - in production you'd want proper authentication
+    const arcgisUploadUrl = 'https://www.arcgis.com/sharing/rest/content/users/self/addItem';
+    
+    const uploadResponse = await fetch(arcgisUploadUrl, {
+      method: 'POST',
+      body: formData
+    });
+    
+    const uploadResult = await uploadResponse.json();
+    console.log('📤 UPLOAD TO ARCGIS: Upload response:', uploadResult);
+    
+    if (uploadResult.success) {
+      // If upload successful, create an ArcGIS Online map with the uploaded item
+      const itemId = uploadResult.id;
+      const arcgisMapUrl = `https://www.arcgis.com/apps/mapviewer/index.html?layers=${itemId}`;
+      
+      console.log('✅ UPLOAD TO ARCGIS: Success! Creating map with item ID:', itemId);
+      createArcGISOnlineIframe(arcgisMapUrl, fileType);
+    } else {
+      throw new Error(`ArcGIS Online upload failed: ${uploadResult.error?.message || 'Unknown error'}`);
+    }
+    
+  } catch (error) {
+    console.error('❌ UPLOAD TO ARCGIS: Error during upload:', error.message);
+    console.log('🔄 UPLOAD TO ARCGIS: Falling back to simple image display...');
+    
+    // Fallback to simple image display
+    createSimpleImageDisplay(fileUrl);
+  }
+}
+
+// Helper function to create ArcGIS Online iframe
+function createArcGISOnlineIframe(arcgisUrl, fileType) {
+  console.log('🗺️ CREATING IFRAME: Creating ArcGIS Online iframe with URL:', arcgisUrl);
+  
+  // Clear any existing displays
+  const existingDisplay = document.getElementById('arcgis-online-embed') || document.getElementById('fallback-image-display');
+  if (existingDisplay) existingDisplay.remove();
+  
+  // Create container for ArcGIS Online embed
+  const containerElement = document.createElement('div');
+  containerElement.id = 'arcgis-online-embed';
+  containerElement.style.cssText = `
+    width: 100%;
+    height: 70vh;
+    border: 2px solid #007cba;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin: 20px auto;
+    background: white;
+    overflow: hidden;
+  `;
+  
+  // Add title
+  const titleElement = document.createElement('div');
+  titleElement.innerHTML = `
+    <div style="text-align: center; margin: 10px 0; font-weight: bold; color: #007cba; font-size: 16px;">
+      🗺️ Interactive Map - ${fileType.toUpperCase()} File on ArcGIS Online (Uploaded)
+    </div>
+  `;
+  
+  // Create iframe
+  const iframeElement = document.createElement('iframe');
+  iframeElement.src = arcgisUrl;
+  iframeElement.style.cssText = `
+    width: 100%;
+    height: calc(100% - 20px);
+    border: none;
+    margin: 10px;
+  `;
+  iframeElement.title = `ArcGIS Online Map - ${fileType} file (uploaded)`;
+  
+  // Find the map container
+  const mapContainer = document.getElementById('map_main') || document.querySelector('.map-container') || document.body;
+  
+  containerElement.appendChild(iframeElement);
+  mapContainer.appendChild(titleElement);
+  mapContainer.appendChild(containerElement);
+  
+  console.log('✅ CREATING IFRAME: ArcGIS Online iframe created successfully');
 }
 
 // FALLBACK: Simple image display when ArcGIS Online fails
