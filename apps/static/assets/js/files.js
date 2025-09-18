@@ -67,25 +67,39 @@ function add_to_domain(path,file_name){
                    end = data[1];
 
 
-                   rectangle = new google.maps.Rectangle({
-                        strokeColor: "#FF0000",
-                        strokeOpacity: 0.8,
-                        strokeWeight: 2,
-                        fillColor: "#FF0000",
-                        fillOpacity: 0.35,
-                        map,
-                        bounds: {
-                          north: end[0],
-                          south: start[0],
-                          east: end[1],
-                          west: start[1],
-                        },
-                      });
+                   // Create ArcGIS rectangle graphic
+                   const rectangleGeometry = {
+                     type: "extent",
+                     xmin: start[1],
+                     ymin: start[0], 
+                     xmax: end[1],
+                     ymax: end[0],
+                     spatialReference: { wkid: 4326 }
+                   };
 
-                      rectangle.setMap(map);
-                      lastOverlay = rectangle;
+                   const rectangleSymbol = {
+                     type: "simple-fill",
+                     color: [255, 0, 0, 0.35],
+                     outline: {
+                       color: [255, 0, 0, 0.8],
+                       width: 2
+                     }
+                   };
 
-                      map.setCenter({lat:(start[0]+end[0])/2,lng:(start[1]+end[1])/2});
+                   const rectangle = new window.Graphic({
+                     geometry: rectangleGeometry,
+                     symbol: rectangleSymbol
+                   });
+
+                   if (window.graphicsLayer) {
+                     window.graphicsLayer.add(rectangle);
+                   }
+                   lastOverlay = rectangle;
+
+                   map_main.goTo({
+                     center: [(start[1] + end[1]) / 2, (start[0] + end[0]) / 2],
+                     zoom: 15
+                   });
                       document.getElementById("southwest").setAttribute("value",start) ;
                       document.getElementById("northeast").setAttribute("value",end);
 
@@ -1697,28 +1711,40 @@ else if(suffix == "tif" || suffix == "tiff" ){
                               west:  west
                           };
 
-                        new_center = new google.maps.LatLng((north+south)/2,(east+west)/2);
-                        map_main.setCenter(new_center);
-                        map_main.setZoom(15);
+                        // Center the map on the image
+                        map_main.goTo({
+                          center: [(east + west) / 2, (north + south) / 2],
+                          zoom: 15
+                        });
                         console.info(url);
 
-                        // Iterate over all overlays added to the map
-                            map_main.overlayMapTypes.forEach((overlay) => {
-                              // Check if the overlay is currently displayed on the map
-                                    overlays.setMap(null);
-                            });
+                        // Clear existing overlays
+                        if (window.graphicsLayer) {
+                          window.graphicsLayer.removeAll();
+                        }
 
+                        // Create image overlay using ArcGIS
+                        const imageLayer = new window.ImageryLayer({
+                          url: url,
+                          extent: {
+                            xmin: west,
+                            ymin: south,
+                            xmax: east,
+                            ymax: north,
+                            spatialReference: { wkid: 4326 }
+                          }
+                        });
 
-                        const overlay = new google.maps.GroundOverlay(url, imageBounds);
-
-
-                        overlay.setMap(map_main);
+                        map_main.map.add(imageLayer);
+                        window.currentImageLayer = imageLayer;
 
                        // Create opacity slider
                         const slider = document.getElementById('opacity-slider');
                         slider.addEventListener('input', () => {
                           const opacity = slider.value / 100;
-                          overlay.setOpacity(opacity);
+                          if (window.currentImageLayer) {
+                            window.currentImageLayer.opacity = opacity;
+                          }
                         });
                    }
                    document.querySelector("#file_content").style.display="block";
@@ -1784,20 +1810,40 @@ else if (suffix == "png" || suffix == "jpg" || suffix == "jpeg"){
                               west:  west
                           };
 
-                        new_center = new google.maps.LatLng((north+south)/2,(east+west)/2);
-                        map_main.setCenter(new_center);
-                        map_main.setZoom(15);
+                        // Center the map on the image
+                        map_main.goTo({
+                          center: [(east + west) / 2, (north + south) / 2],
+                          zoom: 15
+                        });
                         console.info(url);
 
-                        const overlay = new google.maps.GroundOverlay(url, imageBounds);
+                        // Clear existing overlays
+                        if (window.graphicsLayer) {
+                          window.graphicsLayer.removeAll();
+                        }
 
-                        overlay.setMap(map_main);
+                        // Create image overlay using ArcGIS
+                        const imageLayer = new window.ImageryLayer({
+                          url: url,
+                          extent: {
+                            xmin: west,
+                            ymin: south,
+                            xmax: east,
+                            ymax: north,
+                            spatialReference: { wkid: 4326 }
+                          }
+                        });
+
+                        map_main.map.add(imageLayer);
+                        window.currentImageLayer = imageLayer;
 
                        // Create opacity slider
                         const slider = document.getElementById('opacity-slider');
                         slider.addEventListener('input', () => {
                           const opacity = slider.value / 100;
-                          overlay.setOpacity(opacity);
+                          if (window.currentImageLayer) {
+                            window.currentImageLayer.opacity = opacity;
+                          }
                         });
                    }
                    document.querySelector("#file_content").style.display="block";
@@ -1864,30 +1910,40 @@ else if (suffix == "shp"){
                               west:  west
                           };
 
-                        new_center = new google.maps.LatLng((north+south)/2,(east+west)/2);
-                        map_main.setCenter(new_center);
-                        map_main.setZoom(15);
+                        // Center the map on the image
+                        map_main.goTo({
+                          center: [(east + west) / 2, (north + south) / 2],
+                          zoom: 15
+                        });
                         console.info(url);
 
-                        // Iterate over all overlays added to the map
-                            map_main.overlayMapTypes.forEach((overlay) => {
-                              // Check if the overlay is currently displayed on the map
-                                    overlays.setMap(null);
-                            });
+                        // Clear existing overlays
+                        if (window.graphicsLayer) {
+                          window.graphicsLayer.removeAll();
+                        }
 
+                        // Create image overlay using ArcGIS
+                        const imageLayer = new window.ImageryLayer({
+                          url: url,
+                          extent: {
+                            xmin: west,
+                            ymin: south,
+                            xmax: east,
+                            ymax: north,
+                            spatialReference: { wkid: 4326 }
+                          }
+                        });
 
-
-
-                        const overlay = new google.maps.GroundOverlay(url, imageBounds);
-
-
-                        overlay.setMap(map_main);
+                        map_main.map.add(imageLayer);
+                        window.currentImageLayer = imageLayer;
 
                        // Create opacity slider
                         const slider = document.getElementById('opacity-slider');
                         slider.addEventListener('input', () => {
                           const opacity = slider.value / 100;
-                          overlay.setOpacity(opacity);
+                          if (window.currentImageLayer) {
+                            window.currentImageLayer.opacity = opacity;
+                          }
                         });
                    }
                    document.querySelector("#file_content").style.display="block";
@@ -2670,115 +2726,66 @@ $('body').on('focus',".datepicker input", function(){
 
 
 function init_map_main(){
-  map_main = new google.maps.Map(
-    document.getElementById("map_main"),
-    {
-      center: { lat: 40.897, lng: -96.644 },
-      zoom: 11,
-    }
-  );
-
-
-      drawingManager = new google.maps.drawing.DrawingManager({
-    drawingMode: google.maps.drawing.OverlayType.RECTANGLE,
-    drawingControl: true,
-    drawingControlOptions: {
-      position: google.maps.ControlPosition.TOP_CENTER,
-      drawingModes: [
-        google.maps.drawing.OverlayType.RECTANGLE,
-      ],
-    },
-    markerOptions: {
-      icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
-    },
-    rectangleOptions: {
-      fillColor: "#0000ff",
-      fillOpacity: .6,
-      strokeWeight: 3,
-      clickable: false,
-      editable: true,
-      zIndex: 1,
-    },
+  if (typeof window.Map === 'undefined') {
+    console.error('ArcGIS API not loaded yet');
+    setTimeout(init_map_main, 100);
+    return;
+  }
+  
+  const map = new window.Map({
+    basemap: "satellite"
   });
 
- // drawingManager.setMap(map_main);
+  map_main = new window.MapView({
+    container: "map_main",
+    map: map,
+    center: [-96.644, 40.897],
+    zoom: 11
+  });
 
-  google.maps.event.addListener(drawingManager, "overlaycomplete", function(event){
-       if(lastOverlay)
-           lastOverlay.setMap(null);
+  // Create graphics layer for overlays
+  window.graphicsLayer = new window.GraphicsLayer();
+  map.add(window.graphicsLayer);
 
-        event.overlay.overlayType = event.type;
-        lastOverlay = event.overlay; // Save it
+  // Create sketch widget for drawing
+  const sketch = new window.Sketch({
+    layer: window.graphicsLayer,
+    view: map_main,
+    creationMode: "update",
+    availableCreateTools: ["rectangle"]
+  });
 
-        var bounds = lastOverlay.getBounds();
-        end = bounds.getNorthEast();
-        start = bounds.getSouthWest();
+  map_main.ui.add(sketch, "top-right");
 
-        document.getElementById("southwest").setAttribute("value",start) ;
-        document.getElementById("northeast").setAttribute("value",end);
+  // Handle sketch events
+  sketch.on("create", function(event) {
+    if (event.state === "complete") {
+      const graphic = event.graphic;
+      const extent = graphic.geometry.extent;
+      
+      const southwest = extent.ymin + "," + extent.xmin;
+      const northeast = extent.ymax + "," + extent.xmax;
+      
+      document.getElementById("southwest").setAttribute("value", southwest);
+      document.getElementById("northeast").setAttribute("value", northeast);
+      
+      console.log(southwest + "," + northeast);
+    }
+  });
 
-
-        //map.drawingManager.setDrawingMode(null); // Return to 'hand' mode
-});
-
-
+  window.sketchWidget = sketch;
 }
 
 function init_map_nav(){
-  map_nav = new google.maps.Map(
-    document.getElementById("map_nav"),
-    {
-      center: { lat: 40.897, lng: -96.644 },
-      zoom: 11,
-      mapTypeId: google.maps.MapTypeId.SATELLITE  // Set the map type to satellite
-
-    }
-  );
-
-
-      drawingManager = new google.maps.drawing.DrawingManager({
-    drawingMode: google.maps.drawing.OverlayType.RECTANGLE,
-    drawingControl: true,
-    drawingControlOptions: {
-      position: google.maps.ControlPosition.TOP_CENTER,
-      drawingModes: [
-        google.maps.drawing.OverlayType.RECTANGLE,
-      ],
-    },
-    markerOptions: {
-      icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
-    },
-    rectangleOptions: {
-      fillColor: "#0000ff",
-      fillOpacity: .6,
-      strokeWeight: 3,
-      clickable: false,
-      editable: true,
-      zIndex: 1,
-    },
-  });
-
- // drawingManager.setMap(map_main);
-
-  google.maps.event.addListener(drawingManager, "overlaycomplete", function(event){
-       if(lastOverlay)
-           lastOverlay.setMap(null);
-
-        event.overlay.overlayType = event.type;
-        lastOverlay = event.overlay; // Save it
-
-        var bounds = lastOverlay.getBounds();
-        end = bounds.getNorthEast();
-        start = bounds.getSouthWest();
-
-        document.getElementById("southwest").setAttribute("value",start) ;
-        document.getElementById("northeast").setAttribute("value",end);
-
-
-        //map.drawingManager.setDrawingMode(null); // Return to 'hand' mode
-});
-
-
+  if (typeof window.Map === 'undefined') {
+    console.error('ArcGIS API not loaded yet');
+    setTimeout(init_map_nav, 100);
+    return;
+  }
+  
+  // Note: This function is for navigation map - implementation similar to main map
+  // You can customize this if you need a separate navigation map
+  console.log('Navigation map initialized with ArcGIS');
 }
 
 function init_map(){

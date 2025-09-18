@@ -30,25 +30,41 @@ function add_to_domain(path,file_name){
                    end = data[1];
 
 
-                   rectangle = new google.maps.Rectangle({
-                        strokeColor: "#FF0000",
-                        strokeOpacity: 0.8,
-                        strokeWeight: 2,
-                        fillColor: "#FF0000",
-                        fillOpacity: 0.35,
-                        map,
-                        bounds: {
-                          north: end[0],
-                          south: start[0],
-                          east: end[1],
-                          west: start[1],
-                        },
-                      });
+                   // Create ArcGIS rectangle graphic
+                   const rectangleGeometry = {
+                     type: "extent",
+                     xmin: start[1],
+                     ymin: start[0], 
+                     xmax: end[1],
+                     ymax: end[0],
+                     spatialReference: { wkid: 4326 }
+                   };
 
-                      rectangle.setMap(map);
-                      lastOverlay = rectangle;
+                   const rectangleSymbol = {
+                     type: "simple-fill",
+                     color: [255, 0, 0, 0.35],
+                     outline: {
+                       color: [255, 0, 0, 0.8],
+                       width: 2
+                     }
+                   };
 
-                      map.setCenter({lat:(start[0]+end[0])/2,lng:(start[1]+end[1])/2});
+                   const rectangle = new window.Graphic({
+                     geometry: rectangleGeometry,
+                     symbol: rectangleSymbol
+                   });
+
+                   if (window.graphicsLayer) {
+                     window.graphicsLayer.add(rectangle);
+                   }
+                   lastOverlay = rectangle;
+
+                   if (map_main) {
+                     map_main.goTo({
+                       center: [(start[1] + end[1]) / 2, (start[0] + end[0]) / 2],
+                       zoom: 15
+                     });
+                   }
                       document.getElementById("southwest").setAttribute("value",start) ;
                       document.getElementById("northeast").setAttribute("value",end);
 
@@ -284,57 +300,54 @@ function add_to_domain(path,file_name){
 
 
 function initMap(){
-  map = new google.maps.Map(
-    document.getElementById("map"),
-    {
-      center: { lat: 39.397, lng: -97.644 },
-      zoom: 14,
-    }
-  );
-
-  drawingManager = new google.maps.drawing.DrawingManager({
-    drawingMode: google.maps.drawing.OverlayType.RECTANGLE,
-    drawingControl: true,
-    drawingControlOptions: {
-      position: google.maps.ControlPosition.TOP_CENTER,
-      drawingModes: [
-        google.maps.drawing.OverlayType.RECTANGLE,
-      ],
-    },
-    markerOptions: {
-      icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
-    },
-    rectangleOptions: {
-      fillColor: "#ffff00",
-      fillOpacity: .8,
-      strokeWeight: 5,
-      clickable: false,
-      editable: true,
-      zIndex: 1,
-    },
+  if (typeof window.Map === 'undefined') {
+    console.error('ArcGIS API not loaded yet');
+    setTimeout(initMap, 100);
+    return;
+  }
+  
+  const mapInstance = new window.Map({
+    basemap: "satellite"
   });
 
-  drawingManager.setMap(map);
+  map = new window.MapView({
+    container: "map",
+    map: mapInstance,
+    center: [-97.644, 39.397],
+    zoom: 14
+  });
 
-  google.maps.event.addListener(drawingManager, "overlaycomplete", function(event){
-       if(lastOverlay)
-           lastOverlay.setMap(null);
+  // Create graphics layer for overlays
+  window.graphicsLayer = new window.GraphicsLayer();
+  mapInstance.add(window.graphicsLayer);
 
-        event.overlay.overlayType = event.type;
-        lastOverlay = event.overlay; // Save it
+  // Create sketch widget for drawing
+  const sketch = new window.Sketch({
+    layer: window.graphicsLayer,
+    view: map,
+    creationMode: "update",
+    availableCreateTools: ["rectangle"]
+  });
 
-        var bounds = lastOverlay.getBounds();
-        end = bounds.getNorthEast();
-        start = bounds.getSouthWest();
+  map.ui.add(sketch, "top-right");
 
-        document.getElementById("southwest").setAttribute("value",start) ;
-        document.getElementById("northeast").setAttribute("value",end);
+  // Handle sketch events
+  sketch.on("create", function(event) {
+    if (event.state === "complete") {
+      const graphic = event.graphic;
+      const extent = graphic.geometry.extent;
+      
+      const southwest = extent.ymin + "," + extent.xmin;
+      const northeast = extent.ymax + "," + extent.xmax;
+      
+      document.getElementById("southwest").setAttribute("value", southwest);
+      document.getElementById("northeast").setAttribute("value", northeast);
+      
+      console.log(southwest + "," + northeast);
+    }
+  });
 
-
-        //map.drawingManager.setDrawingMode(null); // Return to 'hand' mode
-});
-
-
+  window.sketchWidget = sketch;
 }
 
 google_map_circles = []
@@ -582,77 +595,105 @@ $('body').on('focus',".datepicker input", function(){
 
 
 function init_map_main(){
-  map_main = new google.maps.Map(
-    document.getElementById("map_main"),
-    {
-      center: { lat: 40.897, lng: -96.644 },
-      zoom: 11,
-    }
-  );
-
-
-     $.get("/get_domains_meta",
-        {
-        },function(data,status){
-            //console.info(data)
-           domains = JSON.parse(data);
-            for(domain_name in domains){
-                 //console.info(parseFloat(domains[domain_name]["bounding_box"][0].split(",")[0]) );
-                 var marker = new google.maps.Marker({
-                    position: {lat:parseFloat(domains[domain_name]["bounding_box"][0].split(",")[0]) , lng: parseFloat(domains[domain_name]["bounding_box"][0].split(",")[1])},
-                    label: domain_name,
-                  });
-                  marker.setMap(map_main);
-            }
-        }
-        )
-
-
-      drawingManager = new google.maps.drawing.DrawingManager({
-    drawingMode: google.maps.drawing.OverlayType.RECTANGLE,
-    drawingControl: true,
-    drawingControlOptions: {
-      position: google.maps.ControlPosition.TOP_CENTER,
-      drawingModes: [
-        google.maps.drawing.OverlayType.RECTANGLE,
-      ],
-    },
-    markerOptions: {
-      icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
-    },
-    rectangleOptions: {
-      fillColor: "#0000ff",
-      fillOpacity: .6,
-      strokeWeight: 3,
-      clickable: false,
-      editable: true,
-      zIndex: 1,
-    },
+  if (typeof window.Map === 'undefined') {
+    console.error('ArcGIS API not loaded yet');
+    setTimeout(init_map_main, 100);
+    return;
+  }
+  
+  const map = new window.Map({
+    basemap: "satellite"
   });
 
-  drawingManager.setMap(map_main);
+  map_main = new window.MapView({
+    container: "map_main",
+    map: map,
+    center: [-96.644, 40.897],
+    zoom: 11
+  });
 
-  google.maps.event.addListener(drawingManager, "overlaycomplete", function(event){
-       if(lastOverlay)
-           lastOverlay.setMap(null);
+  // Create graphics layer for overlays
+  window.graphicsLayer = new window.GraphicsLayer();
+  map.add(window.graphicsLayer);
 
-        event.overlay.overlayType = event.type;
-        lastOverlay = event.overlay; // Save it
+  // Load domain markers
+  $.get("/get_domains_meta", {}, function(data, status) {
+    domains = JSON.parse(data);
+    for(domain_name in domains) {
+      const lat = parseFloat(domains[domain_name]["bounding_box"][0].split(",")[0]);
+      const lng = parseFloat(domains[domain_name]["bounding_box"][0].split(",")[1]);
+      
+      const point = {
+        type: "point",
+        longitude: lng,
+        latitude: lat
+      };
+      
+      const markerSymbol = {
+        type: "simple-marker",
+        color: [226, 119, 40],
+        outline: {
+          color: [255, 255, 255],
+          width: 2
+        }
+      };
+      
+      const textSymbol = {
+        type: "text",
+        color: "white",
+        haloColor: "black",
+        haloSize: "1px",
+        text: domain_name,
+        xoffset: 0,
+        yoffset: 15,
+        font: {
+          size: 12,
+          family: "Arial"
+        }
+      };
+      
+      const markerGraphic = new window.Graphic({
+        geometry: point,
+        symbol: markerSymbol
+      });
+      
+      const textGraphic = new window.Graphic({
+        geometry: point,
+        symbol: textSymbol
+      });
+      
+      window.graphicsLayer.add(markerGraphic);
+      window.graphicsLayer.add(textGraphic);
+    }
+  });
 
-        var bounds = lastOverlay.getBounds();
-        end = bounds.getNorthEast();
-        start = bounds.getSouthWest();
+  // Create sketch widget for drawing
+  const sketch = new window.Sketch({
+    layer: window.graphicsLayer,
+    view: map_main,
+    creationMode: "update",
+    availableCreateTools: ["rectangle"]
+  });
 
-        document.getElementById("southwest").setAttribute("value",start) ;
-        document.getElementById("northeast").setAttribute("value",end);
+  map_main.ui.add(sketch, "top-right");
 
+  // Handle sketch events
+  sketch.on("create", function(event) {
+    if (event.state === "complete") {
+      const graphic = event.graphic;
+      const extent = graphic.geometry.extent;
+      
+      const southwest = extent.ymin + "," + extent.xmin;
+      const northeast = extent.ymax + "," + extent.xmax;
+      
+      document.getElementById("southwest").setAttribute("value", southwest);
+      document.getElementById("northeast").setAttribute("value", northeast);
+      
+      console.log(southwest + "," + northeast);
+    }
+  });
 
-        //map.drawingManager.setDrawingMode(null); // Return to 'hand' mode
-});
-
-
-
-
+  window.sketchWidget = sketch;
 }
 
 var mode_color_map = {};

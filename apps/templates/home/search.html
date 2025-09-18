@@ -314,7 +314,38 @@ current_path_components = current_path.split("/");
 path ="";
 
 </script>
+<link rel="stylesheet" href="https://js.arcgis.com/4.28/esri/themes/light/main.css">
+<script src="https://js.arcgis.com/4.28/"></script>
+<script>
+require([
+  "esri/Map",
+  "esri/views/MapView",
+  "esri/layers/ImageryLayer",
+  "esri/layers/FeatureLayer",
+  "esri/Graphic",
+  "esri/geometry/Extent",
+  "esri/widgets/Sketch",
+  "esri/layers/GraphicsLayer"
+], function(Map, MapView, ImageryLayer, FeatureLayer, Graphic, Extent, Sketch, GraphicsLayer) {
+  // Initialize map when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init_map_main);
+  } else {
+    init_map_main();
+  }
+  
+  window.init_map_main = init_map_main;
+  window.Map = Map;
+  window.MapView = MapView;
+  window.ImageryLayer = ImageryLayer;
+  window.FeatureLayer = FeatureLayer;
+  window.Graphic = Graphic;
+  window.Extent = Extent;
+  window.Sketch = Sketch;
+  window.GraphicsLayer = GraphicsLayer;
+});
+</script>
+
 <script src="/static/assets/js/search.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU1RvtD5YF8-dwMmCIYP8ds-6Np5QVHFY&libraries=drawing&v=weekly&callback=init_map_main"></script>
 
 {% endblock javascripts %}

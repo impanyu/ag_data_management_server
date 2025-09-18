@@ -50,25 +50,41 @@ function add_to_domain(path,file_name){
                    end = data[1];
 
 
-                   rectangle = new google.maps.Rectangle({
-                        strokeColor: "#FF0000",
-                        strokeOpacity: 0.8,
-                        strokeWeight: 2,
-                        fillColor: "#FF0000",
-                        fillOpacity: 0.35,
-                        map,
-                        bounds: {
-                          north: end[0],
-                          south: start[0],
-                          east: end[1],
-                          west: start[1],
-                        },
-                      });
+                   // Create ArcGIS rectangle graphic
+                   const rectangleGeometry = {
+                     type: "extent",
+                     xmin: start[1],
+                     ymin: start[0], 
+                     xmax: end[1],
+                     ymax: end[0],
+                     spatialReference: { wkid: 4326 }
+                   };
 
-                      rectangle.setMap(map);
-                      lastOverlay = rectangle;
+                   const rectangleSymbol = {
+                     type: "simple-fill",
+                     color: [255, 0, 0, 0.35],
+                     outline: {
+                       color: [255, 0, 0, 0.8],
+                       width: 2
+                     }
+                   };
 
-                      map.setCenter({lat:(start[0]+end[0])/2,lng:(start[1]+end[1])/2});
+                   const rectangle = new window.Graphic({
+                     geometry: rectangleGeometry,
+                     symbol: rectangleSymbol
+                   });
+
+                   if (window.graphicsLayer) {
+                     window.graphicsLayer.add(rectangle);
+                   }
+                   lastOverlay = rectangle;
+
+                   if (map_main) {
+                     map_main.goTo({
+                       center: [(start[1] + end[1]) / 2, (start[0] + end[0]) / 2],
+                       zoom: 15
+                     });
+                   }
                       document.getElementById("southwest").setAttribute("value",start) ;
                       document.getElementById("northeast").setAttribute("value",end);
 
@@ -1426,28 +1442,41 @@ else if(suffix == "tif" || suffix == "tiff" ){
                               west:  west
                           };
 
-                        new_center = new google.maps.LatLng((north+south)/2,(east+west)/2);
-                        map_main.setCenter(new_center);
-                        map_main.setZoom(15);
+                        // Center the map on the image
+                        map_main.goTo({
+                          center: [(east + west) / 2, (north + south) / 2],
+                          zoom: 15
+                        });
                         console.info(url);
 
-                        // Iterate over all overlays added to the map
-                            map_main.overlayMapTypes.forEach((overlay) => {
-                              // Check if the overlay is currently displayed on the map
-                                    overlays.setMap(null);
-                            });
+                        // Clear existing overlays
+                        if (window.graphicsLayer) {
+                          window.graphicsLayer.removeAll();
+                        }
 
 
-                        const overlay = new google.maps.GroundOverlay(url, imageBounds);
+                        // Create image overlay using ArcGIS
+                        const imageLayer = new window.ImageryLayer({
+                          url: url,
+                          extent: {
+                            xmin: west,
+                            ymin: south,
+                            xmax: east,
+                            ymax: north,
+                            spatialReference: { wkid: 4326 }
+                          }
+                        });
 
-
-                        overlay.setMap(map_main);
+                        map_main.map.add(imageLayer);
+                        window.currentImageLayer = imageLayer;
 
                        // Create opacity slider
                         const slider = document.getElementById('opacity-slider');
                         slider.addEventListener('input', () => {
                           const opacity = slider.value / 100;
-                          overlay.setOpacity(opacity);
+                          if (window.currentImageLayer) {
+                            window.currentImageLayer.opacity = opacity;
+                          }
                         });
                    }
                    document.querySelector("#file_content").style.display="block";
@@ -1513,9 +1542,11 @@ else if (suffix == "png" || suffix == "jpg" || suffix == "jpeg"){
                               west:  west
                           };
 
-                        new_center = new google.maps.LatLng((north+south)/2,(east+west)/2);
-                        map_main.setCenter(new_center);
-                        map_main.setZoom(15);
+                        // Center the map on the image
+                        map_main.goTo({
+                          center: [(east + west) / 2, (north + south) / 2],
+                          zoom: 15
+                        });
                         console.info(url);
 
                         const overlay = new google.maps.GroundOverlay(url, imageBounds);
@@ -1526,7 +1557,9 @@ else if (suffix == "png" || suffix == "jpg" || suffix == "jpeg"){
                         const slider = document.getElementById('opacity-slider');
                         slider.addEventListener('input', () => {
                           const opacity = slider.value / 100;
-                          overlay.setOpacity(opacity);
+                          if (window.currentImageLayer) {
+                            window.currentImageLayer.opacity = opacity;
+                          }
                         });
                    }
                    document.querySelector("#file_content").style.display="block";
@@ -1590,30 +1623,43 @@ else if (suffix == "shp"){
                               west:  west
                           };
 
-                        new_center = new google.maps.LatLng((north+south)/2,(east+west)/2);
-                        map_main.setCenter(new_center);
-                        map_main.setZoom(15);
+                        // Center the map on the image
+                        map_main.goTo({
+                          center: [(east + west) / 2, (north + south) / 2],
+                          zoom: 15
+                        });
                         console.info(url);
 
-                        // Iterate over all overlays added to the map
-                            map_main.overlayMapTypes.forEach((overlay) => {
-                              // Check if the overlay is currently displayed on the map
-                                    overlays.setMap(null);
-                            });
+                        // Clear existing overlays
+                        if (window.graphicsLayer) {
+                          window.graphicsLayer.removeAll();
+                        }
 
 
 
 
-                        const overlay = new google.maps.GroundOverlay(url, imageBounds);
+                        // Create image overlay using ArcGIS
+                        const imageLayer = new window.ImageryLayer({
+                          url: url,
+                          extent: {
+                            xmin: west,
+                            ymin: south,
+                            xmax: east,
+                            ymax: north,
+                            spatialReference: { wkid: 4326 }
+                          }
+                        });
 
-
-                        overlay.setMap(map_main);
+                        map_main.map.add(imageLayer);
+                        window.currentImageLayer = imageLayer;
 
                        // Create opacity slider
                         const slider = document.getElementById('opacity-slider');
                         slider.addEventListener('input', () => {
                           const opacity = slider.value / 100;
-                          overlay.setOpacity(opacity);
+                          if (window.currentImageLayer) {
+                            window.currentImageLayer.opacity = opacity;
+                          }
                         });
                    }
                    document.querySelector("#file_content").style.display="block";
