@@ -2055,10 +2055,19 @@ else if (suffix == "shp"){
                 console.log('🚫 SHP FILE: No geospatial info, using simple image fallback');
                 
                 // For SHP files without geospatial info, show a message
-                document.querySelector("#file_content").innerHTML = '<div style="text-align:center; padding:20px; border: 2px solid #ccc; margin: 20px; border-radius: 8px;"><h3>SHP File Preview</h3><p>This SHP file does not contain geospatial coordinates and cannot be displayed on a map.</p></div>';
-                document.querySelector("#channel_dropdown").style.display="none";
-                document.querySelector("#map_main").style.display="none";
-                document.querySelector("#opacity-slider-container").style.display="none";
+                const fileContentFallback = document.querySelector("#file_content");
+                if (fileContentFallback) {
+                    fileContentFallback.innerHTML = '<div style="text-align:center; padding:20px; border: 2px solid #ccc; margin: 20px; border-radius: 8px;"><h3>SHP File Preview</h3><p>This SHP file does not contain geospatial coordinates and cannot be displayed on a map.</p></div>';
+                }
+                
+                // Hide UI elements if they exist
+                const channelDropdown = document.querySelector("#channel_dropdown");
+                const mapMain = document.querySelector("#map_main");
+                const opacitySlider = document.querySelector("#opacity-slider-container");
+                
+                if (channelDropdown) channelDropdown.style.display="none";
+                if (mapMain) mapMain.style.display="none";
+                if (opacitySlider) opacitySlider.style.display="none";
             }
             // Has geospatial info, render on map with ArcGIS Online
             else {
