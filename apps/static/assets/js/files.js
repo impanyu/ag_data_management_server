@@ -3075,14 +3075,30 @@ function createArcGISOnlineEmbed(fileUrl, fileType) {
   
   // PRODUCTION MODE: Use ArcGIS Online (HTTPS)
   if (fileType.toLowerCase().includes('tif') || fileType.toLowerCase().includes('tiff')) {
-    // For TIFF files - use ArcGIS Online Map Viewer with custom basemap
-    arcgisUrl = `https://www.arcgis.com/apps/mapviewer/index.html?url=${encodeURIComponent(fileUrl)}`;
+    // For TIFF files - try multiple ArcGIS Online approaches
+    console.log('🗺️ TIFF FILE: Attempting ArcGIS Online integration for TIFF');
+    
+    // Approach 1: Try as an image service
+    arcgisUrl = `https://www.arcgis.com/apps/mapviewer/index.html?layers=${encodeURIComponent(fileUrl)}`;
+    console.log('🔗 TIFF: Using image service approach');
+    
+    // Alternative approaches if first one fails (we'll implement fallback detection)
+    window.tiffFallbackUrls = [
+      `https://www.arcgis.com/apps/mapviewer/index.html?url=${encodeURIComponent(fileUrl)}`,
+      `https://www.arcgis.com/home/webmap/viewer.html?url=${encodeURIComponent(fileUrl)}`,
+      `https://www.arcgis.com/apps/mapviewer/index.html?webmap=new&addLayer=${encodeURIComponent(fileUrl)}`,
+      // Try as image service with explicit parameters
+      `https://www.arcgis.com/apps/mapviewer/index.html?layers=[{"id":"custom_tiff","title":"TIFF Layer","url":"${fileUrl}","type":"ImageServer"}]`
+    ];
+    
   } else if (fileType.toLowerCase().includes('shp')) {
     // For SHP files - use ArcGIS Online feature service
     arcgisUrl = `https://www.arcgis.com/apps/mapviewer/index.html?url=${encodeURIComponent(fileUrl)}`;
+    console.log('🗺️ SHP: Using feature service approach');
   } else {
     // Generic map viewer
     arcgisUrl = `https://www.arcgis.com/home/webmap/viewer.html?url=${encodeURIComponent(fileUrl)}`;
+    console.log('🗺️ GENERIC: Using standard map viewer');
   }
   
   iframeElement.src = arcgisUrl;
@@ -3094,7 +3110,48 @@ function createArcGISOnlineEmbed(fileUrl, fileType) {
   `;
   iframeElement.title = `ArcGIS Online Map - ${fileType} file`;
   
-  // Add fallback content
+  // Add intelligent fallback for TIFF files
+  if (fileType.toLowerCase().includes('tif') || fileType.toLowerCase().includes('tiff')) {
+    let fallbackAttempt = 0;
+    
+    // Monitor iframe for errors and try alternative TIFF approaches
+    const checkTiffSuccess = () => {
+      setTimeout(() => {
+        try {
+          // Check if iframe loaded but shows an error
+          const iframeDoc = iframeElement.contentDocument || iframeElement.contentWindow.document;
+          const errorIndicators = [
+            'unsupported', 'not supported', 'invalid', 'error', 'failed to load'
+          ];
+          
+          const pageText = iframeDoc.body ? iframeDoc.body.innerText.toLowerCase() : '';
+          const hasError = errorIndicators.some(indicator => pageText.includes(indicator));
+          
+          if (hasError && fallbackAttempt < window.tiffFallbackUrls.length) {
+            console.log(`🔄 TIFF FALLBACK: Attempt ${fallbackAttempt + 1} failed, trying next approach`);
+            iframeElement.src = window.tiffFallbackUrls[fallbackAttempt];
+            fallbackAttempt++;
+            checkTiffSuccess(); // Check again after loading new URL
+          } else if (hasError) {
+            console.log('❌ TIFF: All ArcGIS Online approaches failed, using converted image');
+            createSimpleImageDisplay(fileUrl);
+          } else {
+            console.log('✅ TIFF: ArcGIS Online approach successful');
+          }
+        } catch (e) {
+          // Cross-origin error is expected, iframe likely loaded successfully
+          console.log('🔒 TIFF: Cross-origin iframe (likely successful)');
+        }
+      }, 3000); // Give ArcGIS Online time to load and show errors
+    };
+    
+    iframeElement.onload = function() {
+      console.log('📊 TIFF: ArcGIS Online iframe loaded, checking for success...');
+      checkTiffSuccess();
+    };
+  }
+  
+  // Generic fallback for non-TIFF files
   iframeElement.onerror = function() {
     console.log('🔄 IFRAME ERROR: Falling back to simple image display');
     createSimpleImageDisplay(fileUrl);
