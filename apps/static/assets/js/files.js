@@ -40,13 +40,19 @@ console.log('=== DEBUG: User Agent:', navigator.userAgent);
 function waitForMapAndLoadContent() {
   console.log('=== DEBUG: waitForMapAndLoadContent called ===');
   console.log('=== DEBUG: ArcGIS Map available:', typeof window.Map !== 'undefined');
+  console.log('=== DEBUG: ArcGIS ImageryLayer available:', typeof window.ImageryLayer !== 'undefined');
   console.log('=== DEBUG: map_main available:', !!window.map_main);
+  console.log('=== DEBUG: mapViewReady:', !!window.mapViewReady);
   
-  if (typeof window.Map !== 'undefined' && window.map_main) {
-    console.log('=== DEBUG: Both ArcGIS and map_main ready, calling get_meta_and_content ===');
+  if (typeof window.Map !== 'undefined' && 
+      typeof window.ImageryLayer !== 'undefined' && 
+      window.map_main && 
+      window.mapViewReady) {
+    console.log('=== DEBUG: All ArcGIS components ready, loading content ===');
     get_meta_and_content();
   } else {
-    setTimeout(waitForMapAndLoadContent, 100);
+    console.log('=== DEBUG: Still waiting for ArcGIS components, retrying in 200ms ===');
+    setTimeout(waitForMapAndLoadContent, 200);
   }
 }
 
