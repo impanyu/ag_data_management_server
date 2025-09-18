@@ -2987,6 +2987,10 @@ async function createArcGISOnlineEmbedWithStatic(currentPath, fileType) {
     // The API returns a relative URL like "/static_files/user/ag_data/file.shp"
     let staticUrl = staticResult.trim();
     
+    console.log('🔗 CONVERT TO STATIC: Raw API response:', staticResult);
+    console.log('🔗 CONVERT TO STATIC: window.location.origin:', window.location.origin);
+    console.log('🔗 CONVERT TO STATIC: window.location.protocol:', window.location.protocol);
+    
     // If it's a relative URL (starts with /), convert to absolute URL
     if (staticUrl.startsWith('/')) {
       staticUrl = window.location.origin + staticUrl;
@@ -3052,6 +3056,24 @@ function createArcGISOnlineEmbed(fileUrl, fileType) {
   
   // Generate ArcGIS Online URL based on file type
   let arcgisUrl;
+  
+  // DEVELOPMENT MODE: Check if we're on HTTP (development)
+  const isHttpDevelopment = window.location.protocol === 'http:';
+  
+  console.log('🔧 PROTOCOL CHECK: window.location.protocol =', window.location.protocol);
+  console.log('🔧 PROTOCOL CHECK: isHttpDevelopment =', isHttpDevelopment);
+  
+  if (isHttpDevelopment) {
+    console.log('🔧 DEVELOPMENT MODE: Using fallback display for HTTP development server');
+    console.log('🔧 DEVELOPMENT MODE: File URL =', fileUrl);
+    // For development, fall back to simple image display since ArcGIS Online requires HTTPS
+    createSimpleImageDisplay(fileUrl);
+    return; // Exit early, don't create iframe
+  } else {
+    console.log('🌐 PRODUCTION MODE: Using ArcGIS Online iframe');
+  }
+  
+  // PRODUCTION MODE: Use ArcGIS Online (HTTPS)
   if (fileType.toLowerCase().includes('tif') || fileType.toLowerCase().includes('tiff')) {
     // For TIFF files - use ArcGIS Online Map Viewer with custom basemap
     arcgisUrl = `https://www.arcgis.com/apps/mapviewer/index.html?url=${encodeURIComponent(fileUrl)}`;
