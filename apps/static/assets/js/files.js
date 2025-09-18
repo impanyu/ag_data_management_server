@@ -103,11 +103,11 @@ function waitForMapAndLoadContent() {
   if (!window.arcgisLoadAttempts) window.arcgisLoadAttempts = 0;
   window.arcgisLoadAttempts++;
   
+  // For ArcGIS Online embedding, we don't need to wait for mapViewReady
+  // Just check if basic components are available and proceed
   if (typeof window.ArcGISMap !== 'undefined' && 
-      typeof window.ImageryLayer !== 'undefined' && 
-      window.map_main && 
-      window.mapViewReady) {
-    console.log('=== DEBUG: All ArcGIS components ready, loading content ===');
+      typeof window.ImageryLayer !== 'undefined') {
+    console.log('=== DEBUG: ArcGIS components available, loading content ===');
     get_meta_and_content();
   } else if (window.arcgisLoadAttempts > 10) { // After 2 seconds, give up on ArcGIS
     console.log('⚠️ WARNING: ArcGIS failed to load after 2 seconds, loading content anyway for folder browsing');
@@ -195,7 +195,7 @@ function add_to_domain(path,file_name){
                      });
 
                      window.graphicsLayer.add(rectangle);
-                     lastOverlay = rectangle;
+                      lastOverlay = rectangle;
 
                      if (window.mapViewReady && window.map_main && typeof window.map_main.goTo === 'function') {
                        console.log('=== DEBUG: Using ArcGIS goTo for rectangle centering ===');
@@ -2018,118 +2018,55 @@ else if (suffix == "shp"){
                           document.querySelector("#channel_list").innerHTML +=  '<span class="dropdown-item"  onclick="change_channel_dropdown(this)" id="channel_dropdown_item_'+col+'">'+col+'</span>';
                   }
             // Fix: Add null check to prevent error when element doesn't exist
-            const channelElement = document.querySelector("#channel_dropdown_item_"+current_col);
-            if (channelElement) {
-                channelElement.style.backgroundColor = "#87CEEB";
+            if (current_col) {
+                const channelElement = document.querySelector("#channel_dropdown_item_"+current_col);
+                if (channelElement) {
+                    channelElement.style.backgroundColor = "#87CEEB";
+                } else {
+                    console.warn("Channel dropdown element not found for:", current_col);
+                }
             } else {
-                console.warn("Channel dropdown element not found for:", current_col);
+                console.warn("current_col is undefined, skipping channel highlighting");
             }
 
-            $.ajax({
-                url: '/get_file',
-                type: 'POST',
-                data: {current_path: current_path, col:current_col},
-                xhrFields: {
-                    responseType: 'blob'
-                },
-                success: async function(response,status,xhr) {
-                  x=xhr;
-                  
-                  //document.querySelector("#file_content").style.display="block";
-                 
-                  const contentType = xhr.getResponseHeader('Content-Type');
-                  console.info(contentType);
-                   // Extract the filename from the Content-Disposition header
-                   //const filename =xhr.getResponseHeader('Content-Disposition').split('filename=')[1];
-                   const url = window.URL.createObjectURL(response);
+            // NEW APPROACH: Skip the blob download and go directly to ArcGIS Online
+            console.log('🗺️ SHP FILE: Using ArcGIS Online approach directly');
+            console.log('📁 Current path:', current_path);
+            console.log('📊 Current column:', current_col || 'undefined - will use default');
+            
+            // Show the visual content area
+            document.querySelector("#file_content").style.display="none";
+            document.querySelector("#visual_content").style.display="block";
 
-                   if (meta_data["spatial_range"]["northeast"]["lat"] == "0" &&  meta_data["spatial_range"]["northeast"]["lng"] == "-180"){
-                   //no geospatial info, only render a img
+            // Check if SHP has geospatial info or not
+            if (meta_data["spatial_range"]["northeast"]["lat"] == "0" &&  meta_data["spatial_range"]["northeast"]["lng"] == "-180"){
+                console.log('🚫 SHP FILE: No geospatial info, using simple image fallback');
+                
+                // For SHP files without geospatial info, show a message
+                document.querySelector("#file_content").innerHTML = '<div style="text-align:center; padding:20px; border: 2px solid #ccc; margin: 20px; border-radius: 8px;"><h3>SHP File Preview</h3><p>This SHP file does not contain geospatial coordinates and cannot be displayed on a map.</p></div>';
+                document.querySelector("#channel_dropdown").style.display="none";
+                document.querySelector("#map_main").style.display="none";
+                document.querySelector("#opacity-slider-container").style.display="none";
+            }
+            // Has geospatial info, render on map with ArcGIS Online
+            else {
+                console.log('🗺️ SHP FILE: Has geospatial info, using ArcGIS Online');
+                
+                const north = parseFloat(meta_data["spatial_range"]["northeast"]["lat"]);
+                const south = parseFloat(meta_data["spatial_range"]["southwest"]["lat"]);
+                const east = meta_data["spatial_range"]["northeast"]["lng"];
+                const west = meta_data["spatial_range"]["southwest"]["lng"];
 
-                   // Create a URL object from the blob response
-                         const img = document.createElement('img');
-                         img.src = url;
-                         img.style.width="100%";
-                         document.querySelector("#file_content").appendChild(img);
-                         document.querySelector("#channel_dropdown").style.display="none";
-                          document.querySelector("#map_main").style.display="none";
-                           document.querySelector("#opacity-slider-container").style.display="none";
-                   }
+                console.log('🌍 Spatial bounds:', {north, south, east, west});
 
-                   //has geospatial info, render on map
-                   else{
-                          north = parseFloat(meta_data["spatial_range"]["northeast"]["lat"]);
-                          south = parseFloat(meta_data["spatial_range"]["southwest"]["lat"]);
-                          east = meta_data["spatial_range"]["northeast"]["lng"];
-                          west = meta_data["spatial_range"]["southwest"]["lng"];
-
-                          const imageBounds = {
-                              north: north,
-                              south: south,
-                              east:  east,
-                              west:  west
-                          };
-
-                        // Center the map on the image
-                        if (window.map_main) {
-                          if (window.mapViewReady && typeof window.map_main.goTo === 'function') {
-                            console.log('=== DEBUG: Using ArcGIS goTo for image centering ===');
-                            window.map_main.goTo({
-                              center: [(east + west) / 2, (north + south) / 2],
-                              zoom: 15
-                            });
-                          } else {
-                            console.error('=== DEBUG: MapView not ready or goTo not available ===', {
-                              mapViewReady: window.mapViewReady,
-                              map_main: !!window.map_main,
-                              goTo: window.map_main && typeof window.map_main.goTo
-                            });
-                          }
-                        }
-                        console.info(url);
-
-                        // Clear existing overlays
-                        if (window.graphicsLayer) {
-                          window.graphicsLayer.removeAll();
-                        }
-
-                        // Use ArcGIS Online embed directly for all geospatial files
-                        console.log('🗺️ USING ARCGIS ONLINE: Creating ArcGIS Online embed for geospatial file');
-                        console.log('🌐 Blob URL (not usable by ArcGIS):', url);
-                        console.log('📁 Current path:', current_path);
-                        
-                        // Create a static file URL that ArcGIS Online can access
-                        const staticUrl = window.location.origin + '/data/' + current_path;
-                        console.log('🌐 Static file URL for ArcGIS Online:', staticUrl);
-                        
-                        // Determine file type from current path
-                        let fileType = 'unknown';
-                        if (current_path.toLowerCase().includes('.tif') || current_path.toLowerCase().includes('.tiff')) {
-                          fileType = 'TIFF';
-                        } else if (current_path.toLowerCase().includes('.shp')) {
-                          fileType = 'SHP';
-                        }
-                        
-                        console.log('🎯 Detected file type:', fileType);
-                        await createArcGISOnlineEmbedWithStatic(current_path, fileType);
-
-                       // Create opacity slider
-                        const slider = document.getElementById('opacity-slider');
-                        slider.addEventListener('input', () => {
-                          const opacity = slider.value / 100;
-                          if (window.currentImageLayer) {
-                            window.currentImageLayer.opacity = opacity;
-                          }
-                        });
-                   }
-                   document.querySelector("#file_content").style.display="block";
-                      document.querySelector("#preloader2").style.display="none";
-                },
-                error: function(xhr, status, error) {
-
-                    console.error('Error retrieving file:', error);
-                }
-            });
+                // Use ArcGIS Online embed for geospatial SHP files
+                console.log('🗺️ Creating ArcGIS Online embed for geospatial SHP file');
+                await createArcGISOnlineEmbedWithStatic(current_path, 'SHP');
+            }
+            
+            // Finalize display
+            document.querySelector("#file_content").style.display="block";
+            document.querySelector("#preloader2").style.display="none";
 
 }
 /*
