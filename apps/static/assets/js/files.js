@@ -2965,7 +2965,7 @@ async function createArcGISOnlineEmbedWithStatic(currentPath, fileType) {
     console.log('🔗 CONVERT TO STATIC: API file path:', filePathAfterAgData);
     
     // Call ConvertToStatic API
-    const staticResponse = await fetch(`/api/convert_to_static_core/?file_path=${encodeURIComponent(filePathAfterAgData)}`, {
+    const staticResponse = await fetch(`/api/convert_to_static/?file_path=${encodeURIComponent(filePathAfterAgData)}`, {
       credentials: 'same-origin',
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
@@ -2984,17 +2984,17 @@ async function createArcGISOnlineEmbedWithStatic(currentPath, fileType) {
       throw new Error('ConvertToStatic API returned an error page');
     }
     
-    // The API should return a static URL
+    // The API returns a relative URL like "/static_files/user/ag_data/file.shp"
     let staticUrl = staticResult.trim();
     
-    // If the response doesn't look like a URL, construct one
-    if (!staticUrl.startsWith('http') && !staticUrl.includes('SUCCESS')) {
-      staticUrl = window.location.origin + '/static/' + filePathAfterAgData;
+    // If it's a relative URL (starts with /), convert to absolute URL
+    if (staticUrl.startsWith('/')) {
+      staticUrl = window.location.origin + staticUrl;
+      console.log('🔗 CONVERT TO STATIC: Converted to absolute URL:', staticUrl);
+    } else if (!staticUrl.startsWith('http')) {
+      // Fallback: construct URL
+      staticUrl = window.location.origin + '/static_files/' + filePathAfterAgData;
       console.log('🔗 CONVERT TO STATIC: Constructed fallback static URL:', staticUrl);
-    } else if (staticResult.includes('SUCCESS')) {
-      // If it's a debug message, extract any URL from it or use fallback
-      staticUrl = window.location.origin + '/static/' + filePathAfterAgData;
-      console.log('🔗 CONVERT TO STATIC: Using fallback URL after success message:', staticUrl);
     }
     
     console.log('✅ CONVERT TO STATIC: Final static URL:', staticUrl);
@@ -3010,7 +3010,7 @@ async function createArcGISOnlineEmbedWithStatic(currentPath, fileType) {
     const filePathAfterAgData = currentPath.includes('ag_data/') 
       ? currentPath.split('ag_data/')[1] 
       : currentPath;
-    const fallbackUrl = window.location.origin + '/static/' + filePathAfterAgData;
+    const fallbackUrl = window.location.origin + '/static_files/ypan12/ag_data/' + filePathAfterAgData;
     
     console.log('🔄 CONVERT TO STATIC: Fallback URL:', fallbackUrl);
     createArcGISOnlineEmbed(fallbackUrl, fileType);

@@ -26,6 +26,10 @@ urlpatterns = [
 
 #urlpatterns += router.urls
 
+# Add static files serving for converted_static_files (for ArcGIS Online access)
+# This needs to be available in both development and production
+urlpatterns += static('/static_files/', document_root = settings.CONVERTED_STATIC_FILES_ROOT)
+
 # only in development
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

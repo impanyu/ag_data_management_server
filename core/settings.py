@@ -263,11 +263,15 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     "/home",
     os.path.join(CORE_DIR, 'apps/static'),
-    os.path.join(CORE_DIR, 'data')
+    os.path.join(CORE_DIR, 'data'),
+   
 
 )
 
 USER_DATA_DIR = "/data"
+
+# Converted static files directory for ArcGIS Online access
+CONVERTED_STATIC_FILES_ROOT = os.path.join(CORE_DIR, 'converted_static_files')
 
 #############################################################
 #############################################################
